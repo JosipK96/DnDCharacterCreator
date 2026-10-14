@@ -1,5 +1,6 @@
 ﻿using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
+using CharacterCreatorApp.Infrastructure.Extensions;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Classes
             // Plain Postgres arrays (integer[] and text[]); nothing queries inside them
             builder.Property(c => c.AsiLevels);
             builder.Property(c => c.SavingThrowAbilityIds);
+
+            builder.Property(c => c.ToolChoices)
+                .HasJsonConversion();
 
             builder.HasIndex(c => c.Edition);
 

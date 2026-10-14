@@ -1,4 +1,5 @@
-﻿using CharacterCreatorApp.Domain.DomainModels.Spells;
+﻿using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
+using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Domain.DomainModels.Races;
@@ -50,6 +51,9 @@ public class Race
     public int FeatChoiceCount { get; set; }
 
     public string? FeatChoiceCategory { get; set; }
+
+    /// <summary>The tools the player picks for the race: a 2014 dwarf's smith's tools, brewer's supplies or mason's tools.</summary>
+    public List<ToolChoice> ToolChoices { get; set; } = [];
 
     public ICollection<RaceLanguage> RaceLanguages { get; set; } = [];
     public ICollection<RaceAbilityBonus> AbilityBonuses { get; set; } = [];

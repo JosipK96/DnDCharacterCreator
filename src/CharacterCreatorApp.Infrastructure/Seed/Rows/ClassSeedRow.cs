@@ -1,3 +1,5 @@
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
+
 namespace CharacterCreatorApp.Infrastructure.Seed.Rows;
 
 // The shapes of the class seed files. tools/CharacterCreatorApp.SeedDataGenerator writes them
@@ -18,6 +20,7 @@ public sealed record ClassSeedRow
     public List<string> SavingThrowAbilityIds { get; init; } = [];
     public List<string> ProficiencyIds { get; init; } = [];
     public ProficiencyChoiceSeedRow? ProficiencyChoices { get; init; }
+    public List<ToolChoice> ToolChoices { get; init; } = [];
     public SpellcastingSeedRow? Spellcasting { get; init; }
     public List<SpellProgressionSeedRow> SpellProgression { get; init; } = [];
 }

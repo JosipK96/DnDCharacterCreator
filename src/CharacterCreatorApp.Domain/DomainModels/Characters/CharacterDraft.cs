@@ -74,6 +74,14 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public List<string> SelectedClassProficiencyIds { get; private set; } = [];
         public List<string> SelectedRaceSkillIds { get; private set; } = [];
         public List<string> SelectedLanguageIds { get; private set; } = [];
+
+        /// <summary>
+        /// The tools picked for each ToolChoice the race, background and class offer, one list per
+        /// choice in that order: a dwarf bard's smith's tools, then its three instruments. Another
+        /// race, background or class clears it.
+        /// </summary>
+        public List<List<string>> ToolPicks { get; private set; } = [];
+
         public List<string> SelectedFeatIds { get; private set; } = [];
 
         /// <summary>
@@ -151,6 +159,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             SelectedClassProficiencyIds = [];
             SelectedRaceSkillIds = [];
             SelectedLanguageIds = [];
+            ToolPicks = [];
             SelectedFeatIds = [];
             FeatAbilityIncreases = [];
             FightingStyleIds = [];
@@ -184,6 +193,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 RaceAbilityIncreases = [];
                 SelectedRaceSkillIds = [];
                 SelectedLanguageIds = [];
+                ToolPicks = [];
                 ClearImprovements();
             }
             else if (IsRemoved(choiceSources.Subrace))
@@ -197,6 +207,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 SubclassId = null;
                 SelectedClassProficiencyIds = [];
                 SelectedSpellIds = [];
+                ToolPicks = [];
                 ClearFightingStyles();
                 ClearImprovements();
             }
@@ -211,6 +222,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 BackgroundFeatId = null;
                 BackgroundAbilityIncreases = [];
                 SelectedLanguageIds = [];
+                ToolPicks = [];
                 FeatSpells = [];
             }
 
@@ -270,6 +282,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 // Proficiency options, spell lists, improvement levels and the class features feats
                 // ask for are all class-specific
                 SelectedClassProficiencyIds = [];
+                ToolPicks = [];
                 SelectedSpellIds = [];
                 ClearFightingStyles();
                 ClearImprovements();
@@ -311,9 +324,10 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         {
             if (RaceId != raceId)
             {
-                // Skill and language allowances are race-specific
+                // Skill, language and tool allowances are race-specific
                 SelectedRaceSkillIds = [];
                 SelectedLanguageIds = [];
+                ToolPicks = [];
             }
 
             if (RaceId != raceId || SubraceId != subraceId)
@@ -355,8 +369,9 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         {
             if (BackgroundId != backgroundId)
             {
-                // Backgrounds grant differing numbers of free languages
+                // Backgrounds grant differing numbers of free languages and tools
                 SelectedLanguageIds = [];
+                ToolPicks = [];
             }
 
             if (BackgroundId != backgroundId || BackgroundFeatId != featId)
@@ -389,6 +404,14 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public void SetLanguages(List<string> languageIds)
         {
             SelectedLanguageIds = languageIds;
+        }
+
+        /// <summary>Sets the tools picked, one list per tool choice in the order ToolPicks describes.</summary>
+        public void ChooseTools(List<List<string>> picks)
+        {
+            ArgumentNullException.ThrowIfNull(picks);
+
+            ToolPicks = picks;
         }
 
         /// <summary>

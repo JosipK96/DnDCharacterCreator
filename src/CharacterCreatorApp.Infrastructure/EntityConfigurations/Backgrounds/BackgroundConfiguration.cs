@@ -1,4 +1,5 @@
 ﻿using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
+using CharacterCreatorApp.Infrastructure.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -25,6 +26,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Backgrounds
 
             builder.Property(b => b.Languages);
             builder.Property(b => b.AbilityScoreOptions);
+            builder.Property(b => b.ToolChoices)
+                .HasJsonConversion();
             builder.Property(b => b.FeatChoiceCategory)
                 .HasMaxLength(30);
             builder.Property(b => b.FeatSpellListClassId)

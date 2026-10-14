@@ -30,6 +30,18 @@ internal sealed class ProficiencyIndex
         ["improvised"] = "Improvised Weapons",
     };
 
+    // 5etools' kinds of tool, as a key ("anyGamingSet") or a name ("gaming set"), and the type
+    // Proficiencies.json gives every tool of that kind
+    private static readonly Dictionary<string, string> KindTypes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["anyArtisansTool"] = "artisans_tools",
+        ["artisan's tools"] = "artisans_tools",
+        ["anyMusicalInstrument"] = "musical-instrument",
+        ["musical instrument"] = "musical-instrument",
+        ["anyGamingSet"] = "gaming_set",
+        ["gaming set"] = "gaming_set",
+    };
+
     private readonly Dictionary<string, Proficiency> _byName;
 
     private ProficiencyIndex(IEnumerable<Proficiency> proficiencies)
@@ -43,7 +55,16 @@ internal sealed class ProficiencyIndex
 
     /// <summary>Every skill and every tool, instrument and gaming set: what "any skill or tool" offers.</summary>
     public IEnumerable<Proficiency> SkillsAndTools =>
-        _byName.Values.Where(p => p.Type is "skill" or "tool" or "musical-instrument" or "gaming_set");
+        _byName.Values.Where(p => p.Type is "skill" or "tool" or "artisans_tools" or "musical-instrument" or "gaming_set");
+
+    /// <summary>Whether a name is a kind of tool ("gaming set") rather than one tool.</summary>
+    public static bool IsKind(string name) => KindTypes.ContainsKey(name);
+
+    /// <summary>Every tool of a kind ("anyGamingSet", "musical instrument"), or null when the key is no kind.</summary>
+    public List<string>? IdsOfKind(string key) =>
+        KindTypes.TryGetValue(key, out var type)
+            ? _byName.Values.Where(p => p.Type == type).Select(p => p.Id).Order(StringComparer.Ordinal).ToList()
+            : null;
 
     public static async Task<ProficiencyIndex> LoadAsync(string dataPath)
     {

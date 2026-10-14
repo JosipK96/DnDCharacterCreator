@@ -35,6 +35,10 @@ public class Class
 
     public List<ClassProficiency> ClassProficiencies { get; set; } = [];
     public ProficiencyChoice? ProficiencyChoice { get; set; }
+
+    /// <summary>The tools or instruments the player picks for the class: a bard's three instruments.</summary>
+    public List<ToolChoice> ToolChoices { get; set; } = [];
+
     public List<Feature> Features { get; set; } = [];
     public List<Subclass> Subclasses { get; set; } = [];
     public Spellcasting? Spellcasting { get; set; }

@@ -89,6 +89,16 @@ public static class CharacterErrors
             "Character.LanguageChoicesIncomplete",
             $"A {raceName} with the {backgroundName} background must choose exactly {required} language(s). The draft has {actual}.");
 
+    public static Error ToolChoicesIncomplete(IEnumerable<string> offeredBy, int picked)
+    {
+        var names = offeredBy.ToList();
+        var description = names.Count == 0
+            ? $"The character's race, background and class offer no tools to pick. Got {picked} pick(s)."
+            : $"Pick the tools {string.Join(", ", names)} offer(s), one pick each, in that order. Got {picked} pick(s).";
+
+        return Error.Validation("Character.ToolChoicesIncomplete", description);
+    }
+
     public static Error SizeRequired(string raceName, IEnumerable<string> sizes) =>
         Error.Validation("Character.SizeRequired", $"A {raceName} is {string.Join(" or ", sizes)}; pick one.");
 

@@ -30,6 +30,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
             SubclassLevel = row.SubclassLevel,
             AsiLevels = row.AsiLevels,
             SavingThrowAbilityIds = row.SavingThrowAbilityIds,
+            ToolChoices = row.ToolChoices,
             ClassProficiencies = row.ProficiencyIds
                 .Select(id => new ClassProficiency { ClassId = row.Id, ProficiencyId = id })
                 .ToList(),

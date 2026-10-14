@@ -30,6 +30,7 @@ public static class CharacterDraftErrors
         public const string BlankLanguageId = "CharacterDraft.BlankLanguageId";
         public const string ProficiencyIdsRequired = "CharacterDraft.ProficiencyIdsRequired";
         public const string BlankProficiencyId = "CharacterDraft.BlankProficiencyId";
+        public const string ToolPicksRequired = "CharacterDraft.ToolPicksRequired";
         public const string SpellIdsRequired = "CharacterDraft.SpellIdsRequired";
         public const string FightingStyleIdsRequired = "CharacterDraft.FightingStyleIdsRequired";
         public const string BonusSpellsRequired = "CharacterDraft.BonusSpellsRequired";
@@ -158,6 +159,9 @@ public static class CharacterDraftErrors
         Error.Validation("CharacterDraft.DuplicateFeats", $"These feats can only be taken once: {string.Join(", ", names)}");
 
     /// <summary>A picked proficiency the character has already, from the race, background, class or the other pick.</summary>
+    public static Error InvalidToolPick(string offeredBy, int count, IEnumerable<string> options) =>
+        Error.Validation("CharacterDraft.InvalidToolPick", $"{offeredBy} offers {count} different tool(s) from {string.Join(", ", options)}.");
+
     public static Error ProficiencyAlreadyGiven(string proficiencyId, string source) =>
         Error.Validation("CharacterDraft.ProficiencyAlreadyGiven", $"{proficiencyId} comes with {source} already; pick another in its place.");
 

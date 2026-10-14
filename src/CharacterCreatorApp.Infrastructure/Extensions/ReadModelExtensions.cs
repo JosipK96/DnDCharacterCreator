@@ -363,6 +363,7 @@ public static class ReadModelExtensions
             BaseAbilityScores = draft.BaseAbilityScores,
             SelectedClassProficiencyIds = draft.SelectedClassProficiencyIds,
             SelectedRaceSkillIds = draft.SelectedRaceSkillIds,
+            ToolPicks = draft.ToolPicks,
             SelectedLanguageIds = draft.SelectedLanguageIds,
             SelectedFeatIds = draft.SelectedFeatIds,
             FeatAbilityIncreases = draft.FeatAbilityIncreases,

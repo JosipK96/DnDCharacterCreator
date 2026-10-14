@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
 
 namespace CharacterCreatorApp.Infrastructure.Seed.Rows;
@@ -44,6 +45,8 @@ public sealed record RaceSeedRow
 
     /// <summary>Spells the player picks from a class list; see Race.SpellChoiceWith.</summary>
     public BonusSpellChoice? SpellChoice { get; init; }
+
+    public List<ToolChoice> ToolChoices { get; init; } = [];
 
     public List<SubraceSeedRow> Subraces { get; init; } = [];
 }

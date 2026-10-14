@@ -66,6 +66,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
+                    b.Property<string>("ToolChoices")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Edition");
@@ -315,6 +319,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("ToolPicks")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -365,6 +373,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
 
                     b.Property<int>("SubclassLevel")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ToolChoices")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
 
                     b.HasKey("Id");
 
@@ -729,6 +741,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
 
                     b.Property<int>("Speed")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ToolChoices")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
 
                     b.HasKey("Id");
 

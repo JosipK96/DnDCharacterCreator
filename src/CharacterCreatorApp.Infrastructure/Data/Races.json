@@ -47,6 +47,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -108,6 +109,16 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "brewer_supplies",
+          "mason_tools",
+          "smith_tools"
+        ]
+      }
+    ],
     "Subraces": [
       {
         "Id": "hill_dwarf",
@@ -223,6 +234,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "drow_elf",
@@ -420,6 +432,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "forest_gnome",
@@ -548,6 +561,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -605,6 +619,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -651,6 +666,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "lightfoot_halfling",
@@ -734,6 +750,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "standard_human",
@@ -877,6 +894,7 @@
       }
     ],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -930,6 +948,7 @@
       }
     ],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -963,6 +982,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "dragonborn_black_2024",
@@ -1297,6 +1317,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -1344,6 +1365,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "elf_drow_lineage_2024",
@@ -1496,6 +1518,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "gnome_forest_gnome_lineage_2024",
@@ -1596,6 +1619,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "goliath_cloud_giant_ancestry_2024",
@@ -1784,6 +1808,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -1822,6 +1847,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -1860,6 +1886,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": []
   },
   {
@@ -1893,6 +1920,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "ToolChoices": [],
     "Subraces": [
       {
         "Id": "tiefling_abyssal_legacy_2024",

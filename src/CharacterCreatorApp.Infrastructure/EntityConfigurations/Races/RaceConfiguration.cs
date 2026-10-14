@@ -1,4 +1,5 @@
 ﻿using CharacterCreatorApp.Domain.DomainModels.Races;
+using CharacterCreatorApp.Infrastructure.Extensions;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -39,6 +40,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
             builder.HasIndex(r => r.Edition);
 
             builder.OwnsOne(r => r.SpellChoice).ToJson();
+
+            builder.Property(r => r.ToolChoices)
+                .HasJsonConversion();
 
             builder.HasMany(r => r.Spells)
                 .WithOne(s => s.Race)

@@ -1,5 +1,6 @@
 ﻿using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Domain.DomainModels.Backgrounds;
@@ -16,6 +17,9 @@ public class Background
     public string Source { get; set; } = string.Empty;
 
     public List<BackgroundProficiency> BackgroundProficiencies { get; set; } = [];
+
+    /// <summary>The tools, instruments or gaming sets the player picks for the background: a Criminal's gaming set.</summary>
+    public List<ToolChoice> ToolChoices { get; set; } = [];
 
     /// <summary>
     /// Language names ("dwarvish"), with "any" for each one the player picks. A 2024 background

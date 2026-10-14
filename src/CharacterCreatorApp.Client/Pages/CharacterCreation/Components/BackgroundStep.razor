@@ -64,7 +64,7 @@
                                 @if (selectedBackground.Proficiencies?.Any() == true)
                                 {
                                     var skills = selectedBackground.Proficiencies.Where(p => p.Type == "skill").ToList();
-                                    var tools = selectedBackground.Proficiencies.Where(p => p.Type == "tool").ToList();
+                                    var tools = selectedBackground.Proficiencies.Where(p => p.Type != "skill").ToList();
 
                                     @if (skills.Any())
                                     {

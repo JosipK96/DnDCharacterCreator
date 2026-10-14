@@ -58,6 +58,11 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Characters
             builder.Property(x => x.SelectedClassProficiencyIds);
             builder.Property(x => x.SelectedRaceSkillIds);
             builder.Property(x => x.SelectedLanguageIds);
+
+            builder.Property(x => x.ToolPicks)
+                .HasColumnType("jsonb")
+                .HasJsonConversion();
+
             builder.Property(x => x.SelectedFeatIds);
             builder.Property(x => x.FightingStyleIds);
             builder.Property(x => x.SelectedSpellIds);

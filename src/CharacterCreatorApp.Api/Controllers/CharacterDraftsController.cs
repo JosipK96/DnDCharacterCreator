@@ -4,10 +4,12 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseFightingS
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseLanguages;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseProficiencies;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseRaceSkills;
+using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseTools;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.CreateDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.DeleteDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetBonusSpells;
+using CharacterCreatorApp.Application.Features.CharacterCreation.GetToolChoices;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetIncompleteDraft;
@@ -164,6 +166,36 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new ChooseRaceSkillsCommand(draftId, request.ProficiencyIds), cancellationToken);
 
             return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// The tools picked for each tool choice the race, background and class offer, one list
+        /// per choice in the order GET tool-choices lists them.
+        /// </summary>
+        [HttpPut("{draftId:guid}/tools")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ChooseTools(Guid draftId, [FromBody] ChooseToolsApiRequest request, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new ChooseToolsCommand(draftId, request.Picks), cancellationToken);
+
+            return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// The tools the draft's race (a dwarf's artisan's tools), background (a Criminal's gaming
+        /// set) and class (a bard's instruments) let the player pick, in that order; empty when none do.
+        /// </summary>
+        [HttpGet("{draftId:guid}/tool-choices")]
+        [ProducesResponseType(typeof(List<ToolChoiceApiResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetToolChoices(Guid draftId, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new GetToolChoicesQuery(draftId), cancellationToken);
+
+            return OkOrProblem(response, choices => _mapper.Map<List<ToolChoiceApiResponse>>(choices));
         }
 
         [HttpPut("{draftId:guid}/languages")]

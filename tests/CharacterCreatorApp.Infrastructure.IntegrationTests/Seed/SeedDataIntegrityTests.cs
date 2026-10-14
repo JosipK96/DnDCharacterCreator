@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed;
@@ -104,9 +105,9 @@ public partial class SeedDataIntegrityTests
         var feats = await ReadAsync<FeatRow>("Feats.json");
 
         // Act
-        var references = classes.SelectMany(c => (c.ProficiencyIds ?? []).Concat(c.ProficiencyChoices?.Options ?? []).Select(id => $"class {c.Id}: {id}"))
-            .Concat(backgrounds.SelectMany(b => (b.ProficiencyIds ?? []).Select(id => $"background {b.Id}: {id}")))
-            .Concat(races.SelectMany(r => r.ProficiencyIds.Concat(r.SkillChoiceOptions).Select(id => $"race {r.Id}: {id}")))
+        var references = classes.SelectMany(c => (c.ProficiencyIds ?? []).Concat(c.ProficiencyChoices?.Options ?? []).Concat(ToolOptions(c.ToolChoices)).Select(id => $"class {c.Id}: {id}"))
+            .Concat(backgrounds.SelectMany(b => (b.ProficiencyIds ?? []).Concat(ToolOptions(b.ToolChoices)).Select(id => $"background {b.Id}: {id}")))
+            .Concat(races.SelectMany(r => r.ProficiencyIds.Concat(r.SkillChoiceOptions).Concat(ToolOptions(r.ToolChoices)).Select(id => $"race {r.Id}: {id}")))
             .Concat(races.SelectMany(r => r.Subraces).SelectMany(s => s.ProficiencyIds.Select(id => $"subrace {s.Id}: {id}")))
             .Concat(feats.SelectMany(f => (f.GrantedProficiencyIds ?? []).Concat(ProficiencyOptions(f)).Select(id => $"feat {f.Id}: {id}")));
 
@@ -304,16 +305,18 @@ public partial class SeedDataIntegrityTests
     private static IEnumerable<string> Repeated(IEnumerable<string> keys) =>
         keys.GroupBy(k => k).Where(g => g.Count() > 1).Select(g => g.Key);
 
+    private static IEnumerable<string> ToolOptions(List<ToolChoice>? choices) => (choices ?? []).SelectMany(c => c.Options);
+
     private static Task<List<T>> ReadAsync<T>(string relativePath) =>
         SeedFile.ReadListAsync<T>(Path.Combine(DataPath, relativePath), TestContext.Current.CancellationToken);
 
     private sealed record ProficiencyRow(string Id, string Name, string Type);
 
-    private sealed record ClassRow(string Id, List<string>? ProficiencyIds, ProficiencyChoiceRow? ProficiencyChoices);
+    private sealed record ClassRow(string Id, List<string>? ProficiencyIds, ProficiencyChoiceRow? ProficiencyChoices, List<ToolChoice>? ToolChoices);
 
     private sealed record ProficiencyChoiceRow(List<string>? Options);
 
-    private sealed record BackgroundRow(string Id, List<string>? ProficiencyIds);
+    private sealed record BackgroundRow(string Id, List<string>? ProficiencyIds, List<ToolChoice>? ToolChoices);
 
     private sealed record FeatRow(
         string Id,

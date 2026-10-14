@@ -1,5 +1,6 @@
 using System.Text.Json.Nodes;
 
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
@@ -18,12 +19,6 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
     private const string AnyFromCategory = "anyFromCategory";
 
     private static readonly string[] ProficiencyKeys = ["skillProficiencies", "toolProficiencies"];
-
-    // Kinds of tool rather than tools: one set or instrument of the player's choice
-    private static readonly HashSet<string> ToolCategories = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "gaming set", "musical instrument", "artisan's tools",
-    };
 
     // The 2024 rules give every character Common and two standard languages when it is made;
     // the app carries them on the 2024 background, where the 2014 rules put a background's own
@@ -62,6 +57,7 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
                 Edition = edition,
                 Source = SourceBooks.Of(background, edition),
                 ProficiencyIds = Proficiencies(id, background),
+                ToolChoices = ToolChoices(id, background),
                 Languages = edition == RulesEdition.Edition2024 ? Languages2024 : Languages(background),
                 AbilityScoreOptions = AbilityScoreOptions(background),
                 FeatId = FeatId(id, background, featIdsByKey),
@@ -76,28 +72,63 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
             features.OrderBy(f => f.Id, StringComparer.Ordinal).ToList());
     }
 
-    // Named skills and tools; "choose" and "anyGamingSet" are picks, noted and left out
+    // Named skills and tools; a skill pick ("choose") is noted and left out, a tool pick is ToolChoices'
     private List<string> Proficiencies(string backgroundId, JsonObject background)
     {
         var ids = new List<string>();
 
-        foreach (var (name, value) in ProficiencyKeys.SelectMany(background.Objects).SelectMany(entry => entry))
+        foreach (var key in ProficiencyKeys)
         {
-            if (value is JsonValue named && named.TryGetValue<bool>(out var isNamed) && isNamed && !ToolCategories.Contains(name))
+            foreach (var (name, value) in background.Objects(key).SelectMany(entry => entry))
             {
-                if (_proficiencies.IdOf(name) is { } proficiencyId && !ids.Contains(proficiencyId))
+                if (IsNamed(name, value))
                 {
-                    ids.Add(proficiencyId);
+                    if (_proficiencies.IdOf(name) is { } proficiencyId && !ids.Contains(proficiencyId))
+                    {
+                        ids.Add(proficiencyId);
+                    }
                 }
+                else if (key == "skillProficiencies")
+                {
+                    SkippedChoices.Add($"{backgroundId}: {name}");
+                }
+            }
+        }
 
+        return ids;
+    }
+
+    // "anyGamingSet": 1, "gaming set": true, or a "choose" list. A House Agent's tools are one
+    // set per house, which the app does not ask for.
+    private List<ToolChoice> ToolChoices(string backgroundId, JsonObject background)
+    {
+        var entries = background.Objects("toolProficiencies").ToList();
+
+        if (entries.Count > 1)
+        {
+            SkippedChoices.Add($"{backgroundId}: one of {entries.Count} sets of tools");
+            return [];
+        }
+
+        var choices = new List<ToolChoice>();
+
+        foreach (var (name, value) in entries.SelectMany(entry => entry).Where(kvp => !IsNamed(kvp.Key, kvp.Value)))
+        {
+            if (ToolChoiceReader.Read(name, value, _proficiencies) is { } choice)
+            {
+                choices.Add(choice);
                 continue;
             }
 
             SkippedChoices.Add($"{backgroundId}: {name}");
         }
 
-        return ids;
+        return choices;
     }
+
+    // "thieves' tools": true names one; "gaming set": true is a kind, one of the player's choice
+    private static bool IsNamed(string name, JsonNode? value) =>
+        value is JsonValue named && named.TryGetValue<bool>(out var isNamed) && isNamed && !ProficiencyIndex.IsKind(name);
 
     // {"dwarvish": true, "anyStandard": 2}: the names, and "any" for each pick
     private static List<string> Languages(JsonObject background)

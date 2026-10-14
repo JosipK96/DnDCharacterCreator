@@ -38,6 +38,30 @@
         "sleight_of_hand"
       ]
     },
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Spellcasting": {
       "Ability": "Intelligence",
       "IsPreparedCaster": true
@@ -202,6 +226,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -255,6 +280,23 @@
         "survival"
       ]
     },
+    "ToolChoices": [
+      {
+        "Count": 3,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": false
@@ -417,6 +459,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Wisdom",
       "IsPreparedCaster": true
@@ -592,6 +635,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Wisdom",
       "IsPreparedCaster": true
@@ -761,6 +805,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -798,6 +843,40 @@
         "stealth"
       ]
     },
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "bagpipes",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "drum",
+          "dulcimer",
+          "flute",
+          "glassblower_tools",
+          "horn",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "lute",
+          "lyre",
+          "mason_tools",
+          "painter_supplies",
+          "pan-flute",
+          "potter_tools",
+          "shawm",
+          "smith_tools",
+          "tinkers-tools",
+          "viol",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -839,6 +918,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": true
@@ -999,6 +1079,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Wisdom",
       "IsPreparedCaster": false
@@ -1165,6 +1246,7 @@
         "stealth"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -1205,6 +1287,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": false
@@ -1367,6 +1450,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": false
@@ -1531,6 +1615,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Intelligence",
       "IsPreparedCaster": true
@@ -1697,6 +1782,30 @@
         "sleight_of_hand"
       ]
     },
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Spellcasting": {
       "Ability": "Intelligence",
       "IsPreparedCaster": true
@@ -1861,6 +1970,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -1910,6 +2020,23 @@
         "survival"
       ]
     },
+    "ToolChoices": [
+      {
+        "Count": 3,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": true
@@ -2072,6 +2199,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Wisdom",
       "IsPreparedCaster": true
@@ -2237,6 +2365,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Wisdom",
       "IsPreparedCaster": true
@@ -2407,6 +2536,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -2444,6 +2574,40 @@
         "stealth"
       ]
     },
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "bagpipes",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "drum",
+          "dulcimer",
+          "flute",
+          "glassblower_tools",
+          "horn",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "lute",
+          "lyre",
+          "mason_tools",
+          "painter_supplies",
+          "pan-flute",
+          "potter_tools",
+          "shawm",
+          "smith_tools",
+          "tinkers-tools",
+          "viol",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -2485,6 +2649,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": true
@@ -2651,6 +2816,7 @@
         "survival"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Wisdom",
       "IsPreparedCaster": true
@@ -2819,6 +2985,7 @@
         "stealth"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": null,
     "SpellProgression": []
   },
@@ -2855,6 +3022,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": true
@@ -3017,6 +3185,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Charisma",
       "IsPreparedCaster": true
@@ -3178,6 +3347,7 @@
         "religion"
       ]
     },
+    "ToolChoices": [],
     "Spellcasting": {
       "Ability": "Intelligence",
       "IsPreparedCaster": true

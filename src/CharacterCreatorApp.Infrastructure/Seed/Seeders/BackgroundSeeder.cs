@@ -22,6 +22,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                 Source = row.Source,
                 Languages = row.Languages,
                 AbilityScoreOptions = row.AbilityScoreOptions,
+                ToolChoices = row.ToolChoices,
                 FeatId = row.FeatId,
                 FeatChoiceCategory = row.FeatChoiceCategory,
                 FeatSpellListClassId = row.FeatSpellListClassId,

@@ -8,6 +8,7 @@
       "insight",
       "religion"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -27,6 +28,7 @@
       "insight",
       "religion"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -46,6 +48,15 @@
       "history",
       "survival"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "cartographer_tools",
+          "navigator_tools"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -64,6 +75,7 @@
       "insight",
       "religion"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -84,6 +96,7 @@
       "athletics",
       "vehicles_(land)"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -102,6 +115,7 @@
       "insight",
       "intimidation"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -121,6 +135,17 @@
       "athletics",
       "intimidation"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -138,6 +163,7 @@
       "performance",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -159,6 +185,7 @@
       "disguise_kit",
       "forgery_kit"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -175,6 +202,7 @@
       "athletics",
       "insight"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -194,6 +222,30 @@
       "history",
       "insight"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "dwarvish",
       "any"
@@ -212,6 +264,7 @@
     "ProficiencyIds": [
       "history"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -231,6 +284,7 @@
       "insight",
       "persuasion"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -251,6 +305,17 @@
       "stealth",
       "thieves-tools"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -264,6 +329,7 @@
     "Edition": "2014",
     "Source": "PHB",
     "ProficiencyIds": [],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -284,6 +350,7 @@
       "stealth",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -303,6 +370,23 @@
       "performance",
       "disguise_kit"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -320,6 +404,7 @@
       "intimidation",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -337,6 +422,7 @@
     "ProficiencyIds": [
       "insight"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -356,6 +442,30 @@
       "investigation",
       "persuasion"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -373,6 +483,27 @@
     "ProficiencyIds": [
       "insight",
       "perception"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "dice_set",
+          "dragonchess",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "playing_card_set",
+          "shawm",
+          "three_dragon_ante",
+          "viol"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -392,6 +523,23 @@
       "deception",
       "survival"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -410,6 +558,7 @@
       "history",
       "survival"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -429,6 +578,30 @@
       "survival",
       "vehicles_(land)"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -444,6 +617,17 @@
     "ProficiencyIds": [
       "deception",
       "insight"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -463,6 +647,7 @@
       "persuasion",
       "survival"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -482,6 +667,7 @@
       "intimidation",
       "survival"
     ],
+    "ToolChoices": [],
     "Languages": [
       "giant",
       "any"
@@ -502,6 +688,7 @@
       "survival",
       "poisoners_kit"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -518,6 +705,23 @@
       "deception",
       "performance",
       "thieves-tools"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
     ],
     "Languages": [],
     "AbilityScoreOptions": [],
@@ -536,6 +740,7 @@
       "athletics",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -552,6 +757,30 @@
       "insight",
       "persuasion"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -567,6 +796,7 @@
     "Edition": "2014",
     "Source": "VRGR",
     "ProficiencyIds": [],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -586,6 +816,7 @@
       "religion",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -618,6 +849,7 @@
       "forgery_kit",
       "poisoners_kit"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -632,6 +864,27 @@
     "Source": "SCAG",
     "ProficiencyIds": [
       "survival"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "dice_set",
+          "dragonchess",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "playing_card_set",
+          "shawm",
+          "three_dragon_ante",
+          "viol"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -652,6 +905,17 @@
       "intimidation",
       "vehicles_(land)"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -669,6 +933,30 @@
       "religion",
       "thieves-tools"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -685,6 +973,7 @@
       "disguise_kit",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -700,6 +989,30 @@
     "ProficiencyIds": [
       "arcana",
       "investigation"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [],
     "AbilityScoreOptions": [],
@@ -717,6 +1030,7 @@
       "athletics",
       "survival"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -734,6 +1048,27 @@
     "Source": "SCAG",
     "ProficiencyIds": [
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "dice_set",
+          "dragonchess",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "playing_card_set",
+          "shawm",
+          "three_dragon_ante",
+          "viol"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -753,6 +1088,7 @@
       "history",
       "religion"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -772,6 +1108,7 @@
       "arcana",
       "history"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -793,6 +1130,7 @@
       "vehicles_(water)",
       "vehicles_(land)"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -810,6 +1148,17 @@
       "persuasion",
       "vehicles_(land)"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -825,6 +1174,17 @@
     "ProficiencyIds": [
       "history",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -844,6 +1204,7 @@
       "intimidation",
       "religion"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -863,6 +1224,23 @@
       "athletics",
       "survival"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -881,6 +1259,30 @@
       "medicine",
       "persuasion"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -898,6 +1300,7 @@
     "ProficiencyIds": [
       "arcana"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -917,6 +1320,40 @@
       "acrobatics",
       "performance"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "bagpipes",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "drum",
+          "dulcimer",
+          "flute",
+          "glassblower_tools",
+          "horn",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "lute",
+          "lyre",
+          "mason_tools",
+          "painter_supplies",
+          "pan-flute",
+          "potter_tools",
+          "shawm",
+          "smith_tools",
+          "tinkers-tools",
+          "viol",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -934,6 +1371,30 @@
     "ProficiencyIds": [
       "arcana",
       "nature"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -953,6 +1414,23 @@
       "acrobatics",
       "performance"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -968,6 +1446,17 @@
     "ProficiencyIds": [
       "insight",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -987,6 +1476,30 @@
       "history",
       "investigation"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "any"
     ],
@@ -1004,6 +1517,17 @@
     "ProficiencyIds": [
       "stealth",
       "survival"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -1023,6 +1547,30 @@
       "history",
       "perception"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "giant"
     ],
@@ -1041,6 +1589,7 @@
       "arcana",
       "history"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -1062,6 +1611,7 @@
       "navigator_tools",
       "vehicles_(water)"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -1077,6 +1627,40 @@
     "ProficiencyIds": [
       "nature",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "bagpipes",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "drum",
+          "dulcimer",
+          "flute",
+          "glassblower_tools",
+          "horn",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "lute",
+          "lyre",
+          "mason_tools",
+          "painter_supplies",
+          "pan-flute",
+          "potter_tools",
+          "shawm",
+          "smith_tools",
+          "tinkers-tools",
+          "viol",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [],
     "AbilityScoreOptions": [],
@@ -1096,6 +1680,7 @@
       "carpenter_tools",
       "vehicles_(water)"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -1112,6 +1697,7 @@
       "intimidation",
       "persuasion"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -1131,6 +1717,7 @@
       "arcana",
       "medicine"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -1151,6 +1738,7 @@
       "deception",
       "vehicles_(water)"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -1168,6 +1756,17 @@
       "intimidation",
       "vehicles_(land)"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -1181,6 +1780,28 @@
     "Edition": "2014",
     "Source": "SCAG",
     "ProficiencyIds": [],
+    "ToolChoices": [
+      {
+        "Count": 2,
+        "Options": [
+          "bagpipes",
+          "dice_set",
+          "dragonchess",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "playing_card_set",
+          "shawm",
+          "thieves-tools",
+          "three_dragon_ante",
+          "viol"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -1199,6 +1820,7 @@
       "disguise_kit",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -1214,6 +1836,40 @@
     "ProficiencyIds": [
       "athletics",
       "survival"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "bagpipes",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "drum",
+          "dulcimer",
+          "flute",
+          "glassblower_tools",
+          "horn",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "lute",
+          "lyre",
+          "mason_tools",
+          "painter_supplies",
+          "pan-flute",
+          "potter_tools",
+          "shawm",
+          "smith_tools",
+          "tinkers-tools",
+          "viol",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -1233,6 +1889,7 @@
       "insight",
       "investigation"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any",
       "any"
@@ -1252,6 +1909,45 @@
       "history",
       "religion"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      },
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": null,
@@ -1269,6 +1965,7 @@
       "stealth",
       "poisoners_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -1286,6 +1983,27 @@
     "ProficiencyIds": [
       "history",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "dice_set",
+          "dragonchess",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "playing_card_set",
+          "shawm",
+          "three_dragon_ante",
+          "viol"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -1307,6 +2025,7 @@
       "navigator_tools",
       "vehicles_(space)"
     ],
+    "ToolChoices": [],
     "Languages": [],
     "AbilityScoreOptions": [],
     "FeatId": "tough_2014",
@@ -1322,6 +2041,24 @@
     "ProficiencyIds": [
       "performance",
       "sleight_of_hand"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "disguise_kit",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
     ],
     "Languages": [
       "any"
@@ -1342,6 +2079,7 @@
       "survival",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "any"
     ],
@@ -1361,6 +2099,7 @@
       "intimidation",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1386,6 +2125,7 @@
       "religion",
       "calligrapher_supplies"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1411,6 +2151,7 @@
       "sleight_of_hand",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1436,6 +2177,7 @@
       "survival",
       "cartographer_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1459,6 +2201,30 @@
     "ProficiencyIds": [
       "investigation",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -1485,6 +2251,7 @@
       "perception",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1508,6 +2275,17 @@
     "ProficiencyIds": [
       "deception",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -1534,6 +2312,7 @@
       "sleight_of_hand",
       "forgery_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1559,6 +2338,7 @@
       "sleight_of_hand",
       "weaver_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1582,6 +2362,30 @@
     "ProficiencyIds": [
       "athletics",
       "survival"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -1608,6 +2412,7 @@
       "medicine",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1633,6 +2438,7 @@
       "stealth",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1658,6 +2464,7 @@
       "nature",
       "glassblower_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1683,6 +2490,7 @@
       "survival",
       "leatherworker_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1708,6 +2516,7 @@
       "stealth",
       "calligrapher_supplies"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1733,6 +2542,7 @@
       "survival",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1757,6 +2567,23 @@
       "acrobatics",
       "performance"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
+    ],
     "Languages": [
       "common",
       "any",
@@ -1780,6 +2607,17 @@
     "ProficiencyIds": [
       "animal_handling",
       "arcana"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -1806,6 +2644,7 @@
       "nature",
       "carpenter_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1831,6 +2670,7 @@
       "perception",
       "smith_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1856,6 +2696,7 @@
       "persuasion",
       "glassblower_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1879,6 +2720,17 @@
     "ProficiencyIds": [
       "athletics",
       "perception"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -1905,6 +2757,7 @@
       "survival",
       "cartographer_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1930,6 +2783,7 @@
       "sleight_of_hand",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -1953,6 +2807,17 @@
     "ProficiencyIds": [
       "arcana",
       "survival"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -1979,6 +2844,7 @@
       "religion",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2004,6 +2870,7 @@
       "survival",
       "weaver_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2027,6 +2894,30 @@
     "ProficiencyIds": [
       "investigation",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -2052,6 +2943,30 @@
       "investigation",
       "sleight_of_hand"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
+    ],
     "Languages": [
       "common",
       "any",
@@ -2075,6 +2990,17 @@
     "ProficiencyIds": [
       "insight",
       "perception"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -2101,6 +3027,7 @@
       "persuasion",
       "cook_utensils"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2126,6 +3053,7 @@
       "stealth",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2151,6 +3079,7 @@
       "investigation",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2176,6 +3105,7 @@
       "nature",
       "navigator_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2201,6 +3131,7 @@
       "investigation",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2226,6 +3157,7 @@
       "athletics",
       "cartographer_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2251,6 +3183,7 @@
       "stealth",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2276,6 +3209,7 @@
       "perception",
       "calligrapher_supplies"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2300,6 +3234,17 @@
       "perception",
       "survival"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
+    ],
     "Languages": [
       "common",
       "any",
@@ -2323,6 +3268,23 @@
     "ProficiencyIds": [
       "performance",
       "stealth"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "bagpipes",
+          "drum",
+          "dulcimer",
+          "flute",
+          "horn",
+          "lute",
+          "lyre",
+          "pan-flute",
+          "shawm",
+          "viol"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -2349,6 +3311,7 @@
       "nature",
       "herbalism-kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2374,6 +3337,7 @@
       "athletics",
       "woodcarver_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2399,6 +3363,7 @@
       "investigation",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2424,6 +3389,7 @@
       "investigation",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2449,6 +3415,7 @@
       "medicine",
       "smith_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2474,6 +3441,7 @@
       "persuasion",
       "calligrapher_supplies"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2499,6 +3467,7 @@
       "nature",
       "cartographer_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2524,6 +3493,7 @@
       "persuasion",
       "navigator_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2547,6 +3517,30 @@
     "ProficiencyIds": [
       "survival",
       "stealth"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "alchemist_supplies",
+          "brewer_supplies",
+          "calligrapher_supplies",
+          "carpenter_tools",
+          "cartographer_tools",
+          "cobbler_tools",
+          "cook_utensils",
+          "glassblower_tools",
+          "jeweler_tools",
+          "leatherworker_tools",
+          "mason_tools",
+          "painter_supplies",
+          "potter_tools",
+          "smith_tools",
+          "tinkers-tools",
+          "weaver_tools",
+          "woodcarver_tools"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -2573,6 +3567,7 @@
       "performance",
       "painter_supplies"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2598,6 +3593,7 @@
       "religion",
       "mason_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2623,6 +3619,7 @@
       "history",
       "jeweler_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2646,6 +3643,17 @@
     "ProficiencyIds": [
       "history",
       "persuasion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -2672,6 +3680,7 @@
       "performance",
       "disguise_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2697,6 +3706,7 @@
       "insight",
       "navigator_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2722,6 +3732,7 @@
       "perception",
       "cartographer_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2747,6 +3758,7 @@
       "history",
       "calligrapher_supplies"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2772,6 +3784,7 @@
       "perception",
       "navigator_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2797,6 +3810,7 @@
       "perception",
       "calligrapher_supplies"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2822,6 +3836,7 @@
       "insight",
       "navigator_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2847,6 +3862,7 @@
       "stealth",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2872,6 +3888,7 @@
       "deception",
       "glassblower_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2895,6 +3912,17 @@
     "ProficiencyIds": [
       "athletics",
       "intimidation"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -2920,6 +3948,17 @@
       "arcana",
       "perception"
     ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
+    ],
     "Languages": [
       "common",
       "any",
@@ -2943,6 +3982,17 @@
     "ProficiencyIds": [
       "insight",
       "religion"
+    ],
+    "ToolChoices": [
+      {
+        "Count": 1,
+        "Options": [
+          "dice_set",
+          "dragonchess",
+          "playing_card_set",
+          "three_dragon_ante"
+        ]
+      }
     ],
     "Languages": [
       "common",
@@ -2969,6 +4019,7 @@
       "stealth",
       "cook_utensils"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -2994,6 +4045,7 @@
       "religion",
       "woodcarver_tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -3019,6 +4071,7 @@
       "medicine",
       "cook_utensils"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -3044,6 +4097,7 @@
       "stealth",
       "thieves-tools"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",
@@ -3069,6 +4123,7 @@
       "perception",
       "forgery_kit"
     ],
+    "ToolChoices": [],
     "Languages": [
       "common",
       "any",

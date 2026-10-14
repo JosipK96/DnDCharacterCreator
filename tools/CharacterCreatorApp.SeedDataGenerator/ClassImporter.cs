@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
@@ -172,6 +173,7 @@ internal sealed partial class ClassImporter
             SavingThrowAbilityIds = @class.Arr("proficiency").Select(a => AbilityScore.Normalize(a.AsString()!)).ToList(),
             ProficiencyIds = StartingProficiencyIds(startingProficiencies),
             ProficiencyChoices = SkillChoice(startingProficiencies),
+            ToolChoices = ToolChoices(startingProficiencies),
             Spellcasting = Spellcasting(@class, edition),
             SpellProgression = SpellProgression(@class, @class["classTableGroups"])
         };
@@ -210,6 +212,25 @@ internal sealed partial class ClassImporter
             .Select(_proficiencies.IdOf)
             .OfType<string>()
             .Distinct()
+            .ToList();
+    }
+
+    // A bard's three instruments; a monk's artisan's tools or instrument, written as two entries
+    private List<ToolChoice> ToolChoices(JsonNode? startingProficiencies)
+    {
+        var entries = startingProficiencies.Objects("toolProficiencies").ToList();
+
+        if (entries.Count > 1)
+        {
+            return ToolChoiceReader.ReadAlternatives(entries, _proficiencies) is { } alternatives
+                ? [alternatives]
+                : throw new InvalidOperationException($"Class tool proficiencies the generator cannot read: {startingProficiencies?.ToJsonString()}");
+        }
+
+        return entries.SelectMany(entry => entry)
+            .Where(kvp => kvp.Value is not JsonValue named || !named.TryGetValue<bool>(out var isNamed) || !isNamed)
+            .Select(kvp => ToolChoiceReader.Read(kvp.Key, kvp.Value, _proficiencies)
+                ?? throw new InvalidOperationException($"Class tool proficiency the generator cannot read: {kvp.Key}"))
             .ToList();
     }
 

@@ -303,6 +303,35 @@ public class ClassSeedDataTests
             "fighter", "paladin", "ranger", "fighter-2024", "paladin-2024", "ranger-2024", "swords", "champion", "champion-2024");
     }
 
+    [Theory]
+    [InlineData("bard", 3, 10)]
+    [InlineData("bard-2024", 3, 10)]
+    [InlineData("monk", 1, 27)]
+    [InlineData("monk-2024", 1, 27)]
+    [InlineData("artificer", 1, 17)]
+    [InlineData("artificer-2024", 1, 17)]
+    [InlineData("rogue", 0, 0)]
+    [InlineData("fighter-2024", 0, 0)]
+    public async Task Class_ToolChoices_MatchTheBook(string classId, int count, int options)
+    {
+        // Act - the monk's artisan's tools or instrument is one pick from both kinds
+        var @class = await ClassAsync(classId);
+
+        // Assert
+        @class.ToolChoices.Sum(c => c.Count).Should().Be(count);
+        @class.ToolChoices.Sum(c => c.Options.Count).Should().Be(options);
+    }
+
+    [Fact]
+    public async Task Bard_PicksThreeInstruments()
+    {
+        // Act
+        var bard = await ClassAsync("bard");
+
+        // Assert
+        bard.ToolChoices.Should().ContainSingle().Which.Options.Should().Contain(["lute", "lyre", "bagpipes"]).And.NotContain("dice_set");
+    }
+
     private static async Task<ClassSeedRow> ClassAsync(string id) =>
         (await ReadAsync<ClassSeedRow>("Classes.json")).Single(c => c.Id == id);
 

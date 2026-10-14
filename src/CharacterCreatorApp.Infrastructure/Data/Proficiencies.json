@@ -132,7 +132,7 @@
   {
     "Id": "tinkers-tools",
     "Name": "Tinker's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "herbalism-kit",
@@ -302,82 +302,82 @@
   {
     "Id": "alchemist_supplies",
     "Name": "Alchemist's Supplies",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "brewer_supplies",
     "Name": "Brewer's Supplies",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "calligrapher_supplies",
     "Name": "Calligrapher's Supplies",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "carpenter_tools",
     "Name": "Carpenter's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "cartographer_tools",
     "Name": "Cartographer's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "cobbler_tools",
     "Name": "Cobbler's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "cook_utensils",
     "Name": "Cook's Utensils",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "glassblower_tools",
     "Name": "Glassblower's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "jeweler_tools",
     "Name": "Jeweler's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "leatherworker_tools",
     "Name": "Leatherworker's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "mason_tools",
     "Name": "Mason's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "painter_supplies",
     "Name": "Painter's Supplies",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "potter_tools",
     "Name": "Potter's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "smith_tools",
     "Name": "Smith's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "weaver_tools",
     "Name": "Weaver's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "woodcarver_tools",
     "Name": "Woodcarver's Tools",
-    "Type": "tool"
+    "Type": "artisans_tools"
   },
   {
     "Id": "dice_set",

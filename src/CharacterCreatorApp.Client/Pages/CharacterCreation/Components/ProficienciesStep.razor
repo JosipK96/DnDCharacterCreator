@@ -93,7 +93,7 @@
             </div>
         </div>
     }
-    else if (!IsLoading && classDetails?.ProficiencyChoice == null)
+    else if (!IsLoading && toolChoices.Count == 0)
     {
         <div class="bg-gray-800 rounded-lg p-8 text-center">
             <div class="text-6xl mb-4">✨</div>
@@ -101,6 +101,36 @@
             <p class="text-gray-400">This class automatically grants all proficiencies.</p>
             <p class="text-sm text-gray-500 mt-2">Click Next to continue.</p>
         </div>
+    }
+
+    @if (!IsLoading)
+    {
+        @for (var i = 0; i < toolChoices.Count; i++)
+        {
+            var index = i;
+            var choice = toolChoices[index];
+            var picked = toolPicks[index];
+
+            <div class="bg-gray-800 rounded-lg p-6 border-2 @(picked.Count == choice.Count ? "border-green-600" : "border-gray-600")">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-lg font-bold text-white">@choice.OfferedBy: choose @choice.Count tool@(choice.Count == 1 ? "" : "s")</h4>
+                    <div class="text-2xl font-bold @(picked.Count == choice.Count ? "text-green-400" : "text-gray-400")">@picked.Count / @choice.Count</div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    @foreach (var tool in choice.Options)
+                    {
+                        var isSelected = picked.Contains(tool.Id);
+                        var canSelect = isSelected || (picked.Count < choice.Count && !IsPickedElsewhere(index, tool.Id));
+
+                        <button @onclick="() => ToggleTool(index, tool.Id)"
+                                disabled="@(!canSelect)"
+                                class="@GetProficiencyCardClass(isSelected, canSelect)">
+                            <div class="font-medium">@tool.Name</div>
+                        </button>
+                    }
+                </div>
+            </div>
+        }
     }
 
     <!-- Navigation Buttons -->
@@ -128,6 +158,8 @@
     private List<ProficiencyApiResponse> availableOptions = [];
     private List<string> alreadyGrantedNames = [];
     private HashSet<string> selectedProficiencies = new();
+    private List<ToolChoiceApiResponse> toolChoices = [];
+    private List<List<string>> toolPicks = [];
 
     protected override Task OnInitializedAsync() =>
         LoadAsync(LoadProficiencyChoicesAsync, "Failed to load proficiency options");
@@ -186,6 +218,12 @@
                 .ToList();
         }
 
+        // The race's, background's and class's tool picks, kept only while they still fit
+        toolChoices = await DraftService.GetToolChoicesAsync(DraftId);
+        toolPicks = toolChoices.Count == draft.ToolPicks.Count
+            ? draft.ToolPicks.ConvertAll(pick => pick.ToList())
+            : toolChoices.ConvertAll(_ => new List<string>());
+
         // STEP 5: Load any previously selected proficiencies from the draft
         if (draft.SelectedClassProficiencyIds != null && draft.SelectedClassProficiencyIds.Any())
         {
@@ -210,6 +248,22 @@
         StateHasChanged();
     }
 
+    private void ToggleTool(int index, string toolId)
+    {
+        var picked = toolPicks[index];
+
+        if (!picked.Remove(toolId) && picked.Count < toolChoices[index].Count)
+        {
+            picked.Add(toolId);
+        }
+
+        ErrorMessage = null;
+    }
+
+    // The same tool picked for two choices would count once, so the server refuses it
+    private bool IsPickedElsewhere(int index, string toolId) =>
+        toolPicks.Where((_, i) => i != index).Any(pick => pick.Contains(toolId));
+
     private bool IsComplete()
     {
         if (proficiencyChoice == null) return true;
@@ -219,6 +273,9 @@
     private bool CanProceed()
     {
         if (IsLoading || IsSaving)
+            return false;
+
+        if (toolChoices.Where((choice, i) => toolPicks[i].Count != choice.Count).Any())
             return false;
 
         // If no proficiency choice, can proceed
@@ -233,7 +290,7 @@
     {
         if (!CanProceed())
         {
-            ErrorMessage = $"Please select exactly {proficiencyChoice?.Count ?? 0} proficiencies before continuing.";
+            ErrorMessage = "Please make every proficiency and tool choice before continuing.";
             return;
         }
 
@@ -243,6 +300,13 @@
         if (hasChoices && !await SaveAsync(
                 () => DraftService.ChooseProficienciesAsync(DraftId, selectedProficiencies.ToList()),
                 "Failed to save proficiencies"))
+        {
+            return;
+        }
+
+        if (toolChoices.Count != 0 && !await SaveAsync(
+                () => DraftService.ChooseToolsAsync(DraftId, toolPicks),
+                "Failed to save tools"))
         {
             return;
         }

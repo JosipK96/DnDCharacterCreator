@@ -41,6 +41,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
             Traits = row.Traits.ConvertAll(t => new RaceTrait { Id = t.Id, RaceId = row.Id, Name = t.Name, Description = t.Description }),
             Spells = row.Spells.ConvertAll(s => new RaceSpell { RaceId = row.Id, SpellId = s.SpellId, Level = s.Level }),
             SpellChoice = row.SpellChoice,
+            ToolChoices = row.ToolChoices,
             Subraces = row.Subraces.ConvertAll(subrace => ToSubrace(row.Id, subrace)),
         };
 

@@ -18,6 +18,9 @@ public class CharacterDraftMappingConfig : IRegister
         config.NewConfig<BonusSpellListReadModel, BonusSpellListApiResponse>()
             .MapToConstructor(true);
 
+        config.NewConfig<ToolChoiceReadModel, ToolChoiceApiResponse>()
+            .MapToConstructor(true);
+
         config.NewConfig<CharacterDetailsReadModel, CharacterDetailsApiResponse>()
             .MapToConstructor(true);
     }

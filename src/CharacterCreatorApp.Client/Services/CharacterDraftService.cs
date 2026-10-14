@@ -53,6 +53,17 @@ public class CharacterDraftService(HttpClient http)
     public Task ChooseRaceSkillsAsync(Guid draftId, List<string> proficiencyIds) =>
         PutAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(proficiencyIds));
 
+    /// <summary>The tool choices the race, background and class offer, in the order ChooseToolsAsync takes the picks.</summary>
+    public async Task<List<ToolChoiceApiResponse>> GetToolChoicesAsync(Guid draftId)
+    {
+        var response = await _http.GetAsync($"/api/character-drafts/{draftId}/tool-choices");
+        return await response.ReadAsync<List<ToolChoiceApiResponse>>();
+    }
+
+    /// <summary>One list of tools per tool choice, in the order GetToolChoicesAsync lists them.</summary>
+    public Task ChooseToolsAsync(Guid draftId, List<List<string>> picks) =>
+        PutAsync(draftId, "tools", new ChooseToolsApiRequest(picks));
+
     public Task ChooseLanguagesAsync(Guid draftId, List<string> languageIds) =>
         PutAsync(draftId, "languages", new ChooseLanguagesApiRequest(languageIds));
 

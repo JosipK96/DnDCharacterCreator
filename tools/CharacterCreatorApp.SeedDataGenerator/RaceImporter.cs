@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json.Nodes;
 
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
@@ -104,6 +105,8 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
         var (skillCount, skillOptions, fixedSkills) = Skills(id, parts);
         var (abilityCount, abilityOptions) = AbilityChoice(id, parts);
         var (featCount, featCategory) = FeatChoice(id, parts);
+        var toolChoices = new List<ToolChoice>();
+        var itemProficiencyIds = parts.SelectMany(p => ItemProficiencies(id, p, toolChoices)).ToList();
 
         return new RaceSeedRow
         {
@@ -122,7 +125,8 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             FeatChoiceCategory = featCategory,
             Languages = parts.SelectMany(NamedLanguages).Distinct().ToList(),
             AbilityBonuses = parts.SelectMany(AbilityBonuses).ToList(),
-            ProficiencyIds = fixedSkills.Concat(parts.SelectMany(p => ItemProficiencies(id, p))).Distinct().ToList(),
+            ProficiencyIds = fixedSkills.Concat(itemProficiencyIds).Distinct().ToList(),
+            ToolChoices = toolChoices,
             // The traits come from every part, so they are SRD text only when every part is
             Traits = Traits(parts.FirstOrDefault(p => !SrdText.IsSrd(p)) ?? race, id, parts.SelectMany(p => p.Arr("entries")).Where(e => !replacedTraits.Contains(e.Str("name") ?? string.Empty))),
             Spells = Spells(id, parts.Select(p => p["additionalSpells"]), spellIdsByKey),
@@ -160,7 +164,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             FeatChoiceCount = featCount,
             FeatChoiceCategory = featCategory,
             AbilityBonuses = AbilityBonuses(subrace).ToList(),
-            ProficiencyIds = fixedSkills.Concat(ItemProficiencies(id, subrace)).Distinct().ToList(),
+            ProficiencyIds = fixedSkills.Concat(ItemProficiencies(id, subrace, toolChoices: null)).Distinct().ToList(),
             Traits = Traits(subrace, id, subrace.Arr("entries")),
             Spells = Spells(id, [subrace["additionalSpells"]], spellIdsByKey),
             SpellChoice = SpellChoice([subrace["additionalSpells"]], edition),
@@ -333,8 +337,9 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
         return (count, category);
     }
 
-    // Weapons, armour and tools by name, "longsword|phb" or "light"; a choice is noted and left out
-    private IEnumerable<string> ItemProficiencies(string ownerId, JsonObject part)
+    // Weapons, armour and tools by name, "longsword|phb" or "light". A race's tool pick (a dwarf's)
+    // goes in toolChoices; a subrace has none in the data, and any other choice is noted and left out.
+    private IEnumerable<string> ItemProficiencies(string ownerId, JsonObject part, List<ToolChoice>? toolChoices)
     {
         foreach (var key in ItemProficiencyKeys)
         {
@@ -347,6 +352,12 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
                         yield return proficiencyId;
                     }
 
+                    continue;
+                }
+
+                if (toolChoices != null && key == "toolProficiencies" && ToolChoiceReader.Read(name, value, _proficiencies) is { } choice)
+                {
+                    toolChoices.Add(choice);
                     continue;
                 }
 

@@ -103,6 +103,14 @@ public static class DraftCompletenessChecker
             return CharacterErrors.LanguageChoicesIncomplete(race.Name, background.Name, requiredLanguages, draft.SelectedLanguageIds.Count);
         }
 
+        // A dwarf's artisan's tools, a Criminal's gaming set, a bard's instruments
+        var toolError = ToolPicks.FindInvalidPick(draft.ToolPicks, ToolPicks.SlotsFor(race, background, @class));
+
+        if (toolError is not null)
+        {
+            return toolError;
+        }
+
         // The race's skills were picked before the background was known
         var repeatedProficiency = ProficiencyPickCheck.FindRepeated(draft, race, subrace, background, @class);
 

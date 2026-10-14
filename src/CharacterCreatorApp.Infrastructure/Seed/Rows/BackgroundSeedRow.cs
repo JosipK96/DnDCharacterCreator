@@ -1,3 +1,5 @@
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
+
 namespace CharacterCreatorApp.Infrastructure.Seed.Rows;
 
 /// <summary>
@@ -16,6 +18,8 @@ public sealed record BackgroundSeedRow
     public List<string> ProficiencyIds { get; init; } = [];
 
     /// <summary>Language names ("dwarvish"), with "any" for each one the player picks.</summary>
+    public List<ToolChoice> ToolChoices { get; init; } = [];
+
     public List<string> Languages { get; init; } = [];
 
     /// <summary>The abilities a 2024 background raises, +2 and +1 or +1 to all three.</summary>

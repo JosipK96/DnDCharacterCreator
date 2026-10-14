@@ -37,6 +37,9 @@ public class CharacterDraftDetailsReadModel
     public Dictionary<string, int> BaseAbilityScores { get; set; } = [];
     public List<string> SelectedClassProficiencyIds { get; set; } = [];
     public List<string> SelectedRaceSkillIds { get; set; } = [];
+
+    /// <summary>The tools picked for each tool choice, in the order GET tool-choices lists them.</summary>
+    public List<List<string>> ToolPicks { get; set; } = [];
     public List<string> SelectedLanguageIds { get; set; } = [];
     public List<string> SelectedFeatIds { get; set; } = [];
 

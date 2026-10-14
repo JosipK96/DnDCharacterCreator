@@ -1,4 +1,4 @@
-namespace CharacterCreatorApp.Contracts.Requests.CharacterDrafts
+﻿namespace CharacterCreatorApp.Contracts.Requests.CharacterDrafts
 {
     public class SetAbilityScoresApiRequest
     {

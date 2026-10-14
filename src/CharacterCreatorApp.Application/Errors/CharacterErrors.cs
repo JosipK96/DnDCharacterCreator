@@ -47,7 +47,6 @@ public static class CharacterErrors
             "Character.AbilityScoresDoNotFitMethod",
             $"The base ability scores are not ones {AbilityScoreMethodName(method)} can produce. Choose them again in the ability score step.");
 
-    // "the standard array", "point buy (27 points, scores 8 to 15)", "rolling (3 to 18)"
     internal static string AbilityScoreMethodName(string method) => method switch
     {
         AbilityScoreMethod.StandardArray => "the standard array (15, 14, 13, 12, 10, 8)",

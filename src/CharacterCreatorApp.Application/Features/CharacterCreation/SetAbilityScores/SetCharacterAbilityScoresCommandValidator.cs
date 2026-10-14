@@ -1,4 +1,4 @@
-using System.Collections.Frozen;
+﻿using System.Collections.Frozen;
 
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Domain.ValueObjects;

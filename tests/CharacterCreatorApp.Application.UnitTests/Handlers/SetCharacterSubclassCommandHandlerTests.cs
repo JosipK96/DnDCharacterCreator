@@ -101,6 +101,7 @@ public class SetCharacterSubclassCommandHandlerTests : IDisposable
     private CharacterDraft ArrangeDraft(int level, string classId, string subclassId, int subclassLevel)
     {
         var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider());
+        draft.ChooseEdition(RulesEdition.Edition2014);
         draft.SetNameAndLevel("Thorin", level);
         draft.SetClass(classId);
 
@@ -115,9 +116,10 @@ public class SetCharacterSubclassCommandHandlerTests : IDisposable
                 Id = classId,
                 Name = classId,
                 Edition = RulesEdition.Edition2014,
+                Source = "PHB",
                 HitDie = "1d8",
                 SubclassLevel = subclassLevel,
-                Subclasses = [new Subclass { Id = subclassId, ClassId = classId, Name = subclassId, Features = [] }]
+                Subclasses = [new Subclass { Source = "PHB", Id = subclassId, ClassId = classId, Name = subclassId, Features = [] }]
             });
 
         return draft;

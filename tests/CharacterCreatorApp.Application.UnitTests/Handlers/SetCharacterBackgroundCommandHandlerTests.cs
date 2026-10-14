@@ -150,6 +150,7 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         Id = "soldier",
         Name = "Soldier",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         FeatureId = "soldier_military_rank"
     };
 
@@ -159,6 +160,7 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         Id = "soldier_2024",
         Name = "Soldier",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         AbilityScoreOptions = ["STR", "DEX", "CON"],
         FeatId = "savage_attacker_2024"
     };

@@ -192,6 +192,7 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
         {
             Id = "eldritch-knight",
             Name = "Eldritch Knight",
+            Source = "PHB",
             ClassId = "fighter",
             SpellListClassId = "wizard",
             SpellProgression =
@@ -266,6 +267,7 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
         {
             Id = "fiend",
             Name = "The Fiend",
+            Source = "PHB",
             ClassId = "warlock",
             Spells = [new SpellSubclass { SpellId = "burning_hands", SubclassId = "fiend", Level = 1, IsAlwaysPrepared = false }]
         });
@@ -291,6 +293,7 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
         {
             Id = "life",
             Name = "Life Domain",
+            Source = "PHB",
             ClassId = "cleric",
             Spells = [new SpellSubclass { SpellId = "bless", SubclassId = "life", Level = 1, IsAlwaysPrepared = true }]
         });
@@ -364,6 +367,7 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
         var draft = CharacterDraft.CreateEmpty(
             _userId,
             new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
+        draft.ChooseEdition(RulesEdition.Edition2014);
 
         if (level is { } characterLevel)
         {
@@ -391,6 +395,7 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
                 Id = classId,
                 Name = classId,
                 Edition = RulesEdition.Edition2014,
+                Source = "PHB",
                 HitDie = "1d8",
                 SpellProgression = spellProgression,
                 Subclasses = [.. subclasses]
@@ -419,6 +424,7 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
     {
         Id = id,
         Name = id,
+        Source = "PHB",
         ClassId = classId,
         SpellListClassId = "wizard",
         SpellSchools = schools,
@@ -445,6 +451,7 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
     {
         Id = id,
         Name = id,
+        Source = "PHB",
         Level = level,
         Description = "A spell.",
         School = school,

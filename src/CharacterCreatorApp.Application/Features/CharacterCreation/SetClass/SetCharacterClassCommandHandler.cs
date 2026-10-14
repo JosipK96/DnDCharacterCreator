@@ -38,6 +38,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetClass
                 return CharacterDraftErrors.EditionMismatch("class", classEntity.Name, classEntity.Edition, characterDraft.Edition);
             }
 
+            if (!characterDraft.AllowsSource(classEntity.Source))
+            {
+                return CharacterDraftErrors.SourceNotAllowed("class", classEntity.Name, classEntity.Source);
+            }
+
             if (!string.IsNullOrWhiteSpace(command.SubclassId))
             {
                 var subclass = classEntity.Subclasses.FirstOrDefault(x => x.Id == command.SubclassId);
@@ -45,6 +50,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetClass
                 if (subclass == null)
                 {
                     return SubclassErrors.NotFoundById(command.SubclassId);
+                }
+
+                if (!characterDraft.AllowsSource(subclass.Source))
+                {
+                    return CharacterDraftErrors.SourceNotAllowed("subclass", subclass.Name, subclass.Source);
                 }
             }
 

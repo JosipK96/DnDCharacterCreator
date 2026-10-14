@@ -57,6 +57,11 @@ public class SetCharacterSubraceCommandHandler(
             return CharacterDraftErrors.InvalidSubrace(command.SubraceId!, draft.RaceId, race.Subraces.Select(s => s.Name));
         }
 
+        if (!draft.AllowsSource(subrace.Source))
+        {
+            return CharacterDraftErrors.SourceNotAllowed("subrace", subrace.Name, subrace.Source);
+        }
+
         draft.SetSubrace(command.SubraceId);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -22,6 +22,13 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// </summary>
         public string Edition { get; private set; } = RulesEdition.Edition2024;
 
+        /// <summary>
+        /// The books, by code ("XPHB", "EFA"), the character may take its race, class, background,
+        /// feats and spells from. Always holds the edition's Player's Handbook, and only that
+        /// until the player allows more (AllowBooks).
+        /// </summary>
+        public List<string> AllowedSources { get; private set; } = [RulesEdition.PlayersHandbook(RulesEdition.Edition2024)];
+
         public string? RaceId { get; private set; }
         public string? SubraceId { get; private set; }
 
@@ -92,7 +99,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// Switches the rules the character is built with. The two editions share no ids, so a
         /// switch clears every choice that named one: race, class, background, and the skills,
         /// languages, feats, spells and improvements picked for them. The name, level and ability
-        /// scores stay.
+        /// scores stay. The books go back to the new edition's Player's Handbook: no book is in both.
         /// </summary>
         public void ChooseEdition(string edition)
         {
@@ -107,6 +114,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             }
 
             Edition = edition;
+            AllowedSources = [RulesEdition.PlayersHandbook(edition)];
             RaceId = null;
             SubraceId = null;
             RaceAbilityIncreases = [];
@@ -123,6 +131,69 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             SelectedSpellIds = [];
             AbilityScoreImprovements = [];
         }
+
+        public bool AllowsSource(string source) => AllowedSources.Contains(source);
+
+        /// <summary>
+        /// Allows these books and the edition's Player's Handbook, and clears every choice from a
+        /// book no longer allowed, the way changing that choice would: a race takes its skills,
+        /// languages and improvements with it, a feat taken for an improvement the whole
+        /// improvements step. A Fighting Style or spell goes alone, and its step asks for another.
+        /// The caller checks the books belong to the draft's edition.
+        /// </summary>
+        public void AllowBooks(IEnumerable<string> books, DraftChoiceSources choiceSources)
+        {
+            ArgumentNullException.ThrowIfNull(books);
+            ArgumentNullException.ThrowIfNull(choiceSources);
+
+            AllowedSources = books.Prepend(RulesEdition.PlayersHandbook(Edition)).Distinct().ToList();
+
+            if (IsRemoved(choiceSources.Race))
+            {
+                RaceId = null;
+                SubraceId = null;
+                RaceAbilityIncreases = [];
+                SelectedRaceSkillIds = [];
+                SelectedLanguageIds = [];
+                ClearImprovements();
+            }
+            else if (IsRemoved(choiceSources.Subrace))
+            {
+                SetSubrace(null);
+            }
+
+            if (IsRemoved(choiceSources.Class))
+            {
+                ClassId = null;
+                SubclassId = null;
+                SelectedClassProficiencyIds = [];
+                SelectedSpellIds = [];
+                FightingStyleIds = [];
+                ClearImprovements();
+            }
+            else if (IsRemoved(choiceSources.Subclass))
+            {
+                SetSubclass(null);
+            }
+
+            if (IsRemoved(choiceSources.Background))
+            {
+                BackgroundId = null;
+                BackgroundAbilityIncreases = [];
+                SelectedLanguageIds = [];
+            }
+
+            if (SelectedFeatIds.Exists(id => IsRemoved(choiceSources.Feats.GetValueOrDefault(id))))
+            {
+                ClearImprovements();
+            }
+
+            FightingStyleIds = FightingStyleIds.FindAll(id => !IsRemoved(choiceSources.Feats.GetValueOrDefault(id)));
+            SelectedSpellIds = SelectedSpellIds.FindAll(id => !IsRemoved(choiceSources.Spells.GetValueOrDefault(id)));
+        }
+
+        // A choice whose book is unknown (gone after a reseed) is left for finalize to report
+        private bool IsRemoved(string? source) => source != null && !AllowsSource(source);
 
         public void SetNameAndLevel(string name, int level)
         {

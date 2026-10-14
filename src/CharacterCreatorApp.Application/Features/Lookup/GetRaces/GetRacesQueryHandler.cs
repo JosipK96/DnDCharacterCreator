@@ -11,7 +11,17 @@ namespace CharacterCreatorApp.Application.Features.Lookup.GetRaces
 
         public async Task<Response<List<RaceReadModel>>> Handle(GetRacesQuery query, CancellationToken cancellationToken)
         {
-            return await _raceRepository.GetAllAsync(query.Edition, cancellationToken);
+            var races = await _raceRepository.GetAllAsync(query.Edition, cancellationToken);
+
+            if (query.Sources is not { Count: > 0 } sources)
+            {
+                return races;
+            }
+
+            // A subrace can come from another book than its race
+            races.ForEach(r => r.Subraces.RemoveAll(s => !sources.Contains(s.Source)));
+
+            return races.FindAll(r => sources.Contains(r.Source));
         }
     }
 }

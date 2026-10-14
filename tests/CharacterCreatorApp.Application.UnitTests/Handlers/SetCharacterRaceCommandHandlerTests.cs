@@ -203,6 +203,7 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
         Id = "half_elf",
         Name = "Half-Elf",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         AbilityChoiceCount = 2,
@@ -216,15 +217,17 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
         Id = "human",
         Name = "Human",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         Subraces =
         [
-            new Subrace { Id = "standard_human", Name = "Standard Human", RaceId = "human" },
+            new Subrace { Id = "standard_human", Name = "Standard Human", Source = "PHB", RaceId = "human" },
             new Subrace
             {
                 Id = "variant_human",
                 Name = "Variant Human",
+                Source = "PHB",
                 RaceId = "human",
                 AbilityChoiceCount = 2,
                 AbilityChoiceOptions = ["STR", "DEX", "CON", "INT", "WIS", "CHA"],

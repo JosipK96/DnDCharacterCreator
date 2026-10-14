@@ -11,7 +11,9 @@ namespace CharacterCreatorApp.Application.Features.Lookup.GetBackgrounds
 
         public async Task<Response<List<BackgroundReadModel>>> Handle(GetBackgroundsQuery query, CancellationToken cancellationToken)
         {
-            return await _backgroundRepository.GetAllAsync(query.Edition, cancellationToken);
+            var backgrounds = await _backgroundRepository.GetAllAsync(query.Edition, cancellationToken);
+
+            return query.Sources is { Count: > 0 } sources ? backgrounds.FindAll(x => sources.Contains(x.Source)) : backgrounds;
         }
     }
 }

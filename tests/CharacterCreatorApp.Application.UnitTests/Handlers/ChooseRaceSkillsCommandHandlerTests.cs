@@ -122,6 +122,7 @@ public class ChooseRaceSkillsCommandHandlerTests : IDisposable
             Id = "soldier",
             Name = "Soldier",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             BackgroundProficiencies = [new BackgroundProficiency { BackgroundId = "soldier", ProficiencyId = "athletics" }]
         });
 
@@ -206,7 +207,7 @@ public class ChooseRaceSkillsCommandHandlerTests : IDisposable
         // Arrange - a half-elf's skills are left over from before the race changed to dwarf
         var draft = ArrangeDraft(raceId: "dwarf");
         draft.SetRaceSkills(["athletics", "stealth"]);
-        ArrangeRace(new Race { Id = "dwarf", Name = "Dwarf", Edition = RulesEdition.Edition2014, Size = "Medium", Speed = 25 });
+        ArrangeRace(new Race { Id = "dwarf", Name = "Dwarf", Edition = RulesEdition.Edition2014, Source = "PHB", Size = "Medium", Speed = 25 });
 
         // Act
         var result = await _sut.Handle(new ChooseRaceSkillsCommand(_draftId, ["athletics"]), _cts.Token);
@@ -293,6 +294,7 @@ public class ChooseRaceSkillsCommandHandlerTests : IDisposable
         Id = "half_elf",
         Name = "Half-Elf",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         SkillChoiceCount = 2,
@@ -306,12 +308,13 @@ public class ChooseRaceSkillsCommandHandlerTests : IDisposable
         Id = "human",
         Name = "Human",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         Subraces =
         [
-            new Subrace { Id = "standard_human", Name = "Standard Human", RaceId = "human" },
-            new Subrace { Id = "variant_human", Name = "Variant Human", RaceId = "human", SkillChoiceCount = 1 },
+            new Subrace { Id = "standard_human", Name = "Standard Human", Source = "PHB", RaceId = "human" },
+            new Subrace { Id = "variant_human", Name = "Variant Human", Source = "PHB", RaceId = "human", SkillChoiceCount = 1 },
         ],
     };
 
@@ -321,6 +324,7 @@ public class ChooseRaceSkillsCommandHandlerTests : IDisposable
         Id = "elf_2024",
         Name = "Elf",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         Size = "Medium",
         Speed = 30,
         SkillChoiceCount = 1,

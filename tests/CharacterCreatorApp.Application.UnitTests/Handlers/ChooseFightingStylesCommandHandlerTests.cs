@@ -93,7 +93,7 @@ public class ChooseFightingStylesCommandHandlerTests : IDisposable
         // Arrange
         var draft = ArrangeDraft("fighter", RulesEdition.Edition2014, level: 1);
         ArrangeClass(ClassFor("fighter", RulesEdition.Edition2014));
-        var alert = new FeatReadModel { Id = "alert_2014", Name = "Alert", Description = "A feat.", Edition = RulesEdition.Edition2014 };
+        var alert = new FeatReadModel { Id = "alert_2014", Name = "Alert", Description = "A feat.", Edition = RulesEdition.Edition2014, Source = "PHB" };
         ArrangeFeats(["alert_2014"], [alert]);
 
         // Act
@@ -274,6 +274,7 @@ public class ChooseFightingStylesCommandHandlerTests : IDisposable
         Name = id,
         Description = "A Fighting Style.",
         Edition = edition,
+        Source = RulesEdition.PlayersHandbook(edition),
         Category = FeatCategory.FightingStyle,
         Prerequisites = new FeatPrerequisites
         {
@@ -304,6 +305,7 @@ public class ChooseFightingStylesCommandHandlerTests : IDisposable
             Id = classId,
             Name = classId,
             Edition = edition,
+            Source = RulesEdition.PlayersHandbook(edition),
             HitDie = "1d10",
             SubclassLevel = 3,
             AsiLevels = [4, 8, 12, 16, 19],
@@ -318,6 +320,7 @@ public class ChooseFightingStylesCommandHandlerTests : IDisposable
     {
         Id = id,
         Name = id,
+        Source = id.EndsWith("-2024", StringComparison.Ordinal) ? "XPHB" : "PHB",
         ClassId = classId,
         Features = [new Feature { Id = $"{id}-{level}-style", Name = featureName, Description = string.Empty, Level = level, SubclassId = id, Type = "subclass" }]
     };

@@ -12,6 +12,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.GetIncompleteDr
 using CharacterCreatorApp.Application.Features.CharacterCreation.PreviewCharacter;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScoreImprovements;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScores;
+using CharacterCreatorApp.Application.Features.CharacterCreation.SetAllowedBooks;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetBackground;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetClass;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetNameAndLevel;
@@ -54,6 +55,21 @@ namespace CharacterCreatorApp.Api.Controllers
         public async Task<IActionResult> SetNameAndLevel(Guid draftId, [FromBody] SetNameAndLevelApiRequest request, CancellationToken cancellationToken)
         {
             var response = await _sender.Send(new SetCharacterNameAndLevelCommand(draftId, request.Name, request.Level, request.Edition), cancellationToken);
+
+            return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// The books the character may take its choices from, besides its edition's Player's
+        /// Handbook. Choices from a book no longer allowed are cleared.
+        /// </summary>
+        [HttpPut("{draftId:guid}/books")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> SetAllowedBooks(Guid draftId, [FromBody] SetAllowedBooksApiRequest request, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new SetAllowedBooksCommand(draftId, request.Books), cancellationToken);
 
             return NoContentOrProblem(response);
         }

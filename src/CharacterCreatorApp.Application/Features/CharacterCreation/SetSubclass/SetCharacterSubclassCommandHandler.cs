@@ -53,6 +53,11 @@ public class SetCharacterSubclassCommandHandler(
                 command.SubclassId!, draft.ClassId, @class.Subclasses.Select(s => s.Name));
         }
 
+        if (!draft.AllowsSource(subclass.Source))
+        {
+            return CharacterDraftErrors.SourceNotAllowed("subclass", subclass.Name, subclass.Source);
+        }
+
         draft.SetSubclass(command.SubclassId);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

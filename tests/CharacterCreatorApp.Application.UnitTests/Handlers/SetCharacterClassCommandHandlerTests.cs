@@ -89,7 +89,7 @@ public class SetCharacterClassCommandHandlerTests : IDisposable
     {
         _classRepositoryMock
             .Setup(r => r.GetByIdWithSubclassesAsync(id, _cts.Token))
-            .ReturnsAsync(new Class { Id = id, Name = "Wizard", Edition = edition, HitDie = "1d6", SubclassLevel = 3 });
+            .ReturnsAsync(new Class { Id = id, Name = "Wizard", Edition = edition, Source = RulesEdition.PlayersHandbook(edition), HitDie = "1d6", SubclassLevel = 3 });
     }
 
     public void Dispose()

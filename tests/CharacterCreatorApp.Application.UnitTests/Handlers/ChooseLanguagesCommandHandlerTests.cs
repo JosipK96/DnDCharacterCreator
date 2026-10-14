@@ -157,7 +157,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         // Arrange - an elf acolyte picks two, a high elf acolyte three
         var draft = ArrangeDraft(raceId: "elf", backgroundId: "acolyte", subraceId: "high_elf");
         var elf = RaceWithLanguages("elf", "Elf", ["Common", "Elvish"]);
-        elf.Subraces = [new Subrace { Id = "high_elf", Name = "High Elf", RaceId = "elf", LanguageChoiceCount = 1 }];
+        elf.Subraces = [new Subrace { Id = "high_elf", Name = "High Elf", Source = "PHB", RaceId = "elf", LanguageChoiceCount = 1 }];
         ArrangeRace(elf);
         ArrangeBackground(new BackgroundReadModel { Id = "acolyte", Name = "Acolyte", LanguageChoiceCount = 2 });
 
@@ -218,12 +218,13 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
     private CharacterDraft ArrangeDwarfAcolyte2024()
     {
         var draft = ArrangeDraft(raceId: "dwarf_2024", backgroundId: "acolyte_2024", edition: RulesEdition.Edition2024);
-        ArrangeRace(new Race { Id = "dwarf_2024", Name = "Dwarf", Edition = RulesEdition.Edition2024, Size = "Medium", Speed = 30 });
+        ArrangeRace(new Race { Id = "dwarf_2024", Name = "Dwarf", Edition = RulesEdition.Edition2024, Source = "XPHB", Size = "Medium", Speed = 30 });
         ArrangeBackground(new BackgroundReadModel
         {
             Id = "acolyte_2024",
             Name = "Acolyte",
             Edition = RulesEdition.Edition2024,
+            Source = "XPHB",
             LanguageChoiceCount = 2,
             Languages = [new BackgroundLanguageReadModel { Id = "common", Name = "Common" }],
         });
@@ -254,6 +255,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         Id = id,
         Name = name,
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         LanguageChoiceCount = languageChoiceCount,

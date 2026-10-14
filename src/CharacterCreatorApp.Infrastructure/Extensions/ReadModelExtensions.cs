@@ -343,6 +343,7 @@ public static class ReadModelExtensions
             Name = draft.Name,
             Level = draft.Level,
             Edition = draft.Edition,
+            AllowedSources = draft.AllowedSources,
             RaceId = draft.RaceId,
             SubraceId = draft.SubraceId,
             RaceAbilityIncreases = draft.RaceAbilityIncreases,

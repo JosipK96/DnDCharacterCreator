@@ -14,7 +14,10 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 /// </summary>
 public static class FightingStyleChoice
 {
-    /// <summary>The styles the class offers: the edition's Fighting Style feats whose prerequisites it meets.</summary>
+    /// <summary>
+    /// The styles the class offers: the Fighting Style feats of the edition and the allowed books
+    /// whose prerequisites it meets.
+    /// </summary>
     public static List<FeatReadModel> Choosable(
         IEnumerable<FeatReadModel> feats,
         CharacterDraft draft,
@@ -22,7 +25,7 @@ public static class FightingStyleChoice
         Subclass? subclass,
         int level) =>
         feats
-            .Where(f => f.Category == FeatCategory.FightingStyle && f.Edition == draft.Edition)
+            .Where(f => f.Category == FeatCategory.FightingStyle && f.Edition == draft.Edition && draft.AllowsSource(f.Source))
             .Where(f => FeatPrerequisiteCheck.FindUnmet([f], 0, [], draft, null, null, @class, subclass, level) is null)
             .OrderBy(f => f.Name, StringComparer.Ordinal)
             .ToList();
@@ -64,6 +67,11 @@ public static class FightingStyleChoice
         if (picked.Find(f => f.Edition != draft.Edition) is { } otherEdition)
         {
             return CharacterDraftErrors.EditionMismatch("Fighting Style", otherEdition.Name, otherEdition.Edition, draft.Edition);
+        }
+
+        if (picked.Find(f => !draft.AllowsSource(f.Source)) is { } notAllowed)
+        {
+            return CharacterDraftErrors.SourceNotAllowed("Fighting Style", notAllowed.Name, notAllowed.Source);
         }
 
         // No style is repeatable, and a 2024 one taken for an improvement counts too

@@ -65,6 +65,11 @@ public class GetSpellsQueryHandler(ISpellRepository spellRepository) : IQueryHan
             spells = spells.Where(s => s.Level <= query.MaxLevel.Value).ToList();
         }
 
+        if (query.Sources is { Count: > 0 } sources)
+        {
+            spells = spells.FindAll(s => sources.Contains(s.Source));
+        }
+
         return spells;
     }
 }

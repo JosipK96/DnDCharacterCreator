@@ -618,6 +618,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = "dwarf",
         Name = "Dwarf",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 25,
         AbilityBonuses = [new RaceAbilityBonus { RaceId = "dwarf", AbilityScoreId = "CON", Bonus = 2 }]
@@ -628,6 +629,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = "dwarf_2024",
         Name = "Dwarf",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         Size = "Medium",
         Speed = 30
     };
@@ -638,6 +640,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = "half_elf",
         Name = "Half-Elf",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         SkillChoiceCount = 2,
@@ -652,6 +655,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = "human",
         Name = "Human",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         Subraces =
@@ -660,6 +664,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
             {
                 Id = "variant_human",
                 Name = "Variant Human",
+                Source = "PHB",
                 RaceId = "human",
                 AbilityChoiceCount = 2,
                 AbilityChoiceOptions = ["STR", "DEX", "CON", "INT", "WIS", "CHA"],
@@ -675,6 +680,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = "human_2024",
         Name = "Human",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         Size = "Small or Medium",
         Speed = 30,
         SkillChoiceCount = 1,
@@ -686,7 +692,8 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
     {
         Id = "soldier",
         Name = "Soldier",
-        Edition = RulesEdition.Edition2014
+        Edition = RulesEdition.Edition2014,
+        Source = "PHB"
     };
 
     // Savage Attacker, and +2/+1 or +1 to each of Strength, Dexterity and Constitution
@@ -695,6 +702,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = "soldier_2024",
         Name = "Soldier",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         AbilityScoreOptions = ["STR", "DEX", "CON"],
         Feat = new BackgroundFeatReadModel { Id = "savage_attacker_2024", Name = "Savage Attacker" }
     };
@@ -705,6 +713,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = "criminal_2024",
         Name = "Criminal",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         AbilityScoreOptions = ["DEX", "CON", "INT"],
         Feat = new BackgroundFeatReadModel { Id = "alert_2024", Name = "Alert" }
     };
@@ -730,6 +739,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
             Name = name ?? id,
             Description = "A feat.",
             Edition = edition,
+            Source = RulesEdition.PlayersHandbook(edition),
             Category = category,
             IsRepeatable = isRepeatable,
             AbilityIncrease = increase,
@@ -763,6 +773,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         Id = id,
         Name = name,
         Edition = edition,
+        Source = RulesEdition.PlayersHandbook(edition),
         HitDie = hitDie,
         SubclassLevel = 3,
         AsiLevels = asiLevels,

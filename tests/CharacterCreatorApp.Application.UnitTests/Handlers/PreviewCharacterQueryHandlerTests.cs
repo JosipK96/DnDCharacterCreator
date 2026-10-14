@@ -102,12 +102,13 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
             Id = "elf",
             Name = "Elf",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             Size = "Medium",
             Speed = 30,
             Subraces =
             [
-                new Subrace { Id = "high_elf", Name = "High Elf", RaceId = "elf" },
-                new Subrace { Id = "wood_elf", Name = "Wood Elf", RaceId = "elf", Speed = 35 },
+                new Subrace { Id = "high_elf", Name = "High Elf", Source = "PHB", RaceId = "elf" },
+                new Subrace { Id = "wood_elf", Name = "Wood Elf", Source = "PHB", RaceId = "elf", Speed = 35 },
             ]
         });
 
@@ -207,6 +208,7 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
             Id = "dwarf",
             Name = "Dwarf",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             Size = "Medium",
             Speed = 25,
             AbilityBonuses = [new RaceAbilityBonus { RaceId = "dwarf", AbilityScoreId = "con", Bonus = 2 }],
@@ -221,13 +223,14 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
             Id = "fighter",
             Name = "Fighter",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             HitDie = "1d10",
             SubclassLevel = 3,
             AsiLevels = [4, 6, 8, 12, 14, 16, 19],
             SavingThrowAbilityIds = ["STR", "CON"],
             ClassProficiencies = [],
             Features = [],
-            Subclasses = [new Subclass { Id = "champion", ClassId = "fighter", Name = "Champion", Features = [] }]
+            Subclasses = [new Subclass { Source = "PHB", Id = "champion", ClassId = "fighter", Name = "Champion", Features = [] }]
         });
 
         _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("soldier", _cts.Token)).ReturnsAsync(new Background
@@ -235,6 +238,7 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
             Id = "soldier",
             Name = "Soldier",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             FeatureId = "military-rank",
             Languages = [],
             BackgroundProficiencies = []

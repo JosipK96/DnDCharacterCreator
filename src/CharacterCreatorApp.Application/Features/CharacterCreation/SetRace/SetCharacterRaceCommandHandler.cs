@@ -40,6 +40,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetRace
                 return CharacterDraftErrors.EditionMismatch("race", race.Name, race.Edition, characterDraft.Edition);
             }
 
+            if (!characterDraft.AllowsSource(race.Source))
+            {
+                return CharacterDraftErrors.SourceNotAllowed("race", race.Name, race.Source);
+            }
+
             Subrace? subrace = null;
 
             if (!string.IsNullOrWhiteSpace(command.SubraceId))
@@ -49,6 +54,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetRace
                 if (subrace == null)
                 {
                     return SubraceErrors.NotFoundById(command.SubraceId);
+                }
+
+                if (!characterDraft.AllowsSource(subrace.Source))
+                {
+                    return CharacterDraftErrors.SourceNotAllowed("subrace", subrace.Name, subrace.Source);
                 }
             }
 

@@ -54,6 +54,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpell
                 ? []
                 : await SpellChoice.LoadChoosableAsync(_spellRepository, @class, subclass, cancellationToken);
 
+            if (choosable.Find(s => command.SpellIds.Contains(s.Id) && !draft.AllowsSource(s.Source)) is { } notAllowed)
+            {
+                return CharacterDraftErrors.SourceNotAllowed("spell", notAllowed.Name, notAllowed.Source);
+            }
+
             var invalidPick = SpellChoice.FindInvalidPick(command.SpellIds, choosable, allowance, @class.Name, level);
 
             if (invalidPick is not null)

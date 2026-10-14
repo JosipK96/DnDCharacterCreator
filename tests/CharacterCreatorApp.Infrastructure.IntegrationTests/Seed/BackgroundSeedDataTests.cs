@@ -40,7 +40,7 @@ public class BackgroundSeedDataTests
         // Act
         var background = (await ReadBackgroundsAsync()).Single(b => b.Id == backgroundId);
 
-        // Assert - the soldier's gaming set is a pick the app does not ask for yet
+        // Assert - the soldier's gaming set is a pick (ToolChoices), not a proficiency it gives
         background.Edition.Should().Be(RulesEdition.Edition2024);
         background.AbilityScoreOptions.Should().Equal(abilityScoreOptions);
         background.FeatId.Should().Be(featId);
@@ -85,6 +85,44 @@ public class BackgroundSeedDataTests
         // Assert
         background.FeatSpellListClassId.Should().Be(classId);
         background.FeatChoiceCategory.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData("criminal")]
+    [InlineData("noble")]
+    [InlineData("soldier_2024")]
+    [InlineData("carouser_2024")]
+    public async Task Background_WithAGamingSet_LetsThePlayerPickOneOfTheFour(string backgroundId)
+    {
+        // Act
+        var background = (await ReadBackgroundsAsync()).Single(b => b.Id == backgroundId);
+
+        // Assert
+        background.ToolChoices.Should().ContainSingle();
+        background.ToolChoices[0].Count.Should().Be(1);
+        background.ToolChoices[0].Options.Should().Equal("dice_set", "dragonchess", "playing_card_set", "three_dragon_ante");
+    }
+
+    [Fact]
+    public async Task Vizier_PicksOneArtisansToolsAndOneInstrument()
+    {
+        // Act
+        var vizier = (await ReadBackgroundsAsync()).Single(b => b.Id == "vizier");
+
+        // Assert
+        vizier.ToolChoices.Select(c => (c.Count, c.Options.Count)).Should().Equal((1, 17), (1, 10));
+        vizier.ToolChoices[0].Options.Should().Contain(["smith_tools", "tinkers-tools"]);
+        vizier.ToolChoices[1].Options.Should().Contain("lute");
+    }
+
+    [Fact]
+    public async Task FarTraveler_PicksAnInstrumentOrAGamingSet()
+    {
+        // Act
+        var farTraveler = (await ReadBackgroundsAsync()).Single(b => b.Id == "far_traveler");
+
+        // Assert
+        farTraveler.ToolChoices.Should().ContainSingle().Which.Options.Should().HaveCount(14).And.Contain(["lute", "dice_set"]);
     }
 
     private static Task<List<BackgroundSeedRow>> ReadBackgroundsAsync() =>

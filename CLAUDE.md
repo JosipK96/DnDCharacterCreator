@@ -154,8 +154,15 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
   Style", "Spellcasting" or "Pact Magic", from `CharacterFeatures.ClassFeaturesFor`). What it
   cannot check (another feat, a campaign) is shown, not enforced. Classes, subclasses, their
   features, races, backgrounds, spells and feats are generated from 5etools; Tasha's optional
-  class features, and the choices the app does not ask for yet (a dwarf's tools, a
-  background's gaming set, a feat's skills), are left out.
+  class features, and the choices the app does not ask for yet (a feat's skills, a 2014 House
+  Agent's set of tools), are left out.
+- Tools, instruments and gaming sets a race, background or class lets the player pick (a 2014
+  dwarf's artisan's tools, a Criminal's gaming set, a bard's three instruments) are
+  `ToolChoice`s on `Race`, `Background` and `Class`; a kind ("any gaming set") is every
+  proficiency of that type in `Proficiencies.json` (`artisans_tools`, `musical-instrument`,
+  `gaming_set`). They are picked in the proficiencies step and kept in `CharacterDraft.ToolPicks`,
+  one list per choice in race, background, class order (`ToolPicks.SlotsFor`), and checked by
+  `ChooseTools` and finalize alike.
 - Spells a race or feat lets the player pick from a class list (a 2014 high elf's wizard
   cantrip, Magic Initiate's) are `BonusSpellChoice`s on `Race`, `Subrace` and `Feat`, picked in
   the spells step and kept in `CharacterDraft.RaceSpellIds` and `FeatSpells`, one pick per such

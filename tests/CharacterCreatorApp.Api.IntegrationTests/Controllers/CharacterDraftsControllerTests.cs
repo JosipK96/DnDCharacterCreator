@@ -369,6 +369,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "cleric", SubclassId = "life" });
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte" });
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["celestial-phb", "elvish-phb"]));
+        // The hill dwarf's artisan's tools
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["smith_tools"]]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
             Scores = new Dictionary<string, int> { ["STR"] = 13, ["DEX"] = 10, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 15, ["CHA"] = 12 },
@@ -391,6 +393,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         // Assert - Common and Dwarvish come from the race, the other two were chosen
         preview!.BlockingIssue.Should().BeNull();
         character!.LanguageIds.Should().BeEquivalentTo(["common-phb", "dwarvish-phb", "celestial-phb", "elvish-phb"]);
+
+        character.Proficiencies.Select(p => p.Id).Should().Contain("smith_tools");
 
         // Insight and Religion from the background, History and Medicine from the class
         character.Stats!.Skills.Where(s => s.IsProficient).Select(s => s.SkillId)
@@ -531,6 +535,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter" });
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "soldier" });
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["dwarvish-phb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
             Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
@@ -946,6 +951,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
         await PutStepAsync(draftId, "background", Soldier2024());
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
             Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
@@ -1026,6 +1032,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["archery_2024"]));
         await PutStepAsync(draftId, "background", Soldier2024());
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["dwarvish-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
             Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
@@ -1100,6 +1107,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["protection_2014"]));
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "soldier" });
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["giant-phb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
             Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
@@ -1251,6 +1259,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["archery_2014"]));
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "soldier" });
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["giant-phb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
             Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
@@ -1358,6 +1367,77 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
 
         // Assert
         await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.BackgroundFeatNotChoosable");
+    }
+
+    [Fact]
+    public async Task ToolChoices_ForADwarfCriminalBard_ListsTheThreeAndSavesThePicks()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateDwarfCriminalBardAsync();
+
+        // Act
+        var choices = await _client.GetFromJsonAsync<List<ToolChoiceApiResponse>>($"/api/character-drafts/{draftId}/tool-choices", cancellationToken);
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["mason_tools"], ["dragonchess"], ["lute", "lyre", "flute"]]));
+        var draft = await GetDraftAsync(draftId);
+
+        // Assert
+        choices!.Select(c => (c.OfferedBy, c.Count, c.Options.Count)).Should().Equal(("Dwarf", 1, 3), ("Criminal", 1, 4), ("Bard", 3, 10));
+        choices![0].Options.Select(o => o.Name).Should().Equal("Brewer's Supplies", "Mason's Tools", "Smith's Tools");
+        draft.ToolPicks.Should().BeEquivalentTo(new List<List<string>> { new() { "mason_tools" }, new() { "dragonchess" }, new() { "lute", "lyre", "flute" } }, o => o.WithStrictOrdering());
+    }
+
+    [Fact]
+    public async Task ChooseTools_WithAToolTheCriminalDoesNotOffer_ReturnsInvalidToolPick()
+    {
+        // Arrange
+        await SignInAsync();
+        var draftId = await CreateDwarfCriminalBardAsync();
+
+        // Act - thieves' tools come with a Criminal; its pick is a gaming set
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/tools",
+            new ChooseToolsApiRequest([["smith_tools"], ["thieves-tools"], ["lute", "lyre", "flute"]]),
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.InvalidToolPick");
+    }
+
+    [Fact]
+    public async Task Finalize_WithAToolChoiceStillOpen_ReturnsToolChoicesIncompleteAndThePreviewShowsIt()
+    {
+        // Arrange - every step but the tools
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateDwarfCriminalBardAsync();
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 10, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 15 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["arcana", "history", "performance"]));
+
+        // Act
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        var preview = await _client.GetFromJsonAsync<CharacterPreviewApiResponse>($"/api/character-drafts/{draftId}/preview", cancellationToken);
+
+        // Assert
+        await finalizeResponse.ShouldFailWithAsync(HttpStatusCode.BadRequest, "Character.ToolChoicesIncomplete");
+        preview!.BlockingIssue.Should().Contain("Dwarf, Criminal, Bard");
+    }
+
+    // A level 1 hill dwarf bard with the Criminal background: a tool pick from each
+    private async Task<Guid> CreateDwarfCriminalBardAsync()
+    {
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Dain", Level = 1, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "bard" });
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "criminal" });
+
+        return draftId;
     }
 
     private async Task SignInAsync()

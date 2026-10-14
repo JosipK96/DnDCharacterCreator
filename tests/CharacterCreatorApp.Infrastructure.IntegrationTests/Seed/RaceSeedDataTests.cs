@@ -210,6 +210,28 @@ public class RaceSeedDataTests
             .Should().BeEquivalentTo(["high_elf", "elf_high_elf_lineage_2024"]);
     }
 
+    [Fact]
+    public async Task Dwarf2014_PicksSmithsToolsBrewersSuppliesOrMasonsTools()
+    {
+        // Act
+        var dwarf = await ReadRaceAsync("dwarf");
+
+        // Assert
+        dwarf.ToolChoices.Should().ContainSingle();
+        dwarf.ToolChoices[0].Count.Should().Be(1);
+        dwarf.ToolChoices[0].Options.Should().Equal("brewer_supplies", "mason_tools", "smith_tools");
+    }
+
+    [Fact]
+    public async Task Dwarf2024_PicksNoTools()
+    {
+        // Act
+        var dwarf = await ReadRaceAsync("dwarf_2024");
+
+        // Assert
+        dwarf.ToolChoices.Should().BeEmpty();
+    }
+
     private static async Task<RaceSeedRow> ReadRaceAsync(string raceId)
     {
         var races = await SeedFile.ReadListAsync<RaceSeedRow>(Path.Combine(SeedService.DataPath, "Races.json"), TestContext.Current.CancellationToken);

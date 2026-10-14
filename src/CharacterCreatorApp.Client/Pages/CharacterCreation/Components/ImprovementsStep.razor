@@ -37,7 +37,7 @@
                         <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
                                 value="@chosenStyles[styleIndex]" @onchange="e => chosenStyles[styleIndex] = e.Value?.ToString()">
                             <option value="">Choose...</option>
-                            @foreach (var style in fightingStyleOptions.Where(o => o.Id == chosenStyles[styleIndex] || !chosenStyles.Contains(o.Id)))
+                            @foreach (var style in fightingStyleOptions.Where(o => o.Id == chosenStyles[styleIndex] || (!chosenStyles.Contains(o.Id) && !slots.Any(slot => slot.TakesFeat && slot.FeatId == o.Id))))
                             {
                                 <option value="@style.Id">@style.Name</option>
                             }

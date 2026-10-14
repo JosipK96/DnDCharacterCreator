@@ -61,6 +61,12 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// </summary>
         public List<Dictionary<string, int>> FeatAbilityIncreases { get; private set; } = [];
 
+        /// <summary>
+        /// The Fighting Style feats picked for the class's Fighting Style features
+        /// (CharacterFeatures.FightingStylesOwed), apart from the feats taken for improvements.
+        /// </summary>
+        public List<string> FightingStyleIds { get; private set; } = [];
+
         public List<string> SelectedSpellIds { get; private set; } = [];
         // Each element is one ASI use: {"STR": 2} or {"STR": 1, "DEX": 1}
         public List<Dictionary<string, int>> AbilityScoreImprovements { get; private set; } = [];
@@ -113,6 +119,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             SelectedLanguageIds = [];
             SelectedFeatIds = [];
             FeatAbilityIncreases = [];
+            FightingStyleIds = [];
             SelectedSpellIds = [];
             AbilityScoreImprovements = [];
         }
@@ -121,10 +128,11 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         {
             if (Level != level)
             {
-                // How many improvements and spells the character may take depends on level, and a
-                // feat's prerequisites may name one
+                // How many improvements, spells and Fighting Styles the character may take depends
+                // on level, and a feat's prerequisites may name one
                 ClearImprovements();
                 SelectedSpellIds = [];
+                FightingStyleIds = [];
             }
 
             Name = name;
@@ -143,6 +151,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 // ask for are all class-specific
                 SelectedClassProficiencyIds = [];
                 SelectedSpellIds = [];
+                FightingStyleIds = [];
                 ClearImprovements();
             }
 
@@ -157,13 +166,15 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// - Adding subclass after class is already set
         /// - Level-up requiring subclass selection
         /// Another subclass clears the spells: it changes the lists they come from (an Eldritch
-        /// Knight's wizard spells) and the spell table itself.
+        /// Knight's wizard spells) and the spell table itself. It clears the Fighting Styles too,
+        /// a Champion having one more than another fighter.
         /// </summary>
         public void SetSubclass(string? subclassId)
         {
             if (SubclassId != subclassId)
             {
                 SelectedSpellIds = [];
+                FightingStyleIds = [];
             }
 
             SubclassId = subclassId;
@@ -275,6 +286,11 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public void SetAbilityScoreImprovements(List<Dictionary<string, int>> improvements)
         {
             AbilityScoreImprovements = improvements;
+        }
+
+        public void ChooseFightingStyles(List<string> featIds)
+        {
+            FightingStyleIds = featIds;
         }
 
         public void SetSpells(List<string> spellIds)

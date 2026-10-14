@@ -576,7 +576,35 @@
     "Choice": null
   },
   {
-    "Id": "archery",
+    "Id": "archery_2014",
+    "Name": "Archery",
+    "Description": "You gain a +2 bonus to attack rolls you make with ranged weapons.",
+    "Edition": "2014",
+    "Category": "Fighting Style",
+    "Prerequisites": {
+      "MinimumLevel": null,
+      "AbilityMinimums": [],
+      "RaceIds": [],
+      "SubraceIds": [],
+      "Sizes": [],
+      "ClassIds": [
+        "fighter",
+        "ranger"
+      ],
+      "Features": [
+        "Fighting Style"
+      ],
+      "Unchecked": []
+    },
+    "IsRepeatable": false,
+    "AbilityIncrease": null,
+    "GrantedProficiencyIds": [],
+    "GrantedLanguageIds": [],
+    "GrantedSpellIds": [],
+    "Choice": null
+  },
+  {
+    "Id": "archery_2024",
     "Name": "Archery",
     "Description": "You gain a +2 bonus to attack rolls you make with Ranged weapons.",
     "Edition": "2024",
@@ -2438,7 +2466,36 @@
     "Choice": null
   },
   {
-    "Id": "defense",
+    "Id": "defense_2014",
+    "Name": "Defense",
+    "Description": "While you are wearing armor, you gain a +1 bonus to AC.",
+    "Edition": "2014",
+    "Category": "Fighting Style",
+    "Prerequisites": {
+      "MinimumLevel": null,
+      "AbilityMinimums": [],
+      "RaceIds": [],
+      "SubraceIds": [],
+      "Sizes": [],
+      "ClassIds": [
+        "fighter",
+        "paladin",
+        "ranger"
+      ],
+      "Features": [
+        "Fighting Style"
+      ],
+      "Unchecked": []
+    },
+    "IsRepeatable": false,
+    "AbilityIncrease": null,
+    "GrantedProficiencyIds": [],
+    "GrantedLanguageIds": [],
+    "GrantedSpellIds": [],
+    "Choice": null
+  },
+  {
+    "Id": "defense_2024",
     "Name": "Defense",
     "Description": "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to Armor Class.",
     "Edition": "2024",
@@ -2840,7 +2897,37 @@
     "Choice": null
   },
   {
-    "Id": "dueling",
+    "Id": "dueling_2014",
+    "Name": "Dueling",
+    "Description": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
+    "Edition": "2014",
+    "Category": "Fighting Style",
+    "Prerequisites": {
+      "MinimumLevel": null,
+      "AbilityMinimums": [],
+      "RaceIds": [],
+      "SubraceIds": [],
+      "Sizes": [],
+      "ClassIds": [
+        "fighter",
+        "bard",
+        "paladin",
+        "ranger"
+      ],
+      "Features": [
+        "Fighting Style"
+      ],
+      "Unchecked": []
+    },
+    "IsRepeatable": false,
+    "AbilityIncrease": null,
+    "GrantedProficiencyIds": [],
+    "GrantedLanguageIds": [],
+    "GrantedSpellIds": [],
+    "Choice": null
+  },
+  {
+    "Id": "dueling_2024",
     "Name": "Dueling",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
@@ -3838,7 +3925,35 @@
     "Choice": null
   },
   {
-    "Id": "great_weapon_fighting",
+    "Id": "great_weapon_fighting_2014",
+    "Name": "Great Weapon Fighting",
+    "Description": "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.",
+    "Edition": "2014",
+    "Category": "Fighting Style",
+    "Prerequisites": {
+      "MinimumLevel": null,
+      "AbilityMinimums": [],
+      "RaceIds": [],
+      "SubraceIds": [],
+      "Sizes": [],
+      "ClassIds": [
+        "fighter",
+        "paladin"
+      ],
+      "Features": [
+        "Fighting Style"
+      ],
+      "Unchecked": []
+    },
+    "IsRepeatable": false,
+    "AbilityIncrease": null,
+    "GrantedProficiencyIds": [],
+    "GrantedLanguageIds": [],
+    "GrantedSpellIds": [],
+    "Choice": null
+  },
+  {
+    "Id": "great_weapon_fighting_2024",
     "Name": "Great Weapon Fighting",
     "Description": "When you roll damage for an attack you make with a Melee weapon that you are holding with two hands, you can treat any 1 or 2 on a damage die as a 3. The weapon must have the Two-Handed or Versatile property to gain this benefit.",
     "Edition": "2024",
@@ -6775,7 +6890,35 @@
     }
   },
   {
-    "Id": "protection",
+    "Id": "protection_2014",
+    "Name": "Protection",
+    "Description": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.",
+    "Edition": "2014",
+    "Category": "Fighting Style",
+    "Prerequisites": {
+      "MinimumLevel": null,
+      "AbilityMinimums": [],
+      "RaceIds": [],
+      "SubraceIds": [],
+      "Sizes": [],
+      "ClassIds": [
+        "fighter",
+        "paladin"
+      ],
+      "Features": [
+        "Fighting Style"
+      ],
+      "Unchecked": []
+    },
+    "IsRepeatable": false,
+    "AbilityIncrease": null,
+    "GrantedProficiencyIds": [],
+    "GrantedLanguageIds": [],
+    "GrantedSpellIds": [],
+    "Choice": null
+  },
+  {
+    "Id": "protection_2024",
     "Name": "Protection",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
@@ -9051,7 +9194,36 @@
     "Choice": null
   },
   {
-    "Id": "two_weapon_fighting",
+    "Id": "two_weapon_fighting_2014",
+    "Name": "Two-Weapon Fighting",
+    "Description": "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
+    "Edition": "2014",
+    "Category": "Fighting Style",
+    "Prerequisites": {
+      "MinimumLevel": null,
+      "AbilityMinimums": [],
+      "RaceIds": [],
+      "SubraceIds": [],
+      "Sizes": [],
+      "ClassIds": [
+        "fighter",
+        "bard",
+        "ranger"
+      ],
+      "Features": [
+        "Fighting Style"
+      ],
+      "Unchecked": []
+    },
+    "IsRepeatable": false,
+    "AbilityIncrease": null,
+    "GrantedProficiencyIds": [],
+    "GrantedLanguageIds": [],
+    "GrantedSpellIds": [],
+    "Choice": null
+  },
+  {
+    "Id": "two_weapon_fighting_2024",
     "Name": "Two-Weapon Fighting",
     "Description": "When you make an extra attack as a result of using a weapon that has the Light property, you can add your ability modifier to the damage of that attack if you aren't already adding it to the damage.",
     "Edition": "2024",

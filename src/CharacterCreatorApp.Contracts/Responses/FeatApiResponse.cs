@@ -4,7 +4,8 @@ namespace CharacterCreatorApp.Contracts.Responses;
 /// A feat as the improvements step lists it. Edition is "2014" or "2024"; Category is the kind
 /// of 2024 feat ("Origin", "General", "Fighting Style", "Epic Boon") and null for a 2014 one.
 /// Prerequisites are worded for the player, such as "Level 19". AbilityIncrease is what the feat
-/// raises, null when it raises nothing.
+/// raises, null when it raises nothing. CanBeTakenForImprovement is false for a 2014 Fighting
+/// Style, which only the class's Fighting Style feature gives.
 /// </summary>
 public record FeatApiResponse(
     string Id,
@@ -14,7 +15,8 @@ public record FeatApiResponse(
     string Description,
     List<string> Prerequisites,
     List<string> GrantedProficiencyIds,
-    FeatAbilityIncreaseApiResponse? AbilityIncrease
+    FeatAbilityIncreaseApiResponse? AbilityIncrease,
+    bool CanBeTakenForImprovement
 );
 
 /// <summary>

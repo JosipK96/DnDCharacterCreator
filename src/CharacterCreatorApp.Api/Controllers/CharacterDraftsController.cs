@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseLanguages;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseProficiencies;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseRaceSkills;
@@ -6,6 +7,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.CreateDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.DeleteDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetDraft;
+using CharacterCreatorApp.Application.Features.CharacterCreation.GetFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetIncompleteDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.PreviewCharacter;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScoreImprovements;
@@ -165,6 +167,32 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new SetAbilityScoreImprovementsCommand(draftId, request.Improvements, request.FeatIds, request.FeatAbilityIncreases), cancellationToken);
 
             return NoContentOrProblem(response);
+        }
+
+        [HttpPut("{draftId:guid}/fighting-styles")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ChooseFightingStyles(Guid draftId, [FromBody] ChooseFightingStylesApiRequest request, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new ChooseFightingStylesCommand(draftId, request.FeatIds), cancellationToken);
+
+            return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// How many Fighting Styles the draft's character picks (0 for a class without the
+        /// feature) and the ones its class offers.
+        /// </summary>
+        [HttpGet("{draftId:guid}/fighting-styles")]
+        [ProducesResponseType(typeof(FightingStylesApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetFightingStyles(Guid draftId, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new GetFightingStylesQuery(draftId), cancellationToken);
+
+            return OkOrProblem(response, styles => _mapper.Map<FightingStylesApiResponse>(styles));
         }
 
         [HttpPut("{draftId:guid}/spells")]

@@ -667,11 +667,11 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
 
         // Act
-        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["archery"]));
+        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["archery_2024"]));
 
         // Assert
         var draft = await GetDraftAsync(draftId);
-        draft.SelectedFeatIds.Should().Equal("archery");
+        draft.SelectedFeatIds.Should().Equal("archery_2024");
     }
 
     [Fact]

@@ -28,6 +28,9 @@ public class CharacterDraftDetailsApiResponse
     /// <summary>What each of SelectedFeatIds raises, in the same order; empty for a feat that raises nothing.</summary>
     public List<Dictionary<string, int>> FeatAbilityIncreases { get; set; } = [];
 
+    /// <summary>The Fighting Style feats picked for the class's Fighting Style features.</summary>
+    public List<string> FightingStyleIds { get; set; } = [];
+
     public List<string> SelectedSpellIds { get; set; } = [];
     public List<Dictionary<string, int>> AbilityScoreImprovements { get; set; } = [];
     public bool IsCompleted { get; set; }

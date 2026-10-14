@@ -224,6 +224,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.PrimitiveCollection<List<string>>("FightingStyleIds")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 

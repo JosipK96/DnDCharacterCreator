@@ -291,7 +291,7 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     [InlineData("elven_accuracy", new[] { "Elf or Half-Elf" })]
     [InlineData("war_caster_2014", new[] { "The ability to cast at least one spell" })]
     [InlineData("war_caster_2024", new[] { "Level 4", "The Spellcasting or Pact Magic feature" })]
-    [InlineData("archery", new[] { "The Fighting Style feature" })]
+    [InlineData("archery_2024", new[] { "The Fighting Style feature" })]
     [InlineData("blessed_warrior", new[] { "Paladin", "The Fighting Style feature" })]
     [InlineData("squire_of_solamnia", new[] { "Fighter or Paladin or the Knight of Solamnia background", "A Dragonlance campaign" })]
     public async Task GetFeats_ListsEachFeatsPrerequisites(string featId, string[] expected)

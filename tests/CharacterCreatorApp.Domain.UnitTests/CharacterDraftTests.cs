@@ -656,6 +656,76 @@ public class CharacterDraftTests
     }
 
     [Fact]
+    public void ChooseFightingStyles_StoresThem()
+    {
+        // Arrange
+        var draft = CreateCompleteTestDraft();
+
+        // Act
+        draft.ChooseFightingStyles(["defense_2014"]);
+
+        // Assert
+        draft.FightingStyleIds.Should().Equal("defense_2014");
+    }
+
+    [Fact]
+    public void SetClass_WhenClassChanges_ClearsTheFightingStyles()
+    {
+        // Arrange - a wizard has no Fighting Style feature
+        var draft = CreateCompleteTestDraft();
+        draft.ChooseFightingStyles(["defense_2014"]);
+
+        // Act
+        draft.SetClass("wizard");
+
+        // Assert
+        draft.FightingStyleIds.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void SetSubclass_WhenSubclassChanges_ClearsTheFightingStyles()
+    {
+        // Arrange - a level 10 Champion's second style goes with the Champion
+        var draft = CreateCompleteTestDraft();
+        draft.SetClass("fighter", "champion");
+        draft.ChooseFightingStyles(["defense_2014", "archery_2014"]);
+
+        // Act
+        draft.SetSubclass("battle-master");
+
+        // Assert
+        draft.FightingStyleIds.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void SetNameAndLevel_WhenLevelChanges_ClearsTheFightingStyles()
+    {
+        // Arrange - how many styles are owed goes with the level: a paladin has none at level 1
+        var draft = CreateCompleteTestDraft();
+        draft.ChooseFightingStyles(["defense_2014"]);
+
+        // Act
+        draft.SetNameAndLevel("Thorin", 1);
+
+        // Assert
+        draft.FightingStyleIds.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void SetNameAndLevel_WhenOnlyNameChanges_KeepsTheFightingStyles()
+    {
+        // Arrange
+        var draft = CreateCompleteTestDraft();
+        draft.ChooseFightingStyles(["defense_2014"]);
+
+        // Act
+        draft.SetNameAndLevel("Balin", 5);
+
+        // Assert
+        draft.FightingStyleIds.Should().Equal("defense_2014");
+    }
+
+    [Fact]
     public void SetSubclass_WhenSubclassChanges_ClearsTheSpells()
     {
         // Arrange - an Eldritch Knight's wizard spells mean nothing to a Champion
@@ -808,6 +878,7 @@ public class CharacterDraftTests
         draft.SetRaceSkills(["perception"]);
         draft.SetLanguages(["giant-phb"]);
         draft.SetFeats(["alert_2014"]);
+        draft.ChooseFightingStyles(["defense_2024"]);
         draft.SetSpells(["fireball"]);
         draft.SetAbilityScoreImprovements([new Dictionary<string, int> { ["STR"] = 2 }]);
         draft.SetBackground("soldier_2024", new Dictionary<string, int> { ["STR"] = 2, ["CON"] = 1 });
@@ -823,6 +894,7 @@ public class CharacterDraftTests
         draft.SelectedRaceSkillIds.Should().BeEmpty();
         draft.SelectedLanguageIds.Should().BeEmpty();
         draft.SelectedFeatIds.Should().BeEmpty();
+        draft.FightingStyleIds.Should().BeEmpty();
         draft.SelectedSpellIds.Should().BeEmpty();
         draft.AbilityScoreImprovements.Should().BeEmpty();
     }

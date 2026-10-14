@@ -106,10 +106,53 @@ public class CharacterFeaturesTests
         ids.Should().Equal("fighter-1-second-wind", "soldier-military-rank");
     }
 
-    private static Feature FeatureAt(string id, int level, string? subclassId = null) => new()
+    // Fighting Style at 1, and a 2014 Champion's Additional Fighting Style at 10
+    [Theory]
+    [InlineData(1, false, 1)]
+    [InlineData(9, true, 1)]
+    [InlineData(10, false, 1)]
+    [InlineData(10, true, 2)]
+    public void FightingStylesOwed_CountsTheClassAndSubclassFeaturesThatGiveOne(int level, bool champion, int expected)
+    {
+        // Arrange
+        var styleChampion = new Subclass
+        {
+            Id = "champion",
+            Name = "Champion",
+            ClassId = "fighter",
+            Features = [FeatureAt("champion-10-additional-fighting-style", 10, subclassId: "champion", name: "Additional Fighting Style")]
+        };
+        var fighter = new Class
+        {
+            Id = "fighter",
+            Name = "Fighter",
+            Edition = RulesEdition.Edition2014,
+            HitDie = "1d10",
+            Features = [FeatureAt("fighter-1-fighting-style", 1, name: "Fighting Style"), FeatureAt("fighter-1-second-wind", 1)],
+            Subclasses = [styleChampion]
+        };
+
+        // Act
+        var owed = CharacterFeatures.FightingStylesOwed(fighter, champion ? styleChampion : null, level);
+
+        // Assert
+        owed.Should().Be(expected);
+    }
+
+    [Fact]
+    public void FightingStylesOwed_ForAClassWithoutTheFeature_IsZero()
+    {
+        // Act - the fixture fighter's features have other names
+        var owed = CharacterFeatures.FightingStylesOwed(Fighter, Champion, level: 20);
+
+        // Assert
+        owed.Should().Be(0);
+    }
+
+    private static Feature FeatureAt(string id, int level, string? subclassId = null, string? name = null) => new()
     {
         Id = id,
-        Name = id,
+        Name = name ?? id,
         Description = string.Empty,
         Level = level,
         ClassId = "fighter",

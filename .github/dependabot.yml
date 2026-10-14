@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Central package management: every version is in Directory.Packages.props
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # xunit.v3 and its Visual Studio runner only work at the same major version, so they
+      # move together, majors included (a group matches before the next one is tried)
+      xunit:
+        patterns: ["xunit*"]
+      # Patch and minor updates come as one pull request a week
+      minor-and-patch:
+        update-types: [minor, patch]
+    ignore:
+      # Held at 12.4.1 (CLAUDE.md). 13 and later need a paid or registered license, and
+      # 12.5.0 changes the pipeline delegate to take a
+      # cancellation token, which the behaviours do not pass yet. Move it by hand.
+      - dependency-name: MediatR
+
+  # One pull request for all of them: they edit neighbouring lines of the same workflow,
+  # so separate ones conflict with each other after the first is merged
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]

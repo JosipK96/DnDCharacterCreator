@@ -1,0 +1,464 @@
+﻿@using CharacterCreatorApp.Contracts.Requests.CharacterDrafts
+@inject CharacterDraftService DraftService
+@inject IJSRuntime JS
+@inherits WizardStepBase
+
+<div class="space-y-6">
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Ability Scores")</h2>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+            <p class="text-sm">@ErrorMessage</p>
+        </div>
+    }
+
+    <!-- Method Selection -->
+    <div>
+        <h3 class="text-lg font-medium text-white mb-4">Choose Your Method</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <button @onclick="() => SelectMethod(AbilityScoreMethod.StandardArray)"
+                    class="@GetMethodButtonClass(AbilityScoreMethod.StandardArray)">
+                <div class="text-center">
+                    <div class="text-xl font-bold mb-2">📊 Standard Array</div>
+                    <div class="text-sm text-gray-300 mb-2">15, 14, 13, 12, 10, 8</div>
+                    <div class="text-xs text-gray-400">Quick & balanced</div>
+                </div>
+            </button>
+
+            <button @onclick="() => SelectMethod(AbilityScoreMethod.PointBuy)"
+                    class="@GetMethodButtonClass(AbilityScoreMethod.PointBuy)">
+                <div class="text-center">
+                    <div class="text-xl font-bold mb-2">🎯 Point Buy</div>
+                    <div class="text-sm text-gray-300 mb-2">27 points to spend</div>
+                    <div class="text-xs text-gray-400">Customize your stats</div>
+                </div>
+            </button>
+
+            <button @onclick="() => SelectMethod(AbilityScoreMethod.RollDice)"
+                    class="@GetMethodButtonClass(AbilityScoreMethod.RollDice)">
+                <div class="text-center">
+                    <div class="text-xl font-bold mb-2">🎲 Roll Dice 🎲</div>
+                    <div class="text-sm text-gray-300 mb-2">4d6 drop lowest</div>
+                    <div class="text-xs text-gray-400">Live dangerously!</div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+    <!-- Roll Dice Component -->
+    @if (selectedMethod == AbilityScoreMethod.RollDice && !hasRolledScores)
+    {
+        <RollDiceComponent3D Scores="@availableScores"
+                             ScoresChanged="@OnScoresRolled"
+                             OnRollComplete="@OnRollComplete"
+                             OnRollResultsChanged="@OnRollResultsReceived" />
+    }
+
+    <!-- Standard Array - Instant Assignment UI -->
+    @if (selectedMethod == AbilityScoreMethod.StandardArray && !hasGeneratedScores)
+    {
+        <div class="text-center">
+            <button @onclick="GenerateStandardArray"
+                    class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium shadow-lg">
+                ✓ Generate Standard Array
+            </button>
+        </div>
+    }
+
+    <!-- Point Buy Component -->
+    @if (selectedMethod == AbilityScoreMethod.PointBuy && !hasGeneratedScores)
+    {
+        <PointBuyComponent Scores="@availableScores"
+                           ScoresChanged="@OnScoresGenerated" />
+
+        @if (availableScores.Count == 6)
+        {
+            <div class="text-center mt-4">
+                <button @onclick="() => hasGeneratedScores = true"
+                        class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium shadow-lg">
+                    ✓ Use Point Buy Scores
+                </button>
+            </div>
+        }
+    }
+
+    <!-- TWO-COLUMN LAYOUT: Scores + Assignment Side by Side -->
+    @if ((hasRolledScores || hasGeneratedScores) && availableScores.Any())
+    {
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+            <!-- LEFT: Available Scores Pool - CHANGED TO USE INDEX -->
+            <div class="space-y-4">
+                <div class="bg-purple-900/30 border border-purple-700 rounded-lg p-4">
+                    <h3 class="text-lg font-bold text-white mb-2">@(selectedMethod == AbilityScoreMethod.RollDice ? "Your Rolled Scores" : "Your Scores")</h3>
+                    <p class="text-gray-300 text-sm">Click a score to assign it to an ability</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    @for (int scoreIndex = 0; scoreIndex < availableScores.Count; scoreIndex++)
+                    {
+                        var currentIndex = scoreIndex; // Capture for closure
+                        var score = availableScores[currentIndex];
+                        var isAssigned = IsScoreIndexAssigned(currentIndex);
+                        var isSelected = selectedScoreIndex == currentIndex;
+
+                        <button @onclick="() => SelectScore(currentIndex)"
+                                disabled="@isAssigned"
+                                class="@GetScoreCardClass(currentIndex, isAssigned, isSelected)">
+                            <div class="text-center">
+                                @if (selectedMethod == AbilityScoreMethod.RollDice)
+                                {
+                                    var roll = GetRollForScoreIndex(currentIndex);
+                                    if (roll != null)
+                                    {
+                                        <!-- Mini dice display -->
+                                        <div class="flex justify-center gap-1 mb-2">
+                                            @for (int i = 0; i < roll.AllDice.Count; i++)
+                                            {
+                                                var index = i;
+                                                var die = roll.AllDice[index];
+                                                <div class="@GetMiniDieClass(die, index, roll)">
+                                                    @die
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                }
+                                <div class="text-4xl font-bold text-white">@score</div>
+                                @if (isAssigned)
+                                {
+                                    <div class="text-xs text-green-400 mt-1">Assigned</div>
+                                }
+                                else if (isSelected)
+                                {
+                                    <div class="text-xs text-yellow-400 mt-1">Selected</div>
+                                }
+                            </div>
+                        </button>
+                    }
+                </div>
+
+                @if (availableScores.Any() && !AllScoresAssigned())
+                {
+                    <div class="flex gap-3">
+                        <button @onclick="RerollScores"
+                                class="flex-1 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium">
+                            @* The standard array is always the same six numbers, so there all this does is clear the assignments *@
+                            @(selectedMethod == AbilityScoreMethod.RollDice ? "🔄 Reroll All" : "↺ Start Over")
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <!-- RIGHT: Ability Score Assignment - UPDATED TEXT -->
+            <div class="space-y-4">
+                <div class="bg-indigo-900/30 border border-indigo-700 rounded-lg p-4">
+                    <h3 class="text-lg font-bold text-white mb-2">Assign to Abilities</h3>
+                    <p class="text-gray-300 text-sm">
+                        @if (selectedScoreIndex.HasValue && selectedScoreIndex >= 0 && selectedScoreIndex < availableScores.Count)
+                        {
+                            <span>Click an ability to assign <strong>@availableScores[selectedScoreIndex.Value]</strong></span>
+                        }
+                        else
+                        {
+                            <span>Select a score from the left</span>
+                        }
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    @foreach (var ability in new[] { "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma" })
+                    {
+                        var assignedScore = GetAssignedScore(ability);
+                        var hasScore = assignedScore > 0;
+
+                        <div class="bg-gray-700 rounded-lg p-4 border-2 @(hasScore ? "border-green-600" : selectedScoreIndex.HasValue ? "border-yellow-500" : "border-gray-600")">
+                            <div class="flex items-center justify-between">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-white font-medium">@ability</span>
+                                        @if (hasScore)
+                                        {
+                                            <span class="text-green-400">✓</span>
+                                        }
+                                    </div>
+                                </div>
+
+                                @if (hasScore)
+                                {
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-3xl font-bold text-white">@assignedScore</span>
+                                        <button @onclick="() => RemoveScore(ability)"
+                                                class="text-red-400 hover:text-red-300 text-sm px-3 py-1 bg-red-900/30 rounded">
+                                            Remove
+                                        </button>
+                                    </div>
+                                }
+                                else if (selectedScoreIndex.HasValue && selectedScoreIndex >= 0 && selectedScoreIndex < availableScores.Count)
+                                {
+                                    <button @onclick="() => AssignScoreToAbility(ability)"
+                                            class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded font-medium">
+                                        Assign @availableScores[selectedScoreIndex.Value]
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="text-gray-500">--</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between mt-8">
+        <button @onclick="HandleBack"
+                type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            ← Previous
+        </button>
+
+        <button @onclick="HandleNext"
+                disabled="@(!CanProceed() || IsSaving)"
+                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Saving..." : NextLabel)
+        </button>
+    </div>
+</div>
+
+<!-- Dice Canvas Overlay - Fullscreen -->
+<div id="dice-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></div>
+
+@code {
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private enum AbilityScoreMethod
+    {
+        None,
+        StandardArray,
+        PointBuy,
+        RollDice
+    }
+
+    private AbilityScoreMethod selectedMethod = AbilityScoreMethod.None;
+    private List<int> availableScores = new();
+    private List<RollDiceComponent3D.DiceRoll> rollResults = new();
+    private Dictionary<string, int> assignedScores = new(); // ability -> score INDEX
+    private int? selectedScoreIndex = null;
+    private bool hasRolledScores = false;
+    private bool hasGeneratedScores = false;
+
+    protected override void OnInitialized()
+    {
+        foreach (var ability in new[] { "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma" })
+        {
+            assignedScores[ability] = -1; // -1 means unassigned
+        }
+    }
+
+    private void SelectMethod(AbilityScoreMethod method)
+    {
+        selectedMethod = method;
+        availableScores.Clear();
+        rollResults.Clear();
+        hasRolledScores = false;
+        hasGeneratedScores = false;
+        selectedScoreIndex = null;
+        ErrorMessage = null;
+
+        foreach (var key in assignedScores.Keys.ToList())
+        {
+            assignedScores[key] = -1;
+        }
+
+        StateHasChanged();
+    }
+
+    private void OnScoresRolled(List<int> scores)
+    {
+        availableScores = scores.ToList();
+        StateHasChanged();
+    }
+
+    private void OnRollResultsReceived(List<RollDiceComponent3D.DiceRoll> rolls)
+    {
+        rollResults = rolls;
+        StateHasChanged();
+    }
+
+    private void OnRollComplete()
+    {
+        hasRolledScores = true;
+        StateHasChanged();
+    }
+
+    private void GenerateStandardArray()
+    {
+        availableScores = new List<int> { 15, 14, 13, 12, 10, 8 };
+        hasGeneratedScores = true;
+        StateHasChanged();
+    }
+
+    private void OnScoresGenerated(List<int> scores)
+    {
+        availableScores = scores.ToList();
+        StateHasChanged();
+    }
+
+    private void SelectScore(int scoreIndex)
+    {
+        if (IsScoreIndexAssigned(scoreIndex))
+            return;
+
+        selectedScoreIndex = scoreIndex;
+        StateHasChanged();
+    }
+
+    private void AssignScoreToAbility(string ability)
+    {
+        if (!selectedScoreIndex.HasValue)
+            return;
+
+        assignedScores[ability] = selectedScoreIndex.Value;
+        selectedScoreIndex = null;
+        ErrorMessage = null;
+        StateHasChanged();
+    }
+
+    private void RemoveScore(string ability)
+    {
+        assignedScores[ability] = -1;
+        selectedScoreIndex = null;
+        StateHasChanged();
+    }
+
+    private bool IsScoreIndexAssigned(int scoreIndex)
+    {
+        return assignedScores.Values.Contains(scoreIndex);
+    }
+
+    private int GetAssignedScore(string ability)
+    {
+        var scoreIndex = assignedScores.GetValueOrDefault(ability, -1);
+        if (scoreIndex < 0 || scoreIndex >= availableScores.Count)
+            return 0;
+
+        return availableScores[scoreIndex];
+    }
+
+    private bool AllScoresAssigned()
+    {
+        return assignedScores.Values.All(v => v >= 0);
+    }
+
+    private RollDiceComponent3D.DiceRoll? GetRollForScoreIndex(int scoreIndex)
+    {
+        if (scoreIndex < 0 || scoreIndex >= rollResults.Count)
+            return null;
+
+        return rollResults[scoreIndex];
+    }
+
+    private async Task RerollScores()
+    {
+        availableScores.Clear();
+        rollResults.Clear();
+        hasRolledScores = false;
+        hasGeneratedScores = false;
+        selectedScoreIndex = null;
+
+        foreach (var key in assignedScores.Keys.ToList())
+        {
+            assignedScores[key] = -1;
+        }
+
+        StateHasChanged();
+
+        if (selectedMethod == AbilityScoreMethod.RollDice)
+        {
+            // Just reset flags - user will click roll button again
+            await Task.Delay(100);
+        }
+        else if (selectedMethod == AbilityScoreMethod.StandardArray)
+        {
+            GenerateStandardArray();
+        }
+    }
+
+    private bool CanProceed()
+    {
+        if (selectedMethod == AbilityScoreMethod.None)
+            return false;
+
+        if (!AllScoresAssigned())
+            return false;
+
+        return true;
+    }
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed())
+        {
+            ErrorMessage = "Please assign all ability scores before continuing.";
+            return;
+        }
+
+        var scores = new Dictionary<string, int>
+        {
+            ["STR"] = GetAssignedScore("Strength"),
+            ["DEX"] = GetAssignedScore("Dexterity"),
+            ["CON"] = GetAssignedScore("Constitution"),
+            ["INT"] = GetAssignedScore("Intelligence"),
+            ["WIS"] = GetAssignedScore("Wisdom"),
+            ["CHA"] = GetAssignedScore("Charisma")
+        };
+
+        if (await SaveAsync(() => DraftService.SetAbilityScoresAsync(DraftId, scores), "Failed to save ability scores"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+
+    private string GetMethodButtonClass(AbilityScoreMethod method)
+    {
+        var baseClass = "p-6 rounded-lg border-2 transition-all duration-200";
+
+        if (selectedMethod == method)
+            return $"{baseClass} bg-purple-600 border-purple-500 text-white";
+
+        return $"{baseClass} bg-gray-700 border-gray-600 text-gray-300 hover:border-purple-500";
+    }
+
+    private string GetScoreCardClass(int scoreIndex, bool isAssigned, bool isSelected)
+    {
+        var baseClass = "p-4 rounded-lg border-2 transition-all duration-200";
+
+        if (isAssigned)
+            return $"{baseClass} bg-gray-600 border-gray-500 opacity-50 cursor-not-allowed";
+
+        if (isSelected)
+            return $"{baseClass} bg-yellow-600 border-yellow-500 text-white shadow-lg transform scale-105";
+
+        return $"{baseClass} bg-gradient-to-br from-indigo-600 to-purple-600 border-purple-500 text-white hover:scale-105 hover:shadow-xl cursor-pointer";
+    }
+
+    private string GetMiniDieClass(int die, int index, RollDiceComponent3D.DiceRoll roll)
+    {
+        var baseClass = "w-6 h-6 rounded flex items-center justify-center text-xs font-bold";
+
+        if (index == roll.DroppedDieIndex)
+            return $"{baseClass} bg-red-900 text-red-400 opacity-40 line-through";
+
+        return $"{baseClass} bg-white/20 text-white";
+    }
+}

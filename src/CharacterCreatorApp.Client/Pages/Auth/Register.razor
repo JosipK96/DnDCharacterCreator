@@ -1,0 +1,195 @@
+﻿@page "/register"
+@inject AuthService AuthService
+@inject NavigationManager Navigation
+
+<PageTitle>Register - D&D Character Creator</PageTitle>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4">
+    <div class="max-w-md w-full space-y-8 bg-gray-800 p-8 rounded-lg shadow-xl">
+        <div>
+            <h2 class="text-center text-3xl font-bold text-white">
+                🎲 Create Account
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-400">
+                Join and start creating characters
+            </p>
+        </div>
+
+        <EditForm Model="@model" OnValidSubmit="@HandleRegister" class="mt-8 space-y-6">
+            <DataAnnotationsValidator />
+
+            @if (errorMessages.Any())
+            {
+                <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded space-y-2">
+                    @if (errorMessages.Count == 1)
+                    {
+                        <p>@errorMessages[0]</p>
+                    }
+                    else
+                    {
+                        <p class="font-semibold mb-2">Please fix the following errors:</p>
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach (var error in errorMessages)
+                            {
+                                <li>@error</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            }
+
+            <div class="space-y-4">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-300 mb-2">
+                        Username
+                    </label>
+                    <InputText id="username"
+                               @bind-Value="model.UserName"
+                               placeholder="Enter username"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                    <ValidationMessage For="@(() => model.UserName)" class="text-red-400 text-sm mt-1" />
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                        Email Address
+                    </label>
+                    <InputText id="email"
+                               @bind-Value="model.Email"
+                               type="email"
+                               placeholder="your@email.com"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                    <ValidationMessage For="@(() => model.Email)" class="text-red-400 text-sm mt-1" />
+                </div>
+
+                <div>
+                    <label for="displayName" class="block text-sm font-medium text-gray-300 mb-2">
+                        Display Name (Optional)
+                    </label>
+                    <InputText id="displayName"
+                               @bind-Value="model.DisplayName"
+                               placeholder="How others see you"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
+                        Password
+                    </label>
+                    <InputText id="password"
+                               @bind-Value="model.Password"
+                               type="password"
+                               placeholder="••••••••"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                    <ValidationMessage For="@(() => model.Password)" class="text-red-400 text-sm mt-1" />
+                    <p class="text-xs text-gray-400 mt-1">
+                        At least 6 characters, one uppercase letter, and one number
+                    </p>
+                </div>
+
+                <div>
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-300 mb-2">
+                        Confirm Password
+                    </label>
+                    <InputText id="confirmPassword"
+                               @bind-Value="model.ConfirmPassword"
+                               type="password"
+                               placeholder="••••••••"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                    <ValidationMessage For="@(() => model.ConfirmPassword)" class="text-red-400 text-sm mt-1" />
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                        disabled="@isLoading"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                    @if (isLoading)
+                    {
+                        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="ml-2">Creating account...</span>
+                    }
+                    else
+                    {
+                        <span>Create Account</span>
+                    }
+                </button>
+            </div>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-400">
+                    Already have an account?
+                    <a href="/login" class="font-medium text-green-400 hover:text-green-300 ml-1">
+                        Sign in here
+                    </a>
+                </p>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private RegisterModel model = new();
+    private List<string> errorMessages = new();
+    private bool isLoading;
+
+    private async Task HandleRegister()
+    {
+        isLoading = true;
+        errorMessages.Clear();
+
+        try
+        {
+            var request = new RegisterUserRequest
+            {
+                UserName = model.UserName,
+                Email = model.Email,
+                Password = model.Password,
+                DisplayName = model.DisplayName
+            };
+
+            var errors = await AuthService.RegisterAsync(request);
+
+            if (errors.Count == 0)
+            {
+                Navigation.NavigateTo("/login?registered=true");
+            }
+            else
+            {
+                errorMessages = errors.ToList();
+            }
+        }
+        catch (HttpRequestException)
+        {
+            errorMessages = ["Could not reach the server. Check your connection and try again."];
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private class RegisterModel
+    {
+        [Required(ErrorMessage = "Username is required")]
+        public string UserName { get; set; } = "";
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        public string Email { get; set; } = "";
+
+        public string? DisplayName { get; set; }
+
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*\d).+$", ErrorMessage = "Password must contain at least one uppercase letter and one number")]
+        public string Password { get; set; } = "";
+
+        [Required(ErrorMessage = "Please confirm your password")]
+        [Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; } = "";
+    }
+}

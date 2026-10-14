@@ -1,0 +1,164 @@
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Choose Languages")</h2>
+
+    @if (IsLoading)
+    {
+        <div class="flex justify-center items-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+            <p class="text-sm">@ErrorMessage</p>
+        </div>
+    }
+    else if (totalChoices == 0)
+    {
+        <div class="bg-gray-700 rounded-lg p-6 text-center">
+            <p class="text-gray-300 text-lg">Your race and background don't grant any extra language choices.</p>
+            <p class="text-gray-500 text-sm mt-2">You still know the fixed languages from your race.</p>
+        </div>
+    }
+    else
+    {
+        <div class="bg-blue-900 border border-blue-700 text-blue-200 px-4 py-3 rounded-lg mb-6">
+            <p class="text-sm">
+                Choose <strong>@totalChoices</strong> additional language(s) from the list below.
+                (@selectedLanguageIds.Count / @totalChoices selected)
+            </p>
+            @if (alreadyKnownNames.Count > 0)
+            {
+                <p class="text-sm mt-1">Already known from your race and background: <strong>@string.Join(", ", alreadyKnownNames)</strong></p>
+            }
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            @foreach (var language in availableLanguages)
+            {
+                var isSelected = selectedLanguageIds.Contains(language.Id);
+                var isDisabled = !isSelected && selectedLanguageIds.Count >= totalChoices;
+                <button @onclick="() => ToggleLanguage(language.Id)"
+                        disabled="@isDisabled"
+                        class="@GetButtonClass(language.Id, isDisabled)">
+                    <div class="flex items-center justify-between">
+                        <div class="text-left">
+                            <span class="font-medium text-white">@language.Name</span>
+                            <span class="text-xs text-gray-400 ml-2">(@language.Type)</span>
+                        </div>
+                        @if (isSelected)
+                        {
+                            <svg class="w-5 h-5 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                        }
+                    </div>
+                </button>
+            }
+        </div>
+    }
+
+    <div class="flex justify-between mt-8">
+        <button @onclick="HandleBack" type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            Back
+        </button>
+        <button @onclick="HandleNext" disabled="@(!CanProceed() || IsSaving)"
+                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Saving..." : NextLabel)
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private List<LanguageApiResponse> availableLanguages = [];
+    private List<string> alreadyKnownNames = [];
+    private HashSet<string> selectedLanguageIds = [];
+    private int totalChoices;
+
+    protected override Task OnInitializedAsync() => LoadAsync(LoadLanguagesAsync, "Failed to load languages");
+
+    private async Task LoadLanguagesAsync()
+    {
+        var draft = await DraftService.GetDraftDetailsAsync(DraftId);
+        if (draft == null) { ErrorMessage = "Draft not found."; return; }
+
+        var races = await LookupService.GetRacesAsync(draft.Edition);
+        var race = races.FirstOrDefault(r => r.Id == draft.RaceId);
+        var subrace = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
+
+        BackgroundApiResponse? background = null;
+        if (!string.IsNullOrEmpty(draft.BackgroundId))
+            background = await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
+
+        // A high elf picks one more than an elf
+        var raceLanguageChoices = (race?.LanguageChoiceCount ?? 0) + (subrace?.LanguageChoiceCount ?? 0);
+        var backgroundLanguageChoices = background?.LanguageChoiceCount ?? 0;
+        totalChoices = raceLanguageChoices + backgroundLanguageChoices;
+
+        // A 2024 character picks from the 2024 book's standard languages
+        var allLanguages = await LookupService.GetLanguagesAsync(draft.Edition);
+
+        // A language the race or background already gives can't be picked again; the server
+        // refuses it, since the pick would be spent on nothing
+        var knownNames = (race?.Languages ?? [])
+            .Concat(background?.Languages.Select(l => l.Name) ?? [])
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        alreadyKnownNames = allLanguages
+            .Where(l => knownNames.Contains(l.Name))
+            .Select(l => l.Name)
+            .ToList();
+
+        availableLanguages = allLanguages
+            .Where(l => !knownNames.Contains(l.Name))
+            .OrderBy(l => l.Type)
+            .ThenBy(l => l.Name)
+            .ToList();
+
+        // Restore prior selections
+        if (draft.SelectedLanguageIds?.Count > 0)
+            selectedLanguageIds = draft.SelectedLanguageIds.ToHashSet();
+    }
+
+    private void ToggleLanguage(string id)
+    {
+        if (selectedLanguageIds.Contains(id))
+            selectedLanguageIds.Remove(id);
+        else if (selectedLanguageIds.Count < totalChoices)
+            selectedLanguageIds.Add(id);
+    }
+
+    private bool CanProceed() => totalChoices == 0 || selectedLanguageIds.Count == totalChoices;
+
+    private string GetButtonClass(string id, bool isDisabled)
+    {
+        var isSelected = selectedLanguageIds.Contains(id);
+        if (isDisabled) return "bg-gray-800 border-2 border-gray-700 rounded-lg p-3 cursor-not-allowed opacity-50";
+        if (isSelected) return "bg-gray-600 border-2 border-indigo-500 rounded-lg p-3 transition-all duration-200";
+        return "bg-gray-700 border-2 border-gray-600 hover:border-indigo-500 hover:bg-gray-600 rounded-lg p-3 transition-all duration-200";
+    }
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed()) return;
+
+        if (await SaveAsync(() => DraftService.ChooseLanguagesAsync(DraftId, selectedLanguageIds.ToList()), "Failed to save languages"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

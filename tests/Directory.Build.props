@@ -1,0 +1,18 @@
+<Project>
+
+  <!-- Inherit everything from the repository root, then relax what only makes sense for src. -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+
+    <!--
+      CA1707: test names are Method_Scenario_Expectation, which is the point of them
+      CA1861: constant arrays as arguments are fine in test data
+      CS1591: test projects are not documented
+      CA1816: xUnit owns fixture lifetime; GC.SuppressFinalize adds nothing here
+    -->
+    <NoWarn>$(NoWarn);CA1707;CA1861;CS1591;CA1816</NoWarn>
+  </PropertyGroup>
+
+</Project>

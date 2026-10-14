@@ -1,0 +1,155 @@
+﻿@page "/login"
+@inject AuthService AuthService
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<PageTitle>Login - D&D Character Creator</PageTitle>
+
+<div class="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4">
+    <div class="max-w-md w-full space-y-8 bg-gray-800 p-8 rounded-lg shadow-xl">
+        <div>
+            <h2 class="text-center text-3xl font-bold text-white">
+                🎲 Sign In
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-400">
+                Access your D&D characters
+            </p>
+        </div>
+
+        <EditForm Model="@model" OnValidSubmit="@HandleLogin" class="mt-8 space-y-6">
+            <DataAnnotationsValidator />
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="bg-green-900 border-2 border-green-500 text-green-200 px-4 py-3 rounded-lg flex items-center">
+                    <svg class="w-6 h-6 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="font-medium">@successMessage</span>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded">
+                    @errorMessage
+                </div>
+            }
+
+            <div class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">
+                        Email Address
+                    </label>
+                    <InputText id="email"
+                               @bind-Value="model.Email"
+                               type="email"
+                               placeholder="your@email.com"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
+                    <ValidationMessage For="@(() => model.Email)" class="text-red-400 text-sm mt-1" />
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
+                        Password
+                    </label>
+                    <InputText id="password"
+                               @bind-Value="model.Password"
+                               type="password"
+                               placeholder="••••••••"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
+                    <ValidationMessage For="@(() => model.Password)" class="text-red-400 text-sm mt-1" />
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                        disabled="@isLoading"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                    @if (isLoading)
+                    {
+                        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="ml-2">Signing in...</span>
+                    }
+                    else
+                    {
+                        <span>Sign In</span>
+                    }
+                </button>
+            </div>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-400">
+                    Don't have an account?
+                    <a href="/register" class="font-medium text-indigo-400 hover:text-indigo-300 ml-1">
+                        Register here
+                    </a>
+                </p>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private LoginModel model = new();
+    private string? errorMessage;
+    private string? successMessage;
+    private string returnUrl = "characters";
+    private bool isLoading;
+
+    protected override void OnInitialized()
+    {
+        var uri = Navigation.ToAbsoluteUri(Navigation.Uri);
+        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+
+        if (queryParams["registered"] == "true")
+        {
+            successMessage = "Account created successfully! Please sign in below.";
+        }
+
+        // Set by RedirectToLogin. Only a relative path is followed, so a crafted link cannot
+        // send someone off the site after they sign in.
+        var requested = queryParams["returnUrl"];
+
+        if (!string.IsNullOrWhiteSpace(requested) && Uri.IsWellFormedUriString(requested, UriKind.Relative))
+        {
+            returnUrl = requested.TrimStart('/');
+        }
+    }
+
+    private async Task HandleLogin()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            errorMessage = await AuthService.LoginAsync(model.Email, model.Password);
+
+            if (errorMessage is null)
+            {
+                Navigation.NavigateTo(returnUrl);
+            }
+        }
+        catch (HttpRequestException)
+        {
+            errorMessage = "Could not reach the server. Check your connection and try again.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private class LoginModel
+    {
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Password is required")]
+        public string Password { get; set; } = "";
+    }
+}

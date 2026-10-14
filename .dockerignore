@@ -1,0 +1,48 @@
+# Git
+**/.git
+**/.gitignore
+**/.gitattributes
+
+# IDE and tools
+**/.vs
+**/.vscode
+**/.idea
+**/.claude
+**/*.user
+**/*.suo
+
+# Build artifacts
+**/bin
+**/obj
+**/publish
+**/out
+**/node_modules
+**/npm-debug.log
+
+# Tests and their results are not part of the image
+tests/
+**/TestResults
+**/*.trx
+**/coverage
+**/coveragereport
+
+# Documentation
+README.md
+CLAUDE.md
+docs/
+
+# CI/CD
+.github/
+
+# Docker's own files, and secrets: .env holds the JWT key and must never land in an image
+**/.env
+**/docker-compose*
+**/Dockerfile*
+configurations/
+
+# The image's SDK tag picks the SDK; global.json would pin one the image may not have
+global.json
+
+# Misc
+**/.DS_Store
+**/Thumbs.db

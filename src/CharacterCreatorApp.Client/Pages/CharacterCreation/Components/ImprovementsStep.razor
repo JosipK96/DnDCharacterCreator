@@ -1,0 +1,453 @@
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Ability Score Improvements")</h2>
+
+    @if (IsLoading)
+    {
+        <div class="flex justify-center items-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        </div>
+    }
+    else
+    {
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+                <p class="text-sm">@ErrorMessage</p>
+            </div>
+        }
+
+        @if (slots.Count == 0)
+        {
+            <div class="bg-gray-700 rounded-lg p-6 text-center">
+                <p class="text-gray-300 text-lg">No Ability Score Improvements available at this level.</p>
+                <p class="text-gray-500 text-sm mt-2">ASIs are gained at levels @(string.Join(", ", asiLevels)) for your class.</p>
+            </div>
+        }
+        else
+        {
+            @if (bonusFeatCount > 0)
+            {
+                <div class="bg-blue-900 border border-blue-700 text-blue-200 px-4 py-3 rounded-lg mb-6">
+                    <p class="text-sm">
+                        As a <strong>@raceName</strong>, you take <strong>@bonusFeatCount</strong>
+                        @(bonusFeatCategory == null ? string.Empty : bonusFeatCategory + " ")feat(s) of your choice.
+                    </p>
+                </div>
+            }
+
+            @if (asiCount > 0)
+            {
+                <div class="bg-blue-900 border border-blue-700 text-blue-200 px-4 py-3 rounded-lg mb-6">
+                    <p class="text-sm">
+                        You have <strong>@asiCount</strong> Ability Score Improvement(s).
+                        Each one can either raise your ability scores by <strong>2 points</strong>
+                        (+2 to one score, or +1 to two different scores) or take a <strong>feat</strong> instead.
+                    </p>
+                </div>
+            }
+
+            @for (int i = 0; i < slots.Count; i++)
+            {
+                var index = i;
+                var slot = slots[index];
+
+                <div class="bg-gray-700 rounded-lg p-6 mb-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <h3 class="text-lg font-bold text-white">
+                            @(slot.IsRaceFeat ? $"{raceName} Feat" : $"Improvement #{index + 1 - bonusFeatCount}")
+                        </h3>
+
+                        @if (!slot.IsRaceFeat)
+                        {
+                            <div class="flex rounded-lg overflow-hidden border border-gray-500">
+                                <button type="button" @onclick="() => SetMode(index, false)"
+                                        class="@GetModeClass(!slot.TakesFeat)">
+                                    Ability Scores
+                                </button>
+                                <button type="button" @onclick="() => SetMode(index, true)"
+                                        class="@GetModeClass(slot.TakesFeat)">
+                                    Feat
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    @if (!slot.TakesFeat)
+                    {
+                        <p class="text-gray-400 text-sm mb-3">@GetPointsLeft(index) point(s) remaining</p>
+
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            @foreach (var ability in abilityScores)
+                            {
+                                var currentVal = slot.Improvement.TryGetValue(ability.Key, out var v) ? v : 0;
+                                <div class="bg-gray-600 rounded-lg p-3">
+                                    <p class="text-white font-medium text-sm mb-2">@ability.Value</p>
+                                    <div class="flex items-center gap-2">
+                                        <button @onclick="() => DecrementAbility(index, ability.Key)"
+                                                disabled="@(currentVal <= 0)"
+                                                class="w-8 h-8 bg-gray-500 hover:bg-gray-400 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded font-bold">
+                                            −
+                                        </button>
+                                        <span class="text-white font-bold text-lg w-6 text-center">@currentVal</span>
+                                        <button @onclick="() => IncrementAbility(index, ability.Key)"
+                                                disabled="@(GetPointsLeft(index) <= 0 || currentVal >= 2)"
+                                                class="w-8 h-8 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded font-bold">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <input type="search" placeholder="Search feats..."
+                               value="@slot.FeatSearch"
+                               @oninput="e => SetFeatSearch(index, e.Value?.ToString())"
+                               class="w-full bg-gray-600 border border-gray-500 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-3 focus:outline-none focus:border-indigo-500" />
+
+                        <div class="max-h-72 overflow-y-auto space-y-2 pr-1">
+                            @foreach (var feat in FilteredFeats(index))
+                            {
+                                var featId = feat.Id;
+                                <button type="button" @onclick="() => SelectFeat(index, featId)"
+                                        class="@GetFeatClass(slot.FeatId == featId)">
+                                    <p class="text-white font-medium">
+                                        @feat.Name
+                                        @if (feat.Category != null)
+                                        {
+                                            <span class="ml-2 bg-gray-500 text-gray-100 px-2 py-0.5 rounded text-xs font-normal">@feat.Category</span>
+                                        }
+                                    </p>
+                                    @if (feat.Prerequisites.Any())
+                                    {
+                                        <p class="text-amber-300 text-xs mt-1">Requires: @string.Join(", ", feat.Prerequisites)</p>
+                                    }
+                                    @if (feat.AbilityIncrease is { } increase)
+                                    {
+                                        <p class="text-indigo-300 text-xs mt-1">@IncreaseText(increase)</p>
+                                    }
+                                    <p class="text-gray-300 text-xs mt-1">@Truncate(feat.Description)</p>
+                                </button>
+                            }
+
+                            @if (!FilteredFeats(index).Any())
+                            {
+                                <p class="text-gray-400 text-sm py-4 text-center">No feats match that search.</p>
+                            }
+                        </div>
+
+                        <!-- Athlete raises Strength or Dexterity: the player says which -->
+                        @if (SelectedFeat(slot) is { AbilityIncrease: { Options.Count: > 1 } choice } chosenFeat)
+                        {
+                            <label class="block text-sm text-gray-300 mt-4">
+                                @chosenFeat.Name raises by @choice.Points <span class="text-red-400">*</span>
+                                <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
+                                        value="@slot.FeatAbility" @onchange="e => slot.FeatAbility = e.Value?.ToString()">
+                                    <option value="">Choose...</option>
+                                    @foreach (var ability in choice.Options)
+                                    {
+                                        <option value="@ability">@AbilityNames.Of(ability)</option>
+                                    }
+                                </select>
+                            </label>
+                        }
+                    }
+                </div>
+            }
+        }
+    }
+
+    <div class="flex justify-between mt-8">
+        <button @onclick="HandleBack" type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            Back
+        </button>
+        <button @onclick="HandleNext" disabled="@(!CanProceed() || IsSaving)"
+                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Saving..." : NextLabel)
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int CharacterLevel { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    /// <summary>
+    /// One earned ability score improvement, spent either on ability points or on a feat, or a
+    /// feat the race gives (a variant human's), which is a feat and nothing else.
+    /// </summary>
+    private sealed class AsiSlot
+    {
+        public bool IsRaceFeat { get; init; }
+        public bool TakesFeat { get; set; }
+        public Dictionary<string, int> Improvement { get; } = [];
+        public string? FeatId { get; set; }
+
+        /// <summary>The ability the feat raises where it offers several: Athlete's Strength or Dexterity.</summary>
+        public string? FeatAbility { get; set; }
+
+        public string FeatSearch { get; set; } = string.Empty;
+    }
+
+    // The 2024 rules make raising ability scores a feat of this name. The "Ability Scores" mode
+    // is that feat, and taking it from the list would add no points, so it is not listed.
+    private const string AbilityScoreImprovementFeat = "Ability Score Improvement";
+
+    private static readonly Dictionary<string, string> abilityScores = new()
+    {
+        ["strength"] = "Strength",
+        ["dexterity"] = "Dexterity",
+        ["constitution"] = "Constitution",
+        ["intelligence"] = "Intelligence",
+        ["wisdom"] = "Wisdom",
+        ["charisma"] = "Charisma"
+    };
+
+    private List<int> asiLevels = [];
+    private int asiCount;
+
+    // The feats the race gives: a variant human's any one, a 2024 human's Origin one
+    private int bonusFeatCount;
+    private string? bonusFeatCategory;
+    private string? raceName;
+
+    private List<AsiSlot> slots = [];
+    private List<FeatApiResponse> feats = [];
+
+    protected override Task OnInitializedAsync() => LoadAsync(LoadImprovementsAsync, "Failed to load ASI data");
+
+    private async Task LoadImprovementsAsync()
+    {
+        var draft = await DraftService.GetDraftDetailsAsync(DraftId);
+        if (draft == null) { ErrorMessage = "Draft not found."; return; }
+
+        if (string.IsNullOrEmpty(draft.ClassId)) { ErrorMessage = "No class selected."; return; }
+
+        var selectedClass = await LookupService.GetClassByIdAsync(draft.ClassId);
+        if (selectedClass == null) { ErrorMessage = "Class not found."; return; }
+
+        asiLevels = selectedClass.AsiLevels;
+        asiCount = asiLevels.Count(l => l <= CharacterLevel);
+
+        var race = string.IsNullOrEmpty(draft.RaceId)
+            ? null
+            : (await LookupService.GetRacesAsync(draft.Edition)).FirstOrDefault(r => r.Id == draft.RaceId);
+        var subrace = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
+
+        // A variant human's feat comes with the subrace, a 2024 human's with the species
+        raceName = subrace?.Name ?? race?.Name;
+        (bonusFeatCount, bonusFeatCategory) = subrace is { FeatChoiceCount: > 0 }
+            ? ((race?.FeatChoiceCount ?? 0) + subrace.FeatChoiceCount, subrace.FeatChoiceCategory)
+            : (race?.FeatChoiceCount ?? 0, race?.FeatChoiceCategory);
+
+        // Only the feats of the character's rules edition, less one the background already gave
+        // (a 2024 criminal's Alert) unless it can be taken again
+        if (asiCount + bonusFeatCount > 0)
+        {
+            var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
+            var backgroundFeat = background?.Feat is { IsRepeatable: false } feat ? feat.Id : null;
+
+            feats = (await LookupService.GetFeatsAsync(draft.Edition))
+                .Where(f => f.Name != AbilityScoreImprovementFeat && f.Id != backgroundFeat)
+                .ToList();
+        }
+
+        slots = RestoreSlots(draft);
+    }
+
+    /// <summary>
+    /// Rebuilds the slots from what was saved. The draft stores the race's feats first among the
+    /// feats, then improvements and feats as two lists without recording which slot each came
+    /// from, so improvements are restored first and feats fill the slots after them.
+    /// </summary>
+    private List<AsiSlot> RestoreSlots(CharacterDraftDetailsApiResponse draft)
+    {
+        var featIds = draft.SelectedFeatIds ?? [];
+        var increases = draft.FeatAbilityIncreases ?? [];
+        var saved = new List<AsiSlot>();
+
+        for (var i = 0; i < Math.Min(bonusFeatCount, featIds.Count); i++)
+        {
+            saved.Add(FeatSlot(featIds[i], increases.ElementAtOrDefault(i), isRaceFeat: true));
+        }
+
+        foreach (var improvement in draft.AbilityScoreImprovements ?? [])
+        {
+            var slot = new AsiSlot();
+
+            foreach (var entry in improvement)
+            {
+                slot.Improvement[entry.Key] = entry.Value;
+            }
+
+            saved.Add(slot);
+        }
+
+        for (var i = bonusFeatCount; i < featIds.Count; i++)
+        {
+            saved.Add(FeatSlot(featIds[i], increases.ElementAtOrDefault(i), isRaceFeat: false));
+        }
+
+        // Only trust the restored slots if they still match what this character has earned
+        if (saved.Count(s => s.IsRaceFeat) == bonusFeatCount && saved.Count(s => !s.IsRaceFeat) == asiCount)
+        {
+            return saved;
+        }
+
+        return
+        [
+            .. Enumerable.Range(0, bonusFeatCount).Select(_ => new AsiSlot { IsRaceFeat = true, TakesFeat = true }),
+            .. Enumerable.Range(0, asiCount).Select(_ => new AsiSlot()),
+        ];
+    }
+
+    // A saved feat and the ability it raises, the one key of what was saved ({"DEX": 1})
+    private static AsiSlot FeatSlot(string featId, Dictionary<string, int>? increase, bool isRaceFeat) => new()
+    {
+        IsRaceFeat = isRaceFeat,
+        TakesFeat = true,
+        FeatId = featId,
+        FeatAbility = increase?.FirstOrDefault(kvp => kvp.Value > 0).Key,
+    };
+
+    // A race's feat may be of one category only: a 2024 human's is an Origin feat
+    private IEnumerable<FeatApiResponse> FilteredFeats(int index)
+    {
+        var slot = slots[index];
+
+        return feats
+            .Where(f => !slot.IsRaceFeat || bonusFeatCategory == null || f.Category == bonusFeatCategory)
+            .Where(f => string.IsNullOrWhiteSpace(slot.FeatSearch) || f.Name.Contains(slot.FeatSearch, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(f => f.Name);
+    }
+
+    private FeatApiResponse? SelectedFeat(AsiSlot slot) => feats.FirstOrDefault(f => f.Id == slot.FeatId);
+
+    // "+1 Strength or Dexterity", "+1 to any ability, up to 30" for an Epic Boon
+    private static string IncreaseText(FeatAbilityIncreaseApiResponse increase)
+    {
+        var abilities = increase.Options.Count == 6
+            ? "to any ability"
+            : string.Join(" or ", increase.Options.Select(AbilityNames.Of));
+
+        return $"+{increase.Points} {abilities}{(increase.Maximum > 20 ? $", up to {increase.Maximum}" : string.Empty)}";
+    }
+
+    private void SetMode(int index, bool takesFeat)
+    {
+        var slot = slots[index];
+
+        if (slot.TakesFeat == takesFeat)
+        {
+            return;
+        }
+
+        slot.TakesFeat = takesFeat;
+
+        // Clear whichever choice no longer applies so a half-finished one cannot be submitted
+        if (takesFeat)
+        {
+            slot.Improvement.Clear();
+        }
+        else
+        {
+            slot.FeatId = null;
+            slot.FeatAbility = null;
+        }
+    }
+
+    private void SelectFeat(int index, string featId)
+    {
+        slots[index].FeatId = slots[index].FeatId == featId ? null : featId;
+        slots[index].FeatAbility = null;
+    }
+
+    private void SetFeatSearch(int index, string? search)
+    {
+        slots[index].FeatSearch = search ?? string.Empty;
+    }
+
+    private int GetPointsLeft(int index) => 2 - slots[index].Improvement.Values.Sum();
+
+    private void IncrementAbility(int index, string ability)
+    {
+        if (GetPointsLeft(index) <= 0) return;
+        var current = slots[index].Improvement.TryGetValue(ability, out var v) ? v : 0;
+        if (current >= 2) return;
+        slots[index].Improvement[ability] = current + 1;
+    }
+
+    private void DecrementAbility(int index, string ability)
+    {
+        if (!slots[index].Improvement.TryGetValue(ability, out var current) || current <= 0) return;
+        if (current == 1)
+            slots[index].Improvement.Remove(ability);
+        else
+            slots[index].Improvement[ability] = current - 1;
+    }
+
+    private bool CanProceed() =>
+        slots.All(slot => slot.TakesFeat
+            ? !string.IsNullOrEmpty(slot.FeatId) && HasAbilityPick(slot)
+            : slot.Improvement.Values.Sum() == 2);
+
+    // A feat raising one of several abilities needs the pick; one raising a fixed ability does not
+    private bool HasAbilityPick(AsiSlot slot) =>
+        SelectedFeat(slot)?.AbilityIncrease is not { Options.Count: > 1 } increase
+        || (!string.IsNullOrEmpty(slot.FeatAbility) && increase.Options.Contains(slot.FeatAbility));
+
+    // What the feat raises as picked; the API knows a fixed increase (Actor's Charisma) on its own
+    private Dictionary<string, int> FeatIncrease(AsiSlot slot) =>
+        SelectedFeat(slot)?.AbilityIncrease is { Options.Count: > 1 } increase && !string.IsNullOrEmpty(slot.FeatAbility)
+            ? new Dictionary<string, int> { [slot.FeatAbility] = increase.Points }
+            : [];
+
+    private static string GetModeClass(bool isActive) => isActive
+        ? "px-4 py-2 text-sm font-medium bg-indigo-600 text-white"
+        : "px-4 py-2 text-sm font-medium bg-gray-600 text-gray-200 hover:bg-gray-500";
+
+    private static string GetFeatClass(bool isSelected) => isSelected
+        ? "w-full text-left bg-gray-600 border-2 border-indigo-500 rounded-lg p-3"
+        : "w-full text-left bg-gray-600 border-2 border-gray-500 hover:border-indigo-500 rounded-lg p-3";
+
+    private static string Truncate(string text) =>
+        text.Length <= 160 ? text : string.Concat(text.AsSpan(0, 160), "...");
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed()) return;
+
+        var improvements = slots
+            .Where(s => !s.TakesFeat)
+            .Select(s => new Dictionary<string, int>(s.Improvement))
+            .ToList();
+
+        // The race's feats first (they are the first slots), then the improvements' in order
+        var featSlots = slots
+            .Where(s => s.TakesFeat && !string.IsNullOrEmpty(s.FeatId))
+            .ToList();
+
+        var featIds = featSlots.Select(s => s.FeatId!).ToList();
+        var featAbilityIncreases = featSlots.Select(FeatIncrease).ToList();
+
+        if (await SaveAsync(
+                () => DraftService.SetAbilityScoreImprovementsAsync(DraftId, improvements, featIds, featAbilityIncreases),
+                "Failed to save improvements"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

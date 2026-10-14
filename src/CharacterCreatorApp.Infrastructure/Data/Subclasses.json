@@ -1,0 +1,2563 @@
+[
+  {
+    "Id": "alchemist",
+    "Name": "Alchemist",
+    "ClassId": "artificer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "armorer",
+    "Name": "Armorer",
+    "ClassId": "artificer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "artillerist",
+    "Name": "Artillerist",
+    "ClassId": "artificer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "battle-smith",
+    "Name": "Battle Smith",
+    "ClassId": "artificer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "wild-magic",
+    "Name": "Path of Wild Magic",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "ancestral-guardian",
+    "Name": "Path of the Ancestral Guardian",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "battlerager",
+    "Name": "Path of the Battlerager",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "beast",
+    "Name": "Path of the Beast",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "berserker",
+    "Name": "Path of the Berserker",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "giant",
+    "Name": "Path of the Giant",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "storm-herald",
+    "Name": "Path of the Storm Herald",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "totem-warrior",
+    "Name": "Path of the Totem Warrior",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "zealot",
+    "Name": "Path of the Zealot",
+    "ClassId": "barbarian",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "creation",
+    "Name": "College of Creation",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "eloquence",
+    "Name": "College of Eloquence",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "glamour",
+    "Name": "College of Glamour",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "lore",
+    "Name": "College of Lore",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "spirits",
+    "Name": "College of Spirits",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "swords",
+    "Name": "College of Swords",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "valor",
+    "Name": "College of Valor",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "whispers",
+    "Name": "College of Whispers",
+    "ClassId": "bard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "ambition",
+    "Name": "Ambition Domain (PSA)",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "arcana",
+    "Name": "Arcana Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "death",
+    "Name": "Death Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "forge",
+    "Name": "Forge Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "grave",
+    "Name": "Grave Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "knowledge",
+    "Name": "Knowledge Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "knowledge-psa",
+    "Name": "Knowledge Domain (PSA)",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "life",
+    "Name": "Life Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "light",
+    "Name": "Light Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "nature",
+    "Name": "Nature Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "order",
+    "Name": "Order Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "peace",
+    "Name": "Peace Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "solidarity",
+    "Name": "Solidarity Domain (PSA)",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "strength",
+    "Name": "Strength Domain (PSA)",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "tempest",
+    "Name": "Tempest Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "trickery",
+    "Name": "Trickery Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "twilight",
+    "Name": "Twilight Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "war-domain",
+    "Name": "War Domain",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "zeal",
+    "Name": "Zeal Domain (PSA)",
+    "ClassId": "cleric",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "dreams",
+    "Name": "Circle of Dreams",
+    "ClassId": "druid",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "spores",
+    "Name": "Circle of Spores",
+    "ClassId": "druid",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "stars",
+    "Name": "Circle of Stars",
+    "ClassId": "druid",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "wildfire",
+    "Name": "Circle of Wildfire",
+    "ClassId": "druid",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "land",
+    "Name": "Circle of the Land",
+    "ClassId": "druid",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "moon",
+    "Name": "Circle of the Moon",
+    "ClassId": "druid",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "shepherd",
+    "Name": "Circle of the Shepherd",
+    "ClassId": "druid",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "arcane-archer",
+    "Name": "Arcane Archer",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "battle-master",
+    "Name": "Battle Master",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "cavalier",
+    "Name": "Cavalier",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "champion",
+    "Name": "Champion",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "echo-knight",
+    "Name": "Echo Knight",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "eldritch-knight",
+    "Name": "Eldritch Knight",
+    "ClassId": "fighter",
+    "SpellcastingAbility": "Intelligence",
+    "SpellListClassId": "wizard",
+    "SpellProgression": [
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 3,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 4
+      }
+    ],
+    "SpellSchools": [
+      "Abjuration",
+      "Evocation"
+    ],
+    "AnySchoolSpellLevels": [
+      3,
+      8,
+      14,
+      20
+    ]
+  },
+  {
+    "Id": "psi-warrior",
+    "Name": "Psi Warrior",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "purple-dragon-knight",
+    "Name": "Purple Dragon Knight (Banneret)",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "rune-knight",
+    "Name": "Rune Knight",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "samurai",
+    "Name": "Samurai",
+    "ClassId": "fighter",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "mercy",
+    "Name": "Way of Mercy",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "shadow-monk",
+    "Name": "Way of Shadow",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "ascendant-dragon",
+    "Name": "Way of the Ascendant Dragon",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "astral-self",
+    "Name": "Way of the Astral Self",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "drunken-master",
+    "Name": "Way of the Drunken Master",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "four-elements",
+    "Name": "Way of the Four Elements",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "kensei",
+    "Name": "Way of the Kensei",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "long-death",
+    "Name": "Way of the Long Death",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "open-hand",
+    "Name": "Way of the Open Hand",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "sun-soul",
+    "Name": "Way of the Sun Soul",
+    "ClassId": "monk",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "conquest",
+    "Name": "Oath of Conquest",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "devotion",
+    "Name": "Oath of Devotion",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "glory",
+    "Name": "Oath of Glory",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "redemption",
+    "Name": "Oath of Redemption",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "vengeance",
+    "Name": "Oath of Vengeance",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "ancients",
+    "Name": "Oath of the Ancients",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "crown",
+    "Name": "Oath of the Crown",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "watchers",
+    "Name": "Oath of the Watchers",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "oathbreaker",
+    "Name": "Oathbreaker",
+    "ClassId": "paladin",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "beast-master",
+    "Name": "Beast Master",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "drakewarden",
+    "Name": "Drakewarden",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "fey-wanderer",
+    "Name": "Fey Wanderer",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "gloom-stalker",
+    "Name": "Gloom Stalker",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "horizon-walker",
+    "Name": "Horizon Walker",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "hunter",
+    "Name": "Hunter",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "monster-slayer",
+    "Name": "Monster Slayer",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "swarmkeeper",
+    "Name": "Swarmkeeper",
+    "ClassId": "ranger",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "arcane-trickster",
+    "Name": "Arcane Trickster",
+    "ClassId": "rogue",
+    "SpellcastingAbility": "Intelligence",
+    "SpellListClassId": "wizard",
+    "SpellProgression": [
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 3,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 4
+      }
+    ],
+    "SpellSchools": [
+      "Enchantment",
+      "Illusion"
+    ],
+    "AnySchoolSpellLevels": [
+      3,
+      8,
+      14,
+      20
+    ]
+  },
+  {
+    "Id": "assassin",
+    "Name": "Assassin",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "inquisitive",
+    "Name": "Inquisitive",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "mastermind",
+    "Name": "Mastermind",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "phantom",
+    "Name": "Phantom",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "scout",
+    "Name": "Scout",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "soulknife",
+    "Name": "Soulknife",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "swashbuckler",
+    "Name": "Swashbuckler",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "thief",
+    "Name": "Thief",
+    "ClassId": "rogue",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "aberrant-mind",
+    "Name": "Aberrant Mind",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "clockwork-soul",
+    "Name": "Clockwork Soul",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "divine-soul",
+    "Name": "Divine Soul",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": "cleric",
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "draconic",
+    "Name": "Draconic Bloodline",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "lunar",
+    "Name": "Lunar Sorcery",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "pyromancer",
+    "Name": "Pyromancer (PSK)",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "shadow-sorcerer",
+    "Name": "Shadow Magic",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "storm",
+    "Name": "Storm Sorcery",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "wild",
+    "Name": "Wild Magic",
+    "ClassId": "sorcerer",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "archfey",
+    "Name": "The Archfey",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "celestial",
+    "Name": "The Celestial",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "fathomless",
+    "Name": "The Fathomless",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "fiend",
+    "Name": "The Fiend",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "genie",
+    "Name": "The Genie",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "great-old-one",
+    "Name": "The Great Old One",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "hexblade",
+    "Name": "The Hexblade",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "undead",
+    "Name": "The Undead",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "undying",
+    "Name": "The Undying",
+    "ClassId": "warlock",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "bladesinging",
+    "Name": "Bladesinging",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "chronurgy",
+    "Name": "Chronurgy Magic",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "graviturgy",
+    "Name": "Graviturgy Magic",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "scribes",
+    "Name": "Order of Scribes",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "abjuration",
+    "Name": "School of Abjuration",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "conjuration",
+    "Name": "School of Conjuration",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "divination",
+    "Name": "School of Divination",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "enchantment",
+    "Name": "School of Enchantment",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "evocation",
+    "Name": "School of Evocation",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "illusion",
+    "Name": "School of Illusion",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "necromancy",
+    "Name": "School of Necromancy",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "transmutation",
+    "Name": "School of Transmutation",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "war",
+    "Name": "War Magic",
+    "ClassId": "wizard",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "alchemist-2024",
+    "Name": "Alchemist",
+    "ClassId": "artificer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "armorer-2024",
+    "Name": "Armorer",
+    "ClassId": "artificer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "artillerist-2024",
+    "Name": "Artillerist",
+    "ClassId": "artificer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "battle-smith-2024",
+    "Name": "Battle Smith",
+    "ClassId": "artificer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "cartographer-2024",
+    "Name": "Cartographer",
+    "ClassId": "artificer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "reanimator-2024",
+    "Name": "Reanimator",
+    "ClassId": "artificer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "berserker-2024",
+    "Name": "Path of the Berserker",
+    "ClassId": "barbarian-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "wild-heart-2024",
+    "Name": "Path of the Wild Heart",
+    "ClassId": "barbarian-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "world-tree-2024",
+    "Name": "Path of the World Tree",
+    "ClassId": "barbarian-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "zealot-2024",
+    "Name": "Path of the Zealot",
+    "ClassId": "barbarian-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "dance-2024",
+    "Name": "College of Dance",
+    "ClassId": "bard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "glamour-2024",
+    "Name": "College of Glamour",
+    "ClassId": "bard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "lore-2024",
+    "Name": "College of Lore",
+    "ClassId": "bard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "spirits-2024",
+    "Name": "College of Spirits",
+    "ClassId": "bard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "valor-2024",
+    "Name": "College of Valor",
+    "ClassId": "bard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "moon-bard-2024",
+    "Name": "College of the Moon",
+    "ClassId": "bard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "arcana-2024",
+    "Name": "Arcana Domain",
+    "ClassId": "cleric-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "grave-2024",
+    "Name": "Grave Domain",
+    "ClassId": "cleric-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "knowledge-2024",
+    "Name": "Knowledge Domain",
+    "ClassId": "cleric-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "life-2024",
+    "Name": "Life Domain",
+    "ClassId": "cleric-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "light-2024",
+    "Name": "Light Domain",
+    "ClassId": "cleric-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "trickery-2024",
+    "Name": "Trickery Domain",
+    "ClassId": "cleric-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "war-domain-2024",
+    "Name": "War Domain",
+    "ClassId": "cleric-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "land-2024",
+    "Name": "Circle of the Land",
+    "ClassId": "druid-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "moon-druid-2024",
+    "Name": "Circle of the Moon",
+    "ClassId": "druid-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "sea-2024",
+    "Name": "Circle of the Sea",
+    "ClassId": "druid-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "stars-2024",
+    "Name": "Circle of the Stars",
+    "ClassId": "druid-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "arcane-archer-2024",
+    "Name": "Arcane Archer",
+    "ClassId": "fighter-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "banneret-2024",
+    "Name": "Banneret",
+    "ClassId": "fighter-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "battle-master-2024",
+    "Name": "Battle Master",
+    "ClassId": "fighter-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "champion-2024",
+    "Name": "Champion",
+    "ClassId": "fighter-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "eldritch-knight-2024",
+    "Name": "Eldritch Knight",
+    "ClassId": "fighter-2024",
+    "SpellcastingAbility": "Intelligence",
+    "SpellListClassId": "wizard-2024",
+    "SpellProgression": [
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 3,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 4
+      }
+    ],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "psi-warrior-2024",
+    "Name": "Psi Warrior",
+    "ClassId": "fighter-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "mercy-2024",
+    "Name": "Warrior of Mercy",
+    "ClassId": "monk-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "shadow-monk-2024",
+    "Name": "Warrior of Shadow",
+    "ClassId": "monk-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "elements-2024",
+    "Name": "Warrior of the Elements",
+    "ClassId": "monk-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "mystic-arts-2024",
+    "Name": "Warrior of the Mystic Arts",
+    "ClassId": "monk-2024",
+    "SpellcastingAbility": "Wisdom",
+    "SpellListClassId": "sorcerer-2024",
+    "SpellProgression": [
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 3,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 4
+      }
+    ],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "open-hand-2024",
+    "Name": "Warrior of the Open Hand",
+    "ClassId": "monk-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "devotion-2024",
+    "Name": "Oath of Devotion",
+    "ClassId": "paladin-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "glory-2024",
+    "Name": "Oath of Glory",
+    "ClassId": "paladin-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "vengeance-2024",
+    "Name": "Oath of Vengeance",
+    "ClassId": "paladin-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "ancients-2024",
+    "Name": "Oath of the Ancients",
+    "ClassId": "paladin-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "noble-genies-2024",
+    "Name": "Oath of the Noble Genies",
+    "ClassId": "paladin-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "beast-master-2024",
+    "Name": "Beast Master",
+    "ClassId": "ranger-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "fey-wanderer-2024",
+    "Name": "Fey Wanderer",
+    "ClassId": "ranger-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "gloom-stalker-2024",
+    "Name": "Gloom Stalker",
+    "ClassId": "ranger-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "hollow-warden-2024",
+    "Name": "Hollow Warden",
+    "ClassId": "ranger-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "hunter-2024",
+    "Name": "Hunter",
+    "ClassId": "ranger-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "winter-walker-2024",
+    "Name": "Winter Walker",
+    "ClassId": "ranger-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "arcane-trickster-2024",
+    "Name": "Arcane Trickster",
+    "ClassId": "rogue-2024",
+    "SpellcastingAbility": "Intelligence",
+    "SpellListClassId": "wizard-2024",
+    "SpellProgression": [
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 3,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 4
+      }
+    ],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "assassin-2024",
+    "Name": "Assassin",
+    "ClassId": "rogue-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "phantom-2024",
+    "Name": "Phantom",
+    "ClassId": "rogue-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "scion-of-the-three-2024",
+    "Name": "Scion of the Three",
+    "ClassId": "rogue-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "soulknife-2024",
+    "Name": "Soulknife",
+    "ClassId": "rogue-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "thief-2024",
+    "Name": "Thief",
+    "ClassId": "rogue-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "aberrant-2024",
+    "Name": "Aberrant Sorcery",
+    "ClassId": "sorcerer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "clockwork-2024",
+    "Name": "Clockwork Sorcery",
+    "ClassId": "sorcerer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "draconic-2024",
+    "Name": "Draconic Sorcery",
+    "ClassId": "sorcerer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "shadow-sorcerer-2024",
+    "Name": "Shadow Sorcery",
+    "ClassId": "sorcerer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "spellfire-2024",
+    "Name": "Spellfire Sorcery",
+    "ClassId": "sorcerer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "wild-magic-2024",
+    "Name": "Wild Magic Sorcery",
+    "ClassId": "sorcerer-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "archfey-2024",
+    "Name": "Archfey Patron",
+    "ClassId": "warlock-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "celestial-2024",
+    "Name": "Celestial Patron",
+    "ClassId": "warlock-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "fiend-2024",
+    "Name": "Fiend Patron",
+    "ClassId": "warlock-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "great-old-one-2024",
+    "Name": "Great Old One Patron",
+    "ClassId": "warlock-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "undead-2024",
+    "Name": "Undead Patron",
+    "ClassId": "warlock-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "vestige-2024",
+    "Name": "Vestige Patron",
+    "ClassId": "warlock-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "abjurer-2024",
+    "Name": "Abjurer",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "bladesinger-2024",
+    "Name": "Bladesinger",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "conjurer-2024",
+    "Name": "Conjurer",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "diviner-2024",
+    "Name": "Diviner",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "enchanter-2024",
+    "Name": "Enchanter",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "evoker-2024",
+    "Name": "Evoker",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "illusionist-2024",
+    "Name": "Illusionist",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "necromancer-2024",
+    "Name": "Necromancer",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  },
+  {
+    "Id": "transmuter-2024",
+    "Name": "Transmuter",
+    "ClassId": "wizard-2024",
+    "SpellcastingAbility": null,
+    "SpellListClassId": null,
+    "SpellProgression": [],
+    "SpellSchools": [],
+    "AnySchoolSpellLevels": []
+  }
+]

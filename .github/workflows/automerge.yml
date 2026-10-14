@@ -1,0 +1,56 @@
+# Merges a pull request labelled "automerge" as soon as CI passes on it, so a reviewed PR needs
+# no one to come back and merge it. It reacts to CI finishing instead of polling, costs nothing
+# while idle, and works on a private repository, where GitHub's own auto-merge is unavailable.
+name: Auto-merge
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  merge:
+    name: Merge when green
+    # Only a pull request's CI that passed, from a branch of this repository: a fork's branch is
+    # never merged unattended
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Merge the labelled pull request whose head CI passed
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The head must still be the commit CI passed: a newer push waits for its own run
+          number=$(gh pr list --repo "$REPO" --head "$HEAD_BRANCH" --state open \
+            --json number,headRefOid,labels \
+            --jq ".[] | select(.headRefOid == \"$HEAD_SHA\") | select(any(.labels[]; .name == \"automerge\")) | .number")
+
+          if [ -z "$number" ]; then
+            echo "No open pull request labelled automerge at $HEAD_SHA on $HEAD_BRANCH"
+            exit 0
+          fi
+
+          # Squash with GitHub's default message: the PR title and its commits' messages
+          gh pr merge "$number" --repo "$REPO" --squash --delete-branch --match-head-commit "$HEAD_SHA"
+          echo "Merged #$number"
+
+          # A merge made with the workflow's token does not trigger GitHub's closing of the issues
+          # the pull request names ("Closes #37"), so they are closed here
+          for issue in $(gh pr view "$number" --repo "$REPO" --json closingIssuesReferences --jq '.closingIssuesReferences[].number'); do
+            gh issue close "$issue" --repo "$REPO" --reason completed --comment "Done in #$number."
+            echo "Closed #$issue"
+          done

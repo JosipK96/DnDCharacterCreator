@@ -1,0 +1,677 @@
+[
+  {
+    "Id": "acolyte_shelter_of_the_faithful",
+    "Name": "Shelter of the Faithful",
+    "Description": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle.\n\nYou might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "anthropologist_adept_linguist",
+    "Name": "Adept Linguist",
+    "Description": "See Tomb of Annihilation, page 191.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "archaeologist_historical_knowledge",
+    "Name": "Historical Knowledge",
+    "Description": "See Tomb of Annihilation, page 192.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "astral_drifter_divine_contact",
+    "Name": "Divine Contact",
+    "Description": "See Spelljammer: Astral Adventurer's Guide, page 7.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "athlete_echoes_of_victory",
+    "Name": "Echoes of Victory",
+    "Description": "See Mythic Odysseys of Theros, page 31.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "azorius_functionary_legal_authority",
+    "Name": "Legal Authority",
+    "Description": "See Guildmasters' Guide to Ravnica, page 33.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "boros_legionnaire_legion_station",
+    "Name": "Legion Station",
+    "Description": "See Guildmasters' Guide to Ravnica, page 40.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "celebrity_adventurers_scion_name_dropping",
+    "Name": "Name Dropping",
+    "Description": "See Acquisitions Incorporated, page 48.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "charlatan_false_identity",
+    "Name": "False Identity",
+    "Description": "See Player's Handbook (2014), page 128.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "city_watch_watchers_eye",
+    "Name": "Watcher's Eye",
+    "Description": "See Sword Coast Adventurer's Guide, page 145.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "clan_crafter_respect_of_the_stout_folk",
+    "Name": "Respect of the Stout Folk",
+    "Description": "See Sword Coast Adventurer's Guide, page 145.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "cloistered_scholar_library_access",
+    "Name": "Library Access",
+    "Description": "See Sword Coast Adventurer's Guide, page 146.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "courtier_court_functionary",
+    "Name": "Court Functionary",
+    "Description": "See Sword Coast Adventurer's Guide, page 146.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "criminal_criminal_contact",
+    "Name": "Criminal Contact",
+    "Description": "See Player's Handbook (2014), page 129.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "custom_background_choose_a_feature",
+    "Name": "Choose a Feature",
+    "Description": "See Player's Handbook (2014), page 126.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "dimir_operative_false_identity",
+    "Name": "False Identity",
+    "Description": "See Guildmasters' Guide to Ravnica, page 46.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "entertainer_by_popular_demand",
+    "Name": "By Popular Demand",
+    "Description": "See Player's Handbook (2014), page 130.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "faceless_dual_personalities",
+    "Name": "Dual Personalities",
+    "Description": "See Baldur's Gate: Descent into Avernus, page 203.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "faction_agent_safe_haven",
+    "Name": "Safe Haven",
+    "Description": "See Sword Coast Adventurer's Guide, page 147.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "failed_merchant_supply_chain",
+    "Name": "Supply Chain",
+    "Description": "See Acquisitions Incorporated, page 49.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "far_traveler_all_eyes_on_you",
+    "Name": "All Eyes on You",
+    "Description": "See Sword Coast Adventurer's Guide, page 148.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "feylost_feywild_connection",
+    "Name": "Feywild Connection",
+    "Description": "See The Wild Beyond the Witchlight, page 9.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "fisher_harvest_the_water",
+    "Name": "Harvest the Water",
+    "Description": "See Ghosts of Saltmarsh, page 29.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "folk_hero_rustic_hospitality",
+    "Name": "Rustic Hospitality",
+    "Description": "See Player's Handbook (2014), page 131.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "gambler_never_tell_me_the_odds",
+    "Name": "Never Tell Me the Odds",
+    "Description": "See Acquisitions Incorporated, page 49.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "gate_warden_planar_infusion",
+    "Name": "Planar Infusion",
+    "Description": "See Sigil and the Outlands, page 7.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "giant_foundling_strike_of_the_giants",
+    "Name": "Strike of the Giants",
+    "Description": "See Bigby Presents: Glory of the Giants, page 6.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "golgari_agent_undercity_paths",
+    "Name": "Undercity Paths",
+    "Description": "See Guildmasters' Guide to Ravnica, page 53.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "grinner_ballad_of_the_grinning_fool",
+    "Name": "Ballad of the Grinning Fool",
+    "Description": "See Explorer's Guide to Wildemount, page 200.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "gruul_anarch_rubblebelt_refuge",
+    "Name": "Rubblebelt Refuge",
+    "Description": "See Guildmasters' Guide to Ravnica, page 60.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "guild_artisan_guild_membership",
+    "Name": "Guild Membership",
+    "Description": "See Player's Handbook (2014), page 132.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "haunted_one_heart_of_darkness",
+    "Name": "Heart of Darkness",
+    "Description": "See Van Richten's Guide to Ravenloft, page 34.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "hermit_discovery",
+    "Name": "Discovery",
+    "Description": "See Player's Handbook (2014), page 134.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "house_agent_house_connections",
+    "Name": "House Connections",
+    "Description": "See Eberron: Rising from the Last War, page 53.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "inheritor_inheritance",
+    "Name": "Inheritance",
+    "Description": "See Sword Coast Adventurer's Guide, page 150.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "initiate_trials_of_the_five_gods",
+    "Name": "Trials of the Five Gods",
+    "Description": "See Plane Shift: Amonkhet, page 8.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "inquisitor_legal_authority",
+    "Name": "Legal Authority",
+    "Description": "See Plane Shift: Innistrad, page 12.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "investigator_official_inquiry",
+    "Name": "Official Inquiry",
+    "Description": "See Van Richten's Guide to Ravenloft, page 35.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "izzet_engineer_urban_infrastructure",
+    "Name": "Urban Infrastructure",
+    "Description": "See Guildmasters' Guide to Ravnica, page 66.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "knight_of_solamnia_squire_of_solamnia",
+    "Name": "Squire of Solamnia",
+    "Description": "See Dragonlance: Shadow of the Dragon Queen, page 30.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "knight_of_the_order_knightly_regard",
+    "Name": "Knightly Regard",
+    "Description": "See Sword Coast Adventurer's Guide, page 151.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "lorehold_student_lorehold_initiate",
+    "Name": "Lorehold Initiate",
+    "Description": "See Strixhaven: A Curriculum of Chaos, page 31.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "mage_of_high_sorcery_initiate_of_high_sorcery",
+    "Name": "Initiate of High Sorcery",
+    "Description": "See Dragonlance: Shadow of the Dragon Queen, page 30.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "marine_steady",
+    "Name": "Steady",
+    "Description": "See Ghosts of Saltmarsh, page 31.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "mercenary_veteran_mercenary_life",
+    "Name": "Mercenary Life",
+    "Description": "See Sword Coast Adventurer's Guide, page 152.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "noble_position_of_privilege",
+    "Name": "Position of Privilege",
+    "Description": "See Player's Handbook (2014), page 135.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "orzhov_representative_leverage",
+    "Name": "Leverage",
+    "Description": "See Guildmasters' Guide to Ravnica, page 72.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "outlander_wanderer",
+    "Name": "Wanderer",
+    "Description": "See Player's Handbook (2014), page 136.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "plaintiff_legalese",
+    "Name": "Legalese",
+    "Description": "See Acquisitions Incorporated, page 50.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "planar_philosopher_conviction",
+    "Name": "Conviction",
+    "Description": "See Sigil and the Outlands, page 8.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "prismari_student_prismari_initiate",
+    "Name": "Prismari Initiate",
+    "Description": "See Strixhaven: A Curriculum of Chaos, page 32.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "quandrix_student_quandrix_initiate",
+    "Name": "Quandrix Initiate",
+    "Description": "See Strixhaven: A Curriculum of Chaos, page 33.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "rakdos_cultist_a_flair_for_the_dramatic",
+    "Name": "A Flair for the Dramatic",
+    "Description": "See Guildmasters' Guide to Ravnica, page 79.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "rewarded_fortunes_favor",
+    "Name": "Fortune's Favor",
+    "Description": "See The Book of Many Things, page 57.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "rival_intern_inside_informant",
+    "Name": "Inside Informant",
+    "Description": "See Acquisitions Incorporated, page 51.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "ruined_still_standing",
+    "Name": "Still Standing",
+    "Description": "See The Book of Many Things, page 58.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "rune_carver_rune_shaper",
+    "Name": "Rune Shaper",
+    "Description": "See Bigby Presents: Glory of the Giants, page 12.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "sage_researcher",
+    "Name": "Researcher",
+    "Description": "See Player's Handbook (2014), page 137.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "sailor_ships_passage",
+    "Name": "Ship's Passage",
+    "Description": "See Player's Handbook (2014), page 139.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "selesnya_initiate_conclaves_shelter",
+    "Name": "Conclave's Shelter",
+    "Description": "See Guildmasters' Guide to Ravnica, page 86.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "shipwright_ill_patch_it",
+    "Name": "I'll Patch It!",
+    "Description": "See Ghosts of Saltmarsh, page 33.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "silverquill_student_silverquill_initiate",
+    "Name": "Silverquill Initiate",
+    "Description": "See Strixhaven: A Curriculum of Chaos, page 35.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "simic_scientist_researcher",
+    "Name": "Researcher",
+    "Description": "See Guildmasters' Guide to Ravnica, page 93.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "smuggler_down_low",
+    "Name": "Down Low",
+    "Description": "See Ghosts of Saltmarsh, page 34.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "soldier_military_rank",
+    "Name": "Military Rank",
+    "Description": "See Player's Handbook (2014), page 140.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "urban_bounty_hunter_ear_to_the_ground",
+    "Name": "Ear to the Ground",
+    "Description": "See Sword Coast Adventurer's Guide, page 153.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "urchin_city_secrets",
+    "Name": "City Secrets",
+    "Description": "See Player's Handbook (2014), page 141.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "uthgardt_tribe_member_uthgardt_heritage",
+    "Name": "Uthgardt Heritage",
+    "Description": "See Sword Coast Adventurer's Guide, page 153.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "variant_city_watch_investigator_watchers_eye",
+    "Name": "Watcher's Eye",
+    "Description": "See Sword Coast Adventurer's Guide, page 145.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "vizier_voice_of_authority",
+    "Name": "Voice of Authority",
+    "Description": "See Plane Shift: Amonkhet, page 10.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "volstrucker_agent_shadow_network",
+    "Name": "Shadow Network",
+    "Description": "See Explorer's Guide to Wildemount, page 202.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "waterdhavian_noble_kept_in_style",
+    "Name": "Kept in Style",
+    "Description": "See Sword Coast Adventurer's Guide, page 154.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "wildspacer_wildspace_adaptation",
+    "Name": "Wildspace Adaptation",
+    "Description": "See Spelljammer: Astral Adventurer's Guide, page 8.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "witchlight_hand_carnival_fixture",
+    "Name": "Carnival Fixture",
+    "Description": "See The Wild Beyond the Witchlight, page 11.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  },
+  {
+    "Id": "witherbloom_student_witherbloom_initiate",
+    "Name": "Witherbloom Initiate",
+    "Description": "See Strixhaven: A Curriculum of Chaos, page 36.",
+    "Level": 0,
+    "ClassId": null,
+    "SubclassId": null,
+    "Type": "background"
+  }
+]

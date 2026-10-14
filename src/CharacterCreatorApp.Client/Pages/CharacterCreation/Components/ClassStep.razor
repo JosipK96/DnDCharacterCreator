@@ -1,0 +1,281 @@
+﻿@using CharacterCreatorApp.Contracts.Requests.CharacterDrafts
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Choose Your Class")</h2>
+
+    @if (IsLoading)
+    {
+        <div class="flex justify-center items-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+            <p class="text-sm">@ErrorMessage</p>
+        </div>
+    }
+    else
+    {
+        @if (selectedClass == null)
+        {
+            <!-- Class Selection Grid -->
+            <div class="mb-6">
+                <p class="text-gray-400 mb-4">
+                    Choose your character's class. Your class determines your abilities, proficiencies, and role in combat.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    @foreach (var classOption in classes)
+                    {
+                        <button @onclick="() => SelectClass(classOption)"
+                                class="bg-gray-700 hover:bg-gray-600 border-2 border-gray-600 hover:border-indigo-500 rounded-lg p-4 text-left transition-all duration-200 group">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 flex-1">
+                                    @classOption.Name
+                                </h3>
+                                <span class="text-sm text-gray-400 ml-2">@classOption.HitDie</span>
+                            </div>
+
+                            @if (classOption.ClassProficiencies?.Any() == true)
+                            {
+                                <p class="text-xs text-gray-500 mt-2">
+                                    @classOption.ClassProficiencies.Count proficiencies
+                                </p>
+                            }
+
+                            @if (classOption.ProficiencyChoice != null)
+                            {
+                                <p class="text-xs text-indigo-400 mt-1">
+                                    Choose @classOption.ProficiencyChoice.Type from @classOption.ProficiencyChoice.Options.Count skills
+                                </p>
+                            }
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <!-- Selected Class Details -->
+            <div class="space-y-6">
+                <!-- Class Summary -->
+                <div class="bg-gray-700 rounded-lg p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-white mb-4">@selectedClass.Name</h3>
+
+                            <div class="space-y-3">
+                                <div>
+                                    <span class="text-gray-400 text-sm">Hit Die:</span>
+                                    <p class="text-white font-medium">@selectedClass.HitDie</p>
+                                </div>
+
+                                @if (selectedClass.ClassProficiencies?.Any() == true)
+                                {
+                                    <div>
+                                        <span class="text-gray-400 text-sm">Proficiencies:</span>
+                                        <div class="flex flex-wrap gap-2 mt-2">
+                                            @foreach (var prof in selectedClass.ClassProficiencies)
+                                            {
+                                                <span class="bg-gray-600 text-gray-200 px-2 py-1 rounded text-sm">
+                                                    @prof.Name
+                                                </span>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+
+                                @if (selectedClass.ProficiencyChoice != null)
+                                {
+                                    <div>
+                                        <span class="text-gray-400 text-sm">Skill Choices:</span>
+                                        <p class="text-indigo-300 text-sm mt-1">
+                                            Choose @selectedClass.ProficiencyChoice.Type from:
+                                            @string.Join(", ", selectedClass.ProficiencyChoice.Options.Select(o => o.Name))
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <button @onclick="() => selectedClass = null"
+                                class="text-gray-400 hover:text-white ml-4">
+                            Change
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Subclass Selection (if at or past subclass unlock level) -->
+                @if (characterLevel >= selectedClass.SubclassLevel)
+                {
+                    @if (loadingSubclasses)
+                    {
+                        <div class="text-center py-8">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
+                            <p class="text-gray-400 mt-2">Loading subclasses...</p>
+                        </div>
+                    }
+                    else if (subclasses.Any())
+                    {
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-4">
+                                Choose a Subclass <span class="text-red-400">*</span>
+                            </h3>
+                            <p class="text-gray-400 text-sm mb-4">
+                                At level @selectedClass.SubclassLevel, you choose a subclass that grants you additional features.
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                @foreach (var subclass in subclasses)
+                                {
+                                    <button @onclick="() => selectedSubclass = subclass"
+                                            class="@GetSubclassButtonClass(subclass)">
+                                        <div class="flex items-start">
+                                            <div class="flex-1 text-left">
+                                                <h4 class="font-bold text-white mb-1">@subclass.Name</h4>
+                                                <p class="text-xs text-gray-500">
+                                                    @selectedClass.Name Subclass
+                                                </p>
+                                            </div>
+                                            @if (selectedSubclass?.Id == subclass.Id)
+                                            {
+                                                <svg class="w-6 h-6 text-indigo-400 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                </svg>
+                                            }
+                                        </div>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else if (characterLevel >= selectedClass.SubclassLevel && !loadingSubclasses && !subclasses.Any())
+                    {
+                        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg">
+                            <p class="text-sm">Failed to load subclasses. Please go back and try again.</p>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="bg-blue-900 border border-blue-700 text-blue-200 px-4 py-3 rounded-lg">
+                        <p class="text-sm">
+                            <strong>Note:</strong> You'll choose a subclass when you reach level @selectedClass.SubclassLevel.
+                        </p>
+                    </div>
+                }
+            </div>
+        }
+    }
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between mt-8">
+        <button @onclick="HandleBack"
+                type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            Back
+        </button>
+
+        <button @onclick="HandleNext"
+                disabled="@(!CanProceed() || IsSaving)"
+                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Saving..." : NextLabel)
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int CharacterLevel { get; set; } = 1;
+
+    /// <summary>The draft's rules edition; only its classes are offered.</summary>
+    [Parameter, EditorRequired]
+    public string Edition { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback OnNext { get; set; }
+
+    [Parameter]
+    public EventCallback OnBack { get; set; }
+
+    private List<ClassApiResponse> classes = new();
+    private List<SubclassApiResponse> subclasses = new();
+    private ClassApiResponse? selectedClass;
+    private SubclassApiResponse? selectedSubclass;
+    private int characterLevel = 1;
+    private bool loadingSubclasses = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        characterLevel = CharacterLevel;
+        await LoadClasses();
+    }
+
+    private Task LoadClasses() =>
+        LoadAsync(async () => classes = await LookupService.GetClassesAsync(Edition), "Failed to load classes");
+
+    private async Task SelectClass(ClassApiResponse classOption)
+    {
+        selectedClass = classOption;
+        selectedSubclass = null;
+        StateHasChanged();
+
+        if (characterLevel >= classOption.SubclassLevel)
+        {
+            await LoadSubclasses(classOption.Id);
+        }
+    }
+
+    private Task LoadSubclasses(string classId) =>
+        RunAsync(
+            async () =>
+            {
+                // Cleared first, so a failed load cannot leave the last class's subclasses showing
+                subclasses = [];
+                subclasses = await LookupService.GetSubclassesByClassAsync(classId);
+            },
+            busy => loadingSubclasses = busy,
+            "Failed to load subclasses");
+
+    private bool CanProceed()
+    {
+        if (selectedClass == null)
+            return false;
+
+        if (characterLevel >= selectedClass.SubclassLevel && !loadingSubclasses && !subclasses.Any())
+            return false;
+
+        if (characterLevel >= selectedClass.SubclassLevel && subclasses.Any())
+            return selectedSubclass != null;
+
+        return true;
+    }
+
+    private string GetSubclassButtonClass(SubclassApiResponse subclass)
+    {
+        var baseClass = "bg-gray-700 border-2 rounded-lg p-4 transition-all duration-200";
+
+        if (selectedSubclass?.Id == subclass.Id)
+            return $"{baseClass} border-indigo-500 bg-gray-600";
+
+        return $"{baseClass} border-gray-600 hover:border-indigo-500 hover:bg-gray-600";
+    }
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed()) return;
+
+        if (await SaveAsync(() => DraftService.SetClassAsync(DraftId, selectedClass!.Id, selectedSubclass?.Id)))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

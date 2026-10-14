@@ -1,0 +1,54 @@
+@inject AuthService AuthService
+@inject NavigationManager Navigation
+
+<nav class="bg-gray-800 shadow-lg">
+    <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-8">
+                <a href="/" class="text-white text-xl font-bold">
+                    🎲 D&D Character Creator
+                </a>
+
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="hidden md:flex space-x-4">
+                            <a href="/characters" class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
+                                My Characters
+                            </a>
+                            <a href="/character/create" class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
+                                Create Character
+                            </a>
+                        </div>
+                    </Authorized>
+                </AuthorizeView>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <AuthorizeView>
+                    <Authorized>
+                        <button @onclick="Logout"
+                                class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
+                            Logout
+                        </button>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="/login" class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
+                            Login
+                        </a>
+                        <a href="/register" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md">
+                            Register
+                        </a>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </div>
+    </div>
+</nav>
+
+@code {
+    private async Task Logout()
+    {
+        await AuthService.LogoutAsync();
+        Navigation.NavigateTo("/");
+    }
+}

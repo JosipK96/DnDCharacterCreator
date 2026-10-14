@@ -1,0 +1,148 @@
+# Builds and tests every pull request and every push to main. A pull request merges only when
+# both jobs are green; the Auto-merge workflow merges a labelled one when this run passes. The
+# job names are what branch protection and Auto-merge match on, so they stay as they are.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# A newer push to the same branch makes the older run pointless
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+          cache: true
+          cache-dependency-path: |
+            Directory.Packages.props
+            **/*.csproj
+
+      # Through the test projects rather than the solution: the solution holds
+      # docker-compose.dcproj, which the dotnet CLI cannot build, and the test projects between
+      # them reference every other project. A new test project is picked up without editing this.
+      - name: Restore
+        shell: bash
+        run: |
+          set -euo pipefail
+          for project in tests/*/*.csproj; do
+            dotnet restore "$project"
+          done
+
+      # TreatWarningsAsErrors and the analyzers come from Directory.Build.props, so a red Build
+      # here is the same failure as locally: the code does not compile or an analyzer objects
+      - name: Build
+        id: build
+        shell: bash
+        run: |
+          set -euo pipefail
+          for project in tests/*/*.csproj; do
+            dotnet build "$project" --configuration Release --no-restore
+          done
+
+      # global.json runs dotnet test on Microsoft.Testing.Platform (xunit.v3 4): a project is
+      # passed with --project, and xunit writes its own .trx
+      - name: Unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          for project in tests/*.UnitTests/*.csproj; do
+            dotnet test --project "$project" --configuration Release --no-build --results-directory TestResults \
+              --report-xunit-trx --report-xunit-trx-filename "$(basename "$project" .csproj).trx"
+          done
+
+      # Runs when the unit tests failed too, so one run shows both; not when nothing was built.
+      # PostgreSQL starts through Testcontainers on the runner's Docker.
+      - name: Integration tests
+        if: (success() || failure()) && steps.build.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for project in tests/*.IntegrationTests/*.csproj; do
+            dotnet test --project "$project" --configuration Release --no-build --results-directory TestResults \
+              --report-xunit-trx --report-xunit-trx-filename "$(basename "$project" .csproj).trx"
+          done
+
+      # Restore's own audit did not fail this job for a high-severity advisory that failed the
+      # Docker build's restore of the same package, so the check is made explicitly
+      - name: No vulnerable packages
+        if: success() || failure()
+        shell: bash
+        run: |
+          set -uo pipefail
+          found=0
+          for project in src/*/*.csproj tools/*/*.csproj tests/*/*.csproj; do
+            output=$(dotnet list "$project" package --vulnerable --include-transitive 2>&1)
+            if grep -q "has the following vulnerable packages" <<< "$output"; then
+              echo "::error file=$project::vulnerable packages"
+              echo "$output"
+              found=1
+            fi
+          done
+          exit $found
+
+      - name: Keep the test results
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results
+          path: TestResults
+          retention-days: 7
+
+  # Not a deploy: proves on every pull request that the app still packages into the image a
+  # deploy will use. The Dockerfile breaks in ways the build above never sees (a project or
+  # props file it does not copy, a restore that fails only in the container).
+  docker-image:
+    name: Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # A pull request that changes only Markdown or docs/ cannot change the image. The job
+      # still reports success, so required checks and Auto-merge see it as green.
+      - name: What the change touches
+        id: changes
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.base_ref }}
+        run: |
+          set -uo pipefail
+          if [ "$EVENT" != "pull_request" ]; then
+            echo "image=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if git diff --name-only "origin/$BASE...HEAD" | grep -qvE '\.md$|^docs/'; then
+            echo "image=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Only documentation changed; the image is not rebuilt."
+            echo "image=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # As docker-compose builds it: the repository root is the context. Nothing is pushed.
+      - name: Build the Api image
+        if: steps.changes.outputs.image == 'true'
+        run: docker build --file src/CharacterCreatorApp.Api/Dockerfile --tag charactercreatorapi:ci .

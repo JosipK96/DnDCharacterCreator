@@ -1,0 +1,289 @@
+﻿@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div class="space-y-6">
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Proficiencies")</h2>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+            <p class="text-sm">@ErrorMessage</p>
+        </div>
+    }
+
+    @if (IsLoading)
+    {
+        <div class="flex justify-center items-center py-12">
+            <div class="text-center">
+                <div class="inline-block w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p class="text-gray-300">Loading proficiency options...</p>
+            </div>
+        </div>
+    }
+    else if (classDetails?.ProficiencyChoice != null)
+    {
+        <div class="bg-gray-800 rounded-lg p-6 mb-6">
+            <h3 class="text-xl font-bold text-white mb-2">@classDetails.Name Proficiencies</h3>
+            <p class="text-gray-300 text-sm">Choose your proficiencies from the options below.</p>
+        </div>
+
+        @if (alreadyGrantedNames.Any())
+        {
+            <div class="bg-amber-900/40 border border-amber-700 text-amber-200 px-4 py-3 rounded-lg mb-4 text-sm">
+                <strong>Note:</strong> The following skills are already granted by your background and have been removed from the list:
+                @string.Join(", ", alreadyGrantedNames).
+            </div>
+        }
+
+        <!-- Proficiency Selection -->
+        <div class="bg-gray-800 rounded-lg p-6 border-2 @GetBorderClass()">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h4 class="text-lg font-bold text-white">
+                        Choose @proficiencyChoice!.Count @proficiencyChoice.Type Proficiencies
+                    </h4>
+                    <p class="text-sm text-gray-400 mt-1">
+                        Select @proficiencyChoice.Count from the options below
+                    </p>
+                </div>
+                <div class="text-right">
+                    <div class="text-3xl font-bold @GetCounterClass()">
+                        @selectedProficiencies.Count / @proficiencyChoice.Count
+                    </div>
+                    @if (IsComplete())
+                    {
+                        <div class="text-xs text-green-400 mt-1">✓ Complete</div>
+                    }
+                    else
+                    {
+                        <div class="text-xs text-yellow-400 mt-1">Choose @(proficiencyChoice.Count - selectedProficiencies.Count) more</div>
+                    }
+                </div>
+            </div>
+
+            <!-- Proficiency Options Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                @foreach (var proficiency in availableOptions)
+                {
+                    var isSelected = selectedProficiencies.Contains(proficiency.Id);
+                    var canSelect = selectedProficiencies.Count < proficiencyChoice.Count || isSelected;
+
+                    <button @onclick="() => ToggleProficiency(proficiency.Id)"
+                            disabled="@(!canSelect && !isSelected)"
+                            class="@GetProficiencyCardClass(isSelected, canSelect)">
+                        <div class="flex items-start gap-3">
+                            <div class="@GetCheckboxClass(isSelected)">
+                                @if (isSelected)
+                                {
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                }
+                            </div>
+                            <div class="flex-1 text-left">
+                                <div class="font-medium text-white">@proficiency.Name</div>
+                                <div class="text-xs text-gray-400 mt-1">@proficiency.Type</div>
+                            </div>
+                        </div>
+                    </button>
+                }
+            </div>
+        </div>
+    }
+    else if (!IsLoading && classDetails?.ProficiencyChoice == null)
+    {
+        <div class="bg-gray-800 rounded-lg p-8 text-center">
+            <div class="text-6xl mb-4">✨</div>
+            <p class="text-xl text-white font-medium mb-2">No Proficiency Choices</p>
+            <p class="text-gray-400">This class automatically grants all proficiencies.</p>
+            <p class="text-sm text-gray-500 mt-2">Click Next to continue.</p>
+        </div>
+    }
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between mt-8">
+        <button @onclick="HandleBack"
+                type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            ← Previous
+        </button>
+
+        <button @onclick="HandleNext"
+                disabled="@(!CanProceed() || IsSaving)"
+                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Saving..." : NextLabel)
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private ClassApiResponse? classDetails;
+    private ProficiencyChoiceApiResponse? proficiencyChoice;
+    private List<ProficiencyApiResponse> availableOptions = [];
+    private List<string> alreadyGrantedNames = [];
+    private HashSet<string> selectedProficiencies = new();
+
+    protected override Task OnInitializedAsync() =>
+        LoadAsync(LoadProficiencyChoicesAsync, "Failed to load proficiency options");
+
+    private async Task LoadProficiencyChoicesAsync()
+    {
+        // STEP 1: Get the draft to find the ClassId
+        var draft = await DraftService.GetDraftDetailsAsync(DraftId);
+
+        if (draft == null)
+        {
+            ErrorMessage = "Draft not found. Please start over.";
+            return;
+        }
+
+        if (string.IsNullOrEmpty(draft.ClassId))
+        {
+            ErrorMessage = "No class selected. Please go back and select a class.";
+            return;
+        }
+
+        // STEP 2: Load the class details to get proficiency choice
+        classDetails = await LookupService.GetClassByIdAsync(draft.ClassId);
+
+        if (classDetails == null)
+        {
+            ErrorMessage = "Failed to load class details.";
+            return;
+        }
+
+        // STEP 3: Get the proficiency choice (singular, nullable)
+        proficiencyChoice = classDetails.ProficiencyChoice;
+
+        // STEP 4: Build the filtered options list, removing skills the background already grants
+        if (proficiencyChoice != null)
+        {
+            HashSet<string> backgroundProficiencyIds = [];
+
+            if (!string.IsNullOrEmpty(draft.BackgroundId))
+            {
+                var background = await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
+                if (background?.Proficiencies != null)
+                {
+                    foreach (var bp in background.Proficiencies)
+                        backgroundProficiencyIds.Add(bp.Id);
+                }
+            }
+
+            alreadyGrantedNames = proficiencyChoice.Options
+                .Where(o => backgroundProficiencyIds.Contains(o.Id))
+                .Select(o => o.Name)
+                .ToList();
+
+            availableOptions = proficiencyChoice.Options
+                .Where(o => !backgroundProficiencyIds.Contains(o.Id))
+                .ToList();
+        }
+
+        // STEP 5: Load any previously selected proficiencies from the draft
+        if (draft.SelectedClassProficiencyIds != null && draft.SelectedClassProficiencyIds.Any())
+        {
+            selectedProficiencies = new HashSet<string>(draft.SelectedClassProficiencyIds);
+        }
+    }
+
+    private void ToggleProficiency(string proficiencyId)
+    {
+        if (proficiencyChoice == null) return;
+
+        if (selectedProficiencies.Contains(proficiencyId))
+        {
+            selectedProficiencies.Remove(proficiencyId);
+        }
+        else if (selectedProficiencies.Count < proficiencyChoice.Count)
+        {
+            selectedProficiencies.Add(proficiencyId);
+        }
+
+        ErrorMessage = null;
+        StateHasChanged();
+    }
+
+    private bool IsComplete()
+    {
+        if (proficiencyChoice == null) return true;
+        return selectedProficiencies.Count == proficiencyChoice.Count;
+    }
+
+    private bool CanProceed()
+    {
+        if (IsLoading || IsSaving)
+            return false;
+
+        // If no proficiency choice, can proceed
+        if (proficiencyChoice == null)
+            return true;
+
+        // Must select exactly the required count
+        return selectedProficiencies.Count == proficiencyChoice.Count;
+    }
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed())
+        {
+            ErrorMessage = $"Please select exactly {proficiencyChoice?.Count ?? 0} proficiencies before continuing.";
+            return;
+        }
+
+        // Only save if there are proficiencies to choose
+        var hasChoices = proficiencyChoice != null && selectedProficiencies.Any();
+
+        if (hasChoices && !await SaveAsync(
+                () => DraftService.ChooseProficienciesAsync(DraftId, selectedProficiencies.ToList()),
+                "Failed to save proficiencies"))
+        {
+            return;
+        }
+
+        await OnNext.InvokeAsync();
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+
+    private string GetBorderClass()
+    {
+        return IsComplete() ? "border-green-600" : "border-gray-600";
+    }
+
+    private string GetCounterClass()
+    {
+        if (IsComplete())
+            return "text-green-400";
+
+        return selectedProficiencies.Count > 0 ? "text-yellow-400" : "text-gray-400";
+    }
+
+    private string GetProficiencyCardClass(bool isSelected, bool canSelect)
+    {
+        var baseClass = "p-4 rounded-lg border-2 transition-all duration-200 text-left";
+
+        if (isSelected)
+            return $"{baseClass} bg-indigo-600 border-indigo-500 text-white shadow-lg";
+
+        if (!canSelect)
+            return $"{baseClass} bg-gray-700 border-gray-600 text-gray-500 cursor-not-allowed opacity-50";
+
+        return $"{baseClass} bg-gray-700 border-gray-600 hover:border-indigo-500 hover:bg-gray-600 cursor-pointer";
+    }
+
+    private string GetCheckboxClass(bool isSelected)
+    {
+        var baseClass = "w-6 h-6 rounded border-2 flex items-center justify-center flex-shrink-0";
+        return isSelected ? $"{baseClass} bg-white border-white text-indigo-600" : $"{baseClass} border-gray-400";
+    }
+}

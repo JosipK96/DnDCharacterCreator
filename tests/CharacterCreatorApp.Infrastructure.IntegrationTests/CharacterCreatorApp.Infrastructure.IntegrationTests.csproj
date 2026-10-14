@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Testcontainers.PostgreSql" />
+    <!-- Pinned above the version Testcontainers pulls in: 2025.1.0 has two high-severity advisories -->
+    <PackageReference Include="SSH.NET" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Infrastructure\CharacterCreatorApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Application\CharacterCreatorApp.Application.csproj" />
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Domain\CharacterCreatorApp.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

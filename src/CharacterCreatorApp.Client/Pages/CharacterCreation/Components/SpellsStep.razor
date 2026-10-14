@@ -1,0 +1,477 @@
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div class="space-y-6">
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Spells")</h2>
+
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+            <p class="text-sm">@ErrorMessage</p>
+        </div>
+    }
+
+    @if (IsLoading)
+    {
+        <div class="flex justify-center items-center py-12">
+            <div class="text-center">
+                <div class="inline-block w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p class="text-gray-300">Loading spell options...</p>
+            </div>
+        </div>
+    }
+    else if (!isSpellcaster)
+    {
+        <div class="bg-gray-800 rounded-lg p-8 text-center">
+            <div class="text-6xl mb-4">⚔️</div>
+            <p class="text-xl text-white font-medium mb-2">No Spells Available</p>
+            <p class="text-gray-400">
+                @className doesn't have spellcasting at level @(draft?.Level ?? 1).
+            </p>
+            <p class="text-sm text-gray-500 mt-2">Click Next to complete character creation!</p>
+        </div>
+    }
+    else
+    {
+        <!-- Prepared caster info box (Cleric, Druid, Paladin, Artificer with no fixed spell list) -->
+        @if (isPreparedCaster && spellsKnown == 0)
+        {
+            <div class="bg-blue-900 border border-blue-700 text-blue-200 px-5 py-4 rounded-lg mb-4">
+                <p class="font-semibold mb-1">Prepared Spellcaster</p>
+                <p class="text-sm">
+                    @className prepares spells each day from the full @className spell list.
+                    No leveled spells are chosen at character creation — you'll prepare them fresh each day.
+                </p>
+            </div>
+        }
+
+        <!-- Class heading -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-4">
+            <h3 class="text-xl font-bold text-white mb-1">@className Spells</h3>
+            <p class="text-gray-300 text-sm">
+                @if (cantripsKnown > 0 && spellsKnown > 0)
+                {
+                    <span>Choose @cantripsKnown @(cantripsKnown == 1 ? "cantrip" : "cantrips") and @spellsKnown @(spellsKnown == 1 ? "spell" : "spells").</span>
+                }
+                else if (cantripsKnown > 0 && isPreparedCaster)
+                {
+                    <span>Choose @cantripsKnown @(cantripsKnown == 1 ? "cantrip" : "cantrips") for your character.</span>
+                }
+                else if (cantripsKnown > 0)
+                {
+                    <span>Choose @cantripsKnown @(cantripsKnown == 1 ? "cantrip" : "cantrips").</span>
+                }
+                else if (spellsKnown > 0)
+                {
+                    <span>Choose @spellsKnown @(spellsKnown == 1 ? "spell" : "spells") for your starting repertoire.</span>
+                }
+            </p>
+        </div>
+
+        <!-- ===== CANTRIPS SECTION ===== -->
+        @if (cantripsKnown > 0 && availableCantrips.Any())
+        {
+            <div class="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-lg p-5 border-2 @GetCantripBorderClass() mb-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Cantrips</h4>
+                        <p class="text-sm text-gray-400 mt-1">Choose @cantripsKnown</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-bold @GetCantripCounterClass()">
+                            @selectedCantrips.Count / @cantripsKnown
+                        </div>
+                        @if (selectedCantrips.Count == cantripsKnown)
+                        {
+                            <div class="text-xs text-green-400 mt-1">✓ Complete</div>
+                        }
+                        else
+                        {
+                            <div class="text-xs text-yellow-400 mt-1">Choose @(cantripsKnown - selectedCantrips.Count) more</div>
+                        }
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    @foreach (var spell in GetFilteredSpells(availableCantrips))
+                    {
+                        var isSelected = selectedCantrips.Contains(spell.Id);
+                        var canSelect = selectedCantrips.Count < cantripsKnown || isSelected;
+
+                        <button @onclick="() => ToggleCantrip(spell.Id)"
+                                disabled="@(!canSelect && !isSelected)"
+                                class="@GetSpellCardClass(isSelected, canSelect)">
+                            @SpellCardContent(spell, isSelected)
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- ===== LEVELED SPELLS SECTION ===== -->
+        @if (!isPreparedCaster && spellsKnown > 0 && availableLeveledSpells.Any())
+        {
+            <div class="bg-gradient-to-r from-indigo-900/50 to-blue-900/50 rounded-lg p-5 border-2 @GetSpellBorderClass() mb-4">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h4 class="text-lg font-bold text-white">Spells</h4>
+                        <p class="text-sm text-gray-400 mt-1">Choose @spellsKnown (up to level @maxSpellLevel)</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-3xl font-bold @GetSpellCounterClass()">
+                            @selectedLeveledSpells.Count / @spellsKnown
+                        </div>
+                        @if (selectedLeveledSpells.Count == spellsKnown)
+                        {
+                            <div class="text-xs text-green-400 mt-1">✓ Complete</div>
+                        }
+                        else
+                        {
+                            <div class="text-xs text-yellow-400 mt-1">Choose @(spellsKnown - selectedLeveledSpells.Count) more</div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Spell Filters -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Spell Level</label>
+                        <select @bind="filterLevel" @bind:after="StateHasChanged" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm">
+                            <option value="">All Levels</option>
+                            @for (int i = 1; i <= maxSpellLevel; i++)
+                            {
+                                <option value="@i">Level @i</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">School</label>
+                        <select @bind="filterSchool" @bind:after="StateHasChanged" class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm">
+                            <option value="">All Schools</option>
+                            @foreach (var school in schools)
+                            {
+                                <option value="@school">@school</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Search</label>
+                        <input @bind="searchText" @bind:after="StateHasChanged" type="text" placeholder="Search spells..."
+                               class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm" />
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    @foreach (var spell in GetFilteredSpells(availableLeveledSpells))
+                    {
+                        var isSelected = selectedLeveledSpells.Contains(spell.Id);
+                        var canSelect = selectedLeveledSpells.Count < spellsKnown || isSelected;
+
+                        <button @onclick="() => ToggleLeveledSpell(spell.Id)"
+                                disabled="@(!canSelect && !isSelected)"
+                                class="@GetSpellCardClass(isSelected, canSelect)">
+                            @SpellCardContent(spell, isSelected)
+                        </button>
+                    }
+                    @if (!GetFilteredSpells(availableLeveledSpells).Any())
+                    {
+                        <div class="bg-gray-700 rounded-lg p-6 text-center">
+                            <p class="text-gray-400">No spells match your filters.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+
+    <!-- Navigation Buttons -->
+    <div class="flex justify-between mt-8">
+        <button @onclick="HandleBack"
+                type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            ← Previous
+        </button>
+
+        <button @onclick="HandleNext"
+                disabled="@(!CanProceed() || IsSaving)"
+                class="bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Saving..." : NextLabel)
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private CharacterDraftDetailsApiResponse? draft;
+    private string? className;
+
+    private bool isSpellcaster = false;
+    private bool isPreparedCaster = false; // SpellsKnown == 0 means prepared (Cleric/Druid/Paladin/Artificer)
+    private int spellsKnown = 0;
+    private int cantripsKnown = 0;
+    private int maxSpellLevel = 0;
+
+    private List<SpellApiResponse> availableCantrips = [];
+    private List<SpellApiResponse> availableLeveledSpells = [];
+    private HashSet<string> schools = [];
+
+    private HashSet<string> selectedCantrips = [];
+    private HashSet<string> selectedLeveledSpells = [];
+
+    private string? filterLevel;
+    private string? filterSchool;
+    private string searchText = "";
+
+
+    protected override Task OnInitializedAsync() => LoadAsync(LoadSpellsAsync, "Failed to load spells");
+
+    private async Task LoadSpellsAsync()
+    {
+        draft = await DraftService.GetDraftDetailsAsync(DraftId);
+
+        if (draft == null) { ErrorMessage = "Draft not found."; return; }
+        if (string.IsNullOrEmpty(draft.ClassId)) { ErrorMessage = "No class selected."; return; }
+        if (draft.Level == null) { ErrorMessage = "Character level is not set. Please go back to step 1."; return; }
+
+        var classDetails = await LookupService.GetClassByIdAsync(draft.ClassId);
+        if (classDetails == null) { ErrorMessage = "Failed to load class details."; return; }
+
+        className = classDetails.Name;
+        var characterLevel = draft.Level.Value;
+
+        var subclassDetails = string.IsNullOrEmpty(draft.SubclassId)
+            ? null
+            : await LookupService.GetSubclassByIdAsync(draft.SubclassId);
+
+        var activeProgression = classDetails.SpellProgression
+            .FirstOrDefault(p => p.CharacterLevel == characterLevel);
+
+        // Subclass progression (Eldritch Knight, Arcane Trickster, etc.)
+        if (activeProgression == null && subclassDetails != null)
+        {
+            activeProgression = subclassDetails.SpellProgression
+                .FirstOrDefault(p => p.CharacterLevel == characterLevel);
+
+            if (activeProgression != null)
+                className = $"{classDetails.Name} ({subclassDetails.Name})";
+        }
+
+        if (activeProgression == null)
+        {
+            isSpellcaster = false;
+            return;
+        }
+
+        isSpellcaster = true;
+        spellsKnown = activeProgression.SpellsKnown;
+        cantripsKnown = activeProgression.CantripsKnown;
+        maxSpellLevel = activeProgression.MaxSpellLevel;
+        isPreparedCaster = spellsKnown == 0;
+
+        // Everything up to the highest spell level (cantrips are level 0): the class's own list,
+        // the whole list of another class the subclass opens up (the Wizard's for an Eldritch
+        // Knight, whose fighter has none), and the spells the subclass adds to its class's
+        var lists = new List<List<SpellApiResponse>>
+        {
+            await LookupService.GetSpellsAsync(classId: draft.ClassId, maxLevel: maxSpellLevel)
+        };
+
+        if (subclassDetails?.SpellListClassId is { } listClassId)
+            lists.Add(await LookupService.GetSpellsAsync(classId: listClassId, maxLevel: maxSpellLevel));
+
+        if (subclassDetails != null)
+            lists.Add(await LookupService.GetSpellsAsync(subclassId: subclassDetails.Id, maxLevel: maxSpellLevel));
+
+        var allSpells = lists
+            .SelectMany(list => list)
+            .DistinctBy(s => s.Id)
+            .OrderBy(s => s.Level)
+            .ThenBy(s => s.Name)
+            .ToList();
+
+        availableCantrips = allSpells.Where(s => s.Level == 0).ToList();
+        availableLeveledSpells = allSpells.Where(s => s.Level > 0).ToList();
+        schools = availableLeveledSpells.Select(s => s.School).Distinct().OrderBy(s => s).ToHashSet();
+
+        // Restore previously selected spells
+        if (draft.SelectedSpellIds?.Any() == true)
+        {
+            var cantripIds = availableCantrips.Select(s => s.Id).ToHashSet();
+            foreach (var id in draft.SelectedSpellIds)
+            {
+                if (cantripIds.Contains(id))
+                    selectedCantrips.Add(id);
+                else
+                    selectedLeveledSpells.Add(id);
+            }
+        }
+    }
+
+    private List<SpellApiResponse> GetFilteredSpells(List<SpellApiResponse> source)
+    {
+        var result = source.AsEnumerable();
+
+        if (!string.IsNullOrEmpty(filterLevel) && int.TryParse(filterLevel, out var level))
+            result = result.Where(s => s.Level == level);
+
+        if (!string.IsNullOrEmpty(filterSchool))
+            result = result.Where(s => s.School == filterSchool);
+
+        if (!string.IsNullOrEmpty(searchText))
+            result = result.Where(s =>
+                s.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                s.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+
+        return result.ToList();
+    }
+
+    private void ToggleCantrip(string spellId)
+    {
+        if (selectedCantrips.Contains(spellId))
+            selectedCantrips.Remove(spellId);
+        else if (selectedCantrips.Count < cantripsKnown)
+            selectedCantrips.Add(spellId);
+
+        ErrorMessage = null;
+        StateHasChanged();
+    }
+
+    private void ToggleLeveledSpell(string spellId)
+    {
+        if (selectedLeveledSpells.Contains(spellId))
+            selectedLeveledSpells.Remove(spellId);
+        else if (selectedLeveledSpells.Count < spellsKnown)
+            selectedLeveledSpells.Add(spellId);
+
+        ErrorMessage = null;
+        StateHasChanged();
+    }
+
+    private bool CanProceed()
+    {
+        if (IsLoading || IsSaving) return false;
+        if (!isSpellcaster) return true;
+
+        // Prepared caster with no cantrips (Paladin, Ranger, Artificer at low levels): nothing to choose
+        if (isPreparedCaster && cantripsKnown == 0) return true;
+
+        // Cantrip requirement
+        if (cantripsKnown > 0 && selectedCantrips.Count != cantripsKnown) return false;
+
+        // Leveled spell requirement (only for known-spell casters)
+        if (!isPreparedCaster && spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown) return false;
+
+        return true;
+    }
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed())
+        {
+            if (cantripsKnown > 0 && selectedCantrips.Count != cantripsKnown)
+                ErrorMessage = $"Please select exactly {cantripsKnown} cantrip{(cantripsKnown == 1 ? "" : "s")}.";
+            else if (!isPreparedCaster && spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown)
+                ErrorMessage = $"Please select exactly {spellsKnown} spell{(spellsKnown == 1 ? "" : "s")}.";
+            return;
+        }
+
+        var allSelected = selectedCantrips.Concat(selectedLeveledSpells).ToList();
+
+        if (isSpellcaster && allSelected.Any()
+            && !await SaveAsync(() => DraftService.ChooseSpellsAsync(DraftId, allSelected), "Failed to save spells"))
+        {
+            return;
+        }
+
+        await OnNext.InvokeAsync();
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+
+    // Helpers
+
+    private RenderFragment SpellCardContent(SpellApiResponse spell, bool isSelected) => __builder =>
+    {
+        <div class="flex items-start gap-4">
+            <div class="@GetCheckboxClass(isSelected)">
+                @if (isSelected)
+                {
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                }
+            </div>
+            <div class="flex-1">
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2">
+                            <h5 class="font-bold text-white">@spell.Name</h5>
+                            @if (spell.IsRitual)
+                            {
+                                <span class="text-xs bg-purple-600 text-white px-2 py-0.5 rounded">Ritual</span>
+                            }
+                            @if (spell.IsConcentration)
+                            {
+                                <span class="text-xs bg-yellow-600 text-white px-2 py-0.5 rounded">Concentration</span>
+                            }
+                        </div>
+                        <div class="flex items-center gap-2 mt-1 text-sm text-gray-400">
+                            <span>@(spell.Level == 0 ? "Cantrip" : $"Level {spell.Level}")</span>
+                            <span>•</span>
+                            <span>@spell.School</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-sm font-medium text-gray-300">@spell.CastingTime</div>
+                        <div class="text-xs text-gray-500">@spell.Range</div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-400 mt-2">@spell.Description</p>
+                <div class="text-xs text-gray-500 mt-1">
+                    <span>Components: @spell.Components</span>
+                    <span class="mx-2">•</span>
+                    <span>Duration: @spell.Duration</span>
+                </div>
+            </div>
+        </div>
+    };
+
+    private string GetCantripBorderClass() =>
+        selectedCantrips.Count == cantripsKnown ? "border-green-600" : "border-yellow-600";
+
+    private string GetSpellBorderClass() =>
+        selectedLeveledSpells.Count == spellsKnown ? "border-green-600" : "border-gray-600";
+
+    private string GetCantripCounterClass()
+    {
+        if (selectedCantrips.Count == cantripsKnown) return "text-green-400";
+        return selectedCantrips.Count > 0 ? "text-yellow-400" : "text-gray-400";
+    }
+
+    private string GetSpellCounterClass()
+    {
+        if (selectedLeveledSpells.Count == spellsKnown) return "text-green-400";
+        return selectedLeveledSpells.Count > 0 ? "text-yellow-400" : "text-gray-400";
+    }
+
+    private string GetSpellCardClass(bool isSelected, bool canSelect)
+    {
+        var baseClass = "w-full p-4 rounded-lg border-2 transition-all duration-200 text-left";
+        if (isSelected) return $"{baseClass} bg-purple-600 border-purple-500 shadow-lg";
+        if (!canSelect) return $"{baseClass} bg-gray-700 border-gray-600 text-gray-500 cursor-not-allowed opacity-50";
+        return $"{baseClass} bg-gray-800 border-gray-600 hover:border-purple-500 hover:bg-gray-700 cursor-pointer";
+    }
+
+    private string GetCheckboxClass(bool isSelected)
+    {
+        var baseClass = "w-7 h-7 rounded border-2 flex items-center justify-center flex-shrink-0";
+        return isSelected ? $"{baseClass} bg-white border-white text-purple-600" : $"{baseClass} border-gray-400";
+    }
+}

@@ -1,0 +1,2652 @@
+[
+  {
+    "Id": "acolyte",
+    "Name": "Acolyte",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "religion"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "acolyte_shelter_of_the_faithful"
+  },
+  {
+    "Id": "anthropologist",
+    "Name": "Anthropologist",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "religion"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "anthropologist_adept_linguist"
+  },
+  {
+    "Id": "archaeologist",
+    "Name": "Archaeologist",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "survival"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "archaeologist_historical_knowledge"
+  },
+  {
+    "Id": "astral_drifter",
+    "Name": "Astral Drifter",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "religion"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "magic_initiate_2014",
+    "FeatureId": "astral_drifter_divine_contact"
+  },
+  {
+    "Id": "athlete",
+    "Name": "Athlete",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "acrobatics",
+      "athletics",
+      "vehicles_(land)"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "athlete_echoes_of_victory"
+  },
+  {
+    "Id": "azorius_functionary",
+    "Name": "Azorius Functionary",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "intimidation"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "azorius_functionary_legal_authority"
+  },
+  {
+    "Id": "boros_legionnaire",
+    "Name": "Boros Legionnaire",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "intimidation"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "boros_legionnaire_legion_station"
+  },
+  {
+    "Id": "celebrity_adventurers_scion",
+    "Name": "Celebrity Adventurer's Scion",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "perception",
+      "performance",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "celebrity_adventurers_scion_name_dropping"
+  },
+  {
+    "Id": "charlatan",
+    "Name": "Charlatan",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "sleight_of_hand",
+      "disguise_kit",
+      "forgery_kit"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "charlatan_false_identity"
+  },
+  {
+    "Id": "city_watch",
+    "Name": "City Watch",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "insight"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "city_watch_watchers_eye"
+  },
+  {
+    "Id": "clan_crafter",
+    "Name": "Clan Crafter",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "insight"
+    ],
+    "Languages": [
+      "dwarvish",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "clan_crafter_respect_of_the_stout_folk"
+  },
+  {
+    "Id": "cloistered_scholar",
+    "Name": "Cloistered Scholar",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "cloistered_scholar_library_access"
+  },
+  {
+    "Id": "courtier",
+    "Name": "Courtier",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "persuasion"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "courtier_court_functionary"
+  },
+  {
+    "Id": "criminal",
+    "Name": "Criminal",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "stealth",
+      "thieves-tools"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "criminal_criminal_contact"
+  },
+  {
+    "Id": "custom_background",
+    "Name": "Custom Background",
+    "Edition": "2014",
+    "ProficiencyIds": [],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "custom_background_choose_a_feature"
+  },
+  {
+    "Id": "dimir_operative",
+    "Name": "Dimir Operative",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "stealth",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "dimir_operative_false_identity"
+  },
+  {
+    "Id": "entertainer",
+    "Name": "Entertainer",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "acrobatics",
+      "performance",
+      "disguise_kit"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "entertainer_by_popular_demand"
+  },
+  {
+    "Id": "faceless",
+    "Name": "Faceless",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "intimidation",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "faceless_dual_personalities"
+  },
+  {
+    "Id": "faction_agent",
+    "Name": "Faction Agent",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "faction_agent_safe_haven"
+  },
+  {
+    "Id": "failed_merchant",
+    "Name": "Failed Merchant",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "investigation",
+      "persuasion"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "failed_merchant_supply_chain"
+  },
+  {
+    "Id": "far_traveler",
+    "Name": "Far Traveler",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "perception"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "far_traveler_all_eyes_on_you"
+  },
+  {
+    "Id": "feylost",
+    "Name": "Feylost",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "survival"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "feylost_feywild_connection"
+  },
+  {
+    "Id": "fisher",
+    "Name": "Fisher",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "survival"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "fisher_harvest_the_water"
+  },
+  {
+    "Id": "folk_hero",
+    "Name": "Folk Hero",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "animal_handling",
+      "survival",
+      "vehicles_(land)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "folk_hero_rustic_hospitality"
+  },
+  {
+    "Id": "gambler",
+    "Name": "Gambler",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "insight"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "gambler_never_tell_me_the_odds"
+  },
+  {
+    "Id": "gate_warden",
+    "Name": "Gate Warden",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "persuasion",
+      "survival"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "scion_of_the_outer_planes",
+    "FeatureId": "gate_warden_planar_infusion"
+  },
+  {
+    "Id": "giant_foundling",
+    "Name": "Giant Foundling",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "intimidation",
+      "survival"
+    ],
+    "Languages": [
+      "giant",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "strike_of_the_giants",
+    "FeatureId": "giant_foundling_strike_of_the_giants"
+  },
+  {
+    "Id": "golgari_agent",
+    "Name": "Golgari Agent",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "nature",
+      "survival",
+      "poisoners_kit"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "golgari_agent_undercity_paths"
+  },
+  {
+    "Id": "grinner",
+    "Name": "Grinner",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "performance",
+      "thieves-tools"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "grinner_ballad_of_the_grinning_fool"
+  },
+  {
+    "Id": "gruul_anarch",
+    "Name": "Gruul Anarch",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "animal_handling",
+      "athletics",
+      "herbalism-kit"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "gruul_anarch_rubblebelt_refuge"
+  },
+  {
+    "Id": "guild_artisan",
+    "Name": "Guild Artisan",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "persuasion"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "guild_artisan_guild_membership"
+  },
+  {
+    "Id": "haunted_one",
+    "Name": "Haunted One",
+    "Edition": "2014",
+    "ProficiencyIds": [],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "haunted_one_heart_of_darkness"
+  },
+  {
+    "Id": "hermit",
+    "Name": "Hermit",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "medicine",
+      "religion",
+      "herbalism-kit"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "hermit_discovery"
+  },
+  {
+    "Id": "house_agent",
+    "Name": "House Agent",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "investigation",
+      "persuasion",
+      "alchemist_supplies",
+      "tinkers-tools",
+      "vehicles_(land)",
+      "brewer_supplies",
+      "cook_utensils",
+      "herbalism-kit",
+      "thieves-tools",
+      "vehicles_(water)",
+      "vehicles_(air)",
+      "navigator_tools",
+      "disguise_kit",
+      "calligrapher_supplies",
+      "forgery_kit",
+      "poisoners_kit"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "house_agent_house_connections"
+  },
+  {
+    "Id": "inheritor",
+    "Name": "Inheritor",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "survival"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "inheritor_inheritance"
+  },
+  {
+    "Id": "initiate",
+    "Name": "Initiate",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "intimidation",
+      "vehicles_(land)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "initiate_trials_of_the_five_gods"
+  },
+  {
+    "Id": "inquisitor",
+    "Name": "Inquisitor",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "investigation",
+      "religion",
+      "thieves-tools"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "inquisitor_legal_authority"
+  },
+  {
+    "Id": "investigator",
+    "Name": "Investigator",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "disguise_kit",
+      "thieves-tools"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "investigator_official_inquiry"
+  },
+  {
+    "Id": "izzet_engineer",
+    "Name": "Izzet Engineer",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "arcana",
+      "investigation"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "izzet_engineer_urban_infrastructure"
+  },
+  {
+    "Id": "knight_of_solamnia",
+    "Name": "Knight of Solamnia",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "survival"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "squire_of_solamnia",
+    "FeatureId": "knight_of_solamnia_squire_of_solamnia"
+  },
+  {
+    "Id": "knight_of_the_order",
+    "Name": "Knight of the Order",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "persuasion"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "knight_of_the_order_knightly_regard"
+  },
+  {
+    "Id": "lorehold_student",
+    "Name": "Lorehold Student",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "religion"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "strixhaven_initiate",
+    "FeatureId": "lorehold_student_lorehold_initiate"
+  },
+  {
+    "Id": "mage_of_high_sorcery",
+    "Name": "Mage of High Sorcery",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "arcana",
+      "history"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "initiate_of_high_sorcery",
+    "FeatureId": "mage_of_high_sorcery_initiate_of_high_sorcery"
+  },
+  {
+    "Id": "marine",
+    "Name": "Marine",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "survival",
+      "vehicles_(water)",
+      "vehicles_(land)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "marine_steady"
+  },
+  {
+    "Id": "mercenary_veteran",
+    "Name": "Mercenary Veteran",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "persuasion",
+      "vehicles_(land)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "mercenary_veteran_mercenary_life"
+  },
+  {
+    "Id": "noble",
+    "Name": "Noble",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "persuasion"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "noble_position_of_privilege"
+  },
+  {
+    "Id": "orzhov_representative",
+    "Name": "Orzhov Representative",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "intimidation",
+      "religion"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "orzhov_representative_leverage"
+  },
+  {
+    "Id": "outlander",
+    "Name": "Outlander",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "survival"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "outlander_wanderer"
+  },
+  {
+    "Id": "plaintiff",
+    "Name": "Plaintiff",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "medicine",
+      "persuasion"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "plaintiff_legalese"
+  },
+  {
+    "Id": "planar_philosopher",
+    "Name": "Planar Philosopher",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "arcana"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "scion_of_the_outer_planes",
+    "FeatureId": "planar_philosopher_conviction"
+  },
+  {
+    "Id": "prismari_student",
+    "Name": "Prismari Student",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "acrobatics",
+      "performance"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "strixhaven_initiate",
+    "FeatureId": "prismari_student_prismari_initiate"
+  },
+  {
+    "Id": "quandrix_student",
+    "Name": "Quandrix Student",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "arcana",
+      "nature"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "strixhaven_initiate",
+    "FeatureId": "quandrix_student_quandrix_initiate"
+  },
+  {
+    "Id": "rakdos_cultist",
+    "Name": "Rakdos Cultist",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "acrobatics",
+      "performance"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "rakdos_cultist_a_flair_for_the_dramatic"
+  },
+  {
+    "Id": "rewarded",
+    "Name": "Rewarded",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "persuasion"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "lucky_2014",
+    "FeatureId": "rewarded_fortunes_favor"
+  },
+  {
+    "Id": "rival_intern",
+    "Name": "Rival Intern",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "investigation"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "rival_intern_inside_informant"
+  },
+  {
+    "Id": "ruined",
+    "Name": "Ruined",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "stealth",
+      "survival"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "alert_2014",
+    "FeatureId": "ruined_still_standing"
+  },
+  {
+    "Id": "rune_carver",
+    "Name": "Rune Carver",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "perception"
+    ],
+    "Languages": [
+      "giant"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "rune_shaper",
+    "FeatureId": "rune_carver_rune_shaper"
+  },
+  {
+    "Id": "sage",
+    "Name": "Sage",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "arcana",
+      "history"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "sage_researcher"
+  },
+  {
+    "Id": "sailor",
+    "Name": "Sailor",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "perception",
+      "navigator_tools",
+      "vehicles_(water)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "sailor_ships_passage"
+  },
+  {
+    "Id": "selesnya_initiate",
+    "Name": "Selesnya Initiate",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "nature",
+      "persuasion"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "selesnya_initiate_conclaves_shelter"
+  },
+  {
+    "Id": "shipwright",
+    "Name": "Shipwright",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "perception",
+      "carpenter_tools",
+      "vehicles_(water)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "shipwright_ill_patch_it"
+  },
+  {
+    "Id": "silverquill_student",
+    "Name": "Silverquill Student",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "intimidation",
+      "persuasion"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "strixhaven_initiate",
+    "FeatureId": "silverquill_student_silverquill_initiate"
+  },
+  {
+    "Id": "simic_scientist",
+    "Name": "Simic Scientist",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "arcana",
+      "medicine"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "simic_scientist_researcher"
+  },
+  {
+    "Id": "smuggler",
+    "Name": "Smuggler",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "deception",
+      "vehicles_(water)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "smuggler_down_low"
+  },
+  {
+    "Id": "soldier",
+    "Name": "Soldier",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "intimidation",
+      "vehicles_(land)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "soldier_military_rank"
+  },
+  {
+    "Id": "urban_bounty_hunter",
+    "Name": "Urban Bounty Hunter",
+    "Edition": "2014",
+    "ProficiencyIds": [],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "urban_bounty_hunter_ear_to_the_ground"
+  },
+  {
+    "Id": "urchin",
+    "Name": "Urchin",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "sleight_of_hand",
+      "stealth",
+      "disguise_kit",
+      "thieves-tools"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "urchin_city_secrets"
+  },
+  {
+    "Id": "uthgardt_tribe_member",
+    "Name": "Uthgardt Tribe Member",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "survival"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "uthgardt_tribe_member_uthgardt_heritage"
+  },
+  {
+    "Id": "variant_city_watch_investigator",
+    "Name": "Variant City Watch (Investigator)",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "insight",
+      "investigation"
+    ],
+    "Languages": [
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "variant_city_watch_investigator_watchers_eye"
+  },
+  {
+    "Id": "vizier",
+    "Name": "Vizier",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "religion"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "vizier_voice_of_authority"
+  },
+  {
+    "Id": "volstrucker_agent",
+    "Name": "Volstrucker Agent",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "deception",
+      "stealth",
+      "poisoners_kit"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "volstrucker_agent_shadow_network"
+  },
+  {
+    "Id": "waterdhavian_noble",
+    "Name": "Waterdhavian Noble",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "history",
+      "persuasion"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "waterdhavian_noble_kept_in_style"
+  },
+  {
+    "Id": "wildspacer",
+    "Name": "Wildspacer",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "athletics",
+      "survival",
+      "navigator_tools",
+      "vehicles_(space)"
+    ],
+    "Languages": [],
+    "AbilityScoreOptions": [],
+    "FeatId": "tough_2014",
+    "FeatureId": "wildspacer_wildspace_adaptation"
+  },
+  {
+    "Id": "witchlight_hand",
+    "Name": "Witchlight Hand",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "performance",
+      "sleight_of_hand"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": null,
+    "FeatureId": "witchlight_hand_carnival_fixture"
+  },
+  {
+    "Id": "witherbloom_student",
+    "Name": "Witherbloom Student",
+    "Edition": "2014",
+    "ProficiencyIds": [
+      "nature",
+      "survival",
+      "herbalism-kit"
+    ],
+    "Languages": [
+      "any"
+    ],
+    "AbilityScoreOptions": [],
+    "FeatId": "strixhaven_initiate",
+    "FeatureId": "witherbloom_student_witherbloom_initiate"
+  },
+  {
+    "Id": "aberrant_heir_2024",
+    "Name": "Aberrant Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "history",
+      "intimidation",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "CHA"
+    ],
+    "FeatId": "aberrant_dragonmark_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "acolyte_2024",
+    "Name": "Acolyte",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "religion",
+      "calligrapher_supplies"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "INT",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "magic_initiate_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "agent_of_the_ninth_quill_2024",
+    "Name": "Agent of the Ninth Quill",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "arcana",
+      "sleight_of_hand",
+      "thieves-tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "arcane_infiltrator",
+    "FeatureId": null
+  },
+  {
+    "Id": "archaeologist_2024",
+    "Name": "Archaeologist",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "history",
+      "survival",
+      "cartographer_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "skilled_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "artisan_2024",
+    "Name": "Artisan",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "investigation",
+      "persuasion"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "INT"
+    ],
+    "FeatId": "crafter",
+    "FeatureId": null
+  },
+  {
+    "Id": "bejeweled_conclave_spy_2024",
+    "Name": "Bejeweled Conclave Spy",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "deception",
+      "perception",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "arcane_eloquence",
+    "FeatureId": null
+  },
+  {
+    "Id": "carouser_2024",
+    "Name": "Carouser",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "deception",
+      "persuasion"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "tireless_reveler",
+    "FeatureId": null
+  },
+  {
+    "Id": "charlatan_2024",
+    "Name": "Charlatan",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "deception",
+      "sleight_of_hand",
+      "forgery_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "CHA"
+    ],
+    "FeatId": "skilled_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "chondathan_freebooter_2024",
+    "Name": "Chondathan Freebooter",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "athletics",
+      "sleight_of_hand",
+      "weaver_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "WIS"
+    ],
+    "FeatId": "skilled_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "cosmic_dawn_experiment_2024",
+    "Name": "Cosmic Dawn Experiment",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "athletics",
+      "survival"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "CON"
+    ],
+    "FeatId": "transmuted_anatomy",
+    "FeatureId": null
+  },
+  {
+    "Id": "covenant_of_the_grave_recruit_2024",
+    "Name": "Covenant of the Grave Recruit",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "history",
+      "medicine",
+      "herbalism-kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "arcane_undertaker",
+    "FeatureId": null
+  },
+  {
+    "Id": "criminal_2024",
+    "Name": "Criminal",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "sleight_of_hand",
+      "stealth",
+      "thieves-tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "INT"
+    ],
+    "FeatId": "alert_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "crucible_storm_chaser_2024",
+    "Name": "Crucible Storm Chaser",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "athletics",
+      "nature",
+      "glassblower_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "INT"
+    ],
+    "FeatId": "arcane_overload",
+    "FeatureId": null
+  },
+  {
+    "Id": "dead_magic_dweller_2024",
+    "Name": "Dead Magic Dweller",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "medicine",
+      "survival",
+      "leatherworker_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "healer_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "dragon_cultist_2024",
+    "Name": "Dragon Cultist",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "deception",
+      "stealth",
+      "calligrapher_supplies"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "INT"
+    ],
+    "FeatId": "cult_of_the_dragon_initiate",
+    "FeatureId": null
+  },
+  {
+    "Id": "emerald_enclave_caretaker_2024",
+    "Name": "Emerald Enclave Caretaker",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "nature",
+      "survival",
+      "herbalism-kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "emerald_enclave_fledgling",
+    "FeatureId": null
+  },
+  {
+    "Id": "entertainer_2024",
+    "Name": "Entertainer",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "acrobatics",
+      "performance"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "CHA"
+    ],
+    "FeatId": "musician",
+    "FeatureId": null
+  },
+  {
+    "Id": "familiar_trainer_2024",
+    "Name": "Familiar Trainer",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "animal_handling",
+      "arcana"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "familiar_friend",
+    "FeatureId": null
+  },
+  {
+    "Id": "farmer_2024",
+    "Name": "Farmer",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "animal_handling",
+      "nature",
+      "carpenter_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "tough_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "flaming_fist_mercenary_2024",
+    "Name": "Flaming Fist Mercenary",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "intimidation",
+      "perception",
+      "smith_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "CHA"
+    ],
+    "FeatId": "tough_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "genie_touched_2024",
+    "Name": "Genie Touched",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "perception",
+      "persuasion",
+      "glassblower_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": null,
+    "FeatureId": null
+  },
+  {
+    "Id": "guard_2024",
+    "Name": "Guard",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "athletics",
+      "perception"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "alert_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "guide_2024",
+    "Name": "Guide",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "stealth",
+      "survival",
+      "cartographer_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "magic_initiate_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "harper_2024",
+    "Name": "Harper",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "performance",
+      "sleight_of_hand",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "harper_agent",
+    "FeatureId": null
+  },
+  {
+    "Id": "haunted_one_2024",
+    "Name": "Haunted One",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "arcana",
+      "survival"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "survivor",
+    "FeatureId": null
+  },
+  {
+    "Id": "hermit_2024",
+    "Name": "Hermit",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "medicine",
+      "religion",
+      "herbalism-kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "healer_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "horizon_weaver_initiate_2024",
+    "Name": "Horizon Weaver Initiate",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "acrobatics",
+      "survival",
+      "weaver_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "portal_jumper",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_agent_2024",
+    "Name": "House Agent",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "investigation",
+      "persuasion"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "lucky_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_cannith_heir_2024",
+    "Name": "House Cannith Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "investigation",
+      "sleight_of_hand"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "INT"
+    ],
+    "FeatId": "mark_of_making",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_deneith_heir_2024",
+    "Name": "House Deneith Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "perception"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "mark_of_sentinel",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_ghallanda_heir_2024",
+    "Name": "House Ghallanda Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "persuasion",
+      "cook_utensils"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "mark_of_hospitality",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_jorasco_heir_2024",
+    "Name": "House Jorasco Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "medicine",
+      "stealth",
+      "herbalism-kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "mark_of_healing",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_kundarak_heir_2024",
+    "Name": "House Kundarak Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "arcana",
+      "investigation",
+      "thieves-tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "INT"
+    ],
+    "FeatId": "mark_of_warding",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_lyrandar_heir_2024",
+    "Name": "House Lyrandar Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "acrobatics",
+      "nature",
+      "navigator_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "CHA"
+    ],
+    "FeatId": "mark_of_storm",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_medani_heir_2024",
+    "Name": "House Medani Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "investigation",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "mark_of_detection",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_orien_heir_2024",
+    "Name": "House Orien Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "acrobatics",
+      "athletics",
+      "cartographer_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "INT"
+    ],
+    "FeatId": "mark_of_passage",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_phiarlan_heir_2024",
+    "Name": "House Phiarlan Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "deception",
+      "stealth",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "mark_of_shadow",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_sivis_heir_2024",
+    "Name": "House Sivis Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "history",
+      "perception",
+      "calligrapher_supplies"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "INT",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "mark_of_scribing",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_tharashk_heir_2024",
+    "Name": "House Tharashk Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "perception",
+      "survival"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "mark_of_finding",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_thuranni_heir_2024",
+    "Name": "House Thuranni Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "performance",
+      "stealth"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "mark_of_shadow",
+    "FeatureId": null
+  },
+  {
+    "Id": "house_vadalis_heir_2024",
+    "Name": "House Vadalis Heir",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "animal_handling",
+      "nature",
+      "herbalism-kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "mark_of_handling",
+    "FeatureId": null
+  },
+  {
+    "Id": "ice_fisher_2024",
+    "Name": "Ice Fisher",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "animal_handling",
+      "athletics",
+      "woodcarver_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "CON"
+    ],
+    "FeatId": "alert_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "inquisitive_2024",
+    "Name": "Inquisitive",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "investigation",
+      "thieves-tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "alert_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "investigator_2024",
+    "Name": "Investigator",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "investigation",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "INT",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "sharp_eye",
+    "FeatureId": null
+  },
+  {
+    "Id": "knight_of_the_gauntlet_2024",
+    "Name": "Knight of the Gauntlet",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "athletics",
+      "medicine",
+      "smith_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "tyro_of_the_gauntlet",
+    "FeatureId": null
+  },
+  {
+    "Id": "lords_alliance_vassal_2024",
+    "Name": "Lords' Alliance Vassal",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "persuasion",
+      "calligrapher_supplies"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "lords_alliance_agent",
+    "FeatureId": null
+  },
+  {
+    "Id": "lorwyn_expert_2024",
+    "Name": "Lorwyn Expert",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "athletics",
+      "nature",
+      "cartographer_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "child_of_the_sun",
+    "FeatureId": null
+  },
+  {
+    "Id": "merchant_2024",
+    "Name": "Merchant",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "animal_handling",
+      "persuasion",
+      "navigator_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "lucky_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "mist_wanderer_2024",
+    "Name": "Mist Wanderer",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "survival",
+      "stealth"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": null,
+    "FeatureId": null
+  },
+  {
+    "Id": "moonwell_pilgrim_2024",
+    "Name": "Moonwell Pilgrim",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "nature",
+      "performance",
+      "painter_supplies"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "magic_initiate_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "mulhorandi_tomb_raider_2024",
+    "Name": "Mulhorandi Tomb Raider",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "investigation",
+      "religion",
+      "mason_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "INT"
+    ],
+    "FeatId": "lucky_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "mythalkeeper_2024",
+    "Name": "Mythalkeeper",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "arcana",
+      "history",
+      "jeweler_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "INT",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "crafter",
+    "FeatureId": null
+  },
+  {
+    "Id": "noble_2024",
+    "Name": "Noble",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "history",
+      "persuasion"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "skilled_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "phantasmic_circus_trouper_2024",
+    "Name": "Phantasmic Circus Trouper",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "deception",
+      "performance",
+      "disguise_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "CHA"
+    ],
+    "FeatId": "arcane_artist",
+    "FeatureId": null
+  },
+  {
+    "Id": "purple_dragon_squire_2024",
+    "Name": "Purple Dragon Squire",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "animal_handling",
+      "insight",
+      "navigator_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "purple_dragon_rook",
+    "FeatureId": null
+  },
+  {
+    "Id": "rashemi_wanderer_2024",
+    "Name": "Rashemi Wanderer",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "intimidation",
+      "perception",
+      "cartographer_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "CHA"
+    ],
+    "FeatId": "tough_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "sage_2024",
+    "Name": "Sage",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "arcana",
+      "history",
+      "calligrapher_supplies"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "magic_initiate_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "sailor_2024",
+    "Name": "Sailor",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "acrobatics",
+      "perception",
+      "navigator_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "WIS"
+    ],
+    "FeatId": "tavern_brawler_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "scribe_2024",
+    "Name": "Scribe",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "investigation",
+      "perception",
+      "calligrapher_supplies"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": "skilled_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "seer_apprentice_2024",
+    "Name": "Seer Apprentice",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "history",
+      "insight",
+      "navigator_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "INT",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "arcane_omens",
+    "FeatureId": null
+  },
+  {
+    "Id": "shadowmasters_exile_2024",
+    "Name": "Shadowmasters Exile",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "acrobatics",
+      "stealth",
+      "thieves-tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "savage_attacker_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "shadowmoor_expert_2024",
+    "Name": "Shadowmoor Expert",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "acrobatics",
+      "deception",
+      "glassblower_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "shadowmoor_hexer",
+    "FeatureId": null
+  },
+  {
+    "Id": "soldier_2024",
+    "Name": "Soldier",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "athletics",
+      "intimidation"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "CON"
+    ],
+    "FeatId": "savage_attacker_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "spellfire_initiate_2024",
+    "Name": "Spellfire Initiate",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "arcana",
+      "perception"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "CHA"
+    ],
+    "FeatId": "spellfire_spark",
+    "FeatureId": null
+  },
+  {
+    "Id": "spirit_medium_2024",
+    "Name": "Spirit Medium",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "religion"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "INT",
+      "WIS"
+    ],
+    "FeatId": null,
+    "FeatureId": null
+  },
+  {
+    "Id": "vampire_devotee_2024",
+    "Name": "Vampire Devotee",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "persuasion",
+      "stealth",
+      "cook_utensils"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "CON",
+      "CHA"
+    ],
+    "FeatId": "vampires_plaything",
+    "FeatureId": null
+  },
+  {
+    "Id": "vampire_survivor_2024",
+    "Name": "Vampire Survivor",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "religion",
+      "woodcarver_tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "CON",
+      "WIS"
+    ],
+    "FeatId": "vampire_hunter",
+    "FeatureId": null
+  },
+  {
+    "Id": "ward_of_the_sheltering_hands_2024",
+    "Name": "Ward of the Sheltering Hands",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "medicine",
+      "cook_utensils"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "CON",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "arcane_safeguard",
+    "FeatureId": null
+  },
+  {
+    "Id": "wayfarer_2024",
+    "Name": "Wayfarer",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "insight",
+      "stealth",
+      "thieves-tools"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "DEX",
+      "WIS",
+      "CHA"
+    ],
+    "FeatId": "lucky_2024",
+    "FeatureId": null
+  },
+  {
+    "Id": "zhentarim_mercenary_2024",
+    "Name": "Zhentarim Mercenary",
+    "Edition": "2024",
+    "ProficiencyIds": [
+      "intimidation",
+      "perception",
+      "forgery_kit"
+    ],
+    "Languages": [
+      "common",
+      "any",
+      "any"
+    ],
+    "AbilityScoreOptions": [
+      "STR",
+      "DEX",
+      "CHA"
+    ],
+    "FeatId": "zhentarim_ruffian",
+    "FeatureId": null
+  }
+]

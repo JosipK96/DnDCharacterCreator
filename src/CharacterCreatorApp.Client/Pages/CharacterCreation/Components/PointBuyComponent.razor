@@ -1,0 +1,182 @@
+﻿<div class="space-y-6">
+    <div class="text-center">
+        <p class="text-gray-300 mb-2">
+            You have <span class="text-2xl font-bold text-indigo-400">@pointsRemaining</span> points remaining
+        </p>
+        <p class="text-sm text-gray-400">
+            All scores start at 8. You can increase them up to 15.
+        </p>
+    </div>
+
+    <!-- Point Buy Table -->
+    <div class="bg-gray-700 rounded-lg p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @foreach (var ability in GetAbilityOrder())
+            {
+                <div class="bg-gray-600 rounded-lg p-4">
+                    <h4 class="text-sm text-gray-300 font-medium mb-3 text-center">
+                        @GetAbilityFullName(ability)
+                    </h4>
+
+                    <div class="flex items-center justify-between gap-3">
+                        <button @onclick="() => DecreaseScore(ability)"
+                                disabled="@(!CanDecrease(ability))"
+                                class="bg-red-600 hover:bg-red-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white w-10 h-10 rounded-lg font-bold text-xl">
+                            −
+                        </button>
+
+                        <div class="flex-1 text-center">
+                            <div class="text-3xl font-bold text-white">
+                                @pointBuyScores[ability]
+                            </div>
+                            <div class="text-xs text-gray-400 mt-1">
+                                Cost: @GetCostForScore(pointBuyScores[ability])
+                            </div>
+                        </div>
+
+                        <button @onclick="() => IncreaseScore(ability)"
+                                disabled="@(!CanIncrease(ability))"
+                                class="bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white w-10 h-10 rounded-lg font-bold text-xl">
+                            +
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Point Buy Cost Table Reference -->
+    <div class="bg-blue-900 border border-blue-700 rounded-lg p-4">
+        <h4 class="text-white font-medium mb-2">Point Buy Costs</h4>
+        <div class="grid grid-cols-4 gap-2 text-center text-sm">
+            @foreach (var kvp in pointCosts.OrderBy(x => x.Key))
+            {
+                <div>
+                    <span class="text-gray-300">@kvp.Key:</span>
+                    <span class="text-indigo-300 font-medium">@kvp.Value pts</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button @onclick="ApplyPointBuy"
+                disabled="@(pointsRemaining != 0)"
+                class="bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(pointsRemaining == 0 ? "✓ Use These Scores" : $"Spend all {pointsRemaining} points to continue")
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public List<int> Scores { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<List<int>> ScoresChanged { get; set; }
+
+    private Dictionary<string, int> pointBuyScores = new()
+    {
+        ["STR"] = 8,
+        ["DEX"] = 8,
+        ["CON"] = 8,
+        ["INT"] = 8,
+        ["WIS"] = 8,
+        ["CHA"] = 8
+    };
+
+    private readonly Dictionary<int, int> pointCosts = new()
+    {
+        [8] = 0,
+        [9] = 1,
+        [10] = 2,
+        [11] = 3,
+        [12] = 4,
+        [13] = 5,
+        [14] = 7,
+        [15] = 9
+    };
+
+    private const int TotalPoints = 27;
+    private int pointsRemaining => TotalPoints - GetTotalSpent();
+
+    private List<string> GetAbilityOrder()
+    {
+        return new() { "STR", "DEX", "CON", "INT", "WIS", "CHA" };
+    }
+
+    private string GetAbilityFullName(string abbr)
+    {
+        return abbr switch
+        {
+            "STR" => "Strength",
+            "DEX" => "Dexterity",
+            "CON" => "Constitution",
+            "INT" => "Intelligence",
+            "WIS" => "Wisdom",
+            "CHA" => "Charisma",
+            _ => abbr
+        };
+    }
+
+    private int GetTotalSpent()
+    {
+        return pointBuyScores.Values.Sum(score => GetCostForScore(score));
+    }
+
+    private int GetCostForScore(int score)
+    {
+        return pointCosts.GetValueOrDefault(score, 0);
+    }
+
+    private bool CanIncrease(string ability)
+    {
+        int currentScore = pointBuyScores[ability];
+
+        // Can't go above 15
+        if (currentScore >= 15) return false;
+
+        // Check if we have enough points
+        int currentCost = GetCostForScore(currentScore);
+        int nextCost = GetCostForScore(currentScore + 1);
+        int costIncrease = nextCost - currentCost;
+
+        return pointsRemaining >= costIncrease;
+    }
+
+    private bool CanDecrease(string ability)
+    {
+        // Can't go below 8
+        return pointBuyScores[ability] > 8;
+    }
+
+    private void IncreaseScore(string ability)
+    {
+        if (CanIncrease(ability))
+        {
+            pointBuyScores[ability]++;
+            StateHasChanged();
+        }
+    }
+
+    private void DecreaseScore(string ability)
+    {
+        if (CanDecrease(ability))
+        {
+            pointBuyScores[ability]--;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ApplyPointBuy()
+    {
+        if (pointsRemaining != 0) return;
+
+        var scores = pointBuyScores.Values.ToList();
+
+        Scores.Clear();
+        Scores.AddRange(scores);
+
+        await ScoresChanged.InvokeAsync(Scores);
+    }
+}

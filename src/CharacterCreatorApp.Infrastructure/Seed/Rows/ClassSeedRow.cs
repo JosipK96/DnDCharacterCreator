@@ -1,0 +1,92 @@
+namespace CharacterCreatorApp.Infrastructure.Seed.Rows;
+
+// The shapes of the class seed files. tools/CharacterCreatorApp.SeedDataGenerator writes them
+// from 5etools and the seeders read them, so both sides agree on the format at compile time.
+
+/// <summary>One entry of Classes.json.</summary>
+public sealed record ClassSeedRow
+{
+    public required string Id { get; init; }
+    public required string Name { get; init; }
+    public required string Edition { get; init; }
+    public required string HitDie { get; init; }
+    public int SubclassLevel { get; init; }
+    public List<int> AsiLevels { get; init; } = [];
+    public List<string> SavingThrowAbilityIds { get; init; } = [];
+    public List<string> ProficiencyIds { get; init; } = [];
+    public ProficiencyChoiceSeedRow? ProficiencyChoices { get; init; }
+    public SpellcastingSeedRow? Spellcasting { get; init; }
+    public List<SpellProgressionSeedRow> SpellProgression { get; init; } = [];
+}
+
+public sealed record ProficiencyChoiceSeedRow
+{
+    public required string Type { get; init; }
+    public int Count { get; init; }
+    public List<string> Options { get; init; } = [];
+}
+
+public sealed record SpellcastingSeedRow
+{
+    /// <summary>The ability's full name, "Intelligence".</summary>
+    public required string Ability { get; init; }
+
+    public bool IsPreparedCaster { get; init; }
+}
+
+/// <summary>What a caster of the class or subclass has at one character level.</summary>
+public sealed record SpellProgressionSeedRow
+{
+    public int Level { get; init; }
+    public int CantripsKnown { get; init; }
+
+    /// <summary>
+    /// The levelled spells the player picks: spells known, a 2024 class's prepared spells, or the
+    /// spells in a wizard's spellbook. 0 for a 2014 class that prepares from its whole list.
+    /// </summary>
+    public int SpellsKnown { get; init; }
+
+    public int MaxSpellLevel { get; init; }
+}
+
+/// <summary>One entry of Subclasses.json.</summary>
+public sealed record SubclassSeedRow
+{
+    public required string Id { get; init; }
+    public required string Name { get; init; }
+    public required string ClassId { get; init; }
+
+    /// <summary>Set for a subclass that casts spells of its own, like the Eldritch Knight.</summary>
+    public string? SpellcastingAbility { get; init; }
+
+    /// <summary>
+    /// A class whose whole spell list the subclass may pick from: the Wizard's for an Eldritch
+    /// Knight or Arcane Trickster, the Cleric's for a Divine Soul sorcerer.
+    /// </summary>
+    public string? SpellListClassId { get; init; }
+
+    public List<SpellProgressionSeedRow> SpellProgression { get; init; } = [];
+
+    /// <summary>
+    /// The schools the subclass's levelled spells must come from ("Abjuration", "Evocation"), or
+    /// empty when any school will do.
+    /// </summary>
+    public List<string> SpellSchools { get; init; } = [];
+
+    /// <summary>The character levels that each give one spell from any school.</summary>
+    public List<int> AnySchoolSpellLevels { get; init; } = [];
+}
+
+/// <summary>One entry of ClassFeatures.json or BackgroundFeatures.json.</summary>
+public sealed record FeatureSeedRow
+{
+    public required string Id { get; init; }
+    public required string Name { get; init; }
+    public required string Description { get; init; }
+    public int Level { get; init; }
+    public string? ClassId { get; init; }
+    public string? SubclassId { get; init; }
+
+    /// <summary>"class", "subclass" or "background".</summary>
+    public required string Type { get; init; }
+}

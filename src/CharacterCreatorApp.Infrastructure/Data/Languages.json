@@ -1,0 +1,1409 @@
+[
+  {
+    "Id": "aarakocra-mm",
+    "Name": "Aarakocra",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "aarakocra-xmm",
+    "Name": "Aarakocra",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "abanasinian-dsotdq",
+    "Name": "Abanasinian",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "abyssal-ggr",
+    "Name": "Abyssal",
+    "Type": "standard",
+    "Script": "Infernal",
+    "Source": "GGR"
+  },
+  {
+    "Id": "abyssal-phb",
+    "Name": "Abyssal",
+    "Type": "exotic",
+    "Script": "Infernal",
+    "Source": "PHB"
+  },
+  {
+    "Id": "abyssal-xphb",
+    "Name": "Abyssal",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "aglarondan-frhof",
+    "Name": "Aglarondan",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "alzhedo-frhof",
+    "Name": "Alzhedo",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "alzhedo-scag",
+    "Name": "Alzhedo",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "aven-psd",
+    "Name": "Aven",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSD"
+  },
+  {
+    "Id": "blink-dog-mm",
+    "Name": "Blink Dog",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "blink-dog-xmm",
+    "Name": "Blink Dog",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "bothii-frhof",
+    "Name": "Bothii",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "bothii-skt",
+    "Name": "Bothii",
+    "Type": "standard",
+    "Script": null,
+    "Source": "SKT"
+  },
+  {
+    "Id": "bullywug-mm",
+    "Name": "Bullywug",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "bullywug-xmm",
+    "Name": "Bullywug",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "celestial-erlw",
+    "Name": "Celestial",
+    "Type": "exotic",
+    "Script": "Celestial",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "celestial-ggr",
+    "Name": "Celestial",
+    "Type": "standard",
+    "Script": "Celestial",
+    "Source": "GGR"
+  },
+  {
+    "Id": "celestial-mot",
+    "Name": "Celestial",
+    "Type": "standard",
+    "Script": "Celestial",
+    "Source": "MOT"
+  },
+  {
+    "Id": "celestial-phb",
+    "Name": "Celestial",
+    "Type": "exotic",
+    "Script": "Celestial",
+    "Source": "PHB"
+  },
+  {
+    "Id": "celestial-xphb",
+    "Name": "Celestial",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "chessentan-frhof",
+    "Name": "Chessentan",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "chessentan-scag",
+    "Name": "Chessentan",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "chondathan-frhof",
+    "Name": "Chondathan",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "chondathan-scag",
+    "Name": "Chondathan",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "coalition-pidgin-psx",
+    "Name": "Coalition Pidgin",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSX"
+  },
+  {
+    "Id": "common-dsotdq",
+    "Name": "Common",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "common-erlw",
+    "Name": "Common",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "common-ggr",
+    "Name": "Common",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "GGR"
+  },
+  {
+    "Id": "common-mot",
+    "Name": "Common",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "MOT"
+  },
+  {
+    "Id": "common-phb",
+    "Name": "Common",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "PHB"
+  },
+  {
+    "Id": "common-psi",
+    "Name": "Common",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSI"
+  },
+  {
+    "Id": "common-sign-language-xphb",
+    "Name": "Common Sign Language",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "common-trade-pidgin-psx",
+    "Name": "Common Trade Pidgin",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSX"
+  },
+  {
+    "Id": "common-xphb",
+    "Name": "Common",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "daelkyr-erlw",
+    "Name": "Daelkyr",
+    "Type": "exotic",
+    "Script": "Daelkyr",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "damaran-frhof",
+    "Name": "Damaran",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "damaran-scag",
+    "Name": "Damaran",
+    "Type": "standard",
+    "Script": "Dethek",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "dambrathan-scag",
+    "Name": "Dambrathan",
+    "Type": "standard",
+    "Script": "Espruar",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "deep-crow-ai",
+    "Name": "Deep Crow",
+    "Type": "standard",
+    "Script": null,
+    "Source": "AI"
+  },
+  {
+    "Id": "deep-speech-phb",
+    "Name": "Deep Speech",
+    "Type": "exotic",
+    "Script": "none",
+    "Source": "PHB"
+  },
+  {
+    "Id": "deep-speech-xphb",
+    "Name": "Deep Speech",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "demonic-psi",
+    "Name": "Demonic",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSI"
+  },
+  {
+    "Id": "draconic-dsotdq",
+    "Name": "Draconic",
+    "Type": "exotic",
+    "Script": "Draconic",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "draconic-erlw",
+    "Name": "Draconic",
+    "Type": "exotic",
+    "Script": "Draconic",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "draconic-ggr",
+    "Name": "Draconic",
+    "Type": "standard",
+    "Script": "Draconic",
+    "Source": "GGR"
+  },
+  {
+    "Id": "draconic-mot",
+    "Name": "Draconic",
+    "Type": "standard",
+    "Script": "Draconic",
+    "Source": "MOT"
+  },
+  {
+    "Id": "draconic-phb",
+    "Name": "Draconic",
+    "Type": "exotic",
+    "Script": "Draconic",
+    "Source": "PHB"
+  },
+  {
+    "Id": "draconic-psi",
+    "Name": "Draconic",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSI"
+  },
+  {
+    "Id": "draconic-xphb",
+    "Name": "Draconic",
+    "Type": "standard",
+    "Script": "Draconic",
+    "Source": "XPHB"
+  },
+  {
+    "Id": "druidic-ggr",
+    "Name": "Druidic",
+    "Type": "secret",
+    "Script": null,
+    "Source": "GGR"
+  },
+  {
+    "Id": "druidic-phb",
+    "Name": "Druidic",
+    "Type": "secret",
+    "Script": null,
+    "Source": "PHB"
+  },
+  {
+    "Id": "druidic-xphb",
+    "Name": "Druidic",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "dwarvish-dsotdq",
+    "Name": "Dwarvish",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "dwarvish-erlw",
+    "Name": "Dwarvish",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "dwarvish-phb",
+    "Name": "Dwarvish",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "dwarvish-xphb",
+    "Name": "Dwarvish",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "elvish-dsotdq",
+    "Name": "Elvish",
+    "Type": "standard",
+    "Script": "Elvish",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "elvish-erlw",
+    "Name": "Elvish",
+    "Type": "standard",
+    "Script": "Elvish",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "elvish-ggr",
+    "Name": "Elvish",
+    "Type": "standard",
+    "Script": "Elvish",
+    "Source": "GGR"
+  },
+  {
+    "Id": "elvish-phb",
+    "Name": "Elvish",
+    "Type": "standard",
+    "Script": "Elvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "elvish-xphb",
+    "Name": "Elvish",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "ergot-dsotdq",
+    "Name": "Ergot",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "giant-eagle-mm",
+    "Name": "Giant Eagle",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "giant-elk-mm",
+    "Name": "Giant Elk",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "giant-erlw",
+    "Name": "Giant",
+    "Type": "standard",
+    "Script": "Giant",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "giant-ggr",
+    "Name": "Giant",
+    "Type": "standard",
+    "Script": "Minotaur",
+    "Source": "GGR"
+  },
+  {
+    "Id": "giant-mot",
+    "Name": "Giant",
+    "Type": "standard",
+    "Script": "Minotaur",
+    "Source": "MOT"
+  },
+  {
+    "Id": "giant-owl-mm",
+    "Name": "Giant Owl",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "giant-phb",
+    "Name": "Giant",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "giant-xphb",
+    "Name": "Giant",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "gith-mm",
+    "Name": "Gith",
+    "Type": "standard",
+    "Script": "Tir'su",
+    "Source": "MM"
+  },
+  {
+    "Id": "gith-xmm",
+    "Name": "Gith",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "gnoll-mm",
+    "Name": "Gnoll",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "gnoll-xmm",
+    "Name": "Gnoll",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "gnomish-dsotdq",
+    "Name": "Gnomish",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "gnomish-erlw",
+    "Name": "Gnomish",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "gnomish-phb",
+    "Name": "Gnomish",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "gnomish-xphb",
+    "Name": "Gnomish",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "goblin-dsotdq",
+    "Name": "Goblin",
+    "Type": "exotic",
+    "Script": "Dwarvish",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "goblin-erlw",
+    "Name": "Goblin",
+    "Type": "standard",
+    "Script": "Goblin",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "goblin-ggr",
+    "Name": "Goblin",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "GGR"
+  },
+  {
+    "Id": "goblin-phb",
+    "Name": "Goblin",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "goblin-xphb",
+    "Name": "Goblin",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "grell-mm",
+    "Name": "Grell",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "grung-vgm",
+    "Name": "Grung",
+    "Type": "standard",
+    "Script": null,
+    "Source": "VGM"
+  },
+  {
+    "Id": "guran-scag",
+    "Name": "Guran",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "halfling-erlw",
+    "Name": "Halfling",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "halfling-phb",
+    "Name": "Halfling",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "PHB"
+  },
+  {
+    "Id": "halfling-xphb",
+    "Name": "Halfling",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "halruaan-scag",
+    "Name": "Halruaan",
+    "Type": "standard",
+    "Script": "Draconic",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "homarid-psd",
+    "Name": "Homarid",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSD"
+  },
+  {
+    "Id": "hook-horror-mm",
+    "Name": "Hook Horror",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "hook-horror-xmm",
+    "Name": "Hook Horror",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "ice-toad-rot",
+    "Name": "Ice Toad",
+    "Type": "standard",
+    "Script": null,
+    "Source": "RoT"
+  },
+  {
+    "Id": "illuskan-frhof",
+    "Name": "Illuskan",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "illuskan-scag",
+    "Name": "Illuskan",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "infernal-erlw",
+    "Name": "Infernal",
+    "Type": "exotic",
+    "Script": "Infernal",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "infernal-phb",
+    "Name": "Infernal",
+    "Type": "exotic",
+    "Script": "Infernal",
+    "Source": "PHB"
+  },
+  {
+    "Id": "infernal-xphb",
+    "Name": "Infernal",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "istarian-dsotdq",
+    "Name": "Istarian",
+    "Type": "exotic",
+    "Script": "Istarian",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "itzocan-psx",
+    "Name": "Itzocan",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSX"
+  },
+  {
+    "Id": "ixitxachitl-oota",
+    "Name": "Ixitxachitl",
+    "Type": "standard",
+    "Script": null,
+    "Source": "OotA"
+  },
+  {
+    "Id": "keldon-psd",
+    "Name": "Keldon",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSD"
+  },
+  {
+    "Id": "kenderspeak-dsotdq",
+    "Name": "Kenderspeak",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "kharolian-dsotdq",
+    "Name": "Kharolian",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "khenra-psa",
+    "Name": "Khenra",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSA"
+  },
+  {
+    "Id": "khur-dsotdq",
+    "Name": "Khur",
+    "Type": "standard",
+    "Script": "Istarian",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "kothian-dsotdq",
+    "Name": "Kothian",
+    "Type": "exotic",
+    "Script": "Kothian",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "kraul-ggr",
+    "Name": "Kraul",
+    "Type": "standard",
+    "Script": "Kraul",
+    "Source": "GGR"
+  },
+  {
+    "Id": "kruthik-mtf",
+    "Name": "Kruthik",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MTF"
+  },
+  {
+    "Id": "lantanese-frhof",
+    "Name": "Lantanese",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "leonin-mot",
+    "Name": "Leonin",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "MOT"
+  },
+  {
+    "Id": "loross-idrotf",
+    "Name": "Loross",
+    "Type": "standard",
+    "Script": "Draconic",
+    "Source": "IDRotF"
+  },
+  {
+    "Id": "loxodon-ggr",
+    "Name": "Loxodon",
+    "Type": "standard",
+    "Script": "Elvish",
+    "Source": "GGR"
+  },
+  {
+    "Id": "marquesian-egw",
+    "Name": "Marquesian",
+    "Type": "standard",
+    "Script": null,
+    "Source": "EGW"
+  },
+  {
+    "Id": "merfolk-ggr",
+    "Name": "Merfolk",
+    "Type": "standard",
+    "Script": "Merfolk",
+    "Source": "GGR"
+  },
+  {
+    "Id": "merfolk-psx",
+    "Name": "Merfolk",
+    "Type": "standard",
+    "Script": "Merfolk",
+    "Source": "PSX"
+  },
+  {
+    "Id": "midani-frhof",
+    "Name": "Midani",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "midani-scag",
+    "Name": "Midani",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "minotaur-ggr",
+    "Name": "Minotaur",
+    "Type": "standard",
+    "Script": "Minotaur",
+    "Source": "GGR"
+  },
+  {
+    "Id": "minotaur-mot",
+    "Name": "Minotaur",
+    "Type": "standard",
+    "Script": "Minotaur",
+    "Source": "MOT"
+  },
+  {
+    "Id": "modron-mm",
+    "Name": "Modron",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "modron-xmm",
+    "Name": "Modron",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "mulhorandi-frhof",
+    "Name": "Mulhorandi",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "mulhorandi-scag",
+    "Name": "Mulhorandi",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "naga-psa",
+    "Name": "Naga",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSA"
+  },
+  {
+    "Id": "naush-egw",
+    "Name": "Naush",
+    "Type": "standard",
+    "Script": null,
+    "Source": "EGW"
+  },
+  {
+    "Id": "nerakese-dsotdq",
+    "Name": "Nerakese",
+    "Type": "exotic",
+    "Script": "Istarian",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "netherese-frhof",
+    "Name": "Netherese",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "netherese-hotdq",
+    "Name": "Netherese",
+    "Type": "standard",
+    "Script": "Draconic",
+    "Source": "HotDQ"
+  },
+  {
+    "Id": "nordmaarian-dsotdq",
+    "Name": "Nordmaarian",
+    "Type": "standard",
+    "Script": "Istarian",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "ogre-dsotdq",
+    "Name": "Ogre",
+    "Type": "exotic",
+    "Script": "Ogre",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "olman-tftyp",
+    "Name": "Olman",
+    "Type": "standard",
+    "Script": null,
+    "Source": "TftYP"
+  },
+  {
+    "Id": "orc-erlw",
+    "Name": "Orc",
+    "Type": "exotic",
+    "Script": "Goblin",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "orc-phb",
+    "Name": "Orc",
+    "Type": "standard",
+    "Script": "Dwarvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "orc-xphb",
+    "Name": "Orc",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "otyugh-mm",
+    "Name": "Otyugh",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "otyugh-xmm",
+    "Name": "Otyugh",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "primordial-dsotdq",
+    "Name": "Primordial",
+    "Type": "exotic",
+    "Script": "Primordial",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "primordial-erlw",
+    "Name": "Primordial",
+    "Type": "exotic",
+    "Script": "Primordial",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "primordial-mot",
+    "Name": "Primordial",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "MOT"
+  },
+  {
+    "Id": "primordial-phb",
+    "Name": "Primordial",
+    "Type": "exotic",
+    "Script": "Dwarvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "primordial-psi",
+    "Name": "Primordial",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSI"
+  },
+  {
+    "Id": "primordial-xphb",
+    "Name": "Primordial",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "qualith-vgm",
+    "Name": "Qualith",
+    "Type": "standard",
+    "Script": "Qualith",
+    "Source": "VGM"
+  },
+  {
+    "Id": "quori-erlw",
+    "Name": "Quori",
+    "Type": "exotic",
+    "Script": "Quori",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "rashemi-frhof",
+    "Name": "Rashemi",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "rashemi-scag",
+    "Name": "Rashemi",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "reghedjic-frhof",
+    "Name": "Reghedjic",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "riedran-erlw",
+    "Name": "Riedran",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "roushoum-scag",
+    "Name": "Roushoum",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "sahuagin-mm",
+    "Name": "Sahuagin",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "sahuagin-xmm",
+    "Name": "Sahuagin",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "sespech-frhof",
+    "Name": "Sespech",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "shaaran-scag",
+    "Name": "Shaaran",
+    "Type": "standard",
+    "Script": "Dethek",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "shou-scag",
+    "Name": "Shou",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "siren-psx",
+    "Name": "Siren",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSX"
+  },
+  {
+    "Id": "slaad-mm",
+    "Name": "Slaad",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "slaad-xmm",
+    "Name": "Slaad",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "solamnic-dsotdq",
+    "Name": "Solamnic",
+    "Type": "standard",
+    "Script": "Common",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "sphinx-ggr",
+    "Name": "Sphinx",
+    "Type": "standard",
+    "Script": "none",
+    "Source": "GGR"
+  },
+  {
+    "Id": "sphinx-mm",
+    "Name": "Sphinx",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "sphinx-mot",
+    "Name": "Sphinx",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MOT"
+  },
+  {
+    "Id": "sylvan-dsotdq",
+    "Name": "Sylvan",
+    "Type": "exotic",
+    "Script": "Sylvan",
+    "Source": "DSotDQ"
+  },
+  {
+    "Id": "sylvan-erlw",
+    "Name": "Sylvan",
+    "Type": "exotic",
+    "Script": "Elvish",
+    "Source": "ERLW"
+  },
+  {
+    "Id": "sylvan-ggr",
+    "Name": "Sylvan",
+    "Type": "standard",
+    "Script": "Elvish",
+    "Source": "GGR"
+  },
+  {
+    "Id": "sylvan-mot",
+    "Name": "Sylvan",
+    "Type": "standard",
+    "Script": "Elvish",
+    "Source": "MOT"
+  },
+  {
+    "Id": "sylvan-phb",
+    "Name": "Sylvan",
+    "Type": "exotic",
+    "Script": "Elvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "sylvan-xphb",
+    "Name": "Sylvan",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "thayan-frhof",
+    "Name": "Thayan",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "thayan-scag",
+    "Name": "Thayan",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "thieves-cant-ggr",
+    "Name": "Thieves' Cant",
+    "Type": "secret",
+    "Script": null,
+    "Source": "GGR"
+  },
+  {
+    "Id": "thieves-cant-phb",
+    "Name": "Thieves' Cant",
+    "Type": "secret",
+    "Script": null,
+    "Source": "PHB"
+  },
+  {
+    "Id": "thieves-cant-xphb",
+    "Name": "Thieves' Cant",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "thri-kreen-mm",
+    "Name": "Thri-kreen",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "thri-kreen-xmm",
+    "Name": "Thri-kreen",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "tlincalli-vgm",
+    "Name": "Tlincalli",
+    "Type": "standard",
+    "Script": null,
+    "Source": "VGM"
+  },
+  {
+    "Id": "troglodyte-mm",
+    "Name": "Troglodyte",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "troglodyte-xmm",
+    "Name": "Troglodyte",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "tuigan-scag",
+    "Name": "Tuigan",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "turmic-frhof",
+    "Name": "Turmic",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "turmic-scag",
+    "Name": "Turmic",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "uluik-scag",
+    "Name": "Uluik",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "umber-hulk-mm",
+    "Name": "Umber Hulk",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "umber-hulk-xmm",
+    "Name": "Umber Hulk",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "undercommon-phb",
+    "Name": "Undercommon",
+    "Type": "exotic",
+    "Script": "Elvish",
+    "Source": "PHB"
+  },
+  {
+    "Id": "undercommon-xphb",
+    "Name": "Undercommon",
+    "Type": "exotic",
+    "Script": null,
+    "Source": "XPHB"
+  },
+  {
+    "Id": "untheric-frhof",
+    "Name": "Untheric",
+    "Type": "standard",
+    "Script": null,
+    "Source": "FRHoF"
+  },
+  {
+    "Id": "untheric-scag",
+    "Name": "Untheric",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "vampire-psx",
+    "Name": "Vampire",
+    "Type": "standard",
+    "Script": null,
+    "Source": "PSX"
+  },
+  {
+    "Id": "vedalken-ggr",
+    "Name": "Vedalken",
+    "Type": "standard",
+    "Script": "Vedalken",
+    "Source": "GGR"
+  },
+  {
+    "Id": "vegepygmy-vgm",
+    "Name": "Vegepygmy",
+    "Type": "standard",
+    "Script": null,
+    "Source": "VGM"
+  },
+  {
+    "Id": "waelan-scag",
+    "Name": "Waelan",
+    "Type": "standard",
+    "Script": "Thorass",
+    "Source": "SCAG"
+  },
+  {
+    "Id": "winter-wolf-mm",
+    "Name": "Winter Wolf",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "worg-mm",
+    "Name": "Worg",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "worg-xmm",
+    "Name": "Worg",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "yeti-mm",
+    "Name": "Yeti",
+    "Type": "standard",
+    "Script": null,
+    "Source": "MM"
+  },
+  {
+    "Id": "yeti-xmm",
+    "Name": "Yeti",
+    "Type": "standard",
+    "Script": null,
+    "Source": "XMM"
+  },
+  {
+    "Id": "yikaria-skt",
+    "Name": "Yikaria",
+    "Type": "standard",
+    "Script": null,
+    "Source": "SKT"
+  },
+  {
+    "Id": "zemnian-egw",
+    "Name": "Zemnian",
+    "Type": "standard",
+    "Script": null,
+    "Source": "EGW"
+  }
+]

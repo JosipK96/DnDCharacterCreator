@@ -1,0 +1,342 @@
+@page "/character/create"
+@page "/character/create/{DraftIdParam}"
+@attribute [Authorize]
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject CharacterService CharacterService
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<div class="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+
+        @if (isInitializing)
+        {
+            <div class="flex justify-center items-center py-20">
+                <div class="text-center">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
+                    <p class="text-gray-400">Initializing character creation...</p>
+                </div>
+            </div>
+        }
+        else if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="bg-red-900 border border-red-700 text-red-200 px-6 py-4 rounded-lg">
+                <p class="font-medium">Error</p>
+                <p class="text-sm mt-1">@errorMessage</p>
+                <button @onclick="Cancel"
+                        class="mt-4 bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm">
+                    Back to Characters
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-white mb-2">Create New Character</h1>
+                <p class="text-gray-400">Follow the steps below to create your D&D 5E character</p>
+            </div>
+
+            <WizardProgress CurrentStep="@currentStep" />
+
+            @* The order here has to match WizardSteps.Names, which gives each step its number and name *@
+            <div class="bg-gray-800 rounded-lg shadow-xl p-8 mt-6">
+                @if (currentStep == 1)
+                {
+                    <NameAndLevelStep DraftId="@draftId" Step="@currentStep"
+                                      OnNext="@((choice) => MoveToStep2(choice.Level, choice.Edition))"
+                                      OnCancel="Cancel" />
+                }
+                else if (currentStep == 2)
+                {
+                    <RaceStep DraftId="@draftId" Step="@currentStep"
+                              Edition="@edition"
+                              OnNext="MoveToStep3"
+                              OnBack="MoveToStep1" />
+                }
+                else if (currentStep == 3)
+                {
+                    <ClassStep DraftId="@draftId" Step="@currentStep"
+                               CharacterLevel="@characterLevel"
+                               Edition="@edition"
+                               OnNext="MoveToStep4"
+                               OnBack="MoveToStep2" />
+                }
+                else if (currentStep == 4)
+                {
+                    <BackgroundStep DraftId="@draftId" Step="@currentStep"
+                                    Edition="@edition"
+                                    OnNext="MoveToStep5"
+                                    OnBack="MoveToStep3" />
+                }
+                else if (currentStep == 5)
+                {
+                    <LanguagesStep DraftId="@draftId" Step="@currentStep"
+                                   OnNext="MoveToStep6"
+                                   OnBack="MoveToStep4" />
+                }
+                else if (currentStep == 6)
+                {
+                    <AbilityScoresStep DraftId="@draftId" Step="@currentStep"
+                                       OnNext="MoveToStep7"
+                                       OnBack="MoveToStep5" />
+                }
+                else if (currentStep == 7)
+                {
+                    <ProficienciesStep DraftId="@draftId" Step="@currentStep"
+                                       OnNext="MoveToStep8"
+                                       OnBack="MoveToStep6" />
+                }
+                else if (currentStep == 8)
+                {
+                    <SpellsStep DraftId="@draftId" Step="@currentStep"
+                                OnNext="MoveToStep9"
+                                OnBack="MoveToStep7" />
+                }
+                else if (currentStep == 9)
+                {
+                    <ImprovementsStep DraftId="@draftId" Step="@currentStep"
+                                      CharacterLevel="@characterLevel"
+                                      OnNext="MoveToStep10"
+                                      OnBack="MoveToStep8" />
+                }
+                else if (currentStep == 10)
+                {
+                    <ReviewStep DraftId="@draftId" Step="@currentStep"
+                                OnNext="FinalizeCharacter"
+                                OnBack="MoveToStep9" />
+                }
+            </div>
+
+            <div class="mt-6 text-center">
+                <button @onclick="ConfirmCancel" class="text-gray-400 hover:text-white">
+                    Cancel Character Creation
+                </button>
+            </div>
+        }
+
+        @if (showCancelConfirm)
+        {
+            <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 px-4">
+                <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
+                    <h3 class="text-xl font-bold text-white mb-4">Cancel Character Creation?</h3>
+                    <p class="text-gray-300 mb-6">Are you sure you want to cancel? All progress will be lost.</p>
+                    <div class="flex justify-end space-x-3">
+                        <button @onclick="() => showCancelConfirm = false"
+                                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium">
+                            Continue Creating
+                        </button>
+                        <button @onclick="Cancel"
+                                class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium">
+                            Yes, Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (showResumePrompt && existingDraft != null)
+        {
+            <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 px-4">
+                <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
+                    <h3 class="text-xl font-bold text-white mb-4">Resume Character Creation?</h3>
+                    <p class="text-gray-300 mb-2">You have an in-progress character:</p>
+                    <div class="bg-gray-700 rounded p-3 mb-6">
+                        <p class="text-white font-medium">
+                            @(string.IsNullOrEmpty(existingDraft.Name) ? "Unnamed Character" : existingDraft.Name)
+                        </p>
+                        @if (existingDraft.Level.HasValue)
+                        {
+                            <p class="text-gray-400 text-sm">Level @existingDraft.Level</p>
+                        }
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">
+                        Would you like to continue where you left off, or start a new character?
+                    </p>
+                    <div class="flex flex-col space-y-3">
+                        <button @onclick="ResumeDraft"
+                                class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-medium w-full">
+                            Resume Character
+                        </button>
+                        <button @onclick="StartFresh"
+                                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 rounded-lg font-medium w-full">
+                            Start Fresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string? DraftIdParam { get; set; }
+
+    private Guid draftId = Guid.Empty;
+    private int currentStep = 1;
+    private int characterLevel = 1;
+
+    // The draft's rules edition, which decides what the later steps offer
+    private string edition = "";
+    private bool isInitializing = true;
+    private bool showCancelConfirm = false;
+    private bool showResumePrompt = false;
+    private CharacterDraftDetailsApiResponse? existingDraft;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(DraftIdParam) && Guid.TryParse(DraftIdParam, out var parsedDraftId))
+        {
+            draftId = parsedDraftId;
+            await LoadDraftAndDetermineStep();
+        }
+        else
+        {
+            await CheckForExistingDraft();
+        }
+    }
+
+    private async Task LoadDraftAndDetermineStep()
+    {
+        isInitializing = true;
+        StateHasChanged();
+
+        try
+        {
+            existingDraft = await DraftService.GetDraftDetailsAsync(draftId);
+
+            if (existingDraft == null)
+            {
+                errorMessage = "Character draft not found or you don't have access to it.";
+                return;
+            }
+
+            currentStep = DetermineCurrentStep(existingDraft);
+            edition = existingDraft.Edition;
+
+            if (existingDraft.Level.HasValue)
+                characterLevel = existingDraft.Level.Value;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error loading draft: {ex.Message}";
+        }
+        finally
+        {
+            isInitializing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task CheckForExistingDraft()
+    {
+        isInitializing = true;
+        StateHasChanged();
+
+        try
+        {
+            existingDraft = await DraftService.GetIncompleteDraftAsync();
+
+            if (existingDraft != null)
+                showResumePrompt = true;
+            else
+                await CreateNewDraft();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            isInitializing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ResumeDraft()
+    {
+        showResumePrompt = false;
+        draftId = existingDraft!.Id;
+        Navigation.NavigateTo($"/character/create/{draftId}", false);
+        currentStep = DetermineCurrentStep(existingDraft);
+        edition = existingDraft.Edition;
+        if (existingDraft.Level.HasValue)
+            characterLevel = existingDraft.Level.Value;
+        StateHasChanged();
+    }
+
+    private int DetermineCurrentStep(CharacterDraftDetailsApiResponse draft)
+    {
+        if (string.IsNullOrEmpty(draft.Name) || !draft.Level.HasValue) return 1;
+        if (string.IsNullOrEmpty(draft.RaceId)) return 2;
+        if (string.IsNullOrEmpty(draft.ClassId)) return 3;
+        if (string.IsNullOrEmpty(draft.BackgroundId)) return 4;
+        if (draft.BaseAbilityScores == null || draft.BaseAbilityScores.Count < 6) return 6;
+        return 7;
+    }
+
+    private async Task StartFresh()
+    {
+        showResumePrompt = false;
+        if (existingDraft != null)
+            await DraftService.DeleteDraftAsync(existingDraft.Id);
+        await CreateNewDraft();
+    }
+
+    private async Task CreateNewDraft()
+    {
+        try
+        {
+            draftId = await DraftService.CreateDraftAsync();
+            if (draftId == Guid.Empty)
+            {
+                errorMessage = "Failed to initialize character creation";
+                return;
+            }
+            Navigation.NavigateTo($"/character/create/{draftId}", false);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+        }
+    }
+
+    private void MoveToStep1() { currentStep = 1; StateHasChanged(); }
+    private void MoveToStep2() { currentStep = 2; StateHasChanged(); }
+    private void MoveToStep2(int level, string chosenEdition) { characterLevel = level; edition = chosenEdition; currentStep = 2; StateHasChanged(); }
+    private void MoveToStep3() { currentStep = 3; StateHasChanged(); }
+    private void MoveToStep4() { currentStep = 4; StateHasChanged(); }
+    private void MoveToStep5() { currentStep = 5; StateHasChanged(); }
+    private void MoveToStep6() { currentStep = 6; StateHasChanged(); }
+    private void MoveToStep7() { currentStep = 7; StateHasChanged(); }
+    private void MoveToStep8() { currentStep = 8; StateHasChanged(); }
+    private void MoveToStep9() { currentStep = 9; StateHasChanged(); }
+    private void MoveToStep10() { currentStep = 10; StateHasChanged(); }
+
+    private async Task FinalizeCharacter()
+    {
+        try
+        {
+            var characterId = await CharacterService.FinalizeCharacterAsync(draftId);
+            Navigation.NavigateTo($"/character/{characterId}");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to finalize character: {ex.Message}";
+            StateHasChanged();
+        }
+    }
+
+    private void ConfirmCancel()
+    {
+        showCancelConfirm = true;
+        StateHasChanged();
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/characters");
+    }
+}

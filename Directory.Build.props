@@ -1,0 +1,55 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Language -->
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Documentation. CS1591 is "missing XML comment for publicly visible type"; comments are
+         written where they explain something, not on every member. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- Build quality. A change is not done until it builds clean. -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+
+    <!-- Code style rules from .editorconfig are enforced at build time, not just in the IDE -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!-- .NET platform analyzers -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+
+    <!--
+      CS1591:     Missing XML comment for publicly visible type or member
+      CA1848:     Use LoggerMessage delegates
+      CA1873:     Avoid potentially expensive logging when the log level is not enabled
+      AsyncFixer01: Unnecessary async/await
+      NU1900:     Error occurred while getting package vulnerability data
+    -->
+    <NoWarn>$(NoWarn);CS1591;CA1848;CA1873;AsyncFixer01;NU1900</NoWarn>
+  </PropertyGroup>
+
+  <!-- C# projects only: docker-compose.dcproj imports this file too, and has nothing to compile -->
+  <ItemGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <Compile Include="$(MSBuildThisFileDirectory)analyzers/GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <PackageReference Include="AsyncFixer">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)analyzers/stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+</Project>

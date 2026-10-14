@@ -1,0 +1,421 @@
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    @if (subStep == 1)
+    {
+        <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Choose Your Race")</h2>
+
+        @if (IsLoading)
+        {
+            <div class="flex justify-center items-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
+        }
+        else if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+                <p class="text-sm">@ErrorMessage</p>
+            </div>
+        }
+        else
+        {
+            @if (selectedRace == null)
+            {
+                <div class="mb-6">
+                    <p class="text-gray-400 mb-4">Choose your character's race. Each race provides unique traits and bonuses.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @foreach (var race in races)
+                        {
+                            <button @onclick="() => SelectRace(race)"
+                                    class="bg-gray-700 hover:bg-gray-600 border-2 border-gray-600 hover:border-indigo-500 rounded-lg p-4 text-left transition-all duration-200 group">
+                                <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 mb-2">@race.Name</h3>
+                                @if (race.Subraces?.Any() == true)
+                                {
+                                    <p class="text-xs text-indigo-400 mt-2">@race.Subraces.Count subrace(s) available</p>
+                                }
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="space-y-6">
+                    <div class="bg-gray-700 rounded-lg p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white">@selectedRace.Name</h3>
+                            <button @onclick="ClearRace" class="text-gray-400 hover:text-white">Change</button>
+                        </div>
+
+                        @if (selectedRace.AbilityScoreBonuses?.Any() == true)
+                        {
+                            <div class="mt-4">
+                                <h4 class="text-sm font-medium text-gray-400 mb-2">Ability Score Bonuses</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach (var bonus in selectedRace.AbilityScoreBonuses)
+                                    {
+                                        <span class="bg-indigo-900 text-indigo-200 px-3 py-1 rounded-full text-sm">+@bonus.Bonus @bonus.AbilityScore.ToUpper()</span>
+                                    }
+                                </div>
+                            </div>
+                        }
+
+                        @if (selectedRace.Speed > 0)
+                        {
+                            <div class="mt-4">
+                                <h4 class="text-sm font-medium text-gray-400 mb-2">Speed</h4>
+                                <p class="text-white">@selectedRace.Speed ft.</p>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(selectedRace.Size))
+                        {
+                            <div class="mt-4">
+                                <h4 class="text-sm font-medium text-gray-400 mb-2">Size</h4>
+                                <p class="text-white">@selectedRace.Size</p>
+                            </div>
+                        }
+
+                        @if (selectedRace.FeatChoiceCount > 0)
+                        {
+                            <div class="mt-4">
+                                <h4 class="text-sm font-medium text-gray-400 mb-2">Feat</h4>
+                                <p class="text-white">@FeatChoiceText(selectedRace.FeatChoiceCount, selectedRace.FeatChoiceCategory)</p>
+                            </div>
+                        }
+                    </div>
+
+                    @if (selectedRace.Subraces?.Any() == true)
+                    {
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-4">@SubraceHeading(selectedRace) <span class="text-red-400">*</span></h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                @foreach (var subrace in selectedRace.Subraces)
+                                {
+                                    <button @onclick="() => SelectSubrace(subrace)" class="@GetSubraceButtonClass(subrace)">
+                                        <div class="flex items-start">
+                                            <div class="flex-1 text-left">
+                                                <h4 class="font-bold text-white mb-1">@subrace.Name</h4>
+                                                @if (subrace.Speed is { } subraceSpeed)
+                                                {
+                                                    <p class="text-xs text-gray-300">Speed @subraceSpeed ft.</p>
+                                                }
+                                                @if (subrace.AbilityScoreBonuses?.Any() == true)
+                                                {
+                                                    <div class="flex flex-wrap gap-1 mt-2">
+                                                        @foreach (var bonus in subrace.AbilityScoreBonuses)
+                                                        {
+                                                            <span class="text-xs bg-indigo-900 text-indigo-200 px-2 py-0.5 rounded">+@bonus.Bonus @bonus.AbilityScore.ToUpper()</span>
+                                                        }
+                                                    </div>
+                                                }
+                                                @if (SubraceChoicesText(subrace) is { } choices)
+                                                {
+                                                    <p class="text-xs text-gray-300 mt-2">@choices</p>
+                                                }
+                                            </div>
+                                            @if (selectedSubrace?.Id == subrace.Id)
+                                            {
+                                                <svg class="w-6 h-6 text-indigo-400 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                                </svg>
+                                            }
+                                        </div>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <!-- A half-elf's +1 to two abilities besides Charisma, a variant human's to two of six -->
+                    @if (AbilityChoiceCount() > 0 && (selectedRace.Subraces?.Any() != true || selectedSubrace != null))
+                    {
+                        <div class="bg-gray-700 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-white mb-2">Ability Score Increases <span class="text-red-400">*</span></h3>
+                            <p class="text-gray-400 text-sm mb-4">
+                                Raise @AbilityChoiceCount() different abilities by 1. (@abilityPicks.Count / @AbilityChoiceCount() selected)
+                            </p>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                @foreach (var ability in AbilityChoiceOptions())
+                                {
+                                    var isPicked = abilityPicks.Contains(ability);
+                                    var isDisabled = !isPicked && abilityPicks.Count >= AbilityChoiceCount();
+                                    <button type="button" @onclick="() => ToggleAbility(ability)" disabled="@isDisabled"
+                                            class="@GetPickClass(isPicked, isDisabled)">
+                                        <span class="font-medium text-white">+1 @AbilityNames.Of(ability)</span>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        }
+
+        <div class="flex justify-between mt-8">
+            <button @onclick="HandleBack" type="button"
+                    class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                Back
+            </button>
+            <button @onclick="HandleRaceNext" disabled="@(!CanProceedRace() || IsSaving)"
+                    class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                @(IsSaving ? "Saving..." : SkillChoiceCount() > 0 ? "Next: Choose Skills" : NextLabel)
+            </button>
+        </div>
+    }
+    else if (subStep == 2)
+    {
+        <!-- Race Skill Choices -->
+        <h2 class="text-2xl font-bold text-white mb-6">@StepHeading($"{selectedSubrace?.Name ?? selectedRace!.Name} Skill Proficiencies")</h2>
+
+        @if (isLoadingSkills)
+        {
+            <div class="flex justify-center items-center py-20">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+            </div>
+        }
+        else
+        {
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+                    <p class="text-sm">@ErrorMessage</p>
+                </div>
+            }
+
+            <div class="bg-blue-900 border border-blue-700 text-blue-200 px-4 py-3 rounded-lg mb-6">
+                <p class="text-sm">As a <strong>@(selectedSubrace?.Name ?? selectedRace!.Name)</strong>, choose <strong>@SkillChoiceCount()</strong> skill proficiency(ies). (@selectedRaceSkills.Count / @SkillChoiceCount() selected)</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                @foreach (var skill in availableSkills)
+                {
+                    var isSelected = selectedRaceSkills.Contains(skill.Id);
+                    var isDisabled = !isSelected && selectedRaceSkills.Count >= SkillChoiceCount();
+                    <button @onclick="() => ToggleSkill(skill.Id)"
+                            disabled="@isDisabled"
+                            class="@GetSkillButtonClass(skill.Id, isDisabled)">
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium text-white">@skill.Name</span>
+                            @if (isSelected)
+                            {
+                                <svg class="w-5 h-5 text-indigo-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                            }
+                        </div>
+                    </button>
+                }
+            </div>
+        }
+
+        <div class="flex justify-between mt-8">
+            <button @onclick="() => subStep = 1" type="button"
+                    class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                Back
+            </button>
+            <button @onclick="HandleSkillsNext" disabled="@(selectedRaceSkills.Count != SkillChoiceCount() || IsSaving)"
+                    class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+                @(IsSaving ? "Saving..." : NextLabel)
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    /// <summary>The draft's rules edition; only its races are offered.</summary>
+    [Parameter] public string? Edition { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private List<RaceApiResponse> races = [];
+    private RaceApiResponse? selectedRace;
+    private SubraceApiResponse? selectedSubrace;
+    private List<ProficiencyApiResponse> availableSkills = [];
+    private HashSet<string> selectedRaceSkills = [];
+
+    // The abilities picked for the race's or subrace's +1s
+    private HashSet<string> abilityPicks = [];
+    private int subStep = 1;
+    private bool isLoadingSkills = false;
+
+    protected override Task OnInitializedAsync() =>
+        LoadAsync(async () => races = await LookupService.GetRacesAsync(Edition), "Failed to load races");
+
+    // The 2024 book calls them lineages ("Drow Lineage"), ancestries or legacies: the word the
+    // options end in, and an ancestry for the dragonborn's dragons, which are just colours
+    private static string SubraceHeading(RaceApiResponse race)
+    {
+        if (race.Edition != "2024")
+        {
+            return "Choose a Subrace";
+        }
+
+        var lastWords = race.Subraces.Select(s => s.Name.Split(' ')[^1]).Distinct().ToList();
+        var word = lastWords.Count == 1 && race.Subraces.Count > 1 ? lastWords[0] : "Ancestry";
+
+        return $"Choose {("AEIOU".Contains(word[0]) ? "an" : "a")} {word}";
+    }
+
+    private void SelectRace(RaceApiResponse race)
+    {
+        selectedRace = race;
+        selectedSubrace = null;
+        selectedRaceSkills = [];
+        abilityPicks = [];
+    }
+
+    private void ClearRace()
+    {
+        selectedRace = null;
+        selectedSubrace = null;
+        abilityPicks = [];
+    }
+
+    // Another subrace may bring its own ability choice (a variant human's), so the picks go
+    private void SelectSubrace(SubraceApiResponse subrace)
+    {
+        if (selectedSubrace?.Id != subrace.Id)
+        {
+            abilityPicks = [];
+            selectedRaceSkills = [];
+        }
+
+        selectedSubrace = subrace;
+    }
+
+    private bool CanProceedRace()
+    {
+        if (selectedRace == null) return false;
+        if (selectedRace.Subraces?.Any() == true && selectedSubrace == null) return false;
+        return abilityPicks.Count == AbilityChoiceCount();
+    }
+
+    // The +1s the player picks: a subrace's take the place of the race's, as the variant human's
+    // replace the standard human's +1 to everything; the API refuses any other count
+    private int AbilityChoiceCount() =>
+        selectedSubrace is { AbilityChoiceCount: > 0 } ? selectedSubrace.AbilityChoiceCount : selectedRace?.AbilityChoiceCount ?? 0;
+
+    private List<string> AbilityChoiceOptions() =>
+        selectedSubrace is { AbilityChoiceCount: > 0 } ? selectedSubrace.AbilityChoiceOptions : selectedRace?.AbilityChoiceOptions ?? [];
+
+    // The skills picked for the race and subrace together: a variant human's comes with the subrace
+    private int SkillChoiceCount() => (selectedRace?.SkillChoiceCount ?? 0) + (selectedSubrace?.SkillChoiceCount ?? 0);
+
+    // Any skill when either pick has no list (a half-elf's, a variant human's), else the listed ones
+    private List<string> SkillChoiceOptions()
+    {
+        var anyFromRace = selectedRace is { SkillChoiceCount: > 0, SkillChoiceOptions.Count: 0 };
+        var anyFromSubrace = selectedSubrace is { SkillChoiceCount: > 0, SkillChoiceOptions.Count: 0 };
+
+        return anyFromRace || anyFromSubrace ? [] : [.. selectedRace?.SkillChoiceOptions ?? [], .. selectedSubrace?.SkillChoiceOptions ?? []];
+    }
+
+    private void ToggleAbility(string ability)
+    {
+        if (!abilityPicks.Remove(ability) && abilityPicks.Count < AbilityChoiceCount())
+        {
+            abilityPicks.Add(ability);
+        }
+    }
+
+    // A 2024 human's Origin feat; the feat is picked with the improvements, where its prerequisites are checked
+    private static string FeatChoiceText(int count, string? category) =>
+        $"{count} {(category == null ? string.Empty : category + " ")}feat(s) of your choice, picked with the ability score improvements.";
+
+    // What the subrace has the player pick: a variant human's two +1s, a skill and a feat
+    private static string? SubraceChoicesText(SubraceApiResponse subrace)
+    {
+        var choices = new List<string>();
+
+        if (subrace.AbilityChoiceCount > 0)
+        {
+            choices.Add($"+1 to {subrace.AbilityChoiceCount} abilities");
+        }
+
+        if (subrace.SkillChoiceCount > 0)
+        {
+            choices.Add($"{subrace.SkillChoiceCount} skill(s)");
+        }
+
+        if (subrace.FeatChoiceCount > 0)
+        {
+            choices.Add($"{subrace.FeatChoiceCount} feat(s)");
+        }
+
+        return choices.Count == 0 ? null : $"Choose {string.Join(", ", choices)}";
+    }
+
+    private string GetSubraceButtonClass(SubraceApiResponse subrace)
+    {
+        var baseClass = "bg-gray-700 border-2 rounded-lg p-4 transition-all duration-200";
+        return selectedSubrace?.Id == subrace.Id
+            ? $"{baseClass} border-indigo-500 bg-gray-600"
+            : $"{baseClass} border-gray-600 hover:border-indigo-500 hover:bg-gray-600";
+    }
+
+    private string GetSkillButtonClass(string id, bool isDisabled) => GetPickClass(selectedRaceSkills.Contains(id), isDisabled);
+
+    private static string GetPickClass(bool isSelected, bool isDisabled)
+    {
+        if (isDisabled) return "bg-gray-800 border-2 border-gray-700 rounded-lg p-3 cursor-not-allowed opacity-50";
+        if (isSelected) return "bg-gray-600 border-2 border-indigo-500 rounded-lg p-3 transition-all duration-200";
+        return "bg-gray-700 border-2 border-gray-600 hover:border-indigo-500 hover:bg-gray-600 rounded-lg p-3 transition-all duration-200";
+    }
+
+    private void ToggleSkill(string id)
+    {
+        if (selectedRaceSkills.Contains(id))
+            selectedRaceSkills.Remove(id);
+        else if (selectedRaceSkills.Count < SkillChoiceCount())
+            selectedRaceSkills.Add(id);
+    }
+
+    private async Task HandleRaceNext()
+    {
+        if (!CanProceedRace()) return;
+
+        var abilityIncreases = abilityPicks.ToDictionary(ability => ability, _ => 1);
+
+        if (!await SaveAsync(() => DraftService.SetRaceAsync(DraftId, selectedRace!.Id, selectedSubrace?.Id, abilityIncreases)))
+        {
+            return;
+        }
+
+        if (SkillChoiceCount() == 0)
+        {
+            await OnNext.InvokeAsync();
+            return;
+        }
+
+        subStep = 2;
+        await RunAsync(
+            async () =>
+            {
+                // A 2024 elf's Keen Senses is one of three; a half-elf may pick any skill
+                var skills = await LookupService.GetSkillProficienciesAsync();
+                var options = SkillChoiceOptions();
+                availableSkills = options.Count == 0 ? skills : skills.Where(s => options.Contains(s.Id)).ToList();
+            },
+            busy => isLoadingSkills = busy,
+            "Failed to load skills");
+    }
+
+    private async Task HandleSkillsNext()
+    {
+        if (selectedRaceSkills.Count != SkillChoiceCount()) return;
+
+        if (await SaveAsync(() => DraftService.ChooseRaceSkillsAsync(DraftId, selectedRaceSkills.ToList()), "Failed to save race skills"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

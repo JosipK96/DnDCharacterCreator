@@ -1,0 +1,3282 @@
+[
+  {
+    "Id": "artificer",
+    "Name": "Artificer",
+    "Edition": "2014",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "CON",
+      "INT"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons",
+      "thieves-tools",
+      "tinkers-tools"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "history",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "sleight_of_hand"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Intelligence",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "barbarian",
+    "Name": "Barbarian",
+    "Edition": "2014",
+    "HitDie": "1d12",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "CON"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "animal_handling",
+        "athletics",
+        "intimidation",
+        "nature",
+        "perception",
+        "survival"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "bard",
+    "Name": "Bard",
+    "Edition": "2014",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "DEX",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "simple-weapons",
+      "hand-crossbows",
+      "longswords",
+      "rapiers",
+      "shortswords"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 3,
+      "Options": [
+        "acrobatics",
+        "animal_handling",
+        "arcana",
+        "athletics",
+        "deception",
+        "history",
+        "insight",
+        "intimidation",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "performance",
+        "persuasion",
+        "religion",
+        "sleight_of_hand",
+        "stealth",
+        "survival"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": false
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 4,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 19,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 19,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 20,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "cleric",
+    "Name": "Cleric",
+    "Edition": "2014",
+    "HitDie": "1d8",
+    "SubclassLevel": 1,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "WIS",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "history",
+        "insight",
+        "medicine",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Wisdom",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 5,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "druid",
+    "Name": "Druid",
+    "Edition": "2014",
+    "HitDie": "1d8",
+    "SubclassLevel": 2,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "INT",
+      "WIS"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "clubs",
+      "daggers",
+      "darts",
+      "javelins",
+      "maces",
+      "quarterstaffs",
+      "scimitars",
+      "sickles",
+      "slings",
+      "spears",
+      "herbalism-kit"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "animal_handling",
+        "insight",
+        "medicine",
+        "nature",
+        "perception",
+        "religion",
+        "survival"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Wisdom",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 3,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "fighter",
+    "Name": "Fighter",
+    "Edition": "2014",
+    "HitDie": "1d10",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      6,
+      8,
+      12,
+      14,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "CON"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "heavy-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "acrobatics",
+        "animal_handling",
+        "athletics",
+        "history",
+        "insight",
+        "intimidation",
+        "perception",
+        "survival"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "monk",
+    "Name": "Monk",
+    "Edition": "2014",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "DEX"
+    ],
+    "ProficiencyIds": [
+      "simple-weapons",
+      "shortswords"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "acrobatics",
+        "athletics",
+        "history",
+        "insight",
+        "religion",
+        "stealth"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "paladin",
+    "Name": "Paladin",
+    "Edition": "2014",
+    "HitDie": "1d10",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "WIS",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "heavy-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "athletics",
+        "insight",
+        "intimidation",
+        "medicine",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 2,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 0,
+        "SpellsKnown": 0,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "ranger",
+    "Name": "Ranger",
+    "Edition": "2014",
+    "HitDie": "1d10",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "DEX"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 3,
+      "Options": [
+        "animal_handling",
+        "athletics",
+        "insight",
+        "investigation",
+        "nature",
+        "perception",
+        "stealth",
+        "survival"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Wisdom",
+      "IsPreparedCaster": false
+    },
+    "SpellProgression": [
+      {
+        "Level": 2,
+        "CantripsKnown": 0,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 0,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 0,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 0,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 0,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 0,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 0,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 0,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 0,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 0,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 0,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 0,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 0,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 0,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 0,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 0,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 0,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 0,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 0,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "rogue",
+    "Name": "Rogue",
+    "Edition": "2014",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      10,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "DEX",
+      "INT"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "simple-weapons",
+      "hand-crossbows",
+      "longswords",
+      "rapiers",
+      "shortswords",
+      "thieves-tools"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 4,
+      "Options": [
+        "acrobatics",
+        "athletics",
+        "deception",
+        "insight",
+        "intimidation",
+        "investigation",
+        "perception",
+        "performance",
+        "persuasion",
+        "sleight_of_hand",
+        "stealth"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "sorcerer",
+    "Name": "Sorcerer",
+    "Edition": "2014",
+    "HitDie": "1d6",
+    "SubclassLevel": 1,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "CON",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "daggers",
+      "darts",
+      "slings",
+      "quarterstaffs",
+      "light-crossbows"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "deception",
+        "insight",
+        "intimidation",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": false
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 4,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 4,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 4,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 5,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 5,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 5,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 5,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 5,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 5,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 6,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 6,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 6,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 6,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 6,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 6,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 6,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 6,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 6,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 6,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 6,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "warlock",
+    "Name": "Warlock",
+    "Edition": "2014",
+    "HitDie": "1d8",
+    "SubclassLevel": 1,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "WIS",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "simple-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "deception",
+        "history",
+        "intimidation",
+        "investigation",
+        "nature",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": false
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 3,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 3,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 4,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 4,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 4,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "wizard",
+    "Name": "Wizard",
+    "Edition": "2014",
+    "HitDie": "1d6",
+    "SubclassLevel": 2,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "INT",
+      "WIS"
+    ],
+    "ProficiencyIds": [
+      "daggers",
+      "darts",
+      "slings",
+      "quarterstaffs",
+      "light-crossbows"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "history",
+        "insight",
+        "investigation",
+        "medicine",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Intelligence",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 3,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 4,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 4,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 4,
+        "SpellsKnown": 20,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 4,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 5,
+        "SpellsKnown": 24,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 5,
+        "SpellsKnown": 26,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 5,
+        "SpellsKnown": 28,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 5,
+        "SpellsKnown": 30,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 5,
+        "SpellsKnown": 32,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 5,
+        "SpellsKnown": 34,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 5,
+        "SpellsKnown": 36,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 5,
+        "SpellsKnown": 38,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 5,
+        "SpellsKnown": 40,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 5,
+        "SpellsKnown": 42,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 5,
+        "SpellsKnown": 44,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "artificer-2024",
+    "Name": "Artificer",
+    "Edition": "2024",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "CON",
+      "INT"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons",
+      "thieves-tools",
+      "tinkers-tools"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "history",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "sleight_of_hand"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Intelligence",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 2,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 2,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 2,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "barbarian-2024",
+    "Name": "Barbarian",
+    "Edition": "2024",
+    "HitDie": "1d12",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "CON"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "animal_handling",
+        "athletics",
+        "intimidation",
+        "nature",
+        "perception",
+        "survival"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "bard-2024",
+    "Name": "Bard",
+    "Edition": "2024",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "DEX",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "simple-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 3,
+      "Options": [
+        "acrobatics",
+        "animal_handling",
+        "arcana",
+        "athletics",
+        "deception",
+        "history",
+        "insight",
+        "intimidation",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "performance",
+        "persuasion",
+        "religion",
+        "sleight_of_hand",
+        "stealth",
+        "survival"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 3,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 4,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 4,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 4,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 19,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 20,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 21,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "cleric-2024",
+    "Name": "Cleric",
+    "Edition": "2024",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "WIS",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "history",
+        "insight",
+        "medicine",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Wisdom",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 3,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 3,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 3,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 4,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 4,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 4,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 4,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 5,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 5,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 5,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 5,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 5,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 5,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 5,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 5,
+        "SpellsKnown": 19,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 5,
+        "SpellsKnown": 20,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 5,
+        "SpellsKnown": 21,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 5,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "druid-2024",
+    "Name": "Druid",
+    "Edition": "2024",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "INT",
+      "WIS"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "shields",
+      "simple-weapons",
+      "herbalism-kit"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "animal_handling",
+        "insight",
+        "medicine",
+        "nature",
+        "perception",
+        "religion",
+        "survival"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Wisdom",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 3,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 3,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 3,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 4,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 4,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 4,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 19,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 20,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 21,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "fighter-2024",
+    "Name": "Fighter",
+    "Edition": "2024",
+    "HitDie": "1d10",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      6,
+      8,
+      12,
+      14,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "CON"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "heavy-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "acrobatics",
+        "animal_handling",
+        "athletics",
+        "history",
+        "insight",
+        "intimidation",
+        "persuasion",
+        "perception",
+        "survival"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "monk-2024",
+    "Name": "Monk",
+    "Edition": "2024",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "DEX"
+    ],
+    "ProficiencyIds": [
+      "simple-weapons",
+      "light-martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "acrobatics",
+        "athletics",
+        "history",
+        "insight",
+        "religion",
+        "stealth"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "paladin-2024",
+    "Name": "Paladin",
+    "Edition": "2024",
+    "HitDie": "1d10",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "WIS",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "heavy-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "athletics",
+        "insight",
+        "intimidation",
+        "medicine",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 0,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 0,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 0,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 0,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 0,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 0,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 0,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 0,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 0,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 0,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 0,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 0,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 0,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 0,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 0,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 0,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 0,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 0,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 0,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 0,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "ranger-2024",
+    "Name": "Ranger",
+    "Edition": "2024",
+    "HitDie": "1d10",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "STR",
+      "DEX"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "medium-armor",
+      "shields",
+      "simple-weapons",
+      "martial-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 3,
+      "Options": [
+        "animal_handling",
+        "athletics",
+        "insight",
+        "investigation",
+        "nature",
+        "perception",
+        "stealth",
+        "survival"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Wisdom",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 0,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 0,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 0,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 0,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 0,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 0,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 0,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 0,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 0,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 0,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 0,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 0,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 0,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 0,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 0,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 0,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 0,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 0,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 0,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 0,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "rogue-2024",
+    "Name": "Rogue",
+    "Edition": "2024",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      10,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "DEX",
+      "INT"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "simple-weapons",
+      "finesse-or-light-martial-weapons",
+      "thieves-tools"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 4,
+      "Options": [
+        "acrobatics",
+        "athletics",
+        "deception",
+        "insight",
+        "intimidation",
+        "investigation",
+        "perception",
+        "persuasion",
+        "sleight_of_hand",
+        "stealth"
+      ]
+    },
+    "Spellcasting": null,
+    "SpellProgression": []
+  },
+  {
+    "Id": "sorcerer-2024",
+    "Name": "Sorcerer",
+    "Edition": "2024",
+    "HitDie": "1d6",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "CON",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "simple-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "deception",
+        "insight",
+        "intimidation",
+        "persuasion",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 4,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 4,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 4,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 5,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 5,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 5,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 5,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 5,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 5,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 6,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 6,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 6,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 6,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 6,
+        "SpellsKnown": 17,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 6,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 6,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 6,
+        "SpellsKnown": 19,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 6,
+        "SpellsKnown": 20,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 6,
+        "SpellsKnown": 21,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 6,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 9
+      }
+    ]
+  },
+  {
+    "Id": "warlock-2024",
+    "Name": "Warlock",
+    "Edition": "2024",
+    "HitDie": "1d8",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "WIS",
+      "CHA"
+    ],
+    "ProficiencyIds": [
+      "light-armor",
+      "simple-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "deception",
+        "history",
+        "intimidation",
+        "investigation",
+        "nature",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Charisma",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 2,
+        "SpellsKnown": 2,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 2,
+        "SpellsKnown": 3,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 2,
+        "SpellsKnown": 4,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 3,
+        "SpellsKnown": 5,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 3,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 3,
+        "SpellsKnown": 7,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 3,
+        "SpellsKnown": 9,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 4,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 4,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 4,
+        "SpellsKnown": 11,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 4,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 4,
+        "SpellsKnown": 13,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 4,
+        "SpellsKnown": 15,
+        "MaxSpellLevel": 5
+      }
+    ]
+  },
+  {
+    "Id": "wizard-2024",
+    "Name": "Wizard",
+    "Edition": "2024",
+    "HitDie": "1d6",
+    "SubclassLevel": 3,
+    "AsiLevels": [
+      4,
+      8,
+      12,
+      16,
+      19
+    ],
+    "SavingThrowAbilityIds": [
+      "INT",
+      "WIS"
+    ],
+    "ProficiencyIds": [
+      "simple-weapons"
+    ],
+    "ProficiencyChoices": {
+      "Type": "skills",
+      "Count": 2,
+      "Options": [
+        "arcana",
+        "history",
+        "insight",
+        "investigation",
+        "medicine",
+        "nature",
+        "religion"
+      ]
+    },
+    "Spellcasting": {
+      "Ability": "Intelligence",
+      "IsPreparedCaster": true
+    },
+    "SpellProgression": [
+      {
+        "Level": 1,
+        "CantripsKnown": 3,
+        "SpellsKnown": 6,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 2,
+        "CantripsKnown": 3,
+        "SpellsKnown": 8,
+        "MaxSpellLevel": 1
+      },
+      {
+        "Level": 3,
+        "CantripsKnown": 3,
+        "SpellsKnown": 10,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 4,
+        "CantripsKnown": 4,
+        "SpellsKnown": 12,
+        "MaxSpellLevel": 2
+      },
+      {
+        "Level": 5,
+        "CantripsKnown": 4,
+        "SpellsKnown": 14,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 6,
+        "CantripsKnown": 4,
+        "SpellsKnown": 16,
+        "MaxSpellLevel": 3
+      },
+      {
+        "Level": 7,
+        "CantripsKnown": 4,
+        "SpellsKnown": 18,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 8,
+        "CantripsKnown": 4,
+        "SpellsKnown": 20,
+        "MaxSpellLevel": 4
+      },
+      {
+        "Level": 9,
+        "CantripsKnown": 4,
+        "SpellsKnown": 22,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 10,
+        "CantripsKnown": 5,
+        "SpellsKnown": 24,
+        "MaxSpellLevel": 5
+      },
+      {
+        "Level": 11,
+        "CantripsKnown": 5,
+        "SpellsKnown": 26,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 12,
+        "CantripsKnown": 5,
+        "SpellsKnown": 28,
+        "MaxSpellLevel": 6
+      },
+      {
+        "Level": 13,
+        "CantripsKnown": 5,
+        "SpellsKnown": 30,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 14,
+        "CantripsKnown": 5,
+        "SpellsKnown": 32,
+        "MaxSpellLevel": 7
+      },
+      {
+        "Level": 15,
+        "CantripsKnown": 5,
+        "SpellsKnown": 34,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 16,
+        "CantripsKnown": 5,
+        "SpellsKnown": 36,
+        "MaxSpellLevel": 8
+      },
+      {
+        "Level": 17,
+        "CantripsKnown": 5,
+        "SpellsKnown": 38,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 18,
+        "CantripsKnown": 5,
+        "SpellsKnown": 40,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 19,
+        "CantripsKnown": 5,
+        "SpellsKnown": 42,
+        "MaxSpellLevel": 9
+      },
+      {
+        "Level": 20,
+        "CantripsKnown": 5,
+        "SpellsKnown": 44,
+        "MaxSpellLevel": 9
+      }
+    ]
+  }
+]

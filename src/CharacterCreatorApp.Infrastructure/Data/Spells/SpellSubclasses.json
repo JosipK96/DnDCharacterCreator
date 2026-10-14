@@ -1,0 +1,5354 @@
+[
+  {
+    "SpellId": "healing_word",
+    "SubclassId": "alchemist",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_sickness",
+    "SubclassId": "alchemist",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flaming_sphere",
+    "SubclassId": "alchemist",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "melfs_acid_arrow",
+    "SubclassId": "alchemist",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gaseous_form",
+    "SubclassId": "alchemist",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_healing_word",
+    "SubclassId": "alchemist",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blight",
+    "SubclassId": "alchemist",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward",
+    "SubclassId": "alchemist",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cloudkill",
+    "SubclassId": "alchemist",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "raise_dead",
+    "SubclassId": "alchemist",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_missile",
+    "SubclassId": "armorer",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderwave",
+    "SubclassId": "armorer",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mirror_image",
+    "SubclassId": "armorer",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shatter",
+    "SubclassId": "armorer",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hypnotic_pattern",
+    "SubclassId": "armorer",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lightning_bolt",
+    "SubclassId": "armorer",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield",
+    "SubclassId": "armorer",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility",
+    "SubclassId": "armorer",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "passwall",
+    "SubclassId": "armorer",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_force",
+    "SubclassId": "armorer",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield",
+    "SubclassId": "artillerist",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderwave",
+    "SubclassId": "artillerist",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scorching_ray",
+    "SubclassId": "artillerist",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shatter",
+    "SubclassId": "artillerist",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fireball",
+    "SubclassId": "artillerist",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wind_wall",
+    "SubclassId": "artillerist",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_storm",
+    "SubclassId": "artillerist",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire",
+    "SubclassId": "artillerist",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cone_of_cold",
+    "SubclassId": "artillerist",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_force",
+    "SubclassId": "artillerist",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "heroism",
+    "SubclassId": "battle-smith",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield",
+    "SubclassId": "battle-smith",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "branding_smite",
+    "SubclassId": "battle-smith",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "warding_bond",
+    "SubclassId": "battle-smith",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_vitality",
+    "SubclassId": "battle-smith",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "conjure_barrage",
+    "SubclassId": "battle-smith",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_purity",
+    "SubclassId": "battle-smith",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield",
+    "SubclassId": "battle-smith",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishing_smite",
+    "SubclassId": "battle-smith",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_cure_wounds",
+    "SubclassId": "battle-smith",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "augury",
+    "SubclassId": "ancestral-guardian",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "clairvoyance",
+    "SubclassId": "ancestral-guardian",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "druidcraft",
+    "SubclassId": "giant",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thaumaturgy",
+    "SubclassId": "giant",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "beast_sense",
+    "SubclassId": "totem-warrior",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_animals",
+    "SubclassId": "totem-warrior",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune_with_nature",
+    "SubclassId": "totem-warrior",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command",
+    "SubclassId": "glamour",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guidance",
+    "SubclassId": "spirits",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bane",
+    "SubclassId": "ambition",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "disguise_self",
+    "SubclassId": "ambition",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mirror_image",
+    "SubclassId": "ambition",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_enfeeblement",
+    "SubclassId": "ambition",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bestow_curse",
+    "SubclassId": "ambition",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "vampiric_touch",
+    "SubclassId": "ambition",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward",
+    "SubclassId": "ambition",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dimension_door",
+    "SubclassId": "ambition",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_person",
+    "SubclassId": "ambition",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "modify_memory",
+    "SubclassId": "ambition",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_magic",
+    "SubclassId": "arcana",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_missile",
+    "SubclassId": "arcana",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon",
+    "SubclassId": "arcana",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nystuls_magic_aura",
+    "SubclassId": "arcana",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic",
+    "SubclassId": "arcana",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_circle",
+    "SubclassId": "arcana",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye",
+    "SubclassId": "arcana",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "leomunds_secret_chest",
+    "SubclassId": "arcana",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "planar_binding",
+    "SubclassId": "arcana",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "teleportation_circle",
+    "SubclassId": "arcana",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "false_life",
+    "SubclassId": "death",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_sickness",
+    "SubclassId": "death",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blindness_deafness",
+    "SubclassId": "death",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_enfeeblement",
+    "SubclassId": "death",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "animate_dead",
+    "SubclassId": "death",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "vampiric_touch",
+    "SubclassId": "death",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blight",
+    "SubclassId": "death",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward",
+    "SubclassId": "death",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "antilife_shell",
+    "SubclassId": "death",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cloudkill",
+    "SubclassId": "death",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "identify",
+    "SubclassId": "forge",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "searing_smite",
+    "SubclassId": "forge",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "heat_metal",
+    "SubclassId": "forge",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon",
+    "SubclassId": "forge",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "elemental_weapon",
+    "SubclassId": "forge",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy",
+    "SubclassId": "forge",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fabricate",
+    "SubclassId": "forge",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire",
+    "SubclassId": "forge",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "animate_objects",
+    "SubclassId": "forge",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "creation",
+    "SubclassId": "forge",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bane",
+    "SubclassId": "grave",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "false_life",
+    "SubclassId": "grave",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gentle_repose",
+    "SubclassId": "grave",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_enfeeblement",
+    "SubclassId": "grave",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "revivify",
+    "SubclassId": "grave",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "vampiric_touch",
+    "SubclassId": "grave",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blight",
+    "SubclassId": "grave",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward",
+    "SubclassId": "grave",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "antilife_shell",
+    "SubclassId": "grave",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "raise_dead",
+    "SubclassId": "grave",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spare_the_dying",
+    "SubclassId": "grave",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command",
+    "SubclassId": "knowledge",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "identify",
+    "SubclassId": "knowledge",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "augury",
+    "SubclassId": "knowledge",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "suggestion",
+    "SubclassId": "knowledge",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nondetection",
+    "SubclassId": "knowledge",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_dead",
+    "SubclassId": "knowledge",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye",
+    "SubclassId": "knowledge",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "confusion",
+    "SubclassId": "knowledge",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "legend_lore",
+    "SubclassId": "knowledge",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying",
+    "SubclassId": "knowledge",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command",
+    "SubclassId": "knowledge-psa",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "identify",
+    "SubclassId": "knowledge-psa",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "augury",
+    "SubclassId": "knowledge-psa",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "suggestion",
+    "SubclassId": "knowledge-psa",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nondetection",
+    "SubclassId": "knowledge-psa",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_dead",
+    "SubclassId": "knowledge-psa",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye",
+    "SubclassId": "knowledge-psa",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "confusion",
+    "SubclassId": "knowledge-psa",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "legend_lore",
+    "SubclassId": "knowledge-psa",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying",
+    "SubclassId": "knowledge-psa",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bless",
+    "SubclassId": "life",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cure_wounds",
+    "SubclassId": "life",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration",
+    "SubclassId": "life",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spiritual_weapon",
+    "SubclassId": "life",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "beacon_of_hope",
+    "SubclassId": "life",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "revivify",
+    "SubclassId": "life",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward",
+    "SubclassId": "life",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guardian_of_faith",
+    "SubclassId": "life",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_cure_wounds",
+    "SubclassId": "life",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "raise_dead",
+    "SubclassId": "life",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "burning_hands",
+    "SubclassId": "light",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "faerie_fire",
+    "SubclassId": "light",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flaming_sphere",
+    "SubclassId": "light",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scorching_ray",
+    "SubclassId": "light",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "daylight",
+    "SubclassId": "light",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fireball",
+    "SubclassId": "light",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guardian_of_faith",
+    "SubclassId": "light",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire",
+    "SubclassId": "light",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "light",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying",
+    "SubclassId": "light",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "light",
+    "SubclassId": "light",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "animal_friendship",
+    "SubclassId": "nature",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_animals",
+    "SubclassId": "nature",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "barkskin",
+    "SubclassId": "nature",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spike_growth",
+    "SubclassId": "nature",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "plant_growth",
+    "SubclassId": "nature",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wind_wall",
+    "SubclassId": "nature",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_beast",
+    "SubclassId": "nature",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "grasping_vine",
+    "SubclassId": "nature",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "insect_plague",
+    "SubclassId": "nature",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "tree_stride",
+    "SubclassId": "nature",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command",
+    "SubclassId": "order",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "heroism",
+    "SubclassId": "order",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_person",
+    "SubclassId": "order",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "zone_of_truth",
+    "SubclassId": "order",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_healing_word",
+    "SubclassId": "order",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "slow",
+    "SubclassId": "order",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "compulsion",
+    "SubclassId": "order",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "locate_creature",
+    "SubclassId": "order",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune",
+    "SubclassId": "order",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_person",
+    "SubclassId": "order",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "heroism",
+    "SubclassId": "peace",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sanctuary",
+    "SubclassId": "peace",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aid",
+    "SubclassId": "peace",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "warding_bond",
+    "SubclassId": "peace",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "beacon_of_hope",
+    "SubclassId": "peace",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sending",
+    "SubclassId": "peace",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_purity",
+    "SubclassId": "peace",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "otilukes_resilient_sphere",
+    "SubclassId": "peace",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_restoration",
+    "SubclassId": "peace",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "rarys_telepathic_bond",
+    "SubclassId": "peace",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bless",
+    "SubclassId": "solidarity",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt",
+    "SubclassId": "solidarity",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aid",
+    "SubclassId": "solidarity",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "warding_bond",
+    "SubclassId": "solidarity",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "beacon_of_hope",
+    "SubclassId": "solidarity",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "crusaders_mantle",
+    "SubclassId": "solidarity",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_life",
+    "SubclassId": "solidarity",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guardian_of_faith",
+    "SubclassId": "solidarity",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "circle_of_power",
+    "SubclassId": "solidarity",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_cure_wounds",
+    "SubclassId": "solidarity",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "divine_favor",
+    "SubclassId": "strength",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield_of_faith",
+    "SubclassId": "strength",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "enhance_ability",
+    "SubclassId": "strength",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_poison",
+    "SubclassId": "strength",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "haste",
+    "SubclassId": "strength",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy",
+    "SubclassId": "strength",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_beast",
+    "SubclassId": "strength",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "stoneskin",
+    "SubclassId": "strength",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "destructive_wave",
+    "SubclassId": "strength",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "insect_plague",
+    "SubclassId": "strength",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fog_cloud",
+    "SubclassId": "tempest",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderwave",
+    "SubclassId": "tempest",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gust_of_wind",
+    "SubclassId": "tempest",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shatter",
+    "SubclassId": "tempest",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "call_lightning",
+    "SubclassId": "tempest",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sleet_storm",
+    "SubclassId": "tempest",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "control_water",
+    "SubclassId": "tempest",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_storm",
+    "SubclassId": "tempest",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "destructive_wave",
+    "SubclassId": "tempest",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "insect_plague",
+    "SubclassId": "tempest",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "charm_person",
+    "SubclassId": "trickery",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "disguise_self",
+    "SubclassId": "trickery",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mirror_image",
+    "SubclassId": "trickery",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "pass_without_trace",
+    "SubclassId": "trickery",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blink",
+    "SubclassId": "trickery",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic",
+    "SubclassId": "trickery",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dimension_door",
+    "SubclassId": "trickery",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "polymorph",
+    "SubclassId": "trickery",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_person",
+    "SubclassId": "trickery",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "modify_memory",
+    "SubclassId": "trickery",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "faerie_fire",
+    "SubclassId": "twilight",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sleep",
+    "SubclassId": "twilight",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "moonbeam",
+    "SubclassId": "twilight",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "see_invisibility",
+    "SubclassId": "twilight",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_vitality",
+    "SubclassId": "twilight",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "leomunds_tiny_hut",
+    "SubclassId": "twilight",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_life",
+    "SubclassId": "twilight",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility",
+    "SubclassId": "twilight",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "circle_of_power",
+    "SubclassId": "twilight",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mislead",
+    "SubclassId": "twilight",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "divine_favor",
+    "SubclassId": "war-domain",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield_of_faith",
+    "SubclassId": "war-domain",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon",
+    "SubclassId": "war-domain",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spiritual_weapon",
+    "SubclassId": "war-domain",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "crusaders_mantle",
+    "SubclassId": "war-domain",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spirit_guardians",
+    "SubclassId": "war-domain",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement",
+    "SubclassId": "war-domain",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "stoneskin",
+    "SubclassId": "war-domain",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "war-domain",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster",
+    "SubclassId": "war-domain",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "searing_smite",
+    "SubclassId": "zeal",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderous_smite",
+    "SubclassId": "zeal",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon",
+    "SubclassId": "zeal",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shatter",
+    "SubclassId": "zeal",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "haste",
+    "SubclassId": "zeal",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fireball",
+    "SubclassId": "zeal",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield",
+    "SubclassId": "zeal",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement",
+    "SubclassId": "zeal",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "destructive_wave",
+    "SubclassId": "zeal",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "zeal",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blindness_deafness",
+    "SubclassId": "spores",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gentle_repose",
+    "SubclassId": "spores",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "animate_dead",
+    "SubclassId": "spores",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gaseous_form",
+    "SubclassId": "spores",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blight",
+    "SubclassId": "spores",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "confusion",
+    "SubclassId": "spores",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cloudkill",
+    "SubclassId": "spores",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "contagion",
+    "SubclassId": "spores",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "chill_touch",
+    "SubclassId": "spores",
+    "Level": 2,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt",
+    "SubclassId": "stars",
+    "Level": 2,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guidance",
+    "SubclassId": "stars",
+    "Level": 2,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "burning_hands",
+    "SubclassId": "wildfire",
+    "Level": 2,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cure_wounds",
+    "SubclassId": "wildfire",
+    "Level": 2,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flaming_sphere",
+    "SubclassId": "wildfire",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scorching_ray",
+    "SubclassId": "wildfire",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "plant_growth",
+    "SubclassId": "wildfire",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "revivify",
+    "SubclassId": "wildfire",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_life",
+    "SubclassId": "wildfire",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield",
+    "SubclassId": "wildfire",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "wildfire",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_cure_wounds",
+    "SubclassId": "wildfire",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "alter_self",
+    "SubclassId": "moon",
+    "Level": 14,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "prestidigitation",
+    "SubclassId": "arcane-archer",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "druidcraft",
+    "SubclassId": "arcane-archer",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "telekinesis",
+    "SubclassId": "psi-warrior",
+    "Level": 18,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "minor_illusion",
+    "SubclassId": "shadow-monk",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "darkness",
+    "SubclassId": "shadow-monk",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "darkvision",
+    "SubclassId": "shadow-monk",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "pass_without_trace",
+    "SubclassId": "shadow-monk",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "silence",
+    "SubclassId": "shadow-monk",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sanctuary",
+    "SubclassId": "open-hand",
+    "Level": 11,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "burning_hands",
+    "SubclassId": "sun-soul",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "armor_of_agathys",
+    "SubclassId": "conquest",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command",
+    "SubclassId": "conquest",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_person",
+    "SubclassId": "conquest",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spiritual_weapon",
+    "SubclassId": "conquest",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bestow_curse",
+    "SubclassId": "conquest",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fear",
+    "SubclassId": "conquest",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_beast",
+    "SubclassId": "conquest",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "stoneskin",
+    "SubclassId": "conquest",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cloudkill",
+    "SubclassId": "conquest",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_person",
+    "SubclassId": "conquest",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_evil_and_good",
+    "SubclassId": "devotion",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sanctuary",
+    "SubclassId": "devotion",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration",
+    "SubclassId": "devotion",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "zone_of_truth",
+    "SubclassId": "devotion",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "beacon_of_hope",
+    "SubclassId": "devotion",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic",
+    "SubclassId": "devotion",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement",
+    "SubclassId": "devotion",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guardian_of_faith",
+    "SubclassId": "devotion",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune",
+    "SubclassId": "devotion",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "devotion",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt",
+    "SubclassId": "glory",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "heroism",
+    "SubclassId": "glory",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "enhance_ability",
+    "SubclassId": "glory",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon",
+    "SubclassId": "glory",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "haste",
+    "SubclassId": "glory",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy",
+    "SubclassId": "glory",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "compulsion",
+    "SubclassId": "glory",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement",
+    "SubclassId": "glory",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune",
+    "SubclassId": "glory",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "glory",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sanctuary",
+    "SubclassId": "redemption",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sleep",
+    "SubclassId": "redemption",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "calm_emotions",
+    "SubclassId": "redemption",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_person",
+    "SubclassId": "redemption",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "counterspell",
+    "SubclassId": "redemption",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hypnotic_pattern",
+    "SubclassId": "redemption",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "otilukes_resilient_sphere",
+    "SubclassId": "redemption",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "stoneskin",
+    "SubclassId": "redemption",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster",
+    "SubclassId": "redemption",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_force",
+    "SubclassId": "redemption",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bane",
+    "SubclassId": "vengeance",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hunters_mark",
+    "SubclassId": "vengeance",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_person",
+    "SubclassId": "vengeance",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step",
+    "SubclassId": "vengeance",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "haste",
+    "SubclassId": "vengeance",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy",
+    "SubclassId": "vengeance",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment",
+    "SubclassId": "vengeance",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dimension_door",
+    "SubclassId": "vengeance",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster",
+    "SubclassId": "vengeance",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying",
+    "SubclassId": "vengeance",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ensnaring_strike",
+    "SubclassId": "ancients",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_animals",
+    "SubclassId": "ancients",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "moonbeam",
+    "SubclassId": "ancients",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step",
+    "SubclassId": "ancients",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "plant_growth",
+    "SubclassId": "ancients",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy",
+    "SubclassId": "ancients",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_storm",
+    "SubclassId": "ancients",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "stoneskin",
+    "SubclassId": "ancients",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune_with_nature",
+    "SubclassId": "ancients",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "tree_stride",
+    "SubclassId": "ancients",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command",
+    "SubclassId": "crown",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "compelled_duel",
+    "SubclassId": "crown",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "warding_bond",
+    "SubclassId": "crown",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "zone_of_truth",
+    "SubclassId": "crown",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_vitality",
+    "SubclassId": "crown",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spirit_guardians",
+    "SubclassId": "crown",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment",
+    "SubclassId": "crown",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guardian_of_faith",
+    "SubclassId": "crown",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "circle_of_power",
+    "SubclassId": "crown",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "geas",
+    "SubclassId": "crown",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "alarm",
+    "SubclassId": "watchers",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_magic",
+    "SubclassId": "watchers",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "moonbeam",
+    "SubclassId": "watchers",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "see_invisibility",
+    "SubclassId": "watchers",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "counterspell",
+    "SubclassId": "watchers",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nondetection",
+    "SubclassId": "watchers",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_purity",
+    "SubclassId": "watchers",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment",
+    "SubclassId": "watchers",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster",
+    "SubclassId": "watchers",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying",
+    "SubclassId": "watchers",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hellish_rebuke",
+    "SubclassId": "oathbreaker",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "inflict_wounds",
+    "SubclassId": "oathbreaker",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "crown_of_madness",
+    "SubclassId": "oathbreaker",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "darkness",
+    "SubclassId": "oathbreaker",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "animate_dead",
+    "SubclassId": "oathbreaker",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bestow_curse",
+    "SubclassId": "oathbreaker",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blight",
+    "SubclassId": "oathbreaker",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "confusion",
+    "SubclassId": "oathbreaker",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "contagion",
+    "SubclassId": "oathbreaker",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_person",
+    "SubclassId": "oathbreaker",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thaumaturgy",
+    "SubclassId": "drakewarden",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "charm_person",
+    "SubclassId": "fey-wanderer",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step",
+    "SubclassId": "fey-wanderer",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic",
+    "SubclassId": "fey-wanderer",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dimension_door",
+    "SubclassId": "fey-wanderer",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mislead",
+    "SubclassId": "fey-wanderer",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "disguise_self",
+    "SubclassId": "gloom-stalker",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "rope_trick",
+    "SubclassId": "gloom-stalker",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fear",
+    "SubclassId": "gloom-stalker",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility",
+    "SubclassId": "gloom-stalker",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "seeming",
+    "SubclassId": "gloom-stalker",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_evil_and_good",
+    "SubclassId": "horizon-walker",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step",
+    "SubclassId": "horizon-walker",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "haste",
+    "SubclassId": "horizon-walker",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment",
+    "SubclassId": "horizon-walker",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "teleportation_circle",
+    "SubclassId": "horizon-walker",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_evil_and_good",
+    "SubclassId": "monster-slayer",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "zone_of_truth",
+    "SubclassId": "monster-slayer",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_circle",
+    "SubclassId": "monster-slayer",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment",
+    "SubclassId": "monster-slayer",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster",
+    "SubclassId": "monster-slayer",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mage_hand",
+    "SubclassId": "swarmkeeper",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "faerie_fire",
+    "SubclassId": "swarmkeeper",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "web",
+    "SubclassId": "swarmkeeper",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gaseous_form",
+    "SubclassId": "swarmkeeper",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye",
+    "SubclassId": "swarmkeeper",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "insect_plague",
+    "SubclassId": "swarmkeeper",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mage_hand",
+    "SubclassId": "arcane-trickster",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mind_sliver",
+    "SubclassId": "aberrant-mind",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arms_of_hadar",
+    "SubclassId": "aberrant-mind",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dissonant_whispers",
+    "SubclassId": "aberrant-mind",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "calm_emotions",
+    "SubclassId": "aberrant-mind",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_thoughts",
+    "SubclassId": "aberrant-mind",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hunger_of_hadar",
+    "SubclassId": "aberrant-mind",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sending",
+    "SubclassId": "aberrant-mind",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "evards_black_tentacles",
+    "SubclassId": "aberrant-mind",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_aberration",
+    "SubclassId": "aberrant-mind",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "rarys_telepathic_bond",
+    "SubclassId": "aberrant-mind",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "telekinesis",
+    "SubclassId": "aberrant-mind",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "alarm",
+    "SubclassId": "clockwork-soul",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_evil_and_good",
+    "SubclassId": "clockwork-soul",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aid",
+    "SubclassId": "clockwork-soul",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration",
+    "SubclassId": "clockwork-soul",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic",
+    "SubclassId": "clockwork-soul",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy",
+    "SubclassId": "clockwork-soul",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement",
+    "SubclassId": "clockwork-soul",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_construct",
+    "SubclassId": "clockwork-soul",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_restoration",
+    "SubclassId": "clockwork-soul",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_force",
+    "SubclassId": "clockwork-soul",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "darkness",
+    "SubclassId": "shadow-sorcerer",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "faerie_fire",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "sleep",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "calm_emotions",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "phantasmal_force",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "blink",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "plant_growth",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "dominate_beast",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "greater_invisibility",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "dominate_person",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "seeming",
+    "SubclassId": "archfey",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "sacred_flame",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "light",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cure_wounds",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "guiding_bolt",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "flaming_sphere",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "lesser_restoration",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "daylight",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "revivify",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "guardian_of_faith",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "wall_of_fire",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "greater_restoration",
+    "SubclassId": "celestial",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "evards_black_tentacles",
+    "SubclassId": "fathomless",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "create_or_destroy_water",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "thunderwave",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "gust_of_wind",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "silence",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "lightning_bolt",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "sleet_storm",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "control_water",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "summon_elemental",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "bigbys_hand",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "cone_of_cold",
+    "SubclassId": "fathomless",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "burning_hands",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "command",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "blindness_deafness",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "scorching_ray",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "fireball",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "stinking_cloud",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "fire_shield",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "wall_of_fire",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "flame_strike",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "hallow",
+    "SubclassId": "fiend",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "dissonant_whispers",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "tashas_hideous_laughter",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "detect_thoughts",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "phantasmal_force",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "clairvoyance",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "sending",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "dominate_beast",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "evards_black_tentacles",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "dominate_person",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "telekinesis",
+    "SubclassId": "great-old-one",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "shield",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "wrathful_smite",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "blur",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "branding_smite",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "blink",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "elemental_weapon",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "phantasmal_killer",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "staggering_smite",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "banishing_smite",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "cone_of_cold",
+    "SubclassId": "hexblade",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "bane",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "false_life",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "blindness_deafness",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "phantasmal_force",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "phantom_steed",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "speak_with_dead",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "death_ward",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "greater_invisibility",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "antilife_shell",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "cloudkill",
+    "SubclassId": "undead",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "spare_the_dying",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "false_life",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "ray_of_sickness",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "blindness_deafness",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "silence",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "feign_death",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "speak_with_dead",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "aura_of_life",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "death_ward",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "contagion",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "legend_lore",
+    "SubclassId": "undying",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "dark_star",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "fortunes_favor",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "gift_of_alacrity",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "gravity_fissure",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "gravity_sinkhole",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "immovable_object",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "magnify_gravity",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "pulse_wave",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "ravenous_void",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "reality_break",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "sapping_sting",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "temporal_shunt",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "tether_essence",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "time_ravage",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "wristpocket",
+    "SubclassId": "chronurgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "dark_star",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "fortunes_favor",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "gift_of_alacrity",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "gravity_fissure",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "gravity_sinkhole",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "immovable_object",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "magnify_gravity",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "pulse_wave",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "ravenous_void",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "reality_break",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "sapping_sting",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "temporal_shunt",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "tether_essence",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "time_ravage",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "wristpocket",
+    "SubclassId": "graviturgy",
+    "Level": 1,
+    "IsAlwaysPrepared": false
+  },
+  {
+    "SpellId": "minor_illusion",
+    "SubclassId": "illusion",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "healing_word_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_sickness_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flaming_sphere_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "melfs_acid_arrow_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gaseous_form_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_healing_word_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "vitriolic_sphere_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cloudkill_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "raise_dead_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "tashas_bubbling_cauldron_2024",
+    "SubclassId": "alchemist-2024",
+    "Level": 15,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_missile_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderwave_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mirror_image_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shatter_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hypnotic_pattern_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lightning_bolt_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "passwall_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_force_2024",
+    "SubclassId": "armorer-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderwave_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scorching_ray_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shatter_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fireball_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wind_wall_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_storm_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cone_of_cold_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_force_2024",
+    "SubclassId": "artillerist-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "heroism_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shining_smite_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "warding_bond_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_vitality_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "conjure_barrage_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_purity_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishing_smite_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_cure_wounds_2024",
+    "SubclassId": "battle-smith-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "faerie_fire_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "healing_word_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "locate_object_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mind_spike_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "call_lightning_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "clairvoyance_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "locate_creature_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "teleportation_circle_2024",
+    "SubclassId": "cartographer-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "false_life_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spare_the_dying_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "witch_bolt_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blindness_deafness_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "enhance_ability_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "animate_dead_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lightning_bolt_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blight_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "antilife_shell_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "raise_dead_2024",
+    "SubclassId": "reanimator-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "beast_sense_2024",
+    "SubclassId": "wild-heart-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_animals_2024",
+    "SubclassId": "wild-heart-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune_with_nature_2024",
+    "SubclassId": "wild-heart-2024",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "charm_person_2024",
+    "SubclassId": "glamour-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mirror_image_2024",
+    "SubclassId": "glamour-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command_2024",
+    "SubclassId": "glamour-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spirit_guardians_2024",
+    "SubclassId": "spirits-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "moonbeam_2024",
+    "SubclassId": "moon-bard-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_magic_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_missile_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nystuls_magic_aura_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "counterspell_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "leomunds_secret_chest_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bigbys_hand_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "teleportation_circle_2024",
+    "SubclassId": "arcana-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_evil_and_good_2024",
+    "SubclassId": "grave-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "false_life_2024",
+    "SubclassId": "grave-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gentle_repose_2024",
+    "SubclassId": "grave-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_enfeeblement_2024",
+    "SubclassId": "grave-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spare_the_dying_2024",
+    "SubclassId": "grave-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "revivify_2024",
+    "SubclassId": "grave-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "vampiric_touch_2024",
+    "SubclassId": "grave-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blight_2024",
+    "SubclassId": "grave-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward_2024",
+    "SubclassId": "grave-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_evil_and_good_2024",
+    "SubclassId": "grave-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "raise_dead_2024",
+    "SubclassId": "grave-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "comprehend_languages_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_magic_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_thoughts_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "identify_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mind_spike_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nondetection_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "tongues_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "confusion_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "legend_lore_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "synaptic_static_2024",
+    "SubclassId": "knowledge-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aid_2024",
+    "SubclassId": "life-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bless_2024",
+    "SubclassId": "life-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cure_wounds_2024",
+    "SubclassId": "life-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration_2024",
+    "SubclassId": "life-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_healing_word_2024",
+    "SubclassId": "life-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "revivify_2024",
+    "SubclassId": "life-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_life_2024",
+    "SubclassId": "life-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "death_ward_2024",
+    "SubclassId": "life-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_restoration_2024",
+    "SubclassId": "life-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_cure_wounds_2024",
+    "SubclassId": "life-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "burning_hands_2024",
+    "SubclassId": "light-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "faerie_fire_2024",
+    "SubclassId": "light-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scorching_ray_2024",
+    "SubclassId": "light-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "see_invisibility_2024",
+    "SubclassId": "light-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "daylight_2024",
+    "SubclassId": "light-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fireball_2024",
+    "SubclassId": "light-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye_2024",
+    "SubclassId": "light-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire_2024",
+    "SubclassId": "light-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike_2024",
+    "SubclassId": "light-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying_2024",
+    "SubclassId": "light-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "charm_person_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "disguise_self_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "invisibility_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "pass_without_trace_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hypnotic_pattern_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nondetection_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "confusion_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dimension_door_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_person_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "modify_memory_2024",
+    "SubclassId": "trickery-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield_of_faith_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spiritual_weapon_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "crusaders_mantle_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "spirit_guardians_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "steel_wind_strike_2024",
+    "SubclassId": "war-domain-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cure_wounds_2024",
+    "SubclassId": "moon-druid-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "moonbeam_2024",
+    "SubclassId": "moon-druid-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "starry_wisp_2024",
+    "SubclassId": "moon-druid-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "conjure_animals_2024",
+    "SubclassId": "moon-druid-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fount_of_moonlight_2024",
+    "SubclassId": "moon-druid-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mass_cure_wounds_2024",
+    "SubclassId": "moon-druid-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fog_cloud_2024",
+    "SubclassId": "sea-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gust_of_wind_2024",
+    "SubclassId": "sea-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_frost_2024",
+    "SubclassId": "sea-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shatter_2024",
+    "SubclassId": "sea-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderwave_2024",
+    "SubclassId": "sea-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lightning_bolt_2024",
+    "SubclassId": "sea-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "water_breathing_2024",
+    "SubclassId": "sea-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "control_water_2024",
+    "SubclassId": "sea-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_storm_2024",
+    "SubclassId": "sea-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "conjure_elemental_2024",
+    "SubclassId": "sea-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster_2024",
+    "SubclassId": "sea-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt_2024",
+    "SubclassId": "stars-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guidance_2024",
+    "SubclassId": "stars-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "druidcraft_2024",
+    "SubclassId": "arcane-archer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "prestidigitation_2024",
+    "SubclassId": "arcane-archer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "comprehend_languages_2024",
+    "SubclassId": "banneret-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "telekinesis_2024",
+    "SubclassId": "psi-warrior-2024",
+    "Level": 18,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "minor_illusion_2024",
+    "SubclassId": "shadow-monk-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "darkness_2024",
+    "SubclassId": "shadow-monk-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "elementalism_2024",
+    "SubclassId": "elements-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_evil_and_good_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "shield_of_faith_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aid_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "zone_of_truth_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "beacon_of_hope_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guardian_of_faith_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike_2024",
+    "SubclassId": "devotion-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt_2024",
+    "SubclassId": "glory-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "heroism_2024",
+    "SubclassId": "glory-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "enhance_ability_2024",
+    "SubclassId": "glory-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "magic_weapon_2024",
+    "SubclassId": "glory-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "haste_2024",
+    "SubclassId": "glory-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy_2024",
+    "SubclassId": "glory-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "compulsion_2024",
+    "SubclassId": "glory-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement_2024",
+    "SubclassId": "glory-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "legend_lore_2024",
+    "SubclassId": "glory-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "yolandes_regal_presence_2024",
+    "SubclassId": "glory-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bane_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hunters_mark_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_person_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "haste_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishment_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dimension_door_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_monster_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scrying_2024",
+    "SubclassId": "vengeance-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ensnaring_strike_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_animals_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "moonbeam_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "plant_growth_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_storm_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "stoneskin_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "commune_with_nature_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "tree_stride_2024",
+    "SubclassId": "ancients-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "chromatic_orb_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "elementalism_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "thunderous_smite_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mirror_image_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "phantasmal_force_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fly_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "gaseous_form_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "conjure_minor_elementals_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_elemental_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "banishing_smite_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "contact_other_plane_2024",
+    "SubclassId": "noble-genies-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "charm_person_2024",
+    "SubclassId": "fey-wanderer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step_2024",
+    "SubclassId": "fey-wanderer-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_fey_2024",
+    "SubclassId": "fey-wanderer-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dimension_door_2024",
+    "SubclassId": "fey-wanderer-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mislead_2024",
+    "SubclassId": "fey-wanderer-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "disguise_self_2024",
+    "SubclassId": "gloom-stalker-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "rope_trick_2024",
+    "SubclassId": "gloom-stalker-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fear_2024",
+    "SubclassId": "gloom-stalker-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility_2024",
+    "SubclassId": "gloom-stalker-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "seeming_2024",
+    "SubclassId": "gloom-stalker-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wrathful_smite_2024",
+    "SubclassId": "hollow-warden-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "alter_self_2024",
+    "SubclassId": "hollow-warden-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "phantom_steed_2024",
+    "SubclassId": "hollow-warden-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_beast_2024",
+    "SubclassId": "hollow-warden-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "steel_wind_strike_2024",
+    "SubclassId": "hollow-warden-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_knife_2024",
+    "SubclassId": "winter-walker-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hold_person_2024",
+    "SubclassId": "winter-walker-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "remove_curse_2024",
+    "SubclassId": "winter-walker-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ice_storm_2024",
+    "SubclassId": "winter-walker-2024",
+    "Level": 13,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cone_of_cold_2024",
+    "SubclassId": "winter-walker-2024",
+    "Level": 17,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mage_hand_2024",
+    "SubclassId": "arcane-trickster-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_dead_2024",
+    "SubclassId": "phantom-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arms_of_hadar_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "calm_emotions_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_thoughts_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dissonant_whispers_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "mind_sliver_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hunger_of_hadar_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sending_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "evards_black_tentacles_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_aberration_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "rarys_telepathic_bond_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "telekinesis_2024",
+    "SubclassId": "aberrant-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aid_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "alarm_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_evil_and_good_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "protection_from_energy_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "freedom_of_movement_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_construct_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_restoration_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_force_2024",
+    "SubclassId": "clockwork-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "alter_self_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "chromatic_orb_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dragons_breath_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fear_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fly_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "arcane_eye_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "charm_monster_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "legend_lore_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_dragon_2024",
+    "SubclassId": "draconic-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bane_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "darkness_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "inflict_wounds_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "pass_without_trace_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hunger_of_hadar_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "nondetection_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "phantasmal_killer_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "contagion_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "creation_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_beast_2024",
+    "SubclassId": "shadow-sorcerer-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cure_wounds_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scorching_ray_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aura_of_vitality_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "counterspell_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_restoration_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "flame_strike_2024",
+    "SubclassId": "spellfire-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "calm_emotions_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "faerie_fire_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "misty_step_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "phantasmal_force_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sleep_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blink_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "plant_growth_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_beast_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dominate_person_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "seeming_2024",
+    "SubclassId": "archfey-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "aid_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cure_wounds_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guiding_bolt_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "lesser_restoration_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "daylight_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "revivify_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "guardian_of_faith_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_restoration_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_celestial_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "sacred_flame_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "light_2024",
+    "SubclassId": "celestial-2024",
+    "Level": 1,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "burning_hands_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "command_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "scorching_ray_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "suggestion_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fireball_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "stinking_cloud_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "fire_shield_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "wall_of_fire_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "geas_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "insect_plague_2024",
+    "SubclassId": "fiend-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "detect_thoughts_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dissonant_whispers_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "phantasmal_force_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "tashas_hideous_laughter_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "clairvoyance_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hunger_of_hadar_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "confusion_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_aberration_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "modify_memory_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "telekinesis_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "hex_2024",
+    "SubclassId": "great-old-one-2024",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "bane_2024",
+    "SubclassId": "undead-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "blindness_deafness_2024",
+    "SubclassId": "undead-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "phantasmal_force_2024",
+    "SubclassId": "undead-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "ray_of_sickness_2024",
+    "SubclassId": "undead-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "speak_with_dead_2024",
+    "SubclassId": "undead-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_undead_2024",
+    "SubclassId": "undead-2024",
+    "Level": 5,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "greater_invisibility_2024",
+    "SubclassId": "undead-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "phantasmal_killer_2024",
+    "SubclassId": "undead-2024",
+    "Level": 7,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "antilife_shell_2024",
+    "SubclassId": "undead-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "cloudkill_2024",
+    "SubclassId": "undead-2024",
+    "Level": 9,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "counterspell_2024",
+    "SubclassId": "abjurer-2024",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "dispel_magic_2024",
+    "SubclassId": "abjurer-2024",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "see_invisibility_2024",
+    "SubclassId": "diviner-2024",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_beast_2024",
+    "SubclassId": "illusionist-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "summon_fey_2024",
+    "SubclassId": "illusionist-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "minor_illusion_2024",
+    "SubclassId": "illusionist-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "animate_dead_2024",
+    "SubclassId": "necromancer-2024",
+    "Level": 6,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "find_familiar_2024",
+    "SubclassId": "necromancer-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "alter_self_2024",
+    "SubclassId": "transmuter-2024",
+    "Level": 3,
+    "IsAlwaysPrepared": true
+  },
+  {
+    "SpellId": "polymorph_2024",
+    "SubclassId": "transmuter-2024",
+    "Level": 10,
+    "IsAlwaysPrepared": true
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "name": "charactercreatorapp.client",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Source of the 3D dice. Nothing builds from node_modules: wwwroot/lib/dice-box is a copy of node_modules/@3d-dice/dice-box/dist. To update it, change the version here, run npm install and copy dist over wwwroot/lib/dice-box.",
+  "dependencies": {
+    "@3d-dice/dice-box": "1.1.4"
+  }
+}

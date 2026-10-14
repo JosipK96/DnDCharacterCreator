@@ -1,0 +1,7 @@
+# Merged over docker-compose.yml by "docker compose up" and by Visual Studio: a local run is a
+# Development run (Swagger at /swagger, exception messages in 500 responses). Deploy with
+# "docker compose -f docker-compose.yml up" to leave this out.
+services:
+  charactercreator.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Development}

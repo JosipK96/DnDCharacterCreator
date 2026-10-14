@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <UserSecretsId>e2b1a5a1-8d11-4353-9690-dfb18418112f</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerfileContext>..\..</DockerfileContext>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Mapster" />
+        <PackageReference Include="Mapster.DependencyInjection" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\CharacterCreatorApp.Application\CharacterCreatorApp.Application.csproj" />
+        <ProjectReference Include="..\CharacterCreatorApp.Client\CharacterCreatorApp.Client.csproj" />
+        <ProjectReference Include="..\CharacterCreatorApp.Contracts\CharacterCreatorApp.Contracts.csproj" />
+        <ProjectReference Include="..\CharacterCreatorApp.Infrastructure\CharacterCreatorApp.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

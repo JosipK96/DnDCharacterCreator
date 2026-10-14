@@ -1,0 +1,77 @@
+<div class="mb-8">
+    <div class="flex items-start">
+        @for (int step = 1; step <= TotalSteps; step++)
+        {
+            var stepNumber = step;
+            var isActive = stepNumber == CurrentStep;
+            var isCompleted = stepNumber < CurrentStep;
+
+            if (stepNumber < TotalSteps)
+            {
+                <!-- Step with connecting line -->
+                <div class="flex items-center flex-1">
+                    <div class="flex flex-col items-center">
+                        <!-- Step Circle -->
+                        <div class="@GetStepClass(isActive, isCompleted)">
+                            @if (isCompleted)
+                            {
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            }
+                            else
+                            {
+                                <span>@stepNumber</span>
+                            }
+                        </div>
+                        <!-- Step Label -->
+                        <span class="text-xs mt-1 text-center @(isActive ? "text-indigo-400 font-medium" : "text-gray-500")">@GetStepLabel(stepNumber)</span>
+                    </div>
+                    <!-- Connecting line -->
+                    <div class="flex-1 h-0.5 mx-2 mb-4 @(isCompleted ? "bg-indigo-600" : "bg-gray-700")"></div>
+                </div>
+            }
+            else
+            {
+                <!-- Last step — no line -->
+                <div class="flex flex-col items-center">
+                    <div class="@GetStepClass(isActive, isCompleted)">
+                        @if (isCompleted)
+                        {
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                        }
+                        else
+                        {
+                            <span>@stepNumber</span>
+                        }
+                    </div>
+                    <span class="text-xs mt-1 text-center @(isActive ? "text-indigo-400 font-medium" : "text-gray-500")">@GetStepLabel(stepNumber)</span>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int CurrentStep { get; set; }
+
+    private static int TotalSteps => WizardSteps.Count;
+
+    private string GetStepClass(bool isActive, bool isCompleted)
+    {
+        var baseClass = "w-10 h-10 rounded-full flex items-center justify-center font-medium";
+
+        if (isCompleted)
+            return $"{baseClass} bg-indigo-600 text-white";
+
+        if (isActive)
+            return $"{baseClass} bg-indigo-600 text-white ring-4 ring-indigo-600 ring-opacity-30";
+
+        return $"{baseClass} bg-gray-700 text-gray-400";
+    }
+
+    private static string GetStepLabel(int step) => WizardSteps.NameOf(step);
+}

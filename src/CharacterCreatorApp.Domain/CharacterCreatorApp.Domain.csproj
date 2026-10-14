@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!-- No package references: the domain model is plain C#. ASP.NET Core Identity's user type
+         lives in Infrastructure/Identity, and Application reaches it through IIdentityService. -->
+
+</Project>

@@ -1,0 +1,63 @@
+## Build artifacts
+**/bin/
+**/obj/
+**/publish/
+
+## IDE files
+**/.vs/
+**/.idea/
+**/.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Test results
+**/TestResults/
+**/*.trx
+**/coverage/
+**/coveragereport/
+
+## NuGet
+**/packages/
+*.nupkg
+*.snupkg
+
+## npm (the client's dice library is copied into wwwroot/lib; node_modules is only its source)
+**/node_modules/
+
+## Database
+*.db
+*.db-shm
+*.db-wal
+
+## Logs
+**/logs/
+*.log
+
+## Sensitive files (keep templates)
+**/appsettings.*.json
+!**/appsettings.json
+!**/appsettings.Development.json
+
+## docker compose secrets; .env.example is the committed template
+.env
+
+## The Api serves the client, which has no launch profile of its own; Visual Studio writes
+## a default one the first time it opens the project
+src/CharacterCreatorApp.Client/Properties/launchSettings.json
+
+## Rider
+.idea/
+*.sln.iml
+
+## Visual Studio
+.vs/
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+# Claude Code: the skills (a clone of a private repository), worktrees and local settings
+.claude/
+**/.claude/

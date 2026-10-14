@@ -1,0 +1,44 @@
+name: charactercreator
+
+# Values in ${...} come from .env next to this file (copy .env.example). Secrets are only ever
+# read from there; configurations/Env_files holds the non-secret container settings.
+services:
+  charactercreator.api:
+    image: ${DOCKER_REGISTRY-}charactercreatorapi
+    container_name: charactercreator.api
+    build:
+      context: .
+      dockerfile: src/CharacterCreatorApp.Api/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    env_file:
+      - configurations/Env_files/api.env
+    # GSS Encryption Mode=Disable: Npgsql otherwise probes for Kerberos on connect, and the
+    # aspnet image has no libgssapi, so every start logged "Cannot load library libgssapi_krb5".
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=${POSTGRES_DB:-charactercreator};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-postgres};GSS Encryption Mode=Disable
+      - JwtSettings__Key=${JWT_KEY:?JWT_KEY is not set. Copy .env.example to .env and set it.}
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: charactercreator.postgres
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-charactercreator}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:

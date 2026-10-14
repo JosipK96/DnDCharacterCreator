@@ -1,0 +1,1902 @@
+[
+  {
+    "Id": "dragonborn",
+    "Name": "Dragonborn",
+    "Edition": "2014",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Draconic"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "STR",
+        "Bonus": 2
+      },
+      {
+        "AbilityScoreId": "CHA",
+        "Bonus": 1
+      }
+    ],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "dragonborn_draconic_ancestry",
+        "Name": "Draconic Ancestry",
+        "Description": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.\n\nDraconic Ancestry\nDragon | Damage Type | Breath Weapon\nBlack | Acid | 5 by 30 ft. line (Dex. save)\nBlue | Lightning | 5 by 30 ft. line (Dex. save)\nBrass | Fire | 5 by 30 ft. line (Dex. save)\nBronze | Lightning | 5 by 30 ft. line (Dex. save)\nCopper | Acid | 5 by 30 ft. line (Dex. save)\nGold | Fire | 15 ft. cone (Dex. save)\nGreen | Poison | 15 ft. cone (Con. save)\nRed | Fire | 15 ft. cone (Dex. save)\nSilver | Cold | 15 ft. cone (Con. save)\nWhite | Cold | 15 ft. cone (Con. save)"
+      },
+      {
+        "Id": "dragonborn_breath_weapon",
+        "Name": "Breath Weapon",
+        "Description": "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.\n\nWhen you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\n\nAfter you use your breath weapon, you can't use it again until you complete a short or long rest."
+      },
+      {
+        "Id": "dragonborn_damage_resistance",
+        "Name": "Damage Resistance",
+        "Description": "You have resistance to the damage type associated with your draconic ancestry."
+      }
+    ],
+    "Spells": [],
+    "Subraces": []
+  },
+  {
+    "Id": "dwarf",
+    "Name": "Dwarf",
+    "Edition": "2014",
+    "Size": "Medium",
+    "Speed": 25,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Dwarvish"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "CON",
+        "Bonus": 2
+      }
+    ],
+    "ProficiencyIds": [
+      "battleaxe",
+      "handaxe",
+      "light_hammer",
+      "warhammer"
+    ],
+    "Traits": [
+      {
+        "Id": "dwarf_darkvision",
+        "Name": "Darkvision",
+        "Description": "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+      },
+      {
+        "Id": "dwarf_dwarven_resilience",
+        "Name": "Dwarven Resilience",
+        "Description": "You have advantage on saving throws against poison, and you have resistance against poison damage."
+      },
+      {
+        "Id": "dwarf_dwarven_combat_training",
+        "Name": "Dwarven Combat Training",
+        "Description": "You have proficiency with the battleaxe, handaxe, light hammer, and warhammer."
+      },
+      {
+        "Id": "dwarf_tool_proficiency",
+        "Name": "Tool Proficiency",
+        "Description": "You gain proficiency with the artisan's tools of your choice: Smith's tools, brewer's supplies, or mason's tools."
+      },
+      {
+        "Id": "dwarf_stonecunning",
+        "Name": "Stonecunning",
+        "Description": "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "hill_dwarf",
+        "Name": "Hill Dwarf",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "WIS",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "hill_dwarf_dwarven_toughness",
+            "Name": "Dwarven Toughness",
+            "Description": "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "mountain_dwarf",
+        "Name": "Mountain Dwarf",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "STR",
+            "Bonus": 2
+          }
+        ],
+        "ProficiencyIds": [
+          "light-armor",
+          "medium-armor"
+        ],
+        "Traits": [
+          {
+            "Id": "mountain_dwarf_dwarven_armor_training",
+            "Name": "Dwarven Armor Training",
+            "Description": "See Player's Handbook (2014), page 20."
+          }
+        ],
+        "Spells": []
+      }
+    ]
+  },
+  {
+    "Id": "elf",
+    "Name": "Elf",
+    "Edition": "2014",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Elvish"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "DEX",
+        "Bonus": 2
+      }
+    ],
+    "ProficiencyIds": [
+      "perception"
+    ],
+    "Traits": [
+      {
+        "Id": "elf_darkvision",
+        "Name": "Darkvision",
+        "Description": "Accustomed to twilit forests and the night sky, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+      },
+      {
+        "Id": "elf_keen_senses",
+        "Name": "Keen Senses",
+        "Description": "You have proficiency in the Perception skill."
+      },
+      {
+        "Id": "elf_fey_ancestry",
+        "Name": "Fey Ancestry",
+        "Description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep."
+      },
+      {
+        "Id": "elf_trance",
+        "Name": "Trance",
+        "Description": "Elves don't need to sleep. Instead, they meditate deeply, remaining semiconscious, for 4 hours a day. (The Common word for such meditation is \"trance.\") While meditating, you can dream after a fashion; such dreams are actually mental exercises that have become reflexive through years of practice. After resting in this way, you gain the same benefit that a human does from 8 hours of sleep.\n\nIf you meditate during a long rest, you finish the rest after only 4 hours. You otherwise obey all the rules for a long rest; only the duration is changed."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "drow_elf",
+        "Name": "Drow Elf",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "CHA",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [
+          "rapiers",
+          "shortswords",
+          "hand-crossbows"
+        ],
+        "Traits": [
+          {
+            "Id": "drow_elf_superior_darkvision",
+            "Name": "Superior Darkvision",
+            "Description": "See Player's Handbook (2014), page 24."
+          },
+          {
+            "Id": "drow_elf_sunlight_sensitivity",
+            "Name": "Sunlight Sensitivity",
+            "Description": "See Player's Handbook (2014), page 24."
+          },
+          {
+            "Id": "drow_elf_drow_magic",
+            "Name": "Drow Magic",
+            "Description": "See Player's Handbook (2014), page 24."
+          },
+          {
+            "Id": "drow_elf_drow_weapon_training",
+            "Name": "Drow Weapon Training",
+            "Description": "See Player's Handbook (2014), page 24."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "dancing_lights",
+            "Level": 1
+          },
+          {
+            "SpellId": "faerie_fire",
+            "Level": 3
+          },
+          {
+            "SpellId": "darkness",
+            "Level": 5
+          }
+        ]
+      },
+      {
+        "Id": "high_elf",
+        "Name": "High Elf",
+        "Speed": null,
+        "LanguageChoiceCount": 1,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "INT",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [
+          "longswords",
+          "shortswords",
+          "shortbow",
+          "longbow"
+        ],
+        "Traits": [
+          {
+            "Id": "high_elf_elf_weapon_training",
+            "Name": "Elf Weapon Training",
+            "Description": "You have proficiency with the longsword, shortsword, shortbow, and longbow."
+          },
+          {
+            "Id": "high_elf_cantrip",
+            "Name": "Cantrip",
+            "Description": "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it."
+          },
+          {
+            "Id": "high_elf_extra_language",
+            "Name": "Extra Language",
+            "Description": "You can speak, read, and write one extra language of your choosing."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "wood_elf",
+        "Name": "Wood Elf",
+        "Speed": 35,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "WIS",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [
+          "longswords",
+          "shortswords",
+          "shortbow",
+          "longbow"
+        ],
+        "Traits": [
+          {
+            "Id": "wood_elf_elf_weapon_training",
+            "Name": "Elf Weapon Training",
+            "Description": "See Player's Handbook (2014), page 24."
+          },
+          {
+            "Id": "wood_elf_fleet_of_foot",
+            "Name": "Fleet of Foot",
+            "Description": "See Player's Handbook (2014), page 24."
+          },
+          {
+            "Id": "wood_elf_mask_of_the_wild",
+            "Name": "Mask of the Wild",
+            "Description": "See Player's Handbook (2014), page 24."
+          }
+        ],
+        "Spells": []
+      }
+    ]
+  },
+  {
+    "Id": "gnome",
+    "Name": "Gnome",
+    "Edition": "2014",
+    "Size": "Small",
+    "Speed": 25,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Gnomish"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "INT",
+        "Bonus": 2
+      }
+    ],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "gnome_darkvision",
+        "Name": "Darkvision",
+        "Description": "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+      },
+      {
+        "Id": "gnome_gnome_cunning",
+        "Name": "Gnome Cunning",
+        "Description": "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "forest_gnome",
+        "Name": "Forest Gnome",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "DEX",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "forest_gnome_natural_illusionist",
+            "Name": "Natural Illusionist",
+            "Description": "See Player's Handbook (2014), page 37."
+          },
+          {
+            "Id": "forest_gnome_speak_with_small_beasts",
+            "Name": "Speak with Small Beasts",
+            "Description": "See Player's Handbook (2014), page 37."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "minor_illusion",
+            "Level": 1
+          }
+        ]
+      },
+      {
+        "Id": "rock_gnome",
+        "Name": "Rock Gnome",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "CON",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [
+          "tinkers-tools"
+        ],
+        "Traits": [
+          {
+            "Id": "rock_gnome_artificers_lore",
+            "Name": "Artificer's Lore",
+            "Description": "Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply."
+          },
+          {
+            "Id": "rock_gnome_tinker",
+            "Name": "Tinker",
+            "Description": "You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time.\n\nWhen you create a device, choose one of the following options:\n\nClockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents.\n\nFire Starter. The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action.\n\nMusic Box. When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song's end or when it is closed."
+          }
+        ],
+        "Spells": []
+      }
+    ]
+  },
+  {
+    "Id": "half_elf",
+    "Name": "Half-Elf",
+    "Edition": "2014",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 2,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 1,
+    "AbilityChoiceCount": 2,
+    "AbilityChoiceOptions": [
+      "STR",
+      "DEX",
+      "CON",
+      "INT",
+      "WIS"
+    ],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Elvish"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "CHA",
+        "Bonus": 2
+      }
+    ],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "half_elf_darkvision",
+        "Name": "Darkvision",
+        "Description": "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+      },
+      {
+        "Id": "half_elf_fey_ancestry",
+        "Name": "Fey Ancestry",
+        "Description": "You have advantage on saving throws against being charmed, and magic can't put you to sleep."
+      },
+      {
+        "Id": "half_elf_skill_versatility",
+        "Name": "Skill Versatility",
+        "Description": "You gain proficiency in two skills of your choice."
+      }
+    ],
+    "Spells": [],
+    "Subraces": []
+  },
+  {
+    "Id": "half_orc",
+    "Name": "Half-Orc",
+    "Edition": "2014",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Orc"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "STR",
+        "Bonus": 2
+      },
+      {
+        "AbilityScoreId": "CON",
+        "Bonus": 1
+      }
+    ],
+    "ProficiencyIds": [
+      "intimidation"
+    ],
+    "Traits": [
+      {
+        "Id": "half_orc_darkvision",
+        "Name": "Darkvision",
+        "Description": "Thanks to your orc blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+      },
+      {
+        "Id": "half_orc_menacing",
+        "Name": "Menacing",
+        "Description": "You gain proficiency in the Intimidation skill."
+      },
+      {
+        "Id": "half_orc_relentless_endurance",
+        "Name": "Relentless Endurance",
+        "Description": "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest."
+      },
+      {
+        "Id": "half_orc_savage_attacks",
+        "Name": "Savage Attacks",
+        "Description": "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit."
+      }
+    ],
+    "Spells": [],
+    "Subraces": []
+  },
+  {
+    "Id": "halfling",
+    "Name": "Halfling",
+    "Edition": "2014",
+    "Size": "Small",
+    "Speed": 25,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Halfling"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "DEX",
+        "Bonus": 2
+      }
+    ],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "halfling_lucky",
+        "Name": "Lucky",
+        "Description": "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll."
+      },
+      {
+        "Id": "halfling_brave",
+        "Name": "Brave",
+        "Description": "You have advantage on saving throws against being frightened."
+      },
+      {
+        "Id": "halfling_halfling_nimbleness",
+        "Name": "Halfling Nimbleness",
+        "Description": "You can move through the space of any creature that is of a size larger than yours."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "lightfoot_halfling",
+        "Name": "Lightfoot Halfling",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "CHA",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "lightfoot_halfling_naturally_stealthy",
+            "Name": "Naturally Stealthy",
+            "Description": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "stout_halfling",
+        "Name": "Stout Halfling",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "CON",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "stout_halfling_stout_resilience",
+            "Name": "Stout Resilience",
+            "Description": "See Player's Handbook (2014), page 28."
+          }
+        ],
+        "Spells": []
+      }
+    ]
+  },
+  {
+    "Id": "human",
+    "Name": "Human",
+    "Edition": "2014",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 1,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common"
+    ],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "standard_human",
+        "Name": "Standard Human",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [
+          {
+            "AbilityScoreId": "STR",
+            "Bonus": 1
+          },
+          {
+            "AbilityScoreId": "DEX",
+            "Bonus": 1
+          },
+          {
+            "AbilityScoreId": "CON",
+            "Bonus": 1
+          },
+          {
+            "AbilityScoreId": "INT",
+            "Bonus": 1
+          },
+          {
+            "AbilityScoreId": "WIS",
+            "Bonus": 1
+          },
+          {
+            "AbilityScoreId": "CHA",
+            "Bonus": 1
+          }
+        ],
+        "ProficiencyIds": [],
+        "Traits": [],
+        "Spells": []
+      },
+      {
+        "Id": "variant_human",
+        "Name": "Variant Human",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 2,
+        "AbilityChoiceOptions": [
+          "STR",
+          "DEX",
+          "CON",
+          "INT",
+          "WIS",
+          "CHA"
+        ],
+        "SkillChoiceCount": 1,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 1,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "variant_human_skills",
+            "Name": "Skills",
+            "Description": "See Player's Handbook (2014), page 31."
+          },
+          {
+            "Id": "variant_human_feat",
+            "Name": "Feat",
+            "Description": "See Player's Handbook (2014), page 31."
+          }
+        ],
+        "Spells": []
+      }
+    ]
+  },
+  {
+    "Id": "tiefling",
+    "Name": "Tiefling",
+    "Edition": "2014",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [
+      "Common",
+      "Infernal"
+    ],
+    "AbilityBonuses": [
+      {
+        "AbilityScoreId": "CHA",
+        "Bonus": 2
+      },
+      {
+        "AbilityScoreId": "INT",
+        "Bonus": 1
+      }
+    ],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "tiefling_darkvision",
+        "Name": "Darkvision",
+        "Description": "Thanks to your infernal heritage, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray."
+      },
+      {
+        "Id": "tiefling_hellish_resistance",
+        "Name": "Hellish Resistance",
+        "Description": "You have resistance to fire damage."
+      },
+      {
+        "Id": "tiefling_infernal_legacy",
+        "Name": "Infernal Legacy",
+        "Description": "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell as a 2nd-level spell with this trait; you regain the ability to cast it when you finish a long rest. Once you reach 5th level, you can also cast the darkness spell once per day with this trait; you regain the ability to cast it when you finish a long rest. Charisma is your spellcasting ability for these spells."
+      }
+    ],
+    "Spells": [
+      {
+        "SpellId": "thaumaturgy",
+        "Level": 1
+      },
+      {
+        "SpellId": "hellish_rebuke",
+        "Level": 3
+      },
+      {
+        "SpellId": "darkness",
+        "Level": 5
+      }
+    ],
+    "Subraces": []
+  },
+  {
+    "Id": "aasimar_2024",
+    "Name": "Aasimar",
+    "Edition": "2024",
+    "Size": "Small or Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "aasimar_2024_celestial_resistance",
+        "Name": "Celestial Resistance",
+        "Description": "See Player's Handbook (2024), page 186."
+      },
+      {
+        "Id": "aasimar_2024_darkvision",
+        "Name": "Darkvision",
+        "Description": "See Player's Handbook (2024), page 186."
+      },
+      {
+        "Id": "aasimar_2024_healing_hands",
+        "Name": "Healing Hands",
+        "Description": "See Player's Handbook (2024), page 186."
+      },
+      {
+        "Id": "aasimar_2024_light_bearer",
+        "Name": "Light Bearer",
+        "Description": "See Player's Handbook (2024), page 186."
+      },
+      {
+        "Id": "aasimar_2024_celestial_revelation",
+        "Name": "Celestial Revelation",
+        "Description": "See Player's Handbook (2024), page 186."
+      }
+    ],
+    "Spells": [
+      {
+        "SpellId": "light_2024",
+        "Level": 1
+      }
+    ],
+    "Subraces": []
+  },
+  {
+    "Id": "dragonborn_2024",
+    "Name": "Dragonborn",
+    "Edition": "2024",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "dragonborn_2024_darkvision",
+        "Name": "Darkvision",
+        "Description": "You have Darkvision with a range of 60 feet."
+      },
+      {
+        "Id": "dragonborn_2024_draconic_flight",
+        "Name": "Draconic Flight",
+        "Description": "When you reach character level 5, you can channel draconic magic to give yourself temporary flight. As a Bonus Action, you sprout spectral wings on your back that last for 10 minutes or until you retract the wings (no action required) or have the Incapacitated condition. During that time, you have a Fly Speed equal to your Speed. Your wings appear to be made of the same energy as your Breath Weapon. Once you use this trait, you can't use it again until you finish a Long Rest."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "dragonborn_black_2024",
+        "Name": "Black",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_black_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Acid damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_black_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Acid damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_blue_2024",
+        "Name": "Blue",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_blue_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Lightning damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_blue_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Lightning damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_brass_2024",
+        "Name": "Brass",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_brass_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Fire damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_brass_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Fire damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_bronze_2024",
+        "Name": "Bronze",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_bronze_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Lightning damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_bronze_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Lightning damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_copper_2024",
+        "Name": "Copper",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_copper_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Acid damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_copper_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Acid damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_gold_2024",
+        "Name": "Gold",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_gold_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Fire damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_gold_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Fire damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_green_2024",
+        "Name": "Green",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_green_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Poison damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_green_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Poison damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_red_2024",
+        "Name": "Red",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_red_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Fire damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_red_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Fire damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_silver_2024",
+        "Name": "Silver",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_silver_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Cold damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_silver_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Cold damage."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "dragonborn_white_2024",
+        "Name": "White",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "dragonborn_white_2024_breath_weapon",
+            "Name": "Breath Weapon",
+            "Description": "When you take the Attack action on your turn, you can replace one of your attacks with an exhalation of magical energy in either a 15-foot Cone or a 30-foot Line that is 5 feet wide (choose the shape each time). Each creature in that area must make a Dexterity saving throw (DC 8 plus your Constitution modifier and Proficiency Bonus). On a failed save, a creature takes 1d10 Cold damage. On a successful save, a creature takes half as much damage. This damage increases by 1d10 when you reach character levels 5 (2d10), 11 (3d10), and 17 (4d10).\n\nYou can use this Breath Weapon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+          },
+          {
+            "Id": "dragonborn_white_2024_damage_resistance",
+            "Name": "Damage Resistance",
+            "Description": "You have Resistance to Cold damage."
+          }
+        ],
+        "Spells": []
+      }
+    ]
+  },
+  {
+    "Id": "dwarf_2024",
+    "Name": "Dwarf",
+    "Edition": "2024",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "dwarf_2024_darkvision",
+        "Name": "Darkvision",
+        "Description": "You have Darkvision with a range of 120 feet."
+      },
+      {
+        "Id": "dwarf_2024_dwarven_resilience",
+        "Name": "Dwarven Resilience",
+        "Description": "You have Resistance to Poison damage. You also have Advantage on saving throws you make to avoid or end the Poisoned condition."
+      },
+      {
+        "Id": "dwarf_2024_dwarven_toughness",
+        "Name": "Dwarven Toughness",
+        "Description": "Your Hit Point maximum increases by 1, and it increases by 1 again whenever you gain a level."
+      },
+      {
+        "Id": "dwarf_2024_stonecunning",
+        "Name": "Stonecunning",
+        "Description": "As a Bonus Action, you gain Tremorsense with a range of 60 feet for 10 minutes. You must be on a stone surface or touching a stone surface to use this Tremorsense. The stone can be natural or worked.\n\nYou can use this Bonus Action a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest."
+      }
+    ],
+    "Spells": [],
+    "Subraces": []
+  },
+  {
+    "Id": "elf_2024",
+    "Name": "Elf",
+    "Edition": "2024",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 1,
+    "SkillChoiceOptions": [
+      "insight",
+      "perception",
+      "survival"
+    ],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "elf_2024_darkvision",
+        "Name": "Darkvision",
+        "Description": "You have Darkvision with a range of 60 feet."
+      },
+      {
+        "Id": "elf_2024_fey_ancestry",
+        "Name": "Fey Ancestry",
+        "Description": "You have Advantage on saving throws you make to avoid or end the Charmed condition."
+      },
+      {
+        "Id": "elf_2024_keen_senses",
+        "Name": "Keen Senses",
+        "Description": "You have proficiency in the Insight, Perception, or Survival skill."
+      },
+      {
+        "Id": "elf_2024_trance",
+        "Name": "Trance",
+        "Description": "You don't need to sleep, and magic can't put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a trancelike meditation, during which you retain consciousness."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "elf_drow_lineage_2024",
+        "Name": "Drow Lineage",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "elf_drow_lineage_2024_elven_lineage_drow",
+            "Name": "Elven Lineage (Drow)",
+            "Description": "You are part of a lineage that grants you supernatural abilities. The range of your Darkvision increases to 120 feet. You also know the Dancing Lights cantrip.\n\nWhen you reach character level 3, you learn the Faerie Fire spell. When you reach character level 5, you also learn the Darkness spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
+          },
+          {
+            "Id": "elf_drow_lineage_2024_darkvision",
+            "Name": "Darkvision",
+            "Description": "You have Darkvision with a range of 120 feet."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "dancing_lights_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "faerie_fire_2024",
+            "Level": 3
+          },
+          {
+            "SpellId": "darkness_2024",
+            "Level": 5
+          }
+        ]
+      },
+      {
+        "Id": "elf_high_elf_lineage_2024",
+        "Name": "High Elf Lineage",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "elf_high_elf_lineage_2024_elven_lineage_high_elf",
+            "Name": "Elven Lineage (High Elf)",
+            "Description": "You are part of a lineage that grants you supernatural abilities. You know the Prestidigitation cantrip. Whenever you finish a Long Rest, you can replace that cantrip with a different cantrip from the Wizard spell list.\n\nWhen you reach character level 3, you learn the Detect Magic spell. When you reach character level 5, you also learn the Misty Step spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "detect_magic_2024",
+            "Level": 3
+          },
+          {
+            "SpellId": "misty_step_2024",
+            "Level": 5
+          }
+        ]
+      },
+      {
+        "Id": "elf_wood_elf_lineage_2024",
+        "Name": "Wood Elf Lineage",
+        "Speed": 35,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "elf_wood_elf_lineage_2024_elven_lineage_wood_elf",
+            "Name": "Elven Lineage (Wood Elf)",
+            "Description": "You are part of a lineage that grants you supernatural abilities. Your Speed increases to 35 feet. You also know the Druidcraft cantrip.\n\nWhen you reach character level 3, you learn the Longstrider spell. When you reach character level 5, you also learn the Pass without Trace spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the lineage)."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "druidcraft_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "longstrider_2024",
+            "Level": 3
+          },
+          {
+            "SpellId": "pass_without_trace_2024",
+            "Level": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "gnome_2024",
+    "Name": "Gnome",
+    "Edition": "2024",
+    "Size": "Small",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "gnome_2024_darkvision",
+        "Name": "Darkvision",
+        "Description": "You have Darkvision with a range of 60 feet."
+      },
+      {
+        "Id": "gnome_2024_gnomish_cunning",
+        "Name": "Gnomish Cunning",
+        "Description": "You have Advantage on Intelligence, Wisdom, and Charisma saving throws."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "gnome_forest_gnome_lineage_2024",
+        "Name": "Forest Gnome Lineage",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "gnome_forest_gnome_lineage_2024_gnomish_lineage_forest_gnome",
+            "Name": "Gnomish Lineage (Forest Gnome)",
+            "Description": "You know the Minor Illusion cantrip. You also always have the Speak with Animals spell prepared. You can cast it without a spell slot a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest. You can also use any spell slots you have to cast the spell."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "minor_illusion_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "speak_with_animals_2024",
+            "Level": 3
+          }
+        ]
+      },
+      {
+        "Id": "gnome_rock_gnome_lineage_2024",
+        "Name": "Rock Gnome Lineage",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "gnome_rock_gnome_lineage_2024_gnomish_lineage_rock_gnome",
+            "Name": "Gnomish Lineage (Rock Gnome)",
+            "Description": "You know the Mending and Prestidigitation cantrips. In addition, you can spend 10 minutes casting Prestidigitation to create a Tiny clockwork device (AC 5, 1 HP), such as a toy, fire starter, or music box. When you create the device, you determine its function by choosing one effect from Prestidigitation; the device produces that effect whenever you or another creature takes a Bonus Action to activate it with a touch. If the chosen effect has options within it, you choose one of those options for the device when you create it. For example, if you choose the spell's ignite-extinguish effect, you determine whether the device ignites or extinguishes fire; the device doesn't do both. You can have three such devices in existence at a time, and each falls apart 8 hours after its creation or when you dismantle it with a touch as a Utilize action."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "mending_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "prestidigitation_2024",
+            "Level": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Id": "goliath_2024",
+    "Name": "Goliath",
+    "Edition": "2024",
+    "Size": "Medium",
+    "Speed": 35,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "goliath_2024_large_form",
+        "Name": "Large Form",
+        "Description": "Starting at character level 5, you can change your size to Large as a Bonus Action if you're in a big enough space. This transformation lasts for 10 minutes or until you end it (no action required). For that duration, you have Advantage on Strength checks, and your Speed increases by 10 feet. Once you use this trait, you can't use it again until you finish a Long Rest."
+      },
+      {
+        "Id": "goliath_2024_powerful_build",
+        "Name": "Powerful Build",
+        "Description": "You have Advantage on any ability check you make to end the Grappled condition. You also count as one size larger when determining your carrying capacity."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "goliath_cloud_giant_ancestry_2024",
+        "Name": "Cloud Giant Ancestry",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "goliath_cloud_giant_ancestry_2024_giant_ancestry_cloud",
+            "Name": "Giant Ancestry (Cloud)",
+            "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Cloud's Jaunt. As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "goliath_fire_giant_ancestry_2024",
+        "Name": "Fire Giant Ancestry",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "goliath_fire_giant_ancestry_2024_giant_ancestry_fire",
+            "Name": "Giant Ancestry (Fire)",
+            "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Fire's Burn. When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "goliath_frost_giant_ancestry_2024",
+        "Name": "Frost Giant Ancestry",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "goliath_frost_giant_ancestry_2024_giant_ancestry_frost",
+            "Name": "Giant Ancestry (Frost)",
+            "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Frost's Chill. When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "goliath_hill_giant_ancestry_2024",
+        "Name": "Hill Giant Ancestry",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "goliath_hill_giant_ancestry_2024_giant_ancestry_hill",
+            "Name": "Giant Ancestry (Hill)",
+            "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Hill's Tumble. When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "goliath_stone_giant_ancestry_2024",
+        "Name": "Stone Giant Ancestry",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "goliath_stone_giant_ancestry_2024_giant_ancestry_stone",
+            "Name": "Giant Ancestry (Stone)",
+            "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Stone's Endurance. When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total."
+          }
+        ],
+        "Spells": []
+      },
+      {
+        "Id": "goliath_storm_giant_ancestry_2024",
+        "Name": "Storm Giant Ancestry",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "goliath_storm_giant_ancestry_2024_giant_ancestry_storm",
+            "Name": "Giant Ancestry (Storm)",
+            "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Storm's Thunder. When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to that creature."
+          }
+        ],
+        "Spells": []
+      }
+    ]
+  },
+  {
+    "Id": "halfling_2024",
+    "Name": "Halfling",
+    "Edition": "2024",
+    "Size": "Small",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "halfling_2024_brave",
+        "Name": "Brave",
+        "Description": "You have Advantage on saving throws you make to avoid or end the Frightened condition."
+      },
+      {
+        "Id": "halfling_2024_halfling_nimbleness",
+        "Name": "Halfling Nimbleness",
+        "Description": "You can move through the space of any creature that is a size larger than you, but you can't stop in the same space."
+      },
+      {
+        "Id": "halfling_2024_luck",
+        "Name": "Luck",
+        "Description": "When you roll a 1 on the d20 of a D20 Test, you can reroll the die, and you must use the new roll."
+      },
+      {
+        "Id": "halfling_2024_naturally_stealthy",
+        "Name": "Naturally Stealthy",
+        "Description": "You can take the Hide action even when you are obscured only by a creature that is at least one size larger than you."
+      }
+    ],
+    "Spells": [],
+    "Subraces": []
+  },
+  {
+    "Id": "human_2024",
+    "Name": "Human",
+    "Edition": "2024",
+    "Size": "Small or Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 1,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 1,
+    "FeatChoiceCategory": "Origin",
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "human_2024_resourceful",
+        "Name": "Resourceful",
+        "Description": "You gain Heroic Inspiration whenever you finish a Long Rest."
+      },
+      {
+        "Id": "human_2024_skillful",
+        "Name": "Skillful",
+        "Description": "You gain proficiency in one skill of your choice."
+      },
+      {
+        "Id": "human_2024_versatile",
+        "Name": "Versatile",
+        "Description": "You gain an Origin feat of your choice."
+      }
+    ],
+    "Spells": [],
+    "Subraces": []
+  },
+  {
+    "Id": "orc_2024",
+    "Name": "Orc",
+    "Edition": "2024",
+    "Size": "Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "orc_2024_adrenaline_rush",
+        "Name": "Adrenaline Rush",
+        "Description": "You can take the Dash action as a Bonus Action. When you do so, you gain a number of Temporary Hit Points equal to your Proficiency Bonus.\n\nYou can use this trait a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Short or Long Rest."
+      },
+      {
+        "Id": "orc_2024_darkvision",
+        "Name": "Darkvision",
+        "Description": "You have Darkvision with a range of 120 feet."
+      },
+      {
+        "Id": "orc_2024_relentless_endurance",
+        "Name": "Relentless Endurance",
+        "Description": "When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. Once you use this trait, you can't do so again until you finish a Long Rest."
+      }
+    ],
+    "Spells": [],
+    "Subraces": []
+  },
+  {
+    "Id": "tiefling_2024",
+    "Name": "Tiefling",
+    "Edition": "2024",
+    "Size": "Small or Medium",
+    "Speed": 30,
+    "SkillChoiceCount": 0,
+    "SkillChoiceOptions": [],
+    "LanguageChoiceCount": 0,
+    "AbilityChoiceCount": 0,
+    "AbilityChoiceOptions": [],
+    "FeatChoiceCount": 0,
+    "FeatChoiceCategory": null,
+    "Languages": [],
+    "AbilityBonuses": [],
+    "ProficiencyIds": [],
+    "Traits": [
+      {
+        "Id": "tiefling_2024_darkvision",
+        "Name": "Darkvision",
+        "Description": "You have Darkvision with a range of 60 feet."
+      },
+      {
+        "Id": "tiefling_2024_otherworldly_presence",
+        "Name": "Otherworldly Presence",
+        "Description": "You know the Thaumaturgy cantrip. When you cast it with this trait, the spell uses the same spellcasting ability you use for your Fiendish Legacy Trait."
+      }
+    ],
+    "Spells": [],
+    "Subraces": [
+      {
+        "Id": "tiefling_abyssal_legacy_2024",
+        "Name": "Abyssal Legacy",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "tiefling_abyssal_legacy_2024_fiendish_legacy_abyssal",
+            "Name": "Fiendish Legacy (Abyssal)",
+            "Description": "You are the recipient of a legacy that grants you supernatural abilities. You have Resistance to Poison damage. You also know the Poison Spray cantrip.\n\nWhen you reach character level 3, you learn the Ray of Sickness spell. When you reach character level 5, you also learn the Hold Person spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "thaumaturgy_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "poison_spray_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "ray_of_sickness_2024",
+            "Level": 3
+          },
+          {
+            "SpellId": "hold_person_2024",
+            "Level": 5
+          }
+        ]
+      },
+      {
+        "Id": "tiefling_chthonic_legacy_2024",
+        "Name": "Chthonic Legacy",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "tiefling_chthonic_legacy_2024_fiendish_legacy_chthonic",
+            "Name": "Fiendish Legacy (Chthonic)",
+            "Description": "You are the recipient of a legacy that grants you supernatural abilities. You have Resistance to Necrotic damage. You also know the Chill Touch cantrip.\n\nWhen you reach character level 3, you learn the False Life spell. When you reach character level 5, you also learn the Ray of Enfeeblement spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "thaumaturgy_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "chill_touch_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "false_life_2024",
+            "Level": 3
+          },
+          {
+            "SpellId": "ray_of_enfeeblement_2024",
+            "Level": 5
+          }
+        ]
+      },
+      {
+        "Id": "tiefling_infernal_legacy_2024",
+        "Name": "Infernal Legacy",
+        "Speed": null,
+        "LanguageChoiceCount": 0,
+        "AbilityChoiceCount": 0,
+        "AbilityChoiceOptions": [],
+        "SkillChoiceCount": 0,
+        "SkillChoiceOptions": [],
+        "FeatChoiceCount": 0,
+        "FeatChoiceCategory": null,
+        "AbilityBonuses": [],
+        "ProficiencyIds": [],
+        "Traits": [
+          {
+            "Id": "tiefling_infernal_legacy_2024_fiendish_legacy_infernal",
+            "Name": "Fiendish Legacy (Infernal)",
+            "Description": "You are the recipient of a legacy that grants you supernatural abilities. You have Resistance to Fire damage. You also know the Fire Bolt cantrip.\n\nWhen you reach character level 3, you learn the Hellish Rebuke spell. When you reach character level 5, you also learn the Darkness spell. You always have these spells prepared, and you can cast each spell once without a spell slot. Once you cast either of these spells with this trait, you can't cast that spell with it again until you finish a Long Rest. You can also cast the spell using any spell slots you have of the appropriate level.\n\nIntelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select the legacy)."
+          }
+        ],
+        "Spells": [
+          {
+            "SpellId": "thaumaturgy_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "fire_bolt_2024",
+            "Level": 1
+          },
+          {
+            "SpellId": "hellish_rebuke_2024",
+            "Level": 3
+          },
+          {
+            "SpellId": "darkness_2024",
+            "Level": 5
+          }
+        ]
+      }
+    ]
+  }
+]

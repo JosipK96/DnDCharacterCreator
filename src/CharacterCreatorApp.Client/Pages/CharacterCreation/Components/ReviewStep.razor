@@ -1,0 +1,214 @@
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Review")</h2>
+
+    @if (IsLoading)
+    {
+        <div class="flex justify-center items-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        </div>
+    }
+    else if (preview is null)
+    {
+        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+            <p class="text-sm">@(ErrorMessage ?? "Could not build a preview of this character.")</p>
+        </div>
+    }
+    else
+    {
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+                <p class="text-sm">@ErrorMessage</p>
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(preview.BlockingIssue))
+        {
+            <div class="bg-amber-900 border border-amber-700 text-amber-100 px-4 py-3 rounded-lg mb-6">
+                <p class="font-medium text-sm">Something still needs choosing</p>
+                <p class="text-sm mt-1">@preview.BlockingIssue</p>
+            </div>
+        }
+
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg px-6 py-5 mb-6">
+            <h3 class="text-3xl font-bold text-white">@preview.Name</h3>
+            <p class="text-indigo-100">
+                Level @preview.Level @preview.ClassName@(preview.SubclassName != null ? $" ({preview.SubclassName})" : "")
+            </p>
+            <p class="text-indigo-200 text-sm mt-1">
+                @preview.RaceName@(preview.SubraceName != null ? $" ({preview.SubraceName})" : "") • @preview.BackgroundName • @preview.Edition rules
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
+            <div class="bg-gray-700 rounded-lg p-3 text-center">
+                <div class="text-gray-400 text-xs mb-1">Hit Points</div>
+                <div class="text-2xl font-bold text-white">@preview.Stats.MaxHitPoints</div>
+            </div>
+            <div class="bg-gray-700 rounded-lg p-3 text-center">
+                <div class="text-gray-400 text-xs mb-1">Armor Class</div>
+                <div class="text-2xl font-bold text-white">@preview.Stats.ArmorClass</div>
+            </div>
+            <div class="bg-gray-700 rounded-lg p-3 text-center">
+                <div class="text-gray-400 text-xs mb-1">Initiative</div>
+                <div class="text-2xl font-bold text-white">@Signed(preview.Stats.Initiative)</div>
+            </div>
+            <div class="bg-gray-700 rounded-lg p-3 text-center">
+                <div class="text-gray-400 text-xs mb-1">Speed</div>
+                <div class="text-2xl font-bold text-white">@preview.Stats.Speed</div>
+            </div>
+            <div class="bg-gray-700 rounded-lg p-3 text-center">
+                <div class="text-gray-400 text-xs mb-1">Hit Dice</div>
+                <div class="text-2xl font-bold text-white">@preview.Stats.HitDice</div>
+            </div>
+            <div class="bg-gray-700 rounded-lg p-3 text-center">
+                <div class="text-gray-400 text-xs mb-1">Prof. Bonus</div>
+                <div class="text-2xl font-bold text-indigo-400">@Signed(preview.Stats.ProficiencyBonus)</div>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h4 class="text-lg font-bold text-white mb-3">Ability Scores</h4>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+                @foreach (var ability in preview.Stats.Abilities)
+                {
+                    <div class="bg-gray-700 rounded-lg p-3 text-center">
+                        <div class="text-gray-400 text-xs mb-1">@ability.AbilityId</div>
+                        <div class="text-2xl font-bold text-white">@ability.Score</div>
+                        <div class="text-indigo-400">@Signed(ability.Modifier)</div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+                <h4 class="text-lg font-bold text-white mb-3">Saving Throws</h4>
+                <div class="bg-gray-700 rounded-lg p-4 space-y-2">
+                    @foreach (var save in preview.Stats.SavingThrows)
+                    {
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-200">@save.AbilityId @(save.IsProficient ? "●" : "")</span>
+                            <span class="text-white font-bold">@Signed(save.Modifier)</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-3">Proficient Skills</h4>
+                <div class="bg-gray-700 rounded-lg p-4 space-y-2">
+                    @foreach (var skill in preview.Stats.Skills.Where(s => s.IsProficient))
+                    {
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-200">@skill.Name</span>
+                            <span class="text-white font-bold">@Signed(skill.Modifier)</span>
+                        </div>
+                    }
+
+                    @if (!preview.Stats.Skills.Any(s => s.IsProficient))
+                    {
+                        <p class="text-gray-400 text-sm">No skill proficiencies.</p>
+                    }
+
+                    <p class="text-gray-400 text-sm pt-2 border-t border-gray-600">
+                        Passive Perception <span class="text-white font-bold">@preview.Stats.PassivePerception</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        @if (preview.Languages.Any())
+        {
+            <div class="mb-6">
+                <h4 class="text-lg font-bold text-white mb-3">Languages</h4>
+                <div class="bg-gray-700 rounded-lg p-4 flex flex-wrap gap-2">
+                    @foreach (var language in preview.Languages.OrderBy(l => l.Name))
+                    {
+                        <span class="bg-green-900 text-green-200 px-3 py-1 rounded-full text-sm">@language.Name</span>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (preview.Feats.Any())
+        {
+            <div class="mb-6">
+                <h4 class="text-lg font-bold text-white mb-3">Feats</h4>
+                <div class="bg-gray-700 rounded-lg p-4 space-y-1">
+                    @foreach (var feat in preview.Feats.OrderBy(f => f.Name))
+                    {
+                        <p class="text-gray-200">@feat.Name</p>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (preview.Spells.Any())
+        {
+            <div class="mb-6">
+                <h4 class="text-lg font-bold text-white mb-3">Spells (@preview.Spells.Count)</h4>
+                <div class="bg-gray-700 rounded-lg p-4 flex flex-wrap gap-2">
+                    @foreach (var spell in preview.Spells.OrderBy(s => s.Level).ThenBy(s => s.Name))
+                    {
+                        <span class="bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm">@spell.Name</span>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (preview.Features.Any())
+        {
+            <div class="mb-6">
+                <h4 class="text-lg font-bold text-white mb-3">Features &amp; Traits (@preview.Features.Count)</h4>
+                <div class="bg-gray-700 rounded-lg p-4 flex flex-wrap gap-2">
+                    @foreach (var feature in preview.Features.OrderBy(f => f.Name))
+                    {
+                        <span class="bg-gray-600 text-gray-200 px-3 py-1 rounded-full text-sm">@feature.Name</span>
+                    }
+                </div>
+            </div>
+        }
+    }
+
+    <div class="flex justify-between mt-8">
+        <button @onclick="HandleBack" type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            Back
+        </button>
+        <button @onclick="HandleNext" disabled="@(!CanProceed())"
+                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Creating..." : "Create Character")
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private CharacterPreviewApiResponse? preview;
+
+    // A draft that is not ready fails here with the API's own account of what is missing
+    protected override Task OnInitializedAsync() =>
+        LoadAsync(async () => preview = await DraftService.GetPreviewAsync(DraftId), "Failed to load the preview");
+
+    private bool CanProceed() =>
+        !IsSaving && preview is not null && string.IsNullOrEmpty(preview.BlockingIssue);
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed()) return;
+
+        // CreateCharacter does the finalizing; this keeps the button busy while it runs
+        await SaveAsync(() => OnNext.InvokeAsync(), "Failed to create the character");
+    }
+
+    private async Task HandleBack() => await OnBack.InvokeAsync();
+
+    private static string Signed(int value) => value >= 0 ? $"+{value}" : value.ToString();
+}

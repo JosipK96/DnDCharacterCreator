@@ -1,0 +1,17 @@
+using CharacterCreatorApp.Domain.Common.Results;
+
+namespace CharacterCreatorApp.Application.Features.Authentication;
+
+public static class UserErrors
+{
+    public static Error EmailAlreadyInUse() => Error.Conflict(code: "User.EmailAlreadyInUse", description: "Email is already in use");
+    public static Error NotFoundByEmail() => Error.NotFound(code: "User.NotFoundByEmail", description: "User is not found by email");
+    public static Error WrongPassword() => Error.Unauthorized(code: "User.WrongPassword", description: "Wrong password");
+
+    /// <summary>
+    /// A reason ASP.NET Core Identity refused to create an account. Identity names its own
+    /// reasons ("PasswordTooShort", "DuplicateUserName"), so the code is that name under "User.".
+    /// </summary>
+    public static Error RejectedByIdentity(string identityCode, string description) =>
+        Error.Validation(code: $"User.{identityCode}", description: description);
+}

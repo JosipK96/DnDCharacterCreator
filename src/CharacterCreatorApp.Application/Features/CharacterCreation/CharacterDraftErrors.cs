@@ -35,6 +35,8 @@ public static class CharacterDraftErrors
         public const string FeatAbilityIncreasesMismatch = "CharacterDraft.FeatAbilityIncreasesMismatch";
         public const string InvalidAbilityScoreCount = "CharacterDraft.InvalidAbilityScoreCount";
         public const string InvalidAbilityScoreKeys = "CharacterDraft.InvalidAbilityScoreKeys";
+        public const string InvalidAbilityScoreMethod = "CharacterDraft.InvalidAbilityScoreMethod";
+        public const string AbilityScoresDoNotFitMethod = "CharacterDraft.AbilityScoresDoNotFitMethod";
     }
 
     public static Error NotFoundById(Guid draftId) =>

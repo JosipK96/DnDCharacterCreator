@@ -248,10 +248,11 @@ public class CharacterDraftTests
         };
 
         // Act
-        draft.SetBaseAbilityScores(scores);
+        draft.SetBaseAbilityScores(scores, AbilityScoreMethod.StandardArray);
 
         // Assert
         draft.BaseAbilityScores.Should().BeEquivalentTo(scores);
+        draft.BaseAbilityScoreMethod.Should().Be(AbilityScoreMethod.StandardArray);
     }
 
     [Fact]
@@ -270,7 +271,7 @@ public class CharacterDraftTests
         };
 
         // Act
-        draft.SetBaseAbilityScores(scores);
+        draft.SetBaseAbilityScores(scores, AbilityScoreMethod.Rolled);
         scores["strength"] = 20; // Modify original
 
         // Assert - Draft's scores should not be affected
@@ -460,7 +461,7 @@ public class CharacterDraftTests
             ["intelligence"] = 12,
             ["wisdom"] = 10,
             ["charisma"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -482,7 +483,7 @@ public class CharacterDraftTests
             ["CON"] = 13,
             ["INT"] = 12,
             ["CHA"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
 
         // Act & Assert
         draft.IsReadyToFinalize().Should().BeFalse();
@@ -501,7 +502,7 @@ public class CharacterDraftTests
             ["INT"] = 12,
             ["WIS"] = 10,
             ["CHA"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
 
         // Act & Assert
         draft.IsReadyToFinalize().Should().BeFalse();
@@ -884,7 +885,7 @@ public class CharacterDraftTests
             ["INT"] = 12,
             ["WIS"] = 10,
             ["CHA"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
 
         return draft;
     }
@@ -980,7 +981,7 @@ public class CharacterDraftTests
             ["dexterity"] = 14,
             ["constitution"] = 13
             // Missing 3 scores
-        });
+        }, AbilityScoreMethod.Rolled);
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1003,7 +1004,7 @@ public class CharacterDraftTests
             ["wisdom"] = 10,
             ["charisma"] = 8,
             ["luck"] = 10 // Extra score
-        });
+        }, AbilityScoreMethod.Rolled);
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1119,7 +1120,7 @@ public class CharacterDraftTests
             ["intelligence"] = 12,
             ["wisdom"] = 10,
             ["charisma"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
         return draft;
     }
 }

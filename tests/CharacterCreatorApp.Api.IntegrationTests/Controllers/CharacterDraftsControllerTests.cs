@@ -172,7 +172,38 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
                 ["INT"] = 12,
                 ["WIS"] = 10,
                 ["CHA"] = 8
-            }
+            },
+            Method = "standard-array"
+        };
+
+        // Act
+        var response = await _client.PutAsJsonAsync($"/api/character-drafts/{draftId}/ability-scores", request, TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+    }
+
+    [Theory]
+    [InlineData("point-buy", new[] { 15, 15, 15, 8, 8, 8 })]
+    [InlineData("rolled", new[] { 18, 3, 11, 9, 16, 7 })]
+    public async Task SetAbilityScores_WithScoresTheMethodCanProduce_ReturnsNoContent(string method, int[] scores)
+    {
+        // Arrange
+        await SignInAsync();
+
+        var draftId = await CreateDraftAsync();
+        var request = new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int>
+            {
+                ["STR"] = scores[0],
+                ["DEX"] = scores[1],
+                ["CON"] = scores[2],
+                ["INT"] = scores[3],
+                ["WIS"] = scores[4],
+                ["CHA"] = scores[5]
+            },
+            Method = method
         };
 
         // Act
@@ -197,7 +228,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
                 ["DEX"] = 14,
                 ["CON"] = 13
                 // Missing 3 scores
-            }
+            },
+            Method = "standard-array"
         };
 
         // Act
@@ -224,7 +256,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
                 ["INT"] = 12,
                 ["WIS"] = 10,
                 ["CHA"] = 8
-            }
+            },
+            Method = "standard-array"
         };
 
         // Act
@@ -232,6 +265,28 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    [Theory]
+    [InlineData("point-buy", "CharacterDraft.AbilityScoresDoNotFitMethod")]
+    [InlineData("", "CharacterDraft.InvalidAbilityScoreMethod")]
+    public async Task SetAbilityScores_WithScoresTheMethodCannotProduce_ReturnsBadRequest(string method, string expectedCode)
+    {
+        // Arrange - 16 is beyond point buy, and an unnamed method could be anything
+        await SignInAsync();
+
+        var draftId = await CreateDraftAsync();
+        var request = new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 16, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 12, ["WIS"] = 10, ["CHA"] = 8 },
+            Method = method
+        };
+
+        // Act
+        var response = await _client.PutAsJsonAsync($"/api/character-drafts/{draftId}/ability-scores", request, TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, expectedCode);
     }
 
     [Fact]
@@ -313,7 +368,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["celestial-phb", "elvish-phb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
-            Scores = new Dictionary<string, int> { ["STR"] = 13, ["DEX"] = 10, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 15, ["CHA"] = 12 }
+            Scores = new Dictionary<string, int> { ["STR"] = 13, ["DEX"] = 10, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 15, ["CHA"] = 12 },
+            Method = "standard-array"
         });
         await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["history", "medicine"]));
         await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(["guidance", "sacred_flame", "toll_the_dead"]));
@@ -474,7 +530,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["dwarvish-phb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
-            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 }
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
         });
         await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["perception", "survival"]));
 
@@ -690,7 +747,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte" });
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
-            Scores = new Dictionary<string, int> { ["STR"] = 13, ["DEX"] = 10, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 15, ["CHA"] = 12 }
+            Scores = new Dictionary<string, int> { ["STR"] = 13, ["DEX"] = 10, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 15, ["CHA"] = 12 },
+            Method = "standard-array"
         });
         await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["history", "medicine"]));
 
@@ -785,7 +843,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
-            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 }
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
         });
         await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
 
@@ -863,7 +922,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["dwarvish-xphb", "giant-xphb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
-            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 }
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
         });
         // Not Athletics: the soldier gives it already
         await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "survival"]));
@@ -935,7 +995,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["giant-phb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
         {
-            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 }
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
         });
         await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
         await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["athlete_2014"], [new() { ["DEX"] = 1 }]));

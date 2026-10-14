@@ -1,4 +1,7 @@
 ﻿using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScores;
+using CharacterCreatorApp.Domain.ValueObjects;
+
+using FluentAssertions;
 
 using FluentValidation.TestHelper;
 
@@ -22,7 +25,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
                 ["INT"] = 12,
                 ["WIS"] = 10,
                 ["CHA"] = 8
-            }
+            },
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -46,7 +50,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
                 ["int"] = 12,
                 ["wis"] = 10,
                 ["cha"] = 8
-            }
+            },
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -70,7 +75,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
                 ["int"] = 12,
                 ["Wis"] = 10,
                 ["CHA"] = 8
-            }
+            },
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -86,7 +92,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
         // Arrange
         var command = new SetCharacterAbilityScoresCommand(
             Guid.Empty,
-            CreateValidScores()
+            CreateValidScores(),
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -108,7 +115,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
                 ["DEX"] = 14,
                 ["CON"] = 13
                 // Missing 3 scores
-            }
+            },
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -134,7 +142,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
                 ["WIS"] = 10,
                 ["CHA"] = 8,
                 ["LUCK"] = 10 // Extra invalid score
-            }
+            },
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -159,7 +168,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
                 ["INT"] = 12,
                 ["WIS"] = 10,
                 ["INVALID"] = 8 // Invalid key
-            }
+            },
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -184,7 +194,8 @@ public class SetCharacterAbilityScoresCommandValidatorTests
                 ["INT"] = 12,
                 ["WIS"] = 10,
                 ["CHA"] = 8
-            }
+            },
+            AbilityScoreMethod.StandardArray
         );
 
         // Act
@@ -193,6 +204,71 @@ public class SetCharacterAbilityScoresCommandValidatorTests
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Scores.Keys);
     }
+
+    [Theory]
+    [InlineData(AbilityScoreMethod.StandardArray, new[] { 15, 14, 13, 12, 10, 8 })]
+    [InlineData(AbilityScoreMethod.PointBuy, new[] { 15, 15, 15, 8, 8, 8 })]
+    [InlineData(AbilityScoreMethod.PointBuy, new[] { 8, 8, 8, 8, 8, 8 })]
+    [InlineData(AbilityScoreMethod.Rolled, new[] { 18, 3, 13, 12, 10, 8 })]
+    public void Valid_WithScoresTheMethodCanProduce_Passes(string method, int[] scores)
+    {
+        // Arrange
+        var command = new SetCharacterAbilityScoresCommand(Guid.NewGuid(), ScoresOf(scores), method);
+
+        // Act
+        var result = _validator.TestValidate(command);
+
+        // Assert
+        result.ShouldNotHaveAnyValidationErrors();
+    }
+
+    [Theory]
+    [InlineData(AbilityScoreMethod.StandardArray, new[] { 15, 15, 13, 12, 10, 8 })]
+    [InlineData(AbilityScoreMethod.PointBuy, new[] { 15, 15, 15, 15, 8, 8 })]
+    [InlineData(AbilityScoreMethod.PointBuy, new[] { 7, 14, 13, 12, 10, 8 })]
+    [InlineData(AbilityScoreMethod.Rolled, new[] { 19, 14, 13, 12, 10, 8 })]
+    [InlineData(AbilityScoreMethod.Rolled, new[] { 2, 14, 13, 12, 10, 8 })]
+    public void Invalid_WithScoresTheMethodCannotProduce_Fails(string method, int[] scores)
+    {
+        // Arrange
+        var command = new SetCharacterAbilityScoresCommand(Guid.NewGuid(), ScoresOf(scores), method);
+
+        // Act
+        var result = _validator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(x => x.Scores)
+            .WithErrorCode("CharacterDraft.AbilityScoresDoNotFitMethod");
+        result.Errors.Should().ContainSingle();
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("4d6")]
+    [InlineData("Standard-Array")]
+    public void Invalid_WithUnknownMethod_FailsOnTheMethodAlone(string method)
+    {
+        // Arrange
+        var command = new SetCharacterAbilityScoresCommand(Guid.NewGuid(), CreateValidScores(), method);
+
+        // Act
+        var result = _validator.TestValidate(command);
+
+        // Assert
+        result.ShouldHaveValidationErrorFor(x => x.Method)
+            .WithErrorCode("CharacterDraft.InvalidAbilityScoreMethod");
+        result.Errors.Should().ContainSingle();
+    }
+
+    private static Dictionary<string, int> ScoresOf(int[] scores) => new()
+    {
+        ["STR"] = scores[0],
+        ["DEX"] = scores[1],
+        ["CON"] = scores[2],
+        ["INT"] = scores[3],
+        ["WIS"] = scores[4],
+        ["CHA"] = scores[5]
+    };
 
     private static Dictionary<string, int> CreateValidScores()
     {

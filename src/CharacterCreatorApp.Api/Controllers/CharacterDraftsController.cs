@@ -118,7 +118,7 @@ namespace CharacterCreatorApp.Api.Controllers
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SetAbilityScores(Guid draftId, [FromBody] SetAbilityScoresApiRequest request, CancellationToken cancellationToken)
         {
-            var response = await _sender.Send(new SetCharacterAbilityScoresCommand(draftId, request.Scores), cancellationToken);
+            var response = await _sender.Send(new SetCharacterAbilityScoresCommand(draftId, request.Scores, request.Method), cancellationToken);
 
             return NoContentOrProblem(response);
         }

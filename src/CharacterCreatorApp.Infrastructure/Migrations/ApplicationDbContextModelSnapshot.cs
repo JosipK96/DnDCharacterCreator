@@ -18,7 +18,7 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.9")
+                .HasAnnotation("ProductVersion", "10.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -197,6 +197,9 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Property<string>("BackgroundId")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("BaseAbilityScoreMethod")
+                        .HasColumnType("text");
 
                     b.Property<string>("BaseAbilityScores")
                         .IsRequired()

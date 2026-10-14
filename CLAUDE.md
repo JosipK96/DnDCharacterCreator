@@ -23,11 +23,10 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
 - CI (`.github/workflows/ci.yml`) runs on every pull request and push to `main`: restore,
   build (warnings as errors), unit tests, integration tests and a vulnerable-package check as
   separate steps, and the Api's Docker image (skipped when a PR changes only Markdown or
-  `docs/`). A PR merges only
-  when both jobs are green: label it `automerge` once reviewed, and the Auto-merge workflow
-  squash-merges it when CI passes on its head. Dependabot proposes NuGet updates weekly and
-  Actions monthly; its minor and patch updates are labelled `automerge` by a workflow and merge
-  themselves when green, while major ones wait for a review.
+  `docs/`). Branch protection requires both jobs before a PR can merge: once reviewed, turn on
+  auto-merge (`gh pr merge <n> --auto --squash`) and GitHub merges it when they pass.
+  Dependabot proposes NuGet updates weekly and Actions monthly; a workflow turns on auto-merge
+  for its minor and patch updates, while major ones wait for a review.
 
 ## Where code goes
 
@@ -122,6 +121,10 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
 - Ability keys arrive as `STR`, `str` and `strength` depending on the source; always go through
   `AbilityScore.Normalize`/`TryNormalize`. `Character.AbilityScores` only ever holds canonical
   ids.
+- Base scores come with the method that made them (`AbilityScoreMethod`: the standard array,
+  27-point buy with 8 to 15, or 3 to 18 rolled), and the server checks they fit it, in the
+  validator and again in `DraftCompletenessChecker`. A draft from before the method was kept
+  has to pick its scores again.
 - Language ids are source-suffixed (`common-phb`, `common-xphb`): a 2014 character's are the
   PHB's, a 2024 one's the 2024 book's (`Language.SourceFor`). Race languages are stored as
   display names and background languages contain `"any"` placeholders; `LanguageResolver`

@@ -195,7 +195,7 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
             ["INT"] = 12,
             ["WIS"] = 10,
             ["CHA"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
         draft.SetAbilityScoreImprovements(
             [.. Enumerable.Range(0, new[] { 4, 6, 8, 12, 14, 16, 19 }.Count(l => l <= level))
                 .Select(_ => new Dictionary<string, int> { ["strength"] = 2 })]);

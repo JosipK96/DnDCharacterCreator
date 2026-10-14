@@ -180,6 +180,68 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_WithARaceFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - Volo's Guide is not among the draft's books, the Player's Handbook alone
+        var draft = ArrangeDraft();
+        var race = HalfElf();
+        race.Source = "VGM";
+        ArrangeRace(race);
+
+        var command = new SetCharacterRaceCommand(_draftId, "half_elf", null, new() { ["DEX"] = 1, ["WIS"] = 1 });
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The race Half-Elf comes from VGM, a book this character does not allow.");
+        draft.RaceId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithARaceFromABookTheDraftAllows_SetsIt()
+    {
+        // Arrange
+        var draft = ArrangeDraft();
+        draft.AllowBooks(["VGM"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        var race = HalfElf();
+        race.Source = "VGM";
+        ArrangeRace(race);
+
+        var command = new SetCharacterRaceCommand(_draftId, "half_elf", null, new() { ["DEX"] = 1, ["WIS"] = 1 });
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.RaceId.Should().Be("half_elf");
+    }
+
+    [Fact]
+    public async Task Handle_WithASubraceFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - a Player's Handbook race whose subrace is from another book
+        var draft = ArrangeDraft();
+        var human = Human();
+        human.Subraces.First(s => s.Id == "standard_human").Source = "MTF";
+        ArrangeRace(human);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterRaceCommand(_draftId, "human", "standard_human"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The subrace Standard Human comes from MTF, a book this character does not allow.");
+        draft.RaceId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
     private CharacterDraft ArrangeDraft(string edition = RulesEdition.Edition2014)
     {
         var draft = CharacterDraft.CreateEmpty(
@@ -203,6 +265,7 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
         Id = "half_elf",
         Name = "Half-Elf",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         AbilityChoiceCount = 2,
@@ -216,15 +279,17 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
         Id = "human",
         Name = "Human",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Size = "Medium",
         Speed = 30,
         Subraces =
         [
-            new Subrace { Id = "standard_human", Name = "Standard Human", RaceId = "human" },
+            new Subrace { Id = "standard_human", Name = "Standard Human", Source = "PHB", RaceId = "human" },
             new Subrace
             {
                 Id = "variant_human",
                 Name = "Variant Human",
+                Source = "PHB",
                 RaceId = "human",
                 AbilityChoiceCount = 2,
                 AbilityChoiceOptions = ["STR", "DEX", "CON", "INT", "WIS", "CHA"],

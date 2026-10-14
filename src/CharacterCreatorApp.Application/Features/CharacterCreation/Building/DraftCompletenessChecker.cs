@@ -31,6 +31,15 @@ public static class DraftCompletenessChecker
             return CharacterErrors.AbilityScoresDoNotFitMethod(method);
         }
 
+        // Narrowing the books clears what came from them, but a step may have been saved under
+        // books the draft allowed before
+        var notAllowed = FindChoiceFromBookNotAllowed(draft, sources);
+
+        if (notAllowed is not null)
+        {
+            return notAllowed;
+        }
+
         // A dwarf is a hill or a mountain dwarf, a 2024 elf has a lineage; a 2014 human with
         // neither the standard nor the variant choice would have no increases at all
         if (subrace == null && race.Subraces.Count != 0)
@@ -111,6 +120,35 @@ public static class DraftCompletenessChecker
                 @class.SpellAllowanceAt(level, sources.Subclass),
                 @class.Name,
                 level);
+    }
+
+    // The background's own feat comes with it, and the spells a subclass always has with that
+    private static Error? FindChoiceFromBookNotAllowed(CharacterDraft draft, CharacterSources sources)
+    {
+        var chosen = new List<(string What, string Name, string Source)>
+        {
+            ("race", sources.Race.Name, sources.Race.Source),
+            ("class", sources.Class.Name, sources.Class.Source),
+            ("background", sources.Background.Name, sources.Background.Source),
+        };
+
+        if (sources.Subrace is { } subrace)
+        {
+            chosen.Add(("subrace", subrace.Name, subrace.Source));
+        }
+
+        if (sources.Subclass is { } subclass)
+        {
+            chosen.Add(("subclass", subclass.Name, subclass.Source));
+        }
+
+        var pickedFeatIds = draft.SelectedFeatIds.Concat(draft.FightingStyleIds).ToHashSet();
+        chosen.AddRange(sources.Feats.Where(f => pickedFeatIds.Contains(f.Id)).Select(f => ("feat", f.Name, f.Source)));
+        chosen.AddRange(sources.ChoosableSpells.Where(s => draft.SelectedSpellIds.Contains(s.Id)).Select(s => ("spell", s.Name, s.Source)));
+
+        var (what, name, source) = chosen.Find(c => !draft.AllowsSource(c.Source));
+
+        return what is null ? null : CharacterDraftErrors.SourceNotAllowed(what, name, source);
     }
 
     // The race's own feats come first among the feats (a 2024 human's Origin feat), then one for

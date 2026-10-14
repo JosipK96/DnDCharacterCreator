@@ -16,13 +16,16 @@ namespace CharacterCreatorApp.Api.Controllers
         private readonly ISender _sender = sender;
         private readonly IMapper _mapper = mapper;
 
-        /// <summary>The backgrounds of one rules edition ("2014" or "2024"), or of both without one.</summary>
+        /// <summary>
+        /// The backgrounds of one rules edition ("2014" or "2024"), or of both without one, from
+        /// the books named by sources ("XPHB", "EFA"), or from every book without any.
+        /// </summary>
         [HttpGet]
         [ProducesResponseType(typeof(List<BackgroundApiResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetBackgrounds([FromQuery] string? edition, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBackgrounds([FromQuery] string? edition, [FromQuery] string[] sources, CancellationToken cancellationToken)
         {
-            var response = await _sender.Send(new GetBackgroundsQuery(edition), cancellationToken);
+            var response = await _sender.Send(new GetBackgroundsQuery(edition, sources), cancellationToken);
 
             return OkOrProblem(response, backgrounds => _mapper.Map<List<BackgroundApiResponse>>(backgrounds));
         }

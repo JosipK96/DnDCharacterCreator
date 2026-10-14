@@ -24,9 +24,10 @@ namespace CharacterCreatorApp.Api.Controllers
             [FromQuery] int? level = null,
             [FromQuery] int? maxLevel = null,
             [FromQuery] string? school = null,
-            [FromQuery] bool? isRitual = null)
+            [FromQuery] bool? isRitual = null,
+            [FromQuery] string[]? sources = null)
         {
-            var query = new GetSpellsQuery(classId, subclassId, level, maxLevel, school, isRitual);
+            var query = new GetSpellsQuery(classId, subclassId, level, maxLevel, school, isRitual, sources);
             var response = await _sender.Send(query, cancellationToken);
 
             return OkOrProblem(response, spells => _mapper.Map<List<SpellApiResponse>>(spells));

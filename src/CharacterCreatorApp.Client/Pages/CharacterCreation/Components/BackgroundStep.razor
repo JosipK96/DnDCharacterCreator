@@ -224,6 +224,10 @@
     [Parameter]
     public string? Edition { get; set; }
 
+    /// <summary>The books the draft allows, by code; only what comes from them is offered.</summary>
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
+
     [Parameter]
     public EventCallback OnNext { get; set; }
 
@@ -239,7 +243,7 @@
     private string? plusOne;
 
     protected override Task OnInitializedAsync() =>
-        LoadAsync(async () => backgrounds = await LookupService.GetBackgroundsAsync(Edition), "Failed to load backgrounds");
+        LoadAsync(async () => backgrounds = await LookupService.GetBackgroundsAsync(Edition, Sources), "Failed to load backgrounds");
 
     private void SelectBackground(BackgroundApiResponse background)
     {

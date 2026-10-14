@@ -87,6 +87,34 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     }
 
     [Fact]
+    public async Task GetBooks_For2024_ListsItsBooksWithThePlayersHandbookFirst()
+    {
+        // Act
+        var books = await _client.GetFromJsonAsync<List<BookApiResponse>>(
+            "/api/books?edition=2024", TestContext.Current.CancellationToken);
+
+        // Assert
+        books.Should().OnlyContain(b => b.Edition == "2024");
+        books![0].Should().Be(new BookApiResponse("XPHB", "Player's Handbook (2024)", "2024", true));
+        books.Select(b => b.Code).Should().Contain("AU");
+    }
+
+    [Fact]
+    public async Task GetFeats_WithSources_ReturnsOnlyTheFeatsFromThoseBooks()
+    {
+        // Act - Arcane Warrior, a 2024 Fighting Style, is from Arcana Unleashed
+        var handbookOnly = await _client.GetFromJsonAsync<List<FeatApiResponse>>(
+            "/api/feats?edition=2024&sources=XPHB", TestContext.Current.CancellationToken);
+        var withArcanaUnleashed = await _client.GetFromJsonAsync<List<FeatApiResponse>>(
+            "/api/feats?edition=2024&sources=XPHB&sources=AU", TestContext.Current.CancellationToken);
+
+        // Assert
+        handbookOnly.Should().NotBeEmpty().And.OnlyContain(f => f.Source == "XPHB");
+        withArcanaUnleashed.Should().Contain(f => f.Id == "arcane_warrior")
+            .And.OnlyContain(f => f.Source == "XPHB" || f.Source == "AU");
+    }
+
+    [Fact]
     public async Task GetClasses_WithoutAnEdition_ReturnsBoth()
     {
         // Act

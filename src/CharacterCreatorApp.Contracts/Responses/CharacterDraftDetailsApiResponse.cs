@@ -6,6 +6,10 @@ public class CharacterDraftDetailsApiResponse
     public string? Name { get; set; }
     public int? Level { get; set; }
     public string Edition { get; set; } = string.Empty;
+
+    /// <summary>The books, by code, the character may take its choices from; always its edition's Player's Handbook.</summary>
+    public List<string> AllowedSources { get; set; } = [];
+
     public string? RaceId { get; set; }
     public string? SubraceId { get; set; }
 

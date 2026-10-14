@@ -228,6 +228,10 @@
 @code {
     /// <summary>The draft's rules edition; only its races are offered.</summary>
     [Parameter] public string? Edition { get; set; }
+
+    /// <summary>The books the draft allows, by code; only what comes from them is offered.</summary>
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
     [Parameter] public EventCallback OnNext { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
 
@@ -243,7 +247,7 @@
     private bool isLoadingSkills = false;
 
     protected override Task OnInitializedAsync() =>
-        LoadAsync(async () => races = await LookupService.GetRacesAsync(Edition), "Failed to load races");
+        LoadAsync(async () => races = await LookupService.GetRacesAsync(Edition, Sources), "Failed to load races");
 
     // The 2024 book calls them lineages ("Drow Lineage"), ancestries or legacies: the word the
     // options end in, and an ancestry for the dragonborn's dragons, which are just colours

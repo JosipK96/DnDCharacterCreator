@@ -23,6 +23,10 @@ public class CharacterDraftService(HttpClient http)
     public Task SetNameAndLevelAsync(Guid draftId, string name, int level, string edition) =>
         PutAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = name, Level = level, Edition = edition });
 
+    /// <summary>The books besides the edition's Player's Handbook; choices from a book left out are cleared.</summary>
+    public Task SetAllowedBooksAsync(Guid draftId, List<string> books) =>
+        PutAsync(draftId, "books", new SetAllowedBooksApiRequest(books));
+
     /// <summary>Sets the race and subrace, with the +1s picked where they offer them ({"DEX": 1, "WIS": 1}).</summary>
     public Task SetRaceAsync(Guid draftId, string raceId, string? subraceId, Dictionary<string, int>? abilityIncreases = null) =>
         PutAsync(draftId, "race", new SetRaceApiRequest { RaceId = raceId, SubraceId = subraceId, AbilityIncreases = abilityIncreases });

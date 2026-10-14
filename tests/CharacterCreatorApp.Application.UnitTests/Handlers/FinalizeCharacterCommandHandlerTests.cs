@@ -283,6 +283,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
                     Id = "linguist",
                     Name = "Linguist",
                     Edition = "2014",
+                    Source = "PHB",
                     Description = "You learn three languages.",
                     GrantedProficiencyIds = ["calligrapher_supplies"],
                     GrantedLanguageIds = ["Elvish"],
@@ -312,6 +313,41 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         // Assert
         created.AbilityScores["STR"].Should().Be(17);
         created.FeatIds.Should().BeEquivalentTo(["alert"]);
+    }
+
+    [Fact]
+    public async Task Handle_WithAChoiceFromABookTheDraftNoLongerAllows_ReturnsSourceNotAllowed()
+    {
+        // Arrange - a background from the Sword Coast guide, saved while the draft allowed it
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        var background = CreateTestBackground();
+        background.Source = "SCAG";
+        ArrangeRepositories(_draftId, _userId, draft, background: background);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The background Soldier comes from SCAG, a book this character does not allow.");
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithEveryChoiceFromAnAllowedBook_CreatesTheCharacter()
+    {
+        // Arrange
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        draft.AllowBooks(["SCAG"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        var background = CreateTestBackground();
+        background.Source = "SCAG";
+
+        // Act
+        var created = await ArrangeAndFinalize(_draftId, _userId, draft, background: background);
+
+        // Assert
+        created.BackgroundId.Should().Be("soldier");
     }
 
     [Fact]
@@ -385,7 +421,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         var race = CreateTestRace();
         race.Id = "elf";
         race.Name = "Elf";
-        race.Subraces = [new Subrace { Id = "high_elf", Name = "High Elf", RaceId = "elf", LanguageChoiceCount = 1 }];
+        race.Subraces = [new Subrace { Id = "high_elf", Name = "High Elf", Source = "PHB", RaceId = "elf", LanguageChoiceCount = 1 }];
 
         ArrangeRepositories(_draftId, _userId, draft, race);
 
@@ -407,8 +443,8 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         var race = CreateTestRace();
         race.Subraces =
         [
-            new Subrace { Id = "hill_dwarf", Name = "Hill Dwarf", RaceId = "dwarf" },
-            new Subrace { Id = "mountain_dwarf", Name = "Mountain Dwarf", RaceId = "dwarf" },
+            new Subrace { Id = "hill_dwarf", Name = "Hill Dwarf", Source = "PHB", RaceId = "dwarf" },
+            new Subrace { Id = "mountain_dwarf", Name = "Mountain Dwarf", Source = "PHB", RaceId = "dwarf" },
         ];
 
         ArrangeRepositories(_draftId, _userId, draft, race);
@@ -521,7 +557,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         draft.SetFeats(["boon_of_combat_prowess"], [new() { ["STR"] = 1 }]);
 
         var fighter = Fighter2024();
-        fighter.Subclasses = [new() { Id = "champion-2024", ClassId = "fighter-2024", Name = "Champion", Features = [] }];
+        fighter.Subclasses = [new() { Id = "champion-2024", ClassId = "fighter-2024", Name = "Champion", Source = "XPHB", Features = [] }];
 
         _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync([
             new FeatReadModel
@@ -529,6 +565,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
                 Id = "boon_of_combat_prowess",
                 Name = "Boon of Combat Prowess",
                 Edition = RulesEdition.Edition2024,
+                Source = "XPHB",
                 Category = "Epic Boon",
                 Description = "You gain a boon.",
                 AbilityIncrease = new FeatAbilityIncrease { Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"], Maximum = 30 }
@@ -582,6 +619,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             {
                 Id = "drow_elf",
                 Name = "Drow Elf",
+                Source = "PHB",
                 RaceId = "elf",
                 Spells =
                 [
@@ -1264,6 +1302,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         race.Id = "elf";
         var subrace = new Subrace
         {
+            Source = "PHB",
             Id = "high-elf",
             RaceId = "elf",
             Name = "High Elf",
@@ -1398,8 +1437,8 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         race.Name = "Elf";
         race.Subraces =
         [
-            new Subrace { Id = "high_elf", Name = "High Elf", RaceId = "elf" },
-            new Subrace { Id = "wood_elf", Name = "Wood Elf", RaceId = "elf" },
+            new Subrace { Id = "high_elf", Name = "High Elf", Source = "PHB", RaceId = "elf" },
+            new Subrace { Id = "wood_elf", Name = "Wood Elf", Source = "PHB", RaceId = "elf" },
         ];
         return race;
     }
@@ -1411,6 +1450,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             Id = "dwarf",
             Name = "Dwarf",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             Speed = 25,
             Size = "Medium",
             AbilityBonuses = [],
@@ -1428,6 +1468,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             Id = "fighter",
             Name = "Fighter",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             HitDie = "1d10",
             SubclassLevel = 3,
             AsiLevels = [4, 6, 8, 12, 14, 16, 19],
@@ -1436,7 +1477,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             Features = [],
             Subclasses =
             [
-                new() { Id = "champion", ClassId = "fighter", Name = "Champion", Features = [] }
+                new() { Id = "champion", ClassId = "fighter", Name = "Champion", Source = "PHB", Features = [] }
             ]
         };
     }
@@ -1464,6 +1505,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
                     Id = id,
                     Name = name,
                     Edition = RulesEdition.Edition2014,
+                    Source = "PHB",
                     Description = "A feat.",
                     Category = category,
                     Prerequisites = prerequisites
@@ -1512,6 +1554,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         Id = id,
         Name = id,
+        Source = "PHB",
         Level = level,
         School = "Evocation",
         CastingTimeUnit = "action",
@@ -1527,6 +1570,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             Id = "soldier",
             Name = "Soldier",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             FeatureId = "military-rank",
             Languages = [],
             BackgroundProficiencies = []
@@ -1607,6 +1651,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             {
                 Id = "standard_human",
                 Name = "Standard Human",
+                Source = "PHB",
                 RaceId = "human",
                 AbilityBonuses = [.. new[] { "STR", "DEX", "CON", "INT", "WIS", "CHA" }.Select(id => new SubraceAbilityBonus { SubraceId = "standard_human", AbilityScoreId = id, Bonus = 1 })]
             },
@@ -1614,6 +1659,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             {
                 Id = "variant_human",
                 Name = "Variant Human",
+                Source = "PHB",
                 RaceId = "human",
                 AbilityChoiceCount = 2,
                 AbilityChoiceOptions = ["STR", "DEX", "CON", "INT", "WIS", "CHA"],
@@ -1630,6 +1676,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         Id = "athlete",
         Name = "Athlete",
         Edition = RulesEdition.Edition2014,
+        Source = "PHB",
         Description = "You have undergone extensive physical training.",
         AbilityIncrease = new FeatAbilityIncrease { Options = ["STR", "DEX"] }
     };
@@ -1639,6 +1686,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         Id = "dwarf_2024",
         Name = "Dwarf",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         Size = "Medium",
         Speed = 30
     };
@@ -1648,6 +1696,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         var fighter = CreateTestClass();
         fighter.Id = "fighter-2024";
         fighter.Edition = RulesEdition.Edition2024;
+        fighter.Source = "XPHB";
         fighter.Subclasses = [];
         return fighter;
     }
@@ -1659,6 +1708,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         Id = "soldier_2024",
         Name = "Soldier",
         Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
         AbilityScoreOptions = ["STR", "DEX", "CON"],
         FeatId = "savage_attacker_2024",
         Languages = ["common", "any", "any"]

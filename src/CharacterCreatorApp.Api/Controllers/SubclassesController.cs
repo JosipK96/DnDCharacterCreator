@@ -20,9 +20,9 @@ namespace CharacterCreatorApp.Api.Controllers
         [ProducesResponseType(typeof(List<SubclassApiResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetSubclassesByClass([FromQuery] string classId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetSubclassesByClass([FromQuery] string classId, [FromQuery] string[] sources, CancellationToken cancellationToken)
         {
-            var response = await _sender.Send(new GetSubclassesQuery(classId), cancellationToken);
+            var response = await _sender.Send(new GetSubclassesQuery(classId, sources), cancellationToken);
 
             return OkOrProblem(response, subclasses => _mapper.Map<List<SubclassApiResponse>>(subclasses));
         }

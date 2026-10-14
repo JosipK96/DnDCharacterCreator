@@ -14,4 +14,15 @@ public static class RulesEdition
     public static IReadOnlyList<string> All { get; } = [Edition2014, Edition2024];
 
     public static bool IsKnown(string? edition) => edition is Edition2014 or Edition2024;
+
+    /// <summary>
+    /// The code of the edition's Player's Handbook, the book every character of it may use:
+    /// "PHB" for 2014, "XPHB" for 2024, as Books.json in the seed data flags them.
+    /// </summary>
+    public static string PlayersHandbook(string edition) => edition switch
+    {
+        Edition2014 => "PHB",
+        Edition2024 => "XPHB",
+        _ => throw new ArgumentException($"Unknown rules edition: {edition}", nameof(edition)),
+    };
 }

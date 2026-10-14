@@ -39,6 +39,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetBackgrou
                 return CharacterDraftErrors.EditionMismatch("background", background.Name, background.Edition, draft.Edition);
             }
 
+            if (!draft.AllowsSource(background.Source))
+            {
+                return CharacterDraftErrors.SourceNotAllowed("background", background.Name, background.Source);
+            }
+
             if (!background.AllowsAbilityIncreases(command.AbilityIncreases))
             {
                 return CharacterDraftErrors.InvalidBackgroundAbilityIncreases(

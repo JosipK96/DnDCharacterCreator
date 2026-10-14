@@ -11,7 +11,9 @@ namespace CharacterCreatorApp.Application.Features.Lookup.GetFeats
 
         public async Task<Response<List<FeatReadModel>>> Handle(GetFeatsQuery query, CancellationToken cancellationToken)
         {
-            return await _featRepository.GetAllAsync(query.Edition, cancellationToken);
+            var feats = await _featRepository.GetAllAsync(query.Edition, cancellationToken);
+
+            return query.Sources is { Count: > 0 } sources ? feats.FindAll(x => sources.Contains(x.Source)) : feats;
         }
     }
 }

@@ -87,6 +87,13 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
   `CharacterDraftErrors.EditionMismatch`. Classes, races, backgrounds, spells, feats and the
   languages a player picks are all split by edition (a reprint is a second spell,
   `fireball_2024`).
+- A draft also keeps the books it may use (`CharacterDraft.AllowedSources`, book codes as in
+  `Books.json`), picked in step 1. It always holds the edition's Player's Handbook
+  (`RulesEdition.PlayersHandbook`) and only that until the player ticks more, and `ChooseEdition`
+  resets it. The wizard's lookups take the books as `?sources=` (none means every book), a step
+  handler refuses an entity from another book with `CharacterDraftErrors.SourceNotAllowed`, and
+  `DraftCompletenessChecker` does the same at finalize. `CharacterDraft.AllowBooks` clears the
+  choices from a book taken away, through the same cascades as changing them.
 - A 2024 species is a race (`elf_2024`), and its lineages, ancestries and legacies are its
   subraces (`elf_drow_lineage_2024`, `dragonborn_black_2024`). It has no ability increases or
   languages; those come with the 2024 background. A race and its subrace give spells from a

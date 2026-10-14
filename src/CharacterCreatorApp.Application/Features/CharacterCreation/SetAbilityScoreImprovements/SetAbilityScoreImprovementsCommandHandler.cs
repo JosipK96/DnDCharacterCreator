@@ -231,8 +231,13 @@ public class SetAbilityScoreImprovementsCommandHandler(
 
         var otherEdition = featIds.Select(id => featsById[id]).FirstOrDefault(f => f.Edition != draft.Edition);
 
-        return otherEdition is null
-            ? null
-            : CharacterDraftErrors.EditionMismatch("feat", otherEdition.Name, otherEdition.Edition, draft.Edition);
+        if (otherEdition is not null)
+        {
+            return CharacterDraftErrors.EditionMismatch("feat", otherEdition.Name, otherEdition.Edition, draft.Edition);
+        }
+
+        var notAllowed = featIds.Select(id => featsById[id]).FirstOrDefault(f => !draft.AllowsSource(f.Source));
+
+        return notAllowed is null ? null : CharacterDraftErrors.SourceNotAllowed("feat", notAllowed.Name, notAllowed.Source);
     }
 }

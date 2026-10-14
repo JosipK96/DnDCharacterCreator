@@ -362,6 +362,9 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         var draftId = await CreateDraftAsync();
 
         await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Thorin", Level = 3, Edition = RulesEdition.Edition2014 });
+
+        // Toll the Dead, picked below, is from Xanathar's Guide
+        await PutStepAsync(draftId, "books", new SetAllowedBooksApiRequest(["XGE"]));
         await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "cleric", SubclassId = "life" });
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte" });
@@ -692,6 +695,68 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         styles!.Owed.Should().Be(1);
         styles.Options.Select(o => o.Id).Should().Equal("defense_2014", "dueling_2014", "great_weapon_fighting_2014", "protection_2014");
         (await GetDraftAsync(draftId)).FightingStyleIds.Should().Equal("protection_2014");
+    }
+
+    [Fact]
+    public async Task ChooseFightingStyles_WithAStyleFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - a new 2024 fighter allows the Player's Handbook alone; Arcane Warrior is from Arcana Unleashed
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Tester", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+
+        // Act
+        var styles = await _client.GetFromJsonAsync<FightingStylesApiResponse>(
+            $"/api/character-drafts/{draftId}/fighting-styles", TestContext.Current.CancellationToken);
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/fighting-styles",
+            new ChooseFightingStylesApiRequest(["arcane_warrior"]),
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        styles!.Options.Select(o => o.Id).Should().NotContain("arcane_warrior").And.Contain("defense_2024");
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.SourceNotAllowed");
+    }
+
+    [Fact]
+    public async Task SetBooks_AllowingTheStylesBook_LetsTheFighterTakeItAndNarrowingThemClearsIt()
+    {
+        // Arrange
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Tester", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+
+        // Act
+        await PutStepAsync(draftId, "books", new SetAllowedBooksApiRequest(["AU"]));
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["arcane_warrior"]));
+        var withTheBook = await GetDraftAsync(draftId);
+        await PutStepAsync(draftId, "books", new SetAllowedBooksApiRequest([]));
+        var withoutIt = await GetDraftAsync(draftId);
+
+        // Assert
+        withTheBook.AllowedSources.Should().Equal("XPHB", "AU");
+        withTheBook.FightingStyleIds.Should().Equal("arcane_warrior");
+        withoutIt.AllowedSources.Should().Equal("XPHB");
+        withoutIt.FightingStyleIds.Should().BeEmpty();
+        withoutIt.ClassId.Should().Be("fighter-2024");
+    }
+
+    [Fact]
+    public async Task SetBooks_WithABookOfTheOtherEdition_ReturnsUnknownBooks()
+    {
+        // Arrange - Xanathar's Guide is a 2014 book
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Tester", Level = 1, Edition = RulesEdition.Edition2024 });
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/books", new SetAllowedBooksApiRequest(["XGE"]), TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.UnknownBooks");
     }
 
     [Fact]

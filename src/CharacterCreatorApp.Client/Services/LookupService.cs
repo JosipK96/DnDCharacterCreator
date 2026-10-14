@@ -15,24 +15,31 @@ public class LookupService(HttpClient http)
     private readonly HttpClient _http = http;
     private readonly Dictionary<string, object> _cache = [];
 
-    /// <summary>The races of one rules edition, "2014" or "2024", or of both when it is null.</summary>
-    public Task<List<RaceApiResponse>> GetRacesAsync(string? edition) =>
-        GetCachedAsync<List<RaceApiResponse>>($"/api/races/get-list{ToQueryString(new() { ["edition"] = edition })}");
+    /// <summary>The books of a rules edition a character may be allowed, its Player's Handbook first.</summary>
+    public Task<List<BookApiResponse>> GetBooksAsync(string edition) =>
+        GetCachedAsync<List<BookApiResponse>>($"/api/books{ToQueryString(new() { ["edition"] = edition })}");
 
-    /// <summary>The classes of one rules edition, "2014" or "2024", or of both when it is null.</summary>
-    public Task<List<ClassApiResponse>> GetClassesAsync(string? edition) =>
-        GetCachedAsync<List<ClassApiResponse>>($"/api/classes/get-list{ToQueryString(new() { ["edition"] = edition })}");
+    /// <summary>
+    /// The races of one rules edition, "2014" or "2024", or of both when it is null; only those
+    /// (and their subraces) from the given books, when there are any.
+    /// </summary>
+    public Task<List<RaceApiResponse>> GetRacesAsync(string? edition, IEnumerable<string>? sources = null) =>
+        GetCachedAsync<List<RaceApiResponse>>($"/api/races/get-list{ToQueryString(new() { ["edition"] = edition }, sources)}");
+
+    /// <summary>The classes of one rules edition, "2014" or "2024", or of both when it is null; only those from the given books, when there are any.</summary>
+    public Task<List<ClassApiResponse>> GetClassesAsync(string? edition, IEnumerable<string>? sources = null) =>
+        GetCachedAsync<List<ClassApiResponse>>($"/api/classes/get-list{ToQueryString(new() { ["edition"] = edition }, sources)}");
 
     public Task<ClassApiResponse?> GetClassByIdAsync(string id) => GetCachedOrNullAsync<ClassApiResponse>($"/api/classes/{id}");
 
-    public Task<List<SubclassApiResponse>> GetSubclassesByClassAsync(string classId) =>
-        GetCachedAsync<List<SubclassApiResponse>>($"/api/subclasses?classId={Uri.EscapeDataString(classId)}");
+    public Task<List<SubclassApiResponse>> GetSubclassesByClassAsync(string classId, IEnumerable<string>? sources = null) =>
+        GetCachedAsync<List<SubclassApiResponse>>($"/api/subclasses{ToQueryString(new() { ["classId"] = classId }, sources)}");
 
     public Task<SubclassApiResponse?> GetSubclassByIdAsync(string id) => GetCachedOrNullAsync<SubclassApiResponse>($"/api/subclasses/{id}");
 
-    /// <summary>The backgrounds of one rules edition, "2014" or "2024", or of both when it is null.</summary>
-    public Task<List<BackgroundApiResponse>> GetBackgroundsAsync(string? edition) =>
-        GetCachedAsync<List<BackgroundApiResponse>>($"/api/backgrounds{ToQueryString(new() { ["edition"] = edition })}");
+    /// <summary>The backgrounds of one rules edition, "2014" or "2024", or of both when it is null; only those from the given books, when there are any.</summary>
+    public Task<List<BackgroundApiResponse>> GetBackgroundsAsync(string? edition, IEnumerable<string>? sources = null) =>
+        GetCachedAsync<List<BackgroundApiResponse>>($"/api/backgrounds{ToQueryString(new() { ["edition"] = edition }, sources)}");
 
     public Task<BackgroundApiResponse?> GetBackgroundByIdAsync(string id) => GetCachedOrNullAsync<BackgroundApiResponse>($"/api/backgrounds/{id}");
 
@@ -42,7 +49,8 @@ public class LookupService(HttpClient http)
         int? level = null,
         int? maxLevel = null,
         string? school = null,
-        bool? isRitual = null)
+        bool? isRitual = null,
+        IEnumerable<string>? sources = null)
     {
         var query = ToQueryString(new Dictionary<string, string?>
         {
@@ -52,14 +60,14 @@ public class LookupService(HttpClient http)
             ["maxLevel"] = maxLevel?.ToString(CultureInfo.InvariantCulture),
             ["school"] = school,
             ["isRitual"] = isRitual?.ToString()
-        });
+        }, sources);
 
         return GetCachedAsync<List<SpellApiResponse>>($"/api/spells{query}");
     }
 
-    /// <summary>The feats of one rules edition, "2014" or "2024", or of both when it is null.</summary>
-    public Task<List<FeatApiResponse>> GetFeatsAsync(string? edition) =>
-        GetCachedAsync<List<FeatApiResponse>>($"/api/feats{ToQueryString(new() { ["edition"] = edition })}");
+    /// <summary>The feats of one rules edition, "2014" or "2024", or of both when it is null; only those from the given books, when there are any.</summary>
+    public Task<List<FeatApiResponse>> GetFeatsAsync(string? edition, IEnumerable<string>? sources = null) =>
+        GetCachedAsync<List<FeatApiResponse>>($"/api/feats{ToQueryString(new() { ["edition"] = edition }, sources)}");
 
     public Task<ProficiencyApiResponse?> GetProficiencyByIdAsync(string id) => GetCachedOrNullAsync<ProficiencyApiResponse>($"/api/proficiencies/{id}");
 
@@ -109,14 +117,15 @@ public class LookupService(HttpClient http)
         return value;
     }
 
-    // "?a=1&b=2" from the parameters that have a value, or "" when none do. Written out rather
-    // than taken from ASP.NET Core's QueryString, which would pull a 2.x server package into
-    // the WebAssembly download for one method.
-    private static string ToQueryString(Dictionary<string, string?> parameters)
+    // "?a=1&b=2&sources=XPHB&sources=EFA" from the parameters that have a value and the books,
+    // or "" when there are none. Written out rather than taken from ASP.NET Core's QueryString,
+    // which would pull a 2.x server package into the WebAssembly download for one method.
+    private static string ToQueryString(Dictionary<string, string?> parameters, IEnumerable<string>? sources = null)
     {
         var pairs = parameters
             .Where(kvp => kvp.Value != null)
             .Select(kvp => $"{Uri.EscapeDataString(kvp.Key)}={Uri.EscapeDataString(kvp.Value!)}")
+            .Concat((sources ?? []).Select(source => $"sources={Uri.EscapeDataString(source)}"))
             .ToList();
 
         return pairs.Count == 0 ? string.Empty : "?" + string.Join('&', pairs);

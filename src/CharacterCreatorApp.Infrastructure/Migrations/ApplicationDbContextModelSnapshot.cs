@@ -195,6 +195,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.PrimitiveCollection<List<string>>("AllowedSources")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.Property<string>("BackgroundAbilityIncreases")
                         .IsRequired()
                         .HasColumnType("jsonb");

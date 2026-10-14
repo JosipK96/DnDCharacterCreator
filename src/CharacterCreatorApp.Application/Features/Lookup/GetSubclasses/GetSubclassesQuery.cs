@@ -4,4 +4,5 @@ using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.Lookup.GetSubclasses;
 
-public record GetSubclassesQuery(string ClassId) : IQuery<Response<List<SubclassReadModel>>>;
+/// <summary>A class's subclasses; Sources, when given, keeps only those from these books.</summary>
+public record GetSubclassesQuery(string ClassId, IReadOnlyCollection<string>? Sources = null) : IQuery<Response<List<SubclassReadModel>>>;

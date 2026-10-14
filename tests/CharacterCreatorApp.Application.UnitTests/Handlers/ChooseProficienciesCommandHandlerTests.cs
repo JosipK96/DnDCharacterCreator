@@ -92,6 +92,7 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
             Id = "soldier",
             Name = "Soldier",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             BackgroundProficiencies = [new BackgroundProficiency { BackgroundId = "soldier", ProficiencyId = "athletics" }]
         });
         ArrangeProficiencies("perception", "survival");
@@ -120,6 +121,7 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
             Id = "half_elf",
             Name = "Half-Elf",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             Size = "Medium",
             Speed = 30,
             SkillChoiceCount = 2
@@ -129,6 +131,7 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
             Id = "fighter",
             Name = "Fighter",
             Edition = RulesEdition.Edition2014,
+            Source = "PHB",
             HitDie = "1d10",
             ProficiencyChoice = new ProficiencyChoice
             {

@@ -11,7 +11,9 @@ namespace CharacterCreatorApp.Application.Features.Lookup.GetClasses
 
         public async Task<Response<List<ClassReadModel>>> Handle(GetClassesQuery query, CancellationToken cancellationToken)
         {
-            return await _classRepository.GetClassesAsync(query.Edition, cancellationToken);
+            var classes = await _classRepository.GetClassesAsync(query.Edition, cancellationToken);
+
+            return query.Sources is { Count: > 0 } sources ? classes.FindAll(x => sources.Contains(x.Source)) : classes;
         }
     }
 }

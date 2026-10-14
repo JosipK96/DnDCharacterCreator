@@ -32,6 +32,7 @@ public static class CharacterDraftErrors
         public const string BlankProficiencyId = "CharacterDraft.BlankProficiencyId";
         public const string SpellIdsRequired = "CharacterDraft.SpellIdsRequired";
         public const string FightingStyleIdsRequired = "CharacterDraft.FightingStyleIdsRequired";
+        public const string BooksRequired = "CharacterDraft.BooksRequired";
         public const string ImprovementsRequired = "CharacterDraft.ImprovementsRequired";
         public const string FeatAbilityIncreasesMismatch = "CharacterDraft.FeatAbilityIncreasesMismatch";
         public const string InvalidAbilityScoreCount = "CharacterDraft.InvalidAbilityScoreCount";
@@ -68,6 +69,14 @@ public static class CharacterDraftErrors
     /// <summary>A choice from the other rules edition than the one the character is built with.</summary>
     public static Error EditionMismatch(string what, string name, string itsEdition, string draftEdition) =>
         Error.Validation("CharacterDraft.EditionMismatch", $"The {what} {name} follows the {itsEdition} rules, but this character is built with the {draftEdition} rules.");
+
+    /// <summary>A choice from a book the character does not allow (CharacterDraft.AllowedSources).</summary>
+    public static Error SourceNotAllowed(string what, string name, string source) =>
+        Error.Validation("CharacterDraft.SourceNotAllowed", $"The {what} {name} comes from {source}, a book this character does not allow.");
+
+    /// <summary>Book codes that name no book of the character's edition.</summary>
+    public static Error UnknownBooks(IEnumerable<string> codes, string edition) =>
+        Error.Validation("CharacterDraft.UnknownBooks", $"No {edition} book has the code {string.Join(", ", codes)}.");
 
     // --- Race ability increases ---
     public static Error InvalidRaceAbilityIncreases(string raceName, int count, IReadOnlyCollection<string> abilityNames)

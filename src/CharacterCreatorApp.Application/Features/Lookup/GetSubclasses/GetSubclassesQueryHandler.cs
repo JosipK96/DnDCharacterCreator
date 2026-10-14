@@ -25,6 +25,6 @@ public class GetSubclassesQueryHandler(
 
         var subclasses = await _subclassRepository.GetByClassIdAsync(query.ClassId, cancellationToken);
 
-        return subclasses;
+        return query.Sources is { Count: > 0 } sources ? subclasses.FindAll(s => sources.Contains(s.Source)) : subclasses;
     }
 }

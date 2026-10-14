@@ -72,6 +72,43 @@ public class SetCharacterClassCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_WithAClassFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - a class from Tasha's Cauldron, which the draft does not allow
+        var draft = ArrangeDraft(RulesEdition.Edition2014);
+        ArrangeClass("artificer", RulesEdition.Edition2014, "TCE");
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterClassCommand(_draftId, "artificer", null), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The class Wizard comes from TCE, a book this character does not allow.");
+        draft.ClassId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithASubclassFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2014);
+        var wizard = ArrangeClass("wizard", RulesEdition.Edition2014);
+        wizard.Subclasses = [new Subclass { Id = "war-magic", ClassId = "wizard", Name = "War Magic", Source = "XGE", Features = [] }];
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterClassCommand(_draftId, "wizard", "war-magic"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The subclass War Magic comes from XGE, a book this character does not allow.");
+        draft.ClassId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
     private CharacterDraft ArrangeDraft(string edition)
     {
         var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider());
@@ -85,11 +122,15 @@ public class SetCharacterClassCommandHandlerTests : IDisposable
         return draft;
     }
 
-    private void ArrangeClass(string id, string edition)
+    private Class ArrangeClass(string id, string edition, string? source = null)
     {
+        var @class = new Class { Id = id, Name = "Wizard", Edition = edition, Source = source ?? RulesEdition.PlayersHandbook(edition), HitDie = "1d6", SubclassLevel = 3 };
+
         _classRepositoryMock
             .Setup(r => r.GetByIdWithSubclassesAsync(id, _cts.Token))
-            .ReturnsAsync(new Class { Id = id, Name = "Wizard", Edition = edition, HitDie = "1d6", SubclassLevel = 3 });
+            .ReturnsAsync(@class);
+
+        return @class;
     }
 
     public void Dispose()

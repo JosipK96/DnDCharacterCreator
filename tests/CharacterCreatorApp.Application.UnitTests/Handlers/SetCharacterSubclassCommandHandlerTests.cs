@@ -97,10 +97,44 @@ public class SetCharacterSubclassCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_WithASubclassFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - Xanathar's Guide is not among the draft's books, the Player's Handbook alone
+        var draft = ArrangeDraft(level: 3, classId: "rogue", subclassId: "swashbuckler", subclassLevel: 3, subclassSource: "XGE");
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubclassCommand(_draftId, "swashbuckler"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The subclass swashbuckler comes from XGE, a book this character does not allow.");
+        draft.SubclassId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithASubclassFromABookTheDraftAllows_SetsIt()
+    {
+        // Arrange
+        var draft = ArrangeDraft(level: 3, classId: "rogue", subclassId: "swashbuckler", subclassLevel: 3, subclassSource: "XGE");
+        draft.AllowBooks(["XGE"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubclassCommand(_draftId, "swashbuckler"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.SubclassId.Should().Be("swashbuckler");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
     // The subclass level comes from the class data, which gives each class its own
-    private CharacterDraft ArrangeDraft(int level, string classId, string subclassId, int subclassLevel)
+    private CharacterDraft ArrangeDraft(int level, string classId, string subclassId, int subclassLevel, string subclassSource = "PHB")
     {
         var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider());
+        draft.ChooseEdition(RulesEdition.Edition2014);
         draft.SetNameAndLevel("Thorin", level);
         draft.SetClass(classId);
 
@@ -115,9 +149,10 @@ public class SetCharacterSubclassCommandHandlerTests : IDisposable
                 Id = classId,
                 Name = classId,
                 Edition = RulesEdition.Edition2014,
+                Source = "PHB",
                 HitDie = "1d8",
                 SubclassLevel = subclassLevel,
-                Subclasses = [new Subclass { Id = subclassId, ClassId = classId, Name = subclassId, Features = [] }]
+                Subclasses = [new Subclass { Id = subclassId, ClassId = classId, Name = subclassId, Source = subclassSource, Features = [] }]
             });
 
         return draft;

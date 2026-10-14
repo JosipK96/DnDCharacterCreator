@@ -2,8 +2,9 @@
   {
     "Id": "aberrant_anatomy",
     "Name": "Aberrant Anatomy",
-    "Description": "See RHW, page 32.",
+    "Description": "See Ravenloft: The Horrors Within, page 32.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -31,6 +32,7 @@
     "Name": "Aberrant Dragonmark",
     "Description": "See Eberron: Rising from the Last War, page 52.",
     "Edition": "2014",
+    "Source": "ERLW",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -62,6 +64,7 @@
     "Name": "Aberrant Dragonmark",
     "Description": "See Eberron: Forge of the Artificer, page 39.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -88,6 +91,7 @@
     "Name": "Ability Score Improvement",
     "Description": "Increase one ability score of your choice by 2, or increase two ability scores of your choice by 1. This feat can't increase an ability score above 20.\n\nRepeatable. You can take this feat more than once.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -120,8 +124,9 @@
   {
     "Id": "abjuration_adept",
     "Name": "Abjuration Adept",
-    "Description": "See AU, page 28.",
+    "Description": "See Arcana Unleashed, page 28.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -162,6 +167,7 @@
     "Name": "Actor",
     "Description": "See Player's Handbook (2014), page 165.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -191,6 +197,7 @@
     "Name": "Actor",
     "Description": "See Player's Handbook (2024), page 202.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -225,6 +232,7 @@
     "Name": "Adept of the Black Robes",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 31.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -250,6 +258,7 @@
     "Name": "Adept of the Red Robes",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 32.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -275,6 +284,7 @@
     "Name": "Adept of the White Robes",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 32.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -300,6 +310,7 @@
     "Name": "Agent of Order",
     "Description": "See Sigil and the Outlands, page 10.",
     "Edition": "2014",
+    "Source": "SatO",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -336,6 +347,7 @@
     "Name": "Alert",
     "Description": "See Player's Handbook (2014), page 165.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -359,6 +371,7 @@
     "Name": "Alert",
     "Description": "You gain the following benefits.\n\nInitiative Proficiency. When you roll Initiative, you can add your Proficiency Bonus to the roll.\n\nInitiative Swap. Immediately after you roll Initiative, you can swap your Initiative with the Initiative of one willing ally in the same combat. You can't make this swap if you or the ally has the Incapacitated condition.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -380,8 +393,9 @@
   {
     "Id": "arcane_artist",
     "Name": "Arcane Artist",
-    "Description": "See AU, page 26.",
+    "Description": "See Arcana Unleashed, page 26.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -405,8 +419,9 @@
   {
     "Id": "arcane_eloquence",
     "Name": "Arcane Eloquence",
-    "Description": "See AU, page 26.",
+    "Description": "See Arcana Unleashed, page 26.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -430,8 +445,9 @@
   {
     "Id": "arcane_infiltrator",
     "Name": "Arcane Infiltrator",
-    "Description": "See AU, page 26.",
+    "Description": "See Arcana Unleashed, page 26.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -455,8 +471,9 @@
   {
     "Id": "arcane_omens",
     "Name": "Arcane Omens",
-    "Description": "See AU, page 27.",
+    "Description": "See Arcana Unleashed, page 27.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -480,8 +497,9 @@
   {
     "Id": "arcane_overload",
     "Name": "Arcane Overload",
-    "Description": "See AU, page 27.",
+    "Description": "See Arcana Unleashed, page 27.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -505,8 +523,9 @@
   {
     "Id": "arcane_safeguard",
     "Name": "Arcane Safeguard",
-    "Description": "See AU, page 27.",
+    "Description": "See Arcana Unleashed, page 27.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -530,8 +549,9 @@
   {
     "Id": "arcane_undertaker",
     "Name": "Arcane Undertaker",
-    "Description": "See AU, page 27.",
+    "Description": "See Arcana Unleashed, page 27.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -553,8 +573,9 @@
   {
     "Id": "arcane_warrior",
     "Name": "Arcane Warrior",
-    "Description": "See AU, page 33.",
+    "Description": "See Arcana Unleashed, page 33.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -580,6 +601,7 @@
     "Name": "Archery",
     "Description": "You gain a +2 bonus to attack rolls you make with ranged weapons.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -608,6 +630,7 @@
     "Name": "Archery",
     "Description": "You gain a +2 bonus to attack rolls you make with Ranged weapons.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -633,6 +656,7 @@
     "Name": "Artificer Initiate",
     "Description": "See Tasha's Cauldron of Everything, page 79.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -656,6 +680,7 @@
     "Name": "Athlete",
     "Description": "See Player's Handbook (2014), page 165.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -686,6 +711,7 @@
     "Name": "Athlete",
     "Description": "See Player's Handbook (2024), page 202.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -725,6 +751,7 @@
     "Name": "Baleful Scion",
     "Description": "See Sigil and the Outlands, page 10.",
     "Edition": "2014",
+    "Source": "SatO",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -761,6 +788,7 @@
     "Name": "Blessed Warrior",
     "Description": "See Player's Handbook (2024), page 110.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -788,6 +816,7 @@
     "Name": "Blind Fighting",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -811,8 +840,9 @@
   {
     "Id": "bloodlust",
     "Name": "Bloodlust",
-    "Description": "See ABH, page 9.",
+    "Description": "See Astarion's Book of Hungers, page 9.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -842,8 +872,9 @@
   {
     "Id": "bomber",
     "Name": "Bomber",
-    "Description": "See ABH, page 9.",
+    "Description": "See Astarion's Book of Hungers, page 9.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -871,8 +902,9 @@
   {
     "Id": "boon_of_blazing_dawn",
     "Name": "Boon of Blazing Dawn",
-    "Description": "See ABH, page 11.",
+    "Description": "See Astarion's Book of Hungers, page 11.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -907,6 +939,7 @@
     "Name": "Boon of Bloodshed",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 42.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -941,6 +974,7 @@
     "Name": "Boon of Bountiful Health",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 42.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -975,6 +1009,7 @@
     "Name": "Boon of Combat Prowess",
     "Description": "You gain the following benefits.\n\nPeerless Aim. When you miss with an attack roll, you can hit instead. Once you use this benefit, you can't use it again until the start of your next turn.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1009,6 +1044,7 @@
     "Name": "Boon of Communication",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 42.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1040,6 +1076,7 @@
     "Name": "Boon of Desperate Resilience",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 42.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1070,6 +1107,7 @@
     "Name": "Boon of Dimensional Travel",
     "Description": "You gain the following benefits.\n\nBlink Steps. Immediately after you take the Attack action or the Magic action, you can teleport up to 30 feet to an unoccupied space you can see.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1104,6 +1142,7 @@
     "Name": "Boon of Energy Resistance",
     "Description": "See Player's Handbook (2024), page 210.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1136,8 +1175,9 @@
   {
     "Id": "boon_of_erupting_spellpower",
     "Name": "Boon of Erupting Spellpower",
-    "Description": "See AU, page 33.",
+    "Description": "See Arcana Unleashed, page 33.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1172,6 +1212,7 @@
     "Name": "Boon of Exquisite Radiance",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 42.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1206,6 +1247,7 @@
     "Name": "Boon of Fate",
     "Description": "You gain the following benefits.\n\nImprove Fate. When you or another creature within 60 feet of you succeeds on or fails a D20 Test, you can roll 2d4 and apply the total rolled as a bonus or penalty to the d20 roll. Once you use this benefit, you can't use it again until you roll Initiative or finish a Short or Long Rest.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1240,6 +1282,7 @@
     "Name": "Boon of Fluid Forms",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 42.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1271,6 +1314,7 @@
     "Name": "Boon of Fortitude",
     "Description": "See Player's Handbook (2024), page 210.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1305,6 +1349,7 @@
     "Name": "Boon of Fortune's Favor",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 43.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1339,6 +1384,7 @@
     "Name": "Boon of Irresistible Offense",
     "Description": "You gain the following benefits.\n\nOvercome Defenses. The Bludgeoning, Piercing, and Slashing damage you deal always ignores Resistance.\n\nOverwhelming Strike. When you roll a 20 on the d20 for an attack roll, you can deal extra damage to the target equal to the ability score increased by this feat. The extra damage's type is the same as the attack's type.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1367,8 +1413,9 @@
   {
     "Id": "boon_of_looming_shadows",
     "Name": "Boon of Looming Shadows",
-    "Description": "See ABH, page 11.",
+    "Description": "See Astarion's Book of Hungers, page 11.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1401,8 +1448,9 @@
   {
     "Id": "boon_of_magic_school_mastery",
     "Name": "Boon of Magic School Mastery",
-    "Description": "See AU, page 33.",
+    "Description": "See Arcana Unleashed, page 33.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1435,8 +1483,9 @@
   {
     "Id": "boon_of_misty_escape",
     "Name": "Boon of Misty Escape",
-    "Description": "See ABH, page 11.",
+    "Description": "See Astarion's Book of Hungers, page 11.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1470,6 +1519,7 @@
     "Name": "Boon of Poison Mastery",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 43.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1504,6 +1554,7 @@
     "Name": "Boon of Recovery",
     "Description": "See Player's Handbook (2024), page 211.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1538,6 +1589,7 @@
     "Name": "Boon of Revelry",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 43.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1571,6 +1623,7 @@
     "Name": "Boon of Siberys",
     "Description": "See Eberron: Forge of the Artificer, page 45.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1607,6 +1660,7 @@
     "Name": "Boon of Skill",
     "Description": "See Player's Handbook (2024), page 211.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1660,6 +1714,7 @@
     "Name": "Boon of Speed",
     "Description": "See Player's Handbook (2024), page 211.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1694,6 +1749,7 @@
     "Name": "Boon of Spell Recall",
     "Description": "You gain the following benefits.\n\nFree Casting. Whenever you cast a spell with a level 1-4 spell slot, roll 1d4. If the number you roll is the same as the slot's level, the slot isn't expended.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1728,6 +1784,7 @@
     "Name": "Boon of Terror",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 43.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1759,6 +1816,7 @@
     "Name": "Boon of Truesight",
     "Description": "You gain the following benefits.\n\nTruesight. You have Truesight with a range of 60 feet.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1793,6 +1851,7 @@
     "Name": "Boon of the Bright Sun",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 43.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1824,6 +1883,7 @@
     "Name": "Boon of the Furious Storm",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 43.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1856,8 +1916,9 @@
   {
     "Id": "boon_of_the_iron_mind",
     "Name": "Boon of the Iron Mind",
-    "Description": "See AU, page 33.",
+    "Description": "See Arcana Unleashed, page 33.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1892,6 +1953,7 @@
     "Name": "Boon of the Night Spirit",
     "Description": "You gain the following benefits.\n\nMerge with Shadows. While within Dim Light or Darkness, you can give yourself the Invisible condition as a Bonus Action. The condition ends on you immediately after you take an action, a Bonus Action, or a Reaction.\n\nShadowy Form. While within Dim Light or Darkness, you have Resistance to all damage except Psychic and Radiant.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1926,6 +1988,7 @@
     "Name": "Boon of the Soul Drinker",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 43.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Epic Boon",
     "Prerequisites": {
       "MinimumLevel": 19,
@@ -1960,6 +2023,7 @@
     "Name": "Bountiful Luck",
     "Description": "See Xanathar's Guide to Everything, page 73.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -1985,6 +2049,7 @@
     "Name": "Cartomancer",
     "Description": "See The Book of Many Things, page 49.",
     "Edition": "2014",
+    "Source": "BMT",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2012,6 +2077,7 @@
     "Name": "Charger",
     "Description": "See Player's Handbook (2014), page 165.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2035,6 +2101,7 @@
     "Name": "Charger",
     "Description": "See Player's Handbook (2024), page 202.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2074,6 +2141,7 @@
     "Name": "Chef",
     "Description": "See Tasha's Cauldron of Everything, page 79.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2106,6 +2174,7 @@
     "Name": "Chef",
     "Description": "See Player's Handbook (2024), page 202.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2136,8 +2205,9 @@
   {
     "Id": "child_of_the_sun",
     "Name": "Child of the Sun",
-    "Description": "See LFL.",
+    "Description": "See Lorwyn: First Light.",
     "Edition": "2024",
+    "Source": "LFL",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2161,8 +2231,9 @@
   {
     "Id": "cloying_mists",
     "Name": "Cloying Mists",
-    "Description": "See ABH, page 9.",
+    "Description": "See Astarion's Book of Hungers, page 9.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2196,6 +2267,7 @@
     "Name": "Cohort of Chaos",
     "Description": "See Sigil and the Outlands, page 10.",
     "Edition": "2014",
+    "Source": "SatO",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2232,6 +2304,7 @@
     "Name": "Cold Caster",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 39.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2263,8 +2336,9 @@
   {
     "Id": "conjuration_adept",
     "Name": "Conjuration Adept",
-    "Description": "See AU, page 28.",
+    "Description": "See Arcana Unleashed, page 28.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2305,6 +2379,7 @@
     "Name": "Crafter",
     "Description": "See Player's Handbook (2024), page 200.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2328,6 +2403,7 @@
     "Name": "Crossbow Expert",
     "Description": "See Player's Handbook (2014), page 165.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2351,6 +2427,7 @@
     "Name": "Crossbow Expert",
     "Description": "See Player's Handbook (2024), page 203.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2385,6 +2462,7 @@
     "Name": "Crusher",
     "Description": "See Tasha's Cauldron of Everything, page 79.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2415,6 +2493,7 @@
     "Name": "Crusher",
     "Description": "See Player's Handbook (2024), page 203.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2445,6 +2524,7 @@
     "Name": "Cult of the Dragon Initiate",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 37.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2470,6 +2550,7 @@
     "Name": "Defense",
     "Description": "While you are wearing armor, you gain a +1 bonus to AC.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2499,6 +2580,7 @@
     "Name": "Defense",
     "Description": "While you're wearing Light, Medium, or Heavy armor, you gain a +1 bonus to Armor Class.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2524,6 +2606,7 @@
     "Name": "Defensive Duelist",
     "Description": "See Player's Handbook (2014), page 165.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2552,6 +2635,7 @@
     "Name": "Defensive Duelist",
     "Description": "See Player's Handbook (2024), page 203.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2584,8 +2668,9 @@
   {
     "Id": "delicious_pain",
     "Name": "Delicious Pain",
-    "Description": "See ABH, page 9.",
+    "Description": "See Astarion's Book of Hungers, page 9.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2618,8 +2703,9 @@
   {
     "Id": "divination_adept",
     "Name": "Divination Adept",
-    "Description": "See AU, page 29.",
+    "Description": "See Arcana Unleashed, page 29.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2660,6 +2746,7 @@
     "Name": "Divinely Favored",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 32.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2685,6 +2772,7 @@
     "Name": "Dragon Fear",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2718,6 +2806,7 @@
     "Name": "Dragon Hide",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2751,6 +2840,7 @@
     "Name": "Dragonscarred",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 39.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2783,6 +2873,7 @@
     "Name": "Drow High Magic",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2812,6 +2903,7 @@
     "Name": "Druidic Warrior",
     "Description": "See Player's Handbook (2024), page 120.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2839,6 +2931,7 @@
     "Name": "Dual Wielder",
     "Description": "See Player's Handbook (2014), page 165.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2862,6 +2955,7 @@
     "Name": "Dual Wielder",
     "Description": "See Player's Handbook (2024), page 203.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -2901,6 +2995,7 @@
     "Name": "Dueling",
     "Description": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2931,6 +3026,7 @@
     "Name": "Dueling",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2956,6 +3052,7 @@
     "Name": "Dungeon Delver",
     "Description": "See Player's Handbook (2014), page 166.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -2979,6 +3076,7 @@
     "Name": "Durable",
     "Description": "See Player's Handbook (2014), page 166.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3008,6 +3106,7 @@
     "Name": "Durable",
     "Description": "See Player's Handbook (2024), page 203.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3037,6 +3136,7 @@
     "Name": "Dwarven Fortitude",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3066,8 +3166,9 @@
   {
     "Id": "echoing_soul",
     "Name": "Echoing Soul",
-    "Description": "See RHW, page 33.",
+    "Description": "See Ravenloft: The Horrors Within, page 33.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3116,6 +3217,7 @@
     "Name": "Eldritch Adept",
     "Description": "See Tasha's Cauldron of Everything, page 79.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3142,6 +3244,7 @@
     "Name": "Elemental Adept",
     "Description": "See Player's Handbook (2014), page 166.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3167,6 +3270,7 @@
     "Name": "Elemental Adept",
     "Description": "See Player's Handbook (2024), page 203.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3199,8 +3303,9 @@
   {
     "Id": "elemental_familiar",
     "Name": "Elemental Familiar",
-    "Description": "See AU, page 29.",
+    "Description": "See Arcana Unleashed, page 29.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3237,6 +3342,7 @@
     "Name": "Elven Accuracy",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3272,6 +3378,7 @@
     "Name": "Ember of the Fire Giant",
     "Description": "See Bigby Presents: Glory of the Giants, page 17.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3305,6 +3412,7 @@
     "Name": "Emerald Enclave Fledgling",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 37.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3328,8 +3436,9 @@
   {
     "Id": "enchantment_adept",
     "Name": "Enchantment Adept",
-    "Description": "See AU, page 30.",
+    "Description": "See Arcana Unleashed, page 30.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3370,6 +3479,7 @@
     "Name": "Enclave Magic",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 39.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3403,8 +3513,9 @@
   {
     "Id": "evocation_adept",
     "Name": "Evocation Adept",
-    "Description": "See AU, page 30.",
+    "Description": "See Arcana Unleashed, page 30.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3445,6 +3556,7 @@
     "Name": "Fade Away",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3477,6 +3589,7 @@
     "Name": "Fairy Trickster",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 39.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3505,8 +3618,9 @@
   {
     "Id": "familiar_friend",
     "Name": "Familiar Friend",
-    "Description": "See AU, page 27.",
+    "Description": "See Arcana Unleashed, page 27.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3532,6 +3646,7 @@
     "Name": "Fey Teleportation",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3568,6 +3683,7 @@
     "Name": "Fey Touched",
     "Description": "See Tasha's Cauldron of Everything, page 79.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3601,6 +3717,7 @@
     "Name": "Fey-Touched",
     "Description": "See Player's Handbook (2024), page 204.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3634,6 +3751,7 @@
     "Name": "Fighting Initiate",
     "Description": "See Tasha's Cauldron of Everything, page 80.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3659,6 +3777,7 @@
     "Name": "Flames of Phlegethos",
     "Description": "See Xanathar's Guide to Everything, page 74.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3691,6 +3810,7 @@
     "Name": "Fury of the Frost Giant",
     "Description": "See Bigby Presents: Glory of the Giants, page 17.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3722,8 +3842,9 @@
   {
     "Id": "gathered_whispers",
     "Name": "Gathered Whispers",
-    "Description": "See RHW, page 33.",
+    "Description": "See Ravenloft: The Horrors Within, page 33.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3752,6 +3873,7 @@
     "Name": "Genie Magic",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 39.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3783,6 +3905,7 @@
     "Name": "Gift of the Chromatic Dragon",
     "Description": "See Fizban's Treasury of Dragons, page 17.",
     "Edition": "2014",
+    "Source": "FTD",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3806,6 +3929,7 @@
     "Name": "Gift of the Gem Dragon",
     "Description": "See Fizban's Treasury of Dragons, page 17.",
     "Edition": "2014",
+    "Source": "FTD",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3837,6 +3961,7 @@
     "Name": "Gift of the Metallic Dragon",
     "Description": "See Fizban's Treasury of Dragons, page 17.",
     "Edition": "2014",
+    "Source": "FTD",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3862,6 +3987,7 @@
     "Name": "Grappler",
     "Description": "You've developed the skills necessary to hold your own in close-quarters grappling. You gain the following benefits:\n\n• You have advantage on attack rolls against a creature you are grappling.\n• You can use your action to try to pin a creature grappled by you. To do so, make another grapple check. If you succeed, you and the creature are both restrained until the grapple ends.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3890,6 +4016,7 @@
     "Name": "Grappler",
     "Description": "You gain the following benefits.\n\nPunch and Grab. When you hit a creature with an Unarmed Strike as part of the Attack action on your turn, you can use both the Damage and the Grapple option. You can use this benefit only once per turn.\n\nAttack Advantage. You have Advantage on attack rolls against a creature Grappled by you.\n\nFast Wrestler. You don't have to spend extra movement to move a creature Grappled by you if the creature is your size or smaller.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -3929,6 +4056,7 @@
     "Name": "Great Weapon Fighting",
     "Description": "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3957,6 +4085,7 @@
     "Name": "Great Weapon Fighting",
     "Description": "When you roll damage for an attack you make with a Melee weapon that you are holding with two hands, you can treat any 1 or 2 on a damage die as a 3. The weapon must have the Two-Handed or Versatile property to gain this benefit.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -3982,6 +4111,7 @@
     "Name": "Great Weapon Master",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4005,6 +4135,7 @@
     "Name": "Great Weapon Master",
     "Description": "See Player's Handbook (2024), page 204.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4039,6 +4170,7 @@
     "Name": "Greater Aberrant Mark",
     "Description": "See Eberron: Forge of the Artificer, page 43.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4070,6 +4202,7 @@
     "Name": "Greater Mark of Detection",
     "Description": "See Eberron: Forge of the Artificer, page 43.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4106,6 +4239,7 @@
     "Name": "Greater Mark of Finding",
     "Description": "See Eberron: Forge of the Artificer, page 43.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4142,6 +4276,7 @@
     "Name": "Greater Mark of Handling",
     "Description": "See Eberron: Forge of the Artificer, page 43.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4178,6 +4313,7 @@
     "Name": "Greater Mark of Healing",
     "Description": "See Eberron: Forge of the Artificer, page 44.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4214,6 +4350,7 @@
     "Name": "Greater Mark of Hospitality",
     "Description": "See Eberron: Forge of the Artificer, page 44.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4250,6 +4387,7 @@
     "Name": "Greater Mark of Making",
     "Description": "See Eberron: Forge of the Artificer, page 44.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4286,6 +4424,7 @@
     "Name": "Greater Mark of Passage",
     "Description": "See Eberron: Forge of the Artificer, page 44.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4322,6 +4461,7 @@
     "Name": "Greater Mark of Scribing",
     "Description": "See Eberron: Forge of the Artificer, page 44.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4358,6 +4498,7 @@
     "Name": "Greater Mark of Sentinel",
     "Description": "See Eberron: Forge of the Artificer, page 44.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4394,6 +4535,7 @@
     "Name": "Greater Mark of Shadow",
     "Description": "See Eberron: Forge of the Artificer, page 45.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4430,6 +4572,7 @@
     "Name": "Greater Mark of Storm",
     "Description": "See Eberron: Forge of the Artificer, page 45.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4466,6 +4609,7 @@
     "Name": "Greater Mark of Warding",
     "Description": "See Eberron: Forge of the Artificer, page 45.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4502,6 +4646,7 @@
     "Name": "Guile of the Cloud Giant",
     "Description": "See Bigby Presents: Glory of the Giants, page 18.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4535,6 +4680,7 @@
     "Name": "Gunner",
     "Description": "See Tasha's Cauldron of Everything, page 80.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4566,6 +4712,7 @@
     "Name": "Harper Agent",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 37.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4591,6 +4738,7 @@
     "Name": "Harper Teamwork",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 39.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4623,6 +4771,7 @@
     "Name": "Healer",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4646,6 +4795,7 @@
     "Name": "Healer",
     "Description": "See Player's Handbook (2024), page 201.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4669,6 +4819,7 @@
     "Name": "Heavily Armored",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4702,6 +4853,7 @@
     "Name": "Heavily Armored",
     "Description": "See Player's Handbook (2024), page 204.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4736,6 +4888,7 @@
     "Name": "Heavy Armor Master",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4767,6 +4920,7 @@
     "Name": "Heavy Armor Master",
     "Description": "See Player's Handbook (2024), page 204.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4797,8 +4951,9 @@
   {
     "Id": "illusion_adept",
     "Name": "Illusion Adept",
-    "Description": "See AU, page 30.",
+    "Description": "See Arcana Unleashed, page 30.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4839,6 +4994,7 @@
     "Name": "Infernal Constitution",
     "Description": "See Xanathar's Guide to Everything, page 75.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4870,6 +5026,7 @@
     "Name": "Initiate of High Sorcery",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 32.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4896,6 +5053,7 @@
     "Name": "Inspiring Leader",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4924,6 +5082,7 @@
     "Name": "Inspiring Leader",
     "Description": "See Player's Handbook (2024), page 204.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -4963,6 +5122,7 @@
     "Name": "Interception",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -4988,6 +5148,7 @@
     "Name": "Keen Mind",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5017,6 +5178,7 @@
     "Name": "Keen Mind",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5061,6 +5223,7 @@
     "Name": "Keenness of the Stone Giant",
     "Description": "See Bigby Presents: Glory of the Giants, page 18.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5094,6 +5257,7 @@
     "Name": "Knight of the Crown",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 32.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5127,6 +5291,7 @@
     "Name": "Knight of the Rose",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 33.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5160,6 +5325,7 @@
     "Name": "Knight of the Sword",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 33.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5191,8 +5357,9 @@
   {
     "Id": "light_bringer",
     "Name": "Light Bringer",
-    "Description": "See ABH, page 10.",
+    "Description": "See Astarion's Book of Hungers, page 10.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5224,6 +5391,7 @@
     "Name": "Lightly Armored",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5256,6 +5424,7 @@
     "Name": "Lightly Armored",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5289,6 +5458,7 @@
     "Name": "Linguist",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5316,8 +5486,9 @@
   {
     "Id": "living_shadow",
     "Name": "Living Shadow",
-    "Description": "See RHW, page 33.",
+    "Description": "See Ravenloft: The Horrors Within, page 33.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5345,6 +5516,7 @@
     "Name": "Lordly Resolve",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 40.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5377,6 +5549,7 @@
     "Name": "Lords' Alliance Agent",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 38.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5398,8 +5571,9 @@
   {
     "Id": "love_bites",
     "Name": "Love Bites",
-    "Description": "See ABH, page 10.",
+    "Description": "See Astarion's Book of Hungers, page 10.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5434,6 +5608,7 @@
     "Name": "Lucky",
     "Description": "See Player's Handbook (2014), page 167.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5457,6 +5632,7 @@
     "Name": "Lucky",
     "Description": "See Player's Handbook (2024), page 201.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5480,6 +5656,7 @@
     "Name": "Mage Slayer",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5503,6 +5680,7 @@
     "Name": "Mage Slayer",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5531,8 +5709,9 @@
   {
     "Id": "magic_connoisseur",
     "Name": "Magic Connoisseur",
-    "Description": "See AU, page 31.",
+    "Description": "See Arcana Unleashed, page 31.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -5566,6 +5745,7 @@
     "Name": "Magic Initiate",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5589,6 +5769,7 @@
     "Name": "Magic Initiate",
     "Description": "You gain the following benefits.\n\nTwo Cantrips. You learn two cantrips of your choice from the Cleric, Druid, or Wizard spell list. Intelligence, Wisdom, or Charisma is your spellcasting ability for this feat's spells (choose when you select this feat).\n\nLevel 1 Spell. Choose a level 1 spell from the same list you selected for this feat's cantrips. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slots you have.\n\nSpell Change. Whenever you gain a new level, you can replace one of the spells you chose for this feat with a different spell of the same level from the chosen spell list.\n\nRepeatable. You can take this feat more than once, but you must choose a different spell list each time.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5612,6 +5793,7 @@
     "Name": "Mark of Detection",
     "Description": "See Eberron: Forge of the Artificer, page 39.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5641,6 +5823,7 @@
     "Name": "Mark of Finding",
     "Description": "See Eberron: Forge of the Artificer, page 39.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5670,6 +5853,7 @@
     "Name": "Mark of Handling",
     "Description": "See Eberron: Forge of the Artificer, page 39.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5699,6 +5883,7 @@
     "Name": "Mark of Healing",
     "Description": "See Eberron: Forge of the Artificer, page 40.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5728,6 +5913,7 @@
     "Name": "Mark of Hospitality",
     "Description": "See Eberron: Forge of the Artificer, page 40.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5758,6 +5944,7 @@
     "Name": "Mark of Making",
     "Description": "See Eberron: Forge of the Artificer, page 40.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5787,6 +5974,7 @@
     "Name": "Mark of Passage",
     "Description": "See Eberron: Forge of the Artificer, page 41.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5815,6 +6003,7 @@
     "Name": "Mark of Scribing",
     "Description": "See Eberron: Forge of the Artificer, page 41.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5845,6 +6034,7 @@
     "Name": "Mark of Sentinel",
     "Description": "See Eberron: Forge of the Artificer, page 41.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5873,6 +6063,7 @@
     "Name": "Mark of Shadow",
     "Description": "See Eberron: Forge of the Artificer, page 42.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5902,6 +6093,7 @@
     "Name": "Mark of Storm",
     "Description": "See Eberron: Forge of the Artificer, page 42.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5931,6 +6123,7 @@
     "Name": "Mark of Warding",
     "Description": "See Eberron: Forge of the Artificer, page 42.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "Dragonmark",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5961,6 +6154,7 @@
     "Name": "Martial Adept",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -5984,6 +6178,7 @@
     "Name": "Martial Weapon Training",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6016,6 +6211,7 @@
     "Name": "Medium Armor Master",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6041,6 +6237,7 @@
     "Name": "Medium Armor Master",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6073,6 +6270,7 @@
     "Name": "Metamagic Adept",
     "Description": "See Tasha's Cauldron of Everything, page 80.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6097,8 +6295,9 @@
   {
     "Id": "mist_walker",
     "Name": "Mist Walker",
-    "Description": "See RHW, page 34.",
+    "Description": "See Ravenloft: The Horrors Within, page 34.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6124,6 +6323,7 @@
     "Name": "Mobile",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6147,6 +6347,7 @@
     "Name": "Moderately Armored",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6182,6 +6383,7 @@
     "Name": "Moderately Armored",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6216,6 +6418,7 @@
     "Name": "Mounted Combatant",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6239,6 +6442,7 @@
     "Name": "Mounted Combatant",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6270,6 +6474,7 @@
     "Name": "Musician",
     "Description": "See Player's Handbook (2024), page 201.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6293,6 +6498,7 @@
     "Name": "Mythal Touched",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 40.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6322,8 +6528,9 @@
   {
     "Id": "necromancy_adept",
     "Name": "Necromancy Adept",
-    "Description": "See AU, page 31.",
+    "Description": "See Arcana Unleashed, page 31.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6364,6 +6571,7 @@
     "Name": "Observant",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6394,6 +6602,7 @@
     "Name": "Observant",
     "Description": "See Player's Handbook (2024), page 205.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6441,6 +6650,7 @@
     "Name": "Orcish Fury",
     "Description": "See Xanathar's Guide to Everything, page 75.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6473,6 +6683,7 @@
     "Name": "Order's Resilience",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 40.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6504,8 +6715,9 @@
   {
     "Id": "otherworldly_familiar",
     "Name": "Otherworldly Familiar",
-    "Description": "See AU, page 31.",
+    "Description": "See Arcana Unleashed, page 31.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6542,6 +6754,7 @@
     "Name": "Outlands Envoy",
     "Description": "See Sigil and the Outlands, page 10.",
     "Edition": "2014",
+    "Source": "SatO",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6581,6 +6794,7 @@
     "Name": "Piercer",
     "Description": "See Tasha's Cauldron of Everything, page 80.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6611,6 +6825,7 @@
     "Name": "Piercer",
     "Description": "See Player's Handbook (2024), page 206.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6641,6 +6856,7 @@
     "Name": "Planar Wanderer",
     "Description": "See Sigil and the Outlands, page 11.",
     "Edition": "2014",
+    "Source": "SatO",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6666,6 +6882,7 @@
     "Name": "Poisoner",
     "Description": "See Tasha's Cauldron of Everything, page 80.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6691,6 +6908,7 @@
     "Name": "Poisoner",
     "Description": "See Player's Handbook (2024), page 206.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6723,6 +6941,7 @@
     "Name": "Polearm Master",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6746,6 +6965,7 @@
     "Name": "Polearm Master",
     "Description": "See Player's Handbook (2024), page 206.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6783,8 +7003,9 @@
   {
     "Id": "portal_jumper",
     "Name": "Portal Jumper",
-    "Description": "See AU, page 27.",
+    "Description": "See Arcana Unleashed, page 27.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6808,6 +7029,7 @@
     "Name": "Potent Dragonmark",
     "Description": "See Eberron: Forge of the Artificer, page 45.",
     "Edition": "2024",
+    "Source": "EFA",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -6844,6 +7066,7 @@
     "Name": "Prodigy",
     "Description": "See Xanathar's Guide to Everything, page 75.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6894,6 +7117,7 @@
     "Name": "Protection",
     "Description": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6922,6 +7146,7 @@
     "Name": "Protection",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6947,6 +7172,7 @@
     "Name": "Purple Dragon Commandant",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 40.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -6979,6 +7205,7 @@
     "Name": "Purple Dragon Rook",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 38.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7008,8 +7235,9 @@
   {
     "Id": "putrefy",
     "Name": "Putrefy",
-    "Description": "See ABH, page 10.",
+    "Description": "See Astarion's Book of Hungers, page 10.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7044,6 +7272,7 @@
     "Name": "Quicksmithing",
     "Description": "See Plane Shift: Kaladesh, page 13.",
     "Edition": "2014",
+    "Source": "PSK",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7070,8 +7299,9 @@
   {
     "Id": "rebuke",
     "Name": "Rebuke",
-    "Description": "See ABH, page 10.",
+    "Description": "See Astarion's Book of Hungers, page 10.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7106,6 +7336,7 @@
     "Name": "Resilient",
     "Description": "See Player's Handbook (2014), page 168.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7151,6 +7382,7 @@
     "Name": "Resilient",
     "Description": "See Player's Handbook (2024), page 206.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7196,6 +7428,7 @@
     "Name": "Revenant Blade",
     "Description": "See Eberron: Rising from the Last War, page 22.",
     "Edition": "2014",
+    "Source": "ERLW",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7228,6 +7461,7 @@
     "Name": "Righteous Heritor",
     "Description": "See Sigil and the Outlands, page 11.",
     "Edition": "2014",
+    "Source": "SatO",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7264,6 +7498,7 @@
     "Name": "Ritual Caster",
     "Description": "See Player's Handbook (2014), page 169.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7296,6 +7531,7 @@
     "Name": "Ritual Caster",
     "Description": "See Player's Handbook (2024), page 206.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7340,6 +7576,7 @@
     "Name": "Rune Shaper",
     "Description": "See Bigby Presents: Glory of the Giants, page 18.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7380,6 +7617,7 @@
     "Name": "Savage Attacker",
     "Description": "See Player's Handbook (2014), page 169.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7403,6 +7641,7 @@
     "Name": "Savage Attacker",
     "Description": "You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7426,6 +7665,7 @@
     "Name": "Scion of the Outer Planes",
     "Description": "See Sigil and the Outlands, page 12.",
     "Edition": "2014",
+    "Source": "SatO",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7451,6 +7691,7 @@
     "Name": "Second Chance",
     "Description": "See Xanathar's Guide to Everything, page 75.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7482,8 +7723,9 @@
   {
     "Id": "second_skin",
     "Name": "Second Skin",
-    "Description": "See RHW, page 34.",
+    "Description": "See Ravenloft: The Horrors Within, page 34.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7511,6 +7753,7 @@
     "Name": "Sentinel",
     "Description": "See Player's Handbook (2014), page 169.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7534,6 +7777,7 @@
     "Name": "Sentinel",
     "Description": "See Player's Handbook (2024), page 207.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7573,6 +7817,7 @@
     "Name": "Servo Crafting",
     "Description": "See Plane Shift: Kaladesh, page 13.",
     "Edition": "2014",
+    "Source": "PSK",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7603,6 +7848,7 @@
     "Name": "Shadow Touched",
     "Description": "See Tasha's Cauldron of Everything, page 80.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7636,6 +7882,7 @@
     "Name": "Shadow-Touched",
     "Description": "See Player's Handbook (2024), page 207.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7667,8 +7914,9 @@
   {
     "Id": "shadowmoor_hexer",
     "Name": "Shadowmoor Hexer",
-    "Description": "See LFL.",
+    "Description": "See Lorwyn: First Light.",
     "Edition": "2024",
+    "Source": "LFL",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7692,8 +7940,9 @@
   {
     "Id": "sharp_eye",
     "Name": "Sharp Eye",
-    "Description": "See RHW, page 32.",
+    "Description": "See Ravenloft: The Horrors Within, page 32.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7717,6 +7966,7 @@
     "Name": "Sharpshooter",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7740,6 +7990,7 @@
     "Name": "Sharpshooter",
     "Description": "See Player's Handbook (2024), page 207.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7774,6 +8025,7 @@
     "Name": "Shield Master",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7797,6 +8049,7 @@
     "Name": "Shield Master",
     "Description": "See Player's Handbook (2024), page 207.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7828,6 +8081,7 @@
     "Name": "Skill Expert",
     "Description": "See Tasha's Cauldron of Everything, page 80.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -7885,6 +8139,7 @@
     "Name": "Skill Expert",
     "Description": "See Player's Handbook (2024), page 207.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -7942,6 +8197,7 @@
     "Name": "Skilled",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8030,6 +8286,7 @@
     "Name": "Skilled",
     "Description": "You gain proficiency in any combination of three skills or tools of your choice.\n\nRepeatable. You can take this feat more than once.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8118,6 +8375,7 @@
     "Name": "Skulker",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8146,6 +8404,7 @@
     "Name": "Skulker",
     "Description": "See Player's Handbook (2024), page 208.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8180,6 +8439,7 @@
     "Name": "Slasher",
     "Description": "See Tasha's Cauldron of Everything, page 81.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8210,6 +8470,7 @@
     "Name": "Slasher",
     "Description": "See Player's Handbook (2024), page 208.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8238,8 +8499,9 @@
   {
     "Id": "soothing_familiar",
     "Name": "Soothing Familiar",
-    "Description": "See AU, page 31.",
+    "Description": "See Arcana Unleashed, page 31.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8276,6 +8538,7 @@
     "Name": "Soul of the Storm Giant",
     "Description": "See Bigby Presents: Glory of the Giants, page 19.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8309,6 +8572,7 @@
     "Name": "Speedy",
     "Description": "See Player's Handbook (2024), page 208.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8346,8 +8610,9 @@
   {
     "Id": "spell_resistant",
     "Name": "Spell Resistant",
-    "Description": "See AU, page 31.",
+    "Description": "See Arcana Unleashed, page 31.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8378,6 +8643,7 @@
     "Name": "Spell Sniper",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8403,6 +8669,7 @@
     "Name": "Spell Sniper",
     "Description": "See Player's Handbook (2024), page 208.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8435,8 +8702,9 @@
   {
     "Id": "spell_subterfuge",
     "Name": "Spell Subterfuge",
-    "Description": "See AU, page 32.",
+    "Description": "See Arcana Unleashed, page 32.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8471,6 +8739,7 @@
     "Name": "Spellfire Adept",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 41.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8504,6 +8773,7 @@
     "Name": "Spellfire Spark",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 38.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8529,6 +8799,7 @@
     "Name": "Squat Nimbleness",
     "Description": "See Xanathar's Guide to Everything, page 75.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8570,6 +8841,7 @@
     "Name": "Squire of Solamnia",
     "Description": "See Dragonlance: Shadow of the Dragon Queen, page 34.",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8596,6 +8868,7 @@
     "Name": "Street Justice",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 41.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8626,6 +8899,7 @@
     "Name": "Strike of the Giants",
     "Description": "See Bigby Presents: Glory of the Giants, page 19.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8651,6 +8925,7 @@
     "Name": "Strixhaven Initiate",
     "Description": "See Strixhaven: A Curriculum of Chaos, page 36.",
     "Edition": "2014",
+    "Source": "SCC",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8674,6 +8949,7 @@
     "Name": "Strixhaven Mascot",
     "Description": "See Strixhaven: A Curriculum of Chaos, page 37.",
     "Edition": "2014",
+    "Source": "SCC",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8699,8 +8975,9 @@
   {
     "Id": "survivor",
     "Name": "Survivor",
-    "Description": "See RHW, page 32.",
+    "Description": "See Ravenloft: The Horrors Within, page 32.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8724,6 +9001,7 @@
     "Name": "Svirfneblin Magic",
     "Description": "See Mordenkainen's Tome of Foes, page 114.",
     "Edition": "2014",
+    "Source": "MTF",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8752,8 +9030,9 @@
   {
     "Id": "symbiotic_being",
     "Name": "Symbiotic Being",
-    "Description": "See RHW, page 34.",
+    "Description": "See Ravenloft: The Horrors Within, page 34.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8794,6 +9073,7 @@
     "Name": "Tavern Brawler",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8824,6 +9104,7 @@
     "Name": "Tavern Brawler",
     "Description": "See Player's Handbook (2024), page 202.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8849,6 +9130,7 @@
     "Name": "Telekinetic",
     "Description": "See Tasha's Cauldron of Everything, page 81.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8882,6 +9164,7 @@
     "Name": "Telekinetic",
     "Description": "See Player's Handbook (2024), page 208.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8915,6 +9198,7 @@
     "Name": "Telepathic",
     "Description": "See Tasha's Cauldron of Everything, page 81.",
     "Edition": "2014",
+    "Source": "TCE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -8948,6 +9232,7 @@
     "Name": "Telepathic",
     "Description": "See Player's Handbook (2024), page 208.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -8981,6 +9266,7 @@
     "Name": "Thrown Weapon Fighting",
     "Description": "See Player's Handbook (2024), page 210.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9004,8 +9290,9 @@
   {
     "Id": "tireless_reveler",
     "Name": "Tireless Reveler",
-    "Description": "See ABH, page 8.",
+    "Description": "See Astarion's Book of Hungers, page 8.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9027,8 +9314,9 @@
   {
     "Id": "touch_of_death",
     "Name": "Touch of Death",
-    "Description": "See RHW, page 35.",
+    "Description": "See Ravenloft: The Horrors Within, page 35.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9056,6 +9344,7 @@
     "Name": "Tough",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9079,6 +9368,7 @@
     "Name": "Tough",
     "Description": "See Player's Handbook (2024), page 202.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9100,8 +9390,9 @@
   {
     "Id": "transmutation_adept",
     "Name": "Transmutation Adept",
-    "Description": "See AU, page 32.",
+    "Description": "See Arcana Unleashed, page 32.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -9140,8 +9431,9 @@
   {
     "Id": "transmuted_anatomy",
     "Name": "Transmuted Anatomy",
-    "Description": "See AU, page 28.",
+    "Description": "See Arcana Unleashed, page 28.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9163,8 +9455,9 @@
   {
     "Id": "treacherous_allure",
     "Name": "Treacherous Allure",
-    "Description": "See ABH, page 10.",
+    "Description": "See Astarion's Book of Hungers, page 10.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -9198,6 +9491,7 @@
     "Name": "Two-Weapon Fighting",
     "Description": "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9227,6 +9521,7 @@
     "Name": "Two-Weapon Fighting",
     "Description": "When you make an extra attack as a result of using a weapon that has the Light property, you can add your ability modifier to the damage of that attack if you aren't already adding it to the damage.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9252,6 +9547,7 @@
     "Name": "Tyro of the Gauntlet",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 38.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9275,6 +9571,7 @@
     "Name": "Unarmed Fighting",
     "Description": "See Player's Handbook (2024), page 210.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "Fighting Style",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9298,8 +9595,9 @@
   {
     "Id": "vampire_hunter",
     "Name": "Vampire Hunter",
-    "Description": "See ABH, page 8.",
+    "Description": "See Astarion's Book of Hungers, page 8.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9321,8 +9619,9 @@
   {
     "Id": "vampire_touched",
     "Name": "Vampire Touched",
-    "Description": "See ABH, page 10.",
+    "Description": "See Astarion's Book of Hungers, page 10.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -9354,8 +9653,9 @@
   {
     "Id": "vampires_plaything",
     "Name": "Vampire's Plaything",
-    "Description": "See ABH, page 9.",
+    "Description": "See Astarion's Book of Hungers, page 9.",
     "Edition": "2024",
+    "Source": "ABH",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9379,6 +9679,7 @@
     "Name": "Vampiric Exultation",
     "Description": "See Plane Shift: Ixalan, page 14.",
     "Edition": "2014",
+    "Source": "PSX",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9404,6 +9705,7 @@
     "Name": "Vigor of the Hill Giant",
     "Description": "See Bigby Presents: Glory of the Giants, page 19.",
     "Edition": "2014",
+    "Source": "BGG",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -9437,6 +9739,7 @@
     "Name": "War Caster",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9462,6 +9765,7 @@
     "Name": "War Caster",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -9494,8 +9798,9 @@
   {
     "Id": "warlike_familiar",
     "Name": "Warlike Familiar",
-    "Description": "See AU, page 33.",
+    "Description": "See Arcana Unleashed, page 33.",
     "Edition": "2024",
+    "Source": "AU",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -9532,8 +9837,9 @@
   {
     "Id": "watchers",
     "Name": "Watchers",
-    "Description": "See RHW, page 35.",
+    "Description": "See Ravenloft: The Horrors Within, page 35.",
     "Edition": "2024",
+    "Source": "RHW",
     "Category": "Dark Gift",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9562,6 +9868,7 @@
     "Name": "Weapon Master",
     "Description": "See Player's Handbook (2014), page 170.",
     "Edition": "2014",
+    "Source": "PHB",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9592,6 +9899,7 @@
     "Name": "Weapon Master",
     "Description": "See Player's Handbook (2024), page 209.",
     "Edition": "2024",
+    "Source": "XPHB",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,
@@ -9622,6 +9930,7 @@
     "Name": "Wood Elf Magic",
     "Description": "See Xanathar's Guide to Everything, page 75.",
     "Edition": "2014",
+    "Source": "XGE",
     "Category": null,
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9650,6 +9959,7 @@
     "Name": "Zhentarim Ruffian",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 38.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "Origin",
     "Prerequisites": {
       "MinimumLevel": null,
@@ -9673,6 +9983,7 @@
     "Name": "Zhentarim Tactics",
     "Description": "See Forgotten Realms: Heroes of Faerûn, page 41.",
     "Edition": "2024",
+    "Source": "FRHoF",
     "Category": "General",
     "Prerequisites": {
       "MinimumLevel": 4,

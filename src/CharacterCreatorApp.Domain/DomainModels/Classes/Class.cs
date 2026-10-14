@@ -13,6 +13,9 @@ public class Class
     /// </summary>
     public required string Edition { get; set; }
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE"); see Books.json in the seed data.</summary>
+    public string Source { get; set; } = string.Empty;
+
     public required string HitDie { get; set; }
 
     /// <summary>

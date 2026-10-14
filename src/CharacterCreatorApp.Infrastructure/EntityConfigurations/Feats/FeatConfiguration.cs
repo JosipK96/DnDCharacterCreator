@@ -14,6 +14,7 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Feats
             builder.Property(f => f.Name);
             builder.Property(f => f.Description);
             builder.Property(f => f.Edition).HasMaxLength(4);
+            builder.Property(f => f.Source).HasMaxLength(20);
             builder.Property(f => f.Category).HasMaxLength(30);
             builder.HasIndex(f => f.Edition);
             builder.Property(f => f.IsRepeatable);

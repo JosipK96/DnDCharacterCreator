@@ -140,6 +140,7 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
             Name = name,
             Description = SrdText.Describe(id, feat, () => _renderer.Render(feat["entries"])),
             Edition = edition,
+            Source = SourceBooks.Of(feat, edition),
             Category = IsFightingStyle2014(feat) ? FightingStyle : CategoryOf(feat),
             Prerequisites = prerequisites,
             IsRepeatable = feat.Bool("repeatable"),

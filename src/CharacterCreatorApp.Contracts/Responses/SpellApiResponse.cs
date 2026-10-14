@@ -3,6 +3,7 @@
 public record SpellApiResponse(
     string Id,
     string Name,
+    string Source,
     int Level,
     string School,
     string CastingTime,

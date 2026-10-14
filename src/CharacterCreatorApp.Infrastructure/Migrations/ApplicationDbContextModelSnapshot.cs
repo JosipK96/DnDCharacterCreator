@@ -53,6 +53,11 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Edition");
@@ -317,6 +322,11 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.Property<int>("SubclassLevel")
                         .HasColumnType("integer");
 
@@ -440,6 +450,11 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
                     b.Property<string>("SpellListClassId")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -517,6 +532,11 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 
@@ -665,6 +685,11 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.PrimitiveCollection<List<string>>("SkillChoiceOptions")
                         .IsRequired()
                         .HasColumnType("text[]");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int>("Speed")
                         .HasColumnType("integer");
@@ -823,6 +848,11 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.PrimitiveCollection<List<string>>("SkillChoiceOptions")
                         .IsRequired()
                         .HasColumnType("text[]");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int?>("Speed")
                         .HasColumnType("integer");
@@ -997,6 +1027,11 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasColumnType("character varying(20)");
 
                     b.Property<string>("School")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<string>("Source")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");

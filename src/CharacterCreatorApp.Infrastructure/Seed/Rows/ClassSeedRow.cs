@@ -9,6 +9,9 @@ public sealed record ClassSeedRow
     public required string Id { get; init; }
     public required string Name { get; init; }
     public required string Edition { get; init; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"), a row of Books.json.</summary>
+    public required string Source { get; init; }
     public required string HitDie { get; init; }
     public int SubclassLevel { get; init; }
     public List<int> AsiLevels { get; init; } = [];
@@ -55,6 +58,9 @@ public sealed record SubclassSeedRow
     public required string Id { get; init; }
     public required string Name { get; init; }
     public required string ClassId { get; init; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"), a row of Books.json.</summary>
+    public required string Source { get; init; }
 
     /// <summary>Set for a subclass that casts spells of its own, like the Eldritch Knight.</summary>
     public string? SpellcastingAbility { get; init; }

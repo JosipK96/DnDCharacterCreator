@@ -20,6 +20,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
             builder.Property(sr => sr.RaceId)
                 .HasMaxLength(50);
 
+            builder.Property(sr => sr.Source)
+                .HasMaxLength(20);
+
             builder.Property(sr => sr.Speed);
             builder.Property(sr => sr.LanguageChoiceCount);
             builder.Property(sr => sr.AbilityChoiceCount);

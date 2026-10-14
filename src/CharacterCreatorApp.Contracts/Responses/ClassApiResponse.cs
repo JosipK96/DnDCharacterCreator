@@ -4,6 +4,7 @@ public record ClassApiResponse(
     string Id,
     string Name,
     string Edition,
+    string Source,
     string HitDie,
     int SubclassLevel,
     List<int> AsiLevels,

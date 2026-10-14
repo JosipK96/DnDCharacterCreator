@@ -4,6 +4,10 @@ public class SpellReadModel
 {
     public required string Id { get; set; }
     public required string Name { get; set; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE").</summary>
+    public string Source { get; set; } = string.Empty;
+
     public int Level { get; set; }
     public required string School { get; set; }
     public int CastingTimeNumber { get; set; }

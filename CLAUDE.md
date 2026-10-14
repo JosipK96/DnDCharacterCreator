@@ -162,6 +162,10 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
   (`{@damage 1d8}`) out of every string before it writes one, and `SeedDataIntegrityTests`
   checks none is left. Seeders read them through `SeedFile.ReadListAsync`, which refuses an
   empty file. The database holds plain text; don't render markup anywhere downstream.
+- Every race, subrace, class, subclass, background, feat and spell has a `Source`, the code of
+  the 5etools book it comes from (`PHB`, `XGE`, `AU`). `Books.json` lists those books with their
+  edition and marks each edition's Player's Handbook; the generator's `SourceBooks` writes it
+  and stops on a book it has no title for, or one with rows in both editions.
 - Only SRD text (5.1 and 5.2, CC-BY 4.0; attribution in NOTICE.md) may be in the seed files.
   The generator's `SrdText` keeps a description only for an entry 5etools marks `srd`/`srd52`
   and lists those ids in `SrdIds.json`; every other one gets its mechanics and a book reference,

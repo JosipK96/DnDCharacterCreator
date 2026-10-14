@@ -3,6 +3,7 @@
     "Id": "artificer",
     "Name": "Artificer",
     "Edition": "2014",
+    "Source": "TCE",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -168,6 +169,7 @@
     "Id": "barbarian",
     "Name": "Barbarian",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d12",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -207,6 +209,7 @@
     "Id": "bard",
     "Name": "Bard",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -383,6 +386,7 @@
     "Id": "cleric",
     "Name": "Cleric",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d8",
     "SubclassLevel": 1,
     "AsiLevels": [
@@ -544,6 +548,7 @@
     "Id": "druid",
     "Name": "Druid",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d8",
     "SubclassLevel": 2,
     "AsiLevels": [
@@ -718,6 +723,7 @@
     "Id": "fighter",
     "Name": "Fighter",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d10",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -762,6 +768,7 @@
     "Id": "monk",
     "Name": "Monk",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -798,6 +805,7 @@
     "Id": "paladin",
     "Name": "Paladin",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d10",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -956,6 +964,7 @@
     "Id": "ranger",
     "Name": "Ranger",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d10",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -1115,6 +1124,7 @@
     "Id": "rogue",
     "Name": "Rogue",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -1162,6 +1172,7 @@
     "Id": "sorcerer",
     "Name": "Sorcerer",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d6",
     "SubclassLevel": 1,
     "AsiLevels": [
@@ -1325,6 +1336,7 @@
     "Id": "warlock",
     "Name": "Warlock",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d8",
     "SubclassLevel": 1,
     "AsiLevels": [
@@ -1486,6 +1498,7 @@
     "Id": "wizard",
     "Name": "Wizard",
     "Edition": "2014",
+    "Source": "PHB",
     "HitDie": "1d6",
     "SubclassLevel": 2,
     "AsiLevels": [
@@ -1649,6 +1662,7 @@
     "Id": "artificer-2024",
     "Name": "Artificer",
     "Edition": "2024",
+    "Source": "EFA",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -1814,6 +1828,7 @@
     "Id": "barbarian-2024",
     "Name": "Barbarian",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d12",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -1853,6 +1868,7 @@
     "Id": "bard-2024",
     "Name": "Bard",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2025,6 +2041,7 @@
     "Id": "cleric-2024",
     "Name": "Cleric",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2186,6 +2203,7 @@
     "Id": "druid-2024",
     "Name": "Druid",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2350,6 +2368,7 @@
     "Id": "fighter-2024",
     "Name": "Fighter",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d10",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2395,6 +2414,7 @@
     "Id": "monk-2024",
     "Name": "Monk",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2431,6 +2451,7 @@
     "Id": "paladin-2024",
     "Name": "Paladin",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d10",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2595,6 +2616,7 @@
     "Id": "ranger-2024",
     "Name": "Ranger",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d10",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2760,6 +2782,7 @@
     "Id": "rogue-2024",
     "Name": "Rogue",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2803,6 +2826,7 @@
     "Id": "sorcerer-2024",
     "Name": "Sorcerer",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d6",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -2962,6 +2986,7 @@
     "Id": "warlock-2024",
     "Name": "Warlock",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d8",
     "SubclassLevel": 3,
     "AsiLevels": [
@@ -3123,6 +3148,7 @@
     "Id": "wizard-2024",
     "Name": "Wizard",
     "Edition": "2024",
+    "Source": "XPHB",
     "HitDie": "1d6",
     "SubclassLevel": 3,
     "AsiLevels": [

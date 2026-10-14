@@ -17,6 +17,7 @@ public static class ReadModelExtensions
         Id = entity.Id,
         Name = entity.Name,
         Edition = entity.Edition,
+        Source = entity.Source,
         HitDie = entity.HitDie,
         SubclassLevel = entity.SubclassLevel,
         AsiLevels = entity.AsiLevels,
@@ -45,6 +46,7 @@ public static class ReadModelExtensions
         Id = race.Id,
         Name = race.Name,
         Edition = race.Edition,
+        Source = race.Source,
         Size = race.Size,
         Speed = race.Speed,
         SkillChoiceCount = race.SkillChoiceCount,
@@ -66,6 +68,7 @@ public static class ReadModelExtensions
         Id = subrace.Id,
         Name = subrace.Name,
         RaceId = subrace.RaceId,
+        Source = subrace.Source,
         Speed = subrace.Speed,
         LanguageChoiceCount = subrace.LanguageChoiceCount,
         AbilityChoiceCount = subrace.AbilityChoiceCount,
@@ -99,6 +102,7 @@ public static class ReadModelExtensions
         Id = subclass.Id,
         Name = subclass.Name,
         ClassId = subclass.ClassId,
+        Source = subclass.Source,
         SpellListClassId = subclass.SpellListClassId,
         SpellProgression = subclass.SpellProgression.Select(sp => sp.ToReadModel()).ToList()
     };
@@ -138,6 +142,7 @@ public static class ReadModelExtensions
             Id = background.Id,
             Name = background.Name,
             Edition = background.Edition,
+            Source = background.Source,
             AbilityScoreOptions = background.AbilityScoreOptions,
             Feat = background.Feat is { } feat
                 ? new BackgroundFeatReadModel { Id = feat.Id, Name = feat.Name, IsRepeatable = feat.IsRepeatable }
@@ -233,6 +238,7 @@ public static class ReadModelExtensions
     {
         Id = spell.Id,
         Name = spell.Name,
+        Source = spell.Source,
         Level = spell.Level,
         School = spell.School,
         CastingTimeNumber = spell.CastingTimeNumber,
@@ -261,6 +267,7 @@ public static class ReadModelExtensions
             Name = feat.Name,
             Description = feat.Description,
             Edition = feat.Edition,
+            Source = feat.Source,
             Category = feat.Category,
             Prerequisites = feat.Prerequisites,
             IsRepeatable = feat.IsRepeatable,

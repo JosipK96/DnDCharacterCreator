@@ -49,7 +49,7 @@ public class SrdTextTests
     }
 
     [Theory]
-    [InlineData("""{"source": "RHW", "page": 12}""", "See RHW, page 12.")]
+    [InlineData("""{"source": "ZZZ", "page": 12}""", "See ZZZ, page 12.")]
     [InlineData("""{"source": "XPHB"}""", "See Player's Handbook (2024).")]
     public void Reference_ASourceWithOrWithoutATitleOrPage_NamesWhatIsKnown(string json, string expected)
     {

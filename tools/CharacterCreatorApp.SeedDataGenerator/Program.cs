@@ -53,6 +53,9 @@ var backgrounds = backgroundImporter.Import(featImporter.IdsByKey);
 await SeedWriter.WriteAsync(dataPath, "Backgrounds.json", backgrounds.Backgrounds, b => b.Id);
 await SeedWriter.WriteAsync(dataPath, "BackgroundFeatures.json", backgrounds.Features, f => f.Id);
 
+// The books every row above names in its Source
+await SeedWriter.WriteAsync(dataPath, "Books.json", SourceBooks.Used(), b => b.Code);
+
 // Which rows kept book text because it is in the SRD; every other description is mechanics only
 await SeedWriter.WriteAsync(dataPath, "SrdIds.json", SrdText.KeptIds.ToList(), id => id);
 

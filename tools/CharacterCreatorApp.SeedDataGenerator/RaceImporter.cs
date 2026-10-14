@@ -109,6 +109,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             Id = id,
             Name = name,
             Edition = edition,
+            Source = SourceBooks.Of(race, edition),
             Size = string.Join(" or ", race.Arr("size").Select(s => s.AsString()).OfType<string>().Select(s => Sizes.GetValueOrDefault(s, s))),
             Speed = speed,
             SkillChoiceCount = skillCount,
@@ -125,14 +126,14 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             Traits = Traits(parts.FirstOrDefault(p => !SrdText.IsSrd(p)) ?? race, id, parts.SelectMany(p => p.Arr("entries")).Where(e => !replacedTraits.Contains(e.Str("name") ?? string.Empty))),
             Spells = Spells(id, parts.Select(p => p["additionalSpells"]), spellIdsByKey),
             Subraces = (named.Count == 0 ? [] : nameless)
-                .Select(s => Subrace(name, "Standard", speed, s, spellIdsByKey))
-                .Concat(named.Select(s => Subrace(name, s.Str("name")!, speed, s, spellIdsByKey)))
+                .Select(s => Subrace(name, "Standard", speed, edition, s, spellIdsByKey))
+                .Concat(named.Select(s => Subrace(name, s.Str("name")!, speed, edition, s, spellIdsByKey)))
                 .Concat(versions.Select(v => Lineage(race, speed, v, spellIdsByKey)))
                 .ToList(),
         };
     }
 
-    private SubraceSeedRow Subrace(string raceName, string name, int raceSpeed, JsonObject subrace, IReadOnlyDictionary<string, string> spellIdsByKey)
+    private SubraceSeedRow Subrace(string raceName, string name, int raceSpeed, string edition, JsonObject subrace, IReadOnlyDictionary<string, string> spellIdsByKey)
     {
         var fullName = $"{name} {raceName}";
         var id = Slug.Of(fullName, '_');
@@ -145,6 +146,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
         {
             Id = id,
             Name = fullName,
+            Source = SourceBooks.Of(subrace, edition),
             Speed = speed == raceSpeed ? null : speed,
 
             // The high elf lists all of an elf's languages again, with one more of the player's
@@ -171,6 +173,9 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
         {
             Id = id,
             Name = version.Name,
+
+            // A version is part of its species' entry, in the same book
+            Source = SourceBooks.Of(race, RulesEdition.Edition2024),
             Speed = speed == null || speed == raceSpeed ? null : speed,
             Traits = Traits(race, id, version.Traits),
             Spells = Spells(id, [version.Node["additionalSpells"]], spellIdsByKey),

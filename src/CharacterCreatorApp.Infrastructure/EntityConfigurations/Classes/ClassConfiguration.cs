@@ -24,6 +24,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Classes
             builder.Property(c => c.Edition)
                 .HasMaxLength(4);
 
+            builder.Property(c => c.Source)
+                .HasMaxLength(20);
+
             // Plain Postgres arrays (integer[] and text[]); nothing queries inside them
             builder.Property(c => c.AsiLevels);
             builder.Property(c => c.SavingThrowAbilityIds);

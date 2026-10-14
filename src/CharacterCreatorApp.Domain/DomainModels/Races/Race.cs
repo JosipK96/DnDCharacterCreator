@@ -13,6 +13,9 @@ public class Race
     /// </summary>
     public required string Edition { get; set; }
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE"); see Books.json in the seed data.</summary>
+    public string Source { get; set; } = string.Empty;
+
     /// <summary>"Medium", "Small", or "Small or Medium" for a 2024 species the player sizes.</summary>
     public required string Size { get; set; }
 

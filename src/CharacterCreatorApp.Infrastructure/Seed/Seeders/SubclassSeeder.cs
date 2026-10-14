@@ -30,6 +30,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                 Id = row.Id,
                 Name = row.Name,
                 ClassId = row.ClassId,
+                Source = row.Source,
                 SpellListClassId = row.SpellListClassId,
                 SpellSchools = row.SpellSchools,
                 AnySchoolSpellLevels = row.AnySchoolSpellLevels,

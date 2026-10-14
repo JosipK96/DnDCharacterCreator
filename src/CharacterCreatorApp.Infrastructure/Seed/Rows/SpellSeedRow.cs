@@ -7,6 +7,9 @@ public sealed record SpellSeedRow
 {
     public required string Id { get; init; }
     public required string Name { get; init; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"), a row of Books.json.</summary>
+    public required string Source { get; init; }
     public int Level { get; init; }
     public required string School { get; init; }
     public int CastingTimeNumber { get; init; }

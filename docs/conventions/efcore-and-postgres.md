@@ -151,11 +151,15 @@ without, say, race languages and said nothing.
 Spells load from their subfolder — `Spells/Spells.json` and its companion files —
 and everything else from a file at the root of `Data/`. `Races.json` holds each
 race with its subraces, traits, bonuses and spells inside it, in place of the nine
-hand-made files that were in `Races/`. Every file there is read by a seeder.
+hand-made files that were in `Races/`. Every file there is read by a seeder but
+two, which only `SeedDataIntegrityTests` reads: `SrdIds.json`, and `Books.json`,
+the books every row's `Source` names with their edition and which is each
+edition's Player's Handbook, until the book filter uses it.
 
 Every file but `Proficiencies.json` (`Classes.json`, `Subclasses.json`,
 `ClassFeatures.json`, `Races.json`, `Backgrounds.json`, `BackgroundFeatures.json`,
-`Feats.json`, `Languages.json` and the files in `Spells/`) is generated from the
+`Feats.json`, `Languages.json`, `Books.json`, `SrdIds.json` and the files in
+`Spells/`) is generated from the
 raw 5etools data by
 `tools/CharacterCreatorApp.SeedDataGenerator` (see the README); don't edit them by
 hand, change the generator and run it again. The

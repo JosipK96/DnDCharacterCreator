@@ -1,0 +1,224 @@
+[
+  {
+    "Code": "AAG",
+    "Name": "Spelljammer: Astral Adventurer's Guide",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "ABH",
+    "Name": "Astarion's Book of Hungers",
+    "Edition": "2024",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "AI",
+    "Name": "Acquisitions Incorporated",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "AU",
+    "Name": "Arcana Unleashed",
+    "Edition": "2024",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "AitFR-AVT",
+    "Name": "Adventures in the Forgotten Realms: A Verdant Tomb",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "BGDIA",
+    "Name": "Baldur's Gate: Descent into Avernus",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "BGG",
+    "Name": "Bigby Presents: Glory of the Giants",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "BMT",
+    "Name": "The Book of Many Things",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "DMG",
+    "Name": "Dungeon Master's Guide (2014)",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "DSotDQ",
+    "Name": "Dragonlance: Shadow of the Dragon Queen",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "EFA",
+    "Name": "Eberron: Forge of the Artificer",
+    "Edition": "2024",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "EGW",
+    "Name": "Explorer's Guide to Wildemount",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "ERLW",
+    "Name": "Eberron: Rising from the Last War",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "FRHoF",
+    "Name": "Forgotten Realms: Heroes of Faerûn",
+    "Edition": "2024",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "FTD",
+    "Name": "Fizban's Treasury of Dragons",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "GGR",
+    "Name": "Guildmasters' Guide to Ravnica",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "GoS",
+    "Name": "Ghosts of Saltmarsh",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "IDRotF",
+    "Name": "Icewind Dale: Rime of the Frostmaiden",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "LFL",
+    "Name": "Lorwyn: First Light",
+    "Edition": "2024",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "LLK",
+    "Name": "Lost Laboratory of Kwalish",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "MOT",
+    "Name": "Mythic Odysseys of Theros",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "MTF",
+    "Name": "Mordenkainen's Tome of Foes",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "PHB",
+    "Name": "Player's Handbook (2014)",
+    "Edition": "2014",
+    "IsPlayersHandbook": true
+  },
+  {
+    "Code": "PSA",
+    "Name": "Plane Shift: Amonkhet",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "PSI",
+    "Name": "Plane Shift: Innistrad",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "PSK",
+    "Name": "Plane Shift: Kaladesh",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "PSX",
+    "Name": "Plane Shift: Ixalan",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "RHW",
+    "Name": "Ravenloft: The Horrors Within",
+    "Edition": "2024",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "SCAG",
+    "Name": "Sword Coast Adventurer's Guide",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "SCC",
+    "Name": "Strixhaven: A Curriculum of Chaos",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "SatO",
+    "Name": "Sigil and the Outlands",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "TCE",
+    "Name": "Tasha's Cauldron of Everything",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "ToA",
+    "Name": "Tomb of Annihilation",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "VRGR",
+    "Name": "Van Richten's Guide to Ravenloft",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "WBtW",
+    "Name": "The Wild Beyond the Witchlight",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "XGE",
+    "Name": "Xanathar's Guide to Everything",
+    "Edition": "2014",
+    "IsPlayersHandbook": false
+  },
+  {
+    "Code": "XPHB",
+    "Name": "Player's Handbook (2024)",
+    "Edition": "2024",
+    "IsPlayersHandbook": true
+  }
+]

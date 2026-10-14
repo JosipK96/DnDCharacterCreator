@@ -15,6 +15,9 @@ namespace CharacterCreatorApp.Domain.DomainModels.Feats
         /// <summary>RulesEdition.Edition2014 or RulesEdition.Edition2024.</summary>
         public required string Edition { get; set; }
 
+        /// <summary>The code of the book it comes from ("PHB", "XGE"); see Books.json in the seed data.</summary>
+        public string Source { get; set; } = string.Empty;
+
         /// <summary>
         /// The kind of 2024 feat: "Origin", "General", "Fighting Style", "Epic Boon" and a few
         /// that one book adds. 2014 feats have none.

@@ -6,6 +6,9 @@ public sealed class SubraceReadModel
     public required string Name { get; init; }
     public required string RaceId { get; init; }
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE").</summary>
+    public string Source { get; init; } = string.Empty;
+
     /// <summary>The subrace's own speed where it changes the race's (a wood elf's 35), else null.</summary>
     public int? Speed { get; init; }
 

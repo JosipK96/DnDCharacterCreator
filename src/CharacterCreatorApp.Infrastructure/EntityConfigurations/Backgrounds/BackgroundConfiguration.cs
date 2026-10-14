@@ -20,6 +20,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Backgrounds
             builder.Property(b => b.Edition)
                 .HasMaxLength(4);
 
+            builder.Property(b => b.Source)
+                .HasMaxLength(20);
+
             builder.Property(b => b.Languages);
             builder.Property(b => b.AbilityScoreOptions);
 

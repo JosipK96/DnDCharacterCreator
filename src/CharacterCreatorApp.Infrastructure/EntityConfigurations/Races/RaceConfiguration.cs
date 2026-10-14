@@ -20,6 +20,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
             builder.Property(r => r.Edition)
                 .HasMaxLength(4);
 
+            builder.Property(r => r.Source)
+                .HasMaxLength(20);
+
             builder.Property(r => r.Size)
                 .HasMaxLength(20);
 

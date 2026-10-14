@@ -20,6 +20,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Spells
             builder.Property(s => s.School)
                 .HasMaxLength(20);
 
+            builder.Property(s => s.Source)
+                .HasMaxLength(20);
+
             builder.Property(s => s.CastingTimeUnit)
                 .HasMaxLength(20);
 

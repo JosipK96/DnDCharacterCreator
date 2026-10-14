@@ -25,6 +25,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
             Id = row.Id,
             Name = row.Name,
             Edition = row.Edition,
+            Source = row.Source,
             HitDie = row.HitDie,
             SubclassLevel = row.SubclassLevel,
             AsiLevels = row.AsiLevels,

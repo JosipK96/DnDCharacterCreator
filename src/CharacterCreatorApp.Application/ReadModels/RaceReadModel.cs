@@ -8,6 +8,9 @@ public sealed class RaceReadModel
     /// <summary>RulesEdition.Edition2014 or RulesEdition.Edition2024.</summary>
     public required string Edition { get; init; }
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE").</summary>
+    public string Source { get; init; } = string.Empty;
+
     public required string Size { get; init; }
     public int Speed { get; init; }
     public List<AbilityScoreBonusReadModel> AbilityScoreBonuses { get; init; } = [];

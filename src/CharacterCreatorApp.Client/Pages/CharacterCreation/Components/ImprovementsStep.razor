@@ -283,8 +283,8 @@
             ? ((race?.FeatChoiceCount ?? 0) + subrace.FeatChoiceCount, subrace.FeatChoiceCategory)
             : (race?.FeatChoiceCount ?? 0, race?.FeatChoiceCategory);
 
-        // Only the feats of the character's rules edition and books, less one the background already gave
-        // (a 2024 criminal's Alert) unless it can be taken again
+        // Only the feats of the character's rules edition and books, less one the background
+        // already gave (a 2024 criminal's Alert) unless it can be taken again
         if (asiCount + bonusFeatCount > 0)
         {
             var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);

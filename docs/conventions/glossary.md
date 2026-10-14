@@ -15,7 +15,8 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | Term | Meaning | In the code |
 |---|---|---|
 | **Edition** | The 2014 rules or their 2024 revision. A character follows one, picked in the first step; the two share no ids | `RulesEdition`, `CharacterDraft.Edition` |
-| **PHB** | Player's Handbook: the 2014 one (`PHB`) and the 2024 one (`XPHB` in the data). A character's languages come from its edition's | `Language.SourceFor` |
+| **Book** | A sourcebook, by its 5etools code (`XGE`, `AU`). Every race, class, background, feat and spell has one, and a character uses only the books it allows | `Source`, `Books.json`, `CharacterDraft.AllowedSources` |
+| **PHB** | Player's Handbook: the 2014 one (`PHB`) and the 2024 one (`XPHB` in the data). Every character may use its edition's, and its languages come from it | `RulesEdition.PlayersHandbook`, `Language.SourceFor` |
 | **Race** | Dwarf, elf, human… A 2014 race grants ability bonuses and languages; the 2024 ones, called species, grant neither. Sometimes proficiencies and spells | `Race` |
 | **Subrace** | A variant of a race — hill dwarf, high elf, standard or variant human; for a 2024 species its lineage, ancestry or legacy (drow lineage, black dragonborn). A race that has them needs one | `Subrace` |
 | **Class** | Fighter, wizard, cleric… Determines hit die, saving throws and progression | `Class` |

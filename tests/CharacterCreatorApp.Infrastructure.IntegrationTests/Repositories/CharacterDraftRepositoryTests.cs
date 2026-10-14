@@ -6,6 +6,7 @@ using FluentAssertions;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Time.Testing;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Infrastructure.IntegrationTests.Repositories;
 
@@ -230,7 +231,7 @@ public class CharacterDraftRepositoryTests : IClassFixture<DatabaseFixture>, IAs
             ["WIS"] = 10,
             ["CHA"] = 8
         };
-        draftToUpdate!.SetBaseAbilityScores(abilityScores);
+        draftToUpdate!.SetBaseAbilityScores(abilityScores, AbilityScoreMethod.Rolled);
 
         // Act
         await _repository.UpdateAsync(draftToUpdate, TestContext.Current.CancellationToken);
@@ -280,7 +281,7 @@ public class CharacterDraftRepositoryTests : IClassFixture<DatabaseFixture>, IAs
             ["INT"] = 18,
             ["WIS"] = 15,
             ["CHA"] = 12
-        });
+        }, AbilityScoreMethod.Rolled);
         draft.SetClassProficiencies(new List<string> { "arcana", "history" });
         draft.SetSpells(new List<string> { "fireball", "magic-missile" });
         draft.MarkAsCompleted();

@@ -2,6 +2,7 @@ using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScores;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;
 
@@ -42,11 +43,12 @@ public class SetCharacterAbilityScoresCommandHandlerTests : IDisposable
         var scores = ValidScores();
 
         // Act
-        var result = await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, scores), _cts.Token);
+        var result = await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, scores, AbilityScoreMethod.StandardArray), _cts.Token);
 
         // Assert
         result.IsSuccess.Should().BeTrue();
         draft.BaseAbilityScores.Should().BeEquivalentTo(scores);
+        draft.BaseAbilityScoreMethod.Should().Be(AbilityScoreMethod.StandardArray);
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
     }
 
@@ -60,7 +62,7 @@ public class SetCharacterAbilityScoresCommandHandlerTests : IDisposable
         var scores = ValidScores();
 
         // Act
-        await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, scores), _cts.Token);
+        await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, scores, AbilityScoreMethod.StandardArray), _cts.Token);
         scores["STR"] = 20;
 
         // Assert
@@ -76,7 +78,7 @@ public class SetCharacterAbilityScoresCommandHandlerTests : IDisposable
             .ReturnsAsync((CharacterDraft?)null);
 
         // Act
-        var result = await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, ValidScores()), _cts.Token);
+        var result = await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, ValidScores(), AbilityScoreMethod.StandardArray), _cts.Token);
 
         // Assert
         result.IsSuccess.Should().BeFalse();
@@ -95,7 +97,7 @@ public class SetCharacterAbilityScoresCommandHandlerTests : IDisposable
             .ReturnsAsync((CharacterDraft?)null);
 
         // Act
-        var result = await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, ValidScores()), _cts.Token);
+        var result = await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, ValidScores(), AbilityScoreMethod.StandardArray), _cts.Token);
 
         // Assert
         result.IsSuccess.Should().BeFalse();
@@ -111,7 +113,7 @@ public class SetCharacterAbilityScoresCommandHandlerTests : IDisposable
         _unitOfWorkMock.Setup(u => u.SaveChangesAsync(_cts.Token)).Returns(Task.CompletedTask);
 
         // Act
-        await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, ValidScores()), _cts.Token);
+        await _sut.Handle(new SetCharacterAbilityScoresCommand(_draftId, ValidScores(), AbilityScoreMethod.StandardArray), _cts.Token);
 
         // Assert
         _draftRepositoryMock.Verify(

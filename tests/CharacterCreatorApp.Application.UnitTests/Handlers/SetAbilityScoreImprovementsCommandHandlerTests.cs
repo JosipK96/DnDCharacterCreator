@@ -539,7 +539,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
             ["INT"] = 12,
             ["WIS"] = 10,
             ["CHA"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
 
         _draftRepositoryMock
             .Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token))

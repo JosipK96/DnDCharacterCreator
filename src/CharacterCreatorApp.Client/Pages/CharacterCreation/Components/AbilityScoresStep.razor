@@ -418,11 +418,20 @@
             ["CHA"] = GetAssignedScore("Charisma")
         };
 
-        if (await SaveAsync(() => DraftService.SetAbilityScoresAsync(DraftId, scores), "Failed to save ability scores"))
+        if (await SaveAsync(() => DraftService.SetAbilityScoresAsync(DraftId, scores, MethodId(selectedMethod)), "Failed to save ability scores"))
         {
             await OnNext.InvokeAsync();
         }
     }
+
+    // The server checks the scores against the method, so it is sent by the id the API knows
+    private static string MethodId(AbilityScoreMethod method) => method switch
+    {
+        AbilityScoreMethod.StandardArray => "standard-array",
+        AbilityScoreMethod.PointBuy => "point-buy",
+        AbilityScoreMethod.RollDice => "rolled",
+        _ => throw new ArgumentOutOfRangeException(nameof(method), method, "No method was chosen.")
+    };
 
     private async Task HandleBack()
     {

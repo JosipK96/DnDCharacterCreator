@@ -988,7 +988,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - D&D 5e rule: All classes require subclass at level 3
         var draft = CreateCompleteDraft(_userId, level);
-        draft.SubclassId = null; // No subclass selected
+        draft.SetSubclass(null);
 
         ArrangeRepositories(_draftId, _userId, draft);
 
@@ -1012,7 +1012,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - Levels 1-2 don't require subclass
         var draft = CreateCompleteDraft(_userId, level);
-        draft.SubclassId = null; // No subclass - should be OK for levels 1-2
+        draft.SetSubclass(null);
 
         var race = CreateTestRace();
         var @class = CreateTestClass();

@@ -6,6 +6,9 @@ public sealed class SubclassReadModel
     public required string Name { get; init; }
     public required string ClassId { get; init; }
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE").</summary>
+    public string Source { get; init; } = string.Empty;
+
     /// <summary>A class whose whole spell list the subclass picks from, such as the Wizard's for an Eldritch Knight.</summary>
     public string? SpellListClassId { get; init; }
 

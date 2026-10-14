@@ -12,6 +12,9 @@ public sealed record FeatSeedRow
     public required string Name { get; init; }
     public required string Description { get; init; }
     public required string Edition { get; init; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"), a row of Books.json.</summary>
+    public required string Source { get; init; }
     public string? Category { get; init; }
     public FeatPrerequisites Prerequisites { get; init; } = new();
     public bool IsRepeatable { get; init; }

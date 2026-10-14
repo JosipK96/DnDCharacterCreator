@@ -2,6 +2,7 @@
   {
     "Id": "abi_dalzims_horrid_wilting",
     "Name": "Abi-Dalzim's Horrid Wilting",
+    "Source": "XGE",
     "Level": 8,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -23,6 +24,7 @@
   {
     "Id": "absorb_elements",
     "Name": "Absorb Elements",
+    "Source": "XGE",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -44,6 +46,7 @@
   {
     "Id": "melfs_acid_arrow",
     "Name": "Acid Arrow",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -65,6 +68,7 @@
   {
     "Id": "melfs_acid_arrow_2024",
     "Name": "Acid Arrow",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -86,6 +90,7 @@
   {
     "Id": "acid_splash",
     "Name": "Acid Splash",
+    "Source": "PHB",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -107,6 +112,7 @@
   {
     "Id": "acid_splash_2024",
     "Name": "Acid Splash",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -128,6 +134,7 @@
   {
     "Id": "aganazzars_scorcher",
     "Name": "Aganazzar's Scorcher",
+    "Source": "XGE",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -149,6 +156,7 @@
   {
     "Id": "aid",
     "Name": "Aid",
+    "Source": "PHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -170,6 +178,7 @@
   {
     "Id": "aid_2024",
     "Name": "Aid",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -191,6 +200,7 @@
   {
     "Id": "air_bubble",
     "Name": "Air Bubble",
+    "Source": "AAG",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -212,6 +222,7 @@
   {
     "Id": "alarm",
     "Name": "Alarm",
+    "Source": "PHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -233,6 +244,7 @@
   {
     "Id": "alarm_2024",
     "Name": "Alarm",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -254,6 +266,7 @@
   {
     "Id": "alter_self",
     "Name": "Alter Self",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -275,6 +288,7 @@
   {
     "Id": "alter_self_2024",
     "Name": "Alter Self",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -296,6 +310,7 @@
   {
     "Id": "alustriels_mooncloak_2024",
     "Name": "Alustriel's Mooncloak",
+    "Source": "FRHoF",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -317,6 +332,7 @@
   {
     "Id": "animal_friendship",
     "Name": "Animal Friendship",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -338,6 +354,7 @@
   {
     "Id": "animal_friendship_2024",
     "Name": "Animal Friendship",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -359,6 +376,7 @@
   {
     "Id": "animal_messenger",
     "Name": "Animal Messenger",
+    "Source": "PHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -380,6 +398,7 @@
   {
     "Id": "animal_messenger_2024",
     "Name": "Animal Messenger",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -401,6 +420,7 @@
   {
     "Id": "animal_shapes",
     "Name": "Animal Shapes",
+    "Source": "PHB",
     "Level": 8,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -422,6 +442,7 @@
   {
     "Id": "animal_shapes_2024",
     "Name": "Animal Shapes",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -443,6 +464,7 @@
   {
     "Id": "animate_dead",
     "Name": "Animate Dead",
+    "Source": "PHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -464,6 +486,7 @@
   {
     "Id": "animate_dead_2024",
     "Name": "Animate Dead",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -485,6 +508,7 @@
   {
     "Id": "animate_objects",
     "Name": "Animate Objects",
+    "Source": "PHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -506,6 +530,7 @@
   {
     "Id": "animate_objects_2024",
     "Name": "Animate Objects",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -527,6 +552,7 @@
   {
     "Id": "antagonize",
     "Name": "Antagonize",
+    "Source": "BMT",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -548,6 +574,7 @@
   {
     "Id": "antilife_shell",
     "Name": "Antilife Shell",
+    "Source": "PHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -569,6 +596,7 @@
   {
     "Id": "antilife_shell_2024",
     "Name": "Antilife Shell",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -590,6 +618,7 @@
   {
     "Id": "antimagic_field",
     "Name": "Antimagic Field",
+    "Source": "PHB",
     "Level": 8,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -611,6 +640,7 @@
   {
     "Id": "antimagic_field_2024",
     "Name": "Antimagic Field",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -632,6 +662,7 @@
   {
     "Id": "antipathy_sympathy",
     "Name": "Antipathy/Sympathy",
+    "Source": "PHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -653,6 +684,7 @@
   {
     "Id": "antipathy_sympathy_2024",
     "Name": "Antipathy/Sympathy",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -674,6 +706,7 @@
   {
     "Id": "arcane_eye",
     "Name": "Arcane Eye",
+    "Source": "PHB",
     "Level": 4,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -695,6 +728,7 @@
   {
     "Id": "arcane_eye_2024",
     "Name": "Arcane Eye",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -716,6 +750,7 @@
   {
     "Id": "arcane_gate",
     "Name": "Arcane Gate",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -737,6 +772,7 @@
   {
     "Id": "arcane_gate_2024",
     "Name": "Arcane Gate",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -758,6 +794,7 @@
   {
     "Id": "bigbys_hand",
     "Name": "Arcane Hand",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -779,6 +816,7 @@
   {
     "Id": "bigbys_hand_2024",
     "Name": "Arcane Hand",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -800,6 +838,7 @@
   {
     "Id": "arcane_lock",
     "Name": "Arcane Lock",
+    "Source": "PHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -821,6 +860,7 @@
   {
     "Id": "arcane_lock_2024",
     "Name": "Arcane Lock",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -842,6 +882,7 @@
   {
     "Id": "mordenkainens_sword",
     "Name": "Arcane Sword",
+    "Source": "PHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -863,6 +904,7 @@
   {
     "Id": "mordenkainens_sword_2024",
     "Name": "Arcane Sword",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -884,6 +926,7 @@
   {
     "Id": "arcane_vigor_2024",
     "Name": "Arcane Vigor",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -905,6 +948,7 @@
   {
     "Id": "nystuls_magic_aura",
     "Name": "Arcanist's Magic Aura",
+    "Source": "PHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -926,6 +970,7 @@
   {
     "Id": "nystuls_magic_aura_2024",
     "Name": "Arcanist's Magic Aura",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -947,6 +992,7 @@
   {
     "Id": "armor_of_agathys",
     "Name": "Armor of Agathys",
+    "Source": "PHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -968,6 +1014,7 @@
   {
     "Id": "armor_of_agathys_2024",
     "Name": "Armor of Agathys",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -989,6 +1036,7 @@
   {
     "Id": "arms_of_hadar",
     "Name": "Arms of Hadar",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1010,6 +1058,7 @@
   {
     "Id": "arms_of_hadar_2024",
     "Name": "Arms of Hadar",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1031,6 +1080,7 @@
   {
     "Id": "ashardalons_stride",
     "Name": "Ashardalon's Stride",
+    "Source": "FTD",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -1052,6 +1102,7 @@
   {
     "Id": "astral_projection",
     "Name": "Astral Projection",
+    "Source": "PHB",
     "Level": 9,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -1073,6 +1124,7 @@
   {
     "Id": "astral_projection_2024",
     "Name": "Astral Projection",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -1094,6 +1146,7 @@
   {
     "Id": "augury",
     "Name": "Augury",
+    "Source": "PHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -1115,6 +1168,7 @@
   {
     "Id": "augury_2024",
     "Name": "Augury",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -1136,6 +1190,7 @@
   {
     "Id": "aura_of_evasion_2024",
     "Name": "Aura of Evasion",
+    "Source": "AU",
     "Level": 7,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1152,11 +1207,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Dexterity saving throw.\n\nSee AU, page 35."
+    "Description": "Dexterity saving throw.\n\nSee Arcana Unleashed, page 35."
   },
   {
     "Id": "aura_of_life",
     "Name": "Aura of Life",
+    "Source": "PHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1178,6 +1234,7 @@
   {
     "Id": "aura_of_life_2024",
     "Name": "Aura of Life",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1199,6 +1256,7 @@
   {
     "Id": "aura_of_purity",
     "Name": "Aura of Purity",
+    "Source": "PHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1220,6 +1278,7 @@
   {
     "Id": "aura_of_purity_2024",
     "Name": "Aura of Purity",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1241,6 +1300,7 @@
   {
     "Id": "aura_of_vitality",
     "Name": "Aura of Vitality",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -1262,6 +1322,7 @@
   {
     "Id": "aura_of_vitality_2024",
     "Name": "Aura of Vitality",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1283,6 +1344,7 @@
   {
     "Id": "awaken",
     "Name": "Awaken",
+    "Source": "PHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 8,
@@ -1304,6 +1366,7 @@
   {
     "Id": "awaken_2024",
     "Name": "Awaken",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 8,
@@ -1325,6 +1388,7 @@
   {
     "Id": "backlash_2024",
     "Name": "Backlash",
+    "Source": "FRHoF",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1346,6 +1410,7 @@
   {
     "Id": "bane",
     "Name": "Bane",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -1367,6 +1432,7 @@
   {
     "Id": "bane_2024",
     "Name": "Bane",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -1388,6 +1454,7 @@
   {
     "Id": "banishing_smite",
     "Name": "Banishing Smite",
+    "Source": "PHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1409,6 +1476,7 @@
   {
     "Id": "banishing_smite_2024",
     "Name": "Banishing Smite",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1430,6 +1498,7 @@
   {
     "Id": "banishment",
     "Name": "Banishment",
+    "Source": "PHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1451,6 +1520,7 @@
   {
     "Id": "banishment_2024",
     "Name": "Banishment",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1472,6 +1542,7 @@
   {
     "Id": "barkskin",
     "Name": "Barkskin",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -1493,6 +1564,7 @@
   {
     "Id": "barkskin_2024",
     "Name": "Barkskin",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -1514,6 +1586,7 @@
   {
     "Id": "battle_familiar_2024",
     "Name": "Battle Familiar",
+    "Source": "AU",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1530,11 +1603,12 @@
     "DurationUnit": "hour",
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Stronger when cast with a higher-level slot.\n\nSee AU, page 35."
+    "Description": "Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 35."
   },
   {
     "Id": "beacon_of_hope",
     "Name": "Beacon of Hope",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1556,6 +1630,7 @@
   {
     "Id": "beacon_of_hope_2024",
     "Name": "Beacon of Hope",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1577,6 +1652,7 @@
   {
     "Id": "beast_bond",
     "Name": "Beast Bond",
+    "Source": "XGE",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -1598,6 +1674,7 @@
   {
     "Id": "beast_sense",
     "Name": "Beast Sense",
+    "Source": "PHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -1619,6 +1696,7 @@
   {
     "Id": "beast_sense_2024",
     "Name": "Beast Sense",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -1640,6 +1718,7 @@
   {
     "Id": "befuddlement_2024",
     "Name": "Befuddlement",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -1661,6 +1740,7 @@
   {
     "Id": "bestow_curse",
     "Name": "Bestow Curse",
+    "Source": "PHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -1682,6 +1762,7 @@
   {
     "Id": "bestow_curse_2024",
     "Name": "Bestow Curse",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -1703,6 +1784,7 @@
   {
     "Id": "evards_black_tentacles",
     "Name": "Black Tentacles",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1724,6 +1806,7 @@
   {
     "Id": "evards_black_tentacles_2024",
     "Name": "Black Tentacles",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1745,6 +1828,7 @@
   {
     "Id": "blade_barrier",
     "Name": "Blade Barrier",
+    "Source": "PHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -1766,6 +1850,7 @@
   {
     "Id": "blade_barrier_2024",
     "Name": "Blade Barrier",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -1787,6 +1872,7 @@
   {
     "Id": "blade_ward",
     "Name": "Blade Ward",
+    "Source": "PHB",
     "Level": 0,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1808,6 +1894,7 @@
   {
     "Id": "blade_ward_2024",
     "Name": "Blade Ward",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -1829,6 +1916,7 @@
   {
     "Id": "blade_of_disaster",
     "Name": "Blade of Disaster",
+    "Source": "TCE",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1850,6 +1938,7 @@
   {
     "Id": "blade_of_disaster_2024",
     "Name": "Blade of Disaster",
+    "Source": "FRHoF",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -1871,6 +1960,7 @@
   {
     "Id": "bless",
     "Name": "Bless",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -1892,6 +1982,7 @@
   {
     "Id": "bless_2024",
     "Name": "Bless",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -1913,6 +2004,7 @@
   {
     "Id": "blight",
     "Name": "Blight",
+    "Source": "PHB",
     "Level": 4,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -1934,6 +2026,7 @@
   {
     "Id": "blight_2024",
     "Name": "Blight",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -1955,6 +2048,7 @@
   {
     "Id": "blinding_smite",
     "Name": "Blinding Smite",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -1976,6 +2070,7 @@
   {
     "Id": "blinding_smite_2024",
     "Name": "Blinding Smite",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -1997,6 +2092,7 @@
   {
     "Id": "blindness_deafness",
     "Name": "Blindness/Deafness",
+    "Source": "PHB",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2018,6 +2114,7 @@
   {
     "Id": "blindness_deafness_2024",
     "Name": "Blindness/Deafness",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -2039,6 +2136,7 @@
   {
     "Id": "blink",
     "Name": "Blink",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -2060,6 +2158,7 @@
   {
     "Id": "blink_2024",
     "Name": "Blink",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -2081,6 +2180,7 @@
   {
     "Id": "blur",
     "Name": "Blur",
+    "Source": "PHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -2102,6 +2202,7 @@
   {
     "Id": "blur_2024",
     "Name": "Blur",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -2123,6 +2224,7 @@
   {
     "Id": "bones_of_the_earth",
     "Name": "Bones of the Earth",
+    "Source": "XGE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -2144,6 +2246,7 @@
   {
     "Id": "booming_blade",
     "Name": "Booming Blade",
+    "Source": "TCE",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2165,6 +2268,7 @@
   {
     "Id": "borrowed_knowledge",
     "Name": "Borrowed Knowledge",
+    "Source": "SCC",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -2186,6 +2290,7 @@
   {
     "Id": "branding_smite",
     "Name": "Branding Smite",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2207,6 +2312,7 @@
   {
     "Id": "burning_hands",
     "Name": "Burning Hands",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2228,6 +2334,7 @@
   {
     "Id": "burning_hands_2024",
     "Name": "Burning Hands",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2249,6 +2356,7 @@
   {
     "Id": "cacophonic_shield_2024",
     "Name": "Cacophonic Shield",
+    "Source": "FRHoF",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2270,6 +2378,7 @@
   {
     "Id": "call_lightning",
     "Name": "Call Lightning",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -2291,6 +2400,7 @@
   {
     "Id": "call_lightning_2024",
     "Name": "Call Lightning",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -2312,6 +2422,7 @@
   {
     "Id": "calm_emotions",
     "Name": "Calm Emotions",
+    "Source": "PHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2333,6 +2444,7 @@
   {
     "Id": "calm_emotions_2024",
     "Name": "Calm Emotions",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2354,6 +2466,7 @@
   {
     "Id": "catapult",
     "Name": "Catapult",
+    "Source": "XGE",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -2375,6 +2488,7 @@
   {
     "Id": "catnap",
     "Name": "Catnap",
+    "Source": "XGE",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2396,6 +2510,7 @@
   {
     "Id": "catnap_2024",
     "Name": "Catnap",
+    "Source": "AU",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2412,11 +2527,12 @@
     "DurationUnit": "minute",
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Can inflict: unconscious. Stronger when cast with a higher-level slot.\n\nSee AU, page 37."
+    "Description": "Can inflict: unconscious. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 37."
   },
   {
     "Id": "cause_fear",
     "Name": "Cause Fear",
+    "Source": "XGE",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2438,6 +2554,7 @@
   {
     "Id": "ceremony",
     "Name": "Ceremony",
+    "Source": "XGE",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -2459,6 +2576,7 @@
   {
     "Id": "chain_lightning",
     "Name": "Chain Lightning",
+    "Source": "PHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2480,6 +2598,7 @@
   {
     "Id": "chain_lightning_2024",
     "Name": "Chain Lightning",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2501,6 +2620,7 @@
   {
     "Id": "chaos_bolt",
     "Name": "Chaos Bolt",
+    "Source": "XGE",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2522,6 +2642,7 @@
   {
     "Id": "charm_monster",
     "Name": "Charm Monster",
+    "Source": "XGE",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2543,6 +2664,7 @@
   {
     "Id": "charm_monster_2024",
     "Name": "Charm Monster",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2564,6 +2686,7 @@
   {
     "Id": "charm_person",
     "Name": "Charm Person",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2585,6 +2708,7 @@
   {
     "Id": "charm_person_2024",
     "Name": "Charm Person",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -2606,6 +2730,7 @@
   {
     "Id": "chill_touch",
     "Name": "Chill Touch",
+    "Source": "PHB",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2627,6 +2752,7 @@
   {
     "Id": "chill_touch_2024",
     "Name": "Chill Touch",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2648,6 +2774,7 @@
   {
     "Id": "chromatic_orb",
     "Name": "Chromatic Orb",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2669,6 +2796,7 @@
   {
     "Id": "chromatic_orb_2024",
     "Name": "Chromatic Orb",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -2690,6 +2818,7 @@
   {
     "Id": "circle_of_death",
     "Name": "Circle of Death",
+    "Source": "PHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2711,6 +2840,7 @@
   {
     "Id": "circle_of_death_2024",
     "Name": "Circle of Death",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2732,6 +2862,7 @@
   {
     "Id": "circle_of_power",
     "Name": "Circle of Power",
+    "Source": "PHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -2753,6 +2884,7 @@
   {
     "Id": "circle_of_power_2024",
     "Name": "Circle of Power",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -2774,6 +2906,7 @@
   {
     "Id": "clairvoyance",
     "Name": "Clairvoyance",
+    "Source": "PHB",
     "Level": 3,
     "School": "Divination",
     "CastingTimeNumber": 10,
@@ -2795,6 +2928,7 @@
   {
     "Id": "clairvoyance_2024",
     "Name": "Clairvoyance",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Divination",
     "CastingTimeNumber": 10,
@@ -2816,6 +2950,7 @@
   {
     "Id": "clone",
     "Name": "Clone",
+    "Source": "PHB",
     "Level": 8,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2837,6 +2972,7 @@
   {
     "Id": "clone_2024",
     "Name": "Clone",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -2858,6 +2994,7 @@
   {
     "Id": "cloud_of_daggers",
     "Name": "Cloud of Daggers",
+    "Source": "PHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -2879,6 +3016,7 @@
   {
     "Id": "cloud_of_daggers_2024",
     "Name": "Cloud of Daggers",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -2900,6 +3038,7 @@
   {
     "Id": "cloudkill",
     "Name": "Cloudkill",
+    "Source": "PHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -2921,6 +3060,7 @@
   {
     "Id": "cloudkill_2024",
     "Name": "Cloudkill",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -2942,6 +3082,7 @@
   {
     "Id": "color_spray",
     "Name": "Color Spray",
+    "Source": "PHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -2963,6 +3104,7 @@
   {
     "Id": "color_spray_2024",
     "Name": "Color Spray",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -2984,6 +3126,7 @@
   {
     "Id": "command",
     "Name": "Command",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3005,6 +3148,7 @@
   {
     "Id": "command_2024",
     "Name": "Command",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3026,6 +3170,7 @@
   {
     "Id": "commune",
     "Name": "Commune",
+    "Source": "PHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3047,6 +3192,7 @@
   {
     "Id": "commune_2024",
     "Name": "Commune",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3068,6 +3214,7 @@
   {
     "Id": "commune_with_nature",
     "Name": "Commune with Nature",
+    "Source": "PHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3089,6 +3236,7 @@
   {
     "Id": "commune_with_nature_2024",
     "Name": "Commune with Nature",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3110,6 +3258,7 @@
   {
     "Id": "compelled_duel",
     "Name": "Compelled Duel",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3131,6 +3280,7 @@
   {
     "Id": "compelled_duel_2024",
     "Name": "Compelled Duel",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3152,6 +3302,7 @@
   {
     "Id": "comprehend_languages",
     "Name": "Comprehend Languages",
+    "Source": "PHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3173,6 +3324,7 @@
   {
     "Id": "comprehend_languages_2024",
     "Name": "Comprehend Languages",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3194,6 +3346,7 @@
   {
     "Id": "compulsion",
     "Name": "Compulsion",
+    "Source": "PHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3215,6 +3368,7 @@
   {
     "Id": "compulsion_2024",
     "Name": "Compulsion",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3236,6 +3390,7 @@
   {
     "Id": "cone_of_cold",
     "Name": "Cone of Cold",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -3257,6 +3412,7 @@
   {
     "Id": "cone_of_cold_2024",
     "Name": "Cone of Cold",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -3278,6 +3434,7 @@
   {
     "Id": "confusion",
     "Name": "Confusion",
+    "Source": "PHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3299,6 +3456,7 @@
   {
     "Id": "confusion_2024",
     "Name": "Confusion",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -3320,6 +3478,7 @@
   {
     "Id": "conjure_animals",
     "Name": "Conjure Animals",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3341,6 +3500,7 @@
   {
     "Id": "conjure_animals_2024",
     "Name": "Conjure Animals",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3362,6 +3522,7 @@
   {
     "Id": "conjure_barrage",
     "Name": "Conjure Barrage",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3383,6 +3544,7 @@
   {
     "Id": "conjure_barrage_2024",
     "Name": "Conjure Barrage",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3404,6 +3566,7 @@
   {
     "Id": "conjure_celestial",
     "Name": "Conjure Celestial",
+    "Source": "PHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3425,6 +3588,7 @@
   {
     "Id": "conjure_celestial_2024",
     "Name": "Conjure Celestial",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3446,6 +3610,7 @@
   {
     "Id": "conjure_constructs_2024",
     "Name": "Conjure Constructs",
+    "Source": "FRHoF",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3467,6 +3632,7 @@
   {
     "Id": "conjure_elemental",
     "Name": "Conjure Elemental",
+    "Source": "PHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3488,6 +3654,7 @@
   {
     "Id": "conjure_elemental_2024",
     "Name": "Conjure Elemental",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3509,6 +3676,7 @@
   {
     "Id": "conjure_fey",
     "Name": "Conjure Fey",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3530,6 +3698,7 @@
   {
     "Id": "conjure_fey_2024",
     "Name": "Conjure Fey",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3551,6 +3720,7 @@
   {
     "Id": "conjure_minor_elementals",
     "Name": "Conjure Minor Elementals",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3572,6 +3742,7 @@
   {
     "Id": "conjure_minor_elementals_2024",
     "Name": "Conjure Minor Elementals",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3593,6 +3764,7 @@
   {
     "Id": "conjure_volley",
     "Name": "Conjure Volley",
+    "Source": "PHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3614,6 +3786,7 @@
   {
     "Id": "conjure_volley_2024",
     "Name": "Conjure Volley",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3635,6 +3808,7 @@
   {
     "Id": "conjure_woodland_beings",
     "Name": "Conjure Woodland Beings",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3656,6 +3830,7 @@
   {
     "Id": "conjure_woodland_beings_2024",
     "Name": "Conjure Woodland Beings",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -3677,6 +3852,7 @@
   {
     "Id": "contact_other_plane",
     "Name": "Contact Other Plane",
+    "Source": "PHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3698,6 +3874,7 @@
   {
     "Id": "contact_other_plane_2024",
     "Name": "Contact Other Plane",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -3719,6 +3896,7 @@
   {
     "Id": "contagion",
     "Name": "Contagion",
+    "Source": "PHB",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -3740,6 +3918,7 @@
   {
     "Id": "contagion_2024",
     "Name": "Contagion",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -3761,6 +3940,7 @@
   {
     "Id": "contingency",
     "Name": "Contingency",
+    "Source": "PHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 10,
@@ -3782,6 +3962,7 @@
   {
     "Id": "contingency_2024",
     "Name": "Contingency",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -3803,6 +3984,7 @@
   {
     "Id": "continual_flame",
     "Name": "Continual Flame",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -3824,6 +4006,7 @@
   {
     "Id": "continual_flame_2024",
     "Name": "Continual Flame",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -3845,6 +4028,7 @@
   {
     "Id": "control_flames",
     "Name": "Control Flames",
+    "Source": "XGE",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -3866,6 +4050,7 @@
   {
     "Id": "control_water",
     "Name": "Control Water",
+    "Source": "PHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -3887,6 +4072,7 @@
   {
     "Id": "control_water_2024",
     "Name": "Control Water",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -3908,6 +4094,7 @@
   {
     "Id": "control_weather",
     "Name": "Control Weather",
+    "Source": "PHB",
     "Level": 8,
     "School": "Transmutation",
     "CastingTimeNumber": 10,
@@ -3929,6 +4116,7 @@
   {
     "Id": "control_weather_2024",
     "Name": "Control Weather",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Transmutation",
     "CastingTimeNumber": 10,
@@ -3950,6 +4138,7 @@
   {
     "Id": "control_winds",
     "Name": "Control Winds",
+    "Source": "XGE",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -3971,6 +4160,7 @@
   {
     "Id": "cordon_of_arrows",
     "Name": "Cordon of Arrows",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -3992,6 +4182,7 @@
   {
     "Id": "cordon_of_arrows_2024",
     "Name": "Cordon of Arrows",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4013,6 +4204,7 @@
   {
     "Id": "counterspell",
     "Name": "Counterspell",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -4034,6 +4226,7 @@
   {
     "Id": "counterspell_2024",
     "Name": "Counterspell",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -4055,6 +4248,7 @@
   {
     "Id": "create_bonfire",
     "Name": "Create Bonfire",
+    "Source": "XGE",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -4076,6 +4270,7 @@
   {
     "Id": "create_food_and_water",
     "Name": "Create Food and Water",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -4097,6 +4292,7 @@
   {
     "Id": "create_food_and_water_2024",
     "Name": "Create Food and Water",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -4118,6 +4314,7 @@
   {
     "Id": "create_homunculus",
     "Name": "Create Homunculus",
+    "Source": "XGE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4139,6 +4336,7 @@
   {
     "Id": "create_magen",
     "Name": "Create Magen",
+    "Source": "IDRotF",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4160,6 +4358,7 @@
   {
     "Id": "create_spelljamming_helm",
     "Name": "Create Spelljamming Helm",
+    "Source": "AAG",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4181,6 +4380,7 @@
   {
     "Id": "create_undead",
     "Name": "Create Undead",
+    "Source": "PHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -4202,6 +4402,7 @@
   {
     "Id": "create_undead_2024",
     "Name": "Create Undead",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -4223,6 +4424,7 @@
   {
     "Id": "create_or_destroy_water",
     "Name": "Create or Destroy Water",
+    "Source": "PHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4244,6 +4446,7 @@
   {
     "Id": "create_or_destroy_water_2024",
     "Name": "Create or Destroy Water",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4265,6 +4468,7 @@
   {
     "Id": "creation",
     "Name": "Creation",
+    "Source": "PHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -4286,6 +4490,7 @@
   {
     "Id": "creation_2024",
     "Name": "Creation",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -4307,6 +4512,7 @@
   {
     "Id": "crown_of_madness",
     "Name": "Crown of Madness",
+    "Source": "PHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -4328,6 +4534,7 @@
   {
     "Id": "crown_of_madness_2024",
     "Name": "Crown of Madness",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -4349,6 +4556,7 @@
   {
     "Id": "crown_of_stars",
     "Name": "Crown of Stars",
+    "Source": "XGE",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4370,6 +4578,7 @@
   {
     "Id": "crusaders_mantle",
     "Name": "Crusader's Mantle",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4391,6 +4600,7 @@
   {
     "Id": "crusaders_mantle_2024",
     "Name": "Crusader's Mantle",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4412,6 +4622,7 @@
   {
     "Id": "cure_wounds",
     "Name": "Cure Wounds",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4433,6 +4644,7 @@
   {
     "Id": "cure_wounds_2024",
     "Name": "Cure Wounds",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -4454,6 +4666,7 @@
   {
     "Id": "dancing_lights",
     "Name": "Dancing Lights",
+    "Source": "PHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4475,6 +4688,7 @@
   {
     "Id": "dancing_lights_2024",
     "Name": "Dancing Lights",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -4496,6 +4710,7 @@
   {
     "Id": "danse_macabre",
     "Name": "Danse Macabre",
+    "Source": "XGE",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -4517,6 +4732,7 @@
   {
     "Id": "dark_star",
     "Name": "Dark Star",
+    "Source": "EGW",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4538,6 +4754,7 @@
   {
     "Id": "darkness",
     "Name": "Darkness",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4559,6 +4776,7 @@
   {
     "Id": "darkness_2024",
     "Name": "Darkness",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4580,6 +4798,7 @@
   {
     "Id": "darkvision",
     "Name": "Darkvision",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4601,6 +4820,7 @@
   {
     "Id": "darkvision_2024",
     "Name": "Darkvision",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -4622,6 +4842,7 @@
   {
     "Id": "dawn",
     "Name": "Dawn",
+    "Source": "XGE",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4643,6 +4864,7 @@
   {
     "Id": "daylight",
     "Name": "Daylight",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4664,6 +4886,7 @@
   {
     "Id": "daylight_2024",
     "Name": "Daylight",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4685,6 +4908,7 @@
   {
     "Id": "death_armor_2024",
     "Name": "Death Armor",
+    "Source": "FRHoF",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -4706,6 +4930,7 @@
   {
     "Id": "death_ward",
     "Name": "Death Ward",
+    "Source": "PHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -4727,6 +4952,7 @@
   {
     "Id": "death_ward_2024",
     "Name": "Death Ward",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -4748,6 +4974,7 @@
   {
     "Id": "delayed_blast_fireball",
     "Name": "Delayed Blast Fireball",
+    "Source": "PHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4769,6 +4996,7 @@
   {
     "Id": "delayed_blast_fireball_2024",
     "Name": "Delayed Blast Fireball",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4790,6 +5018,7 @@
   {
     "Id": "demiplane",
     "Name": "Demiplane",
+    "Source": "PHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -4811,6 +5040,7 @@
   {
     "Id": "demiplane_2024",
     "Name": "Demiplane",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -4832,6 +5062,7 @@
   {
     "Id": "deryans_helpful_homunculi_2024",
     "Name": "Deryan's Helpful Homunculi",
+    "Source": "FRHoF",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -4853,6 +5084,7 @@
   {
     "Id": "destructive_wave",
     "Name": "Destructive Wave",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4874,6 +5106,7 @@
   {
     "Id": "destructive_wave_2024",
     "Name": "Destructive Wave",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -4895,6 +5128,7 @@
   {
     "Id": "detect_evil_and_good",
     "Name": "Detect Evil and Good",
+    "Source": "PHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -4916,6 +5150,7 @@
   {
     "Id": "detect_evil_and_good_2024",
     "Name": "Detect Evil and Good",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -4937,6 +5172,7 @@
   {
     "Id": "detect_magic",
     "Name": "Detect Magic",
+    "Source": "PHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -4958,6 +5194,7 @@
   {
     "Id": "detect_magic_2024",
     "Name": "Detect Magic",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -4979,6 +5216,7 @@
   {
     "Id": "detect_poison_and_disease",
     "Name": "Detect Poison and Disease",
+    "Source": "PHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -5000,6 +5238,7 @@
   {
     "Id": "detect_poison_and_disease_2024",
     "Name": "Detect Poison and Disease",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -5021,6 +5260,7 @@
   {
     "Id": "detect_thoughts",
     "Name": "Detect Thoughts",
+    "Source": "PHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -5042,6 +5282,7 @@
   {
     "Id": "detect_thoughts_2024",
     "Name": "Detect Thoughts",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -5063,6 +5304,7 @@
   {
     "Id": "detonate_2024",
     "Name": "Detonate",
+    "Source": "AU",
     "Level": 9,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -5079,11 +5321,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Constitution or Dexterity saving throw. 10d10 fire damage.\n\nSee AU, page 38."
+    "Description": "Constitution or Dexterity saving throw. 10d10 fire damage.\n\nSee Arcana Unleashed, page 38."
   },
   {
     "Id": "dimension_door",
     "Name": "Dimension Door",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -5105,6 +5348,7 @@
   {
     "Id": "dimension_door_2024",
     "Name": "Dimension Door",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -5126,6 +5370,7 @@
   {
     "Id": "dirge_2024",
     "Name": "Dirge",
+    "Source": "FRHoF",
     "Level": 6,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5147,6 +5392,7 @@
   {
     "Id": "disguise_self",
     "Name": "Disguise Self",
+    "Source": "PHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -5168,6 +5414,7 @@
   {
     "Id": "disguise_self_2024",
     "Name": "Disguise Self",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -5189,6 +5436,7 @@
   {
     "Id": "disintegrate",
     "Name": "Disintegrate",
+    "Source": "PHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5210,6 +5458,7 @@
   {
     "Id": "disintegrate_2024",
     "Name": "Disintegrate",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5231,6 +5480,7 @@
   {
     "Id": "dispel_evil_and_good",
     "Name": "Dispel Evil and Good",
+    "Source": "PHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -5252,6 +5502,7 @@
   {
     "Id": "dispel_evil_and_good_2024",
     "Name": "Dispel Evil and Good",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -5273,6 +5524,7 @@
   {
     "Id": "dispel_magic",
     "Name": "Dispel Magic",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -5294,6 +5546,7 @@
   {
     "Id": "dispel_magic_2024",
     "Name": "Dispel Magic",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -5315,6 +5568,7 @@
   {
     "Id": "disruptive_tune_2024",
     "Name": "Disruptive Tune",
+    "Source": "AU",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -5331,11 +5585,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Constitution saving throw. Area: sphere.\n\nSee AU, page 38."
+    "Description": "Constitution saving throw. Area: sphere.\n\nSee Arcana Unleashed, page 38."
   },
   {
     "Id": "dissonant_whispers",
     "Name": "Dissonant Whispers",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5357,6 +5612,7 @@
   {
     "Id": "dissonant_whispers_2024",
     "Name": "Dissonant Whispers",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5378,6 +5634,7 @@
   {
     "Id": "distort_value",
     "Name": "Distort Value",
+    "Source": "AI",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -5399,6 +5656,7 @@
   {
     "Id": "distorted_distance_2024",
     "Name": "Distorted Distance",
+    "Source": "AU",
     "Level": 4,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -5415,11 +5673,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Intelligence saving throw. 2d10 psychic damage. Area: sphere.\n\nSee AU, page 38."
+    "Description": "Intelligence saving throw. 2d10 psychic damage. Area: sphere.\n\nSee Arcana Unleashed, page 38."
   },
   {
     "Id": "divination",
     "Name": "Divination",
+    "Source": "PHB",
     "Level": 4,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -5441,6 +5700,7 @@
   {
     "Id": "divination_2024",
     "Name": "Divination",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -5462,6 +5722,7 @@
   {
     "Id": "divine_favor",
     "Name": "Divine Favor",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -5483,6 +5744,7 @@
   {
     "Id": "divine_favor_2024",
     "Name": "Divine Favor",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5504,6 +5766,7 @@
   {
     "Id": "divine_smite_2024",
     "Name": "Divine Smite",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -5525,6 +5788,7 @@
   {
     "Id": "divine_word",
     "Name": "Divine Word",
+    "Source": "PHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -5546,6 +5810,7 @@
   {
     "Id": "divine_word_2024",
     "Name": "Divine Word",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -5567,6 +5832,7 @@
   {
     "Id": "dominate_beast",
     "Name": "Dominate Beast",
+    "Source": "PHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5588,6 +5854,7 @@
   {
     "Id": "dominate_beast_2024",
     "Name": "Dominate Beast",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5609,6 +5876,7 @@
   {
     "Id": "dominate_monster",
     "Name": "Dominate Monster",
+    "Source": "PHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5630,6 +5898,7 @@
   {
     "Id": "dominate_monster_2024",
     "Name": "Dominate Monster",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5651,6 +5920,7 @@
   {
     "Id": "dominate_person",
     "Name": "Dominate Person",
+    "Source": "PHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5672,6 +5942,7 @@
   {
     "Id": "dominate_person_2024",
     "Name": "Dominate Person",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -5693,6 +5964,7 @@
   {
     "Id": "doomtide_2024",
     "Name": "Doomtide",
+    "Source": "FRHoF",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -5714,6 +5986,7 @@
   {
     "Id": "draconic_transformation",
     "Name": "Draconic Transformation",
+    "Source": "FTD",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5735,6 +6008,7 @@
   {
     "Id": "dragons_breath",
     "Name": "Dragon's Breath",
+    "Source": "XGE",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5756,6 +6030,7 @@
   {
     "Id": "dragons_breath_2024",
     "Name": "Dragon's Breath",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5777,6 +6052,7 @@
   {
     "Id": "dream",
     "Name": "Dream",
+    "Source": "PHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -5798,6 +6074,7 @@
   {
     "Id": "dream_2024",
     "Name": "Dream",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -5819,6 +6096,7 @@
   {
     "Id": "dream_of_the_blue_veil",
     "Name": "Dream of the Blue Veil",
+    "Source": "TCE",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -5840,6 +6118,7 @@
   {
     "Id": "druid_grove",
     "Name": "Druid Grove",
+    "Source": "XGE",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -5861,6 +6140,7 @@
   {
     "Id": "druidcraft",
     "Name": "Druidcraft",
+    "Source": "PHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5882,6 +6162,7 @@
   {
     "Id": "druidcraft_2024",
     "Name": "Druidcraft",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5903,6 +6184,7 @@
   {
     "Id": "dueling_ground_2024",
     "Name": "Dueling Ground",
+    "Source": "AU",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -5919,11 +6201,12 @@
     "DurationUnit": "hour",
     "IsConcentration": false,
     "IsRitual": true,
-    "Description": "Can inflict: unconscious. Area: sphere. Stronger when cast with a higher-level slot.\n\nSee AU, page 38."
+    "Description": "Can inflict: unconscious. Area: sphere. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 38."
   },
   {
     "Id": "dust_devil",
     "Name": "Dust Devil",
+    "Source": "XGE",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -5945,6 +6228,7 @@
   {
     "Id": "earth_tremor",
     "Name": "Earth Tremor",
+    "Source": "XGE",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -5966,6 +6250,7 @@
   {
     "Id": "earthbind",
     "Name": "Earthbind",
+    "Source": "XGE",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -5987,6 +6272,7 @@
   {
     "Id": "earthquake",
     "Name": "Earthquake",
+    "Source": "PHB",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -6008,6 +6294,7 @@
   {
     "Id": "earthquake_2024",
     "Name": "Earthquake",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6029,6 +6316,7 @@
   {
     "Id": "eldritch_blast",
     "Name": "Eldritch Blast",
+    "Source": "PHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -6050,6 +6338,7 @@
   {
     "Id": "eldritch_blast_2024",
     "Name": "Eldritch Blast",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -6071,6 +6360,7 @@
   {
     "Id": "elemental_bane",
     "Name": "Elemental Bane",
+    "Source": "XGE",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6092,6 +6382,7 @@
   {
     "Id": "elemental_weapon",
     "Name": "Elemental Weapon",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6113,6 +6404,7 @@
   {
     "Id": "elemental_weapon_2024",
     "Name": "Elemental Weapon",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6134,6 +6426,7 @@
   {
     "Id": "elementalism_2024",
     "Name": "Elementalism",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6155,6 +6448,7 @@
   {
     "Id": "elminsters_effulgent_spheres_2024",
     "Name": "Elminster's Effulgent Spheres",
+    "Source": "FRHoF",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -6176,6 +6470,7 @@
   {
     "Id": "elminsters_elusion_2024",
     "Name": "Elminster's Elusion",
+    "Source": "FRHoF",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -6197,6 +6492,7 @@
   {
     "Id": "encode_thoughts",
     "Name": "Encode Thoughts",
+    "Source": "GGR",
     "Level": 0,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -6218,6 +6514,7 @@
   {
     "Id": "enemies_abound",
     "Name": "Enemies Abound",
+    "Source": "XGE",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -6239,6 +6536,7 @@
   {
     "Id": "enervation",
     "Name": "Enervation",
+    "Source": "XGE",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -6260,6 +6558,7 @@
   {
     "Id": "enervation_2024",
     "Name": "Enervation",
+    "Source": "AU",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -6276,11 +6575,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Dexterity saving throw. 6d8 or 2d8 necrotic damage. Stronger when cast with a higher-level slot.\n\nSee AU, page 38."
+    "Description": "Dexterity saving throw. 6d8 or 2d8 necrotic damage. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 38."
   },
   {
     "Id": "enhance_ability",
     "Name": "Enhance Ability",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6302,6 +6602,7 @@
   {
     "Id": "enhance_ability_2024",
     "Name": "Enhance Ability",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6323,6 +6624,7 @@
   {
     "Id": "enlarge_reduce",
     "Name": "Enlarge/Reduce",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6344,6 +6646,7 @@
   {
     "Id": "enlarge_reduce_2024",
     "Name": "Enlarge/Reduce",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6365,6 +6668,7 @@
   {
     "Id": "ensnaring_strike",
     "Name": "Ensnaring Strike",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6386,6 +6690,7 @@
   {
     "Id": "ensnaring_strike_2024",
     "Name": "Ensnaring Strike",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6407,6 +6712,7 @@
   {
     "Id": "entangle",
     "Name": "Entangle",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6428,6 +6734,7 @@
   {
     "Id": "entangle_2024",
     "Name": "Entangle",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6449,6 +6756,7 @@
   {
     "Id": "enthrall",
     "Name": "Enthrall",
+    "Source": "PHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -6470,6 +6778,7 @@
   {
     "Id": "enthrall_2024",
     "Name": "Enthrall",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -6491,6 +6800,7 @@
   {
     "Id": "entrancing_mirrors_2024",
     "Name": "Entrancing Mirrors",
+    "Source": "AU",
     "Level": 8,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -6507,11 +6817,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Intelligence saving throw. 7d6 psychic damage. Can inflict: stunned.\n\nSee AU, page 39."
+    "Description": "Intelligence saving throw. 7d6 psychic damage. Can inflict: stunned.\n\nSee Arcana Unleashed, page 39."
   },
   {
     "Id": "erupting_earth",
     "Name": "Erupting Earth",
+    "Source": "XGE",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6533,6 +6844,7 @@
   {
     "Id": "etherealness",
     "Name": "Etherealness",
+    "Source": "PHB",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6554,6 +6866,7 @@
   {
     "Id": "etherealness_2024",
     "Name": "Etherealness",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6575,6 +6888,7 @@
   {
     "Id": "expeditious_retreat",
     "Name": "Expeditious Retreat",
+    "Source": "PHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6596,6 +6910,7 @@
   {
     "Id": "expeditious_retreat_2024",
     "Name": "Expeditious Retreat",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6617,6 +6932,7 @@
   {
     "Id": "eyebite",
     "Name": "Eyebite",
+    "Source": "PHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -6638,6 +6954,7 @@
   {
     "Id": "eyebite_2024",
     "Name": "Eyebite",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -6659,6 +6976,7 @@
   {
     "Id": "fabricate",
     "Name": "Fabricate",
+    "Source": "PHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 10,
@@ -6680,6 +6998,7 @@
   {
     "Id": "fabricate_2024",
     "Name": "Fabricate",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 10,
@@ -6701,6 +7020,7 @@
   {
     "Id": "faerie_fire",
     "Name": "Faerie Fire",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -6722,6 +7042,7 @@
   {
     "Id": "faerie_fire_2024",
     "Name": "Faerie Fire",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -6743,6 +7064,7 @@
   {
     "Id": "mordenkainens_faithful_hound",
     "Name": "Faithful Hound",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6764,6 +7086,7 @@
   {
     "Id": "mordenkainens_faithful_hound_2024",
     "Name": "Faithful Hound",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6785,6 +7108,7 @@
   {
     "Id": "false_life",
     "Name": "False Life",
+    "Source": "PHB",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -6806,6 +7130,7 @@
   {
     "Id": "false_life_2024",
     "Name": "False Life",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -6827,6 +7152,7 @@
   {
     "Id": "far_step",
     "Name": "Far Step",
+    "Source": "XGE",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -6848,6 +7174,7 @@
   {
     "Id": "fast_friends",
     "Name": "Fast Friends",
+    "Source": "AI",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -6869,6 +7196,7 @@
   {
     "Id": "fear",
     "Name": "Fear",
+    "Source": "PHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -6890,6 +7218,7 @@
   {
     "Id": "fear_2024",
     "Name": "Fear",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -6911,6 +7240,7 @@
   {
     "Id": "feather_fall",
     "Name": "Feather Fall",
+    "Source": "PHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6932,6 +7262,7 @@
   {
     "Id": "feather_fall_2024",
     "Name": "Feather Fall",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -6953,6 +7284,7 @@
   {
     "Id": "feeblemind",
     "Name": "Feeblemind",
+    "Source": "PHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -6974,6 +7306,7 @@
   {
     "Id": "feign_death",
     "Name": "Feign Death",
+    "Source": "PHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -6995,6 +7328,7 @@
   {
     "Id": "feign_death_2024",
     "Name": "Feign Death",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -7016,6 +7350,7 @@
   {
     "Id": "festering_blast_2024",
     "Name": "Festering Blast",
+    "Source": "AU",
     "Level": 4,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -7032,11 +7367,12 @@
     "DurationUnit": "minute",
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Constitution saving throw. 4d10 or 2d10 necrotic or poison damage. Can inflict: poisoned. Area: line. Stronger when cast with a higher-level slot.\n\nSee AU, page 39."
+    "Description": "Constitution saving throw. 4d10 or 2d10 necrotic or poison damage. Can inflict: poisoned. Area: line. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 39."
   },
   {
     "Id": "find_familiar",
     "Name": "Find Familiar",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7058,6 +7394,7 @@
   {
     "Id": "find_familiar_2024",
     "Name": "Find Familiar",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7079,6 +7416,7 @@
   {
     "Id": "find_greater_steed",
     "Name": "Find Greater Steed",
+    "Source": "XGE",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -7100,6 +7438,7 @@
   {
     "Id": "find_steed",
     "Name": "Find Steed",
+    "Source": "PHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -7121,6 +7460,7 @@
   {
     "Id": "find_steed_2024",
     "Name": "Find Steed",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7142,6 +7482,7 @@
   {
     "Id": "find_traps",
     "Name": "Find Traps",
+    "Source": "PHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7163,6 +7504,7 @@
   {
     "Id": "find_traps_2024",
     "Name": "Find Traps",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7184,6 +7526,7 @@
   {
     "Id": "find_the_path",
     "Name": "Find the Path",
+    "Source": "PHB",
     "Level": 6,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7205,6 +7548,7 @@
   {
     "Id": "find_the_path_2024",
     "Name": "Find the Path",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7226,6 +7570,7 @@
   {
     "Id": "finger_of_death",
     "Name": "Finger of Death",
+    "Source": "PHB",
     "Level": 7,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -7247,6 +7592,7 @@
   {
     "Id": "finger_of_death_2024",
     "Name": "Finger of Death",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -7268,6 +7614,7 @@
   {
     "Id": "fire_bolt",
     "Name": "Fire Bolt",
+    "Source": "PHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7289,6 +7636,7 @@
   {
     "Id": "fire_bolt_2024",
     "Name": "Fire Bolt",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7310,6 +7658,7 @@
   {
     "Id": "fire_shield",
     "Name": "Fire Shield",
+    "Source": "PHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7331,6 +7680,7 @@
   {
     "Id": "fire_shield_2024",
     "Name": "Fire Shield",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7352,6 +7702,7 @@
   {
     "Id": "fire_storm",
     "Name": "Fire Storm",
+    "Source": "PHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7373,6 +7724,7 @@
   {
     "Id": "fire_storm_2024",
     "Name": "Fire Storm",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7394,6 +7746,7 @@
   {
     "Id": "fireball",
     "Name": "Fireball",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7415,6 +7768,7 @@
   {
     "Id": "fireball_2024",
     "Name": "Fireball",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7436,6 +7790,7 @@
   {
     "Id": "fizbans_platinum_shield",
     "Name": "Fizban's Platinum Shield",
+    "Source": "FTD",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -7457,6 +7812,7 @@
   {
     "Id": "flame_arrows",
     "Name": "Flame Arrows",
+    "Source": "XGE",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -7478,6 +7834,7 @@
   {
     "Id": "flame_blade",
     "Name": "Flame Blade",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7499,6 +7856,7 @@
   {
     "Id": "flame_blade_2024",
     "Name": "Flame Blade",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7520,6 +7878,7 @@
   {
     "Id": "flame_strike",
     "Name": "Flame Strike",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7541,6 +7900,7 @@
   {
     "Id": "flame_strike_2024",
     "Name": "Flame Strike",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7562,6 +7922,7 @@
   {
     "Id": "flaming_sphere",
     "Name": "Flaming Sphere",
+    "Source": "PHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7583,6 +7944,7 @@
   {
     "Id": "flaming_sphere_2024",
     "Name": "Flaming Sphere",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7604,6 +7966,7 @@
   {
     "Id": "flesh_to_stone",
     "Name": "Flesh to Stone",
+    "Source": "PHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -7625,6 +7988,7 @@
   {
     "Id": "flesh_to_stone_2024",
     "Name": "Flesh to Stone",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -7646,6 +8010,7 @@
   {
     "Id": "tensers_floating_disk",
     "Name": "Floating Disk",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7667,6 +8032,7 @@
   {
     "Id": "tensers_floating_disk_2024",
     "Name": "Floating Disk",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7688,6 +8054,7 @@
   {
     "Id": "flock_of_familiars",
     "Name": "Flock of Familiars",
+    "Source": "LLK",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7709,6 +8076,7 @@
   {
     "Id": "fly",
     "Name": "Fly",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -7730,6 +8098,7 @@
   {
     "Id": "fly_2024",
     "Name": "Fly",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -7751,6 +8120,7 @@
   {
     "Id": "fog_cloud",
     "Name": "Fog Cloud",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7772,6 +8142,7 @@
   {
     "Id": "fog_cloud_2024",
     "Name": "Fog Cloud",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -7793,6 +8164,7 @@
   {
     "Id": "forbiddance",
     "Name": "Forbiddance",
+    "Source": "PHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -7814,6 +8186,7 @@
   {
     "Id": "forbiddance_2024",
     "Name": "Forbiddance",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -7835,6 +8208,7 @@
   {
     "Id": "forcecage",
     "Name": "Forcecage",
+    "Source": "PHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7856,6 +8230,7 @@
   {
     "Id": "forcecage_2024",
     "Name": "Forcecage",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7877,6 +8252,7 @@
   {
     "Id": "foresight",
     "Name": "Foresight",
+    "Source": "PHB",
     "Level": 9,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7898,6 +8274,7 @@
   {
     "Id": "foresight_2024",
     "Name": "Foresight",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7919,6 +8296,7 @@
   {
     "Id": "fortunes_favor",
     "Name": "Fortune's Favor",
+    "Source": "EGW",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7940,6 +8318,7 @@
   {
     "Id": "fount_of_moonlight_2024",
     "Name": "Fount of Moonlight",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -7961,6 +8340,7 @@
   {
     "Id": "fractured_awareness_2024",
     "Name": "Fractured Awareness",
+    "Source": "AU",
     "Level": 7,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -7977,11 +8357,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Intelligence saving throw. 12d10 psychic damage.\n\nSee AU, page 40."
+    "Description": "Intelligence saving throw. 12d10 psychic damage.\n\nSee Arcana Unleashed, page 40."
   },
   {
     "Id": "freedom_of_movement",
     "Name": "Freedom of Movement",
+    "Source": "PHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8003,6 +8384,7 @@
   {
     "Id": "freedom_of_movement_2024",
     "Name": "Freedom of Movement",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8024,6 +8406,7 @@
   {
     "Id": "otilukes_freezing_sphere",
     "Name": "Freezing Sphere",
+    "Source": "PHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -8045,6 +8428,7 @@
   {
     "Id": "otilukes_freezing_sphere_2024",
     "Name": "Freezing Sphere",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -8066,6 +8450,7 @@
   {
     "Id": "friends",
     "Name": "Friends",
+    "Source": "PHB",
     "Level": 0,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -8087,6 +8472,7 @@
   {
     "Id": "friends_2024",
     "Name": "Friends",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -8108,6 +8494,7 @@
   {
     "Id": "frost_fingers",
     "Name": "Frost Fingers",
+    "Source": "IDRotF",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -8129,6 +8516,7 @@
   {
     "Id": "frostbite",
     "Name": "Frostbite",
+    "Source": "XGE",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -8150,6 +8538,7 @@
   {
     "Id": "galders_speedy_courier",
     "Name": "Galder's Speedy Courier",
+    "Source": "LLK",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8171,6 +8560,7 @@
   {
     "Id": "galders_tower",
     "Name": "Galder's Tower",
+    "Source": "LLK",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -8192,6 +8582,7 @@
   {
     "Id": "gaseous_form",
     "Name": "Gaseous Form",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -8213,6 +8604,7 @@
   {
     "Id": "gaseous_form_2024",
     "Name": "Gaseous Form",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -8234,6 +8626,7 @@
   {
     "Id": "gate",
     "Name": "Gate",
+    "Source": "PHB",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8255,6 +8648,7 @@
   {
     "Id": "gate_2024",
     "Name": "Gate",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8276,6 +8670,7 @@
   {
     "Id": "gate_seal",
     "Name": "Gate Seal",
+    "Source": "SatO",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8297,6 +8692,7 @@
   {
     "Id": "geas",
     "Name": "Geas",
+    "Source": "PHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -8318,6 +8714,7 @@
   {
     "Id": "geas_2024",
     "Name": "Geas",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -8339,6 +8736,7 @@
   {
     "Id": "gentle_repose",
     "Name": "Gentle Repose",
+    "Source": "PHB",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -8360,6 +8758,7 @@
   {
     "Id": "gentle_repose_2024",
     "Name": "Gentle Repose",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -8381,6 +8780,7 @@
   {
     "Id": "giant_insect",
     "Name": "Giant Insect",
+    "Source": "PHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -8402,6 +8802,7 @@
   {
     "Id": "giant_insect_2024",
     "Name": "Giant Insect",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8423,6 +8824,7 @@
   {
     "Id": "gift_of_alacrity",
     "Name": "Gift of Alacrity",
+    "Source": "EGW",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -8444,6 +8846,7 @@
   {
     "Id": "gift_of_gab",
     "Name": "Gift of Gab",
+    "Source": "AI",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -8465,6 +8868,7 @@
   {
     "Id": "glibness",
     "Name": "Glibness",
+    "Source": "PHB",
     "Level": 8,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -8486,6 +8890,7 @@
   {
     "Id": "glibness_2024",
     "Name": "Glibness",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -8507,6 +8912,7 @@
   {
     "Id": "globe_of_invulnerability",
     "Name": "Globe of Invulnerability",
+    "Source": "PHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8528,6 +8934,7 @@
   {
     "Id": "globe_of_invulnerability_2024",
     "Name": "Globe of Invulnerability",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8549,6 +8956,7 @@
   {
     "Id": "glyph_of_warding",
     "Name": "Glyph of Warding",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8570,6 +8978,7 @@
   {
     "Id": "glyph_of_warding_2024",
     "Name": "Glyph of Warding",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8591,6 +9000,7 @@
   {
     "Id": "goodberry",
     "Name": "Goodberry",
+    "Source": "PHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -8612,6 +9022,7 @@
   {
     "Id": "goodberry_2024",
     "Name": "Goodberry",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8633,6 +9044,7 @@
   {
     "Id": "grasping_vine",
     "Name": "Grasping Vine",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8654,6 +9066,7 @@
   {
     "Id": "grasping_vine_2024",
     "Name": "Grasping Vine",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8675,6 +9088,7 @@
   {
     "Id": "grave_ground_2024",
     "Name": "Grave Ground",
+    "Source": "AU",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -8691,11 +9105,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Strength saving throw. 6d6 necrotic damage. Area: square. Stronger when cast with a higher-level slot.\n\nSee AU, page 40."
+    "Description": "Strength saving throw. 6d6 necrotic damage. Area: square. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 40."
   },
   {
     "Id": "gravity_fissure",
     "Name": "Gravity Fissure",
+    "Source": "EGW",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -8717,6 +9132,7 @@
   {
     "Id": "gravity_sinkhole",
     "Name": "Gravity Sinkhole",
+    "Source": "EGW",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -8738,6 +9154,7 @@
   {
     "Id": "grease",
     "Name": "Grease",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8759,6 +9176,7 @@
   {
     "Id": "grease_2024",
     "Name": "Grease",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8780,6 +9198,7 @@
   {
     "Id": "greater_invisibility",
     "Name": "Greater Invisibility",
+    "Source": "PHB",
     "Level": 4,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -8801,6 +9220,7 @@
   {
     "Id": "greater_invisibility_2024",
     "Name": "Greater Invisibility",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -8822,6 +9242,7 @@
   {
     "Id": "greater_restoration",
     "Name": "Greater Restoration",
+    "Source": "PHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8843,6 +9264,7 @@
   {
     "Id": "greater_restoration_2024",
     "Name": "Greater Restoration",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8864,6 +9286,7 @@
   {
     "Id": "green_flame_blade",
     "Name": "Green-Flame Blade",
+    "Source": "TCE",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -8885,6 +9308,7 @@
   {
     "Id": "guardian_of_faith",
     "Name": "Guardian of Faith",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8906,6 +9330,7 @@
   {
     "Id": "guardian_of_faith_2024",
     "Name": "Guardian of Faith",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -8927,6 +9352,7 @@
   {
     "Id": "guardian_of_nature",
     "Name": "Guardian of Nature",
+    "Source": "XGE",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -8948,6 +9374,7 @@
   {
     "Id": "guards_and_wards",
     "Name": "Guards and Wards",
+    "Source": "PHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -8969,6 +9396,7 @@
   {
     "Id": "guards_and_wards_2024",
     "Name": "Guards and Wards",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -8990,6 +9418,7 @@
   {
     "Id": "guidance",
     "Name": "Guidance",
+    "Source": "PHB",
     "Level": 0,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -9011,6 +9440,7 @@
   {
     "Id": "guidance_2024",
     "Name": "Guidance",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -9032,6 +9462,7 @@
   {
     "Id": "guiding_bolt",
     "Name": "Guiding Bolt",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9053,6 +9484,7 @@
   {
     "Id": "guiding_bolt_2024",
     "Name": "Guiding Bolt",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9074,6 +9506,7 @@
   {
     "Id": "gust",
     "Name": "Gust",
+    "Source": "XGE",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -9095,6 +9528,7 @@
   {
     "Id": "gust_of_wind",
     "Name": "Gust of Wind",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9116,6 +9550,7 @@
   {
     "Id": "gust_of_wind_2024",
     "Name": "Gust of Wind",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9137,6 +9572,7 @@
   {
     "Id": "hail_of_thorns",
     "Name": "Hail of Thorns",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -9158,6 +9594,7 @@
   {
     "Id": "hail_of_thorns_2024",
     "Name": "Hail of Thorns",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -9179,6 +9616,7 @@
   {
     "Id": "hallow",
     "Name": "Hallow",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 24,
@@ -9200,6 +9638,7 @@
   {
     "Id": "hallow_2024",
     "Name": "Hallow",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 24,
@@ -9221,6 +9660,7 @@
   {
     "Id": "hallucinatory_terrain",
     "Name": "Hallucinatory Terrain",
+    "Source": "PHB",
     "Level": 4,
     "School": "Illusion",
     "CastingTimeNumber": 10,
@@ -9242,6 +9682,7 @@
   {
     "Id": "hallucinatory_terrain_2024",
     "Name": "Hallucinatory Terrain",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Illusion",
     "CastingTimeNumber": 10,
@@ -9263,6 +9704,7 @@
   {
     "Id": "harm",
     "Name": "Harm",
+    "Source": "PHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -9284,6 +9726,7 @@
   {
     "Id": "harm_2024",
     "Name": "Harm",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -9305,6 +9748,7 @@
   {
     "Id": "haste",
     "Name": "Haste",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -9326,6 +9770,7 @@
   {
     "Id": "haste_2024",
     "Name": "Haste",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -9347,6 +9792,7 @@
   {
     "Id": "heal",
     "Name": "Heal",
+    "Source": "PHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9368,6 +9814,7 @@
   {
     "Id": "heal_2024",
     "Name": "Heal",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -9389,6 +9836,7 @@
   {
     "Id": "healing_spirit",
     "Name": "Healing Spirit",
+    "Source": "XGE",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -9410,6 +9858,7 @@
   {
     "Id": "healing_word",
     "Name": "Healing Word",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9431,6 +9880,7 @@
   {
     "Id": "healing_word_2024",
     "Name": "Healing Word",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -9452,6 +9902,7 @@
   {
     "Id": "heat_metal",
     "Name": "Heat Metal",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -9473,6 +9924,7 @@
   {
     "Id": "heat_metal_2024",
     "Name": "Heat Metal",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -9494,6 +9946,7 @@
   {
     "Id": "hellish_rebuke",
     "Name": "Hellish Rebuke",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9515,6 +9968,7 @@
   {
     "Id": "hellish_rebuke_2024",
     "Name": "Hellish Rebuke",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9536,6 +9990,7 @@
   {
     "Id": "heroes_feast",
     "Name": "Heroes' Feast",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -9557,6 +10012,7 @@
   {
     "Id": "heroes_feast_2024",
     "Name": "Heroes' Feast",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -9578,6 +10034,7 @@
   {
     "Id": "heroism",
     "Name": "Heroism",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9599,6 +10056,7 @@
   {
     "Id": "heroism_2024",
     "Name": "Heroism",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9620,6 +10078,7 @@
   {
     "Id": "hex",
     "Name": "Hex",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9641,6 +10100,7 @@
   {
     "Id": "hex_2024",
     "Name": "Hex",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9662,6 +10122,7 @@
   {
     "Id": "tashas_hideous_laughter",
     "Name": "Hideous Laughter",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9683,6 +10144,7 @@
   {
     "Id": "tashas_hideous_laughter_2024",
     "Name": "Hideous Laughter",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9704,6 +10166,7 @@
   {
     "Id": "hindsight_2024",
     "Name": "Hindsight",
+    "Source": "AU",
     "Level": 9,
     "School": "Divination",
     "CastingTimeNumber": 10,
@@ -9720,11 +10183,12 @@
     "DurationUnit": "hour",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "See AU, page 40."
+    "Description": "See Arcana Unleashed, page 40."
   },
   {
     "Id": "hold_monster",
     "Name": "Hold Monster",
+    "Source": "PHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9746,6 +10210,7 @@
   {
     "Id": "hold_monster_2024",
     "Name": "Hold Monster",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9767,6 +10232,7 @@
   {
     "Id": "hold_person",
     "Name": "Hold Person",
+    "Source": "PHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9788,6 +10254,7 @@
   {
     "Id": "hold_person_2024",
     "Name": "Hold Person",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -9809,6 +10276,7 @@
   {
     "Id": "holy_aura",
     "Name": "Holy Aura",
+    "Source": "PHB",
     "Level": 8,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -9830,6 +10298,7 @@
   {
     "Id": "holy_aura_2024",
     "Name": "Holy Aura",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -9851,6 +10320,7 @@
   {
     "Id": "holy_star_of_mystra_2024",
     "Name": "Holy Star of Mystra",
+    "Source": "FRHoF",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9872,6 +10342,7 @@
   {
     "Id": "holy_weapon",
     "Name": "Holy Weapon",
+    "Source": "XGE",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -9893,6 +10364,7 @@
   {
     "Id": "homunculus_servant_2024",
     "Name": "Homunculus Servant",
+    "Source": "EFA",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -9914,6 +10386,7 @@
   {
     "Id": "hunger_of_hadar",
     "Name": "Hunger of Hadar",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -9935,6 +10408,7 @@
   {
     "Id": "hunger_of_hadar_2024",
     "Name": "Hunger of Hadar",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -9956,6 +10430,7 @@
   {
     "Id": "hunters_mark",
     "Name": "Hunter's Mark",
+    "Source": "PHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -9977,6 +10452,7 @@
   {
     "Id": "hunters_mark_2024",
     "Name": "Hunter's Mark",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -9998,6 +10474,7 @@
   {
     "Id": "hypnotic_pattern",
     "Name": "Hypnotic Pattern",
+    "Source": "PHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10019,6 +10496,7 @@
   {
     "Id": "hypnotic_pattern_2024",
     "Name": "Hypnotic Pattern",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10040,6 +10518,7 @@
   {
     "Id": "ice_knife",
     "Name": "Ice Knife",
+    "Source": "XGE",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10061,6 +10540,7 @@
   {
     "Id": "ice_knife_2024",
     "Name": "Ice Knife",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10082,6 +10562,7 @@
   {
     "Id": "ice_storm",
     "Name": "Ice Storm",
+    "Source": "PHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -10103,6 +10584,7 @@
   {
     "Id": "ice_storm_2024",
     "Name": "Ice Storm",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -10124,6 +10606,7 @@
   {
     "Id": "identify",
     "Name": "Identify",
+    "Source": "PHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -10145,6 +10628,7 @@
   {
     "Id": "identify_2024",
     "Name": "Identify",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -10166,6 +10650,7 @@
   {
     "Id": "illusory_dragon",
     "Name": "Illusory Dragon",
+    "Source": "XGE",
     "Level": 8,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10187,6 +10672,7 @@
   {
     "Id": "illusory_dragon_2024",
     "Name": "Illusory Dragon",
+    "Source": "AU",
     "Level": 8,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10203,11 +10689,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Intelligence or Wisdom saving throw. 6d6 acid or cold or fire or lightning or necrotic or poison damage. Can inflict: frightened. Area: cone.\n\nSee AU, page 40."
+    "Description": "Intelligence or Wisdom saving throw. 6d6 acid or cold or fire or lightning or necrotic or poison damage. Can inflict: frightened. Area: cone.\n\nSee Arcana Unleashed, page 40."
   },
   {
     "Id": "illusory_script",
     "Name": "Illusory Script",
+    "Source": "PHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10229,6 +10716,7 @@
   {
     "Id": "illusory_script_2024",
     "Name": "Illusory Script",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10250,6 +10738,7 @@
   {
     "Id": "immolation",
     "Name": "Immolation",
+    "Source": "XGE",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -10271,6 +10760,7 @@
   {
     "Id": "immovable_object",
     "Name": "Immovable Object",
+    "Source": "EGW",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10292,6 +10782,7 @@
   {
     "Id": "imprisonment",
     "Name": "Imprisonment",
+    "Source": "PHB",
     "Level": 9,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -10313,6 +10804,7 @@
   {
     "Id": "imprisonment_2024",
     "Name": "Imprisonment",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -10334,6 +10826,7 @@
   {
     "Id": "incendiary_cloud",
     "Name": "Incendiary Cloud",
+    "Source": "PHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10355,6 +10848,7 @@
   {
     "Id": "incendiary_cloud_2024",
     "Name": "Incendiary Cloud",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10376,6 +10870,7 @@
   {
     "Id": "incite_greed",
     "Name": "Incite Greed",
+    "Source": "AI",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -10397,6 +10892,7 @@
   {
     "Id": "infernal_calling",
     "Name": "Infernal Calling",
+    "Source": "XGE",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10418,6 +10914,7 @@
   {
     "Id": "infestation",
     "Name": "Infestation",
+    "Source": "XGE",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10439,6 +10936,7 @@
   {
     "Id": "inflict_doubt_2024",
     "Name": "Inflict Doubt",
+    "Source": "AU",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -10455,11 +10953,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Wisdom saving throw.\n\nSee AU, page 40."
+    "Description": "Wisdom saving throw.\n\nSee Arcana Unleashed, page 40."
   },
   {
     "Id": "inflict_wounds",
     "Name": "Inflict Wounds",
+    "Source": "PHB",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -10481,6 +10980,7 @@
   {
     "Id": "inflict_wounds_2024",
     "Name": "Inflict Wounds",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -10502,6 +11002,7 @@
   {
     "Id": "insect_plague",
     "Name": "Insect Plague",
+    "Source": "PHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10523,6 +11024,7 @@
   {
     "Id": "insect_plague_2024",
     "Name": "Insect Plague",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10544,6 +11046,7 @@
   {
     "Id": "drawmijs_instant_summons",
     "Name": "Instant Summons",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10565,6 +11068,7 @@
   {
     "Id": "drawmijs_instant_summons_2024",
     "Name": "Instant Summons",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -10586,6 +11090,7 @@
   {
     "Id": "intellect_fortress",
     "Name": "Intellect Fortress",
+    "Source": "TCE",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -10607,6 +11112,7 @@
   {
     "Id": "investiture_of_flame",
     "Name": "Investiture of Flame",
+    "Source": "XGE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10628,6 +11134,7 @@
   {
     "Id": "investiture_of_ice",
     "Name": "Investiture of Ice",
+    "Source": "XGE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10649,6 +11156,7 @@
   {
     "Id": "investiture_of_stone",
     "Name": "Investiture of Stone",
+    "Source": "XGE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10670,6 +11178,7 @@
   {
     "Id": "investiture_of_wind",
     "Name": "Investiture of Wind",
+    "Source": "XGE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10691,6 +11200,7 @@
   {
     "Id": "invisibility",
     "Name": "Invisibility",
+    "Source": "PHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10712,6 +11222,7 @@
   {
     "Id": "invisibility_2024",
     "Name": "Invisibility",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -10733,6 +11244,7 @@
   {
     "Id": "invulnerability",
     "Name": "Invulnerability",
+    "Source": "XGE",
     "Level": 9,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -10754,6 +11266,7 @@
   {
     "Id": "invulnerability_2024",
     "Name": "Invulnerability",
+    "Source": "AU",
     "Level": 9,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -10770,11 +11283,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "See AU, page 41."
+    "Description": "See Arcana Unleashed, page 41."
   },
   {
     "Id": "iron_body_2024",
     "Name": "Iron Body",
+    "Source": "AU",
     "Level": 8,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10791,11 +11305,12 @@
     "DurationUnit": "hour",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "See AU, page 41."
+    "Description": "See Arcana Unleashed, page 41."
   },
   {
     "Id": "ottos_irresistible_dance",
     "Name": "Irresistible Dance",
+    "Source": "PHB",
     "Level": 6,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -10817,6 +11332,7 @@
   {
     "Id": "ottos_irresistible_dance_2024",
     "Name": "Irresistible Dance",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -10838,6 +11354,7 @@
   {
     "Id": "jallarzis_storm_of_radiance_2024",
     "Name": "Jallarzi's Storm of Radiance",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -10859,6 +11376,7 @@
   {
     "Id": "jims_glowing_coin",
     "Name": "Jim's Glowing Coin",
+    "Source": "AI",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -10880,6 +11398,7 @@
   {
     "Id": "jims_magic_missile",
     "Name": "Jim's Magic Missile",
+    "Source": "AI",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -10901,6 +11420,7 @@
   {
     "Id": "jump",
     "Name": "Jump",
+    "Source": "PHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10922,6 +11442,7 @@
   {
     "Id": "jump_2024",
     "Name": "Jump",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10943,6 +11464,7 @@
   {
     "Id": "kinetic_jaunt",
     "Name": "Kinetic Jaunt",
+    "Source": "SCC",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10964,6 +11486,7 @@
   {
     "Id": "knock",
     "Name": "Knock",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -10985,6 +11508,7 @@
   {
     "Id": "knock_2024",
     "Name": "Knock",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11006,6 +11530,7 @@
   {
     "Id": "laerals_silver_lance_2024",
     "Name": "Laeral's Silver Lance",
+    "Source": "FRHoF",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11027,6 +11552,7 @@
   {
     "Id": "legend_lore",
     "Name": "Legend Lore",
+    "Source": "PHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 10,
@@ -11048,6 +11574,7 @@
   {
     "Id": "legend_lore_2024",
     "Name": "Legend Lore",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 10,
@@ -11069,6 +11596,7 @@
   {
     "Id": "lesser_restoration",
     "Name": "Lesser Restoration",
+    "Source": "PHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -11090,6 +11618,7 @@
   {
     "Id": "lesser_restoration_2024",
     "Name": "Lesser Restoration",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -11111,6 +11640,7 @@
   {
     "Id": "levitate",
     "Name": "Levitate",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11132,6 +11662,7 @@
   {
     "Id": "levitate_2024",
     "Name": "Levitate",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11153,6 +11684,7 @@
   {
     "Id": "life_transference",
     "Name": "Life Transference",
+    "Source": "XGE",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -11174,6 +11706,7 @@
   {
     "Id": "light",
     "Name": "Light",
+    "Source": "PHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11195,6 +11728,7 @@
   {
     "Id": "light_2024",
     "Name": "Light",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11216,6 +11750,7 @@
   {
     "Id": "lightning_arrow",
     "Name": "Lightning Arrow",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11237,6 +11772,7 @@
   {
     "Id": "lightning_arrow_2024",
     "Name": "Lightning Arrow",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11258,6 +11794,7 @@
   {
     "Id": "lightning_bolt",
     "Name": "Lightning Bolt",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11279,6 +11816,7 @@
   {
     "Id": "lightning_bolt_2024",
     "Name": "Lightning Bolt",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11300,6 +11838,7 @@
   {
     "Id": "lightning_lure",
     "Name": "Lightning Lure",
+    "Source": "TCE",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11321,6 +11860,7 @@
   {
     "Id": "lightning_ring_2024",
     "Name": "Lightning Ring",
+    "Source": "AU",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11337,11 +11877,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Constitution or Dexterity saving throw. 3d6 or 6d6 lightning or thunder damage. Can inflict: deafened. Area: line.\n\nSee AU, page 41."
+    "Description": "Constitution or Dexterity saving throw. 3d6 or 6d6 lightning or thunder damage. Can inflict: deafened. Area: line.\n\nSee Arcana Unleashed, page 41."
   },
   {
     "Id": "linked_glyphs",
     "Name": "Linked Glyphs",
+    "Source": "AitFR-AVT",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -11358,11 +11899,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Can inflict: invisible. Stronger when cast with a higher-level slot.\n\nSee AitFR-AVT, page 9."
+    "Description": "Can inflict: invisible. Stronger when cast with a higher-level slot.\n\nSee Adventures in the Forgotten Realms: A Verdant Tomb, page 9."
   },
   {
     "Id": "locate_animals_or_plants",
     "Name": "Locate Animals or Plants",
+    "Source": "PHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -11384,6 +11926,7 @@
   {
     "Id": "locate_animals_or_plants_2024",
     "Name": "Locate Animals or Plants",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -11405,6 +11948,7 @@
   {
     "Id": "locate_creature",
     "Name": "Locate Creature",
+    "Source": "PHB",
     "Level": 4,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -11426,6 +11970,7 @@
   {
     "Id": "locate_creature_2024",
     "Name": "Locate Creature",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -11447,6 +11992,7 @@
   {
     "Id": "locate_object",
     "Name": "Locate Object",
+    "Source": "PHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -11468,6 +12014,7 @@
   {
     "Id": "locate_object_2024",
     "Name": "Locate Object",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -11489,6 +12036,7 @@
   {
     "Id": "longstrider",
     "Name": "Longstrider",
+    "Source": "PHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11510,6 +12058,7 @@
   {
     "Id": "longstrider_2024",
     "Name": "Longstrider",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11531,6 +12080,7 @@
   {
     "Id": "maddening_darkness",
     "Name": "Maddening Darkness",
+    "Source": "XGE",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11552,6 +12102,7 @@
   {
     "Id": "maelstrom",
     "Name": "Maelstrom",
+    "Source": "XGE",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11573,6 +12124,7 @@
   {
     "Id": "mage_armor",
     "Name": "Mage Armor",
+    "Source": "PHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -11594,6 +12146,7 @@
   {
     "Id": "mage_armor_2024",
     "Name": "Mage Armor",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -11615,6 +12168,7 @@
   {
     "Id": "mage_hand",
     "Name": "Mage Hand",
+    "Source": "PHB",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -11636,6 +12190,7 @@
   {
     "Id": "mage_hand_2024",
     "Name": "Mage Hand",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -11657,6 +12212,7 @@
   {
     "Id": "magic_circle",
     "Name": "Magic Circle",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -11678,6 +12234,7 @@
   {
     "Id": "magic_circle_2024",
     "Name": "Magic Circle",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -11699,6 +12256,7 @@
   {
     "Id": "magic_jar",
     "Name": "Magic Jar",
+    "Source": "PHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -11720,6 +12278,7 @@
   {
     "Id": "magic_jar_2024",
     "Name": "Magic Jar",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -11741,6 +12300,7 @@
   {
     "Id": "magic_missile",
     "Name": "Magic Missile",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11762,6 +12322,7 @@
   {
     "Id": "magic_missile_2024",
     "Name": "Magic Missile",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -11783,6 +12344,7 @@
   {
     "Id": "magic_mouth",
     "Name": "Magic Mouth",
+    "Source": "PHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -11804,6 +12366,7 @@
   {
     "Id": "magic_mouth_2024",
     "Name": "Magic Mouth",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -11825,6 +12388,7 @@
   {
     "Id": "magic_stone",
     "Name": "Magic Stone",
+    "Source": "XGE",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11846,6 +12410,7 @@
   {
     "Id": "magic_weapon",
     "Name": "Magic Weapon",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11867,6 +12432,7 @@
   {
     "Id": "magic_weapon_2024",
     "Name": "Magic Weapon",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11888,6 +12454,7 @@
   {
     "Id": "mordenkainens_magnificent_mansion",
     "Name": "Magnificent Mansion",
+    "Source": "PHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -11909,6 +12476,7 @@
   {
     "Id": "mordenkainens_magnificent_mansion_2024",
     "Name": "Magnificent Mansion",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -11930,6 +12498,7 @@
   {
     "Id": "magnify_gravity",
     "Name": "Magnify Gravity",
+    "Source": "EGW",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -11951,6 +12520,7 @@
   {
     "Id": "major_image",
     "Name": "Major Image",
+    "Source": "PHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -11972,6 +12542,7 @@
   {
     "Id": "major_image_2024",
     "Name": "Major Image",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -11993,6 +12564,7 @@
   {
     "Id": "mass_cure_wounds",
     "Name": "Mass Cure Wounds",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12014,6 +12586,7 @@
   {
     "Id": "mass_cure_wounds_2024",
     "Name": "Mass Cure Wounds",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -12035,6 +12608,7 @@
   {
     "Id": "mass_heal",
     "Name": "Mass Heal",
+    "Source": "PHB",
     "Level": 9,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12056,6 +12630,7 @@
   {
     "Id": "mass_heal_2024",
     "Name": "Mass Heal",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -12077,6 +12652,7 @@
   {
     "Id": "mass_healing_word",
     "Name": "Mass Healing Word",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12098,6 +12674,7 @@
   {
     "Id": "mass_healing_word_2024",
     "Name": "Mass Healing Word",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -12119,6 +12696,7 @@
   {
     "Id": "mass_polymorph",
     "Name": "Mass Polymorph",
+    "Source": "XGE",
     "Level": 9,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12140,6 +12718,7 @@
   {
     "Id": "mass_suggestion",
     "Name": "Mass Suggestion",
+    "Source": "PHB",
     "Level": 6,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -12161,6 +12740,7 @@
   {
     "Id": "mass_suggestion_2024",
     "Name": "Mass Suggestion",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -12182,6 +12762,7 @@
   {
     "Id": "maximilians_earthen_grasp",
     "Name": "Maximilian's Earthen Grasp",
+    "Source": "XGE",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12203,6 +12784,7 @@
   {
     "Id": "maze",
     "Name": "Maze",
+    "Source": "PHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -12224,6 +12806,7 @@
   {
     "Id": "maze_2024",
     "Name": "Maze",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -12245,6 +12828,7 @@
   {
     "Id": "meld_into_stone",
     "Name": "Meld into Stone",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12266,6 +12850,7 @@
   {
     "Id": "meld_into_stone_2024",
     "Name": "Meld into Stone",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12287,6 +12872,7 @@
   {
     "Id": "melfs_minute_meteors",
     "Name": "Melf's Minute Meteors",
+    "Source": "XGE",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12308,6 +12894,7 @@
   {
     "Id": "mending",
     "Name": "Mending",
+    "Source": "PHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12329,6 +12916,7 @@
   {
     "Id": "mending_2024",
     "Name": "Mending",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12350,6 +12938,7 @@
   {
     "Id": "mental_prison",
     "Name": "Mental Prison",
+    "Source": "XGE",
     "Level": 6,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -12371,6 +12960,7 @@
   {
     "Id": "message",
     "Name": "Message",
+    "Source": "PHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12392,6 +12982,7 @@
   {
     "Id": "message_2024",
     "Name": "Message",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12413,6 +13004,7 @@
   {
     "Id": "meteor_swarm",
     "Name": "Meteor Swarm",
+    "Source": "PHB",
     "Level": 9,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12434,6 +13026,7 @@
   {
     "Id": "meteor_swarm_2024",
     "Name": "Meteor Swarm",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12455,6 +13048,7 @@
   {
     "Id": "mighty_fortress",
     "Name": "Mighty Fortress",
+    "Source": "XGE",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -12476,6 +13070,7 @@
   {
     "Id": "mind_blank",
     "Name": "Mind Blank",
+    "Source": "PHB",
     "Level": 8,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -12497,6 +13092,7 @@
   {
     "Id": "mind_blank_2024",
     "Name": "Mind Blank",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -12518,6 +13114,7 @@
   {
     "Id": "mind_sliver",
     "Name": "Mind Sliver",
+    "Source": "TCE",
     "Level": 0,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -12539,6 +13136,7 @@
   {
     "Id": "mind_sliver_2024",
     "Name": "Mind Sliver",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -12560,6 +13158,7 @@
   {
     "Id": "mind_spike",
     "Name": "Mind Spike",
+    "Source": "XGE",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -12581,6 +13180,7 @@
   {
     "Id": "mind_spike_2024",
     "Name": "Mind Spike",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -12602,6 +13202,7 @@
   {
     "Id": "minor_illusion",
     "Name": "Minor Illusion",
+    "Source": "PHB",
     "Level": 0,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -12623,6 +13224,7 @@
   {
     "Id": "minor_illusion_2024",
     "Name": "Minor Illusion",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -12644,6 +13246,7 @@
   {
     "Id": "mirage_arcane",
     "Name": "Mirage Arcane",
+    "Source": "PHB",
     "Level": 7,
     "School": "Illusion",
     "CastingTimeNumber": 10,
@@ -12665,6 +13268,7 @@
   {
     "Id": "mirage_arcane_2024",
     "Name": "Mirage Arcane",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Illusion",
     "CastingTimeNumber": 10,
@@ -12686,6 +13290,7 @@
   {
     "Id": "mirror_image",
     "Name": "Mirror Image",
+    "Source": "PHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -12707,6 +13312,7 @@
   {
     "Id": "mirror_image_2024",
     "Name": "Mirror Image",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -12728,6 +13334,7 @@
   {
     "Id": "mislead",
     "Name": "Mislead",
+    "Source": "PHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -12749,6 +13356,7 @@
   {
     "Id": "mislead_2024",
     "Name": "Mislead",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -12770,6 +13378,7 @@
   {
     "Id": "misty_step",
     "Name": "Misty Step",
+    "Source": "PHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -12791,6 +13400,7 @@
   {
     "Id": "misty_step_2024",
     "Name": "Misty Step",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -12812,6 +13422,7 @@
   {
     "Id": "modify_memory",
     "Name": "Modify Memory",
+    "Source": "PHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -12833,6 +13444,7 @@
   {
     "Id": "modify_memory_2024",
     "Name": "Modify Memory",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -12854,6 +13466,7 @@
   {
     "Id": "mold_earth",
     "Name": "Mold Earth",
+    "Source": "XGE",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -12875,6 +13488,7 @@
   {
     "Id": "moment_of_prescience_2024",
     "Name": "Moment of Prescience",
+    "Source": "AU",
     "Level": 8,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -12891,11 +13505,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "See AU, page 42."
+    "Description": "See Arcana Unleashed, page 42."
   },
   {
     "Id": "moonbeam",
     "Name": "Moonbeam",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12917,6 +13532,7 @@
   {
     "Id": "moonbeam_2024",
     "Name": "Moonbeam",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -12938,6 +13554,7 @@
   {
     "Id": "mordenkainens_lucubration_2024",
     "Name": "Mordenkainen's Lucubration",
+    "Source": "AU",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -12954,11 +13571,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Stronger when cast with a higher-level slot.\n\nSee AU, page 42."
+    "Description": "Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 42."
   },
   {
     "Id": "motivational_speech",
     "Name": "Motivational Speech",
+    "Source": "AI",
     "Level": 3,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -12980,6 +13598,7 @@
   {
     "Id": "move_earth",
     "Name": "Move Earth",
+    "Source": "PHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13001,6 +13620,7 @@
   {
     "Id": "move_earth_2024",
     "Name": "Move Earth",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13022,6 +13642,7 @@
   {
     "Id": "nathairs_mischief",
     "Name": "Nathair's Mischief",
+    "Source": "FTD",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -13043,6 +13664,7 @@
   {
     "Id": "negative_energy_flood",
     "Name": "Negative Energy Flood",
+    "Source": "XGE",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -13064,6 +13686,7 @@
   {
     "Id": "negative_energy_flood_2024",
     "Name": "Negative Energy Flood",
+    "Source": "AU",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -13080,11 +13703,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Constitution saving throw. 3d10 \\u002B 25 necrotic damage. Stronger when cast with a higher-level slot.\n\nSee AU, page 42."
+    "Description": "Constitution saving throw. 3d10 \\u002B 25 necrotic damage. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 42."
   },
   {
     "Id": "nondetection",
     "Name": "Nondetection",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13106,6 +13730,7 @@
   {
     "Id": "nondetection_2024",
     "Name": "Nondetection",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13127,6 +13752,7 @@
   {
     "Id": "pass_without_trace",
     "Name": "Pass without Trace",
+    "Source": "PHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13148,6 +13774,7 @@
   {
     "Id": "pass_without_trace_2024",
     "Name": "Pass without Trace",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13169,6 +13796,7 @@
   {
     "Id": "passwall",
     "Name": "Passwall",
+    "Source": "PHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13190,6 +13818,7 @@
   {
     "Id": "passwall_2024",
     "Name": "Passwall",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13211,6 +13840,7 @@
   {
     "Id": "phantasmal_force",
     "Name": "Phantasmal Force",
+    "Source": "PHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -13232,6 +13862,7 @@
   {
     "Id": "phantasmal_force_2024",
     "Name": "Phantasmal Force",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -13253,6 +13884,7 @@
   {
     "Id": "phantasmal_killer",
     "Name": "Phantasmal Killer",
+    "Source": "PHB",
     "Level": 4,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -13274,6 +13906,7 @@
   {
     "Id": "phantasmal_killer_2024",
     "Name": "Phantasmal Killer",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -13295,6 +13928,7 @@
   {
     "Id": "phantom_steed",
     "Name": "Phantom Steed",
+    "Source": "PHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -13316,6 +13950,7 @@
   {
     "Id": "phantom_steed_2024",
     "Name": "Phantom Steed",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -13337,6 +13972,7 @@
   {
     "Id": "planar_ally",
     "Name": "Planar Ally",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -13358,6 +13994,7 @@
   {
     "Id": "planar_ally_2024",
     "Name": "Planar Ally",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 10,
@@ -13379,6 +14016,7 @@
   {
     "Id": "planar_binding",
     "Name": "Planar Binding",
+    "Source": "PHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13400,6 +14038,7 @@
   {
     "Id": "planar_binding_2024",
     "Name": "Planar Binding",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13421,6 +14060,7 @@
   {
     "Id": "plane_shift",
     "Name": "Plane Shift",
+    "Source": "PHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -13442,6 +14082,7 @@
   {
     "Id": "plane_shift_2024",
     "Name": "Plane Shift",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -13463,6 +14104,7 @@
   {
     "Id": "plant_growth",
     "Name": "Plant Growth",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13484,6 +14126,7 @@
   {
     "Id": "plant_growth_2024",
     "Name": "Plant Growth",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13505,6 +14148,7 @@
   {
     "Id": "poison_spray",
     "Name": "Poison Spray",
+    "Source": "PHB",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -13526,6 +14170,7 @@
   {
     "Id": "poison_spray_2024",
     "Name": "Poison Spray",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -13547,6 +14192,7 @@
   {
     "Id": "polymorph",
     "Name": "Polymorph",
+    "Source": "PHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13568,6 +14214,7 @@
   {
     "Id": "polymorph_2024",
     "Name": "Polymorph",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13589,6 +14236,7 @@
   {
     "Id": "power_word_fortify_2024",
     "Name": "Power Word Fortify",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13610,6 +14258,7 @@
   {
     "Id": "power_word_heal",
     "Name": "Power Word Heal",
+    "Source": "PHB",
     "Level": 9,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -13631,6 +14280,7 @@
   {
     "Id": "power_word_heal_2024",
     "Name": "Power Word Heal",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13652,6 +14302,7 @@
   {
     "Id": "power_word_kill",
     "Name": "Power Word Kill",
+    "Source": "PHB",
     "Level": 9,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13673,6 +14324,7 @@
   {
     "Id": "power_word_kill_2024",
     "Name": "Power Word Kill",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13694,6 +14346,7 @@
   {
     "Id": "power_word_pain",
     "Name": "Power Word Pain",
+    "Source": "XGE",
     "Level": 7,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13715,6 +14368,7 @@
   {
     "Id": "power_word_pain_2024",
     "Name": "Power Word Pain",
+    "Source": "AU",
     "Level": 7,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13731,11 +14385,12 @@
     "DurationUnit": "minute",
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Constitution saving throw. 6d8 force damage. Can inflict: charmed.\n\nSee AU, page 42."
+    "Description": "Constitution saving throw. 6d8 force damage. Can inflict: charmed.\n\nSee Arcana Unleashed, page 42."
   },
   {
     "Id": "power_word_stun",
     "Name": "Power Word Stun",
+    "Source": "PHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13757,6 +14412,7 @@
   {
     "Id": "power_word_stun_2024",
     "Name": "Power Word Stun",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -13778,6 +14434,7 @@
   {
     "Id": "prayer_of_healing",
     "Name": "Prayer of Healing",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 10,
@@ -13799,6 +14456,7 @@
   {
     "Id": "prayer_of_healing_2024",
     "Name": "Prayer of Healing",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -13820,6 +14478,7 @@
   {
     "Id": "prestidigitation",
     "Name": "Prestidigitation",
+    "Source": "PHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13841,6 +14500,7 @@
   {
     "Id": "prestidigitation_2024",
     "Name": "Prestidigitation",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13862,6 +14522,7 @@
   {
     "Id": "primal_savagery",
     "Name": "Primal Savagery",
+    "Source": "XGE",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -13883,6 +14544,7 @@
   {
     "Id": "primordial_ward",
     "Name": "Primordial Ward",
+    "Source": "XGE",
     "Level": 6,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13904,6 +14566,7 @@
   {
     "Id": "prismatic_spray",
     "Name": "Prismatic Spray",
+    "Source": "PHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -13925,6 +14588,7 @@
   {
     "Id": "prismatic_spray_2024",
     "Name": "Prismatic Spray",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -13946,6 +14610,7 @@
   {
     "Id": "prismatic_wall",
     "Name": "Prismatic Wall",
+    "Source": "PHB",
     "Level": 9,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13967,6 +14632,7 @@
   {
     "Id": "prismatic_wall_2024",
     "Name": "Prismatic Wall",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -13988,6 +14654,7 @@
   {
     "Id": "mordenkainens_private_sanctum",
     "Name": "Private Sanctum",
+    "Source": "PHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -14009,6 +14676,7 @@
   {
     "Id": "mordenkainens_private_sanctum_2024",
     "Name": "Private Sanctum",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 10,
@@ -14030,6 +14698,7 @@
   {
     "Id": "produce_flame",
     "Name": "Produce Flame",
+    "Source": "PHB",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -14051,6 +14720,7 @@
   {
     "Id": "produce_flame_2024",
     "Name": "Produce Flame",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -14072,6 +14742,7 @@
   {
     "Id": "programmed_illusion",
     "Name": "Programmed Illusion",
+    "Source": "PHB",
     "Level": 6,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -14093,6 +14764,7 @@
   {
     "Id": "programmed_illusion_2024",
     "Name": "Programmed Illusion",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -14114,6 +14786,7 @@
   {
     "Id": "project_image",
     "Name": "Project Image",
+    "Source": "PHB",
     "Level": 7,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -14135,6 +14808,7 @@
   {
     "Id": "project_image_2024",
     "Name": "Project Image",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -14156,6 +14830,7 @@
   {
     "Id": "protection_from_energy",
     "Name": "Protection from Energy",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14177,6 +14852,7 @@
   {
     "Id": "protection_from_energy_2024",
     "Name": "Protection from Energy",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14198,6 +14874,7 @@
   {
     "Id": "protection_from_evil_and_good",
     "Name": "Protection from Evil and Good",
+    "Source": "PHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14219,6 +14896,7 @@
   {
     "Id": "protection_from_evil_and_good_2024",
     "Name": "Protection from Evil and Good",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14240,6 +14918,7 @@
   {
     "Id": "protection_from_poison",
     "Name": "Protection from Poison",
+    "Source": "PHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14261,6 +14940,7 @@
   {
     "Id": "protection_from_poison_2024",
     "Name": "Protection from Poison",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14282,6 +14962,7 @@
   {
     "Id": "psychic_scream",
     "Name": "Psychic Scream",
+    "Source": "XGE",
     "Level": 9,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -14303,6 +14984,7 @@
   {
     "Id": "pulse_wave",
     "Name": "Pulse Wave",
+    "Source": "EGW",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -14324,6 +15006,7 @@
   {
     "Id": "purify_food_and_drink",
     "Name": "Purify Food and Drink",
+    "Source": "PHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14345,6 +15028,7 @@
   {
     "Id": "purify_food_and_drink_2024",
     "Name": "Purify Food and Drink",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14366,6 +15050,7 @@
   {
     "Id": "pyrotechnics",
     "Name": "Pyrotechnics",
+    "Source": "XGE",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14387,6 +15072,7 @@
   {
     "Id": "raise_dead",
     "Name": "Raise Dead",
+    "Source": "PHB",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14408,6 +15094,7 @@
   {
     "Id": "raise_dead_2024",
     "Name": "Raise Dead",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14429,6 +15116,7 @@
   {
     "Id": "raulothims_psychic_lance",
     "Name": "Raulothim's Psychic Lance",
+    "Source": "FTD",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -14450,6 +15138,7 @@
   {
     "Id": "ravenous_void",
     "Name": "Ravenous Void",
+    "Source": "EGW",
     "Level": 9,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -14471,6 +15160,7 @@
   {
     "Id": "ray_of_enfeeblement",
     "Name": "Ray of Enfeeblement",
+    "Source": "PHB",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14492,6 +15182,7 @@
   {
     "Id": "ray_of_enfeeblement_2024",
     "Name": "Ray of Enfeeblement",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14513,6 +15204,7 @@
   {
     "Id": "ray_of_frost",
     "Name": "Ray of Frost",
+    "Source": "PHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -14534,6 +15226,7 @@
   {
     "Id": "ray_of_frost_2024",
     "Name": "Ray of Frost",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -14555,6 +15248,7 @@
   {
     "Id": "ray_of_sickness",
     "Name": "Ray of Sickness",
+    "Source": "PHB",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14576,6 +15270,7 @@
   {
     "Id": "ray_of_sickness_2024",
     "Name": "Ray of Sickness",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14597,6 +15292,7 @@
   {
     "Id": "reality_break",
     "Name": "Reality Break",
+    "Source": "EGW",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -14618,6 +15314,7 @@
   {
     "Id": "regenerate",
     "Name": "Regenerate",
+    "Source": "PHB",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14639,6 +15336,7 @@
   {
     "Id": "regenerate_2024",
     "Name": "Regenerate",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14660,6 +15358,7 @@
   {
     "Id": "reincarnate",
     "Name": "Reincarnate",
+    "Source": "PHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14681,6 +15380,7 @@
   {
     "Id": "reincarnate_2024",
     "Name": "Reincarnate",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14702,6 +15402,7 @@
   {
     "Id": "remove_curse",
     "Name": "Remove Curse",
+    "Source": "PHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14723,6 +15424,7 @@
   {
     "Id": "remove_curse_2024",
     "Name": "Remove Curse",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14744,6 +15446,7 @@
   {
     "Id": "otilukes_resilient_sphere",
     "Name": "Resilient Sphere",
+    "Source": "PHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -14765,6 +15468,7 @@
   {
     "Id": "otilukes_resilient_sphere_2024",
     "Name": "Resilient Sphere",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14786,6 +15490,7 @@
   {
     "Id": "resistance",
     "Name": "Resistance",
+    "Source": "PHB",
     "Level": 0,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14807,6 +15512,7 @@
   {
     "Id": "resistance_2024",
     "Name": "Resistance",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -14828,6 +15534,7 @@
   {
     "Id": "resurrection",
     "Name": "Resurrection",
+    "Source": "PHB",
     "Level": 7,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14849,6 +15556,7 @@
   {
     "Id": "resurrection_2024",
     "Name": "Resurrection",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14870,6 +15578,7 @@
   {
     "Id": "reverse_gravity",
     "Name": "Reverse Gravity",
+    "Source": "PHB",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14891,6 +15600,7 @@
   {
     "Id": "reverse_gravity_2024",
     "Name": "Reverse Gravity",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -14912,6 +15622,7 @@
   {
     "Id": "revivify",
     "Name": "Revivify",
+    "Source": "PHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14933,6 +15644,7 @@
   {
     "Id": "revivify_2024",
     "Name": "Revivify",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -14954,6 +15666,7 @@
   {
     "Id": "reweave_fate_2024",
     "Name": "Reweave Fate",
+    "Source": "AU",
     "Level": 7,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -14970,11 +15683,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "See AU, page 42."
+    "Description": "See Arcana Unleashed, page 42."
   },
   {
     "Id": "rimes_binding_ice",
     "Name": "Rime's Binding Ice",
+    "Source": "FTD",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -14996,6 +15710,7 @@
   {
     "Id": "rope_trick",
     "Name": "Rope Trick",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15017,6 +15732,7 @@
   {
     "Id": "rope_trick_2024",
     "Name": "Rope Trick",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15038,6 +15754,7 @@
   {
     "Id": "sacred_flame",
     "Name": "Sacred Flame",
+    "Source": "PHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15059,6 +15776,7 @@
   {
     "Id": "sacred_flame_2024",
     "Name": "Sacred Flame",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15080,6 +15798,7 @@
   {
     "Id": "sanctuary",
     "Name": "Sanctuary",
+    "Source": "PHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -15101,6 +15820,7 @@
   {
     "Id": "sanctuary_2024",
     "Name": "Sanctuary",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -15122,6 +15842,7 @@
   {
     "Id": "sapping_sting",
     "Name": "Sapping Sting",
+    "Source": "EGW",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -15143,6 +15864,7 @@
   {
     "Id": "scatter",
     "Name": "Scatter",
+    "Source": "XGE",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -15164,6 +15886,7 @@
   {
     "Id": "scorching_ray",
     "Name": "Scorching Ray",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15185,6 +15908,7 @@
   {
     "Id": "scorching_ray_2024",
     "Name": "Scorching Ray",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15206,6 +15930,7 @@
   {
     "Id": "scrying",
     "Name": "Scrying",
+    "Source": "PHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 10,
@@ -15227,6 +15952,7 @@
   {
     "Id": "scrying_2024",
     "Name": "Scrying",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 10,
@@ -15248,6 +15974,7 @@
   {
     "Id": "searing_smite",
     "Name": "Searing Smite",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15269,6 +15996,7 @@
   {
     "Id": "searing_smite_2024",
     "Name": "Searing Smite",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15290,6 +16018,7 @@
   {
     "Id": "leomunds_secret_chest",
     "Name": "Secret Chest",
+    "Source": "PHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -15311,6 +16040,7 @@
   {
     "Id": "leomunds_secret_chest_2024",
     "Name": "Secret Chest",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -15332,6 +16062,7 @@
   {
     "Id": "see_invisibility",
     "Name": "See Invisibility",
+    "Source": "PHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -15353,6 +16084,7 @@
   {
     "Id": "see_invisibility_2024",
     "Name": "See Invisibility",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -15374,6 +16106,7 @@
   {
     "Id": "seeming",
     "Name": "Seeming",
+    "Source": "PHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -15395,6 +16128,7 @@
   {
     "Id": "seeming_2024",
     "Name": "Seeming",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -15416,6 +16150,7 @@
   {
     "Id": "sending",
     "Name": "Sending",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15437,6 +16172,7 @@
   {
     "Id": "sending_2024",
     "Name": "Sending",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -15458,6 +16194,7 @@
   {
     "Id": "sequester",
     "Name": "Sequester",
+    "Source": "PHB",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15479,6 +16216,7 @@
   {
     "Id": "sequester_2024",
     "Name": "Sequester",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15500,6 +16238,7 @@
   {
     "Id": "shadow_blade",
     "Name": "Shadow Blade",
+    "Source": "XGE",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -15521,6 +16260,7 @@
   {
     "Id": "shadow_of_moil",
     "Name": "Shadow of Moil",
+    "Source": "XGE",
     "Level": 4,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -15542,6 +16282,7 @@
   {
     "Id": "shape_water",
     "Name": "Shape Water",
+    "Source": "XGE",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15563,6 +16304,7 @@
   {
     "Id": "shapechange",
     "Name": "Shapechange",
+    "Source": "PHB",
     "Level": 9,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15584,6 +16326,7 @@
   {
     "Id": "shapechange_2024",
     "Name": "Shapechange",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15605,6 +16348,7 @@
   {
     "Id": "shatter",
     "Name": "Shatter",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15626,6 +16370,7 @@
   {
     "Id": "shatter_2024",
     "Name": "Shatter",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15647,6 +16392,7 @@
   {
     "Id": "shield",
     "Name": "Shield",
+    "Source": "PHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -15668,6 +16414,7 @@
   {
     "Id": "shield_2024",
     "Name": "Shield",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -15689,6 +16436,7 @@
   {
     "Id": "shield_of_faith",
     "Name": "Shield of Faith",
+    "Source": "PHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -15710,6 +16458,7 @@
   {
     "Id": "shield_of_faith_2024",
     "Name": "Shield of Faith",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -15731,6 +16480,7 @@
   {
     "Id": "shillelagh",
     "Name": "Shillelagh",
+    "Source": "PHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15752,6 +16502,7 @@
   {
     "Id": "shillelagh_2024",
     "Name": "Shillelagh",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15773,6 +16524,7 @@
   {
     "Id": "shining_smite_2024",
     "Name": "Shining Smite",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15794,6 +16546,7 @@
   {
     "Id": "shocking_grasp",
     "Name": "Shocking Grasp",
+    "Source": "PHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15815,6 +16568,7 @@
   {
     "Id": "shocking_grasp_2024",
     "Name": "Shocking Grasp",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15836,6 +16590,7 @@
   {
     "Id": "sickening_radiance",
     "Name": "Sickening Radiance",
+    "Source": "XGE",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -15857,6 +16612,7 @@
   {
     "Id": "silence",
     "Name": "Silence",
+    "Source": "PHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -15878,6 +16634,7 @@
   {
     "Id": "silence_2024",
     "Name": "Silence",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -15899,6 +16656,7 @@
   {
     "Id": "silent_image",
     "Name": "Silent Image",
+    "Source": "PHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -15920,6 +16678,7 @@
   {
     "Id": "silent_image_2024",
     "Name": "Silent Image",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -15941,6 +16700,7 @@
   {
     "Id": "silvery_barbs",
     "Name": "Silvery Barbs",
+    "Source": "SCC",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -15962,6 +16722,7 @@
   {
     "Id": "simbuls_synostodweomer_2024",
     "Name": "Simbul's Synostodweomer",
+    "Source": "FRHoF",
     "Level": 7,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -15983,6 +16744,7 @@
   {
     "Id": "simulacrum",
     "Name": "Simulacrum",
+    "Source": "PHB",
     "Level": 7,
     "School": "Illusion",
     "CastingTimeNumber": 12,
@@ -16004,6 +16766,7 @@
   {
     "Id": "simulacrum_2024",
     "Name": "Simulacrum",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Illusion",
     "CastingTimeNumber": 12,
@@ -16025,6 +16788,7 @@
   {
     "Id": "skill_empowerment",
     "Name": "Skill Empowerment",
+    "Source": "XGE",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16046,6 +16810,7 @@
   {
     "Id": "skywrite",
     "Name": "Skywrite",
+    "Source": "XGE",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16067,6 +16832,7 @@
   {
     "Id": "sleep",
     "Name": "Sleep",
+    "Source": "PHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -16088,6 +16854,7 @@
   {
     "Id": "sleep_2024",
     "Name": "Sleep",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -16109,6 +16876,7 @@
   {
     "Id": "sleet_storm",
     "Name": "Sleet Storm",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16130,6 +16898,7 @@
   {
     "Id": "sleet_storm_2024",
     "Name": "Sleet Storm",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16151,6 +16920,7 @@
   {
     "Id": "slow",
     "Name": "Slow",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16172,6 +16942,7 @@
   {
     "Id": "slow_2024",
     "Name": "Slow",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16193,6 +16964,7 @@
   {
     "Id": "snare",
     "Name": "Snare",
+    "Source": "XGE",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -16214,6 +16986,7 @@
   {
     "Id": "snillocs_snowball_swarm",
     "Name": "Snilloc's Snowball Swarm",
+    "Source": "XGE",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16235,6 +17008,7 @@
   {
     "Id": "songals_elemental_suffusion_2024",
     "Name": "Songal's Elemental Suffusion",
+    "Source": "FRHoF",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16256,6 +17030,7 @@
   {
     "Id": "sorcerous_burst_2024",
     "Name": "Sorcerous Burst",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16277,6 +17052,7 @@
   {
     "Id": "soul_cage",
     "Name": "Soul Cage",
+    "Source": "XGE",
     "Level": 6,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16298,6 +17074,7 @@
   {
     "Id": "spare_the_dying",
     "Name": "Spare the Dying",
+    "Source": "PHB",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16319,6 +17096,7 @@
   {
     "Id": "spare_the_dying_2024",
     "Name": "Spare the Dying",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16340,6 +17118,7 @@
   {
     "Id": "speak_with_animals",
     "Name": "Speak with Animals",
+    "Source": "PHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -16361,6 +17140,7 @@
   {
     "Id": "speak_with_animals_2024",
     "Name": "Speak with Animals",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -16382,6 +17162,7 @@
   {
     "Id": "speak_with_dead",
     "Name": "Speak with Dead",
+    "Source": "PHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16403,6 +17184,7 @@
   {
     "Id": "speak_with_dead_2024",
     "Name": "Speak with Dead",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16424,6 +17206,7 @@
   {
     "Id": "speak_with_plants",
     "Name": "Speak with Plants",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16445,6 +17228,7 @@
   {
     "Id": "speak_with_plants_2024",
     "Name": "Speak with Plants",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16466,6 +17250,7 @@
   {
     "Id": "spellfire_flare_2024",
     "Name": "Spellfire Flare",
+    "Source": "FRHoF",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16487,6 +17272,7 @@
   {
     "Id": "spellfire_storm_2024",
     "Name": "Spellfire Storm",
+    "Source": "FRHoF",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16508,6 +17294,7 @@
   {
     "Id": "spider_climb",
     "Name": "Spider Climb",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16529,6 +17316,7 @@
   {
     "Id": "spider_climb_2024",
     "Name": "Spider Climb",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16550,6 +17338,7 @@
   {
     "Id": "spike_growth",
     "Name": "Spike Growth",
+    "Source": "PHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16571,6 +17360,7 @@
   {
     "Id": "spike_growth_2024",
     "Name": "Spike Growth",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16592,6 +17382,7 @@
   {
     "Id": "spirit_guardians",
     "Name": "Spirit Guardians",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16613,6 +17404,7 @@
   {
     "Id": "spirit_guardians_2024",
     "Name": "Spirit Guardians",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16634,6 +17426,7 @@
   {
     "Id": "spirit_lantern_2024",
     "Name": "Spirit Lantern",
+    "Source": "AU",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16650,11 +17443,12 @@
     "DurationUnit": "minute",
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Constitution saving throw. 4d8 necrotic damage. Heals 4d8.\n\nSee AU, page 43."
+    "Description": "Constitution saving throw. 4d8 necrotic damage. Heals 4d8.\n\nSee Arcana Unleashed, page 43."
   },
   {
     "Id": "spirit_shroud",
     "Name": "Spirit Shroud",
+    "Source": "TCE",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16676,6 +17470,7 @@
   {
     "Id": "spirit_of_death",
     "Name": "Spirit of Death",
+    "Source": "BMT",
     "Level": 4,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -16697,6 +17492,7 @@
   {
     "Id": "spiritual_weapon",
     "Name": "Spiritual Weapon",
+    "Source": "PHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16718,6 +17514,7 @@
   {
     "Id": "spiritual_weapon_2024",
     "Name": "Spiritual Weapon",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16739,6 +17536,7 @@
   {
     "Id": "spray_of_cards",
     "Name": "Spray of Cards",
+    "Source": "BMT",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16760,6 +17558,7 @@
   {
     "Id": "staggering_smite",
     "Name": "Staggering Smite",
+    "Source": "PHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16781,6 +17580,7 @@
   {
     "Id": "staggering_smite_2024",
     "Name": "Staggering Smite",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -16802,6 +17602,7 @@
   {
     "Id": "starry_wisp_2024",
     "Name": "Starry Wisp",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -16823,6 +17624,7 @@
   {
     "Id": "steel_wind_strike",
     "Name": "Steel Wind Strike",
+    "Source": "XGE",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16844,6 +17646,7 @@
   {
     "Id": "steel_wind_strike_2024",
     "Name": "Steel Wind Strike",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16865,6 +17668,7 @@
   {
     "Id": "stinking_cloud",
     "Name": "Stinking Cloud",
+    "Source": "PHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16886,6 +17690,7 @@
   {
     "Id": "stinking_cloud_2024",
     "Name": "Stinking Cloud",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -16907,6 +17712,7 @@
   {
     "Id": "stone_shape",
     "Name": "Stone Shape",
+    "Source": "PHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16928,6 +17734,7 @@
   {
     "Id": "stone_shape_2024",
     "Name": "Stone Shape",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16949,6 +17756,7 @@
   {
     "Id": "stoneskin",
     "Name": "Stoneskin",
+    "Source": "PHB",
     "Level": 4,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -16970,6 +17778,7 @@
   {
     "Id": "stoneskin_2024",
     "Name": "Stoneskin",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -16991,6 +17800,7 @@
   {
     "Id": "storm_sphere",
     "Name": "Storm Sphere",
+    "Source": "XGE",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -17012,6 +17822,7 @@
   {
     "Id": "storm_of_vengeance",
     "Name": "Storm of Vengeance",
+    "Source": "PHB",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17033,6 +17844,7 @@
   {
     "Id": "storm_of_vengeance_2024",
     "Name": "Storm of Vengeance",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17054,6 +17866,7 @@
   {
     "Id": "suggestion",
     "Name": "Suggestion",
+    "Source": "PHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -17075,6 +17888,7 @@
   {
     "Id": "suggestion_2024",
     "Name": "Suggestion",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -17096,6 +17910,7 @@
   {
     "Id": "summon_aberration",
     "Name": "Summon Aberration",
+    "Source": "TCE",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17117,6 +17932,7 @@
   {
     "Id": "summon_aberration_2024",
     "Name": "Summon Aberration",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17138,6 +17954,7 @@
   {
     "Id": "summon_beast",
     "Name": "Summon Beast",
+    "Source": "TCE",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17159,6 +17976,7 @@
   {
     "Id": "summon_beast_2024",
     "Name": "Summon Beast",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17180,6 +17998,7 @@
   {
     "Id": "summon_celestial",
     "Name": "Summon Celestial",
+    "Source": "TCE",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17201,6 +18020,7 @@
   {
     "Id": "summon_celestial_2024",
     "Name": "Summon Celestial",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17222,6 +18042,7 @@
   {
     "Id": "summon_construct",
     "Name": "Summon Construct",
+    "Source": "TCE",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17243,6 +18064,7 @@
   {
     "Id": "summon_construct_2024",
     "Name": "Summon Construct",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17264,6 +18086,7 @@
   {
     "Id": "summon_dinosaur_2024",
     "Name": "Summon Dinosaur",
+    "Source": "AU",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17280,11 +18103,12 @@
     "DurationUnit": "hour",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Stronger when cast with a higher-level slot.\n\nSee AU, page 43."
+    "Description": "Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 43."
   },
   {
     "Id": "summon_draconic_spirit",
     "Name": "Summon Draconic Spirit",
+    "Source": "FTD",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17306,6 +18130,7 @@
   {
     "Id": "summon_dragon_2024",
     "Name": "Summon Dragon",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17327,6 +18152,7 @@
   {
     "Id": "summon_elemental",
     "Name": "Summon Elemental",
+    "Source": "TCE",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17348,6 +18174,7 @@
   {
     "Id": "summon_elemental_2024",
     "Name": "Summon Elemental",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17369,6 +18196,7 @@
   {
     "Id": "summon_fey",
     "Name": "Summon Fey",
+    "Source": "TCE",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17390,6 +18218,7 @@
   {
     "Id": "summon_fey_2024",
     "Name": "Summon Fey",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17411,6 +18240,7 @@
   {
     "Id": "summon_fiend",
     "Name": "Summon Fiend",
+    "Source": "TCE",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17432,6 +18262,7 @@
   {
     "Id": "summon_fiend_2024",
     "Name": "Summon Fiend",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17453,6 +18284,7 @@
   {
     "Id": "summon_greater_demon",
     "Name": "Summon Greater Demon",
+    "Source": "XGE",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17474,6 +18306,7 @@
   {
     "Id": "summon_lesser_demons",
     "Name": "Summon Lesser Demons",
+    "Source": "XGE",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17495,6 +18328,7 @@
   {
     "Id": "summon_plant_2024",
     "Name": "Summon Plant",
+    "Source": "AU",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17511,11 +18345,12 @@
     "DurationUnit": "hour",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Stronger when cast with a higher-level slot.\n\nSee AU, page 44."
+    "Description": "Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 44."
   },
   {
     "Id": "summon_shadowspawn",
     "Name": "Summon Shadowspawn",
+    "Source": "TCE",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17537,6 +18372,7 @@
   {
     "Id": "summon_undead",
     "Name": "Summon Undead",
+    "Source": "TCE",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -17558,6 +18394,7 @@
   {
     "Id": "summon_undead_2024",
     "Name": "Summon Undead",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -17579,6 +18416,7 @@
   {
     "Id": "sunbeam",
     "Name": "Sunbeam",
+    "Source": "PHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -17600,6 +18438,7 @@
   {
     "Id": "sunbeam_2024",
     "Name": "Sunbeam",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -17621,6 +18460,7 @@
   {
     "Id": "sunburst",
     "Name": "Sunburst",
+    "Source": "PHB",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -17642,6 +18482,7 @@
   {
     "Id": "sunburst_2024",
     "Name": "Sunburst",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -17663,6 +18504,7 @@
   {
     "Id": "swift_quiver",
     "Name": "Swift Quiver",
+    "Source": "PHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -17684,6 +18526,7 @@
   {
     "Id": "swift_quiver_2024",
     "Name": "Swift Quiver",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -17705,6 +18548,7 @@
   {
     "Id": "sword_burst",
     "Name": "Sword Burst",
+    "Source": "TCE",
     "Level": 0,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17726,6 +18570,7 @@
   {
     "Id": "sylun_s_viper_2024",
     "Name": "Syluné's Viper",
+    "Source": "FRHoF",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17747,6 +18592,7 @@
   {
     "Id": "symbol",
     "Name": "Symbol",
+    "Source": "PHB",
     "Level": 7,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -17768,6 +18614,7 @@
   {
     "Id": "symbol_2024",
     "Name": "Symbol",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -17789,6 +18636,7 @@
   {
     "Id": "synaptic_static",
     "Name": "Synaptic Static",
+    "Source": "XGE",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -17810,6 +18658,7 @@
   {
     "Id": "synaptic_static_2024",
     "Name": "Synaptic Static",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -17831,6 +18680,7 @@
   {
     "Id": "tashas_bubbling_cauldron_2024",
     "Name": "Tasha's Bubbling Cauldron",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -17852,6 +18702,7 @@
   {
     "Id": "tashas_caustic_brew",
     "Name": "Tasha's Caustic Brew",
+    "Source": "TCE",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -17873,6 +18724,7 @@
   {
     "Id": "tashas_mind_whip",
     "Name": "Tasha's Mind Whip",
+    "Source": "TCE",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -17894,6 +18746,7 @@
   {
     "Id": "tashas_otherworldly_guise",
     "Name": "Tasha's Otherworldly Guise",
+    "Source": "TCE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -17915,6 +18768,7 @@
   {
     "Id": "telekinesis",
     "Name": "Telekinesis",
+    "Source": "PHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -17936,6 +18790,7 @@
   {
     "Id": "telekinesis_2024",
     "Name": "Telekinesis",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -17957,6 +18812,7 @@
   {
     "Id": "rarys_telepathic_bond",
     "Name": "Telepathic Bond",
+    "Source": "PHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -17978,6 +18834,7 @@
   {
     "Id": "rarys_telepathic_bond_2024",
     "Name": "Telepathic Bond",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -17999,6 +18856,7 @@
   {
     "Id": "telepathy",
     "Name": "Telepathy",
+    "Source": "PHB",
     "Level": 8,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18020,6 +18878,7 @@
   {
     "Id": "telepathy_2024",
     "Name": "Telepathy",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -18041,6 +18900,7 @@
   {
     "Id": "teleport",
     "Name": "Teleport",
+    "Source": "PHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18062,6 +18922,7 @@
   {
     "Id": "teleport_2024",
     "Name": "Teleport",
+    "Source": "XPHB",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18083,6 +18944,7 @@
   {
     "Id": "teleportation_circle",
     "Name": "Teleportation Circle",
+    "Source": "PHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18104,6 +18966,7 @@
   {
     "Id": "teleportation_circle_2024",
     "Name": "Teleportation Circle",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18125,6 +18988,7 @@
   {
     "Id": "temple_of_the_gods",
     "Name": "Temple of the Gods",
+    "Source": "XGE",
     "Level": 7,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18146,6 +19010,7 @@
   {
     "Id": "temporal_shunt",
     "Name": "Temporal Shunt",
+    "Source": "EGW",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18167,6 +19032,7 @@
   {
     "Id": "tensers_transformation",
     "Name": "Tenser's Transformation",
+    "Source": "XGE",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18188,6 +19054,7 @@
   {
     "Id": "tether_essence",
     "Name": "Tether Essence",
+    "Source": "EGW",
     "Level": 7,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -18209,6 +19076,7 @@
   {
     "Id": "thaumaturgy",
     "Name": "Thaumaturgy",
+    "Source": "PHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18230,6 +19098,7 @@
   {
     "Id": "thaumaturgy_2024",
     "Name": "Thaumaturgy",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18251,6 +19120,7 @@
   {
     "Id": "thorn_whip",
     "Name": "Thorn Whip",
+    "Source": "PHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18272,6 +19142,7 @@
   {
     "Id": "thorn_whip_2024",
     "Name": "Thorn Whip",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18293,6 +19164,7 @@
   {
     "Id": "thunder_step",
     "Name": "Thunder Step",
+    "Source": "XGE",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18314,6 +19186,7 @@
   {
     "Id": "thunderclap",
     "Name": "Thunderclap",
+    "Source": "XGE",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18335,6 +19208,7 @@
   {
     "Id": "thunderclap_2024",
     "Name": "Thunderclap",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18356,6 +19230,7 @@
   {
     "Id": "thunderous_smite",
     "Name": "Thunderous Smite",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18377,6 +19252,7 @@
   {
     "Id": "thunderous_smite_2024",
     "Name": "Thunderous Smite",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18398,6 +19274,7 @@
   {
     "Id": "thunderwave",
     "Name": "Thunderwave",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18419,6 +19296,7 @@
   {
     "Id": "thunderwave_2024",
     "Name": "Thunderwave",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18440,6 +19318,7 @@
   {
     "Id": "tidal_wave",
     "Name": "Tidal Wave",
+    "Source": "XGE",
     "Level": 3,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18461,6 +19340,7 @@
   {
     "Id": "time_ravage",
     "Name": "Time Ravage",
+    "Source": "EGW",
     "Level": 9,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -18482,6 +19362,7 @@
   {
     "Id": "time_stop",
     "Name": "Time Stop",
+    "Source": "PHB",
     "Level": 9,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18503,6 +19384,7 @@
   {
     "Id": "time_stop_2024",
     "Name": "Time Stop",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18524,6 +19406,7 @@
   {
     "Id": "leomunds_tiny_hut",
     "Name": "Tiny Hut",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18545,6 +19428,7 @@
   {
     "Id": "leomunds_tiny_hut_2024",
     "Name": "Tiny Hut",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -18566,6 +19450,7 @@
   {
     "Id": "tiny_servant",
     "Name": "Tiny Servant",
+    "Source": "XGE",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18587,6 +19472,7 @@
   {
     "Id": "toll_the_dead",
     "Name": "Toll the Dead",
+    "Source": "XGE",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -18608,6 +19494,7 @@
   {
     "Id": "toll_the_dead_2024",
     "Name": "Toll the Dead",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -18629,6 +19516,7 @@
   {
     "Id": "tongues",
     "Name": "Tongues",
+    "Source": "PHB",
     "Level": 3,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -18650,6 +19538,7 @@
   {
     "Id": "tongues_2024",
     "Name": "Tongues",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -18671,6 +19560,7 @@
   {
     "Id": "transfix_2024",
     "Name": "Transfix",
+    "Source": "AU",
     "Level": 7,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -18687,11 +19577,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Charisma saving throw. 4d8 psychic damage. Can inflict: charmed, incapacitated. Stronger when cast with a higher-level slot.\n\nSee AU, page 44."
+    "Description": "Charisma saving throw. 4d8 psychic damage. Can inflict: charmed, incapacitated. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 44."
   },
   {
     "Id": "transmute_rock",
     "Name": "Transmute Rock",
+    "Source": "XGE",
     "Level": 5,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18713,6 +19604,7 @@
   {
     "Id": "transport_via_plants",
     "Name": "Transport via Plants",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18734,6 +19626,7 @@
   {
     "Id": "transport_via_plants_2024",
     "Name": "Transport via Plants",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18755,6 +19648,7 @@
   {
     "Id": "tree_stride",
     "Name": "Tree Stride",
+    "Source": "PHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18776,6 +19670,7 @@
   {
     "Id": "tree_stride_2024",
     "Name": "Tree Stride",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18797,6 +19692,7 @@
   {
     "Id": "true_polymorph",
     "Name": "True Polymorph",
+    "Source": "PHB",
     "Level": 9,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18818,6 +19714,7 @@
   {
     "Id": "true_polymorph_2024",
     "Name": "True Polymorph",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -18839,6 +19736,7 @@
   {
     "Id": "true_resurrection",
     "Name": "True Resurrection",
+    "Source": "PHB",
     "Level": 9,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -18860,6 +19758,7 @@
   {
     "Id": "true_resurrection_2024",
     "Name": "True Resurrection",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -18881,6 +19780,7 @@
   {
     "Id": "true_seeing",
     "Name": "True Seeing",
+    "Source": "PHB",
     "Level": 6,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -18902,6 +19802,7 @@
   {
     "Id": "true_seeing_2024",
     "Name": "True Seeing",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -18923,6 +19824,7 @@
   {
     "Id": "true_strike",
     "Name": "True Strike",
+    "Source": "PHB",
     "Level": 0,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -18944,6 +19846,7 @@
   {
     "Id": "true_strike_2024",
     "Name": "True Strike",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -18965,6 +19868,7 @@
   {
     "Id": "tsunami",
     "Name": "Tsunami",
+    "Source": "PHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -18986,6 +19890,7 @@
   {
     "Id": "tsunami_2024",
     "Name": "Tsunami",
+    "Source": "XPHB",
     "Level": 8,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19007,6 +19912,7 @@
   {
     "Id": "uncertain_footing_2024",
     "Name": "Uncertain Footing",
+    "Source": "AU",
     "Level": 2,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -19023,11 +19929,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Intelligence saving throw.\n\nSee AU, page 44."
+    "Description": "Intelligence saving throw.\n\nSee Arcana Unleashed, page 44."
   },
   {
     "Id": "unseen_servant",
     "Name": "Unseen Servant",
+    "Source": "PHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19049,6 +19956,7 @@
   {
     "Id": "unseen_servant_2024",
     "Name": "Unseen Servant",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19070,6 +19978,7 @@
   {
     "Id": "vampiric_touch",
     "Name": "Vampiric Touch",
+    "Source": "PHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -19091,6 +20000,7 @@
   {
     "Id": "vampiric_touch_2024",
     "Name": "Vampiric Touch",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -19112,6 +20022,7 @@
   {
     "Id": "vicious_mockery",
     "Name": "Vicious Mockery",
+    "Source": "PHB",
     "Level": 0,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -19133,6 +20044,7 @@
   {
     "Id": "vicious_mockery_2024",
     "Name": "Vicious Mockery",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -19154,6 +20066,7 @@
   {
     "Id": "vision_of_elapsing_eons_2024",
     "Name": "Vision of Elapsing Eons",
+    "Source": "AU",
     "Level": 9,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -19170,11 +20083,12 @@
     "DurationUnit": "minute",
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Intelligence saving throw. 10d12 psychic damage. Can inflict: exhaustion, paralyzed.\n\nSee AU, page 45."
+    "Description": "Intelligence saving throw. 10d12 psychic damage. Can inflict: exhaustion, paralyzed.\n\nSee Arcana Unleashed, page 45."
   },
   {
     "Id": "vitriolic_sphere",
     "Name": "Vitriolic Sphere",
+    "Source": "XGE",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19196,6 +20110,7 @@
   {
     "Id": "vitriolic_sphere_2024",
     "Name": "Vitriolic Sphere",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19217,6 +20132,7 @@
   {
     "Id": "vortex_warp",
     "Name": "Vortex Warp",
+    "Source": "SCC",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19238,6 +20154,7 @@
   {
     "Id": "wail_of_the_banshee_2024",
     "Name": "Wail of the Banshee",
+    "Source": "AU",
     "Level": 9,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -19254,11 +20171,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Constitution saving throw. 12d10 psychic damage. Can inflict: deafened.\n\nSee AU, page 45."
+    "Description": "Constitution saving throw. 12d10 psychic damage. Can inflict: deafened.\n\nSee Arcana Unleashed, page 45."
   },
   {
     "Id": "wall_of_fire",
     "Name": "Wall of Fire",
+    "Source": "PHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19280,6 +20198,7 @@
   {
     "Id": "wall_of_fire_2024",
     "Name": "Wall of Fire",
+    "Source": "XPHB",
     "Level": 4,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19301,6 +20220,7 @@
   {
     "Id": "wall_of_force",
     "Name": "Wall of Force",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19322,6 +20242,7 @@
   {
     "Id": "wall_of_force_2024",
     "Name": "Wall of Force",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19343,6 +20264,7 @@
   {
     "Id": "wall_of_ice",
     "Name": "Wall of Ice",
+    "Source": "PHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19364,6 +20286,7 @@
   {
     "Id": "wall_of_ice_2024",
     "Name": "Wall of Ice",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19385,6 +20308,7 @@
   {
     "Id": "wall_of_light",
     "Name": "Wall of Light",
+    "Source": "XGE",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19406,6 +20330,7 @@
   {
     "Id": "wall_of_sand",
     "Name": "Wall of Sand",
+    "Source": "XGE",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19427,6 +20352,7 @@
   {
     "Id": "wall_of_stone",
     "Name": "Wall of Stone",
+    "Source": "PHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19448,6 +20374,7 @@
   {
     "Id": "wall_of_stone_2024",
     "Name": "Wall of Stone",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19469,6 +20396,7 @@
   {
     "Id": "wall_of_thorns",
     "Name": "Wall of Thorns",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19490,6 +20418,7 @@
   {
     "Id": "wall_of_thorns_2024",
     "Name": "Wall of Thorns",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19511,6 +20440,7 @@
   {
     "Id": "wall_of_water",
     "Name": "Wall of Water",
+    "Source": "XGE",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19532,6 +20462,7 @@
   {
     "Id": "wardaway_2024",
     "Name": "Wardaway",
+    "Source": "FRHoF",
     "Level": 1,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -19553,6 +20484,7 @@
   {
     "Id": "warding_bond",
     "Name": "Warding Bond",
+    "Source": "PHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -19574,6 +20506,7 @@
   {
     "Id": "warding_bond_2024",
     "Name": "Warding Bond",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Abjuration",
     "CastingTimeNumber": 1,
@@ -19595,6 +20528,7 @@
   {
     "Id": "warding_wind",
     "Name": "Warding Wind",
+    "Source": "XGE",
     "Level": 2,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19616,6 +20550,7 @@
   {
     "Id": "warp_sense",
     "Name": "Warp Sense",
+    "Source": "SatO",
     "Level": 2,
     "School": "Divination",
     "CastingTimeNumber": 1,
@@ -19637,6 +20572,7 @@
   {
     "Id": "water_breathing",
     "Name": "Water Breathing",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -19658,6 +20594,7 @@
   {
     "Id": "water_breathing_2024",
     "Name": "Water Breathing",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -19679,6 +20616,7 @@
   {
     "Id": "water_walk",
     "Name": "Water Walk",
+    "Source": "PHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -19700,6 +20638,7 @@
   {
     "Id": "water_walk_2024",
     "Name": "Water Walk",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -19721,6 +20660,7 @@
   {
     "Id": "watery_sphere",
     "Name": "Watery Sphere",
+    "Source": "XGE",
     "Level": 4,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19742,6 +20682,7 @@
   {
     "Id": "waves_of_exhaustion_2024",
     "Name": "Waves of Exhaustion",
+    "Source": "AU",
     "Level": 5,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -19758,11 +20699,12 @@
     "DurationUnit": "minute",
     "IsConcentration": true,
     "IsRitual": false,
-    "Description": "Constitution saving throw. Can inflict: exhaustion. Area: cone.\n\nSee AU, page 45."
+    "Description": "Constitution saving throw. Can inflict: exhaustion. Area: cone.\n\nSee Arcana Unleashed, page 45."
   },
   {
     "Id": "web",
     "Name": "Web",
+    "Source": "PHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19784,6 +20726,7 @@
   {
     "Id": "web_2024",
     "Name": "Web",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19805,6 +20748,7 @@
   {
     "Id": "weird",
     "Name": "Weird",
+    "Source": "PHB",
     "Level": 9,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -19826,6 +20770,7 @@
   {
     "Id": "weird_2024",
     "Name": "Weird",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Illusion",
     "CastingTimeNumber": 1,
@@ -19847,6 +20792,7 @@
   {
     "Id": "whirlwind",
     "Name": "Whirlwind",
+    "Source": "XGE",
     "Level": 7,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19868,6 +20814,7 @@
   {
     "Id": "wind_walk",
     "Name": "Wind Walk",
+    "Source": "PHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -19889,6 +20836,7 @@
   {
     "Id": "wind_walk_2024",
     "Name": "Wind Walk",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -19910,6 +20858,7 @@
   {
     "Id": "wind_wall",
     "Name": "Wind Wall",
+    "Source": "PHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19931,6 +20880,7 @@
   {
     "Id": "wind_wall_2024",
     "Name": "Wind Wall",
+    "Source": "XPHB",
     "Level": 3,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -19952,6 +20902,7 @@
   {
     "Id": "wish",
     "Name": "Wish",
+    "Source": "PHB",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19973,6 +20924,7 @@
   {
     "Id": "wish_2024",
     "Name": "Wish",
+    "Source": "XPHB",
     "Level": 9,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -19994,6 +20946,7 @@
   {
     "Id": "witch_bolt",
     "Name": "Witch Bolt",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -20015,6 +20968,7 @@
   {
     "Id": "witch_bolt_2024",
     "Name": "Witch Bolt",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -20036,6 +20990,7 @@
   {
     "Id": "wither_and_bloom",
     "Name": "Wither and Bloom",
+    "Source": "SCC",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -20057,6 +21012,7 @@
   {
     "Id": "wither_and_bloom_2024",
     "Name": "Wither and Bloom",
+    "Source": "AU",
     "Level": 2,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -20073,11 +21029,12 @@
     "DurationUnit": null,
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "Constitution saving throw. 3d6 necrotic damage. Area: sphere. Stronger when cast with a higher-level slot.\n\nSee AU, page 45."
+    "Description": "Constitution saving throw. 3d6 necrotic damage. Area: sphere. Stronger when cast with a higher-level slot.\n\nSee Arcana Unleashed, page 45."
   },
   {
     "Id": "word_of_radiance",
     "Name": "Word of Radiance",
+    "Source": "XGE",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -20099,6 +21056,7 @@
   {
     "Id": "word_of_radiance_2024",
     "Name": "Word of Radiance",
+    "Source": "XPHB",
     "Level": 0,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -20120,6 +21078,7 @@
   {
     "Id": "word_of_recall",
     "Name": "Word of Recall",
+    "Source": "PHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -20141,6 +21100,7 @@
   {
     "Id": "word_of_recall_2024",
     "Name": "Word of Recall",
+    "Source": "XPHB",
     "Level": 6,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -20162,6 +21122,7 @@
   {
     "Id": "wrath_of_nature",
     "Name": "Wrath of Nature",
+    "Source": "XGE",
     "Level": 5,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -20183,6 +21144,7 @@
   {
     "Id": "wrathful_smite",
     "Name": "Wrathful Smite",
+    "Source": "PHB",
     "Level": 1,
     "School": "Evocation",
     "CastingTimeNumber": 1,
@@ -20204,6 +21166,7 @@
   {
     "Id": "wrathful_smite_2024",
     "Name": "Wrathful Smite",
+    "Source": "XPHB",
     "Level": 1,
     "School": "Necromancy",
     "CastingTimeNumber": 1,
@@ -20225,6 +21188,7 @@
   {
     "Id": "wristpocket",
     "Name": "Wristpocket",
+    "Source": "EGW",
     "Level": 2,
     "School": "Conjuration",
     "CastingTimeNumber": 1,
@@ -20246,6 +21210,7 @@
   {
     "Id": "yolandes_regal_presence_2024",
     "Name": "Yolande's Regal Presence",
+    "Source": "XPHB",
     "Level": 5,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -20267,6 +21232,7 @@
   {
     "Id": "zephyr_strike",
     "Name": "Zephyr Strike",
+    "Source": "XGE",
     "Level": 1,
     "School": "Transmutation",
     "CastingTimeNumber": 1,
@@ -20288,6 +21254,7 @@
   {
     "Id": "zone_of_amicability_2024",
     "Name": "Zone of Amicability",
+    "Source": "AU",
     "Level": 4,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -20304,11 +21271,12 @@
     "DurationUnit": "minute",
     "IsConcentration": false,
     "IsRitual": false,
-    "Description": "See AU, page 45."
+    "Description": "See Arcana Unleashed, page 45."
   },
   {
     "Id": "zone_of_truth",
     "Name": "Zone of Truth",
+    "Source": "PHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,
@@ -20330,6 +21298,7 @@
   {
     "Id": "zone_of_truth_2024",
     "Name": "Zone of Truth",
+    "Source": "XPHB",
     "Level": 2,
     "School": "Enchantment",
     "CastingTimeNumber": 1,

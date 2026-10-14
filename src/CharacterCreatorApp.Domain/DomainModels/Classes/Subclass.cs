@@ -7,6 +7,9 @@ public class Subclass
     public required string Id { get; set; }
     public required string Name { get; set; }
     public required string ClassId { get; set; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"); see Books.json in the seed data.</summary>
+    public string Source { get; set; } = string.Empty;
     public Class Class { get; set; } = null!;
     public List<Feature> Features { get; set; } = [];
     public List<SubclassSpellProgression> SpellProgression { get; set; } = [];

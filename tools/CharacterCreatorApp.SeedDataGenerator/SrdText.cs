@@ -13,44 +13,6 @@ namespace CharacterCreatorApp.SeedDataGenerator;
 /// </summary>
 internal static partial class SrdText
 {
-    // Titles for the sources the imported data uses; a source missing here is shown by its code
-    private static readonly Dictionary<string, string> Books = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["PHB"] = "Player's Handbook (2014)",
-        ["XPHB"] = "Player's Handbook (2024)",
-        ["DMG"] = "Dungeon Master's Guide (2014)",
-        ["XGE"] = "Xanathar's Guide to Everything",
-        ["TCE"] = "Tasha's Cauldron of Everything",
-        ["SCAG"] = "Sword Coast Adventurer's Guide",
-        ["EGW"] = "Explorer's Guide to Wildemount",
-        ["FTD"] = "Fizban's Treasury of Dragons",
-        ["MTF"] = "Mordenkainen's Tome of Foes",
-        ["VRGR"] = "Van Richten's Guide to Ravenloft",
-        ["BGG"] = "Bigby Presents: Glory of the Giants",
-        ["BMT"] = "The Book of Many Things",
-        ["SatO"] = "Sigil and the Outlands",
-        ["AAG"] = "Spelljammer: Astral Adventurer's Guide",
-        ["SCC"] = "Strixhaven: A Curriculum of Chaos",
-        ["GGR"] = "Guildmasters' Guide to Ravnica",
-        ["ERLW"] = "Eberron: Rising from the Last War",
-        ["EFA"] = "Eberron: Forge of the Artificer",
-        ["FRHoF"] = "Forgotten Realms: Heroes of Faerûn",
-        ["MOT"] = "Mythic Odysseys of Theros",
-        ["DSotDQ"] = "Dragonlance: Shadow of the Dragon Queen",
-        ["AI"] = "Acquisitions Incorporated",
-        ["GoS"] = "Ghosts of Saltmarsh",
-        ["BGDIA"] = "Baldur's Gate: Descent into Avernus",
-        ["IDRotF"] = "Icewind Dale: Rime of the Frostmaiden",
-        ["WBtW"] = "The Wild Beyond the Witchlight",
-        ["ToA"] = "Tomb of Annihilation",
-        ["LLK"] = "Lost Laboratory of Kwalish",
-        ["PSA"] = "Plane Shift: Amonkhet",
-        ["PSK"] = "Plane Shift: Kaladesh",
-        ["PSI"] = "Plane Shift: Innistrad",
-        ["PSX"] = "Plane Shift: Ixalan",
-        ["UATheMysticClass"] = "Unearthed Arcana: The Mystic Class",
-    };
-
     private static readonly Dictionary<string, string> Areas = new()
     {
         ["C"] = "cube",
@@ -96,7 +58,7 @@ internal static partial class SrdText
     public static string Reference(JsonObject entry)
     {
         var source = entry.Str("source") ?? "the source book";
-        var book = Books.GetValueOrDefault(source, source);
+        var book = SourceBooks.Title(source);
 
         return entry.Int("page") is > 0 and var page
             ? string.Create(CultureInfo.InvariantCulture, $"See {book}, page {page}.")

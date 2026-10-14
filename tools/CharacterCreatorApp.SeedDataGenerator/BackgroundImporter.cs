@@ -58,6 +58,7 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
                 Id = id,
                 Name = background.Str("name")!,
                 Edition = edition,
+                Source = SourceBooks.Of(background, edition),
                 ProficiencyIds = Proficiencies(id, background),
                 Languages = edition == RulesEdition.Edition2024 ? Languages2024 : Languages(background),
                 AbilityScoreOptions = AbilityScoreOptions(background),

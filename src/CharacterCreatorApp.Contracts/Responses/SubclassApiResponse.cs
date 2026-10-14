@@ -6,6 +6,7 @@ public record SubclassApiResponse(
     string Id,
     string Name,
     string ClassId,
+    string Source,
     string? SpellListClassId,
     List<SpellProgressionApiResponse> SpellProgression
 );

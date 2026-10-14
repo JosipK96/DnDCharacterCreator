@@ -30,6 +30,7 @@ public class RaceSeedDataTests
 
         // Assert
         race.Edition.Should().Be(RulesEdition.Edition2014);
+        race.Subraces.Select(s => s.Source).Prepend(race.Source).Should().AllBe("PHB");
         (race.Size, race.Speed, race.SkillChoiceCount, race.LanguageChoiceCount).Should().Be((size, speed, skillChoices, languageChoices));
         race.Languages.Should().Equal(languages);
     }
@@ -52,6 +53,7 @@ public class RaceSeedDataTests
 
         // Assert - ability increases and languages come with the 2024 background instead
         race.Edition.Should().Be(RulesEdition.Edition2024);
+        race.Subraces.Select(s => s.Source).Prepend(race.Source).Should().AllBe("XPHB");
         (race.Size, race.Speed, race.Subraces.Count).Should().Be((size, speed, lineages));
         race.AbilityBonuses.Should().BeEmpty();
         race.Languages.Should().BeEmpty();

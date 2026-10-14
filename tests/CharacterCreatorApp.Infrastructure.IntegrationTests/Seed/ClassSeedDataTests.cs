@@ -151,6 +151,57 @@ public class ClassSeedDataTests
     }
 
     [Theory]
+    [InlineData("artificer", "TCE")]
+    [InlineData("barbarian", "PHB")]
+    [InlineData("bard", "PHB")]
+    [InlineData("cleric", "PHB")]
+    [InlineData("druid", "PHB")]
+    [InlineData("fighter", "PHB")]
+    [InlineData("monk", "PHB")]
+    [InlineData("paladin", "PHB")]
+    [InlineData("ranger", "PHB")]
+    [InlineData("rogue", "PHB")]
+    [InlineData("sorcerer", "PHB")]
+    [InlineData("warlock", "PHB")]
+    [InlineData("wizard", "PHB")]
+    [InlineData("artificer-2024", "EFA")]
+    [InlineData("barbarian-2024", "XPHB")]
+    [InlineData("bard-2024", "XPHB")]
+    [InlineData("cleric-2024", "XPHB")]
+    [InlineData("druid-2024", "XPHB")]
+    [InlineData("fighter-2024", "XPHB")]
+    [InlineData("monk-2024", "XPHB")]
+    [InlineData("paladin-2024", "XPHB")]
+    [InlineData("ranger-2024", "XPHB")]
+    [InlineData("rogue-2024", "XPHB")]
+    [InlineData("sorcerer-2024", "XPHB")]
+    [InlineData("warlock-2024", "XPHB")]
+    [InlineData("wizard-2024", "XPHB")]
+    public async Task Class_ComesFromItsBook(string classId, string source)
+    {
+        // Act
+        var @class = await ClassAsync(classId);
+
+        // Assert - the artificer is in neither Player's Handbook
+        @class.Source.Should().Be(source);
+    }
+
+    [Theory]
+    [InlineData("champion", "PHB")]
+    [InlineData("champion-2024", "XPHB")]
+    [InlineData("swashbuckler", "XGE")]
+    [InlineData("alchemist", "TCE")]
+    [InlineData("alchemist-2024", "EFA")]
+    public async Task Subclass_ComesFromItsOwnBook(string subclassId, string source)
+    {
+        // Act
+        var subclass = (await ReadAsync<SubclassSeedRow>("Subclasses.json")).Single(s => s.Id == subclassId);
+
+        // Assert
+        subclass.Source.Should().Be(source);
+    }
+
+    [Theory]
     [InlineData("eldritch-knight")]
     [InlineData("arcane-trickster")]
     public async Task ThirdCaster_KnowsThreeSpellsAtLevelThree(string subclassId)

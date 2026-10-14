@@ -9,6 +9,7 @@ public record BackgroundApiResponse(
     string Id,
     string Name,
     string Edition,
+    string Source,
     List<BackgroundLanguageApiResponse> Languages,
     int LanguageChoiceCount,
     List<BackgroundProficiencyApiResponse> Proficiencies,

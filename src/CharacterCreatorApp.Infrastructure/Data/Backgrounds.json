@@ -3,6 +3,7 @@
     "Id": "acolyte",
     "Name": "Acolyte",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "insight",
       "religion"
@@ -19,6 +20,7 @@
     "Id": "anthropologist",
     "Name": "Anthropologist",
     "Edition": "2014",
+    "Source": "ToA",
     "ProficiencyIds": [
       "insight",
       "religion"
@@ -35,6 +37,7 @@
     "Id": "archaeologist",
     "Name": "Archaeologist",
     "Edition": "2014",
+    "Source": "ToA",
     "ProficiencyIds": [
       "history",
       "survival"
@@ -50,6 +53,7 @@
     "Id": "astral_drifter",
     "Name": "Astral Drifter",
     "Edition": "2014",
+    "Source": "AAG",
     "ProficiencyIds": [
       "insight",
       "religion"
@@ -66,6 +70,7 @@
     "Id": "athlete",
     "Name": "Athlete",
     "Edition": "2014",
+    "Source": "MOT",
     "ProficiencyIds": [
       "acrobatics",
       "athletics",
@@ -82,6 +87,7 @@
     "Id": "azorius_functionary",
     "Name": "Azorius Functionary",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "insight",
       "intimidation"
@@ -98,6 +104,7 @@
     "Id": "boros_legionnaire",
     "Name": "Boros Legionnaire",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "athletics",
       "intimidation"
@@ -111,6 +118,7 @@
     "Id": "celebrity_adventurers_scion",
     "Name": "Celebrity Adventurer's Scion",
     "Edition": "2014",
+    "Source": "AI",
     "ProficiencyIds": [
       "perception",
       "performance",
@@ -128,6 +136,7 @@
     "Id": "charlatan",
     "Name": "Charlatan",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "deception",
       "sleight_of_hand",
@@ -143,6 +152,7 @@
     "Id": "city_watch",
     "Name": "City Watch",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "athletics",
       "insight"
@@ -159,6 +169,7 @@
     "Id": "clan_crafter",
     "Name": "Clan Crafter",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "history",
       "insight"
@@ -175,6 +186,7 @@
     "Id": "cloistered_scholar",
     "Name": "Cloistered Scholar",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "history"
     ],
@@ -190,6 +202,7 @@
     "Id": "courtier",
     "Name": "Courtier",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "insight",
       "persuasion"
@@ -206,6 +219,7 @@
     "Id": "criminal",
     "Name": "Criminal",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "deception",
       "stealth",
@@ -220,6 +234,7 @@
     "Id": "custom_background",
     "Name": "Custom Background",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [],
     "Languages": [
       "any",
@@ -233,6 +248,7 @@
     "Id": "dimir_operative",
     "Name": "Dimir Operative",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "deception",
       "stealth",
@@ -249,6 +265,7 @@
     "Id": "entertainer",
     "Name": "Entertainer",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "acrobatics",
       "performance",
@@ -263,6 +280,7 @@
     "Id": "faceless",
     "Name": "Faceless",
     "Edition": "2014",
+    "Source": "BGDIA",
     "ProficiencyIds": [
       "deception",
       "intimidation",
@@ -279,6 +297,7 @@
     "Id": "faction_agent",
     "Name": "Faction Agent",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "insight"
     ],
@@ -294,6 +313,7 @@
     "Id": "failed_merchant",
     "Name": "Failed Merchant",
     "Edition": "2014",
+    "Source": "AI",
     "ProficiencyIds": [
       "investigation",
       "persuasion"
@@ -309,6 +329,7 @@
     "Id": "far_traveler",
     "Name": "Far Traveler",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "insight",
       "perception"
@@ -324,6 +345,7 @@
     "Id": "feylost",
     "Name": "Feylost",
     "Edition": "2014",
+    "Source": "WBtW",
     "ProficiencyIds": [
       "deception",
       "survival"
@@ -339,6 +361,7 @@
     "Id": "fisher",
     "Name": "Fisher",
     "Edition": "2014",
+    "Source": "GoS",
     "ProficiencyIds": [
       "history",
       "survival"
@@ -354,6 +377,7 @@
     "Id": "folk_hero",
     "Name": "Folk Hero",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "animal_handling",
       "survival",
@@ -368,6 +392,7 @@
     "Id": "gambler",
     "Name": "Gambler",
     "Edition": "2014",
+    "Source": "AI",
     "ProficiencyIds": [
       "deception",
       "insight"
@@ -383,6 +408,7 @@
     "Id": "gate_warden",
     "Name": "Gate Warden",
     "Edition": "2014",
+    "Source": "SatO",
     "ProficiencyIds": [
       "persuasion",
       "survival"
@@ -399,6 +425,7 @@
     "Id": "giant_foundling",
     "Name": "Giant Foundling",
     "Edition": "2014",
+    "Source": "BGG",
     "ProficiencyIds": [
       "intimidation",
       "survival"
@@ -415,6 +442,7 @@
     "Id": "golgari_agent",
     "Name": "Golgari Agent",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "nature",
       "survival",
@@ -429,6 +457,7 @@
     "Id": "grinner",
     "Name": "Grinner",
     "Edition": "2014",
+    "Source": "EGW",
     "ProficiencyIds": [
       "deception",
       "performance",
@@ -443,6 +472,7 @@
     "Id": "gruul_anarch",
     "Name": "Gruul Anarch",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "animal_handling",
       "athletics",
@@ -457,6 +487,7 @@
     "Id": "guild_artisan",
     "Name": "Guild Artisan",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "insight",
       "persuasion"
@@ -472,6 +503,7 @@
     "Id": "haunted_one",
     "Name": "Haunted One",
     "Edition": "2014",
+    "Source": "VRGR",
     "ProficiencyIds": [],
     "Languages": [
       "any"
@@ -484,6 +516,7 @@
     "Id": "hermit",
     "Name": "Hermit",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "medicine",
       "religion",
@@ -500,6 +533,7 @@
     "Id": "house_agent",
     "Name": "House Agent",
     "Edition": "2014",
+    "Source": "ERLW",
     "ProficiencyIds": [
       "investigation",
       "persuasion",
@@ -527,6 +561,7 @@
     "Id": "inheritor",
     "Name": "Inheritor",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "survival"
     ],
@@ -541,6 +576,7 @@
     "Id": "initiate",
     "Name": "Initiate",
     "Edition": "2014",
+    "Source": "PSA",
     "ProficiencyIds": [
       "athletics",
       "intimidation",
@@ -555,6 +591,7 @@
     "Id": "inquisitor",
     "Name": "Inquisitor",
     "Edition": "2014",
+    "Source": "PSI",
     "ProficiencyIds": [
       "investigation",
       "religion",
@@ -569,6 +606,7 @@
     "Id": "investigator",
     "Name": "Investigator",
     "Edition": "2014",
+    "Source": "VRGR",
     "ProficiencyIds": [
       "disguise_kit",
       "thieves-tools"
@@ -582,6 +620,7 @@
     "Id": "izzet_engineer",
     "Name": "Izzet Engineer",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "arcana",
       "investigation"
@@ -595,6 +634,7 @@
     "Id": "knight_of_solamnia",
     "Name": "Knight of Solamnia",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "ProficiencyIds": [
       "athletics",
       "survival"
@@ -611,6 +651,7 @@
     "Id": "knight_of_the_order",
     "Name": "Knight of the Order",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "persuasion"
     ],
@@ -625,6 +666,7 @@
     "Id": "lorehold_student",
     "Name": "Lorehold Student",
     "Edition": "2014",
+    "Source": "SCC",
     "ProficiencyIds": [
       "history",
       "religion"
@@ -641,6 +683,7 @@
     "Id": "mage_of_high_sorcery",
     "Name": "Mage of High Sorcery",
     "Edition": "2014",
+    "Source": "DSotDQ",
     "ProficiencyIds": [
       "arcana",
       "history"
@@ -657,6 +700,7 @@
     "Id": "marine",
     "Name": "Marine",
     "Edition": "2014",
+    "Source": "GoS",
     "ProficiencyIds": [
       "athletics",
       "survival",
@@ -672,6 +716,7 @@
     "Id": "mercenary_veteran",
     "Name": "Mercenary Veteran",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "athletics",
       "persuasion",
@@ -686,6 +731,7 @@
     "Id": "noble",
     "Name": "Noble",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "history",
       "persuasion"
@@ -701,6 +747,7 @@
     "Id": "orzhov_representative",
     "Name": "Orzhov Representative",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "intimidation",
       "religion"
@@ -717,6 +764,7 @@
     "Id": "outlander",
     "Name": "Outlander",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "athletics",
       "survival"
@@ -732,6 +780,7 @@
     "Id": "plaintiff",
     "Name": "Plaintiff",
     "Edition": "2014",
+    "Source": "AI",
     "ProficiencyIds": [
       "medicine",
       "persuasion"
@@ -747,6 +796,7 @@
     "Id": "planar_philosopher",
     "Name": "Planar Philosopher",
     "Edition": "2014",
+    "Source": "SatO",
     "ProficiencyIds": [
       "arcana"
     ],
@@ -762,6 +812,7 @@
     "Id": "prismari_student",
     "Name": "Prismari Student",
     "Edition": "2014",
+    "Source": "SCC",
     "ProficiencyIds": [
       "acrobatics",
       "performance"
@@ -777,6 +828,7 @@
     "Id": "quandrix_student",
     "Name": "Quandrix Student",
     "Edition": "2014",
+    "Source": "SCC",
     "ProficiencyIds": [
       "arcana",
       "nature"
@@ -792,6 +844,7 @@
     "Id": "rakdos_cultist",
     "Name": "Rakdos Cultist",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "acrobatics",
       "performance"
@@ -805,6 +858,7 @@
     "Id": "rewarded",
     "Name": "Rewarded",
     "Edition": "2014",
+    "Source": "BMT",
     "ProficiencyIds": [
       "insight",
       "persuasion"
@@ -820,6 +874,7 @@
     "Id": "rival_intern",
     "Name": "Rival Intern",
     "Edition": "2014",
+    "Source": "AI",
     "ProficiencyIds": [
       "history",
       "investigation"
@@ -835,6 +890,7 @@
     "Id": "ruined",
     "Name": "Ruined",
     "Edition": "2014",
+    "Source": "BMT",
     "ProficiencyIds": [
       "stealth",
       "survival"
@@ -850,6 +906,7 @@
     "Id": "rune_carver",
     "Name": "Rune Carver",
     "Edition": "2014",
+    "Source": "BGG",
     "ProficiencyIds": [
       "history",
       "perception"
@@ -865,6 +922,7 @@
     "Id": "sage",
     "Name": "Sage",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "arcana",
       "history"
@@ -881,6 +939,7 @@
     "Id": "sailor",
     "Name": "Sailor",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "athletics",
       "perception",
@@ -896,6 +955,7 @@
     "Id": "selesnya_initiate",
     "Name": "Selesnya Initiate",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "nature",
       "persuasion"
@@ -909,6 +969,7 @@
     "Id": "shipwright",
     "Name": "Shipwright",
     "Edition": "2014",
+    "Source": "GoS",
     "ProficiencyIds": [
       "history",
       "perception",
@@ -924,6 +985,7 @@
     "Id": "silverquill_student",
     "Name": "Silverquill Student",
     "Edition": "2014",
+    "Source": "SCC",
     "ProficiencyIds": [
       "intimidation",
       "persuasion"
@@ -940,6 +1002,7 @@
     "Id": "simic_scientist",
     "Name": "Simic Scientist",
     "Edition": "2014",
+    "Source": "GGR",
     "ProficiencyIds": [
       "arcana",
       "medicine"
@@ -956,6 +1019,7 @@
     "Id": "smuggler",
     "Name": "Smuggler",
     "Edition": "2014",
+    "Source": "GoS",
     "ProficiencyIds": [
       "athletics",
       "deception",
@@ -970,6 +1034,7 @@
     "Id": "soldier",
     "Name": "Soldier",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "athletics",
       "intimidation",
@@ -984,6 +1049,7 @@
     "Id": "urban_bounty_hunter",
     "Name": "Urban Bounty Hunter",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [],
     "Languages": [],
     "AbilityScoreOptions": [],
@@ -994,6 +1060,7 @@
     "Id": "urchin",
     "Name": "Urchin",
     "Edition": "2014",
+    "Source": "PHB",
     "ProficiencyIds": [
       "sleight_of_hand",
       "stealth",
@@ -1009,6 +1076,7 @@
     "Id": "uthgardt_tribe_member",
     "Name": "Uthgardt Tribe Member",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "athletics",
       "survival"
@@ -1024,6 +1092,7 @@
     "Id": "variant_city_watch_investigator",
     "Name": "Variant City Watch (Investigator)",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "insight",
       "investigation"
@@ -1040,6 +1109,7 @@
     "Id": "vizier",
     "Name": "Vizier",
     "Edition": "2014",
+    "Source": "PSA",
     "ProficiencyIds": [
       "history",
       "religion"
@@ -1053,6 +1123,7 @@
     "Id": "volstrucker_agent",
     "Name": "Volstrucker Agent",
     "Edition": "2014",
+    "Source": "EGW",
     "ProficiencyIds": [
       "deception",
       "stealth",
@@ -1069,6 +1140,7 @@
     "Id": "waterdhavian_noble",
     "Name": "Waterdhavian Noble",
     "Edition": "2014",
+    "Source": "SCAG",
     "ProficiencyIds": [
       "history",
       "persuasion"
@@ -1084,6 +1156,7 @@
     "Id": "wildspacer",
     "Name": "Wildspacer",
     "Edition": "2014",
+    "Source": "AAG",
     "ProficiencyIds": [
       "athletics",
       "survival",
@@ -1099,6 +1172,7 @@
     "Id": "witchlight_hand",
     "Name": "Witchlight Hand",
     "Edition": "2014",
+    "Source": "WBtW",
     "ProficiencyIds": [
       "performance",
       "sleight_of_hand"
@@ -1114,6 +1188,7 @@
     "Id": "witherbloom_student",
     "Name": "Witherbloom Student",
     "Edition": "2014",
+    "Source": "SCC",
     "ProficiencyIds": [
       "nature",
       "survival",
@@ -1130,6 +1205,7 @@
     "Id": "aberrant_heir_2024",
     "Name": "Aberrant Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "history",
       "intimidation",
@@ -1152,6 +1228,7 @@
     "Id": "acolyte_2024",
     "Name": "Acolyte",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "insight",
       "religion",
@@ -1174,6 +1251,7 @@
     "Id": "agent_of_the_ninth_quill_2024",
     "Name": "Agent of the Ninth Quill",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "arcana",
       "sleight_of_hand",
@@ -1196,6 +1274,7 @@
     "Id": "archaeologist_2024",
     "Name": "Archaeologist",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "history",
       "survival",
@@ -1218,6 +1297,7 @@
     "Id": "artisan_2024",
     "Name": "Artisan",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "investigation",
       "persuasion"
@@ -1239,6 +1319,7 @@
     "Id": "bejeweled_conclave_spy_2024",
     "Name": "Bejeweled Conclave Spy",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "deception",
       "perception",
@@ -1261,6 +1342,7 @@
     "Id": "carouser_2024",
     "Name": "Carouser",
     "Edition": "2024",
+    "Source": "ABH",
     "ProficiencyIds": [
       "deception",
       "persuasion"
@@ -1282,6 +1364,7 @@
     "Id": "charlatan_2024",
     "Name": "Charlatan",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "deception",
       "sleight_of_hand",
@@ -1304,6 +1387,7 @@
     "Id": "chondathan_freebooter_2024",
     "Name": "Chondathan Freebooter",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "athletics",
       "sleight_of_hand",
@@ -1326,6 +1410,7 @@
     "Id": "cosmic_dawn_experiment_2024",
     "Name": "Cosmic Dawn Experiment",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "athletics",
       "survival"
@@ -1347,6 +1432,7 @@
     "Id": "covenant_of_the_grave_recruit_2024",
     "Name": "Covenant of the Grave Recruit",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "history",
       "medicine",
@@ -1369,6 +1455,7 @@
     "Id": "criminal_2024",
     "Name": "Criminal",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "sleight_of_hand",
       "stealth",
@@ -1391,6 +1478,7 @@
     "Id": "crucible_storm_chaser_2024",
     "Name": "Crucible Storm Chaser",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "athletics",
       "nature",
@@ -1413,6 +1501,7 @@
     "Id": "dead_magic_dweller_2024",
     "Name": "Dead Magic Dweller",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "medicine",
       "survival",
@@ -1435,6 +1524,7 @@
     "Id": "dragon_cultist_2024",
     "Name": "Dragon Cultist",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "deception",
       "stealth",
@@ -1457,6 +1547,7 @@
     "Id": "emerald_enclave_caretaker_2024",
     "Name": "Emerald Enclave Caretaker",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "nature",
       "survival",
@@ -1479,6 +1570,7 @@
     "Id": "entertainer_2024",
     "Name": "Entertainer",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "acrobatics",
       "performance"
@@ -1500,6 +1592,7 @@
     "Id": "familiar_trainer_2024",
     "Name": "Familiar Trainer",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "animal_handling",
       "arcana"
@@ -1521,6 +1614,7 @@
     "Id": "farmer_2024",
     "Name": "Farmer",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "animal_handling",
       "nature",
@@ -1543,6 +1637,7 @@
     "Id": "flaming_fist_mercenary_2024",
     "Name": "Flaming Fist Mercenary",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "intimidation",
       "perception",
@@ -1565,6 +1660,7 @@
     "Id": "genie_touched_2024",
     "Name": "Genie Touched",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "perception",
       "persuasion",
@@ -1587,6 +1683,7 @@
     "Id": "guard_2024",
     "Name": "Guard",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "athletics",
       "perception"
@@ -1608,6 +1705,7 @@
     "Id": "guide_2024",
     "Name": "Guide",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "stealth",
       "survival",
@@ -1630,6 +1728,7 @@
     "Id": "harper_2024",
     "Name": "Harper",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "performance",
       "sleight_of_hand",
@@ -1652,6 +1751,7 @@
     "Id": "haunted_one_2024",
     "Name": "Haunted One",
     "Edition": "2024",
+    "Source": "RHW",
     "ProficiencyIds": [
       "arcana",
       "survival"
@@ -1673,6 +1773,7 @@
     "Id": "hermit_2024",
     "Name": "Hermit",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "medicine",
       "religion",
@@ -1695,6 +1796,7 @@
     "Id": "horizon_weaver_initiate_2024",
     "Name": "Horizon Weaver Initiate",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "acrobatics",
       "survival",
@@ -1717,6 +1819,7 @@
     "Id": "house_agent_2024",
     "Name": "House Agent",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "investigation",
       "persuasion"
@@ -1738,6 +1841,7 @@
     "Id": "house_cannith_heir_2024",
     "Name": "House Cannith Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "investigation",
       "sleight_of_hand"
@@ -1759,6 +1863,7 @@
     "Id": "house_deneith_heir_2024",
     "Name": "House Deneith Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "insight",
       "perception"
@@ -1780,6 +1885,7 @@
     "Id": "house_ghallanda_heir_2024",
     "Name": "House Ghallanda Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "insight",
       "persuasion",
@@ -1802,6 +1908,7 @@
     "Id": "house_jorasco_heir_2024",
     "Name": "House Jorasco Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "medicine",
       "stealth",
@@ -1824,6 +1931,7 @@
     "Id": "house_kundarak_heir_2024",
     "Name": "House Kundarak Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "arcana",
       "investigation",
@@ -1846,6 +1954,7 @@
     "Id": "house_lyrandar_heir_2024",
     "Name": "House Lyrandar Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "acrobatics",
       "nature",
@@ -1868,6 +1977,7 @@
     "Id": "house_medani_heir_2024",
     "Name": "House Medani Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "insight",
       "investigation",
@@ -1890,6 +2000,7 @@
     "Id": "house_orien_heir_2024",
     "Name": "House Orien Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "acrobatics",
       "athletics",
@@ -1912,6 +2023,7 @@
     "Id": "house_phiarlan_heir_2024",
     "Name": "House Phiarlan Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "deception",
       "stealth",
@@ -1934,6 +2046,7 @@
     "Id": "house_sivis_heir_2024",
     "Name": "House Sivis Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "history",
       "perception",
@@ -1956,6 +2069,7 @@
     "Id": "house_tharashk_heir_2024",
     "Name": "House Tharashk Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "perception",
       "survival"
@@ -1977,6 +2091,7 @@
     "Id": "house_thuranni_heir_2024",
     "Name": "House Thuranni Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "performance",
       "stealth"
@@ -1998,6 +2113,7 @@
     "Id": "house_vadalis_heir_2024",
     "Name": "House Vadalis Heir",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "animal_handling",
       "nature",
@@ -2020,6 +2136,7 @@
     "Id": "ice_fisher_2024",
     "Name": "Ice Fisher",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "animal_handling",
       "athletics",
@@ -2042,6 +2159,7 @@
     "Id": "inquisitive_2024",
     "Name": "Inquisitive",
     "Edition": "2024",
+    "Source": "EFA",
     "ProficiencyIds": [
       "insight",
       "investigation",
@@ -2064,6 +2182,7 @@
     "Id": "investigator_2024",
     "Name": "Investigator",
     "Edition": "2024",
+    "Source": "RHW",
     "ProficiencyIds": [
       "insight",
       "investigation",
@@ -2086,6 +2205,7 @@
     "Id": "knight_of_the_gauntlet_2024",
     "Name": "Knight of the Gauntlet",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "athletics",
       "medicine",
@@ -2108,6 +2228,7 @@
     "Id": "lords_alliance_vassal_2024",
     "Name": "Lords' Alliance Vassal",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "insight",
       "persuasion",
@@ -2130,6 +2251,7 @@
     "Id": "lorwyn_expert_2024",
     "Name": "Lorwyn Expert",
     "Edition": "2024",
+    "Source": "LFL",
     "ProficiencyIds": [
       "athletics",
       "nature",
@@ -2152,6 +2274,7 @@
     "Id": "merchant_2024",
     "Name": "Merchant",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "animal_handling",
       "persuasion",
@@ -2174,6 +2297,7 @@
     "Id": "mist_wanderer_2024",
     "Name": "Mist Wanderer",
     "Edition": "2024",
+    "Source": "RHW",
     "ProficiencyIds": [
       "survival",
       "stealth"
@@ -2195,6 +2319,7 @@
     "Id": "moonwell_pilgrim_2024",
     "Name": "Moonwell Pilgrim",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "nature",
       "performance",
@@ -2217,6 +2342,7 @@
     "Id": "mulhorandi_tomb_raider_2024",
     "Name": "Mulhorandi Tomb Raider",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "investigation",
       "religion",
@@ -2239,6 +2365,7 @@
     "Id": "mythalkeeper_2024",
     "Name": "Mythalkeeper",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "arcana",
       "history",
@@ -2261,6 +2388,7 @@
     "Id": "noble_2024",
     "Name": "Noble",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "history",
       "persuasion"
@@ -2282,6 +2410,7 @@
     "Id": "phantasmic_circus_trouper_2024",
     "Name": "Phantasmic Circus Trouper",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "deception",
       "performance",
@@ -2304,6 +2433,7 @@
     "Id": "purple_dragon_squire_2024",
     "Name": "Purple Dragon Squire",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "animal_handling",
       "insight",
@@ -2326,6 +2456,7 @@
     "Id": "rashemi_wanderer_2024",
     "Name": "Rashemi Wanderer",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "intimidation",
       "perception",
@@ -2348,6 +2479,7 @@
     "Id": "sage_2024",
     "Name": "Sage",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "arcana",
       "history",
@@ -2370,6 +2502,7 @@
     "Id": "sailor_2024",
     "Name": "Sailor",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "acrobatics",
       "perception",
@@ -2392,6 +2525,7 @@
     "Id": "scribe_2024",
     "Name": "Scribe",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "investigation",
       "perception",
@@ -2414,6 +2548,7 @@
     "Id": "seer_apprentice_2024",
     "Name": "Seer Apprentice",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "history",
       "insight",
@@ -2436,6 +2571,7 @@
     "Id": "shadowmasters_exile_2024",
     "Name": "Shadowmasters Exile",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "acrobatics",
       "stealth",
@@ -2458,6 +2594,7 @@
     "Id": "shadowmoor_expert_2024",
     "Name": "Shadowmoor Expert",
     "Edition": "2024",
+    "Source": "LFL",
     "ProficiencyIds": [
       "acrobatics",
       "deception",
@@ -2480,6 +2617,7 @@
     "Id": "soldier_2024",
     "Name": "Soldier",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "athletics",
       "intimidation"
@@ -2501,6 +2639,7 @@
     "Id": "spellfire_initiate_2024",
     "Name": "Spellfire Initiate",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "arcana",
       "perception"
@@ -2522,6 +2661,7 @@
     "Id": "spirit_medium_2024",
     "Name": "Spirit Medium",
     "Edition": "2024",
+    "Source": "RHW",
     "ProficiencyIds": [
       "insight",
       "religion"
@@ -2543,6 +2683,7 @@
     "Id": "vampire_devotee_2024",
     "Name": "Vampire Devotee",
     "Edition": "2024",
+    "Source": "ABH",
     "ProficiencyIds": [
       "persuasion",
       "stealth",
@@ -2565,6 +2706,7 @@
     "Id": "vampire_survivor_2024",
     "Name": "Vampire Survivor",
     "Edition": "2024",
+    "Source": "ABH",
     "ProficiencyIds": [
       "insight",
       "religion",
@@ -2587,6 +2729,7 @@
     "Id": "ward_of_the_sheltering_hands_2024",
     "Name": "Ward of the Sheltering Hands",
     "Edition": "2024",
+    "Source": "AU",
     "ProficiencyIds": [
       "insight",
       "medicine",
@@ -2609,6 +2752,7 @@
     "Id": "wayfarer_2024",
     "Name": "Wayfarer",
     "Edition": "2024",
+    "Source": "XPHB",
     "ProficiencyIds": [
       "insight",
       "stealth",
@@ -2631,6 +2775,7 @@
     "Id": "zhentarim_mercenary_2024",
     "Name": "Zhentarim Mercenary",
     "Edition": "2024",
+    "Source": "FRHoF",
     "ProficiencyIds": [
       "intimidation",
       "perception",

@@ -12,6 +12,9 @@ public class Background
     /// <summary>RulesEdition.Edition2014 or RulesEdition.Edition2024; a 2024 background's id ends in "_2024".</summary>
     public required string Edition { get; set; }
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE"); see Books.json in the seed data.</summary>
+    public string Source { get; set; } = string.Empty;
+
     public List<BackgroundProficiency> BackgroundProficiencies { get; set; } = [];
 
     /// <summary>

@@ -256,6 +256,45 @@ public partial class SeedDataIntegrityTests
         Repeated(races.SelectMany(r => r.Traits).Concat(subraces.SelectMany(s => s.Traits)).Select(t => t.Id)).Should().BeEmpty();
     }
 
+    [Fact]
+    public async Task EverySourceAFileNames_IsABookOfTheRowsEdition()
+    {
+        // Arrange - the book filter offers what Books.json lists, so a row from a book missing
+        // there could never be allowed, and one filed under the other edition's book never shown
+        var books = (await ReadAsync<BookSeedRow>("Books.json")).ToDictionary(b => b.Code, b => b.Edition);
+        var races = await ReadAsync<RaceSeedRow>("Races.json");
+        var classes = await ReadAsync<ClassSeedRow>("Classes.json");
+        var classEditions = classes.ToDictionary(c => c.Id, c => c.Edition);
+
+        var rows = races.Select(r => (Row: $"race {r.Id}", r.Source, Edition: (string?)r.Edition))
+            .Concat(races.SelectMany(r => r.Subraces.Select(s => (Row: $"subrace {s.Id}", s.Source, Edition: (string?)r.Edition))))
+            .Concat(classes.Select(c => (Row: $"class {c.Id}", c.Source, Edition: (string?)c.Edition)))
+            .Concat((await ReadAsync<SubclassSeedRow>("Subclasses.json")).Select(s => (Row: $"subclass {s.Id}", s.Source, Edition: (string?)classEditions[s.ClassId])))
+            .Concat((await ReadAsync<BackgroundSeedRow>("Backgrounds.json")).Select(b => (Row: $"background {b.Id}", b.Source, Edition: (string?)b.Edition)))
+            .Concat((await ReadAsync<FeatSeedRow>("Feats.json")).Select(f => (Row: $"feat {f.Id}", f.Source, Edition: (string?)f.Edition)))
+            .Concat((await ReadAsync<SpellSeedRow>(Path.Combine("Spells", "Spells.json"))).Select(s => (Row: $"spell {s.Id}", s.Source, Edition: (string?)null)));
+
+        // Act - a spell row has no edition of its own, so only its book is checked
+        var wrong = rows
+            .Where(r => !books.TryGetValue(r.Source, out var edition) || (r.Edition != null && r.Edition != edition))
+            .Select(r => $"{r.Row}: {r.Source}")
+            .ToList();
+
+        // Assert
+        wrong.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task Books_HaveOnePlayersHandbookPerEdition()
+    {
+        // Act
+        var handbooks = (await ReadAsync<BookSeedRow>("Books.json")).Where(b => b.IsPlayersHandbook);
+
+        // Assert
+        handbooks.Select(b => (b.Edition, b.Code)).Should().BeEquivalentTo(
+            [(RulesEdition.Edition2014, "PHB"), (RulesEdition.Edition2024, "XPHB")]);
+    }
+
     // Choices of skills and tools list proficiency ids; an ability score choice lists abilities
     private static List<string> ProficiencyOptions(FeatRow feat) =>
         feat.Choice is { Type: "skills" or "skills_tools" } choice ? choice.Options ?? [] : [];

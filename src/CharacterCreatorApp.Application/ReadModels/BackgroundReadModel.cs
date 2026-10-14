@@ -8,6 +8,9 @@ public class BackgroundReadModel
     /// <summary>RulesEdition.Edition2014 or RulesEdition.Edition2024.</summary>
     public string Edition { get; set; } = string.Empty;
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE").</summary>
+    public string Source { get; set; } = string.Empty;
+
     public List<BackgroundLanguageReadModel> Languages { get; set; } = new();
     public int LanguageChoiceCount { get; set; }
     public List<BackgroundProficiencyReadModel> Proficiencies { get; set; } = new();

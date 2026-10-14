@@ -10,6 +10,9 @@ public sealed record RaceSeedRow
     public required string Id { get; init; }
     public required string Name { get; init; }
     public required string Edition { get; init; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"), a row of Books.json.</summary>
+    public required string Source { get; init; }
     public required string Size { get; init; }
     public int Speed { get; init; }
 
@@ -43,6 +46,9 @@ public sealed record SubraceSeedRow
 {
     public required string Id { get; init; }
     public required string Name { get; init; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"), a row of Books.json.</summary>
+    public required string Source { get; init; }
 
     /// <summary>Set only where the subrace changes its race's speed: a wood elf's 35 feet.</summary>
     public int? Speed { get; init; }

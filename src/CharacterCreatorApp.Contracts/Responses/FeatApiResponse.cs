@@ -11,6 +11,7 @@ public record FeatApiResponse(
     string Id,
     string Name,
     string Edition,
+    string Source,
     string? Category,
     string Description,
     List<string> Prerequisites,

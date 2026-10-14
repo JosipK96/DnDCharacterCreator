@@ -10,6 +10,9 @@ public class Subrace
     public required string Name { get; set; }
     public required string RaceId { get; set; }
 
+    /// <summary>The code of the book it comes from ("PHB", "XGE"); see Books.json in the seed data.</summary>
+    public string Source { get; set; } = string.Empty;
+
     /// <summary>Set only where the subrace changes its race's speed; see Race.SpeedWith.</summary>
     public int? Speed { get; set; }
 

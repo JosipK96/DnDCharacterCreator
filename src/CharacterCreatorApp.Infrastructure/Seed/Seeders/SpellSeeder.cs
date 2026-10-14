@@ -53,6 +53,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
         {
             Id = row.Id,
             Name = row.Name,
+            Source = row.Source,
             Level = row.Level,
             School = row.School,
             CastingTimeNumber = row.CastingTimeNumber,

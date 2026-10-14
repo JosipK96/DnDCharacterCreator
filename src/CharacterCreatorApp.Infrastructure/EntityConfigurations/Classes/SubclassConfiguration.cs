@@ -17,6 +17,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Classes
             builder.Property(x => x.SpellListClassId)
                 .HasMaxLength(50);
 
+            builder.Property(x => x.Source)
+                .HasMaxLength(20);
+
             builder.Property(x => x.SpellSchools);
             builder.Property(x => x.AnySchoolSpellLevels);
 

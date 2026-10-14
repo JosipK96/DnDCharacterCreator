@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json.Nodes;
 
+using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
 namespace CharacterCreatorApp.SeedDataGenerator;
@@ -104,6 +105,7 @@ internal sealed class SpellImporter(FiveEToolsSource source, EntryRenderer rende
             // The id keeps the book's name, so the ids characters store never change
             Id = id,
             Name = SrdText.SrdName(spell) ?? spell.Str("name")!,
+            Source = SourceBooks.Of(spell, Sources2024.Contains(spell.Str("source")!) ? RulesEdition.Edition2024 : RulesEdition.Edition2014),
             Level = spell.Int("level") ?? 0,
             School = Schools.GetValueOrDefault(school, school),
             CastingTimeNumber = time.Int("number") ?? 1,

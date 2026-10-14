@@ -10,6 +10,9 @@ public sealed record BackgroundSeedRow
     public required string Id { get; init; }
     public required string Name { get; init; }
     public required string Edition { get; init; }
+
+    /// <summary>The code of the book it comes from ("PHB", "XGE"), a row of Books.json.</summary>
+    public required string Source { get; init; }
     public List<string> ProficiencyIds { get; init; } = [];
 
     /// <summary>Language names ("dwarvish"), with "any" for each one the player picks.</summary>

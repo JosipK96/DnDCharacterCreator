@@ -11,6 +11,9 @@ namespace CharacterCreatorApp.Application.ReadModels
         /// <summary>RulesEdition.Edition2014 or RulesEdition.Edition2024.</summary>
         public required string Edition { get; set; }
 
+        /// <summary>The code of the book it comes from ("PHB", "XGE").</summary>
+        public string Source { get; set; } = string.Empty;
+
         /// <summary>"Origin", "General", "Fighting Style", "Epic Boon"; null for a 2014 feat.</summary>
         public string? Category { get; set; }
 

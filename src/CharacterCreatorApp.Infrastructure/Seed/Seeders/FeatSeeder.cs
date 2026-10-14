@@ -21,6 +21,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                 Name = row.Name,
                 Description = row.Description,
                 Edition = row.Edition,
+                Source = row.Source,
                 Category = row.Category,
                 Prerequisites = row.Prerequisites,
                 IsRepeatable = row.IsRepeatable,

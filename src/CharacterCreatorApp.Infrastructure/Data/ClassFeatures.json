@@ -8435,7 +8435,7 @@
   {
     "Id": "reanimator-2024-3-reanimator-spells",
     "Name": "Reanimator Spells",
-    "Description": "See RHW, page 15.",
+    "Description": "See Ravenloft: The Horrors Within, page 15.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "reanimator-2024",
@@ -8444,7 +8444,7 @@
   {
     "Id": "reanimator-2024-3-reanimators-skill-set",
     "Name": "Reanimator's Skill Set",
-    "Description": "See RHW, page 15.",
+    "Description": "See Ravenloft: The Horrors Within, page 15.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "reanimator-2024",
@@ -8453,7 +8453,7 @@
   {
     "Id": "reanimator-2024-3-reanimated-companion",
     "Name": "Reanimated Companion",
-    "Description": "See RHW, page 15.",
+    "Description": "See Ravenloft: The Horrors Within, page 15.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "reanimator-2024",
@@ -8462,7 +8462,7 @@
   {
     "Id": "reanimator-2024-5-strange-modifications",
     "Name": "Strange Modifications",
-    "Description": "See RHW, page 16.",
+    "Description": "See Ravenloft: The Horrors Within, page 16.",
     "Level": 5,
     "ClassId": null,
     "SubclassId": "reanimator-2024",
@@ -8471,7 +8471,7 @@
   {
     "Id": "reanimator-2024-9-improved-reanimation",
     "Name": "Improved Reanimation",
-    "Description": "See RHW, page 16.",
+    "Description": "See Ravenloft: The Horrors Within, page 16.",
     "Level": 9,
     "ClassId": null,
     "SubclassId": "reanimator-2024",
@@ -8480,7 +8480,7 @@
   {
     "Id": "reanimator-2024-9-macabre-modifications",
     "Name": "Macabre Modifications",
-    "Description": "See RHW, page 16.",
+    "Description": "See Ravenloft: The Horrors Within, page 16.",
     "Level": 9,
     "ClassId": null,
     "SubclassId": "reanimator-2024",
@@ -8489,7 +8489,7 @@
   {
     "Id": "reanimator-2024-15-refined-reanimation",
     "Name": "Refined Reanimation",
-    "Description": "See RHW, page 16.",
+    "Description": "See Ravenloft: The Horrors Within, page 16.",
     "Level": 15,
     "ClassId": null,
     "SubclassId": "reanimator-2024",
@@ -9119,7 +9119,7 @@
   {
     "Id": "spirits-2024-3-channeler",
     "Name": "Channeler",
-    "Description": "See RHW, page 17.",
+    "Description": "See Ravenloft: The Horrors Within, page 17.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "spirits-2024",
@@ -9128,7 +9128,7 @@
   {
     "Id": "spirits-2024-3-spirits-from-beyond",
     "Name": "Spirits from Beyond",
-    "Description": "See RHW, page 17.",
+    "Description": "See Ravenloft: The Horrors Within, page 17.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "spirits-2024",
@@ -9137,7 +9137,7 @@
   {
     "Id": "spirits-2024-6-empowered-channeling",
     "Name": "Empowered Channeling",
-    "Description": "See RHW, page 18.",
+    "Description": "See Ravenloft: The Horrors Within, page 18.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "spirits-2024",
@@ -9146,7 +9146,7 @@
   {
     "Id": "spirits-2024-14-mystical-connection",
     "Name": "Mystical Connection",
-    "Description": "See RHW, page 18.",
+    "Description": "See Ravenloft: The Horrors Within, page 18.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "spirits-2024",
@@ -9353,7 +9353,7 @@
   {
     "Id": "arcana-2024-3-arcana-domain-spells",
     "Name": "Arcana Domain Spells",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "arcana-2024",
@@ -9362,7 +9362,7 @@
   {
     "Id": "arcana-2024-3-modify-magic",
     "Name": "Modify Magic",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "arcana-2024",
@@ -9371,7 +9371,7 @@
   {
     "Id": "arcana-2024-3-student-of-arcana",
     "Name": "Student of Arcana",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "arcana-2024",
@@ -9380,7 +9380,7 @@
   {
     "Id": "arcana-2024-6-dispelling-recovery",
     "Name": "Dispelling Recovery",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "arcana-2024",
@@ -9389,7 +9389,7 @@
   {
     "Id": "arcana-2024-17-magical-mastery",
     "Name": "Magical Mastery",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 17,
     "ClassId": null,
     "SubclassId": "arcana-2024",
@@ -9398,7 +9398,7 @@
   {
     "Id": "grave-2024-3-grave-domain-spells",
     "Name": "Grave Domain Spells",
-    "Description": "See RHW, page 19.",
+    "Description": "See Ravenloft: The Horrors Within, page 19.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "grave-2024",
@@ -9407,7 +9407,7 @@
   {
     "Id": "grave-2024-3-circle-of-mortality",
     "Name": "Circle of Mortality",
-    "Description": "See RHW, page 19.",
+    "Description": "See Ravenloft: The Horrors Within, page 19.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "grave-2024",
@@ -9416,7 +9416,7 @@
   {
     "Id": "grave-2024-3-path-to-the-grave",
     "Name": "Path to the Grave",
-    "Description": "See RHW, page 19.",
+    "Description": "See Ravenloft: The Horrors Within, page 19.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "grave-2024",
@@ -9425,7 +9425,7 @@
   {
     "Id": "grave-2024-6-sentinel-at-deaths-door",
     "Name": "Sentinel at Death's Door",
-    "Description": "See RHW, page 20.",
+    "Description": "See Ravenloft: The Horrors Within, page 20.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "grave-2024",
@@ -9434,7 +9434,7 @@
   {
     "Id": "grave-2024-17-divine-reaper",
     "Name": "Divine Reaper",
-    "Description": "See RHW, page 20.",
+    "Description": "See Ravenloft: The Horrors Within, page 20.",
     "Level": 17,
     "ClassId": null,
     "SubclassId": "grave-2024",
@@ -10199,7 +10199,7 @@
   {
     "Id": "arcane-archer-2024-3-arcane-archer-lore",
     "Name": "Arcane Archer Lore",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10208,7 +10208,7 @@
   {
     "Id": "arcane-archer-2024-3-arcane-shot",
     "Name": "Arcane Shot",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10217,7 +10217,7 @@
   {
     "Id": "arcane-archer-2024-3-arcane-shot-options",
     "Name": "Arcane Shot Options",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10226,7 +10226,7 @@
   {
     "Id": "arcane-archer-2024-7-curving-shot",
     "Name": "Curving Shot",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 7,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10235,7 +10235,7 @@
   {
     "Id": "arcane-archer-2024-7-magical-ammunition",
     "Name": "Magical Ammunition",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 7,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10244,7 +10244,7 @@
   {
     "Id": "arcane-archer-2024-10-ever-ready-shot",
     "Name": "Ever-Ready Shot",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10253,7 +10253,7 @@
   {
     "Id": "arcane-archer-2024-15-indomitable-teleport",
     "Name": "Indomitable Teleport",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 15,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10262,7 +10262,7 @@
   {
     "Id": "arcane-archer-2024-18-masterful-shots",
     "Name": "Masterful Shots",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 18,
     "ClassId": null,
     "SubclassId": "arcane-archer-2024",
@@ -10901,7 +10901,7 @@
   {
     "Id": "mystic-arts-2024-3-spellcasting",
     "Name": "Spellcasting",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "mystic-arts-2024",
@@ -10910,7 +10910,7 @@
   {
     "Id": "mystic-arts-2024-6-mystic-fighting-style",
     "Name": "Mystic Fighting Style",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "mystic-arts-2024",
@@ -10919,7 +10919,7 @@
   {
     "Id": "mystic-arts-2024-6-mystic-focus",
     "Name": "Mystic Focus",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "mystic-arts-2024",
@@ -10928,7 +10928,7 @@
   {
     "Id": "mystic-arts-2024-11-focused-strike",
     "Name": "Focused Strike",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 11,
     "ClassId": null,
     "SubclassId": "mystic-arts-2024",
@@ -10937,7 +10937,7 @@
   {
     "Id": "mystic-arts-2024-17-improved-mystic-fighting-style",
     "Name": "Improved Mystic Fighting Style",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 17,
     "ClassId": null,
     "SubclassId": "mystic-arts-2024",
@@ -11729,7 +11729,7 @@
   {
     "Id": "hollow-warden-2024-3-hollow-warden-spells",
     "Name": "Hollow Warden Spells",
-    "Description": "See RHW, page 20.",
+    "Description": "See Ravenloft: The Horrors Within, page 20.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "hollow-warden-2024",
@@ -11738,7 +11738,7 @@
   {
     "Id": "hollow-warden-2024-3-wrath-of-the-wild",
     "Name": "Wrath of the Wild",
-    "Description": "See RHW, page 21.",
+    "Description": "See Ravenloft: The Horrors Within, page 21.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "hollow-warden-2024",
@@ -11747,7 +11747,7 @@
   {
     "Id": "hollow-warden-2024-7-hungering-might",
     "Name": "Hungering Might",
-    "Description": "See RHW, page 21.",
+    "Description": "See Ravenloft: The Horrors Within, page 21.",
     "Level": 7,
     "ClassId": null,
     "SubclassId": "hollow-warden-2024",
@@ -11756,7 +11756,7 @@
   {
     "Id": "hollow-warden-2024-11-rot-and-violence",
     "Name": "Rot and Violence",
-    "Description": "See RHW, page 21.",
+    "Description": "See Ravenloft: The Horrors Within, page 21.",
     "Level": 11,
     "ClassId": null,
     "SubclassId": "hollow-warden-2024",
@@ -11765,7 +11765,7 @@
   {
     "Id": "hollow-warden-2024-15-ancient-might",
     "Name": "Ancient Might",
-    "Description": "See RHW, page 21.",
+    "Description": "See Ravenloft: The Horrors Within, page 21.",
     "Level": 15,
     "ClassId": null,
     "SubclassId": "hollow-warden-2024",
@@ -12170,7 +12170,7 @@
   {
     "Id": "phantom-2024-3-wails-from-the-grave",
     "Name": "Wails from the Grave",
-    "Description": "See RHW, page 21.",
+    "Description": "See Ravenloft: The Horrors Within, page 21.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "phantom-2024",
@@ -12179,7 +12179,7 @@
   {
     "Id": "phantom-2024-3-whispers-of-the-dead",
     "Name": "Whispers of the Dead",
-    "Description": "See RHW, page 21.",
+    "Description": "See Ravenloft: The Horrors Within, page 21.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "phantom-2024",
@@ -12188,7 +12188,7 @@
   {
     "Id": "phantom-2024-9-tokens-of-the-departed",
     "Name": "Tokens of the Departed",
-    "Description": "See RHW, page 22.",
+    "Description": "See Ravenloft: The Horrors Within, page 22.",
     "Level": 9,
     "ClassId": null,
     "SubclassId": "phantom-2024",
@@ -12197,7 +12197,7 @@
   {
     "Id": "phantom-2024-9-voice-of-death",
     "Name": "Voice of Death",
-    "Description": "See RHW, page 22.",
+    "Description": "See Ravenloft: The Horrors Within, page 22.",
     "Level": 9,
     "ClassId": null,
     "SubclassId": "phantom-2024",
@@ -12206,7 +12206,7 @@
   {
     "Id": "phantom-2024-13-ghost-walk",
     "Name": "Ghost Walk",
-    "Description": "See RHW, page 23.",
+    "Description": "See Ravenloft: The Horrors Within, page 23.",
     "Level": 13,
     "ClassId": null,
     "SubclassId": "phantom-2024",
@@ -12215,7 +12215,7 @@
   {
     "Id": "phantom-2024-17-deaths-friend",
     "Name": "Death's Friend",
-    "Description": "See RHW, page 23.",
+    "Description": "See Ravenloft: The Horrors Within, page 23.",
     "Level": 17,
     "ClassId": null,
     "SubclassId": "phantom-2024",
@@ -12647,7 +12647,7 @@
   {
     "Id": "shadow-sorcerer-2024-3-shadow-spells",
     "Name": "Shadow Spells",
-    "Description": "See RHW, page 23.",
+    "Description": "See Ravenloft: The Horrors Within, page 23.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "shadow-sorcerer-2024",
@@ -12656,7 +12656,7 @@
   {
     "Id": "shadow-sorcerer-2024-3-power-of-shadow",
     "Name": "Power of Shadow",
-    "Description": "See RHW, page 24.",
+    "Description": "See Ravenloft: The Horrors Within, page 24.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "shadow-sorcerer-2024",
@@ -12665,7 +12665,7 @@
   {
     "Id": "shadow-sorcerer-2024-6-beasts-of-ill-omen",
     "Name": "Beasts of Ill Omen",
-    "Description": "See RHW, page 24.",
+    "Description": "See Ravenloft: The Horrors Within, page 24.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "shadow-sorcerer-2024",
@@ -12674,7 +12674,7 @@
   {
     "Id": "shadow-sorcerer-2024-14-shadow-walk",
     "Name": "Shadow Walk",
-    "Description": "See RHW, page 24.",
+    "Description": "See Ravenloft: The Horrors Within, page 24.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "shadow-sorcerer-2024",
@@ -12683,7 +12683,7 @@
   {
     "Id": "shadow-sorcerer-2024-18-umbral-form",
     "Name": "Umbral Form",
-    "Description": "See RHW, page 24.",
+    "Description": "See Ravenloft: The Horrors Within, page 24.",
     "Level": 18,
     "ClassId": null,
     "SubclassId": "shadow-sorcerer-2024",
@@ -13124,7 +13124,7 @@
   {
     "Id": "undead-2024-3-form-of-dread",
     "Name": "Form of Dread",
-    "Description": "See RHW, page 24.",
+    "Description": "See Ravenloft: The Horrors Within, page 24.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "undead-2024",
@@ -13133,7 +13133,7 @@
   {
     "Id": "undead-2024-3-undead-spells",
     "Name": "Undead Spells",
-    "Description": "See RHW, page 24.",
+    "Description": "See Ravenloft: The Horrors Within, page 24.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "undead-2024",
@@ -13142,7 +13142,7 @@
   {
     "Id": "undead-2024-6-grave-touched",
     "Name": "Grave Touched",
-    "Description": "See RHW, page 24.",
+    "Description": "See Ravenloft: The Horrors Within, page 24.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "undead-2024",
@@ -13151,7 +13151,7 @@
   {
     "Id": "undead-2024-10-necrotic-husk",
     "Name": "Necrotic Husk",
-    "Description": "See RHW, page 25.",
+    "Description": "See Ravenloft: The Horrors Within, page 25.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "undead-2024",
@@ -13160,7 +13160,7 @@
   {
     "Id": "undead-2024-14-superior-dread",
     "Name": "Superior Dread",
-    "Description": "See RHW, page 25.",
+    "Description": "See Ravenloft: The Horrors Within, page 25.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "undead-2024",
@@ -13169,7 +13169,7 @@
   {
     "Id": "vestige-2024-3-vestige-companion",
     "Name": "Vestige Companion",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "vestige-2024",
@@ -13178,7 +13178,7 @@
   {
     "Id": "vestige-2024-3-vestige-spells",
     "Name": "Vestige Spells",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "vestige-2024",
@@ -13187,7 +13187,7 @@
   {
     "Id": "vestige-2024-6-vestige-power",
     "Name": "Vestige Power",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "vestige-2024",
@@ -13196,7 +13196,7 @@
   {
     "Id": "vestige-2024-10-vestige-recovery",
     "Name": "Vestige Recovery",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "vestige-2024",
@@ -13205,7 +13205,7 @@
   {
     "Id": "vestige-2024-14-semblance-of-life",
     "Name": "Semblance of Life",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "vestige-2024",
@@ -13421,7 +13421,7 @@
   {
     "Id": "conjurer-2024-3-benign-transposition",
     "Name": "Benign Transposition",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "conjurer-2024",
@@ -13430,7 +13430,7 @@
   {
     "Id": "conjurer-2024-3-conjuration-savant",
     "Name": "Conjuration Savant",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "conjurer-2024",
@@ -13439,7 +13439,7 @@
   {
     "Id": "conjurer-2024-6-distant-transposition",
     "Name": "Distant Transposition",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "conjurer-2024",
@@ -13448,7 +13448,7 @@
   {
     "Id": "conjurer-2024-6-durable-summons",
     "Name": "Durable Summons",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "conjurer-2024",
@@ -13457,7 +13457,7 @@
   {
     "Id": "conjurer-2024-10-focused-conjuration",
     "Name": "Focused Conjuration",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "conjurer-2024",
@@ -13466,7 +13466,7 @@
   {
     "Id": "conjurer-2024-14-splintered-summons",
     "Name": "Splintered Summons",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "conjurer-2024",
@@ -13520,7 +13520,7 @@
   {
     "Id": "enchanter-2024-3-enchanting-conversationalist",
     "Name": "Enchanting Conversationalist",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "enchanter-2024",
@@ -13529,7 +13529,7 @@
   {
     "Id": "enchanter-2024-3-enchantment-savant",
     "Name": "Enchantment Savant",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "enchanter-2024",
@@ -13538,7 +13538,7 @@
   {
     "Id": "enchanter-2024-3-hypnotic-presence",
     "Name": "Hypnotic Presence",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "enchanter-2024",
@@ -13547,7 +13547,7 @@
   {
     "Id": "enchanter-2024-6-split-enchantment",
     "Name": "Split Enchantment",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "enchanter-2024",
@@ -13556,7 +13556,7 @@
   {
     "Id": "enchanter-2024-10-instinctive-charm",
     "Name": "Instinctive Charm",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "enchanter-2024",
@@ -13565,7 +13565,7 @@
   {
     "Id": "enchanter-2024-14-alter-memories",
     "Name": "Alter Memories",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "enchanter-2024",
@@ -13664,7 +13664,7 @@
   {
     "Id": "necromancer-2024-3-necromancy-savant",
     "Name": "Necromancy Savant",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "necromancer-2024",
@@ -13673,7 +13673,7 @@
   {
     "Id": "necromancer-2024-3-necromancy-spellbook",
     "Name": "Necromancy Spellbook",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "necromancer-2024",
@@ -13682,7 +13682,7 @@
   {
     "Id": "necromancer-2024-6-grave-power",
     "Name": "Grave Power",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "necromancer-2024",
@@ -13691,7 +13691,7 @@
   {
     "Id": "necromancer-2024-6-undead-thralls",
     "Name": "Undead Thralls",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "necromancer-2024",
@@ -13700,7 +13700,7 @@
   {
     "Id": "necromancer-2024-10-harvest-undead",
     "Name": "Harvest Undead",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "necromancer-2024",
@@ -13709,7 +13709,7 @@
   {
     "Id": "necromancer-2024-14-deaths-master",
     "Name": "Death's Master",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "necromancer-2024",
@@ -13718,7 +13718,7 @@
   {
     "Id": "transmuter-2024-3-transmutation-savant",
     "Name": "Transmutation Savant",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "transmuter-2024",
@@ -13727,7 +13727,7 @@
   {
     "Id": "transmuter-2024-3-transmuters-stone",
     "Name": "Transmuter's Stone",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "transmuter-2024",
@@ -13736,7 +13736,7 @@
   {
     "Id": "transmuter-2024-3-wondrous-alteration",
     "Name": "Wondrous Alteration",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 3,
     "ClassId": null,
     "SubclassId": "transmuter-2024",
@@ -13745,7 +13745,7 @@
   {
     "Id": "transmuter-2024-6-empowered-transmutation",
     "Name": "Empowered Transmutation",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 6,
     "ClassId": null,
     "SubclassId": "transmuter-2024",
@@ -13754,7 +13754,7 @@
   {
     "Id": "transmuter-2024-10-potent-stone",
     "Name": "Potent Stone",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "transmuter-2024",
@@ -13763,7 +13763,7 @@
   {
     "Id": "transmuter-2024-10-shape-shifter",
     "Name": "Shape-Shifter",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 10,
     "ClassId": null,
     "SubclassId": "transmuter-2024",
@@ -13772,7 +13772,7 @@
   {
     "Id": "transmuter-2024-14-master-transmuter",
     "Name": "Master Transmuter",
-    "Description": "See AU.",
+    "Description": "See Arcana Unleashed.",
     "Level": 14,
     "ClassId": null,
     "SubclassId": "transmuter-2024",

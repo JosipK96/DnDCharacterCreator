@@ -242,6 +242,55 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Theory]
+    [InlineData("Small")]
+    [InlineData("Medium")]
+    public async Task Handle_WithASizeTheSpeciesOffers_StoresIt(string size)
+    {
+        // Arrange - a 2024 human is Small or Medium
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        ArrangeRace(Human2024());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterRaceCommand(_draftId, "human_2024", null, null, size), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.Size.Should().Be(size);
+    }
+
+    [Fact]
+    public async Task Handle_WithASizeTheSpeciesDoesNotOffer_ReturnsSizeNotOffered()
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        ArrangeRace(Human2024());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterRaceCommand(_draftId, "human_2024", null, null, "Large"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.SizeNotOffered");
+        draft.RaceId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithTheOnlySizeOfARace_KeepsNoSizeOnTheDraft()
+    {
+        // Arrange - a race of one size has it on the race
+        var draft = ArrangeDraft();
+        ArrangeRace(HalfElf());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterRaceCommand(_draftId, "half_elf", null, new() { ["DEX"] = 1, ["WIS"] = 1 }, "Medium"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.Size.Should().BeNull();
+    }
+
     private CharacterDraft ArrangeDraft(string edition = RulesEdition.Edition2014)
     {
         var draft = CharacterDraft.CreateEmpty(
@@ -258,6 +307,16 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
 
     private void ArrangeRace(Race race) =>
         _raceRepositoryMock.Setup(r => r.GetByIdWithSubracesAsync(race.Id, _cts.Token)).ReturnsAsync(race);
+
+    private static Race Human2024() => new()
+    {
+        Id = "human_2024",
+        Name = "Human",
+        Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
+        Size = "Small or Medium",
+        Speed = 30,
+    };
 
     // +2 Charisma, and +1 to two others of the player's choice
     private static Race HalfElf() => new()

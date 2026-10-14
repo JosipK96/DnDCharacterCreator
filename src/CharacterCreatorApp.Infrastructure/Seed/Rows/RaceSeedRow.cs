@@ -1,3 +1,5 @@
+using CharacterCreatorApp.Domain.DomainModels.Spells;
+
 namespace CharacterCreatorApp.Infrastructure.Seed.Rows;
 
 /// <summary>
@@ -39,6 +41,10 @@ public sealed record RaceSeedRow
     public List<string> ProficiencyIds { get; init; } = [];
     public List<TraitSeedRow> Traits { get; init; } = [];
     public List<GrantedSpellSeedRow> Spells { get; init; } = [];
+
+    /// <summary>Spells the player picks from a class list; see Race.SpellChoiceWith.</summary>
+    public BonusSpellChoice? SpellChoice { get; init; }
+
     public List<SubraceSeedRow> Subraces { get; init; } = [];
 }
 
@@ -75,6 +81,9 @@ public sealed record SubraceSeedRow
     public List<string> ProficiencyIds { get; init; } = [];
     public List<TraitSeedRow> Traits { get; init; } = [];
     public List<GrantedSpellSeedRow> Spells { get; init; } = [];
+
+    /// <summary>Spells the player picks from a class list: a high elf's wizard cantrip.</summary>
+    public BonusSpellChoice? SpellChoice { get; init; }
 }
 
 /// <summary>A fixed ability score increase, the ability as its canonical id ("CON").</summary>

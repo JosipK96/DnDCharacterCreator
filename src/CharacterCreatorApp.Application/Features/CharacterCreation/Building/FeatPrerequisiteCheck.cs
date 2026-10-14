@@ -42,7 +42,8 @@ public static class FeatPrerequisiteCheck
             .Select(f => f.Name)
             .ToList();
 
-        var raceSizes = race?.SizeOptions() ?? [];
+        // The size picked for a species that may be either, or every size the race may be
+        IReadOnlyList<string> raceSizes = draft.Size is { } size ? [size] : race?.SizeOptions() ?? [];
 
         for (var i = 0; i < pickedFeats.Count; i++)
         {

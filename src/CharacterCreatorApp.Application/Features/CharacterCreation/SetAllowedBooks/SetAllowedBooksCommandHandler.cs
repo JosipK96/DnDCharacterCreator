@@ -56,8 +56,10 @@ public class SetAllowedBooksCommandHandler(
         var race = draft.RaceId is { } raceId ? await _raceRepository.GetByIdWithSubracesAsync(raceId, cancellationToken) : null;
         var @class = draft.ClassId is { } classId ? await _classRepository.GetByIdWithSubclassesAsync(classId, cancellationToken) : null;
         var background = draft.BackgroundId is { } backgroundId ? await _backgroundRepository.GetByIdAsync(backgroundId, cancellationToken) : null;
-        var feats = await _featRepository.GetByIdsAsync(draft.SelectedFeatIds.Concat(draft.FightingStyleIds).Distinct(), cancellationToken);
-        var spells = await _spellRepository.GetByIdsAsync(draft.SelectedSpellIds, cancellationToken);
+        var feats = await _featRepository.GetByIdsAsync(
+            draft.SelectedFeatIds.Concat(draft.FightingStyleIds).Concat(draft.BackgroundFeatId is { } featId ? [featId] : []).Distinct(), cancellationToken);
+        var spells = await _spellRepository.GetByIdsAsync(
+            draft.SelectedSpellIds.Concat(draft.RaceSpellIds).Concat(draft.FeatSpells.SelectMany(pick => pick.SpellIds)).Distinct().ToList(), cancellationToken);
 
         return new DraftChoiceSources(
             race?.Source,

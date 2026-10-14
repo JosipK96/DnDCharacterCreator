@@ -40,6 +40,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
             RaceProficiencies = row.ProficiencyIds.ConvertAll(id => new RaceProficiency { RaceId = row.Id, ProficiencyId = id }),
             Traits = row.Traits.ConvertAll(t => new RaceTrait { Id = t.Id, RaceId = row.Id, Name = t.Name, Description = t.Description }),
             Spells = row.Spells.ConvertAll(s => new RaceSpell { RaceId = row.Id, SpellId = s.SpellId, Level = s.Level }),
+            SpellChoice = row.SpellChoice,
             Subraces = row.Subraces.ConvertAll(subrace => ToSubrace(row.Id, subrace)),
         };
 
@@ -61,6 +62,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
             SubraceProficiencies = row.ProficiencyIds.ConvertAll(id => new SubraceProficiency { SubraceId = row.Id, ProficiencyId = id }),
             Traits = row.Traits.ConvertAll(t => new SubraceTrait { Id = t.Id, SubraceId = row.Id, Name = t.Name, Description = t.Description }),
             Spells = row.Spells.ConvertAll(s => new SubraceSpell { SubraceId = row.Id, SpellId = s.SpellId, Level = s.Level }),
+            SpellChoice = row.SpellChoice,
         };
     }
 }

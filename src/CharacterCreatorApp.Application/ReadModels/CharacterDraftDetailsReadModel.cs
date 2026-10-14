@@ -1,4 +1,6 @@
-﻿namespace CharacterCreatorApp.Application.ReadModels;
+﻿using CharacterCreatorApp.Domain.DomainModels.Characters;
+
+namespace CharacterCreatorApp.Application.ReadModels;
 
 public class CharacterDraftDetailsReadModel
 {
@@ -16,12 +18,21 @@ public class CharacterDraftDetailsReadModel
     /// <summary>The +1s picked for the race or subrace by ability id: a half-elf's two.</summary>
     public Dictionary<string, int> RaceAbilityIncreases { get; set; } = [];
 
+    /// <summary>The size picked for a species that may be either; null otherwise.</summary>
+    public string? Size { get; set; }
+
+    /// <summary>The spells picked for the race: a high elf's wizard cantrip.</summary>
+    public List<string> RaceSpellIds { get; set; } = [];
+
     public string? ClassId { get; set; }
     public string? SubclassId { get; set; }
     public string? BackgroundId { get; set; }
 
     /// <summary>A 2024 background's ability increases by ability id ("STR"); empty otherwise.</summary>
     public Dictionary<string, int> BackgroundAbilityIncreases { get; set; } = [];
+
+    /// <summary>The feat picked for a background that lets the player choose it.</summary>
+    public string? BackgroundFeatId { get; set; }
 
     public Dictionary<string, int> BaseAbilityScores { get; set; } = [];
     public List<string> SelectedClassProficiencyIds { get; set; } = [];
@@ -36,6 +47,9 @@ public class CharacterDraftDetailsReadModel
     public List<string> FightingStyleIds { get; set; } = [];
 
     public List<string> SelectedSpellIds { get; set; } = [];
+
+    /// <summary>The spells picked for each feat with a spell choice; see CharacterDraft.FeatSpells.</summary>
+    public List<FeatSpellPick> FeatSpells { get; set; } = [];
     public List<Dictionary<string, int>> AbilityScoreImprovements { get; set; } = [];
     public bool IsCompleted { get; set; }
 }

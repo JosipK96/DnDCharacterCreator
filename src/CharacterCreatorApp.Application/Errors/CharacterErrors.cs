@@ -89,6 +89,12 @@ public static class CharacterErrors
             "Character.LanguageChoicesIncomplete",
             $"A {raceName} with the {backgroundName} background must choose exactly {required} language(s). The draft has {actual}.");
 
+    public static Error SizeRequired(string raceName, IEnumerable<string> sizes) =>
+        Error.Validation("Character.SizeRequired", $"A {raceName} is {string.Join(" or ", sizes)}; pick one.");
+
+    public static Error BackgroundFeatRequired(string backgroundName, string category) =>
+        Error.Validation("Character.BackgroundFeatRequired", $"The {backgroundName} background gives a {category} feat of the player's choice; pick it with the background.");
+
     public static Error BonusFeatsIncomplete(string raceName, int required, string? category) =>
         Error.Validation(
             "Character.BonusFeatsIncomplete",

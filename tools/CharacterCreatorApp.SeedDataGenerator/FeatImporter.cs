@@ -148,7 +148,8 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
             GrantedProficiencyIds = GrantedProficiencies(feat),
             GrantedLanguageIds = GrantedLanguages(feat),
             GrantedSpellIds = GrantedSpells(feat, spellIdsByKey),
-            Choice = Choice(feat)
+            Choice = Choice(feat),
+            SpellChoice = AdditionalSpells.Choice(feat.Objects("additionalSpells").ToList(), edition),
         };
     }
 
@@ -258,7 +259,7 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
 
     /// <summary>
     /// The spells a feat always gives, such as Fey Touched's Misty Step. A block with a name is one
-    /// option of a choice (Magic Initiate's "Cleric Spells"), which the app does not ask for.
+    /// option of a choice (Magic Initiate's "Cleric Spells"), which SpellChoice holds.
     /// </summary>
     private List<string> GrantedSpells(JsonObject feat, IReadOnlyDictionary<string, string> spellIdsByKey)
     {
@@ -328,14 +329,14 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
             }
         }
 
-        // Resilient: the ability whose saving throw it adds
+        // Resilient: the ability whose saving throw it adds, which is the one it raises
         var save = feat.Objects("savingThrowProficiencies").Select(entry => entry["choose"]).OfType<JsonObject>().FirstOrDefault();
 
         if (save != null)
         {
             return new FeatChoice
             {
-                Type = "ability-scores",
+                Type = FeatChoice.SavingThrow,
                 Count = 1,
                 Options = save.Arr("from").Select(a => AbilityScore.Normalize(a.AsString()!)).ToList()
             };

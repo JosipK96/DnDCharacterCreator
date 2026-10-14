@@ -33,6 +33,15 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public string? SubraceId { get; private set; }
 
         /// <summary>
+        /// The size picked for a species that may be either (Race.SizeOptions: a 2024 human's
+        /// "Small or Medium"). Null for a race with one size.
+        /// </summary>
+        public string? Size { get; private set; }
+
+        /// <summary>The spells picked for the race or subrace (Race.SpellChoiceWith): a 2014 high elf's wizard cantrip.</summary>
+        public List<string> RaceSpellIds { get; private set; } = [];
+
+        /// <summary>
         /// The +1s picked for the race or subrace (Race.AbilityChoiceWith), by canonical id: a
         /// half-elf's two, a variant human's two. Empty for a race without that choice.
         /// </summary>
@@ -48,6 +57,12 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// id ("STR"). Empty for a 2014 background, whose race gives the increases instead.
         /// </summary>
         public Dictionary<string, int> BackgroundAbilityIncreases { get; private set; } = [];
+
+        /// <summary>
+        /// The feat picked for a background that lets the player choose it (Background.FeatChoiceCategory:
+        /// a Mist Wanderer's Dark Gift). Null for a background whose feat is fixed.
+        /// </summary>
+        public string? BackgroundFeatId { get; private set; }
 
         public Dictionary<string, int> BaseAbilityScores { get; private set; } = [];
 
@@ -75,6 +90,14 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public List<string> FightingStyleIds { get; private set; } = [];
 
         public List<string> SelectedSpellIds { get; private set; } = [];
+
+        /// <summary>
+        /// The spells picked for each feat with a spell choice (Magic Initiate), one per such feat
+        /// in the character's order: the background's, the Fighting Styles, then SelectedFeatIds.
+        /// Changing any of those feats clears it.
+        /// </summary>
+        public List<FeatSpellPick> FeatSpells { get; private set; } = [];
+
         // Each element is one ASI use: {"STR": 2} or {"STR": 1, "DEX": 1}
         public List<Dictionary<string, int>> AbilityScoreImprovements { get; private set; } = [];
 
@@ -117,10 +140,13 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             AllowedSources = [RulesEdition.PlayersHandbook(edition)];
             RaceId = null;
             SubraceId = null;
+            Size = null;
+            RaceSpellIds = [];
             RaceAbilityIncreases = [];
             ClassId = null;
             SubclassId = null;
             BackgroundId = null;
+            BackgroundFeatId = null;
             BackgroundAbilityIncreases = [];
             SelectedClassProficiencyIds = [];
             SelectedRaceSkillIds = [];
@@ -128,6 +154,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             SelectedFeatIds = [];
             FeatAbilityIncreases = [];
             FightingStyleIds = [];
+            FeatSpells = [];
             SelectedSpellIds = [];
             AbilityScoreImprovements = [];
         }
@@ -152,6 +179,8 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             {
                 RaceId = null;
                 SubraceId = null;
+                Size = null;
+                RaceSpellIds = [];
                 RaceAbilityIncreases = [];
                 SelectedRaceSkillIds = [];
                 SelectedLanguageIds = [];
@@ -168,7 +197,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 SubclassId = null;
                 SelectedClassProficiencyIds = [];
                 SelectedSpellIds = [];
-                FightingStyleIds = [];
+                ClearFightingStyles();
                 ClearImprovements();
             }
             else if (IsRemoved(choiceSources.Subclass))
@@ -179,8 +208,16 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             if (IsRemoved(choiceSources.Background))
             {
                 BackgroundId = null;
+                BackgroundFeatId = null;
                 BackgroundAbilityIncreases = [];
                 SelectedLanguageIds = [];
+                FeatSpells = [];
+            }
+
+            if (BackgroundFeatId != null && IsRemoved(choiceSources.Feats.GetValueOrDefault(BackgroundFeatId)))
+            {
+                BackgroundFeatId = null;
+                FeatSpells = [];
             }
 
             if (SelectedFeatIds.Exists(id => IsRemoved(choiceSources.Feats.GetValueOrDefault(id))))
@@ -188,8 +225,20 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 ClearImprovements();
             }
 
-            FightingStyleIds = FightingStyleIds.FindAll(id => !IsRemoved(choiceSources.Feats.GetValueOrDefault(id)));
+            if (FightingStyleIds.Exists(id => IsRemoved(choiceSources.Feats.GetValueOrDefault(id))))
+            {
+                FightingStyleIds = FightingStyleIds.FindAll(id => !IsRemoved(choiceSources.Feats.GetValueOrDefault(id)));
+                FeatSpells = [];
+            }
+
             SelectedSpellIds = SelectedSpellIds.FindAll(id => !IsRemoved(choiceSources.Spells.GetValueOrDefault(id)));
+            RaceSpellIds = RaceSpellIds.FindAll(id => !IsRemoved(choiceSources.Spells.GetValueOrDefault(id)));
+
+            // One pick per feat, in order, so a pick losing a spell takes the others with it
+            if (FeatSpells.Exists(pick => pick.SpellIds.Exists(id => IsRemoved(choiceSources.Spells.GetValueOrDefault(id)))))
+            {
+                FeatSpells = [];
+            }
         }
 
         // A choice whose book is unknown (gone after a reseed) is left for finalize to report
@@ -203,7 +252,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 // on level, and a feat's prerequisites may name one
                 ClearImprovements();
                 SelectedSpellIds = [];
-                FightingStyleIds = [];
+                ClearFightingStyles();
             }
 
             Name = name;
@@ -222,7 +271,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 // ask for are all class-specific
                 SelectedClassProficiencyIds = [];
                 SelectedSpellIds = [];
-                FightingStyleIds = [];
+                ClearFightingStyles();
                 ClearImprovements();
             }
 
@@ -245,18 +294,20 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             if (SubclassId != subclassId)
             {
                 SelectedSpellIds = [];
-                FightingStyleIds = [];
+                ClearFightingStyles();
             }
 
             SubclassId = subclassId;
         }
 
         /// <summary>
-        /// Sets the race and subrace and the +1s picked for them (Race.AbilityChoiceWith), stored
-        /// under canonical ability ids. Use SetSubrace to change only the subrace. Another race or
-        /// subrace clears the improvements step, whose feats start with the race's own.
+        /// Sets the race and subrace, the +1s picked for them (Race.AbilityChoiceWith), stored
+        /// under canonical ability ids, and the size picked for a race that may be either. Use
+        /// SetSubrace to change only the subrace. Another race or subrace clears the improvements
+        /// step, whose feats start with the race's own, and the spells picked for the old one.
         /// </summary>
-        public void SetRace(string raceId, string? subraceId = null, IReadOnlyDictionary<string, int>? abilityIncreases = null)
+        public void SetRace(
+            string raceId, string? subraceId = null, IReadOnlyDictionary<string, int>? abilityIncreases = null, string? size = null)
         {
             if (RaceId != raceId)
             {
@@ -270,11 +321,13 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 // The race's bonus feats, which come first among the feats, change with the race
                 // and with the subrace (a variant human's feat slot)
                 ClearImprovements();
+                RaceSpellIds = [];
             }
 
             RaceId = raceId;
             SubraceId = subraceId;
             RaceAbilityIncreases = Canonical(abilityIncreases);
+            Size = size;
         }
 
         /// <summary>
@@ -286,6 +339,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             if (SubraceId != subraceId)
             {
                 RaceAbilityIncreases = [];
+                RaceSpellIds = [];
                 ClearImprovements();
             }
 
@@ -293,10 +347,11 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         }
 
         /// <summary>
-        /// Sets the background and, for a 2024 one, the ability increases picked from it (see
-        /// Background.AllowsAbilityIncreases), stored under canonical ability ids.
+        /// Sets the background, for a 2024 one the ability increases picked from it (see
+        /// Background.AllowsAbilityIncreases), stored under canonical ability ids, and the feat
+        /// picked for one that lets the player choose it (Background.FeatChoiceCategory).
         /// </summary>
-        public void SetBackground(string backgroundId, IReadOnlyDictionary<string, int>? abilityIncreases = null)
+        public void SetBackground(string backgroundId, IReadOnlyDictionary<string, int>? abilityIncreases = null, string? featId = null)
         {
             if (BackgroundId != backgroundId)
             {
@@ -304,8 +359,15 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 SelectedLanguageIds = [];
             }
 
+            if (BackgroundId != backgroundId || BackgroundFeatId != featId)
+            {
+                // The background's feat comes first among the feats whose spells are picked
+                FeatSpells = [];
+            }
+
             BackgroundId = backgroundId;
             BackgroundAbilityIncreases = Canonical(abilityIncreases);
+            BackgroundFeatId = featId;
         }
 
         public void SetBaseAbilityScores(Dictionary<string, int> scores, string method)
@@ -343,6 +405,11 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                     $"{featIds.Count} feat(s) but {abilityIncreases.Count} ability increase(s); give one per feat.", nameof(abilityIncreases));
             }
 
+            if (!featIds.SequenceEqual(SelectedFeatIds))
+            {
+                FeatSpells = [];
+            }
+
             FeatAbilityIncreases = abilityIncreases?.ConvertAll(increase => Canonical(increase)) ?? featIds.ConvertAll(_ => new Dictionary<string, int>());
             SelectedFeatIds = featIds;
         }
@@ -361,12 +428,33 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
 
         public void ChooseFightingStyles(List<string> featIds)
         {
+            ArgumentNullException.ThrowIfNull(featIds);
+
+            // A Fighting Style may have spells to pick: a 2024 Blessed Warrior's two cantrips
+            if (!featIds.SequenceEqual(FightingStyleIds))
+            {
+                FeatSpells = [];
+            }
+
             FightingStyleIds = featIds;
         }
 
         public void SetSpells(List<string> spellIds)
         {
             SelectedSpellIds = spellIds;
+        }
+
+        /// <summary>
+        /// Sets the spells picked for the race (Race.SpellChoiceWith) and for each feat with a
+        /// spell choice, one pick per feat in the character's order (see FeatSpells).
+        /// </summary>
+        public void ChooseBonusSpells(List<string> raceSpellIds, List<FeatSpellPick> featSpells)
+        {
+            ArgumentNullException.ThrowIfNull(raceSpellIds);
+            ArgumentNullException.ThrowIfNull(featSpells);
+
+            RaceSpellIds = raceSpellIds;
+            FeatSpells = featSpells;
         }
 
         // The improvements step as a whole: the points, the feats taken instead and what they
@@ -376,6 +464,14 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             AbilityScoreImprovements = [];
             SelectedFeatIds = [];
             FeatAbilityIncreases = [];
+            FeatSpells = [];
+        }
+
+        // The spells picked for the feats follow the feats, Fighting Styles among them
+        private void ClearFightingStyles()
+        {
+            FightingStyleIds = [];
+            FeatSpells = [];
         }
 
         public void MarkAsCompleted()

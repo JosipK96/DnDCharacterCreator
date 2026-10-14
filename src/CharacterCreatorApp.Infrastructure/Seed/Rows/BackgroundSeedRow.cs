@@ -24,5 +24,11 @@ public sealed record BackgroundSeedRow
     /// <summary>The feat the background gives: a 2024 origin feat, or a 2014 one such as the Giant Foundling's.</summary>
     public string? FeatId { get; init; }
 
+    /// <summary>The category the player picks the feat from instead ("Dark Gift" for a Mist Wanderer); null when it is fixed.</summary>
+    public string? FeatChoiceCategory { get; init; }
+
+    /// <summary>The class whose list the feat's spells come from: "cleric-2024" for an Acolyte's Magic Initiate.</summary>
+    public string? FeatSpellListClassId { get; init; }
+
     public string? FeatureId { get; init; }
 }

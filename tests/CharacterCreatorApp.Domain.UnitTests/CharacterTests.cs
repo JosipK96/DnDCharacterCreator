@@ -286,6 +286,32 @@ public class CharacterTests
     }
 
     [Fact]
+    public void SetFeatSavingThrows_KeepsEachAbilityOnceUnderItsCanonicalId()
+    {
+        // Arrange
+        var character = CreateTestCharacter();
+
+        // Act
+        character.SetFeatSavingThrows(["con", "CON", "wisdom"]);
+
+        // Assert
+        character.FeatSavingThrowAbilityIds.Should().Equal("CON", "WIS");
+    }
+
+    [Fact]
+    public void SetSize_KeepsIt()
+    {
+        // Arrange
+        var character = CreateTestCharacter();
+
+        // Act
+        character.SetSize("Small");
+
+        // Assert
+        character.Size.Should().Be("Small");
+    }
+
+    [Fact]
     public void SetSpells_RemovesDuplicates()
     {
         // Arrange

@@ -10,4 +10,7 @@ public class SetRaceApiRequest
     /// none for any other race.
     /// </summary>
     public Dictionary<string, int>? AbilityIncreases { get; set; }
+
+    /// <summary>"Small" or "Medium" for a species that may be either (a 2024 human); null otherwise.</summary>
+    public string? Size { get; set; }
 }

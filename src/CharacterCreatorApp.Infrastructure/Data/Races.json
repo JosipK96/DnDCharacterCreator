@@ -46,6 +46,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -106,6 +107,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "hill_dwarf",
@@ -133,7 +135,8 @@
             "Description": "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "mountain_dwarf",
@@ -164,7 +167,8 @@
             "Description": "See Player's Handbook (2014), page 20."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       }
     ]
   },
@@ -218,6 +222,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "drow_elf",
@@ -277,7 +282,8 @@
             "SpellId": "darkness",
             "Level": 5
           }
-        ]
+        ],
+        "SpellChoice": null
       },
       {
         "Id": "high_elf",
@@ -320,7 +326,14 @@
             "Description": "You can speak, read, and write one extra language of your choosing."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": {
+          "ClassIds": [
+            "wizard"
+          ],
+          "Cantrips": 1,
+          "FirstLevelSpells": 0
+        }
       },
       {
         "Id": "wood_elf",
@@ -363,7 +376,8 @@
             "Description": "See Player's Handbook (2014), page 24."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       }
     ]
   },
@@ -405,6 +419,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "forest_gnome",
@@ -442,7 +457,8 @@
             "SpellId": "minor_illusion",
             "Level": 1
           }
-        ]
+        ],
+        "SpellChoice": null
       },
       {
         "Id": "rock_gnome",
@@ -477,7 +493,8 @@
             "Description": "You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time.\n\nWhen you create a device, choose one of the following options:\n\nClockwork Toy. This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents.\n\nFire Starter. The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action.\n\nMusic Box. When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song's end or when it is closed."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       }
     ]
   },
@@ -530,6 +547,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -586,6 +604,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -631,6 +650,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "lightfoot_halfling",
@@ -658,7 +678,8 @@
             "Description": "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "stout_halfling",
@@ -686,7 +707,8 @@
             "Description": "See Player's Handbook (2014), page 28."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       }
     ]
   },
@@ -711,6 +733,7 @@
     "ProficiencyIds": [],
     "Traits": [],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "standard_human",
@@ -752,7 +775,8 @@
         ],
         "ProficiencyIds": [],
         "Traits": [],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "variant_human",
@@ -787,7 +811,8 @@
             "Description": "See Player's Handbook (2014), page 31."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       }
     ]
   },
@@ -851,6 +876,7 @@
         "Level": 5
       }
     ],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -903,6 +929,7 @@
         "Level": 1
       }
     ],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -935,6 +962,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "dragonborn_black_2024",
@@ -962,7 +990,8 @@
             "Description": "You have Resistance to Acid damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_blue_2024",
@@ -990,7 +1019,8 @@
             "Description": "You have Resistance to Lightning damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_brass_2024",
@@ -1018,7 +1048,8 @@
             "Description": "You have Resistance to Fire damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_bronze_2024",
@@ -1046,7 +1077,8 @@
             "Description": "You have Resistance to Lightning damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_copper_2024",
@@ -1074,7 +1106,8 @@
             "Description": "You have Resistance to Acid damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_gold_2024",
@@ -1102,7 +1135,8 @@
             "Description": "You have Resistance to Fire damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_green_2024",
@@ -1130,7 +1164,8 @@
             "Description": "You have Resistance to Poison damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_red_2024",
@@ -1158,7 +1193,8 @@
             "Description": "You have Resistance to Fire damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_silver_2024",
@@ -1186,7 +1222,8 @@
             "Description": "You have Resistance to Cold damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "dragonborn_white_2024",
@@ -1214,7 +1251,8 @@
             "Description": "You have Resistance to Cold damage."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       }
     ]
   },
@@ -1258,6 +1296,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -1304,6 +1343,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "elf_drow_lineage_2024",
@@ -1344,7 +1384,8 @@
             "SpellId": "darkness_2024",
             "Level": 5
           }
-        ]
+        ],
+        "SpellChoice": null
       },
       {
         "Id": "elf_high_elf_lineage_2024",
@@ -1376,7 +1417,14 @@
             "SpellId": "misty_step_2024",
             "Level": 5
           }
-        ]
+        ],
+        "SpellChoice": {
+          "ClassIds": [
+            "wizard-2024"
+          ],
+          "Cantrips": 1,
+          "FirstLevelSpells": 0
+        }
       },
       {
         "Id": "elf_wood_elf_lineage_2024",
@@ -1412,7 +1460,8 @@
             "SpellId": "pass_without_trace_2024",
             "Level": 5
           }
-        ]
+        ],
+        "SpellChoice": null
       }
     ]
   },
@@ -1446,6 +1495,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "gnome_forest_gnome_lineage_2024",
@@ -1477,7 +1527,8 @@
             "SpellId": "speak_with_animals_2024",
             "Level": 3
           }
-        ]
+        ],
+        "SpellChoice": null
       },
       {
         "Id": "gnome_rock_gnome_lineage_2024",
@@ -1509,7 +1560,8 @@
             "SpellId": "prestidigitation_2024",
             "Level": 1
           }
-        ]
+        ],
+        "SpellChoice": null
       }
     ]
   },
@@ -1543,6 +1595,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "goliath_cloud_giant_ancestry_2024",
@@ -1565,7 +1618,8 @@
             "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Cloud's Jaunt. As a Bonus Action, you magically teleport up to 30 feet to an unoccupied space you can see."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "goliath_fire_giant_ancestry_2024",
@@ -1588,7 +1642,8 @@
             "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Fire's Burn. When you hit a target with an attack roll and deal damage to it, you can also deal 1d10 Fire damage to that target."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "goliath_frost_giant_ancestry_2024",
@@ -1611,7 +1666,8 @@
             "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Frost's Chill. When you hit a target with an attack roll and deal damage to it, you can also deal 1d6 Cold damage to that target and reduce its Speed by 10 feet until the start of your next turn."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "goliath_hill_giant_ancestry_2024",
@@ -1634,7 +1690,8 @@
             "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Hill's Tumble. When you hit a Large or smaller creature with an attack roll and deal damage to it, you can give that target the Prone condition."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "goliath_stone_giant_ancestry_2024",
@@ -1657,7 +1714,8 @@
             "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Stone's Endurance. When you take damage, you can take a Reaction to roll 1d12. Add your Constitution modifier to the number rolled and reduce the damage by that total."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       },
       {
         "Id": "goliath_storm_giant_ancestry_2024",
@@ -1680,7 +1738,8 @@
             "Description": "You are descended from Giants, granting you a supernatural boon; you can use this boon a number of times equal to your Proficiency Bonus, and you regain all expended uses when you finish a Long Rest:\n\n• Storm's Thunder. When you take damage from a creature within 60 feet of you, you can take a Reaction to deal 1d8 Thunder damage to that creature."
           }
         ],
-        "Spells": []
+        "Spells": [],
+        "SpellChoice": null
       }
     ]
   },
@@ -1724,6 +1783,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -1761,6 +1821,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -1798,6 +1859,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": []
   },
   {
@@ -1830,6 +1892,7 @@
       }
     ],
     "Spells": [],
+    "SpellChoice": null,
     "Subraces": [
       {
         "Id": "tiefling_abyssal_legacy_2024",
@@ -1869,7 +1932,8 @@
             "SpellId": "hold_person_2024",
             "Level": 5
           }
-        ]
+        ],
+        "SpellChoice": null
       },
       {
         "Id": "tiefling_chthonic_legacy_2024",
@@ -1909,7 +1973,8 @@
             "SpellId": "ray_of_enfeeblement_2024",
             "Level": 5
           }
-        ]
+        ],
+        "SpellChoice": null
       },
       {
         "Id": "tiefling_infernal_legacy_2024",
@@ -1949,7 +2014,8 @@
             "SpellId": "darkness_2024",
             "Level": 5
           }
-        ]
+        ],
+        "SpellChoice": null
       }
     ]
   }

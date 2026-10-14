@@ -19,6 +19,7 @@ public record CharacterDetailsApiResponse(
     string ClassName,
     string? SubclassName,
     string BackgroundName,
+    string Size,
 
     // Character data
     Dictionary<string, int> AbilityScores,

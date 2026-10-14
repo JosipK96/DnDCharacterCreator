@@ -47,6 +47,21 @@ public static class DraftCompletenessChecker
             return CharacterErrors.SubraceRequired(race.Name, race.Subraces.Select(s => s.Name));
         }
 
+        // A 2024 human, aasimar or tiefling is Small or Medium, as the player picks
+        var sizes = race.SizeOptions();
+
+        if (draft.Size is null ? sizes.Count > 1 : !sizes.Contains(draft.Size))
+        {
+            return CharacterErrors.SizeRequired(race.Name, sizes);
+        }
+
+        var backgroundFeatError = FindInvalidBackgroundFeat(draft, sources);
+
+        if (backgroundFeatError is not null)
+        {
+            return backgroundFeatError;
+        }
+
         if (level >= @class.SubclassLevel && string.IsNullOrWhiteSpace(draft.SubclassId))
         {
             return CharacterErrors.SubclassRequired(level, @class.Name, @class.SubclassLevel);
@@ -119,7 +134,39 @@ public static class DraftCompletenessChecker
                 sources.ChoosableSpells,
                 @class.SpellAllowanceAt(level, sources.Subclass),
                 @class.Name,
-                level);
+                level)
+            ?? BonusSpells.FindInvalidPick(
+                draft,
+                BonusSpells.RaceSlot(race, subrace),
+                BonusSpells.FeatSlots(draft, background, sources.Feats.ToDictionary(f => f.Id)),
+                draft.RaceSpellIds,
+                draft.FeatSpells,
+                sources.BonusSpellLists);
+    }
+
+    // A Mist Wanderer's Dark Gift: the step checks it, but a reseed may have moved the feat
+    private static Error? FindInvalidBackgroundFeat(CharacterDraft draft, CharacterSources sources)
+    {
+        var background = sources.Background;
+
+        if (background.FeatChoiceCategory is not { } category)
+        {
+            return draft.BackgroundFeatId == null ? null : CharacterDraftErrors.BackgroundFeatNotChoosable(background.Name);
+        }
+
+        var feat = sources.Feats.FirstOrDefault(f => f.Id == draft.BackgroundFeatId);
+
+        if (feat == null)
+        {
+            return CharacterErrors.BackgroundFeatRequired(background.Name, category);
+        }
+
+        if (feat.Edition != draft.Edition)
+        {
+            return CharacterDraftErrors.EditionMismatch("feat", feat.Name, feat.Edition, draft.Edition);
+        }
+
+        return feat.Category == category ? null : CharacterDraftErrors.BackgroundFeatNotOfCategory(background.Name, feat.Name, category);
     }
 
     // The background's own feat comes with it, and the spells a subclass always has with that
@@ -142,7 +189,7 @@ public static class DraftCompletenessChecker
             chosen.Add(("subclass", subclass.Name, subclass.Source));
         }
 
-        var pickedFeatIds = draft.SelectedFeatIds.Concat(draft.FightingStyleIds).ToHashSet();
+        var pickedFeatIds = draft.SelectedFeatIds.Concat(draft.FightingStyleIds).Append(draft.BackgroundFeatId).ToHashSet();
         chosen.AddRange(sources.Feats.Where(f => pickedFeatIds.Contains(f.Id)).Select(f => ("feat", f.Name, f.Source)));
         chosen.AddRange(sources.ChoosableSpells.Where(s => draft.SelectedSpellIds.Contains(s.Id)).Select(s => ("spell", s.Name, s.Source)));
 

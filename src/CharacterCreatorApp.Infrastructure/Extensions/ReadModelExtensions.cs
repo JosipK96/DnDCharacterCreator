@@ -147,6 +147,7 @@ public static class ReadModelExtensions
             Feat = background.Feat is { } feat
                 ? new BackgroundFeatReadModel { Id = feat.Id, Name = feat.Name, IsRepeatable = feat.IsRepeatable }
                 : null,
+            FeatChoiceCategory = background.FeatChoiceCategory,
 
             LanguageChoiceCount = background.Languages.Count(l => l.Equals("any", StringComparison.OrdinalIgnoreCase)),
 
@@ -280,7 +281,8 @@ public static class ReadModelExtensions
                 Type = feat.Choice.Type,
                 Count = feat.Choice.Count,
                 Options = feat.Choice.Options.AsReadOnly()
-            }
+            },
+            SpellChoice = feat.SpellChoice,
         };
     }
 
@@ -322,6 +324,9 @@ public static class ReadModelExtensions
             SubclassName = character.Subclass?.Name,
             BackgroundName = character.Background.Name,
 
+            // A character made before the size was kept has its race's
+            Size = character.Size ?? character.Race.Size,
+
             // Data. GetCharacterDetailsQueryHandler looks up what these ids stand for; the
             // proficiency ids also decide which skills the sheet counts as proficient, and when
             // they were left off here every skill came out without the proficiency bonus.
@@ -330,6 +335,7 @@ public static class ReadModelExtensions
             LanguageIds = character.LanguageIds,
             SpellIds = character.SpellIds,
             FeatIds = character.FeatIds,
+            FeatSavingThrowAbilityIds = character.FeatSavingThrowAbilityIds,
 
             CreatedAt = character.CreatedAt.DateTime
         };
@@ -347,10 +353,13 @@ public static class ReadModelExtensions
             RaceId = draft.RaceId,
             SubraceId = draft.SubraceId,
             RaceAbilityIncreases = draft.RaceAbilityIncreases,
+            Size = draft.Size,
+            RaceSpellIds = draft.RaceSpellIds,
             ClassId = draft.ClassId,
             SubclassId = draft.SubclassId,
             BackgroundId = draft.BackgroundId,
             BackgroundAbilityIncreases = draft.BackgroundAbilityIncreases,
+            BackgroundFeatId = draft.BackgroundFeatId,
             BaseAbilityScores = draft.BaseAbilityScores,
             SelectedClassProficiencyIds = draft.SelectedClassProficiencyIds,
             SelectedRaceSkillIds = draft.SelectedRaceSkillIds,
@@ -359,6 +368,7 @@ public static class ReadModelExtensions
             FeatAbilityIncreases = draft.FeatAbilityIncreases,
             FightingStyleIds = draft.FightingStyleIds,
             SelectedSpellIds = draft.SelectedSpellIds,
+            FeatSpells = draft.FeatSpells,
             AbilityScoreImprovements = draft.AbilityScoreImprovements,
             IsCompleted = draft.IsCompleted
         };

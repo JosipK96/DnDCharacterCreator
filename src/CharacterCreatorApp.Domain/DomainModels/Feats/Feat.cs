@@ -1,3 +1,5 @@
+using CharacterCreatorApp.Domain.DomainModels.Spells;
+
 namespace CharacterCreatorApp.Domain.DomainModels.Feats
 {
     public class Feat
@@ -35,5 +37,8 @@ namespace CharacterCreatorApp.Domain.DomainModels.Feats
         public List<string> GrantedSpellIds { get; set; } = [];
 
         public FeatChoice? Choice { get; set; }
+
+        /// <summary>The spells the player picks from a class list: Magic Initiate's two cantrips and a 1st-level spell.</summary>
+        public BonusSpellChoice? SpellChoice { get; set; }
     }
 }

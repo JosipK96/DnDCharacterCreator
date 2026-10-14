@@ -23,6 +23,9 @@ public sealed class CharacterDetailsReadModel
     public string? SubclassName { get; set; }
     public string BackgroundName { get; set; } = string.Empty;
 
+    /// <summary>"Small" or "Medium": the one picked for a species that may be either, else the race's.</summary>
+    public string Size { get; set; } = string.Empty;
+
     // Character data
     public Dictionary<string, int> AbilityScores { get; set; } = [];
     public List<string> ProficiencyIds { get; init; } = [];
@@ -34,6 +37,9 @@ public sealed class CharacterDetailsReadModel
     public List<SpellReadModel> Spells { get; set; } = [];
     public List<string> FeatIds { get; set; } = [];
     public List<FeatReadModel> Feats { get; set; } = [];
+
+    /// <summary>Saving throws feats add beside the class's: Resilient's.</summary>
+    public List<string> FeatSavingThrowAbilityIds { get; set; } = [];
 
     /// <summary>Derived numbers (modifiers, hit points, armour class, saves, skills).</summary>
     public CharacterStats? Stats { get; set; }

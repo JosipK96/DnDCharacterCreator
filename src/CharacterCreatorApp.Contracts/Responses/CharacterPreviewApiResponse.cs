@@ -13,6 +13,7 @@ public record CharacterPreviewApiResponse(
     string ClassName,
     string? SubclassName,
     string BackgroundName,
+    string Size,
     List<ProficiencyApiResponse> Proficiencies,
     List<LanguageApiResponse> Languages,
     List<FeatureApiResponse> Features,

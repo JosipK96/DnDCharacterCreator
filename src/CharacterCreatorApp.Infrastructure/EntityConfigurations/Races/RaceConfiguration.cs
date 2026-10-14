@@ -38,6 +38,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
 
             builder.HasIndex(r => r.Edition);
 
+            builder.OwnsOne(r => r.SpellChoice).ToJson();
+
             builder.HasMany(r => r.Spells)
                 .WithOne(s => s.Race)
                 .HasForeignKey(s => s.RaceId)

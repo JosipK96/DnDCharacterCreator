@@ -67,12 +67,21 @@ public sealed class DraftSourceLoader(
 
         // The background's feat grants what the others do: a 2024 Tavern Brawler's improvised weapons
         var feats = await _featRepository.GetByIdsAsync(
-            CharacterBuilder.BackgroundFeatIds(background).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds).Distinct(), cancellationToken);
+            CharacterBuilder.BackgroundFeatIds(background, draft).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds).Distinct(), cancellationToken);
         var languages = await _languageRepository.GetAllForEditionAsync(draft.Edition, cancellationToken);
         var choosableSpells = @class.SpellAllowanceAt(draft.Level!.Value, subclass) == null
             ? []
             : await SpellChoice.LoadChoosableAsync(_spellRepository, @class, subclass, cancellationToken);
 
-        return new CharacterSources(race, subrace, @class, subclass, background, feats, languages, choosableSpells);
+        var bonusSpellSlots = BonusSpells.FeatSlots(draft, background, feats.ToDictionary(f => f.Id));
+
+        if (BonusSpells.RaceSlot(race, subrace) is { } raceSlot)
+        {
+            bonusSpellSlots.Add(raceSlot);
+        }
+
+        var bonusSpellLists = await BonusSpells.LoadListsAsync(_spellRepository, bonusSpellSlots, cancellationToken);
+
+        return new CharacterSources(race, subrace, @class, subclass, background, feats, languages, choosableSpells, bonusSpellLists);
     }
 }

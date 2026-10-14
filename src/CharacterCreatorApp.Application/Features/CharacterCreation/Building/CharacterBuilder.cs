@@ -2,6 +2,7 @@ using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
@@ -47,7 +48,11 @@ public static class CharacterBuilder
         ApplyFeatAbilityIncreases(character, draft, sources.Feats);
 
         // The background's feat (a 2024 origin feat), the Fighting Styles, and those taken for improvements
-        character.SetFeats(BackgroundFeatIds(sources.Background).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds));
+        character.SetFeats(BackgroundFeatIds(sources.Background, draft).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds));
+        character.SetFeatSavingThrows(FeatSavingThrowAbilityIds(draft, sources.Feats));
+
+        // A species that may be Small or Medium is the size picked for it
+        character.SetSize(draft.Size ?? sources.Race.Size);
 
         character.SetLanguages(ResolveLanguageIds(draft, sources));
 
@@ -61,10 +66,13 @@ public static class CharacterBuilder
             .Concat(sources.Feats.SelectMany(f => f.GrantedProficiencyIds))
             .Distinct());
 
-        // What the player picked, what feats grant, what the subclass always has prepared at this
-        // level (a Life cleric's Bless and Cure Wounds), and what the race and subrace give by
-        // then (a tiefling's Thaumaturgy, and Hellish Rebuke from 3)
+        // What the player picked, for the class, the race (a high elf's cantrip) and feats (Magic
+        // Initiate's), what feats grant, what the subclass always has prepared at this level (a
+        // Life cleric's Bless and Cure Wounds), and what the race and subrace give by then (a
+        // tiefling's Thaumaturgy, and Hellish Rebuke from 3)
         character.SetSpells(draft.SelectedSpellIds
+            .Concat(draft.RaceSpellIds)
+            .Concat(draft.FeatSpells.SelectMany(pick => pick.SpellIds))
             .Concat(sources.Feats.SelectMany(f => f.GrantedSpellIds))
             .Concat(sources.Subclass?.AlwaysPreparedSpellIdsAt(draft.Level!.Value) ?? [])
             .Concat(sources.Race.SpellIdsAt(draft.Level!.Value, sources.Subrace)));
@@ -92,9 +100,33 @@ public static class CharacterBuilder
         }
     }
 
-    /// <summary>The feat a background gives, as a list of none or one.</summary>
-    public static IEnumerable<string> BackgroundFeatIds(Background background) =>
-        background.FeatId is { } featId ? [featId] : [];
+    /// <summary>
+    /// The feat a background gives, as a list of none or one: its own, or the one the player
+    /// picked for a background that lets them choose (Background.FeatChoiceCategory).
+    /// </summary>
+    public static IEnumerable<string> BackgroundFeatIds(Background background, CharacterDraft draft)
+    {
+        var featId = background.FeatChoiceCategory == null ? background.FeatId : draft.BackgroundFeatId;
+        return featId is null ? [] : [featId];
+    }
+
+    // Resilient adds the saving throw of the ability it raises, so the save follows that pick
+    private static IEnumerable<string> FeatSavingThrowAbilityIds(CharacterDraft draft, IReadOnlyList<FeatReadModel> feats)
+    {
+        var featsById = feats.ToDictionary(f => f.Id);
+
+        for (var i = 0; i < draft.SelectedFeatIds.Count; i++)
+        {
+            if (featsById.GetValueOrDefault(draft.SelectedFeatIds[i]) is { Choice.Type: FeatChoice.SavingThrow, AbilityIncrease: { } increase }
+                && increase.Resolve(draft.FeatAbilityIncreaseAt(i)) is { } raised)
+            {
+                foreach (var abilityId in raised.Keys)
+                {
+                    yield return abilityId;
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// Every language the character ends up knowing: the race's and the background's own, the

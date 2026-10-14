@@ -9,5 +9,8 @@
         /// none for a 2014 background.
         /// </summary>
         public Dictionary<string, int>? AbilityIncreases { get; set; }
+
+        /// <summary>The feat picked for a background that lets the player choose it (a Mist Wanderer's Dark Gift).</summary>
+        public string? FeatId { get; set; }
     }
 }

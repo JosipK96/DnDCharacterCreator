@@ -59,6 +59,34 @@ public class BackgroundSeedDataTests
         backgrounds2024.Should().OnlyContain(b => b.Languages.SequenceEqual(new[] { "common", "any", "any" }));
     }
 
+    [Theory]
+    [InlineData("mist_wanderer_2024")]
+    [InlineData("spirit_medium_2024")]
+    public async Task Background2024_ThatLetsThePlayerPickTheFeat_OffersADarkGift(string backgroundId)
+    {
+        // Act
+        var background = (await ReadBackgroundsAsync()).Single(b => b.Id == backgroundId);
+
+        // Assert
+        background.FeatId.Should().BeNull();
+        background.FeatChoiceCategory.Should().Be("Dark Gift");
+    }
+
+    [Theory]
+    [InlineData("acolyte_2024", "cleric-2024")]
+    [InlineData("guide_2024", "druid-2024")]
+    [InlineData("sage_2024", "wizard-2024")]
+    [InlineData("soldier_2024", null)]
+    public async Task Background2024_FixesTheListOfItsMagicInitiate(string backgroundId, string? classId)
+    {
+        // Act
+        var background = (await ReadBackgroundsAsync()).Single(b => b.Id == backgroundId);
+
+        // Assert
+        background.FeatSpellListClassId.Should().Be(classId);
+        background.FeatChoiceCategory.Should().BeNull();
+    }
+
     private static Task<List<BackgroundSeedRow>> ReadBackgroundsAsync() =>
         SeedFile.ReadListAsync<BackgroundSeedRow>(Path.Combine(SeedService.DataPath, "Backgrounds.json"), TestContext.Current.CancellationToken);
 }

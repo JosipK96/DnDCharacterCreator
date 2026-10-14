@@ -1,6 +1,8 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetBackground;
 using CharacterCreatorApp.Application.Persistence;
+using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -17,6 +19,7 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
 {
     private readonly Mock<ICharacterDraftRepository> _draftRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IBackgroundRepository> _backgroundRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<IFeatRepository> _featRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = new(MockBehavior.Strict);
     private readonly Mock<IUserContext> _userContextMock = new(MockBehavior.Strict);
     private readonly CancellationTokenSource _cts = new();
@@ -33,6 +36,7 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         _sut = new SetCharacterBackgroundCommandHandler(
             _draftRepositoryMock.Object,
             _backgroundRepositoryMock.Object,
+            _featRepositoryMock.Object,
             _unitOfWorkMock.Object,
             _userContextMock.Object);
     }
@@ -166,6 +170,143 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         result.IsSuccess.Should().BeTrue();
         draft.BackgroundId.Should().Be("soldier");
     }
+
+    [Fact]
+    public async Task Handle_WithADarkGiftForAMistWanderer_StoresTheFeat()
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        draft.AllowBooks(["RHW"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeBackground(MistWanderer());
+        ArrangeFeat(DarkGift());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "mist_wanderer_2024", Increases(), "mist_walker"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.BackgroundFeatId.Should().Be("mist_walker");
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatForABackgroundWithItsOwn_ReturnsBackgroundFeatNotChoosable()
+    {
+        // Arrange - the 2024 soldier's feat is Savage Attacker
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        ArrangeBackground(Soldier2024());
+
+        // Act
+        var result = await _sut.Handle(
+            new SetCharacterBackgroundCommand(_draftId, "soldier_2024", new() { ["STR"] = 2, ["CON"] = 1 }, "alert_2024"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.BackgroundFeatNotChoosable");
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatOfAnotherCategory_ReturnsBackgroundFeatNotOfCategory()
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        draft.AllowBooks(["RHW"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeBackground(MistWanderer());
+        var feat = DarkGift();
+        feat.Category = "Origin";
+        ArrangeFeat(feat);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "mist_wanderer_2024", Increases(), "mist_walker"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.BackgroundFeatNotOfCategory");
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - the Dark Gifts are from RHW, which the draft has not ticked
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        var background = MistWanderer();
+        background.Source = "XPHB";
+        ArrangeBackground(background);
+        ArrangeFeat(DarkGift());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "mist_wanderer_2024", Increases(), "mist_walker"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.SourceNotAllowed");
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatOfTheOtherEdition_ReturnsEditionMismatch()
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        draft.AllowBooks(["RHW"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeBackground(MistWanderer());
+        var feat = DarkGift();
+        feat.Edition = RulesEdition.Edition2014;
+        ArrangeFeat(feat);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "mist_wanderer_2024", Increases(), "mist_walker"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.EditionMismatch");
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatThatDoesNotExist_ReturnsFeatNotFound()
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        draft.AllowBooks(["RHW"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeBackground(MistWanderer());
+        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.Is<IEnumerable<string>>(ids => ids.SequenceEqual(new[] { "mist_walker" })), _cts.Token)).ReturnsAsync([]);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "mist_wanderer_2024", Increases(), "mist_walker"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "Feat.NotFound");
+    }
+
+    private void AssertRefused(Response result, CharacterDraft draft, string code)
+    {
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be(code);
+        draft.BackgroundId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    private void ArrangeFeat(FeatReadModel feat) =>
+        _featRepositoryMock
+            .Setup(r => r.GetByIdsAsync(It.Is<IEnumerable<string>>(ids => ids.SequenceEqual(new[] { feat.Id })), _cts.Token))
+            .ReturnsAsync([feat]);
+
+    private static Dictionary<string, int> Increases() => new() { ["DEX"] = 2, ["WIS"] = 1 };
+
+    // Any Dark Gift, and +2/+1 or +1 to each of Dexterity, Wisdom and Charisma
+    private static Background MistWanderer() => new()
+    {
+        Id = "mist_wanderer_2024",
+        Name = "Mist Wanderer",
+        Edition = RulesEdition.Edition2024,
+        Source = "RHW",
+        AbilityScoreOptions = ["DEX", "WIS", "CHA"],
+        FeatChoiceCategory = "Dark Gift",
+    };
+
+    private static FeatReadModel DarkGift() => new()
+    {
+        Id = "mist_walker",
+        Name = "Mist Walker",
+        Description = "A feat.",
+        Edition = RulesEdition.Edition2024,
+        Source = "RHW",
+        Category = "Dark Gift",
+    };
 
     private CharacterDraft ArrangeDraft(string edition)
     {

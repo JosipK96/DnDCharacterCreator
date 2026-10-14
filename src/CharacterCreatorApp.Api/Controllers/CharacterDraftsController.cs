@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseBonusSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseLanguages;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseProficiencies;
@@ -6,6 +7,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseRaceSkill
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.CreateDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.DeleteDraft;
+using CharacterCreatorApp.Application.Features.CharacterCreation.GetBonusSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetIncompleteDraft;
@@ -21,6 +23,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.SetSubclass;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetSubrace;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
 using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 
 using MapsterMapper;
 
@@ -80,7 +83,7 @@ namespace CharacterCreatorApp.Api.Controllers
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SetRace(Guid draftId, [FromBody] SetRaceApiRequest request, CancellationToken cancellationToken)
         {
-            var response = await _sender.Send(new SetCharacterRaceCommand(draftId, request.RaceId, request.SubraceId, request.AbilityIncreases), cancellationToken);
+            var response = await _sender.Send(new SetCharacterRaceCommand(draftId, request.RaceId, request.SubraceId, request.AbilityIncreases, request.Size), cancellationToken);
 
             return NoContentOrProblem(response);
         }
@@ -125,7 +128,7 @@ namespace CharacterCreatorApp.Api.Controllers
         public async Task<IActionResult> SetBackground(Guid draftId, [FromBody] SetBackgroundApiRequest request, CancellationToken cancellationToken)
         {
             var response = await _sender.Send(
-                new SetCharacterBackgroundCommand(draftId, request.BackgroundId, request.AbilityIncreases ?? []), cancellationToken);
+                new SetCharacterBackgroundCommand(draftId, request.BackgroundId, request.AbilityIncreases ?? [], request.FeatId), cancellationToken);
 
             return NoContentOrProblem(response);
         }
@@ -220,6 +223,36 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new ChooseSpellsCommand(draftId, request.SpellIds), cancellationToken);
 
             return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// The spells the race and each feat with a spell choice let the player pick, one pick per
+        /// feat in the order GET bonus-spells lists them.
+        /// </summary>
+        [HttpPut("{draftId:guid}/bonus-spells")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ChooseBonusSpells(Guid draftId, [FromBody] ChooseBonusSpellsApiRequest request, CancellationToken cancellationToken)
+        {
+            var featSpells = request.FeatSpells.ConvertAll(pick => new FeatSpellPick { FeatId = pick.FeatId, ClassId = pick.ClassId, SpellIds = pick.SpellIds });
+            var response = await _sender.Send(new ChooseBonusSpellsCommand(draftId, request.RaceSpellIds, featSpells), cancellationToken);
+
+            return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// The spells the draft's race (a high elf's cantrip) and feats (Magic Initiate) let the
+        /// player pick, the race's first, each with the lists it may come from; empty when none do.
+        /// </summary>
+        [HttpGet("{draftId:guid}/bonus-spells")]
+        [ProducesResponseType(typeof(List<BonusSpellChoiceApiResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetBonusSpells(Guid draftId, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new GetBonusSpellsQuery(draftId), cancellationToken);
+
+            return OkOrProblem(response, choices => _mapper.Map<List<BonusSpellChoiceApiResponse>>(choices));
         }
 
         /// <summary>

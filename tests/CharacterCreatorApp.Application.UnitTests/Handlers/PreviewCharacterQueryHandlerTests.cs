@@ -5,6 +5,7 @@ using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.ValueObjects;
 
@@ -161,6 +162,48 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
 
         // Assert
         result.Value.BlockingIssue.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task Handle_WithResilientForWisdom_MarksTheWisdomSaveProficient()
+    {
+        // Arrange - the fighter's improvement at 4 spent on Resilient, raising Wisdom
+        var draft = ArrangeDraft(level: 4);
+        draft.SetAbilityScoreImprovements([]);
+        draft.SetFeats(["resilient"], [new Dictionary<string, int> { ["WIS"] = 1 }]);
+        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync(
+        [
+            new FeatReadModel
+            {
+                Id = "resilient",
+                Name = "Resilient",
+                Description = "A feat.",
+                Edition = RulesEdition.Edition2014,
+                Source = "PHB",
+                AbilityIncrease = new FeatAbilityIncrease { Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
+                Choice = new FeatChoiceReadModel { Type = FeatChoice.SavingThrow, Count = 1, Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
+            },
+        ]);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.BlockingIssue.Should().BeNull();
+        result.Value.Stats.SavingThrows.Where(s => s.IsProficient).Select(s => s.AbilityId).Should().BeEquivalentTo(["STR", "CON", "WIS"]);
+    }
+
+    [Fact]
+    public async Task Handle_ShowsTheRacesSize()
+    {
+        // Arrange
+        ArrangeDraft(level: 1);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.Size.Should().Be("Medium");
     }
 
     [Fact]

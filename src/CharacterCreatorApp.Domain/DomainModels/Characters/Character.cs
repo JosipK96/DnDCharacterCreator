@@ -41,6 +41,12 @@ public class Character : Entity<Guid>, IAuditable
     /// </summary>
     public List<string> FeatIds { get; private set; } = [];
 
+    /// <summary>"Small" or "Medium". Null for a character made before the size was kept; its race's size stands.</summary>
+    public string? Size { get; private set; }
+
+    /// <summary>Saving throws a feat adds beside the class's (Resilient), by canonical ability id.</summary>
+    public List<string> FeatSavingThrowAbilityIds { get; private set; } = [];
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor
     private Character() { }
 #pragma warning restore CS8618
@@ -200,5 +206,17 @@ public class Character : Entity<Guid>, IAuditable
     public void SetFeats(IEnumerable<string> featIds)
     {
         FeatIds = featIds.ToList();
+    }
+
+    /// <summary>"Small" or "Medium": the race's only size, or the one picked for a species that may be either.</summary>
+    public void SetSize(string size)
+    {
+        Size = size;
+    }
+
+    /// <summary>The saving throws feats add, by canonical ability id: Resilient's, which is the ability it raised.</summary>
+    public void SetFeatSavingThrows(IEnumerable<string> abilityIds)
+    {
+        FeatSavingThrowAbilityIds = abilityIds.Select(AbilityScore.Normalize).Distinct().ToList();
     }
 }

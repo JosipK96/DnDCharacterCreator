@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Domain.DomainModels.Feats;
+using CharacterCreatorApp.Domain.DomainModels.Spells;
 
 namespace CharacterCreatorApp.Infrastructure.Seed.Rows;
 
@@ -29,4 +30,7 @@ public sealed record FeatSeedRow
 
     public List<string> GrantedSpellIds { get; init; } = [];
     public FeatChoice? Choice { get; init; }
+
+    /// <summary>The spells the player picks from a class list: Magic Initiate's.</summary>
+    public BonusSpellChoice? SpellChoice { get; init; }
 }

@@ -23,6 +23,8 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                 Languages = row.Languages,
                 AbilityScoreOptions = row.AbilityScoreOptions,
                 FeatId = row.FeatId,
+                FeatChoiceCategory = row.FeatChoiceCategory,
+                FeatSpellListClassId = row.FeatSpellListClassId,
                 FeatureId = row.FeatureId,
                 BackgroundProficiencies = row.ProficiencyIds.ConvertAll(id => new BackgroundProficiency { BackgroundId = row.Id, ProficiencyId = id }),
             }), cancellationToken);

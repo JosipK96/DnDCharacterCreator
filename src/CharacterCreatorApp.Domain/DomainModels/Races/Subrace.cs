@@ -1,4 +1,6 @@
-﻿namespace CharacterCreatorApp.Domain.DomainModels.Races;
+﻿using CharacterCreatorApp.Domain.DomainModels.Spells;
+
+namespace CharacterCreatorApp.Domain.DomainModels.Races;
 
 /// <summary>
 /// A 2014 subrace ("Hill Dwarf"), or one of a 2024 species' lineages or ancestries ("Drow
@@ -42,4 +44,7 @@ public class Subrace
     public ICollection<SubraceTrait> Traits { get; set; } = [];
     public ICollection<SubraceProficiency> SubraceProficiencies { get; set; } = [];
     public ICollection<SubraceSpell> Spells { get; set; } = [];
+
+    /// <summary>Spells the player picks from a class list: a high elf's wizard cantrip.</summary>
+    public BonusSpellChoice? SpellChoice { get; set; }
 }

@@ -1,4 +1,5 @@
 @inject CharacterDraftService DraftService
+@inject LookupService LookupService
 @inherits WizardStepBase
 
 <div>
@@ -63,7 +64,7 @@
                     @foreach (var option in EditionOptions)
                     {
                         <button type="button"
-                                @onclick="() => edition = option.Edition"
+                                @onclick="() => ChooseEditionAsync(option.Edition)"
                                 class="@EditionButtonClass(option.Edition)">
                             <span class="block font-bold text-white">@option.Title</span>
                             <span class="block text-sm text-gray-400 mt-1">@option.Description</span>
@@ -74,6 +75,32 @@
                 {
                     <p class="text-yellow-400 text-sm mt-2">
                         Switching rules clears the race, class, background, feats and spells chosen so far.
+                    </p>
+                }
+            </div>
+
+            <!-- Books -->
+            <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">Books</label>
+                <p class="text-gray-400 text-sm mb-3">
+                    The Player's Handbook is always used. Tick the other books your table allows; only what they contain is offered.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    @foreach (var book in books)
+                    {
+                        <label class="flex items-center gap-2 text-sm text-white">
+                            <input type="checkbox"
+                                   checked="@(book.IsPlayersHandbook || selectedBooks.Contains(book.Code))"
+                                   disabled="@book.IsPlayersHandbook"
+                                   @onchange="e => ToggleBook(book.Code, e.Value is true)" />
+                            <span>@book.Name</span>
+                        </label>
+                    }
+                </div>
+                @if (ClearsBookChoices)
+                {
+                    <p class="text-yellow-400 text-sm mt-2">
+                        Choices made from a book you untick are cleared.
                     </p>
                 }
             </div>
@@ -104,8 +131,9 @@
         ("2014", "2014 rules", "The original Player's Handbook and the books written for it."),
     ];
 
+    /// <summary>The level, edition and books (by code, the Player's Handbook first) the draft was saved with.</summary>
     [Parameter]
-    public EventCallback<(int Level, string Edition)> OnNext { get; set; }
+    public EventCallback<(int Level, string Edition, IReadOnlyList<string> Sources)> OnNext { get; set; }
 
     [Parameter]
     public EventCallback OnCancel { get; set; }
@@ -120,21 +148,51 @@
 
     private bool ClearsChoices => hasChoices && edition != savedEdition;
 
+    // The edition's books, and the ones ticked besides its Player's Handbook, which is always allowed
+    private List<BookApiResponse> books = [];
+    private HashSet<string> selectedBooks = [];
+    private HashSet<string> savedBooks = [];
+
+    private bool ClearsBookChoices => hasChoices && edition == savedEdition && !savedBooks.IsSubsetOf(selectedBooks);
+
     // Coming back to this step shows what was saved rather than an empty form
     protected override Task OnInitializedAsync() => LoadAsync(async () =>
     {
         var draft = await DraftService.GetDraftDetailsAsync(DraftId);
 
-        if (draft == null)
+        if (draft != null)
         {
-            return;
+            characterName = draft.Name ?? "";
+            level = draft.Level ?? 1;
+            edition = savedEdition = draft.Edition;
+            hasChoices = draft.RaceId != null || draft.ClassId != null || draft.BackgroundId != null;
+            savedBooks = [.. draft.AllowedSources];
+            selectedBooks = [.. savedBooks];
         }
 
-        characterName = draft.Name ?? "";
-        level = draft.Level ?? 1;
-        edition = savedEdition = draft.Edition;
-        hasChoices = draft.RaceId != null || draft.ClassId != null || draft.BackgroundId != null;
+        books = await LookupService.GetBooksAsync(edition);
     }, "Failed to load the draft");
+
+    // The editions share no book, so another edition starts from its Player's Handbook alone
+    private Task ChooseEditionAsync(string chosen)
+    {
+        edition = chosen;
+        selectedBooks = chosen == savedEdition ? [.. savedBooks] : [];
+
+        return LoadAsync(async () => books = await LookupService.GetBooksAsync(chosen), "Failed to load the books");
+    }
+
+    private void ToggleBook(string code, bool isTicked)
+    {
+        if (isTicked)
+        {
+            selectedBooks.Add(code);
+        }
+        else
+        {
+            selectedBooks.Remove(code);
+        }
+    }
 
     private bool IsValid()
     {
@@ -157,9 +215,17 @@
     {
         if (!IsValid()) return;
 
-        if (await SaveAsync(() => DraftService.SetNameAndLevelAsync(DraftId, characterName.Trim(), level, edition)))
+        // The name and level first: a new edition resets the books, which are then set for it
+        var otherBooks = books.Where(b => !b.IsPlayersHandbook && selectedBooks.Contains(b.Code)).Select(b => b.Code).ToList();
+
+        if (await SaveAsync(async () =>
+            {
+                await DraftService.SetNameAndLevelAsync(DraftId, characterName.Trim(), level, edition);
+                await DraftService.SetAllowedBooksAsync(DraftId, otherBooks);
+            }))
         {
-            await OnNext.InvokeAsync((level, edition));
+            var sources = books.Where(b => b.IsPlayersHandbook).Select(b => b.Code).Concat(otherBooks).ToList();
+            await OnNext.InvokeAsync((level, edition, sources));
         }
     }
 }

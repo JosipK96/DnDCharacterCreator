@@ -195,6 +195,10 @@
     [Parameter, EditorRequired]
     public string Edition { get; set; } = string.Empty;
 
+    /// <summary>The books the draft allows, by code; only what comes from them is offered.</summary>
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
+
     [Parameter]
     public EventCallback OnNext { get; set; }
 
@@ -215,7 +219,7 @@
     }
 
     private Task LoadClasses() =>
-        LoadAsync(async () => classes = await LookupService.GetClassesAsync(Edition), "Failed to load classes");
+        LoadAsync(async () => classes = await LookupService.GetClassesAsync(Edition, Sources), "Failed to load classes");
 
     private async Task SelectClass(ClassApiResponse classOption)
     {
@@ -235,7 +239,7 @@
             {
                 // Cleared first, so a failed load cannot leave the last class's subclasses showing
                 subclasses = [];
-                subclasses = await LookupService.GetSubclassesByClassAsync(classId);
+                subclasses = await LookupService.GetSubclassesByClassAsync(classId, Sources);
             },
             busy => loadingSubclasses = busy,
             "Failed to load subclasses");

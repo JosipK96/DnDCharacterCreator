@@ -277,14 +277,14 @@
         // Knight, whose fighter has none), and the spells the subclass adds to its class's
         var lists = new List<List<SpellApiResponse>>
         {
-            await LookupService.GetSpellsAsync(classId: draft.ClassId, maxLevel: maxSpellLevel)
+            await LookupService.GetSpellsAsync(classId: draft.ClassId, maxLevel: maxSpellLevel, sources: draft.AllowedSources)
         };
 
         if (subclassDetails?.SpellListClassId is { } listClassId)
-            lists.Add(await LookupService.GetSpellsAsync(classId: listClassId, maxLevel: maxSpellLevel));
+            lists.Add(await LookupService.GetSpellsAsync(classId: listClassId, maxLevel: maxSpellLevel, sources: draft.AllowedSources));
 
         if (subclassDetails != null)
-            lists.Add(await LookupService.GetSpellsAsync(subclassId: subclassDetails.Id, maxLevel: maxSpellLevel));
+            lists.Add(await LookupService.GetSpellsAsync(subclassId: subclassDetails.Id, maxLevel: maxSpellLevel, sources: draft.AllowedSources));
 
         var allSpells = lists
             .SelectMany(list => list)

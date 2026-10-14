@@ -121,6 +121,10 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
 - Ability keys arrive as `STR`, `str` and `strength` depending on the source; always go through
   `AbilityScore.Normalize`/`TryNormalize`. `Character.AbilityScores` only ever holds canonical
   ids.
+- Base scores come with the method that made them (`AbilityScoreMethod`: the standard array,
+  27-point buy with 8 to 15, or 3 to 18 rolled), and the server checks they fit it, in the
+  validator and again in `DraftCompletenessChecker`. A draft from before the method was kept
+  has to pick its scores again.
 - Language ids are source-suffixed (`common-phb`, `common-xphb`): a 2014 character's are the
   PHB's, a 2024 one's the 2024 book's (`Language.SourceFor`). Race languages are stored as
   display names and background languages contain `"any"` placeholders; `LanguageResolver`

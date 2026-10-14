@@ -42,14 +42,6 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.FinalizeCha
                 return CharacterDraftErrors.Invalid();
             }
 
-            // IsReadyToFinalize above has already rejected a draft with no level
-            var abilityScoreError = ValidateBaseAbilityScores(draft.Level!.Value, draft.BaseAbilityScores);
-
-            if (abilityScoreError is not null)
-            {
-                return abilityScoreError.Value;
-            }
-
             var sourcesResponse = await _sourceLoader.LoadAsync(draft, cancellationToken);
 
             if (!sourcesResponse.IsSuccess)
@@ -73,28 +65,6 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.FinalizeCha
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return character.Id;
-        }
-
-        /// <summary>
-        /// These are BASE scores before racial bonuses and improvements are applied.
-        /// Point buy and the standard array top out at 15 and 4d6-drop-lowest at 18, so a base
-        /// score above 18 could not have been rolled; 20 is the hard cap either way.
-        /// </summary>
-        private static Error? ValidateBaseAbilityScores(int level, Dictionary<string, int> baseAbilityScores)
-        {
-            const int maxBaseScore = 18;
-
-            var invalidScores = baseAbilityScores.Where(kvp => kvp.Value > maxBaseScore).ToList();
-
-            if (invalidScores.Count == 0)
-            {
-                return null;
-            }
-
-            return CharacterErrors.AbilityScoreTooHigh(
-                level,
-                maxBaseScore,
-                invalidScores.Select(s => $"{s.Key}={s.Value}"));
         }
     }
 }

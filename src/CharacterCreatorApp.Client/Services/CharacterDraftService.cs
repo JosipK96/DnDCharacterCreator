@@ -34,8 +34,8 @@ public class CharacterDraftService(HttpClient http)
     public Task SetBackgroundAsync(Guid draftId, string backgroundId, Dictionary<string, int>? abilityIncreases = null) =>
         PutAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = backgroundId, AbilityIncreases = abilityIncreases });
 
-    public Task SetAbilityScoresAsync(Guid draftId, Dictionary<string, int> scores) =>
-        PutAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest { Scores = scores });
+    public Task SetAbilityScoresAsync(Guid draftId, Dictionary<string, int> scores, string method) =>
+        PutAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest { Scores = scores, Method = method });
 
     public Task ChooseProficienciesAsync(Guid draftId, List<string> proficiencyIds) =>
         PutAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(proficiencyIds));

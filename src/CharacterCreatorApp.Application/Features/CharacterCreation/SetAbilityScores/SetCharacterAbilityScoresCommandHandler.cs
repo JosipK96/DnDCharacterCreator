@@ -24,7 +24,7 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityS
                 return CharacterDraftErrors.NotFoundById(command.DraftId);
             }
 
-            draft.SetBaseAbilityScores(command.Scores);
+            draft.SetBaseAbilityScores(command.Scores, command.Method);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Response.Success();

@@ -7,59 +7,65 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
 {
     public class CharacterDraft : Entity<Guid>, IAuditable
     {
-        public Guid CreatedByUserId { get; set; }
+        public Guid CreatedByUserId { get; private set; }
 
         public DateTimeOffset CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
 
-        public string? Name { get; set; }
-        public int? Level { get; set; }
+        public string? Name { get; private set; }
+        public int? Level { get; private set; }
 
         /// <summary>
         /// RulesEdition.Edition2014 or Edition2024: the rules the character is built with. Every
         /// class (and, as their data gains editions, race, background, feat and spell) the draft
         /// names belongs to it.
         /// </summary>
-        public string Edition { get; set; } = RulesEdition.Edition2024;
+        public string Edition { get; private set; } = RulesEdition.Edition2024;
 
-        public string? RaceId { get; set; }
-        public string? SubraceId { get; set; }
+        public string? RaceId { get; private set; }
+        public string? SubraceId { get; private set; }
 
         /// <summary>
         /// The +1s picked for the race or subrace (Race.AbilityChoiceWith), by canonical id: a
         /// half-elf's two, a variant human's two. Empty for a race without that choice.
         /// </summary>
-        public Dictionary<string, int> RaceAbilityIncreases { get; set; } = [];
+        public Dictionary<string, int> RaceAbilityIncreases { get; private set; } = [];
 
-        public string? ClassId { get; set; }
-        public string? SubclassId { get; set; }
+        public string? ClassId { get; private set; }
+        public string? SubclassId { get; private set; }
 
-        public string? BackgroundId { get; set; }
+        public string? BackgroundId { get; private set; }
 
         /// <summary>
         /// A 2024 background's ability increases, +2 and +1 or +1 to three abilities, by canonical
         /// id ("STR"). Empty for a 2014 background, whose race gives the increases instead.
         /// </summary>
-        public Dictionary<string, int> BackgroundAbilityIncreases { get; set; } = [];
+        public Dictionary<string, int> BackgroundAbilityIncreases { get; private set; } = [];
 
-        public Dictionary<string, int> BaseAbilityScores { get; set; } = [];
-        public List<string> SelectedClassProficiencyIds { get; set; } = [];
-        public List<string> SelectedRaceSkillIds { get; set; } = [];
-        public List<string> SelectedLanguageIds { get; set; } = [];
-        public List<string> SelectedFeatIds { get; set; } = [];
+        public Dictionary<string, int> BaseAbilityScores { get; private set; } = [];
+
+        /// <summary>
+        /// How the base scores were generated (AbilityScoreMethod), so they can be checked against
+        /// what that method allows. Null for a draft saved before the method was recorded.
+        /// </summary>
+        public string? BaseAbilityScoreMethod { get; private set; }
+        public List<string> SelectedClassProficiencyIds { get; private set; } = [];
+        public List<string> SelectedRaceSkillIds { get; private set; } = [];
+        public List<string> SelectedLanguageIds { get; private set; } = [];
+        public List<string> SelectedFeatIds { get; private set; } = [];
 
         /// <summary>
         /// What each of SelectedFeatIds raises, in the same order, by canonical id: {"DEX": 1} for
         /// an Athlete who picked Dexterity, empty for a feat that raises nothing. A repeatable feat
         /// can raise a different ability each time, so this follows the list rather than the ids.
         /// </summary>
-        public List<Dictionary<string, int>> FeatAbilityIncreases { get; set; } = [];
+        public List<Dictionary<string, int>> FeatAbilityIncreases { get; private set; } = [];
 
-        public List<string> SelectedSpellIds { get; set; } = [];
+        public List<string> SelectedSpellIds { get; private set; } = [];
         // Each element is one ASI use: {"STR": 2} or {"STR": 1, "DEX": 1}
-        public List<Dictionary<string, int>> AbilityScoreImprovements { get; set; } = [];
+        public List<Dictionary<string, int>> AbilityScoreImprovements { get; private set; } = [];
 
-        public bool IsCompleted { get; set; }
+        public bool IsCompleted { get; private set; }
 
         public static CharacterDraft CreateEmpty(Guid userId, TimeProvider timeProvider)
         {
@@ -220,9 +226,10 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             BackgroundAbilityIncreases = Canonical(abilityIncreases);
         }
 
-        public void SetBaseAbilityScores(Dictionary<string, int> scores)
+        public void SetBaseAbilityScores(Dictionary<string, int> scores, string method)
         {
             BaseAbilityScores = new Dictionary<string, int>(scores);
+            BaseAbilityScoreMethod = method;
         }
 
         public void SetClassProficiencies(List<string> proficiencyIds)

@@ -31,6 +31,7 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Feats
 
             builder.OwnsOne(f => f.Choice).ToJson();
             builder.OwnsOne(f => f.AbilityIncrease).ToJson();
+            builder.OwnsOne(f => f.SpellChoice).ToJson();
         }
     }
 }

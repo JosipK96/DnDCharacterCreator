@@ -151,6 +151,22 @@
                             </div>
                         </div>
                     }
+
+                    <!-- A 2024 human, aasimar or tiefling is Small or Medium, as the player likes -->
+                    @if (SizeOptions().Count > 1)
+                    {
+                        <div class="bg-gray-700 rounded-lg p-6">
+                            <h3 class="text-lg font-bold text-white mb-4">Size <span class="text-red-400">*</span></h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                @foreach (var size in SizeOptions())
+                                {
+                                    <button type="button" @onclick="() => selectedSize = size" class="@GetPickClass(selectedSize == size, false)">
+                                        <span class="font-medium text-white">@size</span>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
                 </div>
             }
         }
@@ -243,6 +259,9 @@
 
     // The abilities picked for the race's or subrace's +1s
     private HashSet<string> abilityPicks = [];
+
+    // Picked only for a species that may be Small or Medium
+    private string? selectedSize;
     private int subStep = 1;
     private bool isLoadingSkills = false;
 
@@ -270,6 +289,7 @@
         selectedSubrace = null;
         selectedRaceSkills = [];
         abilityPicks = [];
+        selectedSize = null;
     }
 
     private void ClearRace()
@@ -295,8 +315,13 @@
     {
         if (selectedRace == null) return false;
         if (selectedRace.Subraces?.Any() == true && selectedSubrace == null) return false;
+        if (SizeOptions().Count > 1 && selectedSize == null) return false;
         return abilityPicks.Count == AbilityChoiceCount();
     }
+
+    // "Small or Medium" is either, as the player picks
+    private List<string> SizeOptions() =>
+        selectedRace?.Size.Split(" or ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList() ?? [];
 
     // The +1s the player picks: a subrace's take the place of the race's, as the variant human's
     // replace the standard human's +1 to everything; the API refuses any other count
@@ -384,7 +409,7 @@
 
         var abilityIncreases = abilityPicks.ToDictionary(ability => ability, _ => 1);
 
-        if (!await SaveAsync(() => DraftService.SetRaceAsync(DraftId, selectedRace!.Id, selectedSubrace?.Id, abilityIncreases)))
+        if (!await SaveAsync(() => DraftService.SetRaceAsync(DraftId, selectedRace!.Id, selectedSubrace?.Id, abilityIncreases, SizeOptions().Count > 1 ? selectedSize : null)))
         {
             return;
         }

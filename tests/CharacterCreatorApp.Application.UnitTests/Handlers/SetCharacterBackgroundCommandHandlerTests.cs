@@ -17,6 +17,7 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
 {
     private readonly Mock<ICharacterDraftRepository> _draftRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IBackgroundRepository> _backgroundRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<IFeatRepository> _featRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = new(MockBehavior.Strict);
     private readonly Mock<IUserContext> _userContextMock = new(MockBehavior.Strict);
     private readonly CancellationTokenSource _cts = new();
@@ -33,6 +34,7 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         _sut = new SetCharacterBackgroundCommandHandler(
             _draftRepositoryMock.Object,
             _backgroundRepositoryMock.Object,
+            _featRepositoryMock.Object,
             _unitOfWorkMock.Object,
             _userContextMock.Object);
     }

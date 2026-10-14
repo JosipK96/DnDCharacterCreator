@@ -18,6 +18,9 @@ public sealed class CharacterPreviewReadModel
     public string? SubclassName { get; init; }
     public required string BackgroundName { get; init; }
 
+    /// <summary>"Small" or "Medium", or the race's "Small or Medium" while none is picked.</summary>
+    public required string Size { get; init; }
+
     public List<ProficiencyReadModel> Proficiencies { get; set; } = [];
     public List<LanguageReadModel> Languages { get; set; } = [];
     public List<FeatureReadModel> Features { get; set; } = [];

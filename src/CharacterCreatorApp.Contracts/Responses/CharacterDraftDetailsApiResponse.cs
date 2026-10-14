@@ -13,12 +13,21 @@ public class CharacterDraftDetailsApiResponse
     public string? RaceId { get; set; }
     public string? SubraceId { get; set; }
 
+    /// <summary>The size picked for a species that may be Small or Medium; null otherwise.</summary>
+    public string? Size { get; set; }
+
+    /// <summary>The spells picked for the race: a high elf's wizard cantrip.</summary>
+    public List<string> RaceSpellIds { get; set; } = [];
+
     /// <summary>The +1s picked for the race or subrace by ability id: a half-elf's two.</summary>
     public Dictionary<string, int> RaceAbilityIncreases { get; set; } = [];
 
     public string? ClassId { get; set; }
     public string? SubclassId { get; set; }
     public string? BackgroundId { get; set; }
+
+    /// <summary>The feat picked for a background that lets the player choose it (a Dark Gift).</summary>
+    public string? BackgroundFeatId { get; set; }
 
     /// <summary>A 2024 background's ability increases by ability id ("STR"); empty otherwise.</summary>
     public Dictionary<string, int> BackgroundAbilityIncreases { get; set; } = [];
@@ -36,6 +45,9 @@ public class CharacterDraftDetailsApiResponse
     public List<string> FightingStyleIds { get; set; } = [];
 
     public List<string> SelectedSpellIds { get; set; } = [];
+
+    /// <summary>The spells picked for each feat with a spell choice, in the order the bonus spells endpoint lists them.</summary>
+    public List<FeatSpellPickApiModel> FeatSpells { get; set; } = [];
     public List<Dictionary<string, int>> AbilityScoreImprovements { get; set; } = [];
     public bool IsCompleted { get; set; }
 }

@@ -26,6 +26,14 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Characters
             builder.Property(x => x.SubraceId)
                 .HasMaxLength(50);
 
+            builder.Property(x => x.Size)
+                .HasMaxLength(20);
+
+            builder.Property(x => x.RaceSpellIds);
+
+            builder.Property(x => x.BackgroundFeatId)
+                .HasMaxLength(50);
+
             builder.Property(x => x.ClassId)
                 .HasMaxLength(50);
 
@@ -53,6 +61,10 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Characters
             builder.Property(x => x.SelectedFeatIds);
             builder.Property(x => x.FightingStyleIds);
             builder.Property(x => x.SelectedSpellIds);
+
+            builder.Property(x => x.FeatSpells)
+                .HasColumnType("jsonb")
+                .HasJsonConversion();
 
             builder.Property(x => x.FeatAbilityIncreases)
                 .HasColumnType("jsonb")

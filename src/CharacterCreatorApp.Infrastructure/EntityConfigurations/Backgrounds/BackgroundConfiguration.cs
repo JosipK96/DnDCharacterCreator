@@ -25,6 +25,10 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Backgrounds
 
             builder.Property(b => b.Languages);
             builder.Property(b => b.AbilityScoreOptions);
+            builder.Property(b => b.FeatChoiceCategory)
+                .HasMaxLength(30);
+            builder.Property(b => b.FeatSpellListClassId)
+                .HasMaxLength(50);
 
             builder.HasIndex(b => b.Edition);
 

@@ -71,7 +71,15 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetRace
                     subrace?.Name ?? race.Name, abilityChoice.Points, abilityChoice.Options.Select(id => AbilityScore.FromId(id).Name).ToList());
             }
 
-            characterDraft.SetRace(command.RaceId, command.SubraceId, abilityIncreases);
+            var sizes = race.SizeOptions();
+
+            if (command.Size is { } size && !sizes.Contains(size))
+            {
+                return CharacterDraftErrors.SizeNotOffered(race.Name, size, sizes);
+            }
+
+            // Kept only where there is a choice; a race with one size has it on the race
+            characterDraft.SetRace(command.RaceId, command.SubraceId, abilityIncreases, sizes.Count > 1 ? command.Size : null);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Response.Success();

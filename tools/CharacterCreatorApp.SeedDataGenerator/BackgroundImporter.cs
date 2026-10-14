@@ -15,6 +15,8 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
 {
     private const string FeaturePrefix = "Feature: ";
 
+    private const string AnyFromCategory = "anyFromCategory";
+
     private static readonly string[] ProficiencyKeys = ["skillProficiencies", "toolProficiencies"];
 
     // Kinds of tool rather than tools: one set or instrument of the player's choice
@@ -63,6 +65,8 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
                 Languages = edition == RulesEdition.Edition2024 ? Languages2024 : Languages(background),
                 AbilityScoreOptions = AbilityScoreOptions(background),
                 FeatId = FeatId(id, background, featIdsByKey),
+                FeatChoiceCategory = FeatChoiceCategory(id, background),
+                FeatSpellListClassId = FeatSpellListClassId(background, edition),
                 FeatureId = feature?.Id,
             });
         }
@@ -124,20 +128,14 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
             .SelectMany(from => from.Select(a => AbilityScore.Normalize(a.AsString()!)))
             .ToList();
 
-    // {"magic initiate; cleric|xphb": true}: Magic Initiate, whose cleric list the player would pick
+    // {"magic initiate; cleric|xphb": true}: Magic Initiate, with its cleric list (FeatSpellListClassId)
     private string? FeatId(string backgroundId, JsonObject background, IReadOnlyDictionary<string, string> featIdsByKey)
     {
-        var reference = background.Objects("feats").SelectMany(entry => entry).Select(kvp => kvp.Key).FirstOrDefault();
+        var reference = FeatReference(background);
 
-        if (reference == null)
+        // Mist Wanderer and Spirit Medium let the player pick the feat (FeatChoiceCategory)
+        if (reference is null or AnyFromCategory)
         {
-            return null;
-        }
-
-        // Mist Wanderer and Spirit Medium let the player pick an origin feat
-        if (reference == "anyFromCategory")
-        {
-            SkippedChoices.Add($"{backgroundId}: a feat of the player's choice");
             return null;
         }
 
@@ -153,6 +151,33 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
         UnresolvedFeats.Add($"{backgroundId}: {reference}");
         return null;
     }
+
+    // {"anyFromCategory": {"category": ["DG"]}}: any Dark Gift. A second entry is an alternative
+    // to the first (a Haunted One's Survivor or a Dark Gift), which the app does not offer.
+    private string? FeatChoiceCategory(string backgroundId, JsonObject background)
+    {
+        var entries = background.Objects("feats").ToList();
+
+        if (entries.Skip(1).Any(entry => entry.ContainsKey(AnyFromCategory)))
+        {
+            SkippedChoices.Add($"{backgroundId}: a feat of the player's choice in place of its own");
+        }
+
+        var code = entries.FirstOrDefault()?[AnyFromCategory].Arr("category").FirstOrDefault().AsString();
+
+        return code == null ? null : FeatImporter.CategoryNames.GetValueOrDefault(code, code);
+    }
+
+    // "magic initiate; cleric|xphb": the class whose list the feat's spells come from
+    private static string? FeatSpellListClassId(JsonObject background, string edition)
+    {
+        var option = FeatReference(background)?.Split('|')[0].Split(';').ElementAtOrDefault(1)?.Trim();
+
+        return option == null ? null : edition == RulesEdition.Edition2024 ? $"{option}-2024" : option;
+    }
+
+    private static string? FeatReference(JsonObject background) =>
+        background.Objects("feats").SelectMany(entry => entry).Select(kvp => kvp.Key).FirstOrDefault();
 
     // The entry 5etools marks as the background's feature, "Feature: Shelter of the Faithful"
     private FeatureSeedRow? Feature(string backgroundId, JsonObject background)

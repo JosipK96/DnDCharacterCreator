@@ -64,7 +64,7 @@ public class GetCharacterDetailsQueryHandler(
             AbilityScores: character.AbilityScores,
             ProficiencyIds: character.ProficiencyIds,
             HitDie: @class?.HitDie ?? string.Empty,
-            SavingThrowAbilityIds: @class?.SavingThrowAbilityIds ?? [],
+            SavingThrowAbilityIds: (@class?.SavingThrowAbilityIds ?? []).Concat(character.FeatSavingThrowAbilityIds).Distinct().ToList(),
             Speed: race?.SpeedWith(race.Subraces.FirstOrDefault(s => s.Id == character.SubraceId)) ?? 30,
             RaceId: character.RaceId,
             SubraceId: character.SubraceId,

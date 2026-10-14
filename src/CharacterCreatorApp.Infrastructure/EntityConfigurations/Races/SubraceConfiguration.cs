@@ -33,6 +33,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
             builder.Property(sr => sr.FeatChoiceCategory)
                 .HasMaxLength(30);
 
+            builder.OwnsOne(sr => sr.SpellChoice).ToJson();
+
             builder.HasMany(sr => sr.Spells)
                 .WithOne(s => s.Subrace)
                 .HasForeignKey(s => s.SubraceId)

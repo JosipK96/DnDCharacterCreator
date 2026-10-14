@@ -27,16 +27,22 @@ public class CharacterDraftService(HttpClient http)
     public Task SetAllowedBooksAsync(Guid draftId, List<string> books) =>
         PutAsync(draftId, "books", new SetAllowedBooksApiRequest(books));
 
-    /// <summary>Sets the race and subrace, with the +1s picked where they offer them ({"DEX": 1, "WIS": 1}).</summary>
-    public Task SetRaceAsync(Guid draftId, string raceId, string? subraceId, Dictionary<string, int>? abilityIncreases = null) =>
-        PutAsync(draftId, "race", new SetRaceApiRequest { RaceId = raceId, SubraceId = subraceId, AbilityIncreases = abilityIncreases });
+    /// <summary>
+    /// Sets the race and subrace, with the +1s picked where they offer them ({"DEX": 1, "WIS": 1})
+    /// and the size picked for a species that may be Small or Medium.
+    /// </summary>
+    public Task SetRaceAsync(Guid draftId, string raceId, string? subraceId, Dictionary<string, int>? abilityIncreases = null, string? size = null) =>
+        PutAsync(draftId, "race", new SetRaceApiRequest { RaceId = raceId, SubraceId = subraceId, AbilityIncreases = abilityIncreases, Size = size });
 
     public Task SetClassAsync(Guid draftId, string classId, string? subclassId) =>
         PutAsync(draftId, "class", new SetClassApiRequest { ClassId = classId, SubclassId = subclassId });
 
-    /// <summary>Sets the background, with a 2024 one's ability increases ({"WIS": 2, "CHA": 1}).</summary>
-    public Task SetBackgroundAsync(Guid draftId, string backgroundId, Dictionary<string, int>? abilityIncreases = null) =>
-        PutAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = backgroundId, AbilityIncreases = abilityIncreases });
+    /// <summary>
+    /// Sets the background, with a 2024 one's ability increases ({"WIS": 2, "CHA": 1}) and the feat
+    /// picked for one that lets the player choose it (a Mist Wanderer's Dark Gift).
+    /// </summary>
+    public Task SetBackgroundAsync(Guid draftId, string backgroundId, Dictionary<string, int>? abilityIncreases = null, string? featId = null) =>
+        PutAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = backgroundId, AbilityIncreases = abilityIncreases, FeatId = featId });
 
     public Task SetAbilityScoresAsync(Guid draftId, Dictionary<string, int> scores, string method) =>
         PutAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest { Scores = scores, Method = method });
@@ -73,6 +79,17 @@ public class CharacterDraftService(HttpClient http)
 
     public Task ChooseSpellsAsync(Guid draftId, List<string> spellIds) =>
         PutAsync(draftId, "spells", new ChooseSpellsApiRequest(spellIds));
+
+    /// <summary>The spells the race and feats let the character pick, the race's first; empty when none do.</summary>
+    public async Task<List<BonusSpellChoiceApiResponse>> GetBonusSpellsAsync(Guid draftId)
+    {
+        var response = await _http.GetAsync($"/api/character-drafts/{draftId}/bonus-spells");
+        return await response.ReadAsync<List<BonusSpellChoiceApiResponse>>();
+    }
+
+    /// <summary>The race's spells and one pick per feat, in the order GetBonusSpellsAsync lists them.</summary>
+    public Task ChooseBonusSpellsAsync(Guid draftId, List<string> raceSpellIds, List<FeatSpellPickApiModel> featSpells) =>
+        PutAsync(draftId, "bonus-spells", new ChooseBonusSpellsApiRequest { RaceSpellIds = raceSpellIds, FeatSpells = featSpells });
 
     /// <summary>The user's unfinished draft, or null when there is none to resume.</summary>
     public async Task<CharacterDraftDetailsApiResponse?> GetIncompleteDraftAsync()

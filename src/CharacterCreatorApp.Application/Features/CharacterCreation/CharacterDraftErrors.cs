@@ -32,6 +32,7 @@ public static class CharacterDraftErrors
         public const string BlankProficiencyId = "CharacterDraft.BlankProficiencyId";
         public const string SpellIdsRequired = "CharacterDraft.SpellIdsRequired";
         public const string FightingStyleIdsRequired = "CharacterDraft.FightingStyleIdsRequired";
+        public const string BonusSpellsRequired = "CharacterDraft.BonusSpellsRequired";
         public const string BooksRequired = "CharacterDraft.BooksRequired";
         public const string ImprovementsRequired = "CharacterDraft.ImprovementsRequired";
         public const string FeatAbilityIncreasesMismatch = "CharacterDraft.FeatAbilityIncreasesMismatch";
@@ -201,6 +202,40 @@ public static class CharacterDraftErrors
 
         return Error.Validation("CharacterDraft.InvalidFeatAbilityIncrease", description);
     }
+
+    // --- Size and the background's feat ---
+    public static Error SizeNotOffered(string raceName, string size, IEnumerable<string> sizes) =>
+        Error.Validation("CharacterDraft.SizeNotOffered", $"A {raceName} is {string.Join(" or ", sizes)}, not {size}.");
+
+    public static Error BackgroundFeatNotChoosable(string backgroundName) =>
+        Error.Validation("CharacterDraft.BackgroundFeatNotChoosable", $"The {backgroundName} background gives its own feat, or none; there is no feat to pick.");
+
+    public static Error BackgroundFeatNotOfCategory(string backgroundName, string featName, string category) =>
+        Error.Validation("CharacterDraft.BackgroundFeatNotOfCategory", $"The {backgroundName} background's feat is a {category}; {featName} is not.");
+
+    // --- Spells a race or feat lets the player pick ---
+    public static Error BonusSpellPicksMismatch(IReadOnlyCollection<string> featNames, int picked)
+    {
+        var description = featNames.Count == 0
+            ? $"No feat of the character's has spells to pick. Got {picked} pick(s)."
+            : $"Pick the spells of {string.Join(", ", featNames)}, one pick each, in that order. Got {picked} pick(s).";
+
+        return Error.Validation("CharacterDraft.BonusSpellPicksMismatch", description);
+    }
+
+    public static Error BonusSpellListNotOffered(string name, string classId, IEnumerable<string> classIds) =>
+        Error.Validation("CharacterDraft.BonusSpellListNotOffered", $"{name}'s spells come from the {string.Join(", ", classIds)} list(s), not {classId}.");
+
+    public static Error BonusSpellListRepeated(string featName, string classId) =>
+        Error.Validation("CharacterDraft.BonusSpellListRepeated", $"{featName} is taken again with a different spell list each time; {classId} is picked twice.");
+
+    public static Error BonusSpellCount(string name, int cantrips, int firstLevelSpells, int pickedCantrips, int pickedSpells) =>
+        Error.Validation(
+            "CharacterDraft.BonusSpellCount",
+            $"{name} gives {cantrips} cantrip(s) and {firstLevelSpells} 1st-level spell(s). Got {pickedCantrips} cantrip(s) and {pickedSpells} other spell(s).");
+
+    public static Error BonusSpellNotOnList(string name, string spellId, string classId) =>
+        Error.Validation("CharacterDraft.BonusSpellNotOnList", $"{spellId} is not on the {classId} list {name}'s spells come from.");
 
     // --- Subrace and subclass ---
     public static Error NoSubracesAvailable(string raceName) =>

@@ -199,6 +199,23 @@
                         }
                     </div>
                 }
+
+                <!-- A Mist Wanderer or Spirit Medium picks its feat: any Dark Gift -->
+                @if (selectedBackground.FeatChoiceCategory is { } featCategory)
+                {
+                    <div class="bg-gray-700 rounded-lg p-6">
+                        <h3 class="text-lg font-bold text-white mb-2">@featCategory Feat <span class="text-red-400">*</span></h3>
+                        <p class="text-gray-400 text-sm mb-4">@selectedBackground.Name gives a @featCategory feat of your choice.</p>
+                        <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2"
+                                value="@featId" @onchange="e => featId = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
+                            <option value="">Choose...</option>
+                            @foreach (var feat in categoryFeats.Where(f => f.Category == featCategory))
+                            {
+                                <option value="@feat.Id">@feat.Name</option>
+                            }
+                        </select>
+                    </div>
+                }
             </div>
         }
     }
@@ -242,16 +259,25 @@
     private string? plusTwo;
     private string? plusOne;
 
+    // The feat picked for a background that lets the player choose it, from the edition's feats
+    private string? featId;
+    private List<FeatApiResponse> categoryFeats = [];
+
     protected override Task OnInitializedAsync() =>
         LoadAsync(async () => backgrounds = await LookupService.GetBackgroundsAsync(Edition, Sources), "Failed to load backgrounds");
 
-    private void SelectBackground(BackgroundApiResponse background)
+    private async Task SelectBackground(BackgroundApiResponse background)
     {
         selectedBackground = background;
         oneToEach = false;
         plusTwo = null;
         plusOne = null;
-        StateHasChanged();
+        featId = null;
+
+        if (background.FeatChoiceCategory != null && categoryFeats.Count == 0)
+        {
+            await LoadAsync(async () => categoryFeats = await LookupService.GetFeatsAsync(Edition, Sources), "Failed to load feats");
+        }
     }
 
     private static string AbilityName(string abilityId) => AbilityNames.Of(abilityId);
@@ -280,13 +306,14 @@
             : new Dictionary<string, int> { [plusTwo] = 2, [plusOne] = 1 };
     }
 
-    private bool CanProceed() => selectedBackground != null && AbilityIncreases() != null;
+    private bool CanProceed() =>
+        selectedBackground != null && AbilityIncreases() != null && (selectedBackground.FeatChoiceCategory == null || featId != null);
 
     private async Task HandleNext()
     {
         if (selectedBackground == null || AbilityIncreases() is not { } increases) return;
 
-        if (await SaveAsync(() => DraftService.SetBackgroundAsync(DraftId, selectedBackground.Id, increases)))
+        if (await SaveAsync(() => DraftService.SetBackgroundAsync(DraftId, selectedBackground.Id, increases, selectedBackground.FeatChoiceCategory == null ? null : featId)))
         {
             await OnNext.InvokeAsync();
         }

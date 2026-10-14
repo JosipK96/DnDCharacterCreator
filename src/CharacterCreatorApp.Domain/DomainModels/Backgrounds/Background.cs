@@ -34,6 +34,18 @@ public class Background
 
     public Feat? Feat { get; set; }
 
+    /// <summary>
+    /// The category the player picks the background's feat from when it has none of its own: any
+    /// Dark Gift for a Mist Wanderer or a Spirit Medium. Null when the feat is fixed or there is none.
+    /// </summary>
+    public string? FeatChoiceCategory { get; set; }
+
+    /// <summary>
+    /// The class whose spell list the feat's spells come from, when the background fixes it: the
+    /// cleric's ("cleric-2024") for an Acolyte's Magic Initiate.
+    /// </summary>
+    public string? FeatSpellListClassId { get; set; }
+
     /// <summary>A 2014 background's feature ("Shelter of the Faithful"); 2024 backgrounds have none.</summary>
     public string? FeatureId { get; set; }
 

@@ -29,7 +29,8 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                 GrantedProficiencyIds = row.GrantedProficiencyIds,
                 GrantedLanguageIds = row.GrantedLanguageIds,
                 GrantedSpellIds = row.GrantedSpellIds,
-                Choice = row.Choice
+                Choice = row.Choice,
+                SpellChoice = row.SpellChoice,
             }), cancellationToken);
 
             logger.LogInformation("Seeded {Count} feats: {Editions}.", rows.Count,

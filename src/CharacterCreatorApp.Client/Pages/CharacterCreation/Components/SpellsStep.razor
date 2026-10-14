@@ -186,6 +186,51 @@
         }
     }
 
+    <!-- Spells the race (a high elf's cantrip) and feats (Magic Initiate) let the character pick -->
+    @if (!IsLoading)
+    {
+        @for (var i = 0; i < bonusChoices.Count; i++)
+        {
+            var index = i;
+            var choice = bonusChoices[index];
+            var list = choice.Lists.FirstOrDefault(l => l.ClassId == bonusListIds[index]);
+            var picks = bonusPicks[index];
+
+            <div class="bg-gray-800 rounded-lg p-6">
+                <h3 class="text-xl font-bold text-white mb-1">@choice.Name Spells</h3>
+                <p class="text-gray-300 text-sm mb-4">@BonusText(choice)</p>
+
+                @if (choice.Lists.Count > 1)
+                {
+                    <select class="w-full md:w-1/2 bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mb-4"
+                            value="@bonusListIds[index]" @onchange="e => SelectBonusList(index, e.Value?.ToString())">
+                        <option value="">Choose a spell list...</option>
+                        @foreach (var option in choice.Lists)
+                        {
+                            <option value="@option.ClassId">@option.ClassName</option>
+                        }
+                    </select>
+                }
+
+                @if (list != null)
+                {
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                        @foreach (var spell in list.Spells)
+                        {
+                            var isSelected = picks.Contains(spell.Id);
+                            var canSelect = isSelected || BonusRoomFor(choice, picks, list, spell.Level);
+                            <button type="button" @onclick="() => ToggleBonusSpell(index, spell)" disabled="@(!canSelect)"
+                                    class="@GetSpellCardClass(isSelected, canSelect)">
+                                <span class="font-medium text-white">@spell.Name</span>
+                                <span class="text-xs text-gray-400 ml-2">@(spell.Level == 0 ? "Cantrip" : "1st level")</span>
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    }
+
     <!-- Navigation Buttons -->
     <div class="flex justify-between mt-8">
         <button @onclick="HandleBack"
@@ -227,7 +272,86 @@
     private string searchText = "";
 
 
-    protected override Task OnInitializedAsync() => LoadAsync(LoadSpellsAsync, "Failed to load spells");
+    // One per race or feat pick, in the order the API lists them: the list chosen and the spells
+    private List<BonusSpellChoiceApiResponse> bonusChoices = [];
+    private List<string?> bonusListIds = [];
+    private List<HashSet<string>> bonusPicks = [];
+
+    protected override Task OnInitializedAsync() =>
+        LoadAsync(
+            async () =>
+            {
+                await LoadSpellsAsync();
+                await LoadBonusSpellsAsync();
+            },
+            "Failed to load spells");
+
+    private async Task LoadBonusSpellsAsync()
+    {
+        bonusChoices = await DraftService.GetBonusSpellsAsync(DraftId);
+        bonusListIds = bonusChoices.ConvertAll(c => c.Lists.Count == 1 ? c.Lists[0].ClassId : null);
+        bonusPicks = bonusChoices.ConvertAll(_ => new HashSet<string>());
+
+        // What the draft already holds: the race's spells, and the feats' picks in the same order
+        var featPicks = draft?.FeatSpells ?? [];
+        var featIndex = 0;
+
+        for (var i = 0; i < bonusChoices.Count; i++)
+        {
+            if (bonusChoices[i].FeatId == null)
+            {
+                bonusPicks[i] = [.. draft?.RaceSpellIds ?? []];
+            }
+            else if (featIndex < featPicks.Count && featPicks[featIndex].FeatId == bonusChoices[i].FeatId)
+            {
+                bonusListIds[i] = featPicks[featIndex].ClassId;
+                bonusPicks[i] = [.. featPicks[featIndex++].SpellIds];
+            }
+        }
+    }
+
+    private static string BonusText(BonusSpellChoiceApiResponse choice)
+    {
+        var parts = new List<string>();
+
+        if (choice.Cantrips > 0)
+        {
+            parts.Add($"{choice.Cantrips} cantrip(s)");
+        }
+
+        if (choice.FirstLevelSpells > 0)
+        {
+            parts.Add($"{choice.FirstLevelSpells} 1st-level spell(s)");
+        }
+
+        return $"Choose {string.Join(" and ", parts)}{(choice.Lists.Count > 1 ? " from one spell list" : string.Empty)}.";
+    }
+
+    // Another list takes the spells picked from the old one with it
+    private void SelectBonusList(int index, string? classId)
+    {
+        bonusListIds[index] = string.IsNullOrEmpty(classId) ? null : classId;
+        bonusPicks[index] = [];
+    }
+
+    private static bool BonusRoomFor(BonusSpellChoiceApiResponse choice, HashSet<string> picks, BonusSpellListApiResponse list, int level)
+    {
+        var picked = list.Spells.Count(s => picks.Contains(s.Id) && s.Level == level);
+        return picked < (level == 0 ? choice.Cantrips : choice.FirstLevelSpells);
+    }
+
+    private void ToggleBonusSpell(int index, SpellApiResponse spell)
+    {
+        var list = bonusChoices[index].Lists.First(l => l.ClassId == bonusListIds[index]);
+
+        if (!bonusPicks[index].Remove(spell.Id) && BonusRoomFor(bonusChoices[index], bonusPicks[index], list, spell.Level))
+        {
+            bonusPicks[index].Add(spell.Id);
+        }
+    }
+
+    private bool BonusComplete() =>
+        bonusChoices.Select((choice, i) => bonusListIds[i] != null && bonusPicks[i].Count == choice.Cantrips + choice.FirstLevelSpells).All(done => done);
 
     private async Task LoadSpellsAsync()
     {
@@ -354,6 +478,7 @@
     private bool CanProceed()
     {
         if (IsLoading || IsSaving) return false;
+        if (!BonusComplete()) return false;
         if (!isSpellcaster) return true;
 
         // Prepared caster with no cantrips (Paladin, Ranger, Artificer at low levels): nothing to choose
@@ -387,7 +512,24 @@
             return;
         }
 
+        if (bonusChoices.Count > 0 && !await SaveAsync(SaveBonusSpellsAsync, "Failed to save spells"))
+        {
+            return;
+        }
+
         await OnNext.InvokeAsync();
+    }
+
+    private Task SaveBonusSpellsAsync()
+    {
+        var indexed = bonusChoices.Select((choice, i) => (Choice: choice, Index: i)).ToList();
+        var raceSpellIds = indexed.Where(c => c.Choice.FeatId == null).SelectMany(c => bonusPicks[c.Index]).ToList();
+        var featSpells = indexed
+            .Where(c => c.Choice.FeatId != null)
+            .Select(c => new FeatSpellPickApiModel { FeatId = c.Choice.FeatId!, ClassId = bonusListIds[c.Index]!, SpellIds = [.. bonusPicks[c.Index]] })
+            .ToList();
+
+        return DraftService.ChooseBonusSpellsAsync(DraftId, raceSpellIds, featSpells);
     }
 
     private async Task HandleBack()

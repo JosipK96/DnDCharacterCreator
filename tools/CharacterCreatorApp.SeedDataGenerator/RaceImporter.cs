@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Text.Json.Nodes;
 
+using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
@@ -125,6 +126,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             // The traits come from every part, so they are SRD text only when every part is
             Traits = Traits(parts.FirstOrDefault(p => !SrdText.IsSrd(p)) ?? race, id, parts.SelectMany(p => p.Arr("entries")).Where(e => !replacedTraits.Contains(e.Str("name") ?? string.Empty))),
             Spells = Spells(id, parts.Select(p => p["additionalSpells"]), spellIdsByKey),
+            SpellChoice = SpellChoice(parts.Select(p => p["additionalSpells"]), edition),
             Subraces = (named.Count == 0 ? [] : nameless)
                 .Select(s => Subrace(name, "Standard", speed, edition, s, spellIdsByKey))
                 .Concat(named.Select(s => Subrace(name, s.Str("name")!, speed, edition, s, spellIdsByKey)))
@@ -161,6 +163,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             ProficiencyIds = fixedSkills.Concat(ItemProficiencies(id, subrace)).Distinct().ToList(),
             Traits = Traits(subrace, id, subrace.Arr("entries")),
             Spells = Spells(id, [subrace["additionalSpells"]], spellIdsByKey),
+            SpellChoice = SpellChoice([subrace["additionalSpells"]], edition),
         };
     }
 
@@ -179,6 +182,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             Speed = speed == null || speed == raceSpeed ? null : speed,
             Traits = Traits(race, id, version.Traits),
             Spells = Spells(id, [version.Node["additionalSpells"]], spellIdsByKey),
+            SpellChoice = SpellChoice([version.Node["additionalSpells"]], RulesEdition.Edition2024),
         };
     }
 
@@ -427,6 +431,16 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
 
         return spells;
     }
+
+    // A named block is one lineage's, which that lineage's own version carries
+    private static BonusSpellChoice? SpellChoice(IEnumerable<JsonNode?> additionalSpells, string edition) =>
+        AdditionalSpells.Choice(
+            additionalSpells
+                .SelectMany(node => node as JsonArray ?? (node is JsonObject one ? [one.DeepClone()] : []))
+                .OfType<JsonObject>()
+                .Where(block => block.Str("name") == null)
+                .ToList(),
+            edition);
 
     private static int? Speed(JsonNode? speed) =>
         speed is JsonValue walk && walk.TryGetValue<int>(out var feet) ? feet : speed.Int("walk");

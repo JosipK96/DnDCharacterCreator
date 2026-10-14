@@ -1,4 +1,5 @@
-﻿using CharacterCreatorApp.Domain.ValueObjects;
+﻿using CharacterCreatorApp.Domain.DomainModels.Spells;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Domain.DomainModels.Races;
 
@@ -57,6 +58,9 @@ public class Race
     public ICollection<RaceSpell> Spells { get; set; } = [];
     public ICollection<Subrace> Subraces { get; set; } = [];
 
+    /// <summary>Spells the player picks from a class list; a subrace may have its own (see SpellChoiceWith).</summary>
+    public BonusSpellChoice? SpellChoice { get; set; }
+
     /// <summary>The skills picked for the race and its subrace together: a variant human's one.</summary>
     public int SkillChoiceCountWith(Subrace? subrace) => SkillChoiceCount + (subrace?.SkillChoiceCount ?? 0);
 
@@ -96,6 +100,9 @@ public class Race
         subrace is { FeatChoiceCount: > 0 }
             ? new BonusFeatChoice(FeatChoiceCount + subrace.FeatChoiceCount, subrace.FeatChoiceCategory)
             : new BonusFeatChoice(FeatChoiceCount, FeatChoiceCategory);
+
+    /// <summary>The spells the player picks for the race or its subrace: a 2014 high elf's wizard cantrip.</summary>
+    public BonusSpellChoice? SpellChoiceWith(Subrace? subrace) => subrace?.SpellChoice ?? SpellChoice;
 
     /// <summary>The walking speed, which a subrace may change: a wood elf's is 35 feet.</summary>
     public int SpeedWith(Subrace? subrace) => subrace?.Speed ?? Speed;

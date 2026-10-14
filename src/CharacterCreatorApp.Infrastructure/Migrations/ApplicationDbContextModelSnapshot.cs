@@ -38,8 +38,16 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("character varying(4)");
 
+                    b.Property<string>("FeatChoiceCategory")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("FeatId")
                         .HasColumnType("text");
+
+                    b.Property<string>("FeatSpellListClassId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("FeatureId")
                         .HasColumnType("text");
@@ -119,6 +127,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<string>("FeatSavingThrowAbilityIds")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.Property<string>("LanguageIds")
                         .IsRequired()
                         .HasColumnType("jsonb");
@@ -139,6 +151,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Size")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("SpellIds")
                         .IsRequired()
@@ -203,6 +219,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<string>("BackgroundFeatId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<string>("BackgroundId")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -233,6 +253,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<string>("FeatSpells")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.PrimitiveCollection<List<string>>("FightingStyleIds")
                         .IsRequired()
                         .HasColumnType("text[]");
@@ -255,6 +279,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.PrimitiveCollection<List<string>>("RaceSpellIds")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.PrimitiveCollection<List<string>>("SelectedClassProficiencyIds")
                         .IsRequired()
                         .HasColumnType("text[]");
@@ -274,6 +302,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.PrimitiveCollection<List<string>>("SelectedSpellIds")
                         .IsRequired()
                         .HasColumnType("text[]");
+
+                    b.Property<string>("Size")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("SubclassId")
                         .HasMaxLength(50)
@@ -1498,6 +1530,29 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
 
             modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Feats.Feat", b =>
                 {
+                    b.OwnsOne("CharacterCreatorApp.Domain.DomainModels.Spells.BonusSpellChoice", "SpellChoice", b1 =>
+                        {
+                            b1.Property<string>("FeatId");
+
+                            b1.Property<int>("Cantrips");
+
+                            b1.PrimitiveCollection<string>("ClassIds")
+                                .IsRequired();
+
+                            b1.Property<int>("FirstLevelSpells");
+
+                            b1.HasKey("FeatId");
+
+                            b1.ToTable("Feats");
+
+                            b1
+                                .ToJson("SpellChoice")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FeatId");
+                        });
+
                     b.OwnsOne("CharacterCreatorApp.Domain.DomainModels.Feats.FeatAbilityIncrease", "AbilityIncrease", b1 =>
                         {
                             b1.Property<string>("FeatId");
@@ -1609,6 +1664,8 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
 
                     b.Navigation("Prerequisites")
                         .IsRequired();
+
+                    b.Navigation("SpellChoice");
                 });
 
             modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Proficiencies.ProficiencyChoice", b =>
@@ -1639,6 +1696,34 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Navigation("Proficiency");
 
                     b.Navigation("ProficiencyChoice");
+                });
+
+            modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Races.Race", b =>
+                {
+                    b.OwnsOne("CharacterCreatorApp.Domain.DomainModels.Spells.BonusSpellChoice", "SpellChoice", b1 =>
+                        {
+                            b1.Property<string>("RaceId");
+
+                            b1.Property<int>("Cantrips");
+
+                            b1.PrimitiveCollection<string>("ClassIds")
+                                .IsRequired();
+
+                            b1.Property<int>("FirstLevelSpells");
+
+                            b1.HasKey("RaceId");
+
+                            b1.ToTable("Races");
+
+                            b1
+                                .ToJson("SpellChoice")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RaceId");
+                        });
+
+                    b.Navigation("SpellChoice");
                 });
 
             modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Races.RaceAbilityBonus", b =>
@@ -1720,7 +1805,32 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("CharacterCreatorApp.Domain.DomainModels.Spells.BonusSpellChoice", "SpellChoice", b1 =>
+                        {
+                            b1.Property<string>("SubraceId");
+
+                            b1.Property<int>("Cantrips");
+
+                            b1.PrimitiveCollection<string>("ClassIds")
+                                .IsRequired();
+
+                            b1.Property<int>("FirstLevelSpells");
+
+                            b1.HasKey("SubraceId");
+
+                            b1.ToTable("Subraces");
+
+                            b1
+                                .ToJson("SpellChoice")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SubraceId");
+                        });
+
                     b.Navigation("Race");
+
+                    b.Navigation("SpellChoice");
                 });
 
             modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Races.SubraceAbilityBonus", b =>

@@ -25,7 +25,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "aberrant_dragonmark_2014",
@@ -57,7 +58,14 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "sorcerer"
+      ],
+      "Cantrips": 1,
+      "FirstLevelSpells": 1
+    }
   },
   {
     "Id": "aberrant_dragonmark_2024",
@@ -84,7 +92,14 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "sorcerer-2024"
+      ],
+      "Cantrips": 1,
+      "FirstLevelSpells": 1
+    }
   },
   {
     "Id": "ability_score_improvement",
@@ -119,7 +134,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "abjuration_adept",
@@ -160,7 +176,8 @@
       "banishment_2024",
       "mass_cure_wounds_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "actor_2014",
@@ -190,7 +207,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "actor_2024",
@@ -225,7 +243,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "adept_of_the_black_robes",
@@ -251,7 +270,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "adept_of_the_red_robes",
@@ -277,7 +297,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "adept_of_the_white_robes",
@@ -303,7 +324,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "agent_of_order",
@@ -340,7 +362,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "alert_2014",
@@ -364,7 +387,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "alert_2024",
@@ -388,7 +412,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_artist",
@@ -414,7 +439,8 @@
     "GrantedSpellIds": [
       "minor_illusion_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_eloquence",
@@ -440,7 +466,8 @@
     "GrantedSpellIds": [
       "vicious_mockery_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_infiltrator",
@@ -466,7 +493,8 @@
     "GrantedSpellIds": [
       "friends_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_omens",
@@ -492,7 +520,8 @@
     "GrantedSpellIds": [
       "guidance_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_overload",
@@ -518,7 +547,8 @@
     "GrantedSpellIds": [
       "fire_bolt_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_safeguard",
@@ -544,7 +574,8 @@
     "GrantedSpellIds": [
       "resistance_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_undertaker",
@@ -568,7 +599,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "arcane_warrior",
@@ -594,7 +626,14 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "wizard-2024"
+      ],
+      "Cantrips": 2,
+      "FirstLevelSpells": 0
+    }
   },
   {
     "Id": "archery_2014",
@@ -623,7 +662,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "archery_2024",
@@ -649,7 +689,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "artificer_initiate",
@@ -673,7 +714,14 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "artificer"
+      ],
+      "Cantrips": 1,
+      "FirstLevelSpells": 1
+    }
   },
   {
     "Id": "athlete_2014",
@@ -704,7 +752,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "athlete_2024",
@@ -744,7 +793,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "baleful_scion",
@@ -781,7 +831,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "blessed_warrior",
@@ -809,7 +860,14 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "cleric-2024"
+      ],
+      "Cantrips": 2,
+      "FirstLevelSpells": 0
+    }
   },
   {
     "Id": "blind_fighting",
@@ -835,7 +893,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "bloodlust",
@@ -867,7 +926,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "bomber",
@@ -897,7 +957,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_blazing_dawn",
@@ -932,7 +993,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_bloodshed",
@@ -967,7 +1029,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_bountiful_health",
@@ -1002,7 +1065,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_combat_prowess",
@@ -1037,7 +1101,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_communication",
@@ -1069,7 +1134,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_desperate_resilience",
@@ -1100,7 +1166,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_dimensional_travel",
@@ -1135,7 +1202,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_energy_resistance",
@@ -1170,7 +1238,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_erupting_spellpower",
@@ -1205,7 +1274,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_exquisite_radiance",
@@ -1240,7 +1310,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_fate",
@@ -1275,7 +1346,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_fluid_forms",
@@ -1307,7 +1379,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_fortitude",
@@ -1342,7 +1415,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_fortunes_favor",
@@ -1377,7 +1451,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_irresistible_offense",
@@ -1408,7 +1483,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_looming_shadows",
@@ -1443,7 +1519,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_magic_school_mastery",
@@ -1478,7 +1555,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_misty_escape",
@@ -1512,7 +1590,8 @@
     "GrantedSpellIds": [
       "gaseous_form_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_poison_mastery",
@@ -1547,7 +1626,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_recovery",
@@ -1582,7 +1662,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_revelry",
@@ -1616,7 +1697,8 @@
     "GrantedSpellIds": [
       "ottos_irresistible_dance_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_siberys",
@@ -1653,7 +1735,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_skill",
@@ -1707,7 +1790,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_speed",
@@ -1742,7 +1826,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_spell_recall",
@@ -1777,7 +1862,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_terror",
@@ -1809,7 +1895,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_truesight",
@@ -1844,7 +1931,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_the_bright_sun",
@@ -1876,7 +1964,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_the_furious_storm",
@@ -1911,7 +2000,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_the_iron_mind",
@@ -1946,7 +2036,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_the_night_spirit",
@@ -1981,7 +2072,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "boon_of_the_soul_drinker",
@@ -2016,7 +2108,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "bountiful_luck",
@@ -2042,7 +2135,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "cartomancer",
@@ -2070,7 +2164,8 @@
     "GrantedSpellIds": [
       "prestidigitation"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "charger_2014",
@@ -2094,7 +2189,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "charger_2024",
@@ -2134,7 +2230,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "chef_2014",
@@ -2167,7 +2264,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "chef_2024",
@@ -2200,7 +2298,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "child_of_the_sun",
@@ -2226,7 +2325,8 @@
     "GrantedSpellIds": [
       "faerie_fire_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "cloying_mists",
@@ -2260,7 +2360,8 @@
     "GrantedSpellIds": [
       "fog_cloud_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "cohort_of_chaos",
@@ -2297,7 +2398,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "cold_caster",
@@ -2331,7 +2433,8 @@
     "GrantedSpellIds": [
       "ray_of_frost_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "conjuration_adept",
@@ -2372,7 +2475,8 @@
       "dimension_door_2024",
       "conjure_elemental_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "crafter",
@@ -2396,7 +2500,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "crossbow_expert_2014",
@@ -2420,7 +2525,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "crossbow_expert_2024",
@@ -2455,7 +2561,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "crusher_2014",
@@ -2486,7 +2593,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "crusher_2024",
@@ -2517,7 +2625,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "cult_of_the_dragon_initiate",
@@ -2543,7 +2652,8 @@
       "draconic"
     ],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "defense_2014",
@@ -2573,7 +2683,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "defense_2024",
@@ -2599,7 +2710,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "defensive_duelist_2014",
@@ -2628,7 +2740,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "defensive_duelist_2024",
@@ -2663,7 +2776,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "delicious_pain",
@@ -2698,7 +2812,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "divination_adept",
@@ -2739,7 +2854,8 @@
       "divination_2024",
       "scrying_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "divinely_favored",
@@ -2765,7 +2881,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dragon_fear",
@@ -2799,7 +2916,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dragon_hide",
@@ -2833,7 +2951,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dragonscarred",
@@ -2866,7 +2985,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "drow_high_magic",
@@ -2896,7 +3016,8 @@
       "levitate",
       "dispel_magic"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "druidic_warrior",
@@ -2924,7 +3045,14 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "druid-2024"
+      ],
+      "Cantrips": 2,
+      "FirstLevelSpells": 0
+    }
   },
   {
     "Id": "dual_wielder_2014",
@@ -2948,7 +3076,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dual_wielder_2024",
@@ -2988,7 +3117,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dueling_2014",
@@ -3019,7 +3149,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dueling_2024",
@@ -3045,7 +3176,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dungeon_delver",
@@ -3069,7 +3201,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "durable_2014",
@@ -3099,7 +3232,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "durable_2024",
@@ -3129,7 +3263,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "dwarven_fortitude",
@@ -3161,7 +3296,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "echoing_soul",
@@ -3210,7 +3346,8 @@
         "stealth",
         "survival"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "eldritch_adept",
@@ -3237,7 +3374,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "elemental_adept_2014",
@@ -3263,7 +3401,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "elemental_adept_2024",
@@ -3298,7 +3437,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "elemental_familiar",
@@ -3335,7 +3475,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "elven_accuracy",
@@ -3371,7 +3512,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "ember_of_the_fire_giant",
@@ -3405,7 +3547,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "emerald_enclave_fledgling",
@@ -3431,7 +3574,8 @@
     "GrantedSpellIds": [
       "speak_with_animals_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "enchantment_adept",
@@ -3472,7 +3616,8 @@
       "dominate_beast_2024",
       "modify_memory_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "enclave_magic",
@@ -3508,7 +3653,8 @@
     "GrantedSpellIds": [
       "beast_sense_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "evocation_adept",
@@ -3549,7 +3695,8 @@
       "vitriolic_sphere_2024",
       "wall_of_force_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "fade_away",
@@ -3582,7 +3729,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "fairy_trickster",
@@ -3613,7 +3761,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "familiar_friend",
@@ -3639,7 +3788,8 @@
     "GrantedSpellIds": [
       "find_familiar_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "fey_teleportation",
@@ -3676,7 +3826,8 @@
     "GrantedSpellIds": [
       "misty_step"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "fey_touched_2014",
@@ -3710,7 +3861,8 @@
     "GrantedSpellIds": [
       "misty_step"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "fey_touched_2024",
@@ -3744,7 +3896,8 @@
     "GrantedSpellIds": [
       "misty_step_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "fighting_initiate",
@@ -3770,7 +3923,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "flames_of_phlegethos",
@@ -3803,7 +3957,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "fury_of_the_frost_giant",
@@ -3837,7 +3992,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "gathered_whispers",
@@ -3866,7 +4022,8 @@
       "augury_2024",
       "message_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "genie_magic",
@@ -3898,7 +4055,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "gift_of_the_chromatic_dragon",
@@ -3922,7 +4080,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "gift_of_the_gem_dragon",
@@ -3954,7 +4113,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "gift_of_the_metallic_dragon",
@@ -3980,7 +4140,8 @@
     "GrantedSpellIds": [
       "cure_wounds"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "grappler_2014",
@@ -4009,7 +4170,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "grappler_2024",
@@ -4049,7 +4211,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "great_weapon_fighting_2014",
@@ -4078,7 +4241,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "great_weapon_fighting_2024",
@@ -4104,7 +4268,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "great_weapon_master_2014",
@@ -4128,7 +4293,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "great_weapon_master_2024",
@@ -4163,7 +4329,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_aberrant_mark",
@@ -4195,7 +4362,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_detection",
@@ -4232,7 +4400,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_finding",
@@ -4269,7 +4438,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_handling",
@@ -4306,7 +4476,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_healing",
@@ -4343,7 +4514,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_hospitality",
@@ -4380,7 +4552,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_making",
@@ -4417,7 +4590,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_passage",
@@ -4454,7 +4628,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_scribing",
@@ -4491,7 +4666,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_sentinel",
@@ -4528,7 +4704,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_shadow",
@@ -4565,7 +4742,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_storm",
@@ -4602,7 +4780,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "greater_mark_of_warding",
@@ -4639,7 +4818,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "guile_of_the_cloud_giant",
@@ -4673,7 +4853,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "gunner",
@@ -4705,7 +4886,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "harper_agent",
@@ -4731,7 +4913,8 @@
       "thieves' cant"
     ],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "harper_teamwork",
@@ -4764,7 +4947,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "healer_2014",
@@ -4788,7 +4972,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "healer_2024",
@@ -4812,7 +4997,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "heavily_armored_2014",
@@ -4846,7 +5032,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "heavily_armored_2024",
@@ -4881,7 +5068,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "heavy_armor_master_2014",
@@ -4913,7 +5101,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "heavy_armor_master_2024",
@@ -4946,7 +5135,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "illusion_adept",
@@ -4987,7 +5177,8 @@
       "hallucinatory_terrain_2024",
       "seeming_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "infernal_constitution",
@@ -5019,7 +5210,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "initiate_of_high_sorcery",
@@ -5046,7 +5238,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "inspiring_leader_2014",
@@ -5075,7 +5268,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "inspiring_leader_2024",
@@ -5115,7 +5309,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "interception",
@@ -5141,7 +5336,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "keen_mind_2014",
@@ -5171,7 +5367,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "keen_mind_2024",
@@ -5216,7 +5413,8 @@
         "nature",
         "religion"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "keenness_of_the_stone_giant",
@@ -5250,7 +5448,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "knight_of_the_crown",
@@ -5284,7 +5483,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "knight_of_the_rose",
@@ -5318,7 +5518,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "knight_of_the_sword",
@@ -5352,7 +5553,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "light_bringer",
@@ -5384,7 +5586,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "lightly_armored_2014",
@@ -5417,7 +5620,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "lightly_armored_2024",
@@ -5451,7 +5655,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "linguist",
@@ -5481,7 +5686,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "living_shadow",
@@ -5509,7 +5715,8 @@
     "GrantedSpellIds": [
       "mage_hand_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "lordly_resolve",
@@ -5542,7 +5749,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "lords_alliance_agent",
@@ -5566,7 +5774,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "love_bites",
@@ -5601,7 +5810,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "lucky_2014",
@@ -5625,7 +5835,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "lucky_2024",
@@ -5649,7 +5860,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mage_slayer_2014",
@@ -5673,7 +5885,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mage_slayer_2024",
@@ -5704,7 +5917,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "magic_connoisseur",
@@ -5738,7 +5952,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "magic_initiate_2014",
@@ -5762,7 +5977,19 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "bard",
+        "cleric",
+        "druid",
+        "sorcerer",
+        "warlock",
+        "wizard"
+      ],
+      "Cantrips": 2,
+      "FirstLevelSpells": 1
+    }
   },
   {
     "Id": "magic_initiate_2024",
@@ -5786,7 +6013,16 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "cleric-2024",
+        "druid-2024",
+        "wizard-2024"
+      ],
+      "Cantrips": 2,
+      "FirstLevelSpells": 1
+    }
   },
   {
     "Id": "mark_of_detection",
@@ -5816,7 +6052,8 @@
       "see_invisibility_2024",
       "detect_magic_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_finding",
@@ -5846,7 +6083,8 @@
       "locate_object_2024",
       "hunters_mark_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_handling",
@@ -5876,7 +6114,8 @@
       "animal_friendship_2024",
       "speak_with_animals_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_healing",
@@ -5906,7 +6145,8 @@
       "lesser_restoration_2024",
       "cure_wounds_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_hospitality",
@@ -5937,7 +6177,8 @@
       "purify_food_and_drink_2024",
       "unseen_servant_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_making",
@@ -5967,7 +6208,8 @@
       "magic_weapon_2024",
       "mending_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_passage",
@@ -5996,7 +6238,8 @@
     "GrantedSpellIds": [
       "misty_step_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_scribing",
@@ -6027,7 +6270,8 @@
       "comprehend_languages_2024",
       "message_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_sentinel",
@@ -6056,7 +6300,8 @@
     "GrantedSpellIds": [
       "shield_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_shadow",
@@ -6086,7 +6331,8 @@
       "invisibility_2024",
       "minor_illusion_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_storm",
@@ -6116,7 +6362,8 @@
       "gust_of_wind_2024",
       "thunderclap_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mark_of_warding",
@@ -6147,7 +6394,8 @@
       "alarm_2024",
       "mage_armor_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "martial_adept",
@@ -6171,7 +6419,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "martial_weapon_training",
@@ -6204,7 +6453,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "medium_armor_master_2014",
@@ -6230,7 +6480,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "medium_armor_master_2024",
@@ -6263,7 +6514,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "metamagic_adept",
@@ -6290,7 +6542,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mist_walker",
@@ -6316,7 +6569,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mobile",
@@ -6340,7 +6594,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "moderately_armored_2014",
@@ -6376,7 +6631,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "moderately_armored_2024",
@@ -6411,7 +6667,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mounted_combatant_2014",
@@ -6435,7 +6692,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mounted_combatant_2024",
@@ -6467,7 +6725,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "musician",
@@ -6491,7 +6750,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "mythal_touched",
@@ -6523,7 +6783,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "necromancy_adept",
@@ -6564,7 +6825,8 @@
       "blight_2024",
       "raise_dead_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "observant_2014",
@@ -6595,7 +6857,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "observant_2024",
@@ -6643,7 +6906,8 @@
         "investigation",
         "perception"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "orcish_fury",
@@ -6676,7 +6940,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "orders_resilience",
@@ -6710,7 +6975,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "otherworldly_familiar",
@@ -6747,7 +7013,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "outlands_envoy",
@@ -6787,7 +7054,8 @@
       "misty_step",
       "tongues"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "piercer_2014",
@@ -6818,7 +7086,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "piercer_2024",
@@ -6849,7 +7118,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "planar_wanderer",
@@ -6875,7 +7145,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "poisoner_2014",
@@ -6901,7 +7172,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "poisoner_2024",
@@ -6934,7 +7206,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "polearm_master_2014",
@@ -6958,7 +7231,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "polearm_master_2024",
@@ -6998,7 +7272,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "portal_jumper",
@@ -7022,7 +7297,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "potent_dragonmark",
@@ -7059,7 +7335,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "prodigy",
@@ -7110,7 +7387,8 @@
         "performance",
         "persuasion"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "protection_2014",
@@ -7139,7 +7417,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "protection_2024",
@@ -7165,7 +7444,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "purple_dragon_commandant",
@@ -7198,7 +7478,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "purple_dragon_rook",
@@ -7230,7 +7511,8 @@
         "performance",
         "persuasion"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "putrefy",
@@ -7265,7 +7547,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "quicksmithing",
@@ -7294,7 +7577,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "rebuke",
@@ -7329,7 +7613,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "resilient_2014",
@@ -7365,7 +7650,7 @@
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
     "Choice": {
-      "Type": "ability-scores",
+      "Type": "saving-throw",
       "Count": 1,
       "Options": [
         "STR",
@@ -7375,7 +7660,8 @@
         "WIS",
         "CHA"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "resilient_2024",
@@ -7411,7 +7697,7 @@
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
     "Choice": {
-      "Type": "ability-scores",
+      "Type": "saving-throw",
       "Count": 1,
       "Options": [
         "STR",
@@ -7421,7 +7707,8 @@
         "WIS",
         "CHA"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "revenant_blade",
@@ -7454,7 +7741,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "righteous_heritor",
@@ -7491,7 +7779,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "ritual_caster_2014",
@@ -7524,7 +7813,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "ritual_caster_2024",
@@ -7569,7 +7859,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "rune_shaper",
@@ -7610,7 +7901,8 @@
       "sanctuary",
       "thunderwave"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "savage_attacker_2014",
@@ -7634,7 +7926,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "savage_attacker_2024",
@@ -7658,7 +7951,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "scion_of_the_outer_planes",
@@ -7684,7 +7978,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "second_chance",
@@ -7718,7 +8013,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "second_skin",
@@ -7746,7 +8042,8 @@
     "GrantedSpellIds": [
       "alter_self_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "sentinel_2014",
@@ -7770,7 +8067,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "sentinel_2024",
@@ -7810,7 +8108,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "servo_crafting",
@@ -7841,7 +8140,8 @@
     "GrantedSpellIds": [
       "find_familiar"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "shadow_touched_2014",
@@ -7875,7 +8175,8 @@
     "GrantedSpellIds": [
       "invisibility"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "shadow_touched_2024",
@@ -7909,7 +8210,8 @@
     "GrantedSpellIds": [
       "invisibility_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "shadowmoor_hexer",
@@ -7935,7 +8237,8 @@
     "GrantedSpellIds": [
       "hex_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "sharp_eye",
@@ -7959,7 +8262,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "sharpshooter_2014",
@@ -7983,7 +8287,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "sharpshooter_2024",
@@ -8018,7 +8323,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "shield_master_2014",
@@ -8042,7 +8348,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "shield_master_2024",
@@ -8074,7 +8381,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "skill_expert_2014",
@@ -8132,7 +8440,8 @@
         "performance",
         "persuasion"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "skill_expert_2024",
@@ -8190,7 +8499,8 @@
         "stealth",
         "survival"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "skilled_2014",
@@ -8279,7 +8589,8 @@
         "weaver_tools",
         "woodcarver_tools"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "skilled_2024",
@@ -8368,7 +8679,8 @@
         "weaver_tools",
         "woodcarver_tools"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "skulker_2014",
@@ -8397,7 +8709,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "skulker_2024",
@@ -8432,7 +8745,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "slasher_2014",
@@ -8463,7 +8777,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "slasher_2024",
@@ -8494,7 +8809,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "soothing_familiar",
@@ -8531,7 +8847,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "soul_of_the_storm_giant",
@@ -8565,7 +8882,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "speedy",
@@ -8605,7 +8923,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "spell_resistant",
@@ -8636,7 +8955,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "spell_sniper_2014",
@@ -8662,7 +8982,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "spell_sniper_2024",
@@ -8697,7 +9018,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "spell_subterfuge",
@@ -8732,7 +9054,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "spellfire_adept",
@@ -8766,7 +9089,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "spellfire_spark",
@@ -8792,7 +9116,8 @@
     "GrantedSpellIds": [
       "sacred_flame_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "squat_nimbleness",
@@ -8834,7 +9159,8 @@
         "acrobatics",
         "athletics"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "squire_of_solamnia",
@@ -8861,7 +9187,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "street_justice",
@@ -8892,7 +9219,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "strike_of_the_giants",
@@ -8918,7 +9246,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "strixhaven_initiate",
@@ -8942,7 +9271,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "strixhaven_mascot",
@@ -8970,7 +9300,8 @@
     "GrantedSpellIds": [
       "find_familiar"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "survivor",
@@ -8994,7 +9325,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "svirfneblin_magic",
@@ -9025,7 +9357,8 @@
       "blur",
       "disguise_self"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "symbiotic_being",
@@ -9066,7 +9399,8 @@
         "perception",
         "persuasion"
       ]
-    }
+    },
+    "SpellChoice": null
   },
   {
     "Id": "tavern_brawler_2014",
@@ -9097,7 +9431,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "tavern_brawler_2024",
@@ -9123,7 +9458,8 @@
     ],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "telekinetic_2014",
@@ -9157,7 +9493,8 @@
     "GrantedSpellIds": [
       "mage_hand"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "telekinetic_2024",
@@ -9191,7 +9528,8 @@
     "GrantedSpellIds": [
       "mage_hand_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "telepathic_2014",
@@ -9225,7 +9563,8 @@
     "GrantedSpellIds": [
       "detect_thoughts"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "telepathic_2024",
@@ -9259,7 +9598,8 @@
     "GrantedSpellIds": [
       "detect_thoughts_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "thrown_weapon_fighting",
@@ -9285,7 +9625,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "tireless_reveler",
@@ -9309,7 +9650,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "touch_of_death",
@@ -9337,7 +9679,8 @@
     "GrantedSpellIds": [
       "chill_touch_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "tough_2014",
@@ -9361,7 +9704,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "tough_2024",
@@ -9385,7 +9729,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "transmutation_adept",
@@ -9426,7 +9771,8 @@
       "polymorph_2024",
       "animate_objects_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "transmuted_anatomy",
@@ -9450,7 +9796,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "treacherous_allure",
@@ -9484,7 +9831,8 @@
     "GrantedSpellIds": [
       "charm_person_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "two_weapon_fighting_2014",
@@ -9514,7 +9862,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "two_weapon_fighting_2024",
@@ -9540,7 +9889,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "tyro_of_the_gauntlet",
@@ -9564,7 +9914,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "unarmed_fighting",
@@ -9590,7 +9941,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "vampire_hunter",
@@ -9614,7 +9966,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "vampire_touched",
@@ -9648,7 +10001,8 @@
     "GrantedSpellIds": [
       "spider_climb_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "vampires_plaything",
@@ -9672,7 +10026,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "vampiric_exultation",
@@ -9698,7 +10053,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "vigor_of_the_hill_giant",
@@ -9732,7 +10088,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "war_caster_2014",
@@ -9758,7 +10115,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "war_caster_2024",
@@ -9793,7 +10151,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "warlike_familiar",
@@ -9832,7 +10191,8 @@
     "GrantedSpellIds": [
       "battle_familiar_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "watchers",
@@ -9861,7 +10221,8 @@
       "beast_sense_2024",
       "speak_with_animals_2024"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "weapon_master_2014",
@@ -9892,7 +10253,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "weapon_master_2024",
@@ -9923,7 +10285,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "wood_elf_magic",
@@ -9952,7 +10315,14 @@
       "longstrider",
       "pass_without_trace"
     ],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": {
+      "ClassIds": [
+        "druid"
+      ],
+      "Cantrips": 1,
+      "FirstLevelSpells": 0
+    }
   },
   {
     "Id": "zhentarim_ruffian",
@@ -9976,7 +10346,8 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   },
   {
     "Id": "zhentarim_tactics",
@@ -10009,6 +10380,7 @@
     "GrantedProficiencyIds": [],
     "GrantedLanguageIds": [],
     "GrantedSpellIds": [],
-    "Choice": null
+    "Choice": null,
+    "SpellChoice": null
   }
 ]

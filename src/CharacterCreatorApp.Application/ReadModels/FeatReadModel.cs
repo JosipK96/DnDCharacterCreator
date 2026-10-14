@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Domain.DomainModels.Feats;
+using CharacterCreatorApp.Domain.DomainModels.Spells;
 
 namespace CharacterCreatorApp.Application.ReadModels
 {
@@ -28,5 +29,8 @@ namespace CharacterCreatorApp.Application.ReadModels
         public IReadOnlyCollection<string> GrantedSpellIds { get; set; } = [];
 
         public FeatChoiceReadModel? Choice { get; set; }
+
+        /// <summary>The spells the player picks from a class list: Magic Initiate's.</summary>
+        public BonusSpellChoice? SpellChoice { get; set; }
     }
 }

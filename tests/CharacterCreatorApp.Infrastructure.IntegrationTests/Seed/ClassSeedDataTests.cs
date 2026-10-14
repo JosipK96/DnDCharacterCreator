@@ -193,6 +193,65 @@ public class ClassSeedDataTests
         limited.Should().BeEquivalentTo("eldritch-knight", "arcane-trickster");
     }
 
+    [Theory]
+    // How many Fighting Styles a character owes is counted from these features
+    [InlineData("artificer", new int[0])]
+    [InlineData("barbarian", new int[0])]
+    [InlineData("bard", new int[0])]
+    [InlineData("cleric", new int[0])]
+    [InlineData("druid", new int[0])]
+    [InlineData("fighter", new[] { 1 })]
+    [InlineData("monk", new int[0])]
+    [InlineData("paladin", new[] { 2 })]
+    [InlineData("ranger", new[] { 2 })]
+    [InlineData("rogue", new int[0])]
+    [InlineData("sorcerer", new int[0])]
+    [InlineData("warlock", new int[0])]
+    [InlineData("wizard", new int[0])]
+    [InlineData("artificer-2024", new int[0])]
+    [InlineData("barbarian-2024", new int[0])]
+    [InlineData("bard-2024", new int[0])]
+    [InlineData("cleric-2024", new int[0])]
+    [InlineData("druid-2024", new int[0])]
+    [InlineData("fighter-2024", new[] { 1 })]
+    [InlineData("monk-2024", new int[0])]
+    [InlineData("paladin-2024", new[] { 2 })]
+    [InlineData("ranger-2024", new[] { 2 })]
+    [InlineData("rogue-2024", new int[0])]
+    [InlineData("sorcerer-2024", new int[0])]
+    [InlineData("warlock-2024", new int[0])]
+    [InlineData("wizard-2024", new int[0])]
+    // The subclasses that give one: College of Swords, and the Champion's Additional Fighting Style
+    [InlineData("swords", new[] { 3 })]
+    [InlineData("champion", new[] { 10 })]
+    [InlineData("champion-2024", new[] { 7 })]
+    public async Task ClassOrSubclass_GivesAFightingStyleAtTheBooksLevels(string ownerId, int[] levels)
+    {
+        // Arrange
+        var features = await ReadAsync<FeatureSeedRow>("ClassFeatures.json");
+
+        // Act
+        var styleLevels = features
+            .Where(f => (f.ClassId ?? f.SubclassId) == ownerId && f.Name is "Fighting Style" or "Additional Fighting Style")
+            .Select(f => f.Level);
+
+        // Assert
+        styleLevels.Should().Equal(levels);
+    }
+
+    [Fact]
+    public async Task Features_OnlyTheBooksClassesAndSubclassesGiveAFightingStyle()
+    {
+        // Act - the Mystic Arts monk's "Mystic Fighting Style" is another feature, and not counted
+        var owners = (await ReadAsync<FeatureSeedRow>("ClassFeatures.json"))
+            .Where(f => f.Name is "Fighting Style" or "Additional Fighting Style")
+            .Select(f => f.ClassId ?? f.SubclassId);
+
+        // Assert
+        owners.Should().BeEquivalentTo(
+            "fighter", "paladin", "ranger", "fighter-2024", "paladin-2024", "ranger-2024", "swords", "champion", "champion-2024");
+    }
+
     private static async Task<ClassSeedRow> ClassAsync(string id) =>
         (await ReadAsync<ClassSeedRow>("Classes.json")).Single(c => c.Id == id);
 

@@ -675,6 +675,45 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task FightingStyles_ForA2014Paladin_OffersItsFourAndSavesThePick()
+    {
+        // Arrange - a level 2 paladin owes one, from the styles its class lists
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Lancelot", Level = 2, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "paladin" });
+
+        // Act
+        var styles = await _client.GetFromJsonAsync<FightingStylesApiResponse>(
+            $"/api/character-drafts/{draftId}/fighting-styles", TestContext.Current.CancellationToken);
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["protection_2014"]));
+
+        // Assert
+        styles!.Owed.Should().Be(1);
+        styles.Options.Select(o => o.Id).Should().Equal("defense_2014", "dueling_2014", "great_weapon_fighting_2014", "protection_2014");
+        (await GetDraftAsync(draftId)).FightingStyleIds.Should().Equal("protection_2014");
+    }
+
+    [Fact]
+    public async Task ChooseFightingStyles_WithAStyleTheClassDoesNotList_ReturnsFeatPrerequisiteNotMet()
+    {
+        // Arrange - Archery is the 2014 fighter's and ranger's, not the paladin's
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Lancelot", Level = 2, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "paladin" });
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/fighting-styles",
+            new ChooseFightingStylesApiRequest(["archery_2014"]),
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.FeatPrerequisiteNotMet");
+    }
+
+    [Fact]
     public async Task GetIncompleteDraft_WhenTheUserHasOne_ReturnsIt()
     {
         // Arrange
@@ -839,6 +878,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Bruenor", Level = 1, Edition = "2024" });
         await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf_2024" });
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
         await PutStepAsync(draftId, "background", Soldier2024());
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
@@ -859,9 +899,9 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         character.Features.Select(f => f.Name).Should().Contain(["Fighting Style", "Second Wind", "Weapon Mastery"]);
         character.Stats!.SavingThrows.Where(s => s.IsProficient).Select(s => s.AbilityId).Should().BeEquivalentTo(["STR", "CON"]);
 
-        // The soldier's +2 and +1 and its origin feat, and Common with the two picks
+        // The soldier's +2 and +1 and its origin feat, the Fighting Style, and Common with the two picks
         (character.AbilityScores["STR"], character.AbilityScores["CON"]).Should().Be((17, 15));
-        character.Feats.Select(f => f.Name).Should().Equal("Savage Attacker");
+        character.Feats.Select(f => f.Name).Should().BeEquivalentTo(["Savage Attacker", "Defense"]);
         character.LanguageIds.Should().BeEquivalentTo(["common-xphb", "draconic-xphb", "giant-xphb"]);
 
         // A d10 and CON 15 (+2), and 1 more from the 2024 dwarf's own Dwarven Toughness
@@ -918,6 +958,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "elf_2024", SubraceId = "elf_wood_elf_lineage_2024" });
         await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["perception"]));
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024", SubclassId = "champion-2024" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["archery_2024"]));
         await PutStepAsync(draftId, "background", Soldier2024());
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["dwarvish-xphb", "giant-xphb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
@@ -991,6 +1032,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         });
         await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["persuasion"]));
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["protection_2014"]));
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "soldier" });
         await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["giant-phb"]));
         await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
@@ -1010,7 +1052,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         // Assert
         character!.SubraceName.Should().Be("Variant Human");
         (character.AbilityScores["STR"], character.AbilityScores["DEX"], character.AbilityScores["CON"]).Should().Be((16, 14, 15));
-        character.Feats.Select(f => f.Name).Should().Equal("Athlete");
+        character.Feats.Select(f => f.Name).Should().BeEquivalentTo(["Protection", "Athlete"]);
         character.Stats!.Skills.Single(s => s.SkillId == "persuasion").IsProficient.Should().BeTrue();
     }
 

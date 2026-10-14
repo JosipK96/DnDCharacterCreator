@@ -18,9 +18,12 @@ public class FeatSeedDataTests
     // The 2024 book spells it with a hyphen, which the id leaves out
     [InlineData("fey_touched_2014", "Fey Touched", "2014", null)]
     [InlineData("fey_touched_2024", "Fey-Touched", "2024", "General")]
+    // The 2014 Fighting Styles are feats too, of the same category as the 2024 ones
+    [InlineData("archery_2014", "Archery", "2014", "Fighting Style")]
+    [InlineData("archery_2024", "Archery", "2024", "Fighting Style")]
     // Only in one edition: no suffix
     [InlineData("elven_accuracy", "Elven Accuracy", "2014", null)]
-    [InlineData("archery", "Archery", "2024", "Fighting Style")]
+    [InlineData("interception", "Interception", "2024", "Fighting Style")]
     [InlineData("boon_of_fate", "Boon of Fate", "2024", "Epic Boon")]
     public async Task Feat_HasTheNameEditionAndCategoryOfItsBook(string featId, string name, string edition, string? category)
     {
@@ -87,6 +90,26 @@ public class FeatSeedDataTests
         // Assert
         feat.AbilityIncrease!.Options.Should().Equal(options);
         (feat.AbilityIncrease.Points, feat.AbilityIncrease.Maximum).Should().Be((points, maximum));
+    }
+
+    [Theory]
+    // Only the Player's Handbook's six, each for the classes whose Fighting Style lists it
+    [InlineData("archery_2014", new[] { "fighter", "ranger" })]
+    [InlineData("defense_2014", new[] { "fighter", "paladin", "ranger" })]
+    [InlineData("dueling_2014", new[] { "fighter", "bard", "paladin", "ranger" })]
+    [InlineData("great_weapon_fighting_2014", new[] { "fighter", "paladin" })]
+    [InlineData("protection_2014", new[] { "fighter", "paladin" })]
+    [InlineData("two_weapon_fighting_2014", new[] { "fighter", "bard", "ranger" })]
+    public async Task FightingStyle2014_IsForTheClassesThatOfferIt(string featId, string[] classIds)
+    {
+        // Act
+        var feats = await ReadFeatsAsync();
+        var style = feats.Single(f => f.Id == featId);
+
+        // Assert
+        feats.Where(f => f.Edition == "2014" && f.Category == "Fighting Style").Should().HaveCount(6);
+        style.Prerequisites.ClassIds.Should().BeEquivalentTo(classIds);
+        style.Prerequisites.Features.Should().Equal("Fighting Style");
     }
 
     [Fact]

@@ -10,7 +10,7 @@ public static class WizardSteps
     public static readonly IReadOnlyList<string> Names =
     [
         "Name", "Race", "Class", "Background", "Languages",
-        "Ability Scores", "Proficiencies", "Spells", "Improvements", "Review",
+        "Ability Scores", "Proficiencies", "Improvements", "Spells", "Review",
     ];
 
     public static int Count => Names.Count;

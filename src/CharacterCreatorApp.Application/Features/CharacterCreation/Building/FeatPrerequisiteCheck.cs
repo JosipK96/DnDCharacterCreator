@@ -18,10 +18,13 @@ public static class FeatPrerequisiteCheck
 {
     /// <summary>
     /// The first picked feat whose prerequisites the draft does not meet, as an error naming it
-    /// and what it asks for, or null when every one is met.
+    /// and what it asks for, or null when every one is met. The race's own feats come first in
+    /// pickedFeats (raceFeatCount of them); the rest were taken for improvements.
     /// </summary>
     public static Error? FindUnmet(
-        IEnumerable<FeatReadModel> pickedFeats,
+        IReadOnlyList<FeatReadModel> pickedFeats,
+        int raceFeatCount,
+        IEnumerable<Dictionary<string, int>> improvements,
         CharacterDraft draft,
         Race? race,
         Subrace? subrace,
@@ -29,7 +32,11 @@ public static class FeatPrerequisiteCheck
         Subclass? subclass,
         int level)
     {
-        var scores = ScoresBeforeImprovements(draft, race, subrace);
+        // A race's feat is taken at level 1, before any improvement. The draft does not say at
+        // which level each improvement or feat was taken, but the player chooses at each one, so
+        // the improvements can always have come first: a feat counts every one of them.
+        var scoresAtLevelOne = ScoresBeforeImprovements(draft, race, subrace);
+        var scoresWithImprovements = WithImprovements(scoresAtLevelOne, improvements);
         var featureNames = CharacterFeatures
             .ClassFeaturesFor(@class, subclass, level)
             .Select(f => f.Name)
@@ -37,8 +44,10 @@ public static class FeatPrerequisiteCheck
 
         var raceSizes = race?.SizeOptions() ?? [];
 
-        foreach (var feat in pickedFeats.DistinctBy(f => f.Id))
+        for (var i = 0; i < pickedFeats.Count; i++)
         {
+            var feat = pickedFeats[i];
+            var scores = i < raceFeatCount ? scoresAtLevelOne : scoresWithImprovements;
             var unmet = feat.Prerequisites.FindUnmet(
                 level, draft.RaceId, draft.SubraceId, raceSizes, draft.ClassId, scores, featureNames);
 
@@ -78,5 +87,21 @@ public static class FeatPrerequisiteCheck
         }
 
         return scores;
+    }
+
+    // Raised as the sheet raises them, so to 20 at most
+    private static Dictionary<string, int> WithImprovements(
+        Dictionary<string, int> scores,
+        IEnumerable<Dictionary<string, int>> improvements)
+    {
+        var improved = new Dictionary<string, int>(scores);
+
+        foreach (var (key, points) in improvements.SelectMany(improvement => improvement))
+        {
+            var abilityId = AbilityScore.Normalize(key);
+            improved[abilityId] = AbilityScore.Raise(improved.GetValueOrDefault(abilityId), points);
+        }
+
+        return improved;
     }
 }

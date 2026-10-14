@@ -104,12 +104,12 @@ public class Character : Entity<Guid>, IAuditable
     }
 
     // Increases stop at 20, an Epic Boon's at 30; a score already past the cap stays where it is
-    private void AddAbilityScoreBonus(string abilityKey, int bonus, int maximum = 20)
+    private void AddAbilityScoreBonus(string abilityKey, int bonus, int maximum = AbilityScore.Maximum)
     {
         var id = AbilityScore.Normalize(abilityKey);
         var current = AbilityScores.TryGetValue(id, out var value) ? value : 0;
 
-        AbilityScores[id] = Math.Max(current, Math.Min(maximum, current + bonus));
+        AbilityScores[id] = AbilityScore.Raise(current, bonus, maximum);
     }
 
     public void ApplyRaceAbilityScoreBonuses(IEnumerable<RaceAbilityBonus> bonuses)

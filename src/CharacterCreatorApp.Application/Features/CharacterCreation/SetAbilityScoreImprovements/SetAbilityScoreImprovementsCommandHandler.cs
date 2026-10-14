@@ -83,7 +83,9 @@ public class SetAbilityScoreImprovementsCommandHandler(
         // The prerequisites are only looked up once ValidateFeatsAsync has found every id
         var featError = await ValidateFeatsAsync(command.FeatIds, featsById, draft, cancellationToken)
             ?? FeatPrerequisiteCheck.FindUnmet(
-                command.FeatIds.Select(id => featsById[id]),
+                command.FeatIds.ConvertAll(id => featsById[id]),
+                bonusFeats.Count,
+                command.Improvements,
                 draft,
                 race,
                 subrace,

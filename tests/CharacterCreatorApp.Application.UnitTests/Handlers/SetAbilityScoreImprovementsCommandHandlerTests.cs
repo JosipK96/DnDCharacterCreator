@@ -215,6 +215,60 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_WithAFeatAnEarlierImprovementQualifiesFor_Succeeds()
+    {
+        // Arrange - STR 15 is 17 after the level 4 improvement, in time for the feat at level 6
+        var draft = ArrangeDraft(level: 6);
+        ArrangeFeats(Feat("grappler", ability: ("STR", 17)));
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [new() { ["STR"] = 2 }], ["grappler"]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.SelectedFeatIds.Should().Equal("grappler");
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatOnlyAnImprovementBeyondTwentyWouldQualifyFor_ReturnsValidationError()
+    {
+        // Arrange - a level 12 fighter has four improvements; one stops at 20, so STR 15 + 2 + 2 + 2 is 20, not 21
+        ArrangeDraft(level: 12);
+        ArrangeFeats(Feat("grappler", ability: ("STR", 21)));
+
+        var command = new SetAbilityScoreImprovementsCommand(
+            _draftId, [new() { ["STR"] = 2 }, new() { ["STR"] = 2 }, new() { ["STR"] = 2 }], ["grappler"]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("CharacterDraft.FeatPrerequisiteNotMet");
+    }
+
+    [Fact]
+    public async Task Handle_WithARaceFeatOnlyAnImprovementQualifiesFor_ReturnsValidationError()
+    {
+        // Arrange - the variant human's feat comes at level 1, before the level 4 improvement:
+        // STR 15 + 1 is 16 then, whatever the improvement raises it to later
+        ArrangeDraft(level: 4, race: Human2014(), subraceId: "variant_human", raceIncreases: new() { ["STR"] = 1, ["CON"] = 1 });
+        ArrangeFeats(Feat("grappler", ability: ("STR", 17)));
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [new() { ["STR"] = 2 }], ["grappler"]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("CharacterDraft.FeatPrerequisiteNotMet");
+        result.Errors[0].Description.Should().Be("grappler requires Strength 17.");
+    }
+
+    [Fact]
     public async Task Handle_WithAnEpicBoonBeforeLevel19_ReturnsValidationError()
     {
         // Arrange - the 2024 epic boons are listed beside every other feat

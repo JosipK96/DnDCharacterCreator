@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Domain.DomainModels.Races;
+using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;
@@ -135,6 +136,45 @@ public class RaceTests
     }
 
     // +2 Charisma and +1 to two others of the player's choice; any two skills
+    [Fact]
+    public void SpellChoiceWith_ForTheHighElf_IsTheSubracesWizardCantrip()
+    {
+        // Arrange
+        var cantrip = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1 };
+        var elf = new Race { Id = "elf", Name = "Elf", Edition = RulesEdition.Edition2014, Size = "Medium" };
+        var highElf = new Subrace { Id = "high_elf", Name = "High Elf", RaceId = "elf", SpellChoice = cantrip };
+
+        // Act
+        var choice = elf.SpellChoiceWith(highElf);
+
+        // Assert
+        choice.Should().BeSameAs(cantrip);
+    }
+
+    [Fact]
+    public void SpellChoiceWith_ForASubraceWithoutOne_IsTheRaces()
+    {
+        // Arrange
+        var cantrip = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1 };
+        var race = new Race { Id = "race", Name = "Race", Edition = RulesEdition.Edition2014, Size = "Medium", SpellChoice = cantrip };
+
+        // Act
+        var choice = race.SpellChoiceWith(new Subrace { Id = "sub", Name = "Sub", RaceId = "race" });
+
+        // Assert
+        choice.Should().BeSameAs(cantrip);
+    }
+
+    [Fact]
+    public void SpellChoiceWith_ForARaceWithoutOne_IsNull()
+    {
+        // Act
+        var choice = HalfElf().SpellChoiceWith(subrace: null);
+
+        // Assert
+        choice.Should().BeNull();
+    }
+
     private static Race HalfElf() => new()
     {
         Id = "half_elf",

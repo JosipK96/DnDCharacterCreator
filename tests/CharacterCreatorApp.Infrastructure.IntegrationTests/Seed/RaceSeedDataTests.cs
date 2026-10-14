@@ -183,6 +183,33 @@ public class RaceSeedDataTests
         elf.Subraces.Single(s => s.Id == "elf_drow_lineage_2024").Traits.Select(t => t.Name).Should().Equal("Elven Lineage (Drow)", "Darkvision");
     }
 
+    [Theory]
+    // The 2014 high elf's cantrip, and the 2024 High Elf Lineage's, which 5etools writes as a
+    // wizard cantrip of the player's choice in place of Prestidigitation
+    [InlineData("elf", "high_elf", "wizard")]
+    [InlineData("elf_2024", "elf_high_elf_lineage_2024", "wizard-2024")]
+    public async Task HighElf_PicksOneCantripFromTheWizardsList(string raceId, string subraceId, string classId)
+    {
+        // Act
+        var highElf = (await ReadRaceAsync(raceId)).Subraces.Single(s => s.Id == subraceId);
+
+        // Assert
+        highElf.SpellChoice!.ClassIds.Should().Equal(classId);
+        (highElf.SpellChoice.Cantrips, highElf.SpellChoice.FirstLevelSpells).Should().Be((1, 0));
+    }
+
+    [Fact]
+    public async Task Races_OtherThanTheHighElves_PickNoSpells()
+    {
+        // Act
+        var races = await SeedFile.ReadListAsync<RaceSeedRow>(Path.Combine(SeedService.DataPath, "Races.json"), TestContext.Current.CancellationToken);
+
+        // Assert
+        races.Where(r => r.SpellChoice != null).Should().BeEmpty();
+        races.SelectMany(r => r.Subraces).Where(s => s.SpellChoice != null).Select(s => s.Id)
+            .Should().BeEquivalentTo(["high_elf", "elf_high_elf_lineage_2024"]);
+    }
+
     private static async Task<RaceSeedRow> ReadRaceAsync(string raceId)
     {
         var races = await SeedFile.ReadListAsync<RaceSeedRow>(Path.Combine(SeedService.DataPath, "Races.json"), TestContext.Current.CancellationToken);

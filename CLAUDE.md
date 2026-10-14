@@ -155,7 +155,16 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
   cannot check (another feat, a campaign) is shown, not enforced. Classes, subclasses, their
   features, races, backgrounds, spells and feats are generated from 5etools; Tasha's optional
   class features, and the choices the app does not ask for yet (a dwarf's tools, a
-  background's gaming set, Resilient's saving throw), are left out.
+  background's gaming set, a feat's skills), are left out.
+- Spells a race or feat lets the player pick from a class list (a 2014 high elf's wizard
+  cantrip, Magic Initiate's) are `BonusSpellChoice`s on `Race`, `Subrace` and `Feat`, picked in
+  the spells step and kept in `CharacterDraft.RaceSpellIds` and `FeatSpells`, one pick per such
+  feat in the character's feat order. `BonusSpells` lists what a draft owes and checks the
+  picks, for `ChooseBonusSpells` and finalize alike; a background may fix its feat's list
+  (`Background.FeatSpellListClassId`: an Acolyte's is the cleric's). A 2024 species that is
+  "Small or Medium" keeps its pick in `CharacterDraft.Size`, a background that lets the player
+  pick its feat (`Background.FeatChoiceCategory`) in `BackgroundFeatId`, and Resilient's saving
+  throw is the ability it raised (`FeatChoice.SavingThrow`).
 
 ## Data and migrations  → docs/conventions/efcore-and-postgres.md
 

@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Infrastructure.Seed;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
@@ -59,14 +60,17 @@ public class FeatSeedDataTests
         skilled.Choice.Options.Should().Contain(["athletics", "thieves-tools"]);
     }
 
-    [Fact]
-    public async Task Resilient2014_OffersTheSavingThrowOfAnyAbility()
+    [Theory]
+    [InlineData("resilient_2014")]
+    [InlineData("resilient_2024")]
+    public async Task Resilient_OffersTheSavingThrowOfTheAbilityItRaises(string featId)
     {
         // Act
-        var resilient = (await ReadFeatsAsync()).Single(f => f.Id == "resilient_2014");
+        var resilient = (await ReadFeatsAsync()).Single(f => f.Id == featId);
 
-        // Assert
-        resilient.Choice!.Type.Should().Be("ability-scores");
+        // Assert - the save is the raised ability's, so it is not picked on its own
+        resilient.AbilityIncrease!.Options.Should().Equal("STR", "DEX", "CON", "INT", "WIS", "CHA");
+        resilient.Choice!.Type.Should().Be(FeatChoice.SavingThrow);
         resilient.Choice.Count.Should().Be(1);
         resilient.Choice.Options.Should().Equal("STR", "DEX", "CON", "INT", "WIS", "CHA");
     }
@@ -120,6 +124,38 @@ public class FeatSeedDataTests
 
         // Assert
         alert.AbilityIncrease.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData("magic_initiate_2014", new[] { "bard", "cleric", "druid", "sorcerer", "warlock", "wizard" }, 2, 1)]
+    [InlineData("magic_initiate_2024", new[] { "cleric-2024", "druid-2024", "wizard-2024" }, 2, 1)]
+    [InlineData("blessed_warrior", new[] { "cleric-2024" }, 2, 0)]
+    [InlineData("artificer_initiate", new[] { "artificer" }, 1, 1)]
+    [InlineData("wood_elf_magic", new[] { "druid" }, 1, 0)]
+    public async Task Feat_OffersTheSpellPicksOfItsBook(string featId, string[] classIds, int cantrips, int firstLevelSpells)
+    {
+        // Act
+        var feat = (await ReadFeatsAsync()).Single(f => f.Id == featId);
+
+        // Assert
+        feat.SpellChoice!.ClassIds.Should().Equal(classIds);
+        (feat.SpellChoice.Cantrips, feat.SpellChoice.FirstLevelSpells).Should().Be((cantrips, firstLevelSpells));
+    }
+
+    [Theory]
+    // A school or ritual filter is not a class list
+    [InlineData("fey_touched_2024")]
+    [InlineData("ritual_caster_2014")]
+    // Light, or another cleric cantrip if the character knows it already
+    [InlineData("light_bringer")]
+    [InlineData("alert_2024")]
+    public async Task Feat_WithoutAClassListPick_HasNoSpellChoice(string featId)
+    {
+        // Act
+        var feat = (await ReadFeatsAsync()).Single(f => f.Id == featId);
+
+        // Assert
+        feat.SpellChoice.Should().BeNull();
     }
 
     private static Task<List<FeatSeedRow>> ReadFeatsAsync() =>

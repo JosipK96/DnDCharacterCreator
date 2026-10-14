@@ -1188,6 +1188,178 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     // Helper methods
 
     /// <summary>Registers and signs in a new user; every later request is theirs.</summary>
+    [Fact]
+    public async Task CompleteWorkflow_WithASmallHumanAcolyteAndTwoMagicInitiates_GivesTheSizeAndEverySpellPicked()
+    {
+        // Arrange - a level 1 2024 human fighter, Small, whose Origin feat is Magic Initiate on
+        // the wizard list beside the Acolyte's own, which is the cleric's
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Mira", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "human_2024", Size = "Small" });
+        await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["stealth"]));
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte_2024", AbilityIncreases = new() { ["WIS"] = 2, ["CHA"] = 1 } });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
+        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["magic_initiate_2024"], [[]]));
+
+        var choices = await _client.GetFromJsonAsync<List<BonusSpellChoiceApiResponse>>($"/api/character-drafts/{draftId}/bonus-spells", cancellationToken);
+        await PutStepAsync(draftId, "bonus-spells", new ChooseBonusSpellsApiRequest
+        {
+            FeatSpells =
+            [
+                new() { FeatId = "magic_initiate_2024", ClassId = "cleric-2024", SpellIds = ["guidance_2024", "light_2024", "bless_2024"] },
+                new() { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["fire_bolt_2024", "mage_hand_2024", "shield_2024"] },
+            ],
+        });
+
+        // Act
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        // Assert - the Acolyte's Magic Initiate offers only the cleric's list, the human's all three
+        choices!.Select(c => string.Join(" ", c.Lists.Select(l => l.ClassId))).Should().Equal(
+            "cleric-2024", "cleric-2024 druid-2024 wizard-2024");
+        character!.Size.Should().Be("Small");
+        character.Feats.Select(f => f.Name).Should().Contain("Magic Initiate");
+        character.Spells.Select(s => s.Id).Should().BeEquivalentTo(
+            ["guidance_2024", "light_2024", "bless_2024", "fire_bolt_2024", "mage_hand_2024", "shield_2024"]);
+    }
+
+    [Fact]
+    public async Task CompleteWorkflow_WithAHighElf_GivesTheCharacterTheCantripPicked()
+    {
+        // Arrange - a level 1 2014 high elf fighter soldier, with Fire Bolt for its cantrip
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Laucian", Level = 1, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "elf", SubraceId = "high_elf" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["archery_2014"]));
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "soldier" });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["giant-phb"]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "survival"]));
+
+        // A draft without the cantrip is refused
+        var openResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        await openResponse.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.BonusSpellCount");
+
+        await PutStepAsync(draftId, "bonus-spells", new ChooseBonusSpellsApiRequest { RaceSpellIds = ["fire_bolt"] });
+
+        // Act
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        // Assert
+        character!.Spells.Select(s => s.Id).Should().Equal("fire_bolt");
+        character.Size.Should().Be("Medium");
+    }
+
+    [Fact]
+    public async Task ChooseBonusSpells_WithASpellFromAnotherList_ReturnsBonusSpellNotOnList()
+    {
+        // Arrange - Magic Missile is not a cleric spell
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Mira", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte_2024", AbilityIncreases = new() { ["WIS"] = 2, ["CHA"] = 1 } });
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/bonus-spells",
+            new ChooseBonusSpellsApiRequest
+            {
+                FeatSpells = [new() { FeatId = "magic_initiate_2024", ClassId = "cleric-2024", SpellIds = ["guidance_2024", "light_2024", "magic_missile_2024"] }],
+            },
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.BonusSpellNotOnList");
+    }
+
+    [Fact]
+    public async Task Finalize_WithASmallOrMediumSpeciesAndNoSize_ReturnsSizeRequired()
+    {
+        // Arrange - the 2024 human of the workflow above, with no size picked
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Mira", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "human_2024" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+        await PutStepAsync(draftId, "background", Soldier2024());
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+
+        // Act
+        var response = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "Character.SizeRequired");
+    }
+
+    [Fact]
+    public async Task SetBackground_ForAMistWandererWithADarkGift_SavesTheFeat()
+    {
+        // Arrange - Mist Wanderer and the Dark Gifts are from RHW, which the draft allows first
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Ezra", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "books", new SetAllowedBooksApiRequest(["RHW"]));
+
+        // Act
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest
+        {
+            BackgroundId = "mist_wanderer_2024",
+            AbilityIncreases = new() { ["DEX"] = 2, ["WIS"] = 1 },
+            FeatId = "mist_walker",
+        });
+
+        // Assert
+        (await GetDraftAsync(draftId)).BackgroundFeatId.Should().Be("mist_walker");
+    }
+
+    [Fact]
+    public async Task SetBackground_WithAFeatForABackgroundWithItsOwn_ReturnsBackgroundFeatNotChoosable()
+    {
+        // Arrange
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Bruenor", Level = 1, Edition = RulesEdition.Edition2024 });
+
+        // Act
+        var request = Soldier2024();
+        request.FeatId = "alert_2024";
+        var response = await _client.PutAsJsonAsync($"/api/character-drafts/{draftId}/background", request, TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.BackgroundFeatNotChoosable");
+    }
+
     private async Task SignInAsync()
     {
         var token = await GetAuthTokenAsync();

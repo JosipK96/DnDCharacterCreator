@@ -153,7 +153,7 @@ public class ToolChoicesHandlersTests : IDisposable
         // Assert
         result.IsSuccess.Should().BeFalse();
         result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.ProficiencyAlreadyGiven");
-        result.Errors[0].Description.Should().StartWith("smith_tools comes with the tool picks");
+        result.Errors[0].Description.Should().Be("smith_tools comes with another tool pick already; pick another in its place.");
         draft.ToolPicks.Should().BeEmpty();
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }

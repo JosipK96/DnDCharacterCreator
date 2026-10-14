@@ -41,7 +41,7 @@ public static class ProficiencyPickCheck
 
         var racePicks = $"the {subrace?.Name ?? race?.Name} skill picks";
         var classPicksName = $"the {@class?.Name} proficiency picks";
-        const string toolPicksName = "the tool picks";
+        const string toolPicksName = "another tool pick";
 
         if (raceSkillPicks is not null)
         {

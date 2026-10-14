@@ -227,6 +227,42 @@ public class ChooseFightingStylesCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_WithAStyleFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - Arcane Warrior is from Arcana Unleashed; the draft allows the Player's Handbook alone
+        var draft = ArrangeDraft("fighter-2024", RulesEdition.Edition2024, 1);
+        ArrangeClass(ClassFor("fighter-2024", RulesEdition.Edition2024));
+        var arcaneWarrior = Style("arcane_warrior", RulesEdition.Edition2024);
+        arcaneWarrior.Source = "AU";
+        ArrangeFeats(["arcane_warrior"], [arcaneWarrior]);
+
+        // Act
+        var result = await _sut.Handle(new ChooseFightingStylesCommand(_draftId, ["arcane_warrior"]), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.SourceNotAllowed");
+    }
+
+    [Fact]
+    public async Task Handle_WithAStyleFromABookTheDraftAllows_SavesIt()
+    {
+        // Arrange
+        var draft = ArrangeDraft("fighter-2024", RulesEdition.Edition2024, 1);
+        draft.AllowBooks(["AU"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeClass(ClassFor("fighter-2024", RulesEdition.Edition2024));
+        var arcaneWarrior = Style("arcane_warrior", RulesEdition.Edition2024);
+        arcaneWarrior.Source = "AU";
+        ArrangeFeats(["arcane_warrior"], [arcaneWarrior]);
+
+        // Act
+        var result = await _sut.Handle(new ChooseFightingStylesCommand(_draftId, ["arcane_warrior"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
+        draft.FightingStyleIds.Should().Equal("arcane_warrior");
+    }
+
     private void AssertRefused(Domain.Common.Results.Response result, CharacterDraft draft, string code)
     {
         result.IsSuccess.Should().BeFalse();

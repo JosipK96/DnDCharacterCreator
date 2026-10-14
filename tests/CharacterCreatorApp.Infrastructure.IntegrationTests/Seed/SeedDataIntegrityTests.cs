@@ -285,14 +285,14 @@ public partial class SeedDataIntegrityTests
     }
 
     [Fact]
-    public async Task Books_HaveOnePlayersHandbookPerEdition()
+    public async Task Books_HaveOnePlayersHandbookPerEdition_TheOneEveryDraftAllows()
     {
         // Act
         var handbooks = (await ReadAsync<BookSeedRow>("Books.json")).Where(b => b.IsPlayersHandbook);
 
-        // Assert
+        // Assert - RulesEdition.PlayersHandbook is what a new draft allows without reading the file
         handbooks.Select(b => (b.Edition, b.Code)).Should().BeEquivalentTo(
-            [(RulesEdition.Edition2014, "PHB"), (RulesEdition.Edition2024, "XPHB")]);
+            RulesEdition.All.Select(edition => (edition, RulesEdition.PlayersHandbook(edition))));
     }
 
     // Choices of skills and tools list proficiency ids; an ability score choice lists abilities

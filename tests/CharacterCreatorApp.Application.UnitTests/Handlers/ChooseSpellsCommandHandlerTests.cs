@@ -354,6 +354,24 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_WithASpellFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - Absorb Elements is from Xanathar's Guide; the draft allows the Player's Handbook alone
+        var draft = ArrangeDraft("wizard", level: 1);
+        ArrangeClass("wizard", [Row("wizard", 1, cantrips: 0, spells: 1, maxSpellLevel: 1)]);
+        var absorbElements = Spell("absorb_elements", 1);
+        absorbElements.Source = "XGE";
+        ArrangeSpellList("wizard", absorbElements);
+
+        // Act
+        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["absorb_elements"]), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.SourceNotAllowed");
+        result.Errors[0].Description.Should().Be("The spell absorb_elements comes from XGE, a book this character does not allow.");
+    }
+
     private void AssertRefused(Response result, CharacterDraft draft, string code)
     {
         result.IsSuccess.Should().BeFalse();

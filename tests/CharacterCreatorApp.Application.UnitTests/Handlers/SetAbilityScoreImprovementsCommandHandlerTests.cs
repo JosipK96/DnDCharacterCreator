@@ -321,6 +321,28 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_WithAFeatFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - a feat from Tasha's Cauldron, and a draft allowing the Player's Handbook alone
+        var draft = ArrangeDraft(level: 4);
+        var feyTouched = Feat("fey_touched", name: "Fey Touched");
+        feyTouched.Source = "TCE";
+        ArrangeFeats(feyTouched);
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [], ["fey_touched"]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The feat Fey Touched comes from TCE, a book this character does not allow.");
+        draft.SelectedFeatIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
     public async Task Handle_WithAFeatFromTheOtherEdition_ReturnsValidationError()
     {
         // Arrange - a 2014 fighter offered the 2024 Alert

@@ -316,6 +316,41 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_WithAChoiceFromABookTheDraftNoLongerAllows_ReturnsSourceNotAllowed()
+    {
+        // Arrange - a background from the Sword Coast guide, saved while the draft allowed it
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        var background = CreateTestBackground();
+        background.Source = "SCAG";
+        ArrangeRepositories(_draftId, _userId, draft, background: background);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The background Soldier comes from SCAG, a book this character does not allow.");
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithEveryChoiceFromAnAllowedBook_CreatesTheCharacter()
+    {
+        // Arrange
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        draft.AllowBooks(["SCAG"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        var background = CreateTestBackground();
+        background.Source = "SCAG";
+
+        // Act
+        var created = await ArrangeAndFinalize(_draftId, _userId, draft, background: background);
+
+        // Assert
+        created.BackgroundId.Should().Be("soldier");
+    }
+
+    [Fact]
     public async Task Handle_WithMissingAbilityScoreImprovements_ReturnsValidationError()
     {
         // Arrange - a level 4 fighter owes one ASI

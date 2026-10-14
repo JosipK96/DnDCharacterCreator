@@ -129,6 +129,44 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         result.Errors.Should().ContainSingle().Which.Code.Should().Be("Background.NotFound");
     }
 
+    [Fact]
+    public async Task Handle_WithABackgroundFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
+    {
+        // Arrange - the draft allows only the 2014 Player's Handbook
+        var draft = ArrangeDraft(RulesEdition.Edition2014);
+        var background = Soldier2014();
+        background.Source = "SCAG";
+        ArrangeBackground(background);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "soldier", []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Description.Should().Be(
+            "The background Soldier comes from SCAG, a book this character does not allow.");
+        draft.BackgroundId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithABackgroundFromABookTheDraftAllows_SetsIt()
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2014);
+        draft.AllowBooks(["SCAG"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        var background = Soldier2014();
+        background.Source = "SCAG";
+        ArrangeBackground(background);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "soldier", []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.BackgroundId.Should().Be("soldier");
+    }
+
     private CharacterDraft ArrangeDraft(string edition)
     {
         var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider());

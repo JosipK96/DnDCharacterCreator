@@ -23,11 +23,10 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
 - CI (`.github/workflows/ci.yml`) runs on every pull request and push to `main`: restore,
   build (warnings as errors), unit tests, integration tests and a vulnerable-package check as
   separate steps, and the Api's Docker image (skipped when a PR changes only Markdown or
-  `docs/`). A PR merges only
-  when both jobs are green: label it `automerge` once reviewed, and the Auto-merge workflow
-  squash-merges it when CI passes on its head. Dependabot proposes NuGet updates weekly and
-  Actions monthly; its minor and patch updates are labelled `automerge` by a workflow and merge
-  themselves when green, while major ones wait for a review.
+  `docs/`). Branch protection requires both jobs before a PR can merge: once reviewed, turn on
+  auto-merge (`gh pr merge <n> --auto --squash`) and GitHub merges it when they pass.
+  Dependabot proposes NuGet updates weekly and Actions monthly; a workflow turns on auto-merge
+  for its minor and patch updates, while major ones wait for a review.
 
 ## Where code goes
 

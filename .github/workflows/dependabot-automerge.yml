@@ -1,29 +1,29 @@
-# Labels Dependabot's minor and patch updates "automerge", so the Auto-merge workflow merges them
-# once CI passes. Major updates get no label and wait for a review, since they are where breaking
-# changes and license changes live.
+# Turns on GitHub's auto-merge for Dependabot's minor and patch updates, so they squash-merge
+# once the checks branch protection requires are green. Major updates are left for a review,
+# since they are where breaking changes and license changes live.
 name: Dependabot auto-merge
 
 on: pull_request
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 jobs:
-  label:
-    name: Label minor and patch updates
+  enable:
+    name: Auto-merge minor and patch updates
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@v3
 
       # A grouped pull request reports its largest update, so one major update in a group keeps
       # the whole group for review
-      - name: Label for auto-merge
+      - name: Enable auto-merge
         if: steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'
         env:
           GH_TOKEN: ${{ github.token }}
           PR_URL: ${{ github.event.pull_request.html_url }}
-        run: gh pr edit "$PR_URL" --add-label automerge
+        run: gh pr merge "$PR_URL" --auto --squash

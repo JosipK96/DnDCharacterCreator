@@ -140,8 +140,8 @@ file without its Development override, use `docker compose -f docker-compose.yml
 ## Contributing
 
 Work is tracked in GitHub issues; each change goes on its own branch and arrives through a pull
-request that CI has passed. A reviewed pull request labelled `automerge` merges itself when CI
-passes. [CLAUDE.md](CLAUDE.md) and [docs/conventions](docs/conventions)
+request that CI has passed; branch protection on `main` requires it. A reviewed pull request
+with auto-merge turned on merges itself when CI passes. [CLAUDE.md](CLAUDE.md) and [docs/conventions](docs/conventions)
 describe the architecture and conventions.
 
 ## Legal

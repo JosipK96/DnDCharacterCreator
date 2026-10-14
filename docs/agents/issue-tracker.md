@@ -18,7 +18,7 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 - **One issue, one branch, one pull request.** Work starts from an issue, on its own branch, and arrives as a pull request whose body begins with `Closes #<number>`, which links the two and closes the issue on merge.
 - **A pull request does what its issue asks, and nothing else.** Anything found along the way that the issue does not mention becomes a new issue, not part of the pull request.
 - **The exception** is small changes to the repository as a whole (the README, housekeeping like a folder rename): those may be a pull request without an issue.
-- **Merging** happens only when CI is green on the current `main`, after `/pr-review` has posted its report on the pull request. Once reviewed, add the `automerge` label (`gh pr edit <number> --add-label automerge`): the Auto-merge workflow squash-merges the pull request the moment CI passes on its head commit. Nobody needs to watch or poll CI for it.
+- **Merging** happens only when CI is green on the current `main`, after `/pr-review` has posted its report on the pull request. Once reviewed, turn on auto-merge (`gh pr merge <number> --auto --squash`): branch protection requires both CI jobs, and GitHub squash-merges the pull request when they pass, closing the issues it names. Nobody needs to watch or poll CI for it.
 - **No attribution** in anything posted to GitHub: no "Generated with" footers or co-author lines.
 
 ## Pull requests as a triage surface

@@ -317,8 +317,11 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         return _createdCharacter!;
     }
 
+    // Pinned to exactly these feats: the draft's background feat, styles and feats, each once
     private void ArrangeFeats(params FeatReadModel[] feats) =>
-        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync([.. feats]);
+        _featRepositoryMock
+            .Setup(r => r.GetByIdsAsync(It.Is<IEnumerable<string>>(ids => ids.SequenceEqual(feats.Select(f => f.Id))), _cts.Token))
+            .ReturnsAsync([.. feats]);
 
     private void ArrangeSpellList(string classId, params SpellReadModel[] spells) =>
         _spellRepositoryMock.Setup(r => r.GetByClassIdAsync(classId, _cts.Token)).ReturnsAsync([.. spells]);

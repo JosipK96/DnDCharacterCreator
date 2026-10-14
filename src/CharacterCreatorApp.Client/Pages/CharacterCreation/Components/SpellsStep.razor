@@ -30,7 +30,10 @@
             <p class="text-gray-400">
                 @className doesn't have spellcasting at level @(draft?.Level ?? 1).
             </p>
-            <p class="text-sm text-gray-500 mt-2">Click Next to complete character creation!</p>
+            @if (bonusChoices.Count > 0)
+            {
+                <p class="text-sm text-gray-500 mt-2">Your race or feats still give spells to pick below.</p>
+            }
         </div>
     }
     else

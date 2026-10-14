@@ -89,19 +89,17 @@ public static class FeatPrerequisiteCheck
         return scores;
     }
 
-    // An improvement raises a score to 20 at most, as it does on the sheet
+    // Raised as the sheet raises them, so to 20 at most
     private static Dictionary<string, int> WithImprovements(
         Dictionary<string, int> scores,
         IEnumerable<Dictionary<string, int>> improvements)
     {
-        const int maximum = 20;
         var improved = new Dictionary<string, int>(scores);
 
         foreach (var (key, points) in improvements.SelectMany(improvement => improvement))
         {
             var abilityId = AbilityScore.Normalize(key);
-            var current = improved.GetValueOrDefault(abilityId);
-            improved[abilityId] = Math.Max(current, Math.Min(maximum, current + points));
+            improved[abilityId] = AbilityScore.Raise(improved.GetValueOrDefault(abilityId), points);
         }
 
         return improved;

@@ -5,6 +5,9 @@ namespace CharacterCreatorApp.Domain.ValueObjects;
 
 public class AbilityScore
 {
+    /// <summary>The most an increase raises a score to, an Epic Boon's aside (30).</summary>
+    public const int Maximum = 20;
+
     public string Id { get; }
     public string Name { get; }
     public string Abbreviation { get; }
@@ -26,6 +29,13 @@ public class AbilityScore
     public static readonly AbilityScore CHA = new("CHA", "Charisma", "Cha", "Measures force of personality.");
 
     public static IReadOnlyList<AbilityScore> All => new[] { STR, DEX, CON, INT, WIS, CHA };
+
+    /// <summary>
+    /// A score raised by an increase, which stops at the maximum and never lowers a score
+    /// already above it.
+    /// </summary>
+    public static int Raise(int score, int points, int maximum = Maximum) =>
+        Math.Max(score, Math.Min(maximum, score + points));
 
     /// <summary>
     /// Every spelling that may arrive from seed data, API requests or older rows,

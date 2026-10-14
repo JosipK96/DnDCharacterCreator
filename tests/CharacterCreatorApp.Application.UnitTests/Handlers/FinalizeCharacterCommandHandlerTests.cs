@@ -839,7 +839,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - Strength 12 is 14 after the level 4 improvement, enough for Grappler at 6
         var draft = CreateCompleteDraft(_userId, level: 6);
-        draft.SetBaseAbilityScores(new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 15, ["WIS"] = 10, ["CHA"] = 8 });
+        draft.SetBaseAbilityScores(new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 15, ["WIS"] = 10, ["CHA"] = 8 }, AbilityScoreMethod.Rolled);
         draft.SetAbilityScoreImprovements([new() { ["STR"] = 2 }]);
         draft.SetFeats(["grappler"]);
         ArrangeFeat(new FeatPrerequisites { AbilityMinimums = [new AbilityMinimum { AbilityId = "STR", Score = 13 }] }, id: "grappler", name: "Grappler");

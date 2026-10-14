@@ -43,6 +43,12 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public Dictionary<string, int> BackgroundAbilityIncreases { get; private set; } = [];
 
         public Dictionary<string, int> BaseAbilityScores { get; private set; } = [];
+
+        /// <summary>
+        /// How the base scores were generated (AbilityScoreMethod), so they can be checked against
+        /// what that method allows. Null for a draft saved before the method was recorded.
+        /// </summary>
+        public string? BaseAbilityScoreMethod { get; private set; }
         public List<string> SelectedClassProficiencyIds { get; private set; } = [];
         public List<string> SelectedRaceSkillIds { get; private set; } = [];
         public List<string> SelectedLanguageIds { get; private set; } = [];
@@ -220,9 +226,10 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             BackgroundAbilityIncreases = Canonical(abilityIncreases);
         }
 
-        public void SetBaseAbilityScores(Dictionary<string, int> scores)
+        public void SetBaseAbilityScores(Dictionary<string, int> scores, string method)
         {
             BaseAbilityScores = new Dictionary<string, int>(scores);
+            BaseAbilityScoreMethod = method;
         }
 
         public void SetClassProficiencies(List<string> proficiencyIds)

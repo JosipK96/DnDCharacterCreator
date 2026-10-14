@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 
@@ -17,6 +18,18 @@ public static class DraftCompletenessChecker
         var (race, subrace, @class, background) = (sources.Race, sources.Subrace, sources.Class, sources.Background);
         var raceName = subrace?.Name ?? race.Name;
         var level = draft.Level!.Value;
+
+        // The scores must be ones the method the player chose can produce; a draft saved before
+        // the method was recorded has to choose them again
+        if (draft.BaseAbilityScoreMethod is not { } method)
+        {
+            return CharacterErrors.AbilityScoreMethodRequired();
+        }
+
+        if (!AbilityScoreMethod.Allows(method, draft.BaseAbilityScores.Values))
+        {
+            return CharacterErrors.AbilityScoresDoNotFitMethod(method);
+        }
 
         // A dwarf is a hill or a mountain dwarf, a 2024 elf has a lineage; a 2014 human with
         // neither the standard nor the variant choice would have no increases at all

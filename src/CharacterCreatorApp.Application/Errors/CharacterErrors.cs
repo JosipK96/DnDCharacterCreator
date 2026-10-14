@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Application.Errors;
 
@@ -36,14 +37,23 @@ public static class CharacterErrors
         Error.NotFound("Character.NotFound", $"Character with id {characterId} was not found.");
 
     // --- Raised when finalizing a draft ---
-    public static Error AbilityScoreTooHigh(int level, int maxBaseScore, IEnumerable<string> invalidScores)
-    {
-        var description =
-            $"Base ability scores (before racial bonuses) exceed the maximum allowed for level {level}. " +
-            $"Maximum base score: {maxBaseScore}. Invalid scores: {string.Join(", ", invalidScores)}";
+    public static Error AbilityScoreMethodRequired() =>
+        Error.Validation(
+            "Character.AbilityScoreMethodRequired",
+            "The ability scores were saved without saying how they were generated. Choose them again in the ability score step.");
 
-        return Error.Validation("Character.AbilityScoreTooHigh", description);
-    }
+    public static Error AbilityScoresDoNotFitMethod(string method) =>
+        Error.Validation(
+            "Character.AbilityScoresDoNotFitMethod",
+            $"The base ability scores are not ones {AbilityScoreMethodName(method)} can produce. Choose them again in the ability score step.");
+
+    // "the standard array", "point buy (27 points, scores 8 to 15)", "rolling (3 to 18)"
+    internal static string AbilityScoreMethodName(string method) => method switch
+    {
+        AbilityScoreMethod.StandardArray => "the standard array (15, 14, 13, 12, 10, 8)",
+        AbilityScoreMethod.PointBuy => $"point buy ({AbilityScoreMethod.PointBuyBudget} points, scores 8 to 15)",
+        _ => "rolling (scores 3 to 18)",
+    };
 
     public static Error SubraceRequired(string raceName, IEnumerable<string> subraceNames) =>
         Error.Validation(

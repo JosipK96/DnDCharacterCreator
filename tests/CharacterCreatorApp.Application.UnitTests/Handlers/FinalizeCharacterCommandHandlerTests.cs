@@ -781,7 +781,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - Grappler asks for Strength 13; the base Strength was lowered to 12 afterwards
         var draft = CreateCompleteDraft(_userId, level: 4);
-        draft.SetBaseAbilityScores(new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 15, ["WIS"] = 10, ["CHA"] = 8 });
+        draft.SetBaseAbilityScores(new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 15, ["WIS"] = 10, ["CHA"] = 8 }, AbilityScoreMethod.Rolled);
         draft.SetAbilityScoreImprovements([]);
         draft.SetFeats(["grappler"]);
         ArrangeFeat(new FeatPrerequisites { AbilityMinimums = [new AbilityMinimum { AbilityId = "STR", Score = 13 }] }, id: "grappler", name: "Grappler");
@@ -819,7 +819,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - base Strength 12 is 14 with the race's +2, enough for a feat asking for 13
         var draft = CreateCompleteDraft(_userId, level: 4);
-        draft.SetBaseAbilityScores(new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 15, ["WIS"] = 10, ["CHA"] = 8 });
+        draft.SetBaseAbilityScores(new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 15, ["WIS"] = 10, ["CHA"] = 8 }, AbilityScoreMethod.Rolled);
         draft.SetAbilityScoreImprovements([]);
         draft.SetFeats(["grappler"]);
         ArrangeFeat(new FeatPrerequisites { AbilityMinimums = [new AbilityMinimum { AbilityId = "STR", Score = 13 }] }, id: "grappler", name: "Grappler");
@@ -1032,37 +1032,18 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         result.IsSuccess.Should().BeTrue();
     }
 
-    // Base scores are what the player rolled or bought, before racial bonuses and improvements.
-    // 4d6-drop-lowest tops out at 18 at every level, and improvements are applied on top rather
-    // than folded into the base, so the ceiling no longer varies with level.
+    // Base scores are what the player rolled, bought or took from the array, before racial
+    // bonuses and improvements; each method can only produce some sets of six
     [Theory]
-    [InlineData(1, 18)]
-    [InlineData(3, 18)]
-    [InlineData(4, 18)]
-    [InlineData(8, 18)]
-    [InlineData(20, 18)]
-    public async Task Handle_WithValidAbilityScoresForLevel_Succeeds(int level, int maxScore)
+    [InlineData(AbilityScoreMethod.StandardArray, new[] { 15, 14, 13, 12, 10, 8 })]
+    [InlineData(AbilityScoreMethod.PointBuy, new[] { 15, 15, 15, 8, 8, 8 })]
+    [InlineData(AbilityScoreMethod.Rolled, new[] { 18, 3, 13, 12, 10, 8 })]
+    public async Task Handle_WithScoresTheMethodCanProduce_Succeeds(string method, int[] scores)
     {
         // Arrange
-        var draft = CreateCompleteDraft(_userId, level);
-        draft.SetBaseAbilityScores(new Dictionary<string, int>
-        {
-            ["STR"] = maxScore,
-            ["DEX"] = 14,
-            ["CON"] = 13,
-            ["INT"] = 12,
-            ["WIS"] = 10,
-            ["CHA"] = 8
-        });
-
-        var race = CreateTestRace();
-        var @class = CreateTestClass();
-        var background = CreateTestBackground();
-
-        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
-        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.RaceId!, _cts.Token)).ReturnsAsync(race);
-        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.ClassId!, _cts.Token)).ReturnsAsync(@class);
-        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.BackgroundId!, _cts.Token)).ReturnsAsync(background);
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        draft.SetBaseAbilityScores(ScoresOf(scores), method);
+        ArrangeSources(draft);
 
         var command = new FinalizeCharacterCommand(_draftId);
 
@@ -1074,24 +1055,16 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     }
 
     [Theory]
-    [InlineData(1, 19)]  // Level 1 max is 18
-    [InlineData(3, 21)]  // Level 3 max is 18
-    [InlineData(4, 21)]  // Level 4 max is 20
-    public async Task Handle_WithAbilityScoresTooHighForLevel_ReturnsValidationError(int level, int invalidScore)
+    [InlineData(AbilityScoreMethod.StandardArray, new[] { 15, 15, 13, 12, 10, 8 })]
+    [InlineData(AbilityScoreMethod.PointBuy, new[] { 15, 15, 15, 15, 8, 8 })]
+    [InlineData(AbilityScoreMethod.PointBuy, new[] { 16, 14, 13, 12, 10, 8 })]
+    [InlineData(AbilityScoreMethod.Rolled, new[] { 19, 14, 13, 12, 10, 8 })]
+    public async Task Handle_WithScoresTheMethodCannotProduce_ReturnsValidationError(string method, int[] scores)
     {
         // Arrange
-        var draft = CreateCompleteDraft(_userId, level);
-        draft.SetBaseAbilityScores(new Dictionary<string, int>
-        {
-            ["STR"] = invalidScore, // Too high for this level
-            ["DEX"] = 14,
-            ["CON"] = 13,
-            ["INT"] = 12,
-            ["WIS"] = 10,
-            ["CHA"] = 8
-        });
-
-        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        draft.SetBaseAbilityScores(ScoresOf(scores), method);
+        ArrangeSources(draft);
 
         var command = new FinalizeCharacterCommand(_draftId);
 
@@ -1100,10 +1073,28 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.AbilityScoreTooHigh");
-        result.Errors[0].Description.Should().Contain($"level {level}");
+        result.Errors.Should().ContainSingle()
+            .Which.Code.Should().Be("Character.AbilityScoresDoNotFitMethod");
 
         _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    private static Dictionary<string, int> ScoresOf(int[] scores) => new()
+    {
+        ["STR"] = scores[0],
+        ["DEX"] = scores[1],
+        ["CON"] = scores[2],
+        ["INT"] = scores[3],
+        ["WIS"] = scores[4],
+        ["CHA"] = scores[5]
+    };
+
+    private void ArrangeSources(CharacterDraft draft)
+    {
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.RaceId!, _cts.Token)).ReturnsAsync(CreateTestRace());
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.ClassId!, _cts.Token)).ReturnsAsync(CreateTestClass());
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.BackgroundId!, _cts.Token)).ReturnsAsync(CreateTestBackground());
     }
 
     [Fact]
@@ -1323,7 +1314,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             ["INT"] = 12,
             ["WIS"] = 10,
             ["CHA"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
         draft.SetAbilityScoreImprovements(AsisForLevel(level));
         return draft;
     }
@@ -1496,7 +1487,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             ["INT"] = 12,
             ["WIS"] = 10,
             ["CHA"] = 8
-        });
+        }, AbilityScoreMethod.Rolled);
         return draft;
     }
 

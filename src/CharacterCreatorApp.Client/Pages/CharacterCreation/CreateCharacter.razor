@@ -89,16 +89,17 @@
                 }
                 else if (currentStep == 8)
                 {
-                    <SpellsStep DraftId="@draftId" Step="@currentStep"
-                                OnNext="MoveToStep9"
-                                OnBack="MoveToStep7" />
+                    @* Before the spells: a feat can grant a spell, and an improvement changes how many a prepared caster gets *@
+                    <ImprovementsStep DraftId="@draftId" Step="@currentStep"
+                                      CharacterLevel="@characterLevel"
+                                      OnNext="MoveToStep9"
+                                      OnBack="MoveToStep7" />
                 }
                 else if (currentStep == 9)
                 {
-                    <ImprovementsStep DraftId="@draftId" Step="@currentStep"
-                                      CharacterLevel="@characterLevel"
-                                      OnNext="MoveToStep10"
-                                      OnBack="MoveToStep8" />
+                    <SpellsStep DraftId="@draftId" Step="@currentStep"
+                                OnNext="MoveToStep10"
+                                OnBack="MoveToStep8" />
                 }
                 else if (currentStep == 10)
                 {

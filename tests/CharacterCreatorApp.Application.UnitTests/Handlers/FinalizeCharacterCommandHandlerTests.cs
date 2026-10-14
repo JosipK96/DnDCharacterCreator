@@ -835,6 +835,24 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_WithAFeatWhoseAbilityMinimumAnEarlierImprovementMeets_CreatesTheCharacter()
+    {
+        // Arrange - Strength 12 is 14 after the level 4 improvement, enough for Grappler at 6
+        var draft = CreateCompleteDraft(_userId, level: 6);
+        draft.SetBaseAbilityScores(new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 15, ["WIS"] = 10, ["CHA"] = 8 });
+        draft.SetAbilityScoreImprovements([new() { ["STR"] = 2 }]);
+        draft.SetFeats(["grappler"]);
+        ArrangeFeat(new FeatPrerequisites { AbilityMinimums = [new AbilityMinimum { AbilityId = "STR", Score = 13 }] }, id: "grappler", name: "Grappler");
+
+        // Act
+        var created = await ArrangeAndFinalize(_draftId, _userId, draft);
+
+        // Assert
+        created.FeatIds.Should().Equal("grappler");
+        created.AbilityScores["STR"].Should().Be(14);
+    }
+
+    [Fact]
     public async Task Handle_ForAWizardWithItsSpellsPicked_KeepsThem()
     {
         // Arrange - a level 1 wizard: two cantrips and two spells for its spellbook here

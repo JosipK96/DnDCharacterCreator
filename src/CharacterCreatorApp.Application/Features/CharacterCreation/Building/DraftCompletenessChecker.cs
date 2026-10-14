@@ -134,7 +134,9 @@ public static class DraftCompletenessChecker
         // The improvements step checked these when they were picked, but the level, race, class
         // or scores may have changed since. The background's own feat comes with it and is not checked.
         return FeatPrerequisiteCheck.FindUnmet(
-            draft.SelectedFeatIds.Select(id => featsById[id]),
+            draft.SelectedFeatIds.ConvertAll(id => featsById[id]),
+            bonusFeats.Count,
+            draft.AbilityScoreImprovements,
             draft,
             sources.Race,
             sources.Subrace,

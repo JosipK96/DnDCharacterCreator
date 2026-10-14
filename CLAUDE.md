@@ -139,7 +139,8 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
 - A feat belongs to one edition (`Feat.Edition`; 2024 ones have a `Category`, "Origin" or
   "Epic Boon"). One in both keeps its book's name in each, and its id says which:
   `alert_2014`, `alert_2024`. Who may take one is `Feat.Prerequisites.FindUnmet`: level,
-  ability minimums (racial bonuses count), race, class, and class features by name ("Fighting
+  ability minimums (racial bonuses count, and so does every improvement for a feat taken for
+  one, but not for a race's own feat), race, class, and class features by name ("Fighting
   Style", "Spellcasting" or "Pact Magic", from `CharacterFeatures.ClassFeaturesFor`). What it
   cannot check (another feat, a campaign) is shown, not enforced. Classes, subclasses, their
   features, races, backgrounds, spells and feats are generated from 5etools; Tasha's optional

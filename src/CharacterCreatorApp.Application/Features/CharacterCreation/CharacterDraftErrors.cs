@@ -31,6 +31,7 @@ public static class CharacterDraftErrors
         public const string ProficiencyIdsRequired = "CharacterDraft.ProficiencyIdsRequired";
         public const string BlankProficiencyId = "CharacterDraft.BlankProficiencyId";
         public const string SpellIdsRequired = "CharacterDraft.SpellIdsRequired";
+        public const string FightingStyleIdsRequired = "CharacterDraft.FightingStyleIdsRequired";
         public const string ImprovementsRequired = "CharacterDraft.ImprovementsRequired";
         public const string FeatAbilityIncreasesMismatch = "CharacterDraft.FeatAbilityIncreasesMismatch";
         public const string InvalidAbilityScoreCount = "CharacterDraft.InvalidAbilityScoreCount";
@@ -153,6 +154,25 @@ public static class CharacterDraftErrors
     /// <summary>A feat whose requirement the character falls short of, worded as FeatPrerequisites.FindUnmet words it.</summary>
     public static Error FeatPrerequisiteNotMet(string featName, string unmetRequirement) =>
         Error.Validation("CharacterDraft.FeatPrerequisiteNotMet", $"{featName} requires {unmetRequirement}.");
+
+    // --- Fighting Styles ---
+    public static Error FightingStyleCount(string className, int level, int owed, int picked)
+    {
+        var description = owed == 0
+            ? $"A level {level} {className} has no Fighting Style to pick. Got {picked}."
+            : $"A level {level} {className} picks {owed} Fighting Style(s). Got {picked}.";
+
+        return Error.Validation("CharacterDraft.FightingStyleCount", description);
+    }
+
+    public static Error NotAFightingStyle(string featName) =>
+        Error.Validation("CharacterDraft.NotAFightingStyle", $"{featName} is not a Fighting Style.");
+
+    /// <summary>A 2014 Fighting Style picked as a feat for an improvement; only the class gives one.</summary>
+    public static Error FeatNotForImprovement(string featName) =>
+        Error.Validation(
+            "CharacterDraft.FeatNotForImprovement",
+            $"{featName} comes with the class's Fighting Style feature; an improvement cannot be spent on it.");
 
     public static Error BonusFeatsMissing(string raceName, int required, int actual) =>
         Error.Validation("CharacterDraft.BonusFeatsMissing", $"{raceName} gives {required} feat(s) besides the improvements, listed first among the feats. Got {actual} feat(s).");

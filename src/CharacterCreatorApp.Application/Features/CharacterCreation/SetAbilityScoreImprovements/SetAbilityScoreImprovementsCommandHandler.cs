@@ -6,6 +6,7 @@ using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -202,11 +203,20 @@ public class SetAbilityScoreImprovementsCommandHandler(
             return CharacterDraftErrors.InvalidFeatIds(unknown);
         }
 
-        // The background's feat counts too: a 2024 criminal has Alert already
         var backgroundFeatId = draft.BackgroundId is { } backgroundId
             ? (await _backgroundRepository.GetByIdAsync(backgroundId, cancellationToken))?.Feat?.Id
             : null;
 
+        // A 2014 Fighting Style comes with the class alone; no improvement buys one
+        var classOnly = featIds.Select(id => featsById[id]).FirstOrDefault(f => !FeatCategory.CanBeTakenForImprovement(f.Edition, f.Category));
+
+        if (classOnly is not null)
+        {
+            return CharacterDraftErrors.FeatNotForImprovement(classOnly.Name);
+        }
+
+        // The background's feat counts too: a 2024 criminal has Alert already. The Fighting
+        // Styles are saved after this step's feats, and their own step checks them against these.
         var repeatedNonRepeatable = featIds
             .Concat(backgroundFeatId is { } originFeatId ? [originFeatId] : [])
             .GroupBy(id => id)

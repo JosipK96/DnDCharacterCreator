@@ -349,6 +349,7 @@ public static class ReadModelExtensions
             SelectedLanguageIds = draft.SelectedLanguageIds,
             SelectedFeatIds = draft.SelectedFeatIds,
             FeatAbilityIncreases = draft.FeatAbilityIncreases,
+            FightingStyleIds = draft.FightingStyleIds,
             SelectedSpellIds = draft.SelectedSpellIds,
             AbilityScoreImprovements = draft.AbilityScoreImprovements,
             IsCompleted = draft.IsCompleted

@@ -46,8 +46,8 @@ public static class CharacterBuilder
         character.ApplyAbilityScoreImprovements(draft.AbilityScoreImprovements);
         ApplyFeatAbilityIncreases(character, draft, sources.Feats);
 
-        // The background's feat (a 2024 origin feat) and those taken for improvements
-        character.SetFeats(BackgroundFeatIds(sources.Background).Concat(draft.SelectedFeatIds));
+        // The background's feat (a 2024 origin feat), the Fighting Styles, and those taken for improvements
+        character.SetFeats(BackgroundFeatIds(sources.Background).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds));
 
         character.SetLanguages(ResolveLanguageIds(draft, sources));
 

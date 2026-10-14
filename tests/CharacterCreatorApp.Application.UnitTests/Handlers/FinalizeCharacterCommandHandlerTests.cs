@@ -777,6 +777,41 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_ForAFighterOwingAFightingStyleWithNone_ReturnsFightingStyleCount()
+    {
+        // Arrange
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        ArrangeRepositories(_draftId, _userId, draft, @class: FighterWithFightingStyle());
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("CharacterDraft.FightingStyleCount");
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_ForAFighterWithItsFightingStyle_RecordsItAsAFeat()
+    {
+        // Arrange
+        var draft = CreateCompleteDraft(_userId, level: 1);
+        draft.ChooseFightingStyles(["archery_2014"]);
+        ArrangeFeat(
+            new FeatPrerequisites { ClassIds = ["fighter"], Features = ["Fighting Style"] },
+            id: "archery_2014",
+            name: "Archery",
+            category: FeatCategory.FightingStyle);
+
+        // Act
+        var created = await ArrangeAndFinalize(_draftId, _userId, draft, @class: FighterWithFightingStyle());
+
+        // Assert
+        created.FeatIds.Should().Equal("archery_2014");
+    }
+
+    [Fact]
     public async Task Handle_WithAFeatWhoseAbilityMinimumIsNoLongerMet_ReturnsFeatPrerequisiteNotMet()
     {
         // Arrange - Grappler asks for Strength 13; the base Strength was lowered to 12 afterwards
@@ -1406,8 +1441,19 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         };
     }
 
+    // The test fighter with the level 1 feature that owes a Fighting Style
+    private static Class FighterWithFightingStyle()
+    {
+        var fighter = CreateTestClass();
+        fighter.Features =
+        [
+            new Feature { Id = "fighter-1-fighting-style", Name = "Fighting Style", Description = string.Empty, Level = 1, ClassId = "fighter", Type = "class" }
+        ];
+        return fighter;
+    }
+
     // The one feat a soldier with no feat of its own picked; the lookup is pinned to its id
-    private void ArrangeFeat(FeatPrerequisites prerequisites, string id, string name)
+    private void ArrangeFeat(FeatPrerequisites prerequisites, string id, string name, string? category = null)
     {
         _featRepositoryMock
             .Setup(r => r.GetByIdsAsync(It.Is<IEnumerable<string>>(ids => ids.SequenceEqual(new[] { id })), _cts.Token))
@@ -1419,6 +1465,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
                     Name = name,
                     Edition = RulesEdition.Edition2014,
                     Description = "A feat.",
+                    Category = category,
                     Prerequisites = prerequisites
                 }
             ]);

@@ -21,14 +21,44 @@
             </div>
         }
 
-        @if (slots.Count == 0)
+        @if (fightingStylesOwed > 0)
+        {
+            <div class="bg-gray-700 rounded-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold text-white mb-1">Fighting Style</h3>
+                <p class="text-gray-300 text-sm mb-4">
+                    Your class gives you <strong>@fightingStylesOwed</strong> Fighting Style(s). Pick @(fightingStylesOwed == 1 ? "one" : "them").
+                </p>
+
+                @for (int s = 0; s < fightingStylesOwed; s++)
+                {
+                    var styleIndex = s;
+                    <label class="block text-sm text-gray-300 mb-3">
+                        @(fightingStylesOwed == 1 ? "Style" : $"Style {styleIndex + 1}") <span class="text-red-400">*</span>
+                        <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
+                                value="@chosenStyles[styleIndex]" @onchange="e => chosenStyles[styleIndex] = e.Value?.ToString()">
+                            <option value="">Choose...</option>
+                            @foreach (var style in fightingStyleOptions.Where(o => o.Id == chosenStyles[styleIndex] || (!chosenStyles.Contains(o.Id) && !slots.Any(slot => slot.TakesFeat && slot.FeatId == o.Id))))
+                            {
+                                <option value="@style.Id">@style.Name</option>
+                            }
+                        </select>
+                        @if (fightingStyleOptions.FirstOrDefault(o => o.Id == chosenStyles[styleIndex]) is { } picked)
+                        {
+                            <span class="block text-gray-400 text-xs mt-1">@Truncate(picked.Description)</span>
+                        }
+                    </label>
+                }
+            </div>
+        }
+
+        @if (slots.Count == 0 && fightingStylesOwed == 0)
         {
             <div class="bg-gray-700 rounded-lg p-6 text-center">
                 <p class="text-gray-300 text-lg">No Ability Score Improvements available at this level.</p>
                 <p class="text-gray-500 text-sm mt-2">ASIs are gained at levels @(string.Join(", ", asiLevels)) for your class.</p>
             </div>
         }
-        else
+        else if (slots.Count > 0)
         {
             @if (bonusFeatCount > 0)
             {
@@ -222,6 +252,11 @@
     private List<AsiSlot> slots = [];
     private List<FeatApiResponse> feats = [];
 
+    // The class's Fighting Style features: how many, and the styles it offers
+    private int fightingStylesOwed;
+    private List<FeatApiResponse> fightingStyleOptions = [];
+    private List<string?> chosenStyles = [];
+
     protected override Task OnInitializedAsync() => LoadAsync(LoadImprovementsAsync, "Failed to load ASI data");
 
     private async Task LoadImprovementsAsync()
@@ -256,11 +291,18 @@
             var backgroundFeat = background?.Feat is { IsRepeatable: false } feat ? feat.Id : null;
 
             feats = (await LookupService.GetFeatsAsync(draft.Edition))
-                .Where(f => f.Name != AbilityScoreImprovementFeat && f.Id != backgroundFeat)
+                .Where(f => f.Name != AbilityScoreImprovementFeat && f.Id != backgroundFeat && f.CanBeTakenForImprovement)
                 .ToList();
         }
 
         slots = RestoreSlots(draft);
+
+        var fightingStyles = await DraftService.GetFightingStylesAsync(DraftId);
+        fightingStylesOwed = fightingStyles.Owed;
+        fightingStyleOptions = fightingStyles.Options;
+        chosenStyles = Enumerable.Range(0, fightingStylesOwed)
+            .Select(i => i < draft.FightingStyleIds.Count ? draft.FightingStyleIds[i] : null)
+            .ToList();
     }
 
     /// <summary>
@@ -395,7 +437,8 @@
     }
 
     private bool CanProceed() =>
-        slots.All(slot => slot.TakesFeat
+        chosenStyles.All(id => !string.IsNullOrEmpty(id))
+        && slots.All(slot => slot.TakesFeat
             ? !string.IsNullOrEmpty(slot.FeatId) && HasAbilityPick(slot)
             : slot.Improvement.Values.Sum() == 2);
 
@@ -438,8 +481,19 @@
         var featIds = featSlots.Select(s => s.FeatId!).ToList();
         var featAbilityIncreases = featSlots.Select(FeatIncrease).ToList();
 
+        var styleIds = chosenStyles.OfType<string>().ToList();
+
+        // The improvements first: the styles are checked against the feats they take
         if (await SaveAsync(
-                () => DraftService.SetAbilityScoreImprovementsAsync(DraftId, improvements, featIds, featAbilityIncreases),
+                async () =>
+                {
+                    await DraftService.SetAbilityScoreImprovementsAsync(DraftId, improvements, featIds, featAbilityIncreases);
+
+                    if (fightingStylesOwed > 0)
+                    {
+                        await DraftService.ChooseFightingStylesAsync(DraftId, styleIds);
+                    }
+                },
                 "Failed to save improvements"))
         {
             await OnNext.InvokeAsync();

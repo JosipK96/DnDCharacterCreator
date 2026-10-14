@@ -10,17 +10,21 @@ namespace CharacterCreatorApp.SeedDataGenerator;
 /// Reads feats.json into Feats.json. A feat with a category ("O", "G", "FS", "EB") comes from a
 /// book written for the 2024 rules, which introduced them; no 2014 feat has one. A feat in both
 /// editions has one name in each and its edition in its id ("alert_2014", "alert_2024").
+/// The 2014 Fighting Styles join them as 2014 feats of the Fighting Style category, so a
+/// character of either edition picks its style the same way (archery_2014, archery_2024).
 /// </summary>
 internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer renderer, ProficiencyIndex proficiencies)
 {
+    private const string FightingStyle = "Fighting Style";
+
     /// <summary>The names of 5etools' feat category codes.</summary>
     public static readonly IReadOnlyDictionary<string, string> CategoryNames = new Dictionary<string, string>
     {
         ["O"] = "Origin",
         ["G"] = "General",
-        ["FS"] = "Fighting Style",
-        ["FS:P"] = "Fighting Style",
-        ["FS:R"] = "Fighting Style",
+        ["FS"] = FightingStyle,
+        ["FS:P"] = FightingStyle,
+        ["FS:R"] = FightingStyle,
         ["EB"] = "Epic Boon",
         ["D"] = "Dragonmark",
         ["DG"] = "Dark Gift",
@@ -32,6 +36,16 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
     {
         ["FS:P"] = "paladin-2024",
         ["FS:R"] = "ranger-2024",
+    };
+
+    // A 2014 style is one of 5etools' optional features, typed by the classes that offer it: the
+    // fighter's, the paladin's, the ranger's, and a College of Swords bard's
+    private static readonly Dictionary<string, string> FightingStyleClassIds2014 = new()
+    {
+        ["FS:F"] = "fighter",
+        ["FS:P"] = "paladin",
+        ["FS:R"] = "ranger",
+        ["FS:B"] = "bard",
     };
 
     private readonly FiveEToolsSource _source = source;
@@ -55,7 +69,7 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
 
     public List<FeatSeedRow> Import(IReadOnlyDictionary<string, string> spellIdsByKey)
     {
-        var feats = _source.Load("feats.json").Objects("feat").ToList();
+        var feats = _source.Load("feats.json").Objects("feat").Concat(FightingStyles2014()).ToList();
 
         // By id, not name: the 2024 book spells "Fey Touched" as "Fey-Touched"
         var inBothEditions = feats
@@ -84,6 +98,20 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
             .ToList();
     }
 
+    // Only the Player's Handbook's: Tasha's added styles as optional class features, which are left out
+    private IEnumerable<JsonObject> FightingStyles2014() =>
+        _source.Load("optionalfeatures.json")
+            .Objects("optionalfeature")
+            .Where(style => style.Str("source") == "PHB" && StyleClassIds(style).Count != 0);
+
+    private static List<string> StyleClassIds(JsonObject feat) =>
+        feat.Arr("featureType")
+            .Select(type => FightingStyleClassIds2014.GetValueOrDefault(type.AsString() ?? string.Empty))
+            .OfType<string>()
+            .ToList();
+
+    private static bool IsFightingStyle2014(JsonObject feat) => feat["featureType"] != null;
+
     private static string BaseId(JsonObject feat) => Slug.Of(feat.Str("name")!, '_');
 
     private static string EditionOf(JsonObject feat) =>
@@ -98,9 +126,11 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
         var name = feat.Str("name")!;
         var edition = EditionOf(feat);
 
-        var prerequisites = CategoryCode(feat) is { } code && OwnFightingStyleClassIds.TryGetValue(code, out var classId)
-            ? new FeatPrerequisites { ClassIds = [classId], Features = ["Fighting Style"] }
-            : FeatPrerequisiteParser.Parse(feat["prerequisite"], edition, featNames);
+        var prerequisites = IsFightingStyle2014(feat)
+            ? new FeatPrerequisites { ClassIds = StyleClassIds(feat), Features = [FightingStyle] }
+            : CategoryCode(feat) is { } code && OwnFightingStyleClassIds.TryGetValue(code, out var classId)
+                ? new FeatPrerequisites { ClassIds = [classId], Features = [FightingStyle] }
+                : FeatPrerequisiteParser.Parse(feat["prerequisite"], edition, featNames);
 
         var id = BaseId(feat) + (inBothEditions ? $"_{edition}" : string.Empty);
 
@@ -110,7 +140,7 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
             Name = name,
             Description = SrdText.Describe(id, feat, () => _renderer.Render(feat["entries"])),
             Edition = edition,
-            Category = CategoryOf(feat),
+            Category = IsFightingStyle2014(feat) ? FightingStyle : CategoryOf(feat),
             Prerequisites = prerequisites,
             IsRepeatable = feat.Bool("repeatable"),
             AbilityIncrease = AbilityIncrease(feat),

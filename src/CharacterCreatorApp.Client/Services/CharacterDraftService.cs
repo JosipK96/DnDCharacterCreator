@@ -57,6 +57,16 @@ public class CharacterDraftService(HttpClient http)
         List<Dictionary<string, int>> featAbilityIncreases) =>
         PutAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest(improvements, featIds, featAbilityIncreases));
 
+    /// <summary>How many Fighting Styles the character picks (0 for most classes) and its class's options.</summary>
+    public async Task<FightingStylesApiResponse> GetFightingStylesAsync(Guid draftId)
+    {
+        var response = await _http.GetAsync($"/api/character-drafts/{draftId}/fighting-styles");
+        return await response.ReadAsync<FightingStylesApiResponse>();
+    }
+
+    public Task ChooseFightingStylesAsync(Guid draftId, List<string> featIds) =>
+        PutAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(featIds));
+
     public Task ChooseSpellsAsync(Guid draftId, List<string> spellIds) =>
         PutAsync(draftId, "spells", new ChooseSpellsApiRequest(spellIds));
 

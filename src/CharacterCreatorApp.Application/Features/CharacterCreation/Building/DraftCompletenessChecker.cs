@@ -87,6 +87,21 @@ public static class DraftCompletenessChecker
             return repeatedProficiency;
         }
 
+        // A style the class owes and was never picked, or one from a step a draft skipped
+        var invalidStyle = FightingStyleChoice.FindInvalidPick(
+            draft.FightingStyleIds,
+            sources.Feats.ToDictionary(f => f.Id),
+            draft.SelectedFeatIds,
+            draft,
+            @class,
+            sources.Subclass,
+            level);
+
+        if (invalidStyle is not null)
+        {
+            return invalidStyle;
+        }
+
         // The spells step checks the same, but a draft whose level, class or subclass changed
         // afterwards, or that never reached that step, still holds the old picks or none
         return FindMissingFeatChoice(draft, sources, raceName, level)

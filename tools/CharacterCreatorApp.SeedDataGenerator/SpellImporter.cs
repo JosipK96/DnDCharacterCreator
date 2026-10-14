@@ -88,7 +88,10 @@ internal sealed class SpellImporter(FiveEToolsSource source, EntryRenderer rende
     public static string Key(string name, string source) => $"{name}|{source}";
 
     private static string IdOf(JsonObject spell) =>
-        Slug.Of(spell.Str("name")!, '_') + (Sources2024.Contains(spell.Str("source")!) ? "_2024" : string.Empty);
+        Slug.Of(spell.Str("name")!, '_') + (EditionOf(spell) == RulesEdition.Edition2024 ? "_2024" : string.Empty);
+
+    private static string EditionOf(JsonObject spell) =>
+        Sources2024.Contains(spell.Str("source")!) ? RulesEdition.Edition2024 : RulesEdition.Edition2014;
 
     private SpellSeedRow Row(JsonObject spell, string id)
     {
@@ -105,7 +108,7 @@ internal sealed class SpellImporter(FiveEToolsSource source, EntryRenderer rende
             // The id keeps the book's name, so the ids characters store never change
             Id = id,
             Name = SrdText.SrdName(spell) ?? spell.Str("name")!,
-            Source = SourceBooks.Of(spell, Sources2024.Contains(spell.Str("source")!) ? RulesEdition.Edition2024 : RulesEdition.Edition2014),
+            Source = SourceBooks.Of(spell, EditionOf(spell)),
             Level = spell.Int("level") ?? 0,
             School = Schools.GetValueOrDefault(school, school),
             CastingTimeNumber = time.Int("number") ?? 1,

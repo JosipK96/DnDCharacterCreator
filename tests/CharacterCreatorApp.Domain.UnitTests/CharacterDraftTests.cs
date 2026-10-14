@@ -347,12 +347,12 @@ public class CharacterDraftTests
     [Fact]
     public void FeatAbilityIncreaseAt_PastTheIncreasesSaved_IsEmpty()
     {
-        // Arrange - a draft saved with its feats but not what they raise
+        // Arrange - drafts saved before the increases were stored have fewer of them than feats
         var draft = CreateTestDraft();
-        draft.SelectedFeatIds = ["alert"];
+        draft.SetFeats(["alert"]);
 
         // Act
-        var increase = draft.FeatAbilityIncreaseAt(0);
+        var increase = draft.FeatAbilityIncreaseAt(1);
 
         // Assert
         increase.Should().BeEmpty();
@@ -918,11 +918,10 @@ public class CharacterDraftTests
     }
 
     [Fact]
-    public void IsReadyToFinalize_WithoutLevel_ReturnsFalse()
+    public void IsReadyToFinalize_WithoutNameAndLevel_ReturnsFalse()
     {
-        // Arrange
-        var draft = CreateCompleteDraft();
-        draft.Level = null;
+        // Arrange - one step sets both, so a draft cannot have one without the other
+        var draft = CreateCompleteDraftWithout("name and level");
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -935,8 +934,7 @@ public class CharacterDraftTests
     public void IsReadyToFinalize_WithoutRace_ReturnsFalse()
     {
         // Arrange
-        var draft = CreateCompleteDraft();
-        draft.RaceId = null;
+        var draft = CreateCompleteDraftWithout("race");
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -949,8 +947,7 @@ public class CharacterDraftTests
     public void IsReadyToFinalize_WithoutClass_ReturnsFalse()
     {
         // Arrange
-        var draft = CreateCompleteDraft();
-        draft.ClassId = null;
+        var draft = CreateCompleteDraftWithout("class");
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -963,8 +960,7 @@ public class CharacterDraftTests
     public void IsReadyToFinalize_WithoutBackground_ReturnsFalse()
     {
         // Arrange
-        var draft = CreateCompleteDraft();
-        draft.BackgroundId = null;
+        var draft = CreateCompleteDraftWithout("background");
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1021,7 +1017,6 @@ public class CharacterDraftTests
     {
         // Arrange
         var draft = CreateCompleteDraft();
-        draft.SubraceId = null;
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1035,7 +1030,6 @@ public class CharacterDraftTests
     {
         // Arrange
         var draft = CreateCompleteDraft();
-        draft.SubclassId = null;
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1049,7 +1043,6 @@ public class CharacterDraftTests
     {
         // Arrange
         var draft = CreateCompleteDraft();
-        draft.SelectedClassProficiencyIds = [];
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1063,7 +1056,6 @@ public class CharacterDraftTests
     {
         // Arrange
         var draft = CreateCompleteDraft();
-        draft.SelectedFeatIds = [];
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1077,7 +1069,6 @@ public class CharacterDraftTests
     {
         // Arrange
         var draft = CreateCompleteDraft();
-        draft.SelectedSpellIds = [];
 
         // Act
         var isReady = draft.IsReadyToFinalize();
@@ -1092,13 +1083,34 @@ public class CharacterDraftTests
         return CharacterDraft.CreateEmpty(Guid.NewGuid(), FakeTimeProvider);
     }
 
-    private static CharacterDraft CreateCompleteDraft()
+    private static CharacterDraft CreateCompleteDraft() => CreateCompleteDraftWithout(step: null);
+
+    // Every required step but the one named, which is the only way a draft lacks one: its
+    // choices change through its methods alone
+    private static CharacterDraft CreateCompleteDraftWithout(string? step)
     {
         var draft = CreateTestDraft();
-        draft.SetNameAndLevel("Test Character", 5);
-        draft.SetRace("human");
-        draft.SetClass("fighter");
-        draft.SetBackground("soldier");
+
+        if (step != "name and level")
+        {
+            draft.SetNameAndLevel("Test Character", 5);
+        }
+
+        if (step != "race")
+        {
+            draft.SetRace("human");
+        }
+
+        if (step != "class")
+        {
+            draft.SetClass("fighter");
+        }
+
+        if (step != "background")
+        {
+            draft.SetBackground("soldier");
+        }
+
         draft.SetBaseAbilityScores(new Dictionary<string, int>
         {
             ["strength"] = 15,

@@ -60,6 +60,10 @@ The rules nearly every task needs:
 
 ## Code conventions  → docs/conventions/coding-standards.md
 
+- Make the smallest change that fully does the issue, reusing what the codebase has; never cut
+  validation, error handling or security to get there. A known limit you accept gets a comment:
+  `// shortcut: <the limit>, <when to upgrade>`.
+
 - Primary constructors preferred; assign parameters to `private readonly _fields` and use the
   field.
 - Always braces after `if`. Prefer early return over `else` nesting.

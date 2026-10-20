@@ -1468,6 +1468,33 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Navigation("Subrace");
                 });
 
+            modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Classes.Class", b =>
+                {
+                    b.OwnsOne("CharacterCreatorApp.Domain.DomainModels.Classes.UnarmoredArmorClass", "UnarmoredArmorClass", b1 =>
+                        {
+                            b1.Property<string>("ClassId");
+
+                            b1.Property<string>("AbilityId");
+
+                            b1.Property<bool>("AllowsShield");
+
+                            b1.Property<int>("Base");
+
+                            b1.HasKey("ClassId");
+
+                            b1.ToTable("Classes");
+
+                            b1
+                                .ToJson("UnarmoredArmorClass")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ClassId");
+                        });
+
+                    b.Navigation("UnarmoredArmorClass");
+                });
+
             modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Classes.ClassProficiency", b =>
                 {
                     b.HasOne("CharacterCreatorApp.Domain.DomainModels.Classes.Class", "Class")
@@ -1534,7 +1561,31 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("CharacterCreatorApp.Domain.DomainModels.Classes.UnarmoredArmorClass", "UnarmoredArmorClass", b1 =>
+                        {
+                            b1.Property<string>("SubclassId");
+
+                            b1.Property<string>("AbilityId");
+
+                            b1.Property<bool>("AllowsShield");
+
+                            b1.Property<int>("Base");
+
+                            b1.HasKey("SubclassId");
+
+                            b1.ToTable("Subclasses");
+
+                            b1
+                                .ToJson("UnarmoredArmorClass")
+                                .HasColumnType("jsonb");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SubclassId");
+                        });
+
                     b.Navigation("Class");
+
+                    b.Navigation("UnarmoredArmorClass");
                 });
 
             modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Classes.SubclassSpellProgression", b =>

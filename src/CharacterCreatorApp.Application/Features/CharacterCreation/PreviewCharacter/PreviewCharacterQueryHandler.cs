@@ -72,7 +72,8 @@ public class PreviewCharacterQueryHandler(
             RaceId: character.RaceId,
             SubraceId: character.SubraceId,
             SubclassId: character.SubclassId,
-            FeatIds: character.FeatIds));
+            FeatIds: character.FeatIds,
+            UnarmoredArmorClasses: sources.Class.UnarmoredArmorClassesWith(sources.Subclass)));
 
         var spells = character.SpellIds.Count > 0
             ? await _spellRepository.GetByIdsAsync(character.SpellIds, cancellationToken)

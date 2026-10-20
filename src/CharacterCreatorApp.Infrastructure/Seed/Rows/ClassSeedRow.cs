@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 
 namespace CharacterCreatorApp.Infrastructure.Seed.Rows;
@@ -18,6 +19,10 @@ public sealed record ClassSeedRow
     public int SubclassLevel { get; init; }
     public List<int> AsiLevels { get; init; } = [];
     public List<string> SavingThrowAbilityIds { get; init; } = [];
+
+    /// <summary>A barbarian's or monk's Unarmored Defense; null for every other class.</summary>
+    public UnarmoredArmorClass? UnarmoredArmorClass { get; init; }
+
     public List<string> ProficiencyIds { get; init; } = [];
     public ProficiencyChoiceSeedRow? ProficiencyChoices { get; init; }
     public List<ToolChoice> ToolChoices { get; init; } = [];
@@ -84,6 +89,9 @@ public sealed record SubclassSeedRow
 
     /// <summary>The character levels that each give one spell from any school.</summary>
     public List<int> AnySchoolSpellLevels { get; init; } = [];
+
+    /// <summary>A draconic sorcerer's Draconic Resilience, a Dance bard's Unarmored Defense; null otherwise.</summary>
+    public UnarmoredArmorClass? UnarmoredArmorClass { get; init; }
 }
 
 /// <summary>One entry of ClassFeatures.json or BackgroundFeatures.json.</summary>

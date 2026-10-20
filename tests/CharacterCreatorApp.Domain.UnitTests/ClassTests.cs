@@ -134,6 +134,46 @@ public class ClassTests
         allowance.Should().BeNull();
     }
 
+    [Fact]
+    public void UnarmoredArmorClassesWith_AClassWithOne_ReturnsTheClasss()
+    {
+        // Arrange - a barbarian, whose subclass has none
+        var unarmoredDefense = new UnarmoredArmorClass { Base = 10, AbilityId = "CON", AllowsShield = true };
+        var barbarian = Class("barbarian");
+        barbarian.UnarmoredArmorClass = unarmoredDefense;
+        var berserker = new Subclass { Id = "berserker", Name = "Berserker", ClassId = "barbarian" };
+
+        // Act
+        var armorClasses = barbarian.UnarmoredArmorClassesWith(berserker);
+
+        // Assert
+        armorClasses.Should().Equal(unarmoredDefense);
+    }
+
+    [Fact]
+    public void UnarmoredArmorClassesWith_ASubclassWithOne_ReturnsTheSubclasss()
+    {
+        // Arrange - a draconic sorcerer
+        var draconicResilience = new UnarmoredArmorClass { Base = 13, AbilityId = null, AllowsShield = true };
+        var draconic = new Subclass { Id = "draconic", Name = "Draconic Bloodline", ClassId = "sorcerer", UnarmoredArmorClass = draconicResilience };
+
+        // Act
+        var armorClasses = Class("sorcerer").UnarmoredArmorClassesWith(draconic);
+
+        // Assert
+        armorClasses.Should().Equal(draconicResilience);
+    }
+
+    [Fact]
+    public void UnarmoredArmorClassesWith_NeitherHasOne_ReturnsNone()
+    {
+        // Act - a sorcerer who has not picked a subclass yet
+        var armorClasses = Class("sorcerer").UnarmoredArmorClassesWith(subclass: null);
+
+        // Assert
+        armorClasses.Should().BeEmpty();
+    }
+
     private static Class Class(string id, params ClassSpellProgression[] spellProgression) => new()
     {
         Id = id,

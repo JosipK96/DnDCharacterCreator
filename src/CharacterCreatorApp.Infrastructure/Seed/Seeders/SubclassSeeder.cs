@@ -34,6 +34,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                 SpellListClassId = row.SpellListClassId,
                 SpellSchools = row.SpellSchools,
                 AnySchoolSpellLevels = row.AnySchoolSpellLevels,
+                UnarmoredArmorClass = row.UnarmoredArmorClass,
                 SpellProgression = row.SpellProgression
                     .Select(p => new SubclassSpellProgression
                     {

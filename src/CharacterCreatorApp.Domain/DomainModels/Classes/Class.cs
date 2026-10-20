@@ -33,6 +33,12 @@ public class Class
     /// <summary>The two saving throws the class is proficient in, as canonical ids ("STR").</summary>
     public List<string> SavingThrowAbilityIds { get; set; } = [];
 
+    /// <summary>
+    /// A barbarian's or monk's Unarmored Defense, from level 1; null for a class without one.
+    /// From the class data, never assumed from the id.
+    /// </summary>
+    public UnarmoredArmorClass? UnarmoredArmorClass { get; set; }
+
     public List<ClassProficiency> ClassProficiencies { get; set; } = [];
     public ProficiencyChoice? ProficiencyChoice { get; set; }
 
@@ -51,6 +57,10 @@ public class Class
     /// casts no spells yet: a 2014 paladin at level 1, a fighter before its subclass. The
     /// subclass's school limit comes with it.
     /// </summary>
+    /// <summary>The unarmoured armour classes a character of this class and subclass has: the class's, the subclass's, or neither.</summary>
+    public IReadOnlyList<UnarmoredArmorClass> UnarmoredArmorClassesWith(Subclass? subclass) =>
+        new[] { UnarmoredArmorClass, subclass?.UnarmoredArmorClass }.OfType<UnarmoredArmorClass>().ToList();
+
     public SpellAllowance? SpellAllowanceAt(int level, Subclass? subclass)
     {
         if (SpellProgression.Find(p => p.CharacterLevel == level) is { } row)

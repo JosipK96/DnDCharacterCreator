@@ -40,6 +40,23 @@ solutions are passed with `--project`/`--solution`, and xunit's `--filter-class`
 | `CharacterCreatorApp.Infrastructure.IntegrationTests` | **yes** — Testcontainers starts PostgreSQL |
 | `CharacterCreatorApp.Api.IntegrationTests` | **yes** |
 
+Which tests cover what, so a change runs only its own (`--filter-class` takes a pattern, so
+`"*SeedDataTests"` runs every seed row test):
+
+| Area | Test classes | Project | Docker |
+|---|---|---|---|
+| Domain rules: drafts, ability scores and increases, feats, races, classes, tools | `CharacterDraftTests`, `CharacterDraftBooksTests`, `CharacterDraftFeatAndRaceChoicesTests`, `AbilityScoreTests`, `AbilityScoreMethodTests`, `AbilityIncreaseChoiceTests`, `FeatAbilityIncreaseTests`, `FeatPrerequisitesTests`, `RaceTests`, `ClassTests`, `BackgroundTests`, `ToolPicksTests` | Domain.UnitTests | no |
+| Sheet numbers and features | `CharacterStatsCalculatorTests`, `CharacterFeaturesTests`, `CharacterTests` | Domain.UnitTests | no |
+| Wizard steps (one handler each) | `Set*CommandHandlerTests`, `Choose*CommandHandlerTests`, `BonusSpellsHandlersTests`, `ToolChoicesHandlersTests` | Application.UnitTests | no |
+| Finalize and preview | `FinalizeCharacterCommandHandlerTests`, `FinalizeFeatAndRaceChoicesTests`, `PreviewCharacterQueryHandlerTests`, `BonusSpellsTests` | Application.UnitTests | no |
+| Validators and pipeline | `*ValidatorTests`, `ValidationBehaviourTests` | Application.UnitTests | no |
+| Seed JSON content (ids, SRD text, rows per class and race) | `SeedDataIntegrityTests`, `ClassSeedDataTests`, `RaceSeedDataTests`, `BackgroundSeedDataTests`, `FeatSeedDataTests`, `SpellSeedDataTests` | Infrastructure.IntegrationTests | no |
+| Migrations (model snapshot in sync) | `MigrationsTests` | Infrastructure.IntegrationTests | no |
+| Seeding into the database | `SeedServiceTests` | Infrastructure.IntegrationTests | **yes** |
+| Repositories | `CharacterDraftRepositoryTests` | Infrastructure.IntegrationTests | **yes** |
+| HTTP endpoints | `CharacterDraftsControllerTests`, `CharactersControllerTests`, `LookupControllersTests`, `UsersControllerTests` | Api.IntegrationTests | **yes** |
+| Seed data generator (5etools parsing, SRD filter) | `FiveEToolsMarkupTests`, `SrdTextTests`, `SourceBooksTests`, `FeatPrerequisiteParserTests`, … | SeedDataGenerator.UnitTests | no |
+
 If the integration tests fail with `DockerUnavailableException`, start Docker
 Desktop and wait for the daemon rather than assuming the tests are broken.
 

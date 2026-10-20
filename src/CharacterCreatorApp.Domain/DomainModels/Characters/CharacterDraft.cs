@@ -184,7 +184,28 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
 
             AllowedSources = books.Prepend(RulesEdition.PlayersHandbook(Edition)).Distinct().ToList();
 
-            if (IsRemoved(choiceSources.Race))
+            // A choice whose book is unknown (gone after a reseed) is left for finalize to report
+            ClearChoices(choiceSources, (_, source) => source != null && !AllowsSource(source));
+        }
+
+        /// <summary>
+        /// Clears every choice the reference data no longer has, the way AllowBooks clears one from
+        /// a book taken away: a choice is missing when the draft names it and choiceSources has no
+        /// book for it. A reseed that drops or renames an entity calls this, so its step asks again.
+        /// </summary>
+        public void ClearMissingChoices(DraftChoiceSources choiceSources)
+        {
+            ArgumentNullException.ThrowIfNull(choiceSources);
+
+            ClearChoices(choiceSources, (id, source) => id != null && source == null);
+        }
+
+        private void ClearChoices(DraftChoiceSources choiceSources, Func<string?, string?, bool> isGone)
+        {
+            bool IsFeatRemoved(string id) => isGone(id, choiceSources.Feats.GetValueOrDefault(id));
+            bool IsSpellRemoved(string id) => isGone(id, choiceSources.Spells.GetValueOrDefault(id));
+
+            if (isGone(RaceId, choiceSources.Race))
             {
                 RaceId = null;
                 SubraceId = null;
@@ -196,12 +217,12 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 ToolPicks = [];
                 ClearImprovements();
             }
-            else if (IsRemoved(choiceSources.Subrace))
+            else if (isGone(SubraceId, choiceSources.Subrace))
             {
                 SetSubrace(null);
             }
 
-            if (IsRemoved(choiceSources.Class))
+            if (isGone(ClassId, choiceSources.Class))
             {
                 ClassId = null;
                 SubclassId = null;
@@ -211,12 +232,12 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 ClearFightingStyles();
                 ClearImprovements();
             }
-            else if (IsRemoved(choiceSources.Subclass))
+            else if (isGone(SubclassId, choiceSources.Subclass))
             {
                 SetSubclass(null);
             }
 
-            if (IsRemoved(choiceSources.Background))
+            if (isGone(BackgroundId, choiceSources.Background))
             {
                 BackgroundId = null;
                 BackgroundFeatId = null;
@@ -226,35 +247,32 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 FeatSpells = [];
             }
 
-            if (BackgroundFeatId != null && IsRemoved(choiceSources.Feats.GetValueOrDefault(BackgroundFeatId)))
+            if (BackgroundFeatId != null && IsFeatRemoved(BackgroundFeatId))
             {
                 BackgroundFeatId = null;
                 FeatSpells = [];
             }
 
-            if (SelectedFeatIds.Exists(id => IsRemoved(choiceSources.Feats.GetValueOrDefault(id))))
+            if (SelectedFeatIds.Exists(IsFeatRemoved))
             {
                 ClearImprovements();
             }
 
-            if (FightingStyleIds.Exists(id => IsRemoved(choiceSources.Feats.GetValueOrDefault(id))))
+            if (FightingStyleIds.Exists(IsFeatRemoved))
             {
-                FightingStyleIds = FightingStyleIds.FindAll(id => !IsRemoved(choiceSources.Feats.GetValueOrDefault(id)));
+                FightingStyleIds = FightingStyleIds.FindAll(id => !IsFeatRemoved(id));
                 FeatSpells = [];
             }
 
-            SelectedSpellIds = SelectedSpellIds.FindAll(id => !IsRemoved(choiceSources.Spells.GetValueOrDefault(id)));
-            RaceSpellIds = RaceSpellIds.FindAll(id => !IsRemoved(choiceSources.Spells.GetValueOrDefault(id)));
+            SelectedSpellIds = SelectedSpellIds.FindAll(id => !IsSpellRemoved(id));
+            RaceSpellIds = RaceSpellIds.FindAll(id => !IsSpellRemoved(id));
 
             // One pick per feat, in order, so a pick losing a spell takes the others with it
-            if (FeatSpells.Exists(pick => pick.SpellIds.Exists(id => IsRemoved(choiceSources.Spells.GetValueOrDefault(id)))))
+            if (FeatSpells.Exists(pick => pick.SpellIds.Exists(IsSpellRemoved)))
             {
                 FeatSpells = [];
             }
         }
-
-        // A choice whose book is unknown (gone after a reseed) is left for finalize to report
-        private bool IsRemoved(string? source) => source != null && !AllowsSource(source);
 
         public void SetNameAndLevel(string name, int level)
         {

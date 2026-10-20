@@ -12,8 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Time.Testing;
 
-using Npgsql;
-
 namespace CharacterCreatorApp.Infrastructure.IntegrationTests.Seed;
 
 /// <summary>
@@ -98,22 +96,90 @@ public class SeedServiceTests : IClassFixture<DatabaseFixture>, IAsyncLifetime
     }
 
     [Fact]
-    public async Task SeedData_ChangedFilesDropABackgroundACharacterHas_ThrowsAndKeepsTheOldData()
+    public async Task SeedData_ChangedFilesDropABackgroundACharacterHas_KeepsTheOldDataWithoutThrowing()
     {
         // Arrange
         await SeedAsync();
-        await AddCharacterAsync();
+        var characterId = await AddCharacterAsync();
         var hashBefore = await ReferenceDataHash.ComputeAsync(_dataPath.FullName, TestContext.Current.CancellationToken);
         await ChangeArrayAsync("Backgrounds.json", backgrounds => backgrounds.Remove(WithId(backgrounds, "acolyte")));
 
         // Act
-        var act = SeedAsync;
+        await SeedAsync();
 
-        // Assert - the deferred foreign key fails the commit, which rolls the whole replace back
-        (await act.Should().ThrowAsync<PostgresException>()).Which.SqlState.Should().Be(PostgresErrorCodes.ForeignKeyViolation);
+        // Assert
         await using var context = _fixture.CreateNewContext();
         (await context.Backgrounds.AnyAsync(b => b.Id == "acolyte", TestContext.Current.CancellationToken)).Should().BeTrue();
         (await context.ReferenceDataVersions.SingleAsync(TestContext.Current.CancellationToken)).Hash.Should().Be(hashBefore);
+        (await context.Characters.SingleAsync(c => c.Id == characterId, TestContext.Current.CancellationToken)).BackgroundId.Should().Be("acolyte");
+    }
+
+    [Fact]
+    public async Task SeedData_ChangedFilesRenameASubclassACharacterHas_KeepsTheOldDataAndTheCharacter()
+    {
+        // Arrange - the blood-magic case: the generator renamed a subclass a saved character uses
+        await SeedAsync();
+        var characterId = await AddCharacterAsync();
+        var hashBefore = await ReferenceDataHash.ComputeAsync(_dataPath.FullName, TestContext.Current.CancellationToken);
+        await RenameIdAsync("evocation", "evocation_renamed");
+
+        // Act
+        await SeedAsync();
+
+        // Assert
+        await using var context = _fixture.CreateNewContext();
+        (await context.Subclasses.AnyAsync(s => s.Id == "evocation", TestContext.Current.CancellationToken)).Should().BeTrue();
+        (await context.Subclasses.AnyAsync(s => s.Id == "evocation_renamed", TestContext.Current.CancellationToken)).Should().BeFalse();
+        (await context.ReferenceDataVersions.SingleAsync(TestContext.Current.CancellationToken)).Hash.Should().Be(hashBefore);
+        (await context.Characters.SingleAsync(c => c.Id == characterId, TestContext.Current.CancellationToken)).SubclassId.Should().Be("evocation");
+    }
+
+    [Fact]
+    public async Task SeedData_ChangedFilesRenameWhatADraftChose_ReplacesTheDataAndClearsThoseChoices()
+    {
+        // Arrange
+        await SeedAsync();
+        var draftId = await AddDraftAsync();
+        await RenameIdAsync("dwarf", "dwarf_renamed");
+        await RenameIdAsync("wizard", "wizard_renamed");
+        await RenameIdAsync("evocation", "evocation_renamed");
+        await RenameIdAsync("acolyte", "acolyte_renamed");
+        var expectedHash = await ReferenceDataHash.ComputeAsync(_dataPath.FullName, TestContext.Current.CancellationToken);
+
+        // Act
+        await SeedAsync();
+
+        // Assert
+        await using var context = _fixture.CreateNewContext();
+        (await context.ReferenceDataVersions.SingleAsync(TestContext.Current.CancellationToken)).Hash.Should().Be(expectedHash);
+        var draft = await context.CharacterDrafts.SingleAsync(d => d.Id == draftId, TestContext.Current.CancellationToken);
+        draft.RaceId.Should().BeNull();
+        draft.SubraceId.Should().BeNull();
+        draft.ClassId.Should().BeNull();
+        draft.SubclassId.Should().BeNull();
+        draft.BackgroundId.Should().BeNull();
+        draft.Name.Should().Be("Elminster");
+    }
+
+    [Fact]
+    public async Task SeedData_ChangedFilesRenameOnlyADraftsSubclass_KeepsItsOtherChoices()
+    {
+        // Arrange
+        await SeedAsync();
+        var draftId = await AddDraftAsync();
+        await RenameIdAsync("evocation", "evocation_renamed");
+
+        // Act
+        await SeedAsync();
+
+        // Assert
+        await using var context = _fixture.CreateNewContext();
+        var draft = await context.CharacterDrafts.SingleAsync(d => d.Id == draftId, TestContext.Current.CancellationToken);
+        draft.SubclassId.Should().BeNull();
+        draft.RaceId.Should().Be("dwarf");
+        draft.SubraceId.Should().Be("hill_dwarf");
+        draft.ClassId.Should().Be("wizard");
+        draft.BackgroundId.Should().Be("acolyte");
     }
 
     private async Task SeedAsync()
@@ -141,6 +207,32 @@ public class SeedServiceTests : IClassFixture<DatabaseFixture>, IAsyncLifetime
         await context.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         return character.Id;
+    }
+
+    private async Task<Guid> AddDraftAsync()
+    {
+        await using var context = _fixture.CreateNewContext();
+        var draft = CharacterDraft.CreateEmpty(Guid.NewGuid(), _timeProvider);
+        draft.ChooseEdition(RulesEdition.Edition2014);
+        draft.SetNameAndLevel("Elminster", 5);
+        draft.SetRace("dwarf", "hill_dwarf");
+        draft.SetClass("wizard", "evocation");
+        draft.SetBackground("acolyte");
+
+        context.CharacterDrafts.Add(draft);
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        return draft.Id;
+    }
+
+    // Every file, so whatever names the id (a feature's subclass, a spell's class) follows it
+    private async Task RenameIdAsync(string id, string newId)
+    {
+        foreach (var file in Directory.EnumerateFiles(_dataPath.FullName, "*.json", SearchOption.AllDirectories))
+        {
+            var text = await File.ReadAllTextAsync(file, TestContext.Current.CancellationToken);
+            await File.WriteAllTextAsync(file, text.Replace($"\"{id}\"", $"\"{newId}\"", StringComparison.Ordinal), TestContext.Current.CancellationToken);
+        }
     }
 
     private async Task<JsonArray> ReadArrayAsync(string file)

@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Application.Persistence;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Infrastructure.Seed.Seeders;
 
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,8 @@ namespace CharacterCreatorApp.Infrastructure.Seed
     /// Keeps the reference tables (races, classes, spells, feats and the rest) equal to the seed
     /// files. When the files differ from what the tables were filled from, every reference row is
     /// deleted and the files are read in again, in one transaction. Characters and drafts are not
-    /// reference data and are never touched.
+    /// reference data: a draft loses only the choices the new data drops, and a character naming
+    /// one keeps the old data in place.
     /// </summary>
     public class SeedService(
         ApplicationDbContext applicationDbContext,
@@ -85,12 +87,99 @@ namespace CharacterCreatorApp.Infrastructure.Seed
                 await seeder.SeedAsync(_context, dataPath, cancellationToken);
             }
 
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            var sources = await ReferenceSources.LoadAsync(_context, cancellationToken);
+
+            // A finished sheet is not changed behind the player's back: one character naming
+            // something the new data drops keeps the old data, and the next start tries again
+            if (await HasCharactersWithMissingReferencesAsync(sources, cancellationToken))
+            {
+                await transaction.RollbackAsync(cancellationToken);
+                _logger.LogError("Reference data not replaced: characters use entities the new seed files drop. The old data stays.");
+                return;
+            }
+
+            await ClearMissingDraftChoicesAsync(sources, cancellationToken);
             await RecordVersionAsync(hash, cancellationToken);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
 
             _logger.LogInformation("Reference data replaced.");
+        }
+
+        // shortcut: loads every character and draft, fine for one group's database; filter in SQL if it grows
+        private async Task<bool> HasCharactersWithMissingReferencesAsync(ReferenceSources sources, CancellationToken cancellationToken)
+        {
+            var characters = await _context.Characters
+                .AsNoTracking()
+                .Select(c => new { c.Id, c.RaceId, c.SubraceId, c.ClassId, c.SubclassId, c.BackgroundId })
+                .ToListAsync(cancellationToken);
+
+            var blocked = false;
+
+            foreach (var c in characters)
+            {
+                var missing = new[]
+                    {
+                        sources.Races.ContainsKey(c.RaceId) ? null : $"race {c.RaceId}",
+                        c.SubraceId == null || sources.Subraces.ContainsKey(c.SubraceId) ? null : $"subrace {c.SubraceId}",
+                        sources.Classes.ContainsKey(c.ClassId) ? null : $"class {c.ClassId}",
+                        c.SubclassId == null || sources.Subclasses.ContainsKey(c.SubclassId) ? null : $"subclass {c.SubclassId}",
+                        sources.Backgrounds.ContainsKey(c.BackgroundId) ? null : $"background {c.BackgroundId}",
+                    }
+                    .OfType<string>()
+                    .ToList();
+
+                if (missing.Count != 0)
+                {
+                    blocked = true;
+                    _logger.LogError("Character {CharacterId} uses what the new seed files drop: {Missing}", c.Id, string.Join(", ", missing));
+                }
+            }
+
+            return blocked;
+        }
+
+        private async Task ClearMissingDraftChoicesAsync(ReferenceSources sources, CancellationToken cancellationToken)
+        {
+            var drafts = await _context.CharacterDrafts.ToListAsync(cancellationToken);
+
+            foreach (var draft in drafts)
+            {
+                var choiceSources = sources.For(draft);
+                var missing = MissingIds(draft, choiceSources);
+
+                if (missing.Count == 0)
+                {
+                    continue;
+                }
+
+                draft.ClearMissingChoices(choiceSources);
+                _logger.LogWarning("Draft {DraftId} lost the choices the new seed files drop: {Missing}", draft.Id, string.Join(", ", missing));
+            }
+        }
+
+        private static List<string> MissingIds(CharacterDraft draft, DraftChoiceSources choiceSources)
+        {
+            var feats = draft.SelectedFeatIds.Concat(draft.FightingStyleIds).Concat(draft.BackgroundFeatId is { } featId ? [featId] : []);
+            var spells = draft.SelectedSpellIds.Concat(draft.RaceSpellIds).Concat(draft.FeatSpells.SelectMany(pick => pick.SpellIds));
+
+            return new[]
+                {
+                    (draft.RaceId, choiceSources.Race),
+                    (draft.SubraceId, choiceSources.Subrace),
+                    (draft.ClassId, choiceSources.Class),
+                    (draft.SubclassId, choiceSources.Subclass),
+                    (draft.BackgroundId, choiceSources.Background),
+                }
+                .Where(choice => choice.Item1 != null && choice.Item2 == null)
+                .Select(choice => choice.Item1!)
+                .Concat(feats.Where(id => !choiceSources.Feats.ContainsKey(id)))
+                .Concat(spells.Where(id => !choiceSources.Spells.ContainsKey(id)))
+                .Distinct()
+                .ToList();
         }
 
         /// <summary>

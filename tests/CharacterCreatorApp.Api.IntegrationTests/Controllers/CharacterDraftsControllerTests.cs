@@ -972,7 +972,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
 
         // The soldier's +2 and +1 and its origin feat, the Fighting Style, and Common with the two picks
         (character.AbilityScores["STR"], character.AbilityScores["CON"]).Should().Be((17, 15));
-        character.Feats.Select(f => f.Name).Should().BeEquivalentTo(["Savage Attacker", "Defense"]);
+        character.Feats.Select(f => f.Feat.Name).Should().BeEquivalentTo(["Savage Attacker", "Defense"]);
         character.LanguageIds.Should().BeEquivalentTo(["common-xphb", "draconic-xphb", "giant-xphb"]);
 
         // A d10 and CON 15 (+2), and 1 more from the 2024 dwarf's own Dwarven Toughness
@@ -1125,7 +1125,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         // Assert
         character!.SubraceName.Should().Be("Variant Human");
         (character.AbilityScores["STR"], character.AbilityScores["DEX"], character.AbilityScores["CON"]).Should().Be((16, 14, 15));
-        character.Feats.Select(f => f.Name).Should().BeEquivalentTo(["Protection", "Athlete"]);
+        character.Feats.Select(f => f.Feat.Name).Should().BeEquivalentTo(["Protection", "Athlete"]);
         character.Stats!.Skills.Single(s => s.SkillId == "persuasion").IsProficient.Should().BeTrue();
     }
 
@@ -1199,36 +1199,11 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     [Fact]
     public async Task CompleteWorkflow_WithASmallHumanAcolyteAndTwoMagicInitiates_GivesTheSizeAndEverySpellPicked()
     {
-        // Arrange - a level 1 2024 human fighter, Small, whose Origin feat is Magic Initiate on
-        // the wizard list beside the Acolyte's own, which is the cleric's
+        // Arrange
         var cancellationToken = TestContext.Current.CancellationToken;
         await SignInAsync();
-        var draftId = await CreateDraftAsync();
-
-        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Mira", Level = 1, Edition = RulesEdition.Edition2024 });
-        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "human_2024", Size = "Small" });
-        await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["stealth"]));
-        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
-        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
-        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte_2024", AbilityIncreases = new() { ["WIS"] = 2, ["CHA"] = 1 } });
-        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
-        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
-        {
-            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
-            Method = "standard-array"
-        });
-        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
-        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["magic_initiate_2024"], [[]]));
-
+        var draftId = await CreateSmallHumanAcolyteWithTwoMagicInitiatesAsync();
         var choices = await _client.GetFromJsonAsync<List<BonusSpellChoiceApiResponse>>($"/api/character-drafts/{draftId}/bonus-spells", cancellationToken);
-        await PutStepAsync(draftId, "bonus-spells", new ChooseBonusSpellsApiRequest
-        {
-            FeatSpells =
-            [
-                new() { FeatId = "magic_initiate_2024", ClassId = "cleric-2024", SpellIds = ["guidance_2024", "light_2024", "bless_2024"] },
-                new() { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["fire_bolt_2024", "mage_hand_2024", "shield_2024"] },
-            ],
-        });
 
         // Act
         var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
@@ -1240,9 +1215,30 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         choices!.Select(c => string.Join(" ", c.Lists.Select(l => l.ClassId))).Should().Equal(
             "cleric-2024", "cleric-2024 druid-2024 wizard-2024");
         character!.Size.Should().Be("Small");
-        character.Feats.Select(f => f.Name).Should().Contain("Magic Initiate");
+        character.Feats.Select(f => f.Feat.Name).Should().Contain("Magic Initiate");
         character.Spells.Select(s => s.Id).Should().BeEquivalentTo(
             ["guidance_2024", "light_2024", "bless_2024", "fire_bolt_2024", "mage_hand_2024", "shield_2024"]);
+    }
+
+    [Fact]
+    public async Task GetCharacter_WithMagicInitiateTakenTwice_ListsItTwiceEachWithItsOwnSpells()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateSmallHumanAcolyteWithTwoMagicInitiatesAsync();
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
+
+        // Act
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        // Assert - the Acolyte's Magic Initiate, then the Defense fighting style once, then the human's Origin feat
+        character!.Feats.Select(f => f.Feat.Id).Should().Equal("magic_initiate_2024", "defense_2024", "magic_initiate_2024");
+        character.Feats[0].Spells.Select(s => s.Id).Should().Equal("guidance_2024", "light_2024", "bless_2024");
+        character.Feats[1].Spells.Should().BeEmpty();
+        character.Feats[2].Spells.Select(s => s.Id).Should().Equal("fire_bolt_2024", "mage_hand_2024", "shield_2024");
     }
 
     [Fact]
@@ -1436,6 +1432,37 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "bard" });
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "criminal" });
+
+        return draftId;
+    }
+
+    // A level 1 2024 human fighter, Small, ready to finalize: Magic Initiate twice, the Acolyte's
+    // on the cleric list and the human's Origin feat on the wizard list, and Defense
+    private async Task<Guid> CreateSmallHumanAcolyteWithTwoMagicInitiatesAsync()
+    {
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Mira", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "human_2024", Size = "Small" });
+        await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["stealth"]));
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte_2024", AbilityIncreases = new() { ["WIS"] = 2, ["CHA"] = 1 } });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
+        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["magic_initiate_2024"], [[]]));
+        await PutStepAsync(draftId, "bonus-spells", new ChooseBonusSpellsApiRequest
+        {
+            FeatSpells =
+            [
+                new() { FeatId = "magic_initiate_2024", ClassId = "cleric-2024", SpellIds = ["guidance_2024", "light_2024", "bless_2024"] },
+                new() { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["fire_bolt_2024", "mage_hand_2024", "shield_2024"] },
+            ],
+        });
 
         return draftId;
     }

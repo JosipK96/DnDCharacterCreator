@@ -135,6 +135,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<string>("FeatSpells")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.Property<string>("LanguageIds")
                         .IsRequired()
                         .HasColumnType("jsonb");

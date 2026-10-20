@@ -1,4 +1,5 @@
-﻿using CharacterCreatorApp.Domain.Services;
+﻿using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.Services;
 
 namespace CharacterCreatorApp.Application.ReadModels;
 
@@ -36,7 +37,10 @@ public sealed class CharacterDetailsReadModel
     public List<string> SpellIds { get; set; } = [];
     public List<SpellReadModel> Spells { get; set; } = [];
     public List<string> FeatIds { get; set; } = [];
-    public List<FeatReadModel> Feats { get; set; } = [];
+    public List<FeatSpellPick> FeatSpells { get; set; } = [];
+
+    /// <summary>One entry per feat taken, so a repeatable feat taken twice is two entries.</summary>
+    public List<CharacterFeatReadModel> Feats { get; set; } = [];
 
     /// <summary>Saving throws feats add beside the class's: Resilient's.</summary>
     public List<string> FeatSavingThrowAbilityIds { get; set; } = [];

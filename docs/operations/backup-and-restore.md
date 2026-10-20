@@ -11,7 +11,7 @@ on startup.
 UTC, and from the Actions tab (Backup > Run workflow) on demand. It:
 
 1. fails at once if either secret below is missing;
-2. runs `pg_dump --format=custom --no-owner --no-privileges` from the `postgres:17` image;
+2. runs `pg_dump --format=custom --no-owner --no-privileges` from the `postgres:18` image;
 3. encrypts the dump with `gpg --symmetric` (AES-256) and deletes the plaintext;
 4. uploads the encrypted file as the artifact `backup-<date>-<run id>`, kept for 30 days.
 
@@ -57,7 +57,7 @@ CLI and `gpg` (Git for Windows ships it in Git Bash).
 3. Start an empty PostgreSQL of the same major version as the dump, and restore into it:
 
    ```bash
-   docker run -d --name charactercreator-restore -e POSTGRES_PASSWORD=restore -p 5434:5432 postgres:17
+   docker run -d --name charactercreator-restore -e POSTGRES_PASSWORD=restore -p 5434:5432 postgres:18
    docker cp restore/charactercreator.dump charactercreator-restore:/tmp/charactercreator.dump
    docker exec charactercreator-restore createdb -U postgres charactercreator
    docker exec charactercreator-restore pg_restore -U postgres --dbname=charactercreator --no-owner --no-privileges --exit-on-error /tmp/charactercreator.dump
@@ -95,7 +95,7 @@ If the Neon database is lost or damaged:
 3. Restore it with Neon's direct connection string for the new database:
 
    ```bash
-   docker run --rm -v "$PWD/restore:/restore" postgres:17 pg_restore --dbname="<direct postgresql:// URL>" --no-owner --no-privileges --exit-on-error /restore/charactercreator.dump
+   docker run --rm -v "$PWD/restore:/restore" postgres:18 pg_restore --dbname="<direct postgresql:// URL>" --no-owner --no-privileges --exit-on-error /restore/charactercreator.dump
    ```
 
 4. In the Render dashboard, set `ConnectionStrings__DefaultConnection` to the new database

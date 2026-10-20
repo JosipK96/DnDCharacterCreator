@@ -42,7 +42,7 @@ jobs:
           done
           exit $missing
 
-      # From the postgres:17 image, so the runner's own client version doesn't matter. pg_dump
+      # From the postgres:18 image, so the runner's own client version doesn't matter. pg_dump
       # refuses a server newer than itself, which fails this step: raise the image's version then.
       # The URL is expanded inside the container, so it never appears on a command line.
       - name: Dump the database
@@ -52,7 +52,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p backup
-          docker run --rm -e DATABASE_URL postgres:17 \
+          docker run --rm -e DATABASE_URL postgres:18 \
             sh -c 'exec pg_dump --dbname="$DATABASE_URL" --format=custom --no-owner --no-privileges' > "$DUMP"
           if [ ! -s "$DUMP" ]; then
             echo "::error::pg_dump wrote an empty file"

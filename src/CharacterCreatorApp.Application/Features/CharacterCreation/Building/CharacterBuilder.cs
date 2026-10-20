@@ -49,6 +49,7 @@ public static class CharacterBuilder
 
         // The background's feat (a 2024 origin feat), the Fighting Styles, and those taken for improvements
         character.SetFeats(BackgroundFeatIds(sources.Background, draft).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds));
+        character.SetFeatSpells(draft.FeatSpells);
         character.SetFeatSavingThrows(FeatSavingThrowAbilityIds(draft, sources.Feats));
 
         // A species that may be Small or Medium is the size picked for it

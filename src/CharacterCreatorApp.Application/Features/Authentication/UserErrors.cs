@@ -7,6 +7,7 @@ public static class UserErrors
     public static Error EmailAlreadyInUse() => Error.Conflict(code: "User.EmailAlreadyInUse", description: "Email is already in use");
     public static Error NotFoundByEmail() => Error.NotFound(code: "User.NotFoundByEmail", description: "User is not found by email");
     public static Error WrongPassword() => Error.Unauthorized(code: "User.WrongPassword", description: "Wrong password");
+    public static Error InvalidInviteCode() => Error.Forbidden(code: "User.InvalidInviteCode", description: "The invite code is missing or wrong");
 
     /// <summary>
     /// A reason ASP.NET Core Identity refused to create an account. Identity names its own

@@ -74,6 +74,10 @@ public class PreviewCharacterQueryHandler(
             SubclassId: character.SubclassId,
             FeatIds: character.FeatIds));
 
+        var spells = character.SpellIds.Count > 0
+            ? await _spellRepository.GetByIdsAsync(character.SpellIds, cancellationToken)
+            : [];
+
         var preview = new CharacterPreviewReadModel
         {
             Name = character.Name,
@@ -86,13 +90,11 @@ public class PreviewCharacterQueryHandler(
             BackgroundName = sources.Background.Name,
             Size = character.Size ?? sources.Race.Size,
             Stats = stats,
-            Feats = [.. sources.Feats],
+            Feats = CharacterFeatEntries.Build(character.FeatIds, character.FeatSpells, sources.Feats, spells),
             Proficiencies = await _proficiencyRepository.GetByIdsAsync(character.ProficiencyIds, cancellationToken),
             Features = await _featureRepository.GetByIdsAsync(
                 CharacterFeatures.IdsFor(sources.Class, sources.Subclass, sources.Background, character.Level), cancellationToken),
-            Spells = character.SpellIds.Count > 0
-                ? await _spellRepository.GetByIdsAsync(character.SpellIds, cancellationToken)
-                : [],
+            Spells = spells,
             Languages = await _languageRepository.GetByIdsAsync(character.LanguageIds, cancellationToken)
         };
 

@@ -168,22 +168,7 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
     public async Task Handle_WithResilientForWisdom_MarksTheWisdomSaveProficient()
     {
         // Arrange - the fighter's improvement at 4 spent on Resilient, raising Wisdom
-        var draft = ArrangeDraft(level: 4);
-        draft.SetAbilityScoreImprovements([]);
-        draft.SetFeats(["resilient"], [new Dictionary<string, int> { ["WIS"] = 1 }]);
-        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync(
-        [
-            new FeatReadModel
-            {
-                Id = "resilient",
-                Name = "Resilient",
-                Description = "A feat.",
-                Edition = RulesEdition.Edition2014,
-                Source = "PHB",
-                AbilityIncrease = new FeatAbilityIncrease { Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
-                Choice = new FeatChoiceReadModel { Type = FeatChoice.SavingThrow, Count = 1, Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
-            },
-        ]);
+        ArrangeResilientDraft();
 
         // Act
         var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
@@ -191,6 +176,20 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
         // Assert
         result.Value.BlockingIssue.Should().BeNull();
         result.Value.Stats.SavingThrows.Where(s => s.IsProficient).Select(s => s.AbilityId).Should().BeEquivalentTo(["STR", "CON", "WIS"]);
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatTakenOnce_ListsItOnceWithoutSpells()
+    {
+        // Arrange
+        ArrangeResilientDraft();
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.Feats.Should().ContainSingle().Which.Feat.Id.Should().Be("resilient");
+        result.Value.Feats[0].Spells.Should().BeEmpty();
     }
 
     [Fact]
@@ -221,6 +220,27 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
         // Assert
         result.IsSuccess.Should().BeFalse();
         result.Errors[0].Code.Should().Be("CharacterDraft.Invalid");
+    }
+
+    // A level 4 fighter whose improvement went on Resilient for Wisdom
+    private void ArrangeResilientDraft()
+    {
+        var draft = ArrangeDraft(level: 4);
+        draft.SetAbilityScoreImprovements([]);
+        draft.SetFeats(["resilient"], [new Dictionary<string, int> { ["WIS"] = 1 }]);
+        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync(
+        [
+            new FeatReadModel
+            {
+                Id = "resilient",
+                Name = "Resilient",
+                Description = "A feat.",
+                Edition = RulesEdition.Edition2014,
+                Source = "PHB",
+                AbilityIncrease = new FeatAbilityIncrease { Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
+                Choice = new FeatChoiceReadModel { Type = FeatChoice.SavingThrow, Count = 1, Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
+            },
+        ]);
     }
 
     private CharacterDraft ArrangeDraft(int level)

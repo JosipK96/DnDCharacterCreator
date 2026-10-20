@@ -1242,6 +1242,24 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task GetPreview_WithMagicInitiateTakenTwice_ListsItTwiceEachWithItsOwnSpells()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateSmallHumanAcolyteWithTwoMagicInitiatesAsync();
+
+        // Act
+        var preview = await _client.GetFromJsonAsync<CharacterPreviewApiResponse>($"/api/character-drafts/{draftId}/preview", cancellationToken);
+
+        // Assert - as the sheet lists them: the Acolyte's Magic Initiate, Defense, then the human's Origin feat
+        preview!.Feats.Select(f => f.Feat.Id).Should().Equal("magic_initiate_2024", "defense_2024", "magic_initiate_2024");
+        preview.Feats[0].Spells.Select(s => s.Id).Should().Equal("guidance_2024", "light_2024", "bless_2024");
+        preview.Feats[1].Spells.Should().BeEmpty();
+        preview.Feats[2].Spells.Select(s => s.Id).Should().Equal("fire_bolt_2024", "mage_hand_2024", "shield_2024");
+    }
+
+    [Fact]
     public async Task CompleteWorkflow_WithAHighElf_GivesTheCharacterTheCantripPicked()
     {
         // Arrange - a level 1 2014 high elf fighter soldier, with Fire Bolt for its cantrip

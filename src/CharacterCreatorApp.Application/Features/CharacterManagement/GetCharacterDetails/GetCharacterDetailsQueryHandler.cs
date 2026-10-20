@@ -1,10 +1,10 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.Common.Results;
-using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.Services;
 
 namespace CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
@@ -58,7 +58,8 @@ public class GetCharacterDetailsQueryHandler(
             ? await _spellRepository.GetByIdsAsync(character.SpellIds, cancellationToken)
             : [];
         character.Languages = await _languageRepository.GetByIdsAsync(character.LanguageIds, cancellationToken);
-        character.Feats = FeatEntries(character, await _featRepository.GetByIdsAsync(character.FeatIds, cancellationToken));
+        character.Feats = CharacterFeatEntries.Build(
+            character.FeatIds, character.FeatSpells, await _featRepository.GetByIdsAsync(character.FeatIds, cancellationToken), character.Spells);
 
         character.Stats = CharacterStatsCalculator.Calculate(new CharacterStatsInput(
             Level: character.Level,
@@ -73,38 +74,5 @@ public class GetCharacterDetailsQueryHandler(
             FeatIds: character.FeatIds));
 
         return character;
-    }
-
-    /// <summary>
-    /// One entry per feat taken, in the order taken, so a repeatable feat taken twice is listed
-    /// twice: the repository returns each feat once. The nth time a feat appears gets the nth
-    /// spell pick made for it, the order CharacterDraft.FeatSpells keeps them in.
-    /// </summary>
-    private static List<CharacterFeatReadModel> FeatEntries(CharacterDetailsReadModel character, List<FeatReadModel> feats)
-    {
-        var featsById = feats.ToDictionary(f => f.Id);
-        var spellsById = character.Spells.ToDictionary(s => s.Id);
-        var picksByFeat = character.FeatSpells
-            .GroupBy(pick => pick.FeatId)
-            .ToDictionary(group => group.Key, group => new Queue<FeatSpellPick>(group));
-        var entries = new List<CharacterFeatReadModel>();
-
-        foreach (var featId in character.FeatIds)
-        {
-            // A feat a reload of the seed data dropped has nothing to show
-            if (!featsById.TryGetValue(featId, out var feat))
-            {
-                continue;
-            }
-
-            List<string> spellIds = picksByFeat.TryGetValue(featId, out var picks) && picks.TryDequeue(out var pick) ? pick.SpellIds : [];
-            entries.Add(new CharacterFeatReadModel
-            {
-                Feat = feat,
-                Spells = [.. spellIds.Where(spellsById.ContainsKey).Select(id => spellsById[id])],
-            });
-        }
-
-        return entries;
     }
 }

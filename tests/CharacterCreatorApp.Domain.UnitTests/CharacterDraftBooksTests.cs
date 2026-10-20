@@ -245,6 +245,121 @@ public class CharacterDraftBooksTests
         draft.SelectedSpellIds.Should().Equal("fire_bolt_2024", "shield_2024");
     }
 
+    [Fact]
+    public void ClearMissingChoices_WithEveryChoiceStillThere_KeepsThemAll()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.ClearMissingChoices(AllFrom(Other));
+
+        // Assert - which book a choice is from does not matter here, only that it has one
+        draft.RaceId.Should().Be("elf_2024");
+        draft.SubraceId.Should().Be("elf_drow_lineage_2024");
+        draft.ClassId.Should().Be("fighter-2024");
+        draft.SubclassId.Should().Be("eldritch-knight-2024");
+        draft.BackgroundId.Should().Be("soldier_2024");
+        draft.SelectedFeatIds.Should().Equal("alert_2024");
+        draft.FightingStyleIds.Should().Equal("defense_2024");
+        draft.SelectedSpellIds.Should().Equal("fire_bolt_2024", "shield_2024");
+        draft.SelectedLanguageIds.Should().Equal("elvish-xphb");
+    }
+
+    [Fact]
+    public void ClearMissingChoices_WithTheSubclassGone_ClearsTheSubclassItsSpellsAndStyles()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.ClearMissingChoices(AllFrom(Handbook) with { Subclass = null });
+
+        // Assert
+        draft.ClassId.Should().Be("fighter-2024");
+        draft.SubclassId.Should().BeNull();
+        draft.SelectedSpellIds.Should().BeEmpty();
+        draft.FightingStyleIds.Should().BeEmpty();
+        draft.SelectedClassProficiencyIds.Should().Equal("athletics");
+    }
+
+    [Fact]
+    public void ClearMissingChoices_WithTheRaceGone_ClearsTheRaceAndWhatWasPickedForIt()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.ClearMissingChoices(AllFrom(Handbook) with { Race = null, Subrace = null });
+
+        // Assert
+        draft.RaceId.Should().BeNull();
+        draft.SubraceId.Should().BeNull();
+        draft.RaceAbilityIncreases.Should().BeEmpty();
+        draft.SelectedRaceSkillIds.Should().BeEmpty();
+        draft.SelectedLanguageIds.Should().BeEmpty();
+        draft.SelectedFeatIds.Should().BeEmpty();
+        draft.ClassId.Should().Be("fighter-2024");
+        draft.BackgroundId.Should().Be("soldier_2024");
+    }
+
+    [Fact]
+    public void ClearMissingChoices_WithTheClassGone_ClearsTheClassAndWhatWasPickedForIt()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.ClearMissingChoices(AllFrom(Handbook) with { Class = null, Subclass = null });
+
+        // Assert
+        draft.ClassId.Should().BeNull();
+        draft.SubclassId.Should().BeNull();
+        draft.SelectedClassProficiencyIds.Should().BeEmpty();
+        draft.SelectedSpellIds.Should().BeEmpty();
+        draft.FightingStyleIds.Should().BeEmpty();
+        draft.AbilityScoreImprovements.Should().BeEmpty();
+        draft.RaceId.Should().Be("elf_2024");
+    }
+
+    [Fact]
+    public void ClearMissingChoices_WithTheBackgroundGone_ClearsTheBackgroundItsIncreasesAndTheLanguages()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.ClearMissingChoices(AllFrom(Handbook) with { Background = null });
+
+        // Assert
+        draft.BackgroundId.Should().BeNull();
+        draft.BackgroundAbilityIncreases.Should().BeEmpty();
+        draft.SelectedLanguageIds.Should().BeEmpty();
+        draft.RaceId.Should().Be("elf_2024");
+    }
+
+    [Fact]
+    public void ClearMissingChoices_WithAFeatAndASpellGone_ClearsTheImprovementsAndDropsTheSpell()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+        var sources = AllFrom(Handbook) with
+        {
+            Feats = new Dictionary<string, string> { ["defense_2024"] = Handbook },
+            Spells = new Dictionary<string, string> { ["fire_bolt_2024"] = Handbook },
+        };
+
+        // Act
+        draft.ClearMissingChoices(sources);
+
+        // Assert
+        draft.SelectedFeatIds.Should().BeEmpty();
+        draft.AbilityScoreImprovements.Should().BeEmpty();
+        draft.FightingStyleIds.Should().Equal("defense_2024");
+        draft.SelectedSpellIds.Should().Equal("fire_bolt_2024");
+        draft.SubclassId.Should().Be("eldritch-knight-2024");
+    }
+
     private static CharacterDraft DraftWithEveryChoice()
     {
         var draft = CharacterDraft.CreateEmpty(Guid.NewGuid(), FakeTimeProvider);

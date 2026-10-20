@@ -115,17 +115,20 @@ Reference data is loaded from JSON in `Infrastructure/Data` on startup, and
 `ReferenceDataVersions`. The same hash means nothing to do. A different one means
 that, in one transaction, every reference row is deleted, the seeders read the
 files in again, and the new hash is recorded. Characters, drafts and users are
-not reference data and are never touched, so a changed seed file reaches a
-database without resetting it.
+not reference data and stay, so a changed seed file reaches a database without
+resetting it. A draft loses only the choices the new data drops
+(`CharacterDraft.ClearMissingChoices`, the same cascades as `AllowBooks`), each
+logged by draft id.
 
 Characters point at their race, subrace, class, subclass and background through
 foreign keys, and those rows are deleted and re-added during the replace. The
 keys are therefore `NoAction` and `DEFERRABLE INITIALLY IMMEDIATE`, and the
 replace runs `SET CONSTRAINTS ALL DEFERRED`: Postgres checks them at commit, when
-the same ids are back. Data that drops a race, class or background a character
-still uses fails the commit, rolls the whole replace back and stops startup. Keep
-the row, or move those characters in a migration first. Two details keep this
-working:
+the same ids are back. A finished sheet is never changed silently, so before the
+commit `SeedService` looks for characters naming something the new data drops; if
+there is one, it logs each by id and what it is missing, rolls the replace back and
+the Api starts on the old data, trying again on the next start. Keep the row, or
+move those characters in a migration first. Two details keep this working:
 
 - EF has no setting for deferrable, so the `ReferenceDataSync` migration adds it
   in SQL. A migration that drops and re-adds one of those five keys has to repeat

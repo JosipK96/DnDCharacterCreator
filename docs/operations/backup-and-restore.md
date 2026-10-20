@@ -112,4 +112,6 @@ If the Neon database is lost or damaged:
 
 ## Tested
 
-- *Not yet: record the date and the dump's run here once a restore has been done.*
+- 2026-10-20: the dump of run 39501402268 (the first, started by hand) restored into a scratch
+  `postgres:18` with no errors. The Api from `main` started against it, and the owner's
+  character sheet matched the hosted app's.

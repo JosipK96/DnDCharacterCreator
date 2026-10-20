@@ -1,5 +1,8 @@
 # Ability scores, ids and names
 
+The rest of the D&D rules (editions, books, species, backgrounds, feats, spells, tools) are in
+[dnd-rules.md](dnd-rules.md).
+
 ## Ability score keys
 
 The same six abilities are written three different ways depending on where the data came from:

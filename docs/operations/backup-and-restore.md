@@ -39,7 +39,13 @@ If Neon's password is reset, update `BACKUP_DATABASE_URL` along with Render's co
 ## Restoring into a scratch database (the test)
 
 This proves a dump restores, without touching the hosted database. You need Docker, the `gh`
-CLI and `gpg` (Git for Windows ships it in Git Bash).
+CLI and `gpg` (Git for Windows ships it in Git Bash). Run the `bash` steps from the repository
+root. In Git Bash, first stop it rewriting the container paths below (`/tmp/...`, `/restore`)
+into Windows paths:
+
+```bash
+export MSYS_NO_PATHCONV=1
+```
 
 1. Download the newest dump:
 
@@ -91,7 +97,8 @@ If the Neon database is lost or damaged:
 
 1. Create a new, empty database in Neon (a new project, or a new database in the existing one),
    in Frankfurt.
-2. Download and decrypt the dump you want, as in steps 1 and 2 above.
+2. Download and decrypt the dump you want, as in steps 1 and 2 above (in Git Bash, with
+   `MSYS_NO_PATHCONV=1` set as shown there).
 3. Restore it with Neon's direct connection string for the new database:
 
    ```bash

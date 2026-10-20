@@ -164,6 +164,9 @@ Render's `*.onrender.com` one, over Render's HTTPS.
     shows: `Host=<ep-…>.eu-central-1.aws.neon.tech;Database=<db>;Username=<user>;Password=<password>;SSL Mode=VerifyFull;GSS Encryption Mode=Disable`
   - `JwtSettings__Key`: a random key of at least 32 characters
   - `Registration__InviteCode`: the invite code (see Deploying)
+- **Backups:** Neon's free plan keeps only 6 hours of history, so a nightly workflow keeps an
+  encrypted `pg_dump` for 30 days. Its secrets, and how to restore a dump, are in
+  [docs/operations/backup-and-restore.md](docs/operations/backup-and-restore.md).
 - **Sleeping:** the free service sleeps after 15 minutes without traffic and takes about a
   minute to wake; Neon's free database suspends after 5 minutes and wakes in under a second.
   To stop the sleeping, change the service's instance type to Starter ($7/month) on its

@@ -1,9 +1,21 @@
-# D&D rules
+# Domain
 
-How the app models the 2014 and 2024 rules: editions and books, species and subraces, backgrounds,
-ability increases, feats, spells, languages, tools and hit points. Moved from CLAUDE.md, which keeps
-only the rules nearly every task needs. Ability keys, language ids and proficiency ids are explained
-at more length in [ability-scores-and-ids.md](ability-scores-and-ids.md).
+The domain model and the D&D rules it carries. Application handlers apply these rules too, so
+read this before changing a step handler, `CharacterBuilder` or `DraftCompletenessChecker`.
+Ability keys, language ids and proficiency ids are explained at more length in
+`docs/conventions/ability-scores-and-ids.md`.
+
+## The model
+
+- `Character` and `CharacterDraft` derive from `Entity<TId>` and expose intent-named methods
+  (`ApplyAbilityScoreImprovements`, `SetRaceSkills`), never public setters on the interesting
+  state.
+- Derived sheet numbers (hit points, armour class, saves, skills) come from
+  `Domain/Services/CharacterStatsCalculator`. Don't recompute a modifier in a Razor page. A
+  character's features aren't stored either: `CharacterFeatures` works them out from class,
+  subclass, level and background, so regenerated seed data never leaves a sheet with dead ids.
+
+## D&D rules
 
 - A character is built with one rules edition, 2014 or 2024 (`RulesEdition`), picked in step 1:
   `CharacterDraft.ChooseEdition` clears every choice when it changes, because the editions share

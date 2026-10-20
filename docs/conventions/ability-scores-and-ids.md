@@ -1,7 +1,7 @@
 # Ability scores, ids and names
 
 The rest of the D&D rules (editions, books, species, backgrounds, feats, spells, tools) are in
-[dnd-rules.md](dnd-rules.md).
+`src/CharacterCreatorApp.Domain/CLAUDE.md`.
 
 ## Ability score keys
 

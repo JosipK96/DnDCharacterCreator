@@ -98,6 +98,17 @@
                                class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
                     <ValidationMessage For="@(() => model.ConfirmPassword)" class="text-red-400 text-sm mt-1" />
                 </div>
+
+                <div>
+                    <label for="inviteCode" class="block text-sm font-medium text-gray-300 mb-2">
+                        Invite Code
+                    </label>
+                    <InputText id="inviteCode"
+                               @bind-Value="model.InviteCode"
+                               autocomplete="off"
+                               placeholder="The code you were given"
+                               class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                </div>
             </div>
 
             <div>
@@ -148,7 +159,8 @@
                 UserName = model.UserName,
                 Email = model.Email,
                 Password = model.Password,
-                DisplayName = model.DisplayName
+                DisplayName = model.DisplayName,
+                InviteCode = model.InviteCode
             };
 
             var errors = await AuthService.RegisterAsync(request);
@@ -191,5 +203,8 @@
         [Required(ErrorMessage = "Please confirm your password")]
         [Compare(nameof(Password), ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; } = "";
+
+        // Not required here: a host without an invite code set lets anyone register.
+        public string? InviteCode { get; set; }
     }
 }

@@ -335,6 +335,7 @@ public static class ReadModelExtensions
             LanguageIds = character.LanguageIds,
             SpellIds = character.SpellIds,
             FeatIds = character.FeatIds,
+            FeatSpells = character.FeatSpells,
             FeatSavingThrowAbilityIds = character.FeatSavingThrowAbilityIds,
 
             CreatedAt = character.CreatedAt.DateTime

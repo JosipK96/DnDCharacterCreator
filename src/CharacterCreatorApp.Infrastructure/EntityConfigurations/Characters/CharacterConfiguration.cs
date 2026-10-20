@@ -84,6 +84,10 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Character>
             .HasColumnType("jsonb")
             .HasJsonConversion();
 
+        builder.Property(c => c.FeatSpells)
+            .HasColumnType("jsonb")
+            .HasJsonConversion();
+
         builder.Property(c => c.Size)
             .HasMaxLength(20);
 

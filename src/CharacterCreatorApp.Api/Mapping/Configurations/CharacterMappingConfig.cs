@@ -44,6 +44,9 @@ public class CharacterMappingConfig : IRegister
         config.NewConfig<CharacterPreviewReadModel, CharacterPreviewApiResponse>()
             .MapToConstructor(true);
 
+        config.NewConfig<CharacterFeatReadModel, CharacterFeatApiResponse>()
+            .MapToConstructor(true);
+
         config.NewConfig<CharacterDetailsReadModel, CharacterDetailsApiResponse>()
             .MapToConstructor(true);
     }

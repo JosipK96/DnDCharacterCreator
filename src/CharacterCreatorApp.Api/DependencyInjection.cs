@@ -6,6 +6,7 @@ using CharacterCreatorApp.Api.Helpers.Jwt;
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Api.Infrastructure.Authentication;
 using CharacterCreatorApp.Api.Infrastructure.ExceptionHandling;
+using CharacterCreatorApp.Api.Infrastructure.Registration;
 using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.Authentication;
@@ -32,6 +33,9 @@ namespace CharacterCreatorApp.Api
             services.AddCustomProblemDetails();
 
             services.AddScoped<IJwtHelper, JwtHelper>();
+
+            services.AddOptions<RegistrationSettings>().BindConfiguration(RegistrationSettings.SectionName);
+            services.AddScoped<IInviteCodeGate, InviteCodeGate>();
 
             return services;
         }

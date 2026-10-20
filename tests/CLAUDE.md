@@ -25,7 +25,7 @@ migration tests live in an integration project but don't.
 | Sheet numbers and features | `CharacterStatsCalculatorTests`, `CharacterFeaturesTests`, `CharacterTests` | Domain.UnitTests | no |
 | Backticked names in every CLAUDE.md still declared in the code | `ClaudeMdReferencesTests` (allowlist inside, each with a reason) | Domain.UnitTests | no |
 | Wizard steps (one handler each) | `Set*CommandHandlerTests`, `Choose*CommandHandlerTests`, `BonusSpellsHandlersTests`, `ToolChoicesHandlersTests` | Application.UnitTests | no |
-| Finalize and preview | `FinalizeCharacterCommandHandlerTests`, `FinalizeFeatAndRaceChoicesTests`, `PreviewCharacterQueryHandlerTests`, `BonusSpellsTests` | Application.UnitTests | no |
+| Finalize and preview | `FinalizeCharacterCommandHandlerTests`, `FinalizeFeatAndRaceChoicesTests`, `PreviewCharacterQueryHandlerTests`, `BonusSpellsTests`, `CharacterFeatEntriesTests` | Application.UnitTests | no |
 | Validators and pipeline | `*ValidatorTests`, `ValidationBehaviourTests` | Application.UnitTests | no |
 | Seed JSON content (ids, SRD text, rows per class and race) | `SeedDataIntegrityTests`, `ClassSeedDataTests`, `RaceSeedDataTests`, `BackgroundSeedDataTests`, `FeatSeedDataTests`, `SpellSeedDataTests` | Infrastructure.IntegrationTests | no |
 | Migrations (model snapshot in sync) | `MigrationsTests` | Infrastructure.IntegrationTests | no |

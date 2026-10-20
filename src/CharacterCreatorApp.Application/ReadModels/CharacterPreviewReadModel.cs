@@ -25,7 +25,9 @@ public sealed class CharacterPreviewReadModel
     public List<LanguageReadModel> Languages { get; set; } = [];
     public List<FeatureReadModel> Features { get; set; } = [];
     public List<SpellReadModel> Spells { get; set; } = [];
-    public List<FeatReadModel> Feats { get; set; } = [];
+
+    /// <summary>One entry per feat taken, so a repeatable feat taken twice is two entries.</summary>
+    public List<CharacterFeatReadModel> Feats { get; set; } = [];
 
     public required CharacterStats Stats { get; init; }
 

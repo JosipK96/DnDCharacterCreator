@@ -18,6 +18,6 @@ public record CharacterPreviewApiResponse(
     List<LanguageApiResponse> Languages,
     List<FeatureApiResponse> Features,
     List<SpellApiResponse> Spells,
-    List<FeatApiResponse> Feats,
+    List<CharacterFeatApiResponse> Feats,
     CharacterStatsApiResponse Stats,
     string? BlockingIssue);

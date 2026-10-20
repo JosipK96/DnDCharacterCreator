@@ -144,6 +144,31 @@ and one it should have before the link is shared:
 `configurations/Env_files/api.env` holds the non-secret container settings. To run the compose
 file without its Development override, use `docker compose -f docker-compose.yml up -d`.
 
+## Hosting
+
+The group's app runs on [Render](https://render.com)'s free web service, with the database on
+[Neon](https://neon.tech)'s free Postgres, both in Frankfurt (decided in #31). The address is
+Render's `*.onrender.com` one, over Render's HTTPS.
+
+- **The service** is described by [render.yaml](render.yaml), a Render Blueprint: the Docker
+  build, the region, the `/health` check, port 8080, and the non-secret settings from
+  `configurations/Env_files/api.env`. It was created in the Render dashboard with New >
+  Blueprint, and changes to the file are applied from there.
+- **Deploys:** a push to `main` deploys once CI on that commit has passed. Migrations and the
+  reference data load run at startup; the deploy log shows "Applying pending migrations" and
+  "Seeding reference data". If either fails, the new version never passes the health check and
+  the previous one keeps serving.
+- **Secrets** live only in the Render dashboard (the service's Environment page), never here:
+  - `ConnectionStrings__DefaultConnection`: Neon's *direct* endpoint (not the `-pooler` one, so
+    migrations get a normal session), in Npgsql's form rather than the `postgres://` URL Neon
+    shows: `Host=<ep-…>.eu-central-1.aws.neon.tech;Database=<db>;Username=<user>;Password=<password>;SSL Mode=VerifyFull;GSS Encryption Mode=Disable`
+  - `JwtSettings__Key`: a random key of at least 32 characters
+  - `Registration__InviteCode`: the invite code (see Deploying)
+- **Sleeping:** the free service sleeps after 15 minutes without traffic and takes about a
+  minute to wake; Neon's free database suspends after 5 minutes and wakes in under a second.
+  To stop the sleeping, change the service's instance type to Starter ($7/month) on its
+  Settings page, and `plan: free` in `render.yaml` to `plan: starter`. Nothing else changes.
+
 ## Contributing
 
 Work is tracked in GitHub issues; each change goes on its own branch and arrives through a pull

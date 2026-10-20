@@ -41,6 +41,13 @@ public class Character : Entity<Guid>, IAuditable
     /// </summary>
     public List<string> FeatIds { get; private set; } = [];
 
+    /// <summary>
+    /// The spells picked for each feat with a spell choice (Magic Initiate), one pick per such
+    /// feat in FeatIds order, so a feat taken twice keeps its two picks apart. Empty for a
+    /// character made before they were kept; their spells are in SpellIds all the same.
+    /// </summary>
+    public List<FeatSpellPick> FeatSpells { get; private set; } = [];
+
     /// <summary>"Small" or "Medium". Null for a character made before the size was kept; its race's size stands.</summary>
     public string? Size { get; private set; }
 
@@ -206,6 +213,12 @@ public class Character : Entity<Guid>, IAuditable
     public void SetFeats(IEnumerable<string> featIds)
     {
         FeatIds = featIds.ToList();
+    }
+
+    /// <summary>The spells picked for each feat with a spell choice, as the draft kept them.</summary>
+    public void SetFeatSpells(IEnumerable<FeatSpellPick> featSpells)
+    {
+        FeatSpells = featSpells.ToList();
     }
 
     /// <summary>"Small" or "Medium": the race's only size, or the one picked for a species that may be either.</summary>

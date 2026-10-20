@@ -21,7 +21,7 @@ Single-context repo:
 ├── CLAUDE.md
 ├── CONTEXT.md                 (once created)
 ├── docs/
-│   ├── adr/                   (once created)
+│   ├── adr/
 │   └── conventions/
 │       └── glossary.md
 └── src/

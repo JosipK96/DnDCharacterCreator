@@ -1,0 +1,82 @@
+# Backs up the hosted Neon database every night (#41). Neon's free plan keeps only 6 hours of
+# history, so these dumps are the backup. The repository is public and anyone signed in to GitHub
+# can download its artifacts, while a dump holds emails and password hashes: it is encrypted
+# before it leaves the job. How to restore one: docs/operations/backup-and-restore.md.
+name: Backup
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+# Two dumps of the same database at once would only race each other
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    name: Back up the database
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DUMP: backup/charactercreator.dump
+    steps:
+      # A missing secret would otherwise dump nothing, or upload a dump nobody can decrypt
+      - name: Check the secrets are set
+        shell: bash
+        env:
+          BACKUP_DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          missing=0
+          for name in BACKUP_DATABASE_URL BACKUP_PASSPHRASE; do
+            if [ -z "${!name}" ]; then
+              echo "::error::The repository secret $name is not set"
+              missing=1
+            fi
+          done
+          exit $missing
+
+      # From the postgres:18 image, so the runner's own client version doesn't matter. pg_dump
+      # refuses a server newer than itself, which fails this step: raise the image's version then.
+      # The URL is expanded inside the container, so it never appears on a command line.
+      - name: Dump the database
+        shell: bash
+        env:
+          DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          mkdir -p backup
+          docker run --rm -e DATABASE_URL postgres:18 \
+            sh -c 'exec pg_dump --dbname="$DATABASE_URL" --format=custom --no-owner --no-privileges' > "$DUMP"
+          if [ ! -s "$DUMP" ]; then
+            echo "::error::pg_dump wrote an empty file"
+            exit 1
+          fi
+          echo "Dump size: $(stat --format=%s "$DUMP") bytes"
+
+      # The passphrase goes in on stdin, never as an argument; the plaintext is deleted, so only
+      # the encrypted file can be uploaded
+      - name: Encrypt the dump
+        shell: bash
+        env:
+          BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$BACKUP_PASSPHRASE" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 \
+            --symmetric --cipher-algo AES256 --output "$DUMP.gpg" "$DUMP"
+          rm -f "$DUMP"
+          echo "BACKUP_DATE=$(date --utc +%Y-%m-%d)" >> "$GITHUB_ENV"
+
+      - name: Keep the encrypted dump
+        uses: actions/upload-artifact@v7
+        with:
+          name: backup-${{ env.BACKUP_DATE }}-${{ github.run_id }}
+          path: backup/charactercreator.dump.gpg
+          retention-days: 30
+          if-no-files-found: error

@@ -12,6 +12,9 @@
   The only connection string in appsettings is the Development one, for the compose database
   on `localhost:5433`; elsewhere it comes from `ConnectionStrings__DefaultConnection`. The app
   refuses to start without either.
+- Registration asks for an invite code only when the host sets `Registration__InviteCode`
+  (`RegistrationSettings`, checked by `InviteCodeGate`). It is never in appsettings, and left
+  unset registration stays open, as in local development and the integration tests.
 - `docker-compose.yml` (+ `.override.yml`, `.dcproj`) sits at the repository root because the
   Dockerfile builds from there: restore needs `Directory.*.props`, `.editorconfig` and
   `analyzers/`. Non-secret container settings are in `configurations/Env_files/api.env`.

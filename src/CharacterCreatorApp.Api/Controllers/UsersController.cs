@@ -18,11 +18,12 @@ namespace CharacterCreatorApp.Api.Controllers
         [HttpPost("register")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken cancellationToken)
         {
             var response = await _sender.Send(
-                new RegisterUserCommand(request.Email, request.UserName, request.Password, request.DisplayName),
+                new RegisterUserCommand(request.Email, request.UserName, request.Password, request.DisplayName, request.InviteCode),
                 cancellationToken);
 
             return OkOrProblem(response);

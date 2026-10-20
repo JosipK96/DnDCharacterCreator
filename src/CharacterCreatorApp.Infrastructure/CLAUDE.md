@@ -19,7 +19,9 @@ before changing what a seed file holds.
   CharacterCreatorApp.SeedDataGenerator` and run it again.
 - Reference data is seeded from JSON in `Infrastructure/Data` on startup. When the files' hash
   differs from `ReferenceDataVersions`, `SeedService` deletes every reference row and reads the
-  files again in one transaction; characters, drafts and users stay. A character's race, class
+  files again in one transaction. Users stay; a draft loses only the choices the new data drops
+  (`CharacterDraft.ClearMissingChoices`); a character naming one rolls the reload back, logged by
+  id, and the Api starts on the old data. A character's race, class
   and background keys are deferrable `NoAction` for that, set in SQL by the `ReferenceDataSync`
   migration, so a migration that re-creates one of them must repeat it. Bump
   `ReferenceDataHash.SeederVersion` when rows change without the files changing.

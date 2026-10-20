@@ -14,22 +14,25 @@ public class RegisterUserCommandHandlerTests : IDisposable
     private const string UserName = "thorin";
     private const string Password = "Erebor123";
     private const string DisplayName = "Thorin Oakenshield";
+    private const string InviteCode = "khazad-dum";
 
     private readonly Mock<IIdentityService> _identityServiceMock = new(MockBehavior.Strict);
+    private readonly Mock<IInviteCodeGate> _inviteCodeGateMock = new(MockBehavior.Strict);
     private readonly CancellationTokenSource _cts = new();
     private readonly RegisterUserCommandHandler _sut;
 
-    private readonly RegisterUserCommand _command = new(Email, UserName, Password, DisplayName);
+    private readonly RegisterUserCommand _command = new(Email, UserName, Password, DisplayName, InviteCode);
 
     public RegisterUserCommandHandlerTests()
     {
-        _sut = new RegisterUserCommandHandler(_identityServiceMock.Object);
+        _sut = new RegisterUserCommandHandler(_identityServiceMock.Object, _inviteCodeGateMock.Object);
     }
 
     [Fact]
     public async Task Handle_WithAnUnusedEmail_CreatesTheAccount()
     {
         // Arrange
+        _inviteCodeGateMock.Setup(g => g.Admits(InviteCode)).Returns(true);
         _identityServiceMock.Setup(s => s.IsEmailInUseAsync(Email, _cts.Token)).ReturnsAsync(false);
         _identityServiceMock
             .Setup(s => s.CreateUserAsync(UserName, Email, Password, DisplayName, _cts.Token))
@@ -48,6 +51,7 @@ public class RegisterUserCommandHandlerTests : IDisposable
     public async Task Handle_WithAnEmailAlreadyInUse_ReturnsConflictWithoutCreatingAnAccount()
     {
         // Arrange
+        _inviteCodeGateMock.Setup(g => g.Admits(InviteCode)).Returns(true);
         _identityServiceMock.Setup(s => s.IsEmailInUseAsync(Email, _cts.Token)).ReturnsAsync(true);
 
         // Act
@@ -67,6 +71,7 @@ public class RegisterUserCommandHandlerTests : IDisposable
     public async Task Handle_WhenIdentityRejectsTheAccount_ReturnsItsReasons()
     {
         // Arrange
+        _inviteCodeGateMock.Setup(g => g.Admits(InviteCode)).Returns(true);
         _identityServiceMock.Setup(s => s.IsEmailInUseAsync(Email, _cts.Token)).ReturnsAsync(false);
         _identityServiceMock
             .Setup(s => s.CreateUserAsync(UserName, Email, Password, DisplayName, _cts.Token))
@@ -80,6 +85,23 @@ public class RegisterUserCommandHandlerTests : IDisposable
         result.Errors.Should().ContainSingle();
         result.Errors[0].Code.Should().Be("User.PasswordRequiresNonAlphanumeric");
         result.Errors[0].Type.Should().Be(ErrorType.Validation);
+    }
+
+    [Fact]
+    public async Task Handle_WithAnInviteCodeTheGateRefuses_ReturnsForbiddenWithoutTouchingIdentity()
+    {
+        // Arrange - strict mocks: any call to the identity service fails the test
+        _inviteCodeGateMock.Setup(g => g.Admits(InviteCode)).Returns(false);
+
+        // Act
+        var result = await _sut.Handle(_command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle();
+        result.Errors[0].Code.Should().Be("User.InvalidInviteCode");
+        result.Errors[0].Type.Should().Be(ErrorType.Forbidden);
+        _identityServiceMock.VerifyNoOtherCalls();
     }
 
     public void Dispose()

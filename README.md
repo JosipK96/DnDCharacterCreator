@@ -134,6 +134,11 @@ two settings as environment variables:
 - `ConnectionStrings__DefaultConnection`, the host's PostgreSQL connection string
 - `JwtSettings__Key`, the signing key
 
+and one it should have before the link is shared:
+
+- `Registration__InviteCode`, the code registering asks for. Give it to the group by hand; it
+  is never in the repository. Without it anyone with the address can make an account.
+
 `configurations/Env_files/api.env` holds the non-secret container settings. To run the compose
 file without its Development override, use `docker compose -f docker-compose.yml up -d`.
 

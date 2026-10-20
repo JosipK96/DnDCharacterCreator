@@ -2,17 +2,25 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
+using CharacterCreatorApp.Api.Infrastructure.Registration;
 using CharacterCreatorApp.Api.IntegrationTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.User;
 using CharacterCreatorApp.Contracts.Responses;
 
 using FluentAssertions;
 
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
 namespace CharacterCreatorApp.Api.IntegrationTests.Controllers;
 
 [Collection(SharedApiHost.Name)]
 public class UsersControllerTests : IAsyncLifetime
 {
+    private const string InviteCode = "speak-friend-and-enter";
+
     private readonly CustomWebApplicationFactory _factory;
     private readonly HttpClient _client;
 
@@ -98,6 +106,55 @@ public class UsersControllerTests : IAsyncLifetime
         var problem = await response.ReadProblemAsync();
         problem.Errors.Select(e => e.Code).Should().Contain(
             ["User.PasswordTooShort", "User.PasswordRequiresUpper", "User.PasswordRequiresDigit"]);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("speak-friend")]
+    public async Task Register_WithAnInviteCodeSetAndAMissingOrWrongOne_ReturnsForbidden(string? inviteCode)
+    {
+        // Arrange
+        await using var host = WithInviteCode(InviteCode);
+        using var client = host.CreateClient();
+        var request = NewRegistration(inviteCode);
+
+        // Act
+        var response = await client.PostAsJsonAsync("/api/users/register", request, TestContext.Current.CancellationToken);
+
+        // Assert
+        var problem = await response.ReadProblemAsync();
+        problem.Status.Should().Be((int)HttpStatusCode.Forbidden);
+        problem.Errors.Should().ContainSingle()
+            .Which.Should().Be(new ProblemResponseError("User.InvalidInviteCode", null, "The invite code is missing or wrong"));
+    }
+
+    [Fact]
+    public async Task Register_WithAnInviteCodeSetAndTheRightOne_ReturnsOk()
+    {
+        // Arrange
+        await using var host = WithInviteCode(InviteCode);
+        using var client = host.CreateClient();
+        var request = NewRegistration(InviteCode);
+
+        // Act
+        var response = await client.PostAsJsonAsync("/api/users/register", request, TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+
+    [Fact]
+    public async Task Register_WithNoInviteCodeSetAndAnyCodeGiven_ReturnsOk()
+    {
+        // Arrange - the shared host has no invite code, like local development
+        var request = NewRegistration("anything");
+
+        // Act
+        var response = await _client.PostAsJsonAsync("/api/users/register", request, TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -205,6 +262,21 @@ public class UsersControllerTests : IAsyncLifetime
     }
 
     // Helper methods
+
+    // A second host over the same database, with the setting a host gets from Registration__InviteCode
+    private WebApplicationFactory<Program> WithInviteCode(string inviteCode) =>
+        _factory.WithWebHostBuilder(builder => builder.ConfigureTestServices(services =>
+            services.AddSingleton(Options.Create(new RegistrationSettings { InviteCode = inviteCode }))));
+
+    private static RegisterUserRequest NewRegistration(string? inviteCode) => new()
+    {
+        Email = $"invite-{Guid.NewGuid()}@example.com",
+        UserName = $"invite{Guid.NewGuid():N}",
+        Password = "Test123!@#",
+        DisplayName = "Invited User",
+        InviteCode = inviteCode
+    };
+
     private async Task RegisterUserAsync(string email, string password)
     {
         var request = new RegisterUserRequest

@@ -104,7 +104,8 @@ Ability keys, language ids and proficiency ids are explained at more length in
   cantrip, Magic Initiate's) are `BonusSpellChoice`s on `Race`, `Subrace` and `Feat`, picked in
   the spells step and kept in `CharacterDraft.RaceSpellIds` and `FeatSpells`, one pick per such
   feat in the character's feat order. `Character.FeatSpells` keeps the feat picks after
-  finalize, so the sheet lists a feat taken twice twice, each with its own spells. `BonusSpells` lists what a draft owes and checks the
+  finalize, so the sheet, like the review step, lists a feat taken twice twice, each with its
+  own spells (`CharacterFeatEntries` pairs them for both). `BonusSpells` lists what a draft owes and checks the
   picks, for `ChooseBonusSpells` and finalize alike; a background may fix its feat's list
   (`Background.FeatSpellListClassId`: an Acolyte's is the cleric's). A 2024 species that is
   "Small or Medium" keeps its pick in `CharacterDraft.Size`, a background that lets the player

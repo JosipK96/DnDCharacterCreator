@@ -3,8 +3,10 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpells;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
 
@@ -21,6 +23,10 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
     private readonly Mock<ICharacterDraftRepository> _draftRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<ISpellRepository> _spellRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IClassRepository> _classRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<IRaceRepository> _raceRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<IBackgroundRepository> _backgroundRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<ILanguageRepository> _languageRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<IFeatRepository> _featRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IUserContext> _userContextMock = new(MockBehavior.Strict);
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = new(MockBehavior.Strict);
     private readonly CancellationTokenSource _cts = new();
@@ -38,8 +44,13 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
             _draftRepositoryMock.Object,
             _spellRepositoryMock.Object,
             _classRepositoryMock.Object,
+            _raceRepositoryMock.Object,
+            _backgroundRepositoryMock.Object,
+            _languageRepositoryMock.Object,
+            _featRepositoryMock.Object,
             _userContextMock.Object,
-            _unitOfWorkMock.Object);
+            _unitOfWorkMock.Object,
+            new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
     }
 
     [Fact]
@@ -79,32 +90,93 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
     [Fact]
     public async Task Handle_WithTooFewCantrips_ReturnsCantripCountMismatch()
     {
-        // Arrange - a level 1 2014 cleric prepares its spells, so it picks three cantrips and
-        // nothing else
-        var draft = ArrangeDraft("cleric", level: 1);
-        ArrangeClass("cleric", [Row("cleric", 1, cantrips: 3, spells: 0, maxSpellLevel: 1)]);
-        ArrangeSpellList("cleric", Cantrip("guidance"), Cantrip("sacred_flame"), Cantrip("thaumaturgy"));
+        // Arrange - a level 1 sorcerer picks four cantrips
+        var draft = ArrangeDraft("sorcerer", level: 1);
+        ArrangeClass("sorcerer", [Row("sorcerer", 1, cantrips: 4, spells: 0, maxSpellLevel: 1)]);
+        ArrangeSpellList("sorcerer", Cantrip("fire_bolt"), Cantrip("light"), Cantrip("mage_hand"), Cantrip("prestidigitation"));
 
         // Act
-        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["guidance", "sacred_flame"]), _cts.Token);
+        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["fire_bolt", "light"]), _cts.Token);
 
         // Assert
         AssertRefused(result, draft, "Spell.CantripCountMismatch");
     }
 
-    [Fact]
-    public async Task Handle_WithALeveledSpellForACasterThatPreparesThem_ReturnsSpellCountMismatch()
+    [Theory]
+    [InlineData("cleric", "Wisdom", 1, 1, 16, 4)]
+    [InlineData("druid", "Wisdom", 1, 3, 14, 5)]
+    [InlineData("paladin", "Charisma", 2, 5, 16, 5)]
+    [InlineData("artificer", "Intelligence", 2, 3, 16, 4)]
+    public async Task Handle_ForA2014PreparedCasterWithAsManySpellsAsItPrepares_SavesThem(
+        string classId, string ability, int divisor, int level, int score, int prepared)
     {
-        // Arrange - the 2014 cleric's table gives no spells to pick; it prepares from the whole list
-        var draft = ArrangeDraft("cleric", level: 1);
-        ArrangeClass("cleric", [Row("cleric", 1, cantrips: 1, spells: 0, maxSpellLevel: 1)]);
-        ArrangeSpellList("cleric", Cantrip("guidance"), Spell("bless", 1));
+        // Arrange - its spellcasting modifier plus its level, half of it for a paladin or
+        // artificer, from the scores as the sheet has them: the race's +2 counts
+        var draft = ArrangePreparedCasterDraft(classId, ability, level, score - 2, raceBonus: 2);
+        ArrangePreparedCaster(classId, ability, divisor, level);
+        ArrangeSpellList(classId, LevelOneSpells(8));
+        List<string> spellIds = [.. LevelOneSpells(prepared).Select(s => s.Id)];
 
         // Act
-        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["guidance", "bless"]), _cts.Token);
+        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, spellIds), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
+        draft.SelectedSpellIds.Should().Equal(spellIds);
+    }
+
+    [Theory]
+    [InlineData("cleric", "Wisdom", 1, 1, 16, 5)]
+    [InlineData("cleric", "Wisdom", 1, 1, 16, 3)]
+    [InlineData("druid", "Wisdom", 1, 3, 14, 6)]
+    [InlineData("druid", "Wisdom", 1, 3, 14, 0)]
+    [InlineData("paladin", "Charisma", 2, 5, 16, 6)]
+    [InlineData("paladin", "Charisma", 2, 5, 16, 4)]
+    [InlineData("artificer", "Intelligence", 2, 3, 16, 5)]
+    [InlineData("artificer", "Intelligence", 2, 3, 16, 3)]
+    public async Task Handle_ForA2014PreparedCasterWithTooManyOrTooFewSpells_ReturnsSpellCountMismatch(
+        string classId, string ability, int divisor, int level, int score, int picked)
+    {
+        // Arrange - one more or fewer than its modifier plus its level (or half of it)
+        var draft = ArrangePreparedCasterDraft(classId, ability, level, score, raceBonus: 0);
+        ArrangePreparedCaster(classId, ability, divisor, level);
+        ArrangeSpellList(classId, LevelOneSpells(8));
+
+        // Act
+        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, [.. LevelOneSpells(picked).Select(s => s.Id)]), _cts.Token);
 
         // Assert
         AssertRefused(result, draft, "Spell.SpellCountMismatch");
+    }
+
+    [Fact]
+    public async Task Handle_ForA2014PreparedCasterWithASpellAboveItsLevel_ReturnsLevelTooHigh()
+    {
+        // Arrange - a level 1 cleric with WIS 12 prepares two spells, of level 1 only
+        var draft = ArrangePreparedCasterDraft("cleric", "Wisdom", 1, 12, raceBonus: 0);
+        ArrangePreparedCaster("cleric", "Wisdom", 1, 1);
+        ArrangeSpellList("cleric", Spell("bless", 1), Spell("lesser_restoration", 2));
+
+        // Act
+        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["bless", "lesser_restoration"]), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "Spell.LevelTooHigh");
+    }
+
+    [Fact]
+    public async Task Handle_ForA2014PreparedCasterBeforeItsScoresAreChosen_ReturnsScoresRequired()
+    {
+        // Arrange - the count follows the final scores, which a draft without them cannot give
+        var draft = ArrangeDraft("cleric", level: 1);
+        ArrangePreparedCaster("cleric", "Wisdom", 1, 1);
+
+        // Act
+        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["bless"]), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.ScoresRequired");
+        _raceRepositoryMock.Verify(r => r.GetByIdWithDetailsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
@@ -285,11 +357,12 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
     }
 
     [Fact]
-    public async Task Handle_WithASpellTheSubclassAlwaysHasPrepared_ReturnsInvalidSpell()
+    public async Task Handle_WithADomainSpellTheClassListHasToo_ReturnsAlwaysPrepared()
     {
-        // Arrange - a domain spell comes with the subclass; it is not one of the picks
-        var draft = ArrangeDraft("cleric", level: 1, subclassId: "life");
-        ArrangeClass("cleric", [Row("cleric", 1, cantrips: 1, spells: 0, maxSpellLevel: 1)], new Subclass
+        // Arrange - Bless is on the cleric list and a Life cleric's domain spell: it is prepared
+        // already and does not count, so picking it would waste one of the two picks
+        var draft = ArrangePreparedCasterDraft("cleric", "Wisdom", 1, 12, raceBonus: 0, subclassId: "life");
+        ArrangePreparedCaster("cleric", "Wisdom", 1, 1, new Subclass
         {
             Id = "life",
             Name = "Life Domain",
@@ -297,13 +370,14 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
             ClassId = "cleric",
             Spells = [new SpellSubclass { SpellId = "bless", SubclassId = "life", Level = 1, IsAlwaysPrepared = true }]
         });
-        ArrangeSpellList("cleric", Cantrip("guidance"));
+        ArrangeSpellList("cleric", Spell("bless", 1), Spell("cure_wounds", 1));
 
         // Act
-        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["guidance", "bless"]), _cts.Token);
+        var result = await _sut.Handle(new ChooseSpellsCommand(_draftId, ["bless", "cure_wounds"]), _cts.Token);
 
         // Assert
-        AssertRefused(result, draft, "Spell.Invalid");
+        AssertRefused(result, draft, "Spell.AlwaysPrepared");
+        result.Errors[0].Description.Should().Be("bless comes with Life Domain, always prepared and not counted; pick another spell in its place.");
     }
 
     [Fact]
@@ -419,6 +493,65 @@ public class ChooseSpellsCommandHandlerTests : IDisposable
                 Subclasses = [.. subclasses]
             });
     }
+
+    // A 2014 class whose table gives no spell count at this level and no cantrips, up to level 1
+    // spells, preparing its modifier plus its level divided by the divisor
+    private void ArrangePreparedCaster(string classId, string ability, int divisor, int level, params Subclass[] subclasses)
+    {
+        _classRepositoryMock
+            .Setup(r => r.GetByIdWithDetailsAsync(classId, _cts.Token))
+            .ReturnsAsync(new Class
+            {
+                Id = classId,
+                Name = classId,
+                Edition = RulesEdition.Edition2014,
+                Source = "PHB",
+                HitDie = "1d8",
+                Spellcasting = new Spellcasting
+                {
+                    ClassId = classId, SpellcastingAbility = ability, IsPreparedCaster = true, PreparedSpellsLevelDivisor = divisor
+                },
+                SpellProgression = [Row(classId, level, cantrips: 0, spells: 0, maxSpellLevel: 1)],
+                Subclasses = [.. subclasses]
+            });
+    }
+
+    // A dwarf soldier ready to finalize but for its spells, its spellcasting ability at this base
+    // score, which the dwarf raises by raceBonus
+    private CharacterDraft ArrangePreparedCasterDraft(string classId, string ability, int level, int score, int raceBonus, string? subclassId = null)
+    {
+        var draft = ArrangeDraft(classId, level, subclassId);
+        var abilityId = AbilityScore.Normalize(ability);
+        var scores = new Dictionary<string, int> { ["STR"] = 10, ["DEX"] = 10, ["CON"] = 10, ["INT"] = 10, ["WIS"] = 10, ["CHA"] = 10 };
+        scores[abilityId] = score;
+        draft.SetRace("dwarf");
+        draft.SetBackground("soldier");
+        draft.SetBaseAbilityScores(scores, AbilityScoreMethod.Rolled);
+
+        _raceRepositoryMock
+            .Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token))
+            .ReturnsAsync(new Race
+            {
+                Id = "dwarf",
+                Name = "Dwarf",
+                Edition = RulesEdition.Edition2014,
+                Source = "PHB",
+                Speed = 25,
+                Size = "Medium",
+                AbilityBonuses = [new RaceAbilityBonus { RaceId = "dwarf", AbilityScoreId = abilityId, Bonus = raceBonus }],
+            });
+        _backgroundRepositoryMock
+            .Setup(r => r.GetByIdWithDetailsAsync("soldier", _cts.Token))
+            .ReturnsAsync(new Background { Id = "soldier", Name = "Soldier", Edition = RulesEdition.Edition2014, Source = "PHB", FeatureId = "military-rank" });
+        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync([]);
+        _languageRepositoryMock.Setup(r => r.GetAllForEditionAsync(RulesEdition.Edition2014, _cts.Token)).ReturnsAsync([]);
+
+        return draft;
+    }
+
+    // level_1_spell_1 and on, all level 1
+    private static SpellReadModel[] LevelOneSpells(int count) =>
+        [.. Enumerable.Range(1, count).Select(i => Spell($"level_1_spell_{i}", 1))];
 
     private void ArrangeSpellList(string classId, params SpellReadModel[] spells)
     {

@@ -1,4 +1,6 @@
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
+using CharacterCreatorApp.Domain.Services;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Domain.DomainModels.Classes;
 
@@ -51,25 +53,50 @@ public class Class
     public bool IsSpellcaster => Spellcasting != null;
     public List<ClassSpellProgression> SpellProgression { get; set; } = [];
 
-    /// <summary>
-    /// The spells a character of this level picks, from the class's table, or from the
-    /// subclass's when the class has none (an Eldritch Knight's fighter). Null when the character
-    /// casts no spells yet: a 2014 paladin at level 1, a fighter before its subclass. The
-    /// subclass's school limit comes with it.
-    /// </summary>
     /// <summary>The unarmoured armour classes a character of this class and subclass has: the class's, the subclass's, or neither.</summary>
     public IReadOnlyList<UnarmoredArmorClass> UnarmoredArmorClassesWith(Subclass? subclass) =>
         new[] { UnarmoredArmorClass, subclass?.UnarmoredArmorClass }.OfType<UnarmoredArmorClass>().ToList();
 
-    public SpellAllowance? SpellAllowanceAt(int level, Subclass? subclass)
+    /// <summary>
+    /// Whether the spells a character of this level picks follow its ability scores: a 2014
+    /// cleric, druid, paladin or artificer, whose table gives no count. The scores passed to
+    /// SpellAllowanceAt must then be the character's final ones.
+    /// </summary>
+    public bool PreparesSpellsFromScoresAt(int level) =>
+        Spellcasting?.PreparedSpellsLevelDivisor is not null
+        && SpellProgression.Find(p => p.CharacterLevel == level) is { SpellsKnown: 0 };
+
+    /// <summary>
+    /// The spells a character of this level picks, from the class's table, or from the
+    /// subclass's when the class has none (an Eldritch Knight's fighter). Null when the character
+    /// casts no spells yet: a 2014 paladin at level 1, a fighter before its subclass. The
+    /// subclass's school limit comes with it. A class whose table gives no count prepares its
+    /// spellcasting modifier plus its level, or half of it, in spells, at least one
+    /// (PreparesSpellsFromScoresAt); the wizard's table gives its spellbook, so that wins.
+    /// </summary>
+    public SpellAllowance? SpellAllowanceAt(int level, Subclass? subclass, IReadOnlyDictionary<string, int> abilityScores)
     {
         if (SpellProgression.Find(p => p.CharacterLevel == level) is { } row)
         {
-            return new SpellAllowance(row.CantripsKnown, row.SpellsKnown, row.MaxSpellLevel, subclass?.SpellSchoolLimitAt(level));
+            var spells = PreparesSpellsFromScoresAt(level) ? PreparedSpellCount(level, abilityScores) : row.SpellsKnown;
+            return new SpellAllowance(row.CantripsKnown, spells, row.MaxSpellLevel, subclass?.SpellSchoolLimitAt(level));
         }
 
         return subclass?.SpellProgression.Find(p => p.CharacterLevel == level) is { } subclassRow
             ? new SpellAllowance(subclassRow.CantripsKnown, subclassRow.SpellsKnown, subclassRow.MaxSpellLevel, subclass.SpellSchoolLimitAt(level))
             : null;
+    }
+
+    private int PreparedSpellCount(int level, IReadOnlyDictionary<string, int> abilityScores)
+    {
+        // A score the draft lacks counts as 10, as on the sheet; finalize refuses such a draft anyway
+        var abilityId = AbilityScore.Normalize(Spellcasting!.SpellcastingAbility);
+        var score = abilityScores
+            .Where(s => AbilityScore.TryNormalize(s.Key, out var id) && id == abilityId)
+            .Select(s => s.Value)
+            .DefaultIfEmpty(10)
+            .First();
+
+        return Math.Max(1, CharacterStatsCalculator.GetAbilityModifier(score) + (level / Spellcasting.PreparedSpellsLevelDivisor!.Value));
     }
 }

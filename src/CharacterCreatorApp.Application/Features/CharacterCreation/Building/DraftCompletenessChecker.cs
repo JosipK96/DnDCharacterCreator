@@ -12,8 +12,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 /// </summary>
 public static class DraftCompletenessChecker
 {
-    /// <summary>Returns null when every choice the character is owed has been made.</summary>
-    public static Error? FindMissingChoice(CharacterDraft draft, CharacterSources sources)
+    /// <summary>
+    /// Returns null when every choice the character is owed has been made. The scores are the
+    /// built character's, which a 2014 cleric's number of prepared spells follows.
+    /// </summary>
+    public static Error? FindMissingChoice(CharacterDraft draft, CharacterSources sources, IReadOnlyDictionary<string, int> finalAbilityScores)
     {
         var (race, subrace, @class, background) = (sources.Race, sources.Subrace, sources.Class, sources.Background);
         var raceName = subrace?.Name ?? race.Name;
@@ -144,13 +147,14 @@ public static class DraftCompletenessChecker
             return invalidStyle;
         }
 
-        // The spells step checks the same, but a draft whose level, class or subclass changed
-        // afterwards, or that never reached that step, still holds the old picks or none
+        // The spells step checks the same, but a draft whose level, class, subclass or scores
+        // changed afterwards, or that never reached that step, still holds the old picks or none
         return FindMissingFeatChoice(draft, sources, raceName, level)
             ?? SpellChoice.FindInvalidPick(
                 draft.SelectedSpellIds,
                 sources.ChoosableSpells,
-                @class.SpellAllowanceAt(level, sources.Subclass),
+                @class.SpellAllowanceAt(level, sources.Subclass, finalAbilityScores),
+                sources.Subclass,
                 @class.Name,
                 level)
             ?? BonusSpells.FindInvalidPick(

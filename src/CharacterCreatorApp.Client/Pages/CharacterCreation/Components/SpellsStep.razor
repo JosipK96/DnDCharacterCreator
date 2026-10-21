@@ -38,14 +38,18 @@
     }
     else
     {
-        <!-- Prepared caster info box (Cleric, Druid, Paladin, Artificer with no fixed spell list) -->
-        @if (isPreparedCaster && spellsKnown == 0)
+        <!-- A 2014 cleric, druid, paladin or artificer: the count follows its scores and level -->
+        @if (spellsFollowScores)
         {
             <div class="bg-blue-900 border border-blue-700 text-blue-200 px-5 py-4 rounded-lg mb-4">
-                <p class="font-semibold mb-1">Prepared Spellcaster</p>
+                <p class="font-semibold mb-1">Prepared Spells</p>
                 <p class="text-sm">
-                    @className prepares spells each day from the full @className spell list.
-                    No leveled spells are chosen at character creation — you'll prepare them fresh each day.
+                    @className prepares @spellsKnown @(spellsKnown == 1 ? "spell" : "spells") from the @className spell list:
+                    its spellcasting ability modifier plus its level, or half its level, at least one.
+                    @if (alwaysPreparedSpells.Count > 0)
+                    {
+                        <span>Your subclass's spells are always prepared on top of these: @string.Join(", ", alwaysPreparedSpells.Select(s => s.Name)).</span>
+                    }
                 </p>
             </div>
         }
@@ -57,10 +61,6 @@
                 @if (cantripsKnown > 0 && spellsKnown > 0)
                 {
                     <span>Choose @cantripsKnown @(cantripsKnown == 1 ? "cantrip" : "cantrips") and @spellsKnown @(spellsKnown == 1 ? "spell" : "spells").</span>
-                }
-                else if (cantripsKnown > 0 && isPreparedCaster)
-                {
-                    <span>Choose @cantripsKnown @(cantripsKnown == 1 ? "cantrip" : "cantrips") for your character.</span>
                 }
                 else if (cantripsKnown > 0)
                 {
@@ -114,7 +114,7 @@
         }
 
         <!-- ===== LEVELED SPELLS SECTION ===== -->
-        @if (!isPreparedCaster && spellsKnown > 0 && availableLeveledSpells.Any())
+        @if (spellsKnown > 0 && availableLeveledSpells.Any())
         {
             <div class="bg-gradient-to-r from-indigo-900/50 to-blue-900/50 rounded-lg p-5 border-2 @GetSpellBorderClass() mb-4">
                 <div class="flex items-center justify-between mb-4">
@@ -274,7 +274,8 @@
     private string? className;
 
     private bool isSpellcaster = false;
-    private bool isPreparedCaster = false; // SpellsKnown == 0 means prepared (Cleric/Druid/Paladin/Artificer)
+    private bool spellsFollowScores = false; // a 2014 prepared caster's count, from the server
+    private List<SpellApiResponse> alwaysPreparedSpells = [];
     private int spellsKnown = 0;
     private int cantripsKnown = 0;
     private int maxSpellLevel = 0;
@@ -398,30 +399,27 @@
             ? null
             : await LookupService.GetSubclassByIdAsync(draft.SubclassId);
 
-        var activeProgression = classDetails.SpellProgression
-            .FirstOrDefault(p => p.CharacterLevel == characterLevel);
-
-        // Subclass progression (Eldritch Knight, Arcane Trickster, etc.)
-        if (activeProgression == null && subclassDetails != null)
+        // A subclass that casts for a class with no table of its own (Eldritch Knight, Arcane Trickster) is named with it
+        if (!classDetails.SpellProgression.Any(p => p.CharacterLevel == characterLevel)
+            && subclassDetails?.SpellProgression.Any(p => p.CharacterLevel == characterLevel) == true)
         {
-            activeProgression = subclassDetails.SpellProgression
-                .FirstOrDefault(p => p.CharacterLevel == characterLevel);
-
-            if (activeProgression != null)
-                className = $"{classDetails.Name} ({subclassDetails.Name})";
+            className = $"{classDetails.Name} ({subclassDetails.Name})";
         }
 
-        if (activeProgression == null)
+        // The counts come from the server, which checks the picks against them: a 2014 cleric's
+        // prepared spells follow its final scores
+        var allowance = await DraftService.GetSpellAllowanceAsync(DraftId);
+        isSpellcaster = allowance.CastsSpells;
+
+        if (!isSpellcaster)
         {
-            isSpellcaster = false;
             return;
         }
 
-        isSpellcaster = true;
-        spellsKnown = activeProgression.SpellsKnown;
-        cantripsKnown = activeProgression.CantripsKnown;
-        maxSpellLevel = activeProgression.MaxSpellLevel;
-        isPreparedCaster = spellsKnown == 0;
+        spellsKnown = allowance.Spells;
+        cantripsKnown = allowance.Cantrips;
+        maxSpellLevel = allowance.MaxSpellLevel;
+        spellsFollowScores = allowance.SpellsFollowScores;
 
         // Everything up to the highest spell level (cantrips are level 0): the class's own list,
         // the whole list of another class the subclass opens up (the Wizard's for an Eldritch
@@ -443,6 +441,11 @@
             .OrderBy(s => s.Level)
             .ThenBy(s => s.Name)
             .ToList();
+
+        // A domain or oath spell is prepared already and not one of the picks
+        var alwaysPreparedIds = allowance.AlwaysPreparedSpellIds.ToHashSet();
+        alwaysPreparedSpells = allSpells.Where(s => alwaysPreparedIds.Contains(s.Id)).ToList();
+        allSpells = allSpells.Where(s => !alwaysPreparedIds.Contains(s.Id)).ToList();
 
         availableCantrips = allSpells.Where(s => s.Level == 0).ToList();
         availableLeveledSpells = allSpells.Where(s => s.Level > 0).ToList();
@@ -508,14 +511,9 @@
         if (!BonusComplete()) return false;
         if (!isSpellcaster) return true;
 
-        // Prepared caster with no cantrips (Paladin, Ranger, Artificer at low levels): nothing to choose
-        if (isPreparedCaster && cantripsKnown == 0) return true;
-
-        // Cantrip requirement
         if (cantripsKnown > 0 && selectedCantrips.Count != cantripsKnown) return false;
 
-        // Leveled spell requirement (only for known-spell casters)
-        if (!isPreparedCaster && spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown) return false;
+        if (spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown) return false;
 
         return true;
     }
@@ -526,7 +524,7 @@
         {
             if (cantripsKnown > 0 && selectedCantrips.Count != cantripsKnown)
                 ErrorMessage = $"Please select exactly {cantripsKnown} cantrip{(cantripsKnown == 1 ? "" : "s")}.";
-            else if (!isPreparedCaster && spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown)
+            else if (spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown)
                 ErrorMessage = $"Please select exactly {spellsKnown} spell{(spellsKnown == 1 ? "" : "s")}.";
             return;
         }

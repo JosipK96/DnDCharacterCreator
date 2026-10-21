@@ -482,6 +482,9 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
+                    b.Property<int?>("PreparedSpellsLevelDivisor")
+                        .HasColumnType("integer");
+
                     b.Property<string>("SpellcastingAbility")
                         .IsRequired()
                         .HasMaxLength(20)

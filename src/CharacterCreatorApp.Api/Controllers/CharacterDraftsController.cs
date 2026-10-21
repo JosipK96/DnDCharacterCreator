@@ -13,6 +13,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.GetToolChoices;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetIncompleteDraft;
+using CharacterCreatorApp.Application.Features.CharacterCreation.GetSpellAllowance;
 using CharacterCreatorApp.Application.Features.CharacterCreation.PreviewCharacter;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScoreImprovements;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScores;
@@ -258,6 +259,23 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new ChooseSpellsCommand(draftId, request.SpellIds), cancellationToken);
 
             return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// How many cantrips and spells the class lets the draft pick, as PUT spells checks them. A
+        /// 2014 cleric's, druid's, paladin's or artificer's prepared spells follow its final
+        /// scores, so before the race, background and scores are chosen this is 400 with
+        /// CharacterDraft.ScoresRequired.
+        /// </summary>
+        [HttpGet("{draftId:guid}/spell-allowance")]
+        [ProducesResponseType(typeof(SpellAllowanceApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetSpellAllowance(Guid draftId, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new GetSpellAllowanceQuery(draftId), cancellationToken);
+
+            return OkOrProblem(response, allowance => _mapper.Map<SpellAllowanceApiResponse>(allowance));
         }
 
         /// <summary>

@@ -11,14 +11,24 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpell
         ICharacterDraftRepository characterDraftRepository,
         ISpellRepository spellRepository,
         IClassRepository classRepository,
+        IRaceRepository raceRepository,
+        IBackgroundRepository backgroundRepository,
+        ILanguageRepository languageRepository,
+        IFeatRepository featRepository,
         IUserContext userContext,
-        IUnitOfWork unitOfWork) : ICommandHandler<ChooseSpellsCommand, Response>
+        IUnitOfWork unitOfWork,
+        TimeProvider timeProvider) : ICommandHandler<ChooseSpellsCommand, Response>
     {
         private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
         private readonly ISpellRepository _spellRepository = spellRepository;
         private readonly IClassRepository _classRepository = classRepository;
         private readonly IUserContext _userContext = userContext;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly TimeProvider _timeProvider = timeProvider;
+
+        // A 2014 cleric's prepared spells follow its final scores, worked out from everything the draft names
+        private readonly DraftSourceLoader _sourceLoader = new(
+            raceRepository, classRepository, backgroundRepository, languageRepository, featRepository, spellRepository);
 
         public async Task<Response> Handle(ChooseSpellsCommand command, CancellationToken cancellationToken)
         {
@@ -49,8 +59,15 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpell
             }
 
             var subclass = @class.Subclasses.FirstOrDefault(s => s.Id == draft.SubclassId);
-            var allowance = @class.SpellAllowanceAt(level, subclass);
-            var choosable = allowance == null
+            var allowance = await SpellChoice.AllowanceForAsync(
+                draft, @class, subclass, level, _sourceLoader, _userContext.UserId, _timeProvider, cancellationToken);
+
+            if (!allowance.IsSuccess)
+            {
+                return allowance.Errors;
+            }
+
+            var choosable = allowance.Value == null
                 ? []
                 : await SpellChoice.LoadChoosableAsync(_spellRepository, @class, subclass, cancellationToken);
 
@@ -59,7 +76,7 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpell
                 return CharacterDraftErrors.SourceNotAllowed("spell", notAllowed.Name, notAllowed.Source);
             }
 
-            var invalidPick = SpellChoice.FindInvalidPick(command.SpellIds, choosable, allowance, @class.Name, level);
+            var invalidPick = SpellChoice.FindInvalidPick(command.SpellIds, choosable, allowance.Value, subclass, @class.Name, level);
 
             if (invalidPick is not null)
             {

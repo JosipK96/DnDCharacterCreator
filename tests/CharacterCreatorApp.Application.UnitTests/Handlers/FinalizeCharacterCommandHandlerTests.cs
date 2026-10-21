@@ -990,6 +990,94 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         _spellRepositoryMock.Verify(r => r.GetByClassIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Theory]
+    [InlineData("cleric", "Wisdom", 1, 14, 3)]
+    [InlineData("druid", "Wisdom", 1, 16, 4)]
+    [InlineData("paladin", "Charisma", 2, 14, 3)]
+    [InlineData("artificer", "Intelligence", 1, 16, 3)]
+    public async Task Handle_ForA2014PreparedCasterWithItsPreparedSpellsPicked_KeepsThem(
+        string classId, string ability, int level, int score, int prepared)
+    {
+        // Arrange - its modifier plus its level, half of it for a paladin or artificer
+        var spellIds = PreparedSpellIds(prepared);
+        var draft = CreatePreparedCasterDraft(classId, ability, level, score, spellIds);
+        ArrangePreparedCasterSpellList(classId);
+
+        // Act
+        var created = await ArrangeAndFinalize(_draftId, _userId, draft, @class: PreparedCaster(classId, ability, level));
+
+        // Assert
+        created.SpellIds.Should().BeEquivalentTo(spellIds);
+    }
+
+    [Theory]
+    [InlineData("cleric", "Wisdom", 1, 14, 3, 1)]
+    [InlineData("cleric", "Wisdom", 1, 14, 3, -1)]
+    [InlineData("druid", "Wisdom", 1, 16, 4, 1)]
+    [InlineData("druid", "Wisdom", 1, 16, 4, -1)]
+    [InlineData("paladin", "Charisma", 2, 14, 3, 1)]
+    [InlineData("paladin", "Charisma", 2, 14, 3, -3)]
+    [InlineData("artificer", "Intelligence", 1, 16, 3, 1)]
+    [InlineData("artificer", "Intelligence", 1, 16, 3, -2)]
+    public async Task Handle_ForA2014PreparedCasterWithTooManyOrTooFewSpells_ReturnsSpellCountMismatch(
+        string classId, string ability, int level, int score, int prepared, int off)
+    {
+        // Arrange - one more than it prepares, or fewer, down to none for a draft that never
+        // reached the spells step
+        var draft = CreatePreparedCasterDraft(classId, ability, level, score, PreparedSpellIds(prepared + off));
+        ArrangePreparedCasterSpellList(classId);
+        ArrangeRepositories(_draftId, _userId, draft, @class: PreparedCaster(classId, ability, level));
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Spell.SpellCountMismatch");
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Theory]
+    [InlineData("cleric", "Wisdom", 1, 14, 3)]
+    [InlineData("druid", "Wisdom", 1, 16, 4)]
+    [InlineData("paladin", "Charisma", 2, 14, 3)]
+    [InlineData("artificer", "Intelligence", 1, 16, 3)]
+    public async Task Handle_ForA2014PreparedCasterWithASpellAboveItsLevel_ReturnsLevelTooHigh(
+        string classId, string ability, int level, int score, int prepared)
+    {
+        // Arrange - the right count, but one of them a level 2 spell it has no slot for
+        var draft = CreatePreparedCasterDraft(classId, ability, level, score, [.. PreparedSpellIds(prepared - 1), "level_2_spell"]);
+        ArrangePreparedCasterSpellList(classId);
+        ArrangeRepositories(_draftId, _userId, draft, @class: PreparedCaster(classId, ability, level));
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Spell.LevelTooHigh");
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_ForAClericWhoseWisdomRoseAfterTheSpellsStep_ReturnsSpellCountMismatch()
+    {
+        // Arrange - six spells picked for a level 4 cleric with WIS 14 (+2 and 4), then the
+        // improvement went to Wisdom, 16 (+3): it prepares seven now
+        var draft = CreatePreparedCasterDraft("cleric", "Wisdom", 4, 14, PreparedSpellIds(6));
+        draft.SetAbilityScoreImprovements([new Dictionary<string, int> { ["WIS"] = 2 }]);
+        ArrangePreparedCasterSpellList("cleric");
+        ArrangeRepositories(_draftId, _userId, draft, @class: PreparedCaster("cleric", "Wisdom", 4));
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Spell.SpellCountMismatch");
+        result.Errors[0].Description.Should().Be("A level 4 cleric picks exactly 7 spell(s) above cantrips. The draft has 6.");
+    }
+
     /// <summary>
     /// Stubs the lookup repositories so the handler can get as far as building a Character.
     /// </summary>
@@ -1548,6 +1636,47 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
             WizardSpell("magic_missile", 1),
             WizardSpell("hold_person", 2),
         ]);
+    }
+
+    // A level 1 to 4 dwarf soldier of a 2014 prepared caster, its spellcasting ability at this score
+    private CharacterDraft CreatePreparedCasterDraft(string classId, string ability, int level, int score, List<string> spellIds)
+    {
+        var draft = CreateCompleteDraft(_userId, level);
+        draft.SetClass(classId);
+        var scores = new Dictionary<string, int> { ["STR"] = 10, ["DEX"] = 10, ["CON"] = 10, ["INT"] = 10, ["WIS"] = 10, ["CHA"] = 10 };
+        scores[AbilityScore.Normalize(ability)] = score;
+        draft.SetBaseAbilityScores(scores, AbilityScoreMethod.Rolled);
+        draft.SetAbilityScoreImprovements(AsisForLevel(level));
+        draft.SetSpells(spellIds);
+        return draft;
+    }
+
+    // A 2014 class whose table gives no spell count at this level, up to level 1 spells and no
+    // cantrips; a cleric or druid adds its whole level, a paladin or artificer half of it
+    private static Class PreparedCaster(string classId, string ability, int level)
+    {
+        var @class = CreateTestClass();
+        @class.Id = classId;
+        @class.Name = classId;
+        @class.Subclasses = [];
+        @class.SubclassLevel = 20;
+        @class.Spellcasting = new Spellcasting
+        {
+            ClassId = classId,
+            SpellcastingAbility = ability,
+            IsPreparedCaster = true,
+            PreparedSpellsLevelDivisor = classId is "paladin" or "artificer" ? 2 : 1,
+        };
+        @class.SpellProgression = [new ClassSpellProgression { ClassId = classId, CharacterLevel = level, CantripsKnown = 0, SpellsKnown = 0, MaxSpellLevel = 1 }];
+        return @class;
+    }
+
+    private static List<string> PreparedSpellIds(int count) => [.. Enumerable.Range(1, count).Select(i => $"level_1_spell_{i}")];
+
+    private void ArrangePreparedCasterSpellList(string classId)
+    {
+        _spellRepositoryMock.Setup(r => r.GetByClassIdAsync(classId, _cts.Token)).ReturnsAsync(
+            [.. PreparedSpellIds(8).Select(id => WizardSpell(id, 1)), WizardSpell("level_2_spell", 2)]);
     }
 
     private static SpellReadModel WizardSpell(string id, int level) => new()

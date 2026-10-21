@@ -69,7 +69,8 @@ public sealed class DraftSourceLoader(
         var feats = await _featRepository.GetByIdsAsync(
             CharacterBuilder.BackgroundFeatIds(background, draft).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds).Distinct(), cancellationToken);
         var languages = await _languageRepository.GetAllForEditionAsync(draft.Edition, cancellationToken);
-        var choosableSpells = @class.SpellAllowanceAt(draft.Level!.Value, subclass) == null
+        // Whether the character casts at all, which the scores do not change
+        var choosableSpells = @class.SpellAllowanceAt(draft.Level!.Value, subclass, draft.BaseAbilityScores) == null
             ? []
             : await SpellChoice.LoadChoosableAsync(_spellRepository, @class, subclass, cancellationToken);
 

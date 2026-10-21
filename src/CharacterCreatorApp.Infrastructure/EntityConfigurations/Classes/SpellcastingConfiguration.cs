@@ -28,5 +28,7 @@ public class SpellcastingConfiguration : IEntityTypeConfiguration<Spellcasting>
         builder.Property(s => s.IsPreparedCaster)
                .IsRequired()
                .HasDefaultValue(false);
+
+        builder.Property(s => s.PreparedSpellsLevelDivisor);
     }
 }

@@ -46,6 +46,7 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | **Feat** | A special ability taken in place of an ASI, given by a background (a 2024 origin feat, or a Dark Gift a few RHW backgrounds let the player pick, some in place of their own), or picked for a race (a variant human's, a 2024 human's Origin feat). May have prerequisites, and may raise an ability | `Feat`, `CharacterDraft.SelectedFeatIds`, `Background.FeatId`, `Background.FeatIdWith`, `CharacterDraft.BackgroundFeatId`, `Race.BonusFeatsWith` |
 | **Ability increase** | +1 or +2 to an ability from a race, a 2024 background, a feat or an ASI. Some are fixed (a dwarf's CON +2), some the player places (a half-elf's two +1s) | `AbilityIncreaseChoice`, `FeatAbilityIncrease` |
 | **Cantrip** | A spell of level 0, castable at will | Spell `Level == 0` |
+| **Prepared spells** | The levelled spells a prepared caster can cast that day. A 2024 class's table gives the number; a 2014 cleric, druid, paladin or artificer prepares its spellcasting modifier plus its level (half of it for a paladin or artificer), at least one. Domain and oath spells come on top | `Class.SpellAllowanceAt`, `Spellcasting.PreparedSpellsLevelDivisor`, `Subclass.AlwaysPreparedSpellIdsAt` |
 | **Spell slot** | A per-day resource for casting. **Not modelled yet** | — |
 
 ## Terms that mean something specific here

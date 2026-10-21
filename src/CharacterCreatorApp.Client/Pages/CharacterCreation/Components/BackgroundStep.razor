@@ -293,7 +293,7 @@
         plusOne = null;
         featId = null;
 
-        if ((background.FeatChoiceCategory ?? background.FeatAlternativeCategory) != null && categoryFeats.Count == 0)
+        if (BackgroundFeats.PickableCategory(background) != null && categoryFeats.Count == 0)
         {
             await LoadAsync(async () => categoryFeats = await LookupService.GetFeatsAsync(Edition, Sources), "Failed to load feats");
         }
@@ -332,7 +332,7 @@
     {
         if (selectedBackground == null || AbilityIncreases() is not { } increases) return;
 
-        var pickedFeatId = (selectedBackground.FeatChoiceCategory ?? selectedBackground.FeatAlternativeCategory) == null ? null : featId;
+        var pickedFeatId = BackgroundFeats.PickableCategory(selectedBackground) == null ? null : featId;
 
         if (await SaveAsync(() => DraftService.SetBackgroundAsync(DraftId, selectedBackground.Id, increases, pickedFeatId)))
         {

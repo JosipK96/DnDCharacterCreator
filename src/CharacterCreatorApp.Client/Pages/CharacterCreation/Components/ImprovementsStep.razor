@@ -313,10 +313,8 @@
         var editionFeats = await LookupService.GetFeatsAsync(draft.Edition, draft.AllowedSources);
 
         // The feat picked for the background (a Mist Wanderer's Dark Gift, or a Haunted One's in
-        // place of Survivor), or else its own, as Background.FeatIdWith on the server
-        var backgroundFeatId = (background?.FeatChoiceCategory ?? background?.FeatAlternativeCategory) == null
-            ? background?.Feat?.Id
-            : draft.BackgroundFeatId ?? background?.Feat?.Id;
+        // place of Survivor), or else its own
+        var backgroundFeatId = background == null ? null : BackgroundFeats.FeatIdWith(background, draft.BackgroundFeatId);
 
         // Only the feats of the character's rules edition and books, less one the background
         // already gave (a 2024 criminal's Alert) unless it can be taken again

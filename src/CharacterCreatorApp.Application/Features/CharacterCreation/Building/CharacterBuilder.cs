@@ -65,6 +65,7 @@ public static class CharacterBuilder
             .Concat(draft.SelectedClassProficiencyIds)
             .Concat(draft.SelectedRaceSkillIds)
             .Concat(draft.ToolPicks.SelectMany(pick => pick))
+            .Concat(draft.FeatProficiencyPicks.SelectMany(pick => pick.ProficiencyIds))
             .Concat(sources.Feats.SelectMany(f => f.GrantedProficiencyIds))
             .Distinct());
 

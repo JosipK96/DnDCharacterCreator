@@ -67,10 +67,12 @@ internal static class AdditionalSpells
         }
 
         var choices = picking.Select(block => BlockChoice(block, edition)).ToList();
+        var abilityOptions = picking.Select(AbilityOptions).ToList();
 
         if (choices.Contains(null)
             || choices.Select(c => (c!.Cantrips, c.FirstLevelSpells)).Distinct().Count() > 1
-            || choices.Select(c => c!.ClassIds[0]).Distinct().Count() != choices.Count)
+            || choices.Select(c => c!.ClassIds[0]).Distinct().Count() != choices.Count
+            || abilityOptions.Exists(options => !options.SequenceEqual(abilityOptions[0])))
         {
             return null;
         }
@@ -80,8 +82,16 @@ internal static class AdditionalSpells
             ClassIds = choices.Select(c => c!.ClassIds[0]).ToList(),
             Cantrips = choices[0]!.Cantrips,
             FirstLevelSpells = choices[0]!.FirstLevelSpells,
+            AbilityOptions = abilityOptions[0],
         };
     }
+
+    // The spellcasting ability a block lets the player pick, {"choose": ["int", "wis", "cha"]} (the
+    // 2024 Magic Initiate's), by canonical id; none for a fixed one ("con") or "inherit"
+    private static List<string> AbilityOptions(JsonObject block) =>
+        block["ability"] is JsonObject { } ability && ability["choose"] is JsonArray options
+            ? options.Select(option => AbilityScore.Normalize(option!.GetValue<string>())).ToList()
+            : [];
 
     private static BonusSpellChoice? BlockChoice(JsonObject block, string edition)
     {

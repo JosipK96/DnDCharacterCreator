@@ -28,7 +28,8 @@ namespace CharacterCreatorApp.Application.ReadModels
         public IReadOnlyCollection<string> GrantedLanguageIds { get; set; } = [];
         public IReadOnlyCollection<string> GrantedSpellIds { get; set; } = [];
 
-        public FeatChoiceReadModel? Choice { get; set; }
+        /// <summary>The pick it asks for beside its increase: Resilient's save, Keen Mind's skill, Skilled's three.</summary>
+        public FeatChoice? Choice { get; set; }
 
         /// <summary>The spells the player picks from a class list: Magic Initiate's.</summary>
         public BonusSpellChoice? SpellChoice { get; set; }

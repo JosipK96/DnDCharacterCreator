@@ -92,6 +92,13 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public List<Dictionary<string, int>> FeatAbilityIncreases { get; private set; } = [];
 
         /// <summary>
+        /// The skills or tools picked for each feat whose choice asks for them (Keen Mind, Skilled),
+        /// one per such feat: the background's feat, then SelectedFeatIds in order. Skilled taken
+        /// twice has two. Another background feat or another set of feats clears it.
+        /// </summary>
+        public List<FeatProficiencyPick> FeatProficiencyPicks { get; private set; } = [];
+
+        /// <summary>
         /// The Fighting Style feats picked for the class's Fighting Style features
         /// (CharacterFeatures.FightingStylesOwed), apart from the feats taken for improvements.
         /// </summary>
@@ -162,6 +169,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             ToolPicks = [];
             SelectedFeatIds = [];
             FeatAbilityIncreases = [];
+            FeatProficiencyPicks = [];
             FightingStyleIds = [];
             FeatSpells = [];
             SelectedSpellIds = [];
@@ -245,12 +253,14 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 SelectedLanguageIds = [];
                 ToolPicks = [];
                 FeatSpells = [];
+                FeatProficiencyPicks = [];
             }
 
             if (BackgroundFeatId != null && IsFeatRemoved(BackgroundFeatId))
             {
                 BackgroundFeatId = null;
                 FeatSpells = [];
+                FeatProficiencyPicks = [];
             }
 
             if (SelectedFeatIds.Exists(IsFeatRemoved))
@@ -394,8 +404,9 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
 
             if (BackgroundId != backgroundId || BackgroundFeatId != featId)
             {
-                // The background's feat comes first among the feats whose spells are picked
+                // The background's feat comes first among the feats whose spells and proficiencies are picked
                 FeatSpells = [];
+                FeatProficiencyPicks = [];
             }
 
             BackgroundId = backgroundId;
@@ -433,10 +444,14 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         }
 
         /// <summary>
-        /// Sets the feats taken, and what each raises (FeatAbilityIncrease.Resolve): one entry
-        /// per feat, in order, or none at all for feats that raise nothing.
+        /// Sets the feats taken, what each raises (FeatAbilityIncrease.Resolve): one entry per
+        /// feat, in order, or none at all for feats that raise nothing; and the skills or tools
+        /// picked for the background's feat and these, in the order FeatProficiencyPicks keeps.
         /// </summary>
-        public void SetFeats(List<string> featIds, List<Dictionary<string, int>>? abilityIncreases = null)
+        public void SetFeats(
+            List<string> featIds,
+            List<Dictionary<string, int>>? abilityIncreases = null,
+            List<FeatProficiencyPick>? proficiencyPicks = null)
         {
             ArgumentNullException.ThrowIfNull(featIds);
 
@@ -452,6 +467,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             }
 
             FeatAbilityIncreases = abilityIncreases?.ConvertAll(increase => Canonical(increase)) ?? featIds.ConvertAll(_ => new Dictionary<string, int>());
+            FeatProficiencyPicks = proficiencyPicks ?? [];
             SelectedFeatIds = featIds;
         }
 
@@ -495,7 +511,15 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             ArgumentNullException.ThrowIfNull(featSpells);
 
             RaceSpellIds = raceSpellIds;
-            FeatSpells = featSpells;
+
+            // The ability arrives as "WIS" or "wisdom"; the sheet reads the canonical id
+            FeatSpells = featSpells.ConvertAll(pick => new FeatSpellPick
+            {
+                FeatId = pick.FeatId,
+                ClassId = pick.ClassId,
+                SpellIds = pick.SpellIds,
+                AbilityId = pick.AbilityId is { } abilityId ? AbilityScore.Normalize(abilityId) : null,
+            });
         }
 
         // The improvements step as a whole: the points, the feats taken instead and what they
@@ -505,6 +529,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             AbilityScoreImprovements = [];
             SelectedFeatIds = [];
             FeatAbilityIncreases = [];
+            FeatProficiencyPicks = [];
             FeatSpells = [];
         }
 

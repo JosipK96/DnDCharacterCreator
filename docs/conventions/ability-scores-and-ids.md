@@ -47,6 +47,10 @@ A race's own feats (`Race.BonusFeatsWith`: the variant human's one of any kind, 
 Origin one) are not improvements. They come first in `SelectedFeatIds`, and the improvements step
 checks their count and category before counting the rest against `Class.AsiLevels`.
 
+A feat's spellcasting ability, where the player picks it (the 2024 Magic Initiate's Intelligence,
+Wisdom or Charisma, `BonusSpellChoice.AbilityOptions`), is an ability id too: it arrives in any
+spelling with the feat's spells and is kept under its canonical id in `FeatSpellPick.AbilityId`.
+
 ## Language ids
 
 Languages arrive in three shapes too:

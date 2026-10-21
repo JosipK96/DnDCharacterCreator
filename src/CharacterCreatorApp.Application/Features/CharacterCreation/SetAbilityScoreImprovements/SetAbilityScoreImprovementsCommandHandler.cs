@@ -79,10 +79,17 @@ public class SetAbilityScoreImprovementsCommandHandler(
             return improvementError.Value;
         }
 
-        var feats = command.FeatIds.Count == 0 ? [] : await _featRepository.GetByIdsAsync(command.FeatIds, cancellationToken);
+        // The background's feat (a Noble's Skilled) may ask for picks too, made in this step
+        var background = draft.BackgroundId is { } backgroundId
+            ? await _backgroundRepository.GetByIdWithDetailsAsync(backgroundId, cancellationToken)
+            : null;
+        var backgroundFeatIds = background == null ? [] : CharacterBuilder.BackgroundFeatIds(background, draft).ToList();
+        var featIdsToLoad = command.FeatIds.Concat(backgroundFeatIds).Distinct().ToList();
+        var feats = featIdsToLoad.Count == 0 ? [] : await _featRepository.GetByIdsAsync(featIdsToLoad, cancellationToken);
         var featsById = feats.ToDictionary(f => f.Id);
-        // The prerequisites are only looked up once ValidateFeatsAsync has found every id
-        var featError = await ValidateFeatsAsync(command.FeatIds, featsById, draft, cancellationToken)
+
+        // The prerequisites are only looked up once ValidateFeats has found every id
+        var featError = ValidateFeats(command.FeatIds, backgroundFeatIds, featsById, draft)
             ?? FeatPrerequisiteCheck.FindUnmet(
                 command.FeatIds.ConvertAll(id => featsById[id]),
                 bonusFeats.Count,
@@ -113,8 +120,18 @@ public class SetAbilityScoreImprovementsCommandHandler(
             return featIncreases.Errors;
         }
 
+        var proficiencyPicks = command.FeatProficiencyPicks ?? [];
+        var proficiencyError = FeatProficiencyPicks.FindInvalidPick(
+                proficiencyPicks, FeatProficiencyPicks.SlotsFor(backgroundFeatIds, command.FeatIds, featsById))
+            ?? ProficiencyPickCheck.FindRepeated(draft, race, subrace, background, @class, featPicks: proficiencyPicks);
+
+        if (proficiencyError is not null)
+        {
+            return proficiencyError.Value;
+        }
+
         draft.SetAbilityScoreImprovements(command.Improvements);
-        draft.SetFeats(command.FeatIds, featIncreases.Value);
+        draft.SetFeats(command.FeatIds, featIncreases.Value, proficiencyPicks);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Response.Success();
@@ -185,11 +202,11 @@ public class SetAbilityScoreImprovementsCommandHandler(
         return resolved;
     }
 
-    private async Task<Error?> ValidateFeatsAsync(
+    private static Error? ValidateFeats(
         List<string> featIds,
+        List<string> backgroundFeatIds,
         Dictionary<string, FeatReadModel> featsById,
-        CharacterDraft draft,
-        CancellationToken cancellationToken)
+        CharacterDraft draft)
     {
         if (featIds.Count == 0)
         {
@@ -203,10 +220,6 @@ public class SetAbilityScoreImprovementsCommandHandler(
             return CharacterDraftErrors.InvalidFeatIds(unknown);
         }
 
-        var backgroundFeatId = draft.BackgroundId is { } backgroundId
-            ? (await _backgroundRepository.GetByIdAsync(backgroundId, cancellationToken))?.Feat?.Id
-            : null;
-
         // A 2014 Fighting Style comes with the class alone; no improvement buys one
         var classOnly = featIds.Select(id => featsById[id]).FirstOrDefault(f => !FeatCategory.CanBeTakenForImprovement(f.Edition, f.Category));
 
@@ -218,7 +231,7 @@ public class SetAbilityScoreImprovementsCommandHandler(
         // The background's feat counts too: a 2024 criminal has Alert already. The Fighting
         // Styles are saved after this step's feats, and their own step checks them against these.
         var repeatedNonRepeatable = featIds
-            .Concat(backgroundFeatId is { } originFeatId ? [originFeatId] : [])
+            .Concat(backgroundFeatIds.Where(featsById.ContainsKey))
             .GroupBy(id => id)
             .Where(g => g.Count() > 1 && !featsById[g.Key].IsRepeatable)
             .Select(g => featsById[g.Key].Name)

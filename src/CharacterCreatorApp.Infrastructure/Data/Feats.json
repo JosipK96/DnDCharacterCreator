@@ -64,7 +64,8 @@
         "sorcerer"
       ],
       "Cantrips": 1,
-      "FirstLevelSpells": 1
+      "FirstLevelSpells": 1,
+      "AbilityOptions": []
     }
   },
   {
@@ -98,7 +99,8 @@
         "sorcerer-2024"
       ],
       "Cantrips": 1,
-      "FirstLevelSpells": 1
+      "FirstLevelSpells": 1,
+      "AbilityOptions": []
     }
   },
   {
@@ -632,7 +634,12 @@
         "wizard-2024"
       ],
       "Cantrips": 2,
-      "FirstLevelSpells": 0
+      "FirstLevelSpells": 0,
+      "AbilityOptions": [
+        "INT",
+        "WIS",
+        "CHA"
+      ]
     }
   },
   {
@@ -720,7 +727,8 @@
         "artificer"
       ],
       "Cantrips": 1,
-      "FirstLevelSpells": 1
+      "FirstLevelSpells": 1,
+      "AbilityOptions": []
     }
   },
   {
@@ -866,7 +874,8 @@
         "cleric-2024"
       ],
       "Cantrips": 2,
-      "FirstLevelSpells": 0
+      "FirstLevelSpells": 0,
+      "AbilityOptions": []
     }
   },
   {
@@ -3051,7 +3060,8 @@
         "druid-2024"
       ],
       "Cantrips": 2,
-      "FirstLevelSpells": 0
+      "FirstLevelSpells": 0,
+      "AbilityOptions": []
     }
   },
   {
@@ -5988,7 +5998,8 @@
         "wizard"
       ],
       "Cantrips": 2,
-      "FirstLevelSpells": 1
+      "FirstLevelSpells": 1,
+      "AbilityOptions": []
     }
   },
   {
@@ -6021,7 +6032,12 @@
         "wizard-2024"
       ],
       "Cantrips": 2,
-      "FirstLevelSpells": 1
+      "FirstLevelSpells": 1,
+      "AbilityOptions": [
+        "INT",
+        "WIS",
+        "CHA"
+      ]
     }
   },
   {
@@ -10321,7 +10337,8 @@
         "druid"
       ],
       "Cantrips": 1,
-      "FirstLevelSpells": 0
+      "FirstLevelSpells": 0,
+      "AbilityOptions": []
     }
   },
   {

@@ -5,7 +5,8 @@ namespace CharacterCreatorApp.Contracts.Responses;
 /// of 2024 feat ("Origin", "General", "Fighting Style", "Epic Boon") and null for a 2014 one.
 /// Prerequisites are worded for the player, such as "Level 19". AbilityIncrease is what the feat
 /// raises, null when it raises nothing. CanBeTakenForImprovement is false for a 2014 Fighting
-/// Style, which only the class's Fighting Style feature gives.
+/// Style, which only the class's Fighting Style feature gives. Choice is the pick it asks for
+/// beside the increase, null when none.
 /// </summary>
 public record FeatApiResponse(
     string Id,
@@ -17,7 +18,19 @@ public record FeatApiResponse(
     List<string> Prerequisites,
     List<string> GrantedProficiencyIds,
     FeatAbilityIncreaseApiResponse? AbilityIncrease,
-    bool CanBeTakenForImprovement
+    bool CanBeTakenForImprovement,
+    FeatChoiceApiResponse? Choice = null
+);
+
+/// <summary>
+/// A pick a feat asks for: Type "skills" (Count skill ids from Options), "skills_tools" (Count
+/// skill or tool ids from Options, Skilled's three), or "saving-throw" (Resilient's, which follows
+/// the ability it raises and is not picked on its own).
+/// </summary>
+public record FeatChoiceApiResponse(
+    string Type,
+    int Count,
+    List<string> Options
 );
 
 /// <summary>

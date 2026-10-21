@@ -69,14 +69,19 @@ public class CharacterDraftService(HttpClient http)
 
     /// <summary>
     /// Sets the improvements and the feats, the race's own feats first, with what each feat raises
-    /// in the same order ({"DEX": 1} for an Athlete who chose Dexterity, {} for any other).
+    /// in the same order ({"DEX": 1} for an Athlete who chose Dexterity, {} for any other), and the
+    /// skills or tools picked for each feat that asks for them, the background's feat first.
     /// </summary>
     public Task SetAbilityScoreImprovementsAsync(
         Guid draftId,
         List<Dictionary<string, int>> improvements,
         List<string> featIds,
-        List<Dictionary<string, int>> featAbilityIncreases) =>
-        PutAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest(improvements, featIds, featAbilityIncreases));
+        List<Dictionary<string, int>> featAbilityIncreases,
+        List<FeatProficiencyPickApiModel> featProficiencyPicks) =>
+        PutAsync(
+            draftId,
+            "ability-score-improvements",
+            new SetAbilityScoreImprovementsApiRequest(improvements, featIds, featAbilityIncreases, featProficiencyPicks));
 
     /// <summary>How many Fighting Styles the character picks (0 for most classes) and its class's options.</summary>
     public async Task<FightingStylesApiResponse> GetFightingStylesAsync(Guid draftId)

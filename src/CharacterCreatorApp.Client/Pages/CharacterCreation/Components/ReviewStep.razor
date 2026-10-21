@@ -146,7 +146,7 @@
                         <p class="text-gray-200">@entry.Feat.Name</p>
                         @if (entry.Spells.Count > 0)
                         {
-                            <p class="text-gray-400 text-sm">Spells: @string.Join(", ", entry.Spells.Select(s => s.Name))</p>
+                            <p class="text-gray-400 text-sm">@AbilityNames.SpellsLabel(entry.SpellcastingAbilityId): @string.Join(", ", entry.Spells.Select(s => s.Name))</p>
                         }
                     }
                 </div>

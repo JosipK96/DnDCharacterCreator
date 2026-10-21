@@ -1239,6 +1239,9 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         character.Feats[0].Spells.Select(s => s.Id).Should().Equal("guidance_2024", "light_2024", "bless_2024");
         character.Feats[1].Spells.Should().BeEmpty();
         character.Feats[2].Spells.Select(s => s.Id).Should().Equal("fire_bolt_2024", "mage_hand_2024", "shield_2024");
+
+        // Each Magic Initiate with the spellcasting ability picked for it, by its canonical id
+        character.Feats.Select(f => f.SpellcastingAbilityId).Should().Equal("WIS", null, "INT");
     }
 
     [Fact]
@@ -1257,6 +1260,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         preview.Feats[0].Spells.Select(s => s.Id).Should().Equal("guidance_2024", "light_2024", "bless_2024");
         preview.Feats[1].Spells.Should().BeEmpty();
         preview.Feats[2].Spells.Select(s => s.Id).Should().Equal("fire_bolt_2024", "mage_hand_2024", "shield_2024");
+        preview.Feats.Select(f => f.SpellcastingAbilityId).Should().Equal("WIS", null, "INT");
     }
 
     [Fact]
@@ -1589,6 +1593,121 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         return draftId;
     }
 
+    [Fact]
+    public async Task CompleteWorkflow_WithANobleHumanTakingSkilledTwice_KeepsBothSetsAndGivesThemAll()
+    {
+        // Arrange - Skilled from the Noble background, then again as the human's Origin feat
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateNobleHumanFighterAsync();
+        FeatProficiencyPickApiModel[] picks =
+        [
+            new() { FeatId = "skilled_2024", ProficiencyIds = ["arcana", "lute", "thieves-tools"] },
+            new() { FeatId = "skilled_2024", ProficiencyIds = ["insight", "religion", "smith_tools"] },
+        ];
+        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["skilled_2024"], [[]], [.. picks]));
+
+        // Act
+        var draft = await GetDraftAsync(draftId);
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        // Assert - the draft keeps the two sets in order, and the sheet has every one
+        draft.FeatProficiencyPicks.Should().BeEquivalentTo(picks, options => options.WithStrictOrdering());
+        character!.Proficiencies.Select(p => p.Id).Should().Contain(
+            ["arcana", "lute", "thieves-tools", "insight", "religion", "smith_tools", "history", "persuasion"]);
+        character.Stats!.Skills.Single(s => s.SkillId == "arcana").IsProficient.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Finalize_WithTheNoblesSkilledPicksOpen_ReturnsFeatProficiencyPicksIncompleteAndThePreviewShowsIt()
+    {
+        // Arrange - the Noble's Skilled picked, then the background changed to a Charlatan, whose
+        // Skilled is another feat to pick for; the human's Origin feat is Alert
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateNobleHumanFighterAsync();
+        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest(
+            [], ["alert_2024"], [[]], [new() { FeatId = "skilled_2024", ProficiencyIds = ["arcana", "lute", "insight"] }]));
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "charlatan_2024", AbilityIncreases = new() { ["DEX"] = 2, ["CHA"] = 1 } });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+
+        // Act
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        var preview = await _client.GetFromJsonAsync<CharacterPreviewApiResponse>($"/api/character-drafts/{draftId}/preview", cancellationToken);
+
+        // Assert
+        await finalizeResponse.ShouldFailWithAsync(HttpStatusCode.BadRequest, "Character.FeatProficiencyPicksIncomplete");
+        preview!.BlockingIssue.Should().Contain("Skilled");
+    }
+
+    [Fact]
+    public async Task SetAbilityScoreImprovements_WithAFeatPickTheNobleGives_ReturnsProficiencyAlreadyGiven()
+    {
+        // Arrange - History comes with the Noble background
+        await SignInAsync();
+        var draftId = await CreateNobleHumanFighterAsync();
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/ability-score-improvements",
+            new SetAbilityScoreImprovementsApiRequest(
+                [], ["alert_2024"], [[]], [new() { FeatId = "skilled_2024", ProficiencyIds = ["arcana", "history", "lute"] }]),
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.ProficiencyAlreadyGiven");
+    }
+
+    [Fact]
+    public async Task ChooseBonusSpells_ForThe2024MagicInitiateWithoutItsAbility_ReturnsInvalidSpellcastingAbility()
+    {
+        // Arrange - the Acolyte's Magic Initiate on the cleric list, its ability not picked
+        await SignInAsync();
+        var draftId = await CreateSmallHumanAcolyteWithTwoMagicInitiatesAsync();
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/bonus-spells",
+            new ChooseBonusSpellsApiRequest
+            {
+                FeatSpells =
+                [
+                    new() { FeatId = "magic_initiate_2024", ClassId = "cleric-2024", SpellIds = ["guidance_2024", "light_2024", "bless_2024"] },
+                    new() { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["fire_bolt_2024", "mage_hand_2024", "shield_2024"], AbilityId = "INT" },
+                ],
+            },
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.InvalidSpellcastingAbility");
+    }
+
+    // A level 1 2024 human fighter Noble with every step done but the improvements: the Noble's
+    // Skilled and the human's Origin feat are left to pick
+    private async Task<Guid> CreateNobleHumanFighterAsync()
+    {
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Aurelia", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "human_2024", Size = "Medium" });
+        await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["stealth"]));
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "noble_2024", AbilityIncreases = new() { ["STR"] = 2, ["CHA"] = 1 } });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
+
+        return draftId;
+    }
+
     // A level 1 2024 human fighter, Small, ready to finalize: Magic Initiate twice, the Acolyte's
     // on the cleric list and the human's Origin feat on the wizard list, and Defense
     private async Task<Guid> CreateSmallHumanAcolyteWithTwoMagicInitiatesAsync()
@@ -1612,8 +1731,8 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         {
             FeatSpells =
             [
-                new() { FeatId = "magic_initiate_2024", ClassId = "cleric-2024", SpellIds = ["guidance_2024", "light_2024", "bless_2024"] },
-                new() { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["fire_bolt_2024", "mage_hand_2024", "shield_2024"] },
+                new() { FeatId = "magic_initiate_2024", ClassId = "cleric-2024", SpellIds = ["guidance_2024", "light_2024", "bless_2024"], AbilityId = "WIS" },
+                new() { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["fire_bolt_2024", "mage_hand_2024", "shield_2024"], AbilityId = "intelligence" },
             ],
         });
 

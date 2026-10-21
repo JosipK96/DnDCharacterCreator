@@ -78,7 +78,7 @@ public class BonusSpellsHandlersTests : IDisposable
         // Assert
         result.IsSuccess.Should().BeTrue();
         _draft.RaceSpellIds.Should().Equal("fire_bolt");
-        _draft.FeatSpells.Should().Equal(pick);
+        _draft.FeatSpells.Should().BeEquivalentTo([pick]);
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
     }
 
@@ -127,6 +127,25 @@ public class BonusSpellsHandlersTests : IDisposable
             (null, "High Elf", 1, 0),
             ("magic_initiate", "Magic Initiate", 2, 1));
         result.Value[1].Lists.Select(l => (l.ClassId, l.ClassName)).Should().Equal(("cleric", "Cleric"), ("wizard", "Wizard"));
+        result.Value[1].AbilityOptions.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task GetBonusSpells_ForAFeatWithASpellcastingAbilityToPick_ListsTheAbilities()
+    {
+        // Arrange - the 2024 Magic Initiate's Intelligence, Wisdom or Charisma
+        ArrangeClassNames();
+        var magicInitiate = MagicInitiate();
+        magicInitiate.SpellChoice!.AbilityOptions = ["INT", "WIS", "CHA"];
+        _featRepositoryMock
+            .Setup(r => r.GetByIdsAsync(It.Is<IEnumerable<string>>(ids => ids.SequenceEqual(new[] { "magic_initiate" })), _cts.Token))
+            .ReturnsAsync([magicInitiate]);
+
+        // Act
+        var result = await QueryHandler().Handle(new GetBonusSpellsQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value[1].AbilityOptions.Should().Equal("INT", "WIS", "CHA");
     }
 
     [Fact]

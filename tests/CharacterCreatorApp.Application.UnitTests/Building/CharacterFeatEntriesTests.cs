@@ -35,6 +35,23 @@ public class CharacterFeatEntriesTests
     }
 
     [Fact]
+    public void Build_WithAFeatTakenTwice_GivesEachTakeTheAbilityPickedForIt()
+    {
+        // Arrange - the 2024 Magic Initiate's ability is picked each time with its spells
+        List<FeatSpellPick> picks =
+        [
+            new() { FeatId = "magic_initiate", ClassId = "cleric", SpellIds = ["light"], AbilityId = "WIS" },
+            new() { FeatId = "magic_initiate", ClassId = "wizard", SpellIds = ["fire_bolt"], AbilityId = "INT" },
+        ];
+
+        // Act
+        var entries = CharacterFeatEntries.Build(["magic_initiate", "alert", "magic_initiate"], picks, Feats, Spells);
+
+        // Assert
+        entries.Select(e => e.SpellcastingAbilityId).Should().Equal("WIS", null, "INT");
+    }
+
+    [Fact]
     public void Build_WithAFeatTakenOnce_ListsItOnce()
     {
         // Act

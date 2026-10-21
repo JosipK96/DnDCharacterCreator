@@ -193,6 +193,35 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_WithKeenMindsSkillNotPicked_SaysWhatIsMissing()
+    {
+        // Arrange
+        var draft = ArrangeKeenMindDraft();
+        draft.SetFeats(["keen_mind_2014"], [[]]);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.BlockingIssue.Should().Be("Pick the skills or tools of Keen Mind, one pick each, in that order. Got 0 pick(s).");
+    }
+
+    [Fact]
+    public async Task Handle_WithKeenMindsSkillPicked_MarksTheSkillProficient()
+    {
+        // Arrange
+        ArrangeKeenMindDraft();
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.BlockingIssue.Should().BeNull();
+        result.Value.Stats.Skills.Single(s => s.SkillId == "arcana").IsProficient.Should().BeTrue();
+    }
+
+    [Fact]
     public async Task Handle_ShowsTheRacesSize()
     {
         // Arrange
@@ -238,9 +267,30 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
                 Edition = RulesEdition.Edition2014,
                 Source = "PHB",
                 AbilityIncrease = new FeatAbilityIncrease { Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
-                Choice = new FeatChoiceReadModel { Type = FeatChoice.SavingThrow, Count = 1, Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
+                Choice = new FeatChoice { Type = FeatChoice.SavingThrow, Count = 1, Options = ["STR", "DEX", "CON", "INT", "WIS", "CHA"] },
             },
         ]);
+    }
+
+    // A level 4 fighter whose improvement went on Keen Mind, with Arcana picked for it
+    private CharacterDraft ArrangeKeenMindDraft()
+    {
+        var draft = ArrangeDraft(level: 4);
+        draft.SetAbilityScoreImprovements([]);
+        draft.SetFeats(["keen_mind_2014"], [[]], [new FeatProficiencyPick { FeatId = "keen_mind_2014", ProficiencyIds = ["arcana"] }]);
+        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync(
+        [
+            new FeatReadModel
+            {
+                Id = "keen_mind_2014",
+                Name = "Keen Mind",
+                Description = "A feat.",
+                Edition = RulesEdition.Edition2014,
+                Source = "PHB",
+                Choice = new FeatChoice { Type = FeatChoice.Skills, Count = 1, Options = ["arcana", "history"] },
+            },
+        ]);
+        return draft;
     }
 
     private CharacterDraft ArrangeDraft(int level)

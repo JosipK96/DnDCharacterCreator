@@ -33,6 +33,27 @@ public class AdditionalSpellsTests
         // Assert
         choice!.ClassIds.Should().Equal("cleric-2024", "wizard-2024");
         (choice.Cantrips, choice.FirstLevelSpells).Should().Be((2, 1));
+        choice.AbilityOptions.Should().Equal("INT", "WIS", "CHA");
+    }
+
+    [Fact]
+    public void Choice_WithListsCastWithDifferentAbilitiesToPick_IsNull()
+    {
+        // Arrange - which abilities the player picks from would depend on the list
+        var blocks = Blocks("""
+            [
+              {"name": "Cleric Spells", "ability": {"choose": ["wis", "cha"]},
+               "known": {"_": [{"choose": "level=0|class=Cleric", "count": 2}]}},
+              {"name": "Wizard Spells", "ability": {"choose": ["int", "wis", "cha"]},
+               "known": {"_": [{"choose": "level=0|class=Wizard", "count": 2}]}}
+            ]
+            """);
+
+        // Act
+        var choice = AdditionalSpells.Choice(blocks, RulesEdition.Edition2024);
+
+        // Assert
+        choice.Should().BeNull();
     }
 
     [Fact]
@@ -47,6 +68,9 @@ public class AdditionalSpellsTests
         // Assert
         choice!.ClassIds.Should().Equal("wizard");
         (choice.Cantrips, choice.FirstLevelSpells).Should().Be((1, 0));
+
+        // Its Intelligence is fixed, so there is no ability to pick
+        choice.AbilityOptions.Should().BeEmpty();
     }
 
     [Theory]

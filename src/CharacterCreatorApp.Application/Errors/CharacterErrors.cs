@@ -99,6 +99,16 @@ public static class CharacterErrors
         return Error.Validation("Character.ToolChoicesIncomplete", description);
     }
 
+    public static Error FeatProficiencyPicksIncomplete(IEnumerable<string> featNames, int picked)
+    {
+        var names = featNames.ToList();
+        var description = names.Count == 0
+            ? $"No feat of the character's has skills or tools to pick. Got {picked} pick(s)."
+            : $"Pick the skills or tools of {string.Join(", ", names)}, one pick each, in that order. Got {picked} pick(s).";
+
+        return Error.Validation("Character.FeatProficiencyPicksIncomplete", description);
+    }
+
     public static Error SizeRequired(string raceName, IEnumerable<string> sizes) =>
         Error.Validation("Character.SizeRequired", $"A {raceName} is {string.Join(" or ", sizes)}; pick one.");
 

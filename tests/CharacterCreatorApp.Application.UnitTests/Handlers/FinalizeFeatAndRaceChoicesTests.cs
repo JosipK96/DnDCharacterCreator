@@ -7,6 +7,7 @@ using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -261,6 +262,104 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         AssertRefused(result, "CharacterDraft.BonusSpellListNotOffered");
     }
 
+    [Fact]
+    public async Task Handle_WithTheMagicInitiate2024sAbilityNotPicked_ReturnsInvalidSpellcastingAbility()
+    {
+        // Arrange - its spells are picked, its Intelligence, Wisdom or Charisma is not
+        var draft = DraftWithFeat("magic_initiate");
+        draft.ChooseBonusSpells([], [new FeatSpellPick { FeatId = "magic_initiate", ClassId = "wizard", SpellIds = ["fire_bolt", "mage_hand", "shield"] }]);
+        ArrangeFeats(MagicInitiate2024());
+        ArrangeMagicInitiateLists();
+
+        // Act
+        var result = await Finalize(draft);
+
+        // Assert
+        AssertRefused(result, "CharacterDraft.InvalidSpellcastingAbility");
+    }
+
+    [Fact]
+    public async Task Handle_WithTheMagicInitiate2024sAbilityPicked_KeepsItWithTheSpells()
+    {
+        // Arrange
+        var draft = DraftWithFeat("magic_initiate");
+        draft.ChooseBonusSpells(
+            [], [new FeatSpellPick { FeatId = "magic_initiate", ClassId = "wizard", SpellIds = ["fire_bolt", "mage_hand", "shield"], AbilityId = "WIS" }]);
+        ArrangeFeats(MagicInitiate2024());
+        ArrangeMagicInitiateLists();
+
+        // Act
+        var created = await FinalizeSuccessfully(draft);
+
+        // Assert
+        created.FeatSpells.Should().ContainSingle().Which.AbilityId.Should().Be("WIS");
+    }
+
+    // --- A feat's skills and tools ---
+
+    [Fact]
+    public async Task Handle_WithSkilledsPicksNotMade_ReturnsFeatProficiencyPicksIncomplete()
+    {
+        // Arrange
+        var draft = DraftWithFeat("skilled");
+        ArrangeFeats(Skilled());
+
+        // Act
+        var result = await Finalize(draft);
+
+        // Assert
+        AssertRefused(result, "Character.FeatProficiencyPicksIncomplete");
+    }
+
+    [Fact]
+    public async Task Handle_WithSkilledFromTheBackgroundAndAnImprovement_GivesTheCharacterBothSets()
+    {
+        // Arrange - the background's Skilled's picks come first
+        var draft = Draft(level: 4);
+        draft.SetClass("fighter", "champion");
+        draft.SetFeats(["skilled"], [[]], [SkilledPick("stealth", "lute", "arcana"), SkilledPick("insight", "thieves-tools", "history")]);
+        ArrangeFeats(Skilled());
+
+        var background = Soldier();
+        background.FeatId = "skilled";
+
+        // Act
+        var created = await FinalizeSuccessfully(draft, background: background);
+
+        // Assert
+        created.ProficiencyIds.Should().BeEquivalentTo(["stealth", "lute", "arcana", "insight", "thieves-tools", "history"]);
+    }
+
+    public static TheoryData<string[], string> RepeatedFeatPicks => new()
+    {
+        // The Soldier's own Athletics
+        { ["athletics", "lute", "arcana"], "athletics comes with Soldier already; pick another in its place." },
+
+        // The fighter's own pick, made in the proficiencies step
+        { ["stealth", "lute", "perception"], "perception comes with the Fighter proficiency picks already; pick another in its place." },
+    };
+
+    [Theory]
+    [MemberData(nameof(RepeatedFeatPicks))]
+    public async Task Handle_WithAFeatPickTheCharacterHasAlready_ReturnsProficiencyAlreadyGiven(string[] picks, string expected)
+    {
+        // Arrange
+        var draft = DraftWithFeat("skilled");
+        draft.SetFeats(["skilled"], [[]], [SkilledPick(picks)]);
+        draft.SetClassProficiencies(["perception", "survival"]);
+        ArrangeFeats(Skilled());
+
+        var soldier = Soldier();
+        soldier.BackgroundProficiencies = [new BackgroundProficiency { BackgroundId = "soldier", ProficiencyId = "athletics" }];
+
+        // Act
+        var result = await Finalize(draft, background: soldier, @class: FighterPickingTwoSkills());
+
+        // Assert
+        AssertRefused(result, "CharacterDraft.ProficiencyAlreadyGiven");
+        result.Errors[0].Description.Should().Be(expected);
+    }
+
     // --- Resilient ---
 
     [Fact]
@@ -299,11 +398,11 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
-    private Task<Response<Guid>> Finalize(CharacterDraft draft, Race? race = null, Background? background = null)
+    private Task<Response<Guid>> Finalize(CharacterDraft draft, Race? race = null, Background? background = null, Class? @class = null)
     {
         _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
         _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.RaceId!, _cts.Token)).ReturnsAsync(race ?? Dwarf());
-        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.ClassId!, _cts.Token)).ReturnsAsync(Fighter());
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.ClassId!, _cts.Token)).ReturnsAsync(@class ?? Fighter());
         _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(draft.BackgroundId!, _cts.Token)).ReturnsAsync(background ?? Soldier());
 
         return _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
@@ -429,11 +528,44 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         return feat;
     }
 
+    // The same lists, and Intelligence, Wisdom or Charisma to cast them with
+    private static FeatReadModel MagicInitiate2024()
+    {
+        var feat = MagicInitiate();
+        feat.SpellChoice!.AbilityOptions = ["INT", "WIS", "CHA"];
+        return feat;
+    }
+
+    // Three skills or tools, as many times as it is taken
+    private static FeatReadModel Skilled()
+    {
+        var feat = Feat("skilled", "Skilled");
+        feat.IsRepeatable = true;
+        feat.Choice = new FeatChoice
+        {
+            Type = FeatChoice.SkillsTools,
+            Count = 3,
+            Options = ["arcana", "athletics", "history", "insight", "perception", "stealth", "lute", "thieves-tools"],
+        };
+        return feat;
+    }
+
+    private static FeatProficiencyPick SkilledPick(params string[] proficiencyIds) =>
+        new() { FeatId = "skilled", ProficiencyIds = [.. proficiencyIds] };
+
+    // A fighter who picks two skills in the proficiencies step
+    private static Class FighterPickingTwoSkills()
+    {
+        var fighter = Fighter();
+        fighter.ProficiencyChoice = new ProficiencyChoice { ClassId = "fighter", Type = "skill", Count = 2 };
+        return fighter;
+    }
+
     private static FeatReadModel Resilient()
     {
         var feat = Feat("resilient", "Resilient");
         feat.AbilityIncrease = new FeatAbilityIncrease { Options = [.. AbilityScore.All.Select(a => a.Id)] };
-        feat.Choice = new FeatChoiceReadModel { Type = FeatChoice.SavingThrow, Count = 1, Options = [.. AbilityScore.All.Select(a => a.Id)] };
+        feat.Choice = new FeatChoice { Type = FeatChoice.SavingThrow, Count = 1, Options = [.. AbilityScore.All.Select(a => a.Id)] };
         return feat;
     }
 

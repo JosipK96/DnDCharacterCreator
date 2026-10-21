@@ -20,7 +20,8 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   `DraftSourceLoader` fetches the entities a draft names by id. Finalize and preview both use
   all three — that is the point, so the review step cannot disagree with what finalize builds.
   `CharacterFeatEntries` lists the feats taken, one entry per take with its spells, for the
-  review step and the sheet alike.
+  review step and the sheet alike. `ToolPicks`, `FeatProficiencyPicks` and `BonusSpells` list the
+  picks a draft owes and check them, for their step and finalize alike.
 - Application reaches ASP.NET Core Identity through `IIdentityService`.
 
 ## Errors and validation  → docs/conventions/errors-and-validation.md

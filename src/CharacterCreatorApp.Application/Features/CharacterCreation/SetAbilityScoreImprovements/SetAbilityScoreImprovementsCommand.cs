@@ -1,5 +1,6 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScoreImprovements;
 
@@ -10,10 +11,13 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityS
 /// The feats a race gives besides them (a variant human's, a 2024 human's Origin feat) come
 /// first in FeatIds. FeatAbilityIncreases says what each feat raises, in the same order: {"DEX":
 /// 1} for an Athlete who picked Dexterity, empty for a feat that raises nothing or a fixed
-/// ability; null when no feat raises a picked one.
+/// ability; null when no feat raises a picked one. FeatProficiencyPicks are the skills or tools
+/// picked for each feat that asks for them (Keen Mind, Skilled), the background's feat first, then
+/// FeatIds' in order (see FeatProficiencyPicks.SlotsFor); null when none asks.
 /// </summary>
 public record SetAbilityScoreImprovementsCommand(
     Guid DraftId,
     List<Dictionary<string, int>> Improvements,
     List<string> FeatIds,
-    List<Dictionary<string, int>>? FeatAbilityIncreases = null) : ICommand<Response>;
+    List<Dictionary<string, int>>? FeatAbilityIncreases = null,
+    List<FeatProficiencyPick>? FeatProficiencyPicks = null) : ICommand<Response>;

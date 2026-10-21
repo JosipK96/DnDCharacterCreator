@@ -24,6 +24,13 @@ public class Subclass
     public List<SpellSubclass> Spells { get; set; } = [];
 
     /// <summary>
+    /// A draconic sorcerer's Draconic Resilience, a 2024 College of Dance bard's Unarmored Defense
+    /// or a Noble Genies paladin's Genie's Splendor, from the level the subclass is chosen; null
+    /// for a subclass without one.
+    /// </summary>
+    public UnarmoredArmorClass? UnarmoredArmorClass { get; set; }
+
+    /// <summary>
     /// The schools the subclass's levelled spells must come from: abjuration and evocation for a
     /// 2014 Eldritch Knight, enchantment and illusion for a 2014 Arcane Trickster. Empty when
     /// any school will do, as for every 2024 subclass.

@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Infrastructure.Seed;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
@@ -301,6 +302,52 @@ public class ClassSeedDataTests
         // Assert
         owners.Should().BeEquivalentTo(
             "fighter", "paladin", "ranger", "fighter-2024", "paladin-2024", "ranger-2024", "swords", "champion", "champion-2024");
+    }
+
+    [Theory]
+    // Unarmored Defense: a barbarian may use a shield, a monk may not
+    [InlineData("barbarian", 10, "CON", true)]
+    [InlineData("barbarian-2024", 10, "CON", true)]
+    [InlineData("monk", 10, "WIS", false)]
+    [InlineData("monk-2024", 10, "WIS", false)]
+    public async Task Class_HasTheBooksUnarmoredArmorClass(string classId, int @base, string abilityId, bool allowsShield)
+    {
+        // Act
+        var @class = await ClassAsync(classId);
+
+        // Assert
+        @class.UnarmoredArmorClass.Should().BeEquivalentTo(
+            new UnarmoredArmorClass { Base = @base, AbilityId = abilityId, AllowsShield = allowsShield });
+    }
+
+    [Theory]
+    // Draconic Resilience: 13 + DEX in 2014, 10 + DEX + CHA in 2024
+    [InlineData("draconic", 13, null, true)]
+    [InlineData("draconic-2024", 10, "CHA", true)]
+    // The 2024 College of Dance's Unarmored Defense, only without a shield (Dazzling Footwork)
+    [InlineData("dance-2024", 10, "CHA", false)]
+    // The Oath of the Noble Genies' Genie's Splendor (FRHoF)
+    [InlineData("noble-genies-2024", 10, "CHA", true)]
+    public async Task Subclass_HasTheBooksUnarmoredArmorClass(string subclassId, int @base, string? abilityId, bool allowsShield)
+    {
+        // Act
+        var subclass = (await ReadAsync<SubclassSeedRow>("Subclasses.json")).Single(s => s.Id == subclassId);
+
+        // Assert
+        subclass.UnarmoredArmorClass.Should().BeEquivalentTo(
+            new UnarmoredArmorClass { Base = @base, AbilityId = abilityId, AllowsShield = allowsShield });
+    }
+
+    [Fact]
+    public async Task ClassesAndSubclasses_OnlyTheBooksOnesHaveAnUnarmoredArmorClass()
+    {
+        // Act
+        var classes = (await ReadAsync<ClassSeedRow>("Classes.json")).Where(c => c.UnarmoredArmorClass != null).Select(c => c.Id);
+        var subclasses = (await ReadAsync<SubclassSeedRow>("Subclasses.json")).Where(s => s.UnarmoredArmorClass != null).Select(s => s.Id);
+
+        // Assert - every other sorcerer subclass, and every other class, keeps 10 + DEX
+        classes.Should().BeEquivalentTo("barbarian", "barbarian-2024", "monk", "monk-2024");
+        subclasses.Should().BeEquivalentTo("draconic", "draconic-2024", "dance-2024", "noble-genies-2024");
     }
 
     [Theory]

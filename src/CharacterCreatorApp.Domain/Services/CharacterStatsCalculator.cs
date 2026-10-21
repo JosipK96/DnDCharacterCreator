@@ -1,12 +1,14 @@
 using System.Globalization;
 
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Domain.Services;
 
 /// <summary>
 /// Works out the parts of a character sheet that follow from the character's own numbers.
-/// Armour and shields are not modelled yet, so armour class is the unarmoured 10 + DEX.
+/// Armour and shields are not modelled yet, so armour class is the unarmoured one: 10 + DEX, or
+/// what the class or subclass gives instead (a barbarian's Unarmored Defense) when that is higher.
 /// </summary>
 public static class CharacterStatsCalculator
 {
@@ -57,7 +59,7 @@ public static class CharacterStatsCalculator
         return new CharacterStats(
             ProficiencyBonus: proficiencyBonus,
             MaxHitPoints: GetMaxHitPoints(input, GetModifier(scores, AbilityScore.CON.Id)),
-            ArmorClass: 10 + dexterityModifier,
+            ArmorClass: GetArmorClass(input.UnarmoredArmorClasses, abilities, dexterityModifier),
             Initiative: dexterityModifier,
             Speed: input.Speed,
             HitDice: $"{input.Level}{NormalizeHitDie(input.HitDie)}",
@@ -89,6 +91,21 @@ public static class CharacterStatsCalculator
         var bonusPerLevel = HitPointBonuses.PerLevel(input.RaceId, input.SubraceId, input.SubclassId, input.FeatIds);
 
         return total + ((clampedLevel - 1) * perLevelAfterFirst) + (clampedLevel * bonusPerLevel);
+    }
+
+    /// <summary>
+    /// The best of the ways the character has to work out armour class without armour: both rule
+    /// books let a character with more than one pick which, so a barbarian with CON 8 keeps 10 + DEX.
+    /// </summary>
+    private static int GetArmorClass(
+        IReadOnlyCollection<UnarmoredArmorClass> unarmoredArmorClasses, List<AbilityStat> abilities, int dexterityModifier)
+    {
+        var modifiers = abilities.ToDictionary(a => a.AbilityId, a => a.Modifier, StringComparer.Ordinal);
+
+        return unarmoredArmorClasses
+            .Select(armorClass => armorClass.ArmorClassFor(modifiers))
+            .Append(10 + dexterityModifier)
+            .Max();
     }
 
     /// <summary>Reads the die size out of "1d10", "d10" or "10".</summary>

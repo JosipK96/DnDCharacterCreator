@@ -41,16 +41,18 @@ public class GetCharacterDetailsQueryHandler(
             return CharacterErrors.NotFoundById(query.CharacterId);
         }
 
-        // Hit die, saving throws and features come from the class, speed from the race and
-        // subrace, and one feature from the background; the character stores only their ids
+        // Hit die, saving throws, features and an unarmoured armour class come from the class and
+        // subclass, speed from the race and subrace, and one feature from the background; the
+        // character stores only their ids
         var @class = await _classRepository.GetByIdWithDetailsAsync(character.ClassId, cancellationToken);
         var race = await _raceRepository.GetByIdWithDetailsAsync(character.RaceId, cancellationToken);
         var background = await _backgroundRepository.GetByIdWithDetailsAsync(character.BackgroundId, cancellationToken);
 
+        var subclass = @class?.Subclasses.FirstOrDefault(s => s.Id == character.SubclassId);
+
         var featureIds = @class == null || background == null
             ? []
-            : CharacterFeatures.IdsFor(
-                @class, @class.Subclasses.FirstOrDefault(s => s.Id == character.SubclassId), background, character.Level);
+            : CharacterFeatures.IdsFor(@class, subclass, background, character.Level);
 
         character.Proficiencies = await _proficiencyRepository.GetByIdsAsync(character.ProficiencyIds, cancellationToken);
         character.Features = await _featureRepository.GetByIdsAsync(featureIds, cancellationToken);
@@ -71,7 +73,8 @@ public class GetCharacterDetailsQueryHandler(
             RaceId: character.RaceId,
             SubraceId: character.SubraceId,
             SubclassId: character.SubclassId,
-            FeatIds: character.FeatIds));
+            FeatIds: character.FeatIds,
+            UnarmoredArmorClasses: @class?.UnarmoredArmorClassesWith(subclass) ?? []));
 
         return character;
     }

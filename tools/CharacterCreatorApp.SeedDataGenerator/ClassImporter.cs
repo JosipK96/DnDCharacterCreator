@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
@@ -81,9 +82,11 @@ internal sealed partial class ClassImporter
         foreach (var @class in classes)
         {
             var classId = Slug.Of(@class.Str("name")!) + Suffix(edition);
+            var classFeatures = ClassFeatureRows(@class, classId);
+            var classRow = ClassRow(@class, classId, edition, classFeatures);
 
-            import.Classes.Add(ClassRow(@class, classId, edition));
-            import.Features.AddRange(ClassFeatureRows(@class, classId));
+            import.Classes.Add(classRow);
+            import.Features.AddRange(classFeatures);
 
             foreach (var subclass in SubclassesOf(@class))
             {
@@ -91,7 +94,7 @@ internal sealed partial class ClassImporter
 
                 var features = SubclassFeatureRows(subclass, subclassId);
 
-                import.Subclasses.Add(SubclassRow(subclass, subclassId, classId, edition, features));
+                import.Subclasses.Add(SubclassRow(subclass, subclassId, classRow, edition, features));
                 import.Features.AddRange(features);
                 import.SubclassData[subclassId] = subclass;
             }
@@ -156,7 +159,7 @@ internal sealed partial class ClassImporter
         return ids;
     }
 
-    private ClassSeedRow ClassRow(JsonObject @class, string classId, string edition)
+    private ClassSeedRow ClassRow(JsonObject @class, string classId, string edition, List<FeatureSeedRow> features)
     {
         var references = ClassFeatureReferences(@class).ToList();
         var startingProficiencies = @class["startingProficiencies"];
@@ -171,6 +174,7 @@ internal sealed partial class ClassImporter
             SubclassLevel = references.First(r => r.GainsSubclass).Level,
             AsiLevels = AsiLevels(@class, references),
             SavingThrowAbilityIds = @class.Arr("proficiency").Select(a => AbilityScore.Normalize(a.AsString()!)).ToList(),
+            UnarmoredArmorClass = UnarmoredArmorClassIn(features, classId, fromLevel: 1),
             ProficiencyIds = StartingProficiencyIds(startingProficiencies),
             ProficiencyChoices = SkillChoice(startingProficiencies),
             ToolChoices = ToolChoices(startingProficiencies),
@@ -377,8 +381,33 @@ internal sealed partial class ClassImporter
             : 0;
     }
 
+    /// <summary>
+    /// The armour class one of these features gives without armour, read from its text. The app
+    /// keeps no level for it, so the generator stops when the feature comes later than the level
+    /// the class or subclass is taken at.
+    /// </summary>
+    private UnarmoredArmorClass? UnarmoredArmorClassIn(List<FeatureSeedRow> features, string ownerId, int fromLevel)
+    {
+        var found = features
+            .Select(f => (Feature: f, ArmorClass: UnarmoredArmorClassParser.Parse(_bookTextByFeatureId[f.Id])))
+            .Where(f => f.ArmorClass != null)
+            .ToList();
+
+        if (found.Count > 1)
+        {
+            throw new InvalidOperationException($"{ownerId} has more than one unarmoured armour class: {string.Join(", ", found.Select(f => f.Feature.Id))}.");
+        }
+
+        if (found.Count == 1 && found[0].Feature.Level != fromLevel)
+        {
+            throw new InvalidOperationException($"{found[0].Feature.Id} gives an unarmoured armour class at level {found[0].Feature.Level}, not at {fromLevel}.");
+        }
+
+        return found.Count == 1 ? found[0].ArmorClass : null;
+    }
+
     private SubclassSeedRow SubclassRow(
-        JsonObject subclass, string subclassId, string classId, string edition, List<FeatureSeedRow> features)
+        JsonObject subclass, string subclassId, ClassSeedRow classRow, string edition, List<FeatureSeedRow> features)
     {
         // Only a subclass with a spell progression of its own casts; the Arcane Archer has an
         // ability for its shots but no spells
@@ -391,13 +420,14 @@ internal sealed partial class ClassImporter
         {
             Id = subclassId,
             Name = subclass.Str("name")!,
-            ClassId = classId,
+            ClassId = classRow.Id,
             Source = SourceBooks.Of(subclass, edition),
             SpellcastingAbility = casts ? AbilityScore.FromId(subclass.Str("spellcastingAbility")!).Name : null,
             SpellListClassId = SpellListClass(subclass) is { } className ? Slug.Of(className) + Suffix(edition) : null,
             SpellProgression = casts ? SpellProgression(subclass, subclass["subclassTableGroups"]) : [],
             SpellSchools = schoolLimit?.Schools ?? [],
-            AnySchoolSpellLevels = schoolLimit?.AnySchoolLevels ?? []
+            AnySchoolSpellLevels = schoolLimit?.AnySchoolLevels ?? [],
+            UnarmoredArmorClass = UnarmoredArmorClassIn(features, subclassId, fromLevel: classRow.SubclassLevel)
         };
     }
 

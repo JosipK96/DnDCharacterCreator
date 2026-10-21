@@ -57,7 +57,7 @@ Ability keys, language ids and proficiency ids are explained at more length in
   opens a whole other list: the Wizard's for an Eldritch Knight, whose fighter has none. The
   spells step and `ChooseSpells` both take all three into account.
 - A class's rules (`Class.SubclassLevel`, `Class.AsiLevels`, `Class.SavingThrowAbilityIds`,
-  the spell table) and a race's (`Race.SkillChoiceCount` and its options, `Race.
+  `Class.UnarmoredArmorClass`, the spell table) and a race's (`Race.SkillChoiceCount` and its options, `Race.
   LanguageChoiceCount`) are read from the 5etools data by the generator. Read them from the
   entity and never hardcode one at a call site — two separate bugs came from assuming every
   class picks a subclass at level 3. `ClassSeedDataTests` and `RaceSeedDataTests` pin the
@@ -76,7 +76,13 @@ Ability keys, language ids and proficiency ids are explained at more length in
   `ChooseLanguages` alike. What a player may pick is `ILanguageRepository.GetChoosableAsync`
   (`Language.ChoosableTypes`: any PHB language but the secret ones in 2014, the standard ones
   in 2024), and a pick the race or background already gives is refused.
-- Armour is not modelled, so armour class is the unarmoured 10 + DEX and the sheet says so.
+- Armour is not modelled, so armour class is the unarmoured one and the sheet says so: 10 + DEX,
+  or the class's or subclass's own when higher (`Class.UnarmoredArmorClass`, `Subclass.
+  UnarmoredArmorClass`): a barbarian's 10 + DEX + CON and a monk's 10 + DEX + WIS (both
+  editions), a draconic sorcerer's 13 + DEX (2014) or 10 + DEX + CHA (2024), and a 2024 Dance
+  bard's or Noble Genies paladin's 10 + DEX + CHA. The generator reads them from the feature text, with whether a shield still
+  allows it (a monk's and a Dance bard's do not), for when shields are modelled. Both handlers
+  pass `Class.UnarmoredArmorClassesWith` through `CharacterStatsInput`; never check a class id.
 - Hit points some choices add every level (Dwarven Toughness, a 2014 hill dwarf's and every
   2024 dwarf's; Draconic Resilience; Tough) are in `Domain/Services/HitPointBonuses`.
   `CharacterStatsInput` has no defaults, so the preview and the sheet cannot build it

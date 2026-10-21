@@ -35,6 +35,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Classes
             builder.Property(c => c.ToolChoices)
                 .HasJsonConversion();
 
+            builder.OwnsOne(c => c.UnarmoredArmorClass).ToJson();
+
             builder.HasIndex(c => c.Edition);
 
             builder.HasMany(c => c.ClassProficiencies)

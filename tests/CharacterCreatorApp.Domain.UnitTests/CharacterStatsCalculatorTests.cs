@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
@@ -135,6 +136,117 @@ public class CharacterStatsCalculatorTests
         stats.Initiative.Should().Be(3);
     }
 
+    // DEX 14 (+2), CON 16 (+3), WIS 15 (+2), CHA 17 (+3) in every row
+    [Theory]
+    [InlineData("barbarian and barbarian-2024: Unarmored Defense", 10, "CON", true, 10 + 2 + 3)]
+    [InlineData("monk and monk-2024: Unarmored Defense", 10, "WIS", false, 10 + 2 + 2)]
+    [InlineData("draconic: Draconic Resilience", 13, null, true, 13 + 2)]
+    [InlineData("draconic-2024: Draconic Resilience", 10, "CHA", true, 10 + 2 + 3)]
+    [InlineData("dance-2024: Unarmored Defense", 10, "CHA", false, 10 + 2 + 3)]
+    public void Calculate_WithAnUnarmoredArmorClass_UsesItsFormula(
+        string feature, int @base, string? abilityId, bool allowsShield, int expected)
+    {
+        // Arrange
+        var unarmored = new UnarmoredArmorClass { Base = @base, AbilityId = abilityId, AllowsShield = allowsShield };
+        var input = Input(
+            scores: Scores(dexterity: 14, constitution: 16, wisdom: 15, charisma: 17),
+            unarmoredArmorClasses: [unarmored]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.ArmorClass.Should().Be(expected, feature);
+        stats.Initiative.Should().Be(2);
+    }
+
+    [Fact]
+    public void Calculate_WithoutAnUnarmoredArmorClass_IsTenPlusDexterity()
+    {
+        // Arrange - a fighter or a sorcerer of another subclass: DEX 14 (+2), CON 16 (+3)
+        var input = Input(scores: Scores(dexterity: 14, constitution: 16), unarmoredArmorClasses: []);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.ArmorClass.Should().Be(12);
+    }
+
+    [Fact]
+    public void Calculate_WithANegativeAddedModifier_KeepsTenPlusDexterity()
+    {
+        // Arrange - a barbarian with DEX 14 (+2) and CON 8 (-1): 10 + DEX + CON would be 11, and
+        // both rule books let a character with two ways to work out AC pick the better one
+        var barbarian = new UnarmoredArmorClass { Base = 10, AbilityId = "CON", AllowsShield = true };
+        var input = Input(scores: Scores(dexterity: 14, constitution: 8), unarmoredArmorClasses: [barbarian]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.ArmorClass.Should().Be(12);
+    }
+
+    [Fact]
+    public void Calculate_WithANegativeDexterityModifier_SubtractsItFromTheFormula()
+    {
+        // Arrange - a monk with DEX 8 (-1) and WIS 16 (+3)
+        var monk = new UnarmoredArmorClass { Base = 10, AbilityId = "WIS", AllowsShield = false };
+        var input = Input(scores: Scores(dexterity: 8, wisdom: 16), unarmoredArmorClasses: [monk]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.ArmorClass.Should().Be(10 - 1 + 3);
+    }
+
+    [Fact]
+    public void Calculate_WithTwoUnarmoredArmorClasses_UsesTheHigher()
+    {
+        // Arrange - DEX 14 (+2), CON 12 (+1), CHA 18 (+4)
+        var lower = new UnarmoredArmorClass { Base = 10, AbilityId = "CON", AllowsShield = true };
+        var higher = new UnarmoredArmorClass { Base = 10, AbilityId = "CHA", AllowsShield = true };
+        var input = Input(
+            scores: Scores(dexterity: 14, constitution: 12, charisma: 18),
+            unarmoredArmorClasses: [lower, higher]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.ArmorClass.Should().Be(16);
+    }
+
+    [Fact]
+    public void Calculate_WithAnAbilityIdInAnotherSpelling_NormalizesIt()
+    {
+        // Arrange - CON 16 (+3), DEX 12 (+1)
+        var barbarian = new UnarmoredArmorClass { Base = 10, AbilityId = "constitution", AllowsShield = true };
+        var input = Input(scores: Scores(constitution: 16), unarmoredArmorClasses: [barbarian]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.ArmorClass.Should().Be(14);
+    }
+
+    [Fact]
+    public void ArmorClassFor_WithOneAbilityInTwoSpellings_DoesNotThrow()
+    {
+        // Arrange - DEX +2, and CON as both "CON" and "constitution"
+        var barbarian = new UnarmoredArmorClass { Base = 10, AbilityId = "CON", AllowsShield = true };
+        var modifiers = new Dictionary<string, int> { ["DEX"] = 2, ["CON"] = 3, ["constitution"] = 3 };
+
+        // Act
+        var armorClass = barbarian.ArmorClassFor(modifiers);
+
+        // Assert
+        armorClass.Should().Be(15);
+    }
+
     [Fact]
     public void Calculate_AddsProficiencyBonusToProficientSavingThrows()
     {
@@ -263,6 +375,8 @@ public class CharacterStatsCalculatorTests
         string raceId = "human",
         string? subraceId = null,
         string? subclassId = null,
-        string[]? feats = null) =>
-        new(level, scores ?? Scores(), proficiencies ?? [], hitDie, savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? []);
+        string[]? feats = null,
+        UnarmoredArmorClass[]? unarmoredArmorClasses = null) =>
+        new(level, scores ?? Scores(), proficiencies ?? [], hitDie, savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? [],
+            unarmoredArmorClasses ?? []);
 }

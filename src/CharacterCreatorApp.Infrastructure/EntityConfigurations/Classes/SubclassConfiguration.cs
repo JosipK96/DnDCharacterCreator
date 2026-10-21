@@ -23,6 +23,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Classes
             builder.Property(x => x.SpellSchools);
             builder.Property(x => x.AnySchoolSpellLevels);
 
+            builder.OwnsOne(x => x.UnarmoredArmorClass).ToJson();
+
             builder.HasOne(s => s.Class)
                 .WithMany(c => c.Subclasses)
                 .HasForeignKey(s => s.ClassId)

@@ -1442,6 +1442,141 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         preview!.BlockingIssue.Should().Contain("Dwarf, Criminal, Bard");
     }
 
+    [Fact]
+    public async Task CompleteWorkflow_With2024Barbarian_ShowsUnarmoredDefenseOnThePreviewAndTheSheet()
+    {
+        // Arrange - a level 1 dwarf barbarian with DEX 14 (+2) and CON 13 + 1 from the soldier (+2)
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Wulfgar", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf_2024" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "barbarian-2024" });
+        await PutStepAsync(draftId, "background", Soldier2024());
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["perception", "survival"]));
+
+        // Act
+        var (preview, sheet) = await PreviewAndFinalizeArmorClassAsync(draftId);
+
+        // Assert - 10 + DEX + CON, where 10 + DEX would be 12
+        preview.Should().Be(10 + 2 + 2);
+        sheet.Should().Be(preview);
+    }
+
+    [Fact]
+    public async Task CompleteWorkflow_With2014Monk_ShowsUnarmoredDefenseOnThePreviewAndTheSheet()
+    {
+        // Arrange - a level 1 hill dwarf monk with DEX 15 (+2) and WIS 14 + 1 from the hill dwarf (+2)
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Kwai", Level = 1, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "monk" });
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte" });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["celestial-phb", "elvish-phb"]));
+        // The hill dwarf's artisan's tools, then the monk's artisan's tools or instrument
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["smith_tools"], ["lute"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 8, ["DEX"] = 15, ["CON"] = 13, ["INT"] = 10, ["WIS"] = 14, ["CHA"] = 12 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "stealth"]));
+
+        // Act
+        var (preview, sheet) = await PreviewAndFinalizeArmorClassAsync(draftId);
+
+        // Assert - 10 + DEX + WIS
+        preview.Should().Be(10 + 2 + 2);
+        sheet.Should().Be(preview);
+    }
+
+    [Fact]
+    public async Task CompleteWorkflow_With2014DraconicSorcerer_ShowsDraconicResilienceOnThePreviewAndTheSheet()
+    {
+        // Arrange - a level 1 hill dwarf draconic sorcerer with DEX 14 (+2)
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Sora", Level = 1, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "sorcerer", SubclassId = "draconic" });
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte" });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["celestial-phb", "elvish-phb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["smith_tools"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 8, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 10, ["WIS"] = 12, ["CHA"] = 15 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["arcana", "deception"]));
+        await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(
+            ["fire_bolt", "light", "mage_hand", "prestidigitation", "magic_missile", "shield"]));
+
+        // Act
+        var (preview, sheet) = await PreviewAndFinalizeArmorClassAsync(draftId);
+
+        // Assert - 13 + DEX
+        preview.Should().Be(13 + 2);
+        sheet.Should().Be(preview);
+    }
+
+    [Fact]
+    public async Task CompleteWorkflow_With2024DraconicSorcerer_ShowsDraconicResilienceOnThePreviewAndTheSheet()
+    {
+        // Arrange - a level 3 dwarf draconic sorcerer, DEX 13 + 2 from the soldier (+2), CHA 15 (+2)
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Sora", Level = 3, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf_2024" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "sorcerer-2024", SubclassId = "draconic-2024" });
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "soldier_2024", AbilityIncreases = new() { ["DEX"] = 2, ["CON"] = 1 } });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 8, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 10, ["WIS"] = 12, ["CHA"] = 15 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["arcana", "deception"]));
+        await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(
+        [
+            "fire_bolt_2024", "light_2024", "mage_hand_2024", "prestidigitation_2024",
+            "magic_missile_2024", "shield_2024", "burning_hands_2024", "sleep_2024", "mirror_image_2024", "misty_step_2024"
+        ]));
+
+        // Act
+        var (preview, sheet) = await PreviewAndFinalizeArmorClassAsync(draftId);
+
+        // Assert - 10 + DEX + CHA
+        preview.Should().Be(10 + 2 + 2);
+        sheet.Should().Be(preview);
+    }
+
+    // The armour class the review step shows, then the one the saved sheet shows
+    private async Task<(int Preview, int Sheet)> PreviewAndFinalizeArmorClassAsync(Guid draftId)
+    {
+        var cancellationToken = TestContext.Current.CancellationToken;
+        var preview = await _client.GetFromJsonAsync<CharacterPreviewApiResponse>($"/api/character-drafts/{draftId}/preview", cancellationToken);
+        preview!.BlockingIssue.Should().BeNull();
+
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        return (preview.Stats!.ArmorClass, character!.Stats!.ArmorClass);
+    }
+
     // A level 1 hill dwarf bard with the Criminal background: a tool pick from each
     private async Task<Guid> CreateDwarfCriminalBardAsync()
     {

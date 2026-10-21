@@ -8,7 +8,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "armorer",
@@ -19,7 +20,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "artillerist",
@@ -30,7 +32,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "battle-smith",
@@ -41,7 +44,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "wild-magic",
@@ -52,7 +56,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "ancestral-guardian",
@@ -63,7 +68,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "battlerager",
@@ -74,7 +80,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "beast",
@@ -85,7 +92,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "berserker",
@@ -96,7 +104,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "giant",
@@ -107,7 +116,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "storm-herald",
@@ -118,7 +128,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "totem-warrior",
@@ -129,7 +140,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "zealot",
@@ -140,7 +152,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "creation",
@@ -151,7 +164,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "eloquence",
@@ -162,7 +176,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "glamour",
@@ -173,7 +188,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "lore",
@@ -184,7 +200,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "spirits",
@@ -195,7 +212,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "swords",
@@ -206,7 +224,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "valor",
@@ -217,7 +236,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "whispers",
@@ -228,7 +248,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "ambition",
@@ -239,7 +260,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "arcana",
@@ -250,7 +272,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "death",
@@ -261,7 +284,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "forge",
@@ -272,7 +296,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "grave",
@@ -283,7 +308,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "knowledge",
@@ -294,7 +320,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "knowledge-psa",
@@ -305,7 +332,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "life",
@@ -316,7 +344,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "light",
@@ -327,7 +356,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "nature",
@@ -338,7 +368,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "order",
@@ -349,7 +380,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "peace",
@@ -360,7 +392,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "solidarity",
@@ -371,7 +404,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "strength",
@@ -382,7 +416,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "tempest",
@@ -393,7 +428,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "trickery",
@@ -404,7 +440,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "twilight",
@@ -415,7 +452,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "war-domain",
@@ -426,7 +464,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "zeal",
@@ -437,7 +476,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "dreams",
@@ -448,7 +488,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "spores",
@@ -459,7 +500,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "stars",
@@ -470,7 +512,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "wildfire",
@@ -481,7 +524,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "land",
@@ -492,7 +536,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "moon",
@@ -503,7 +548,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "shepherd",
@@ -514,7 +560,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "arcane-archer",
@@ -525,7 +572,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "battle-master",
@@ -536,7 +584,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "cavalier",
@@ -547,7 +596,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "champion",
@@ -558,7 +608,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "echo-knight",
@@ -569,7 +620,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "eldritch-knight",
@@ -697,7 +749,8 @@
       8,
       14,
       20
-    ]
+    ],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "psi-warrior",
@@ -708,7 +761,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "purple-dragon-knight",
@@ -719,7 +773,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "rune-knight",
@@ -730,7 +785,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "samurai",
@@ -741,7 +797,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "mercy",
@@ -752,7 +809,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "shadow-monk",
@@ -763,7 +821,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "ascendant-dragon",
@@ -774,7 +833,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "astral-self",
@@ -785,7 +845,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "drunken-master",
@@ -796,7 +857,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "four-elements",
@@ -807,7 +869,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "kensei",
@@ -818,7 +881,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "long-death",
@@ -829,7 +893,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "open-hand",
@@ -840,7 +905,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "sun-soul",
@@ -851,7 +917,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "conquest",
@@ -862,7 +929,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "devotion",
@@ -873,7 +941,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "glory",
@@ -884,7 +953,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "redemption",
@@ -895,7 +965,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "vengeance",
@@ -906,7 +977,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "ancients",
@@ -917,7 +989,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "crown",
@@ -928,7 +1001,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "watchers",
@@ -939,7 +1013,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "oathbreaker",
@@ -950,7 +1025,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "beast-master",
@@ -961,7 +1037,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "drakewarden",
@@ -972,7 +1049,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "fey-wanderer",
@@ -983,7 +1061,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "gloom-stalker",
@@ -994,7 +1073,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "horizon-walker",
@@ -1005,7 +1085,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "hunter",
@@ -1016,7 +1097,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "monster-slayer",
@@ -1027,7 +1109,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "swarmkeeper",
@@ -1038,7 +1121,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "arcane-trickster",
@@ -1166,7 +1250,8 @@
       8,
       14,
       20
-    ]
+    ],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "assassin",
@@ -1177,7 +1262,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "inquisitive",
@@ -1188,7 +1274,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "mastermind",
@@ -1199,7 +1286,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "phantom",
@@ -1210,7 +1298,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "scout",
@@ -1221,7 +1310,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "soulknife",
@@ -1232,7 +1322,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "swashbuckler",
@@ -1243,7 +1334,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "thief",
@@ -1254,7 +1346,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "aberrant-mind",
@@ -1265,7 +1358,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "clockwork-soul",
@@ -1276,7 +1370,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "divine-soul",
@@ -1287,7 +1382,8 @@
     "SpellListClassId": "cleric",
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "draconic",
@@ -1298,7 +1394,12 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": {
+      "Base": 13,
+      "AbilityId": null,
+      "AllowsShield": true
+    }
   },
   {
     "Id": "lunar",
@@ -1309,7 +1410,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "pyromancer",
@@ -1320,7 +1422,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "shadow-sorcerer",
@@ -1331,7 +1434,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "storm",
@@ -1342,7 +1446,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "wild",
@@ -1353,7 +1458,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "archfey",
@@ -1364,7 +1470,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "celestial",
@@ -1375,7 +1482,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "fathomless",
@@ -1386,7 +1494,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "fiend",
@@ -1397,7 +1506,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "genie",
@@ -1408,7 +1518,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "great-old-one",
@@ -1419,7 +1530,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "hexblade",
@@ -1430,7 +1542,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "undead",
@@ -1441,7 +1554,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "undying",
@@ -1452,7 +1566,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "bladesinging",
@@ -1463,7 +1578,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "chronurgy",
@@ -1474,7 +1590,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "graviturgy",
@@ -1485,7 +1602,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "scribes",
@@ -1496,7 +1614,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "abjuration",
@@ -1507,7 +1626,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "conjuration",
@@ -1518,7 +1638,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "divination",
@@ -1529,7 +1650,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "enchantment",
@@ -1540,7 +1662,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "evocation",
@@ -1551,7 +1674,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "illusion",
@@ -1562,7 +1686,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "necromancy",
@@ -1573,7 +1698,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "transmutation",
@@ -1584,7 +1710,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "war",
@@ -1595,7 +1722,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "alchemist-2024",
@@ -1606,7 +1734,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "armorer-2024",
@@ -1617,7 +1746,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "artillerist-2024",
@@ -1628,7 +1758,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "battle-smith-2024",
@@ -1639,7 +1770,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "cartographer-2024",
@@ -1650,7 +1782,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "reanimator-2024",
@@ -1661,7 +1794,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "berserker-2024",
@@ -1672,7 +1806,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "wild-heart-2024",
@@ -1683,7 +1818,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "world-tree-2024",
@@ -1694,7 +1830,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "zealot-2024",
@@ -1705,7 +1842,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "dance-2024",
@@ -1716,7 +1854,12 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": {
+      "Base": 10,
+      "AbilityId": "CHA",
+      "AllowsShield": false
+    }
   },
   {
     "Id": "glamour-2024",
@@ -1727,7 +1870,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "lore-2024",
@@ -1738,7 +1882,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "spirits-2024",
@@ -1749,7 +1894,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "valor-2024",
@@ -1760,7 +1906,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "moon-bard-2024",
@@ -1771,7 +1918,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "arcana-2024",
@@ -1782,7 +1930,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "grave-2024",
@@ -1793,7 +1942,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "knowledge-2024",
@@ -1804,7 +1954,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "life-2024",
@@ -1815,7 +1966,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "light-2024",
@@ -1826,7 +1978,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "trickery-2024",
@@ -1837,7 +1990,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "war-domain-2024",
@@ -1848,7 +2002,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "land-2024",
@@ -1859,7 +2014,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "moon-druid-2024",
@@ -1870,7 +2026,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "sea-2024",
@@ -1881,7 +2038,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "stars-2024",
@@ -1892,7 +2050,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "arcane-archer-2024",
@@ -1903,7 +2062,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "banneret-2024",
@@ -1914,7 +2074,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "battle-master-2024",
@@ -1925,7 +2086,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "champion-2024",
@@ -1936,7 +2098,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "eldritch-knight-2024",
@@ -2056,7 +2219,8 @@
       }
     ],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "psi-warrior-2024",
@@ -2067,7 +2231,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "mercy-2024",
@@ -2078,7 +2243,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "shadow-monk-2024",
@@ -2089,7 +2255,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "elements-2024",
@@ -2100,7 +2267,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "mystic-arts-2024",
@@ -2220,7 +2388,8 @@
       }
     ],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "open-hand-2024",
@@ -2231,7 +2400,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "devotion-2024",
@@ -2242,7 +2412,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "glory-2024",
@@ -2253,7 +2424,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "vengeance-2024",
@@ -2264,7 +2436,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "ancients-2024",
@@ -2275,7 +2448,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "noble-genies-2024",
@@ -2286,7 +2460,12 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": {
+      "Base": 10,
+      "AbilityId": "CHA",
+      "AllowsShield": true
+    }
   },
   {
     "Id": "beast-master-2024",
@@ -2297,7 +2476,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "fey-wanderer-2024",
@@ -2308,7 +2488,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "gloom-stalker-2024",
@@ -2319,7 +2500,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "hollow-warden-2024",
@@ -2330,7 +2512,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "hunter-2024",
@@ -2341,7 +2524,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "winter-walker-2024",
@@ -2352,7 +2536,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "arcane-trickster-2024",
@@ -2472,7 +2657,8 @@
       }
     ],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "assassin-2024",
@@ -2483,7 +2669,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "phantom-2024",
@@ -2494,7 +2681,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "scion-of-the-three-2024",
@@ -2505,7 +2693,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "soulknife-2024",
@@ -2516,7 +2705,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "thief-2024",
@@ -2527,7 +2717,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "aberrant-2024",
@@ -2538,7 +2729,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "clockwork-2024",
@@ -2549,7 +2741,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "draconic-2024",
@@ -2560,7 +2753,12 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": {
+      "Base": 10,
+      "AbilityId": "CHA",
+      "AllowsShield": true
+    }
   },
   {
     "Id": "shadow-sorcerer-2024",
@@ -2571,7 +2769,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "spellfire-2024",
@@ -2582,7 +2781,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "wild-magic-2024",
@@ -2593,7 +2793,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "archfey-2024",
@@ -2604,7 +2805,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "celestial-2024",
@@ -2615,7 +2817,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "fiend-2024",
@@ -2626,7 +2829,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "great-old-one-2024",
@@ -2637,7 +2841,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "undead-2024",
@@ -2648,7 +2853,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "vestige-2024",
@@ -2659,7 +2865,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "abjurer-2024",
@@ -2670,7 +2877,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "bladesinger-2024",
@@ -2681,7 +2889,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "conjurer-2024",
@@ -2692,7 +2901,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "diviner-2024",
@@ -2703,7 +2913,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "enchanter-2024",
@@ -2714,7 +2925,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "evoker-2024",
@@ -2725,7 +2937,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "illusionist-2024",
@@ -2736,7 +2949,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "necromancer-2024",
@@ -2747,7 +2961,8 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   },
   {
     "Id": "transmuter-2024",
@@ -2758,6 +2973,7 @@
     "SpellListClassId": null,
     "SpellProgression": [],
     "SpellSchools": [],
-    "AnySchoolSpellLevels": []
+    "AnySchoolSpellLevels": [],
+    "UnarmoredArmorClass": null
   }
 ]

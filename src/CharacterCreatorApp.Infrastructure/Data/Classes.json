@@ -17,6 +17,7 @@
       "CON",
       "INT"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -207,6 +208,11 @@
       "STR",
       "CON"
     ],
+    "UnarmoredArmorClass": {
+      "Base": 10,
+      "AbilityId": "CON",
+      "AllowsShield": true
+    },
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -248,6 +254,7 @@
       "DEX",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "simple-weapons",
@@ -442,6 +449,7 @@
       "WIS",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -605,6 +613,7 @@
       "INT",
       "WIS"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -783,6 +792,7 @@
       "STR",
       "CON"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -827,6 +837,11 @@
       "STR",
       "DEX"
     ],
+    "UnarmoredArmorClass": {
+      "Base": 10,
+      "AbilityId": "WIS",
+      "AllowsShield": false
+    },
     "ProficiencyIds": [
       "simple-weapons",
       "shortswords"
@@ -898,6 +913,7 @@
       "WIS",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -1058,6 +1074,7 @@
       "STR",
       "DEX"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -1220,6 +1237,7 @@
       "DEX",
       "INT"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "simple-weapons",
@@ -1268,6 +1286,7 @@
       "CON",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "daggers",
       "darts",
@@ -1433,6 +1452,7 @@
       "WIS",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "simple-weapons"
@@ -1596,6 +1616,7 @@
       "INT",
       "WIS"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "daggers",
       "darts",
@@ -1761,6 +1782,7 @@
       "CON",
       "INT"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -1951,6 +1973,11 @@
       "STR",
       "CON"
     ],
+    "UnarmoredArmorClass": {
+      "Base": 10,
+      "AbilityId": "CON",
+      "AllowsShield": true
+    },
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -1992,6 +2019,7 @@
       "DEX",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "simple-weapons"
@@ -2182,6 +2210,7 @@
       "WIS",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -2345,6 +2374,7 @@
       "INT",
       "WIS"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "shields",
@@ -2513,6 +2543,7 @@
       "STR",
       "CON"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -2558,6 +2589,11 @@
       "STR",
       "DEX"
     ],
+    "UnarmoredArmorClass": {
+      "Base": 10,
+      "AbilityId": "WIS",
+      "AllowsShield": false
+    },
     "ProficiencyIds": [
       "simple-weapons",
       "light-martial-weapons"
@@ -2629,6 +2665,7 @@
       "WIS",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -2795,6 +2832,7 @@
       "STR",
       "DEX"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "medium-armor",
@@ -2963,6 +3001,7 @@
       "DEX",
       "INT"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "simple-weapons",
@@ -3007,6 +3046,7 @@
       "CON",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "simple-weapons"
     ],
@@ -3168,6 +3208,7 @@
       "WIS",
       "CHA"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "light-armor",
       "simple-weapons"
@@ -3331,6 +3372,7 @@
       "INT",
       "WIS"
     ],
+    "UnarmoredArmorClass": null,
     "ProficiencyIds": [
       "simple-weapons"
     ],

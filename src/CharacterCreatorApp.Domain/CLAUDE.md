@@ -55,7 +55,14 @@ Ability keys, language ids and proficiency ids are explained at more length in
   come with it at their level (`Subclass.AlwaysPreparedSpellIdsAt`, added by `CharacterBuilder`),
   and a 2014 patron's only join the list the warlock picks from. `Subclass.SpellListClassId`
   opens a whole other list: the Wizard's for an Eldritch Knight, whose fighter has none. The
-  spells step and `ChooseSpells` both take all three into account.
+  spells step and `ChooseSpells` both take all three into account, and refuse a pick of a
+  spell the subclass already has prepared.
+- A 2024 class's spell table gives how many spells it prepares. A 2014 cleric, druid, paladin
+  or artificer prepares its spellcasting modifier plus its level, or half of it, at least one
+  (`Spellcasting.PreparedSpellsLevelDivisor`, from 5etools' formula; `Class.SpellAllowanceAt`),
+  so the count follows the character's final scores: `SpellChoice.AllowanceForAsync` builds the
+  character for the spells step and `GET spell-allowance`, and finalize passes the built one's
+  scores to `DraftCompletenessChecker`. The wizard's table gives its spellbook, which it keeps.
 - A class's rules (`Class.SubclassLevel`, `Class.AsiLevels`, `Class.SavingThrowAbilityIds`,
   `Class.UnarmoredArmorClass`, the spell table) and a race's (`Race.SkillChoiceCount` and its options, `Race.
   LanguageChoiceCount`) are read from the 5etools data by the generator. Read them from the

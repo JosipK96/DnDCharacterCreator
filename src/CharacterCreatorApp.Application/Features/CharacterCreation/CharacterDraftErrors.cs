@@ -66,6 +66,10 @@ public static class CharacterDraftErrors
     public static Error LevelRequired(string step) =>
         Error.Validation("CharacterDraft.LevelRequired", $"Must choose a level before {step}");
 
+    /// <summary>A step whose numbers follow the final scores: a 2014 cleric's prepared spells.</summary>
+    public static Error ScoresRequired(string step) =>
+        Error.Validation("CharacterDraft.ScoresRequired", $"Must choose a race, a background and ability scores before {step}: how many spells the class prepares follows the final scores.");
+
     public static Error ClassAndLevelRequired() =>
         Error.Validation("CharacterDraft.ClassAndLevelRequired", "Must choose class and level before setting ability score improvements");
 

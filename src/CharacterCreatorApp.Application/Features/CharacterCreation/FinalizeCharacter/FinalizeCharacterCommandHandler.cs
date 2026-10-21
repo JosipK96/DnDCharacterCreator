@@ -51,14 +51,14 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.FinalizeCha
 
             var sources = sourcesResponse.Value;
 
-            var incompleteChoice = DraftCompletenessChecker.FindMissingChoice(draft, sources);
+            // Built before the check, which needs its final scores; nothing is saved until it passes
+            var character = CharacterBuilder.Build(_userContext.UserId, draft, sources, _timeProvider);
+            var incompleteChoice = DraftCompletenessChecker.FindMissingChoice(draft, sources, character.AbilityScores);
 
             if (incompleteChoice is not null)
             {
                 return incompleteChoice.Value;
             }
-
-            var character = CharacterBuilder.Build(_userContext.UserId, draft, sources, _timeProvider);
 
             await _characterRepository.Create(character, cancellationToken);
             draft.MarkAsCompleted();

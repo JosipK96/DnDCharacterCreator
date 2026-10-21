@@ -43,6 +43,12 @@ public sealed record SpellcastingSeedRow
     public required string Ability { get; init; }
 
     public bool IsPreparedCaster { get; init; }
+
+    /// <summary>
+    /// 1 or 2 for a 2014 class that prepares its modifier plus its level (or half of it) in spells;
+    /// null otherwise. See Spellcasting.PreparedSpellsLevelDivisor.
+    /// </summary>
+    public int? PreparedSpellsLevelDivisor { get; init; }
 }
 
 /// <summary>What a caster of the class or subclass has at one character level.</summary>
@@ -53,7 +59,8 @@ public sealed record SpellProgressionSeedRow
 
     /// <summary>
     /// The levelled spells the player picks: spells known, a 2024 class's prepared spells, or the
-    /// spells in a wizard's spellbook. 0 for a 2014 class that prepares from its whole list.
+    /// spells in a wizard's spellbook. 0 for a 2014 class whose prepared spells follow its
+    /// modifier and level instead (SpellcastingSeedRow.PreparedSpellsLevelDivisor).
     /// </summary>
     public int SpellsKnown { get; init; }
 

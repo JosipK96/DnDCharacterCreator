@@ -274,7 +274,12 @@ internal sealed partial class ClassImporter
             Ability = AbilityScore.FromId(ability).Name,
 
             // Every 2024 caster prepares spells; a 2014 one does when its class says how many
-            IsPreparedCaster = edition == RulesEdition.Edition2024 || @class["preparedSpells"] != null
+            IsPreparedCaster = edition == RulesEdition.Edition2024 || @class["preparedSpells"] != null,
+
+            // A 2014 caster's count follows its modifier and level; a 2024 one's is in its table
+            PreparedSpellsLevelDivisor = @class.Str("preparedSpells") is { } formula
+                ? PreparedSpellsFormulaParser.ParseLevelDivisor(formula, ability)
+                : null
         };
     }
 

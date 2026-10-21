@@ -9,6 +9,9 @@ public static class SpellErrors
     public static Error Duplicate(string spellName) =>
         Error.Validation("Spell.Duplicate", $"{spellName} was picked more than once.");
 
+    public static Error AlwaysPrepared(string spellName, string subclassName) =>
+        Error.Validation("Spell.AlwaysPrepared", $"{spellName} comes with {subclassName}, always prepared and not counted; pick another spell in its place.");
+
     public static Error NoSpellcasting(string className, int level) =>
         Error.Validation("Spell.NoSpellcasting", $"A level {level} {className} casts no spells, so it cannot pick any.");
 

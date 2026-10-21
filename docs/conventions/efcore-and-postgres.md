@@ -168,8 +168,9 @@ raw 5etools data by
 hand, change the generator and run it again. The
 row types they share with the seeders are in `Infrastructure/Seed/Rows`. A
 class's spell table (cantrips, spells to pick, highest spell level per level),
-its spellcasting ability, subclass level, ability score improvement levels and
-saving throws are all read from the class data, not written in C#.
+its spellcasting ability and how a 2014 one counts its prepared spells, subclass
+level, ability score improvement levels and saving throws are all read from the
+class data, not written in C#.
 
 The build copies `Data/` next to the app (`CopyToOutputDirectory` in the
 Infrastructure project), and `SeedService.DataPath` reads it from

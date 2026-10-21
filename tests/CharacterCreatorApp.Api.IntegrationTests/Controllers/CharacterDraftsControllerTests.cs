@@ -377,7 +377,9 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
             Method = "standard-array"
         });
         await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["history", "medicine"]));
-        await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(["guidance", "sacred_flame", "toll_the_dead"]));
+        // Three cantrips, and WIS 16 (+3) plus level 3 is six prepared spells
+        await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(
+            ["guidance", "sacred_flame", "toll_the_dead", "command", "guiding_bolt", "healing_word", "sanctuary", "shield_of_faith", "aid"]));
 
         var preview = await _client.GetFromJsonAsync<CharacterPreviewApiResponse>(
             $"/api/character-drafts/{draftId}/preview", cancellationToken);
@@ -407,9 +409,13 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         // Features come from the class and the Life domain up to level 3, and from the background
         character.Features.Select(f => f.Name).Should().Contain(["Divine Domain", "Disciple of Life", "Shelter of the Faithful"]);
 
-        // The three picked cantrips, and the domain spells a level 3 Life cleric has prepared
+        // The three picked cantrips, the six prepared spells, and the domain spells a level 3
+        // Life cleric has prepared on top
         character.Spells.Select(s => s.Id).Should().BeEquivalentTo(
-            ["guidance", "sacred_flame", "toll_the_dead", "bless", "cure_wounds", "lesser_restoration", "spiritual_weapon"]);
+        [
+            "guidance", "sacred_flame", "toll_the_dead", "command", "guiding_bolt", "healing_word", "sanctuary", "shield_of_faith", "aid",
+            "bless", "cure_wounds", "lesser_restoration", "spiritual_weapon"
+        ]);
 
         // The saved sheet reads back exactly what the review step showed
         character.Stats.Should().BeEquivalentTo(preview.Stats);
@@ -1646,6 +1652,68 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         // Assert - 10 + DEX + CHA
         preview.Should().Be(10 + 2 + 2);
         sheet.Should().Be(preview);
+    }
+
+    [Fact]
+    public async Task CompleteWorkflow_With2014LifeCleric_PreparesItsModifierPlusItsLevelAndTheSheetListsThem()
+    {
+        // Arrange - a level 1 hill dwarf Life cleric, WIS 15 + 1 = 16 (+3): four prepared spells,
+        // and Bless and Cure Wounds from the domain on top
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateHillDwarfLifeClericAsync();
+
+        // Act
+        var allowance = await _client.GetFromJsonAsync<SpellAllowanceApiResponse>($"/api/character-drafts/{draftId}/spell-allowance", cancellationToken);
+        await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(
+            ["guidance", "sacred_flame", "thaumaturgy", "guiding_bolt", "healing_word", "shield_of_faith", "sanctuary"]));
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        // Assert
+        allowance.Should().BeEquivalentTo(new SpellAllowanceApiResponse(
+            CastsSpells: true, Cantrips: 3, Spells: 4, MaxSpellLevel: 1, SpellsFollowScores: true, AlwaysPreparedSpellIds: ["bless", "cure_wounds"]));
+        character!.Spells.Select(s => s.Id).Should().BeEquivalentTo(
+            ["guidance", "sacred_flame", "thaumaturgy", "guiding_bolt", "healing_word", "shield_of_faith", "sanctuary", "bless", "cure_wounds"]);
+    }
+
+    [Fact]
+    public async Task ChooseSpells_A2014ClericWithMoreSpellsThanItPrepares_ReturnsSpellCountMismatch()
+    {
+        // Arrange - WIS 16 at level 1 prepares four
+        await SignInAsync();
+        var draftId = await CreateHillDwarfLifeClericAsync();
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/spells",
+            new ChooseSpellsApiRequest(["guidance", "sacred_flame", "thaumaturgy", "guiding_bolt", "healing_word", "shield_of_faith", "sanctuary", "command"]),
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "Spell.SpellCountMismatch");
+    }
+
+    // A level 1 hill dwarf Life cleric Acolyte, every step done but the spells, WIS 15
+    private async Task<Guid> CreateHillDwarfLifeClericAsync()
+    {
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Hilde", Level = 1, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "cleric", SubclassId = "life" });
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte" });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["celestial-phb", "elvish-phb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["smith_tools"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 13, ["DEX"] = 10, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 15, ["CHA"] = 12 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["history", "medicine"]));
+
+        return draftId;
     }
 
     // The armour class the review step shows, then the one the saved sheet shows

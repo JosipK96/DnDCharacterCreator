@@ -101,7 +101,7 @@ public class PreviewCharacterQueryHandler(
 
         // Surfaced rather than returned as an error: the player should see the sheet so far
         // alongside what still needs choosing.
-        preview.BlockingIssue = DraftCompletenessChecker.FindMissingChoice(draft, sources)?.Description;
+        preview.BlockingIssue = DraftCompletenessChecker.FindMissingChoice(draft, sources, character.AbilityScores)?.Description;
 
         return preview;
     }

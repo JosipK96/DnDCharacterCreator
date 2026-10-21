@@ -95,7 +95,8 @@ public class ClassSeedDataTests
     // A wizard picks the six spells of a first spellbook, and two more each level
     [InlineData("wizard", 1, 3, 6, 1)]
     [InlineData("wizard", 5, 4, 14, 3)]
-    // Prepared casters prepare from the whole list, so they pick no levelled spells
+    // A 2014 prepared caster's table gives no count; it follows the modifier and the level
+    // (PreparedSpellsLevelDivisor, pinned below)
     [InlineData("cleric", 17, 5, 0, 9)]
     [InlineData("druid", 4, 3, 0, 2)]
     [InlineData("paladin", 5, 0, 0, 2)]
@@ -114,6 +115,31 @@ public class ClassSeedDataTests
 
         // Assert
         (row.CantripsKnown, row.SpellsKnown, row.MaxSpellLevel).Should().Be((cantrips, spells, maxSpellLevel));
+    }
+
+    [Theory]
+    // A 2014 cleric or druid prepares its modifier plus its level; the wizard too, from its spellbook
+    [InlineData("cleric", "Wisdom", 1)]
+    [InlineData("druid", "Wisdom", 1)]
+    [InlineData("wizard", "Intelligence", 1)]
+    // A paladin or artificer adds half its level, rounded down
+    [InlineData("paladin", "Charisma", 2)]
+    [InlineData("artificer", "Intelligence", 2)]
+    // The others know their spells, and every 2024 caster's table gives its count
+    [InlineData("bard", "Charisma", null)]
+    [InlineData("ranger", "Wisdom", null)]
+    [InlineData("sorcerer", "Charisma", null)]
+    [InlineData("warlock", "Charisma", null)]
+    [InlineData("cleric-2024", "Wisdom", null)]
+    [InlineData("paladin-2024", "Charisma", null)]
+    [InlineData("artificer-2024", "Intelligence", null)]
+    public async Task Class_HasTheBooksPreparedSpellsRule(string classId, string ability, int? levelDivisor)
+    {
+        // Act
+        var spellcasting = (await ClassAsync(classId)).Spellcasting!;
+
+        // Assert
+        (spellcasting.Ability, spellcasting.PreparedSpellsLevelDivisor).Should().Be((ability, levelDivisor));
     }
 
     [Fact]

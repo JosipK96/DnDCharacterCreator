@@ -2,6 +2,7 @@ using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
@@ -39,16 +40,56 @@ public static class SpellChoice
     }
 
     /// <summary>
+    /// What a draft of this class, subclass and level picks in the spells step, or null when it
+    /// casts nothing yet. A 2014 cleric's, druid's, paladin's or artificer's count follows its
+    /// final scores, so for one of those the draft's sources are loaded and the character built,
+    /// as finalize builds it; a draft without its race, background and scores cannot know it yet.
+    /// </summary>
+    public static async Task<Response<SpellAllowance?>> AllowanceForAsync(
+        CharacterDraft draft,
+        Class @class,
+        Subclass? subclass,
+        int level,
+        DraftSourceLoader sourceLoader,
+        Guid userId,
+        TimeProvider timeProvider,
+        CancellationToken cancellationToken)
+    {
+        // Only a prepared caster's count reads the scores; the base ones do for everyone else
+        if (!@class.PreparesSpellsFromScoresAt(level))
+        {
+            return @class.SpellAllowanceAt(level, subclass, draft.BaseAbilityScores);
+        }
+
+        if (!draft.IsReadyToFinalize())
+        {
+            return CharacterDraftErrors.ScoresRequired("selecting spells");
+        }
+
+        var sources = await sourceLoader.LoadAsync(draft, cancellationToken);
+
+        if (!sources.IsSuccess)
+        {
+            return sources.Errors;
+        }
+
+        var character = CharacterBuilder.Build(userId, draft, sources.Value, timeProvider);
+
+        return @class.SpellAllowanceAt(level, subclass, character.AbilityScores);
+    }
+
+    /// <summary>
     /// Returns null when the picks are exactly what the spell table gives this level: every one
-    /// on the lists, none twice, the right number of cantrips and of spells, none above the
-    /// highest spell level, and no more from outside a subclass's schools than it may take (an
-    /// Eldritch Knight's abjuration and evocation). A character who casts nothing yet may pick
-    /// nothing.
+    /// on the lists, none twice, none the subclass always has prepared (a Life cleric's Bless),
+    /// the right number of cantrips and of spells, none above the highest spell level, and no
+    /// more from outside a subclass's schools than it may take (an Eldritch Knight's abjuration
+    /// and evocation). A character who casts nothing yet may pick nothing.
     /// </summary>
     public static Error? FindInvalidPick(
         IReadOnlyList<string> spellIds,
         IReadOnlyCollection<SpellReadModel> choosable,
         SpellAllowance? allowance,
+        Subclass? subclass,
         string className,
         int level)
     {
@@ -69,6 +110,15 @@ public static class SpellChoice
         if (picked.GroupBy(s => s.Id).FirstOrDefault(g => g.Count() > 1) is { } duplicate)
         {
             return SpellErrors.Duplicate(duplicate.First().Name);
+        }
+
+        // A domain or oath spell is prepared without counting against the picks: picking it again
+        // would spend a pick on nothing
+        var alwaysPrepared = subclass?.AlwaysPreparedSpellIdsAt(level).ToHashSet() ?? [];
+
+        if (picked.Find(s => alwaysPrepared.Contains(s.Id)) is { } prepared)
+        {
+            return SpellErrors.AlwaysPrepared(prepared.Name, subclass!.Name);
         }
 
         var cantrips = picked.Count(s => s.Level == 0);

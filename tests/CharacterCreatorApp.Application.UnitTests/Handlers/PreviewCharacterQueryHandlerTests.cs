@@ -164,6 +164,38 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
         result.Value.BlockingIssue.Should().BeNull();
     }
 
+    [Theory]
+    [InlineData("cleric", "Wisdom", 1, 14, 3)]
+    [InlineData("druid", "Wisdom", 1, 16, 4)]
+    [InlineData("paladin", "Charisma", 2, 14, 3)]
+    [InlineData("artificer", "Intelligence", 1, 16, 3)]
+    public async Task Handle_ForA2014PreparedCaster_ListsItsPreparedSpells(string classId, string ability, int level, int score, int prepared)
+    {
+        // Arrange - its modifier plus its level, half of it for a paladin or artificer
+        List<string> spellIds = [.. Enumerable.Range(1, prepared).Select(i => $"level_1_spell_{i}")];
+        ArrangePreparedCasterDraft(classId, ability, level, score, spellIds);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.BlockingIssue.Should().BeNull();
+        result.Value.Spells.Select(s => s.Id).Should().Equal(spellIds);
+    }
+
+    [Fact]
+    public async Task Handle_ForAClericWithFewerSpellsThanItPrepares_SaysWhatIsMissing()
+    {
+        // Arrange - WIS 16 at level 1 prepares four; two were picked
+        ArrangePreparedCasterDraft("cleric", "Wisdom", 1, 16, ["level_1_spell_1", "level_1_spell_2"]);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.BlockingIssue.Should().Be("A level 1 cleric picks exactly 4 spell(s) above cantrips. The draft has 2.");
+    }
+
     [Fact]
     public async Task Handle_WithResilientForWisdom_MarksTheWisdomSaveProficient()
     {
@@ -347,6 +379,57 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
             new FeatReadModel { Id = "alert", Name = "Alert", Description = "A feat.", Edition = RulesEdition.Edition2014, Source = "PHB", Category = "General" },
         ]);
     }
+
+    // The dwarf soldier as a 2014 prepared caster with these spells picked, its spellcasting
+    // ability at this score; its class's table gives no count, and it casts up to level 1
+    private CharacterDraft ArrangePreparedCasterDraft(string classId, string ability, int level, int score, List<string> spellIds)
+    {
+        var draft = ArrangeDraft(level);
+        draft.SetClass(classId);
+        var scores = new Dictionary<string, int> { ["STR"] = 10, ["DEX"] = 10, ["CON"] = 10, ["INT"] = 10, ["WIS"] = 10, ["CHA"] = 10 };
+        scores[AbilityScore.Normalize(ability)] = score;
+        draft.SetBaseAbilityScores(scores, AbilityScoreMethod.Rolled);
+        draft.SetSpells(spellIds);
+
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(classId, _cts.Token)).ReturnsAsync(new Class
+        {
+            Id = classId,
+            Name = classId,
+            Edition = RulesEdition.Edition2014,
+            Source = "PHB",
+            HitDie = "1d8",
+            SubclassLevel = 20,
+            Spellcasting = new Spellcasting
+            {
+                ClassId = classId,
+                SpellcastingAbility = ability,
+                IsPreparedCaster = true,
+                PreparedSpellsLevelDivisor = classId is "paladin" or "artificer" ? 2 : 1,
+            },
+            SpellProgression = [new ClassSpellProgression { ClassId = classId, CharacterLevel = level, CantripsKnown = 0, SpellsKnown = 0, MaxSpellLevel = 1 }],
+        });
+
+        var spells = Enumerable.Range(1, 6).Select(i => PreviewSpell($"level_1_spell_{i}")).ToList();
+        _spellRepositoryMock.Setup(r => r.GetByClassIdAsync(classId, _cts.Token)).ReturnsAsync(spells);
+        _spellRepositoryMock
+            .Setup(r => r.GetByIdsAsync(It.Is<List<string>>(ids => ids.SequenceEqual(spellIds)), _cts.Token))
+            .ReturnsAsync(spells.FindAll(s => spellIds.Contains(s.Id)));
+
+        return draft;
+    }
+
+    private static SpellReadModel PreviewSpell(string id) => new()
+    {
+        Id = id,
+        Name = id,
+        Source = "PHB",
+        Level = 1,
+        School = "Abjuration",
+        CastingTimeUnit = "action",
+        RangeType = "point",
+        DurationType = "instant",
+        Description = "A spell."
+    };
 
     private CharacterDraft ArrangeDraft(int level)
     {

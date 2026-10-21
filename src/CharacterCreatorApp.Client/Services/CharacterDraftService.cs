@@ -93,6 +93,13 @@ public class CharacterDraftService(HttpClient http)
     public Task ChooseFightingStylesAsync(Guid draftId, List<string> featIds) =>
         PutAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(featIds));
 
+    /// <summary>How many cantrips and spells the class lets the character pick: a 2014 cleric's count follows its scores.</summary>
+    public async Task<SpellAllowanceApiResponse> GetSpellAllowanceAsync(Guid draftId)
+    {
+        var response = await _http.GetAsync($"/api/character-drafts/{draftId}/spell-allowance");
+        return await response.ReadAsync<SpellAllowanceApiResponse>();
+    }
+
     public Task ChooseSpellsAsync(Guid draftId, List<string> spellIds) =>
         PutAsync(draftId, "spells", new ChooseSpellsApiRequest(spellIds));
 

@@ -48,7 +48,8 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
             {
                 ClassId = row.Id,
                 SpellcastingAbility = row.Spellcasting.Ability,
-                IsPreparedCaster = row.Spellcasting.IsPreparedCaster
+                IsPreparedCaster = row.Spellcasting.IsPreparedCaster,
+                PreparedSpellsLevelDivisor = row.Spellcasting.PreparedSpellsLevelDivisor
             },
             SpellProgression = row.SpellProgression
                 .Select(p => new ClassSpellProgression

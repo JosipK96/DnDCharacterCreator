@@ -234,6 +234,20 @@ public class CharacterStatsCalculatorTests
     }
 
     [Fact]
+    public void ArmorClassFor_WithOneAbilityInTwoSpellings_DoesNotThrow()
+    {
+        // Arrange - DEX +2, and CON as both "CON" and "constitution"
+        var barbarian = new UnarmoredArmorClass { Base = 10, AbilityId = "CON", AllowsShield = true };
+        var modifiers = new Dictionary<string, int> { ["DEX"] = 2, ["CON"] = 3, ["constitution"] = 3 };
+
+        // Act
+        var armorClass = barbarian.ArmorClassFor(modifiers);
+
+        // Assert
+        armorClass.Should().Be(15);
+    }
+
+    [Fact]
     public void Calculate_AddsProficiencyBonusToProficientSavingThrows()
     {
         // Arrange - a level 5 fighter (+3 bonus) proficient in STR and CON saves

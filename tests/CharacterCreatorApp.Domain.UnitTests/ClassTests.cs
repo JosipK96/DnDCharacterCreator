@@ -135,7 +135,7 @@ public class ClassTests
     }
 
     [Fact]
-    public void UnarmoredArmorClassesWith_AClassWithOne_ReturnsTheClasss()
+    public void UnarmoredArmorClassesWith_AClassWithOne_ReturnsTheClassOne()
     {
         // Arrange - a barbarian, whose subclass has none
         var unarmoredDefense = new UnarmoredArmorClass { Base = 10, AbilityId = "CON", AllowsShield = true };
@@ -151,7 +151,7 @@ public class ClassTests
     }
 
     [Fact]
-    public void UnarmoredArmorClassesWith_ASubclassWithOne_ReturnsTheSubclasss()
+    public void UnarmoredArmorClassesWith_ASubclassWithOne_ReturnsTheSubclassOne()
     {
         // Arrange - a draconic sorcerer
         var draconicResilience = new UnarmoredArmorClass { Base = 13, AbilityId = null, AllowsShield = true };

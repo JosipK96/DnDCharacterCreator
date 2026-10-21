@@ -23,9 +23,15 @@ public class UnarmoredArmorClass
     {
         ArgumentNullException.ThrowIfNull(modifiers);
 
-        var byId = modifiers
-            .Where(kvp => AbilityScore.TryNormalize(kvp.Key, out _))
-            .ToDictionary(kvp => AbilityScore.Normalize(kvp.Key), kvp => kvp.Value, StringComparer.Ordinal);
+        var byId = new Dictionary<string, int>(StringComparer.Ordinal);
+
+        foreach (var (key, modifier) in modifiers)
+        {
+            if (AbilityScore.TryNormalize(key, out var id))
+            {
+                byId[id] = modifier;
+            }
+        }
 
         var armorClass = Base + byId.GetValueOrDefault(AbilityScore.DEX.Id);
 

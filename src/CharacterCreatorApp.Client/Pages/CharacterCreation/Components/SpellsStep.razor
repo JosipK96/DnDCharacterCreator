@@ -45,7 +45,7 @@
                 <p class="font-semibold mb-1">Prepared Spells</p>
                 <p class="text-sm">
                     @className prepares @spellsKnown @(spellsKnown == 1 ? "spell" : "spells") from the @className spell list:
-                    its spellcasting ability modifier plus its level (half its level for a paladin or artificer), at least one.
+                    its spellcasting ability modifier plus its level, or half its level, at least one.
                     @if (alwaysPreparedSpells.Count > 0)
                     {
                         <span>Your subclass's spells are always prepared on top of these: @string.Join(", ", alwaysPreparedSpells.Select(s => s.Name)).</span>

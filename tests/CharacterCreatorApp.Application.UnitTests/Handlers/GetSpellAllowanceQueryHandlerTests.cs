@@ -221,7 +221,7 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
             Subclasses = [.. subclasses],
         });
 
-        // Finalize's sources hold the class's list too
+        // DraftSourceLoader loads the class's list with the rest of a prepared caster's sources
         _spellRepositoryMock.Setup(r => r.GetByClassIdAsync(classId, _cts.Token)).ReturnsAsync([]);
     }
 

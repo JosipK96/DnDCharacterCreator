@@ -20,5 +20,8 @@ public class FeatMappingConfig : IRegister
 
         config.NewConfig<FeatAbilityIncrease, FeatAbilityIncreaseApiResponse>()
             .MapToConstructor(true);
+
+        config.NewConfig<FeatChoice, FeatChoiceApiResponse>()
+            .MapToConstructor(true);
     }
 }

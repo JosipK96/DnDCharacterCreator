@@ -276,12 +276,7 @@ public static class ReadModelExtensions
             GrantedProficiencyIds = feat.GrantedProficiencyIds?.AsReadOnly() ?? new List<string>().AsReadOnly(),
             GrantedLanguageIds = feat.GrantedLanguageIds?.AsReadOnly() ?? new List<string>().AsReadOnly(),
             GrantedSpellIds = feat.GrantedSpellIds?.AsReadOnly() ?? new List<string>().AsReadOnly(),
-            Choice = feat.Choice == null ? null : new FeatChoiceReadModel
-            {
-                Type = feat.Choice.Type,
-                Count = feat.Choice.Count,
-                Options = feat.Choice.Options.AsReadOnly()
-            },
+            Choice = feat.Choice,
             SpellChoice = feat.SpellChoice,
         };
     }
@@ -368,6 +363,7 @@ public static class ReadModelExtensions
             SelectedLanguageIds = draft.SelectedLanguageIds,
             SelectedFeatIds = draft.SelectedFeatIds,
             FeatAbilityIncreases = draft.FeatAbilityIncreases,
+            FeatProficiencyPicks = draft.FeatProficiencyPicks,
             FightingStyleIds = draft.FightingStyleIds,
             SelectedSpellIds = draft.SelectedSpellIds,
             FeatSpells = draft.FeatSpells,

@@ -8,8 +8,8 @@ using Microsoft.Extensions.Time.Testing;
 namespace CharacterCreatorApp.Domain.UnitTests;
 
 /// <summary>
-/// The size, the background's picked feat, and the spells a race or feat lets the player pick,
-/// and what clears each of them.
+/// The size, the background's picked feat, the spells a race or feat lets the player pick, the
+/// skills or tools a feat does, and what clears each of them.
 /// </summary>
 public class CharacterDraftFeatAndRaceChoicesTests
 {
@@ -178,7 +178,92 @@ public class CharacterDraftFeatAndRaceChoicesTests
 
         // Assert
         draft.RaceSpellIds.Should().Equal("fire_bolt_2024");
-        draft.FeatSpells.Should().Equal(pick);
+        draft.FeatSpells.Should().BeEquivalentTo([pick]);
+    }
+
+    [Fact]
+    public void ChooseBonusSpells_WithASpellcastingAbility_KeepsItsCanonicalId()
+    {
+        // Arrange - the 2024 Magic Initiate's ability arrives in any spelling
+        var draft = NewDraft();
+        var pick = new FeatSpellPick { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["light_2024"], AbilityId = "wisdom" };
+
+        // Act
+        draft.ChooseBonusSpells([], [pick]);
+
+        // Assert
+        draft.FeatSpells.Should().ContainSingle().Which.AbilityId.Should().Be("WIS");
+    }
+
+    [Fact]
+    public void SetFeats_WithProficiencyPicks_KeepsThemInOrder()
+    {
+        // Arrange - Skilled taken twice, once for the background and once for the race
+        var draft = NewDraft();
+        FeatProficiencyPick[] picks =
+        [
+            new() { FeatId = "skilled_2024", ProficiencyIds = ["stealth", "lute", "arcana"] },
+            new() { FeatId = "skilled_2024", ProficiencyIds = ["history", "drum", "insight"] },
+        ];
+
+        // Act
+        draft.SetFeats(["skilled_2024"], null, [.. picks]);
+
+        // Assert
+        draft.FeatProficiencyPicks.Should().Equal(picks);
+    }
+
+    [Fact]
+    public void SetFeats_WithoutProficiencyPicks_ClearsThem()
+    {
+        // Arrange - the improvements step always sends them with the feats
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.SetFeats(["magic_initiate_2014"]);
+
+        // Assert
+        draft.FeatProficiencyPicks.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void SetBackground_WithAnotherFeat_ClearsTheFeatsProficiencyPicks()
+    {
+        // Arrange - the background's feat comes first among the feats whose picks are kept
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.SetBackground("acolyte", null, "echoing_soul");
+
+        // Assert
+        draft.FeatProficiencyPicks.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void SetBackground_WithTheSameBackgroundAndFeat_KeepsTheFeatsProficiencyPicks()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.SetBackground("acolyte", null, "mist_walker");
+
+        // Assert
+        draft.FeatProficiencyPicks.Should().ContainSingle();
+    }
+
+    [Fact]
+    public void SetRace_WithAnotherRace_ClearsTheFeatsProficiencyPicksWithTheImprovements()
+    {
+        // Arrange
+        var draft = DraftWithEveryChoice();
+
+        // Act
+        draft.SetRace("dwarf");
+
+        // Assert
+        draft.SelectedFeatIds.Should().BeEmpty();
+        draft.FeatProficiencyPicks.Should().BeEmpty();
     }
 
     [Fact]
@@ -195,6 +280,7 @@ public class CharacterDraftFeatAndRaceChoicesTests
         draft.RaceSpellIds.Should().BeEmpty();
         draft.BackgroundFeatId.Should().BeNull();
         draft.FeatSpells.Should().BeEmpty();
+        draft.FeatProficiencyPicks.Should().BeEmpty();
     }
 
     [Fact]
@@ -210,6 +296,7 @@ public class CharacterDraftFeatAndRaceChoicesTests
         // Assert
         draft.BackgroundFeatId.Should().BeNull();
         draft.FeatSpells.Should().BeEmpty();
+        draft.FeatProficiencyPicks.Should().BeEmpty();
         draft.SelectedFeatIds.Should().Equal("magic_initiate_2014");
     }
 
@@ -259,7 +346,10 @@ public class CharacterDraftFeatAndRaceChoicesTests
         draft.SetClass("fighter", "champion");
         draft.ChooseFightingStyles(["defense"]);
         draft.SetBackground("acolyte", null, "mist_walker");
-        draft.SetFeats(["magic_initiate_2014"]);
+        draft.SetFeats(
+            ["magic_initiate_2014"],
+            null,
+            [new FeatProficiencyPick { FeatId = "mist_walker", ProficiencyIds = ["stealth"] }]);
         draft.ChooseBonusSpells(
             ["fire_bolt"],
             [new FeatSpellPick { FeatId = "magic_initiate_2014", ClassId = "cleric", SpellIds = ["light", "guidance", "bless"] }]);

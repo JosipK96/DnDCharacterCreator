@@ -21,6 +21,15 @@
             </div>
         }
 
+        <!-- The background's feat may ask for skills or tools too: a Noble's Skilled -->
+        @if (backgroundFeat is { Choice: { } backgroundChoice })
+        {
+            <div class="bg-gray-700 rounded-lg p-6 mb-6">
+                <h3 class="text-lg font-semibold text-white mb-1">Background Feat: @backgroundFeat.Name</h3>
+                @ProficiencySelects(backgroundChoice, backgroundFeatPicks)
+            </div>
+        }
+
         @if (fightingStylesOwed > 0)
         {
             <div class="bg-gray-700 rounded-lg p-6 mb-6">
@@ -187,6 +196,12 @@
                                 </select>
                             </label>
                         }
+
+                        <!-- Keen Mind's skill, Skilled's three skills or tools -->
+                        @if (SelectedFeat(slot) is { Choice: { } featChoice } && AsksForProficiencies(featChoice))
+                        {
+                            @ProficiencySelects(featChoice, slot.ProficiencyPicks)
+                        }
                     }
                 </div>
             }
@@ -224,6 +239,9 @@
         /// <summary>The ability the feat raises where it offers several: Athlete's Strength or Dexterity.</summary>
         public string? FeatAbility { get; set; }
 
+        /// <summary>The skills or tools picked for a feat that asks for them, one entry per pick it gives.</summary>
+        public List<string?> ProficiencyPicks { get; set; } = [];
+
         public string FeatSearch { get; set; } = string.Empty;
     }
 
@@ -257,6 +275,14 @@
     private List<FeatApiResponse> fightingStyleOptions = [];
     private List<string?> chosenStyles = [];
 
+    // The background's feat when it asks for skills or tools (a Noble's Skilled), and its picks
+    private FeatApiResponse? backgroundFeat;
+    private List<string?> backgroundFeatPicks = [];
+
+    // Proficiency names by id, and what the race, background and class steps already gave or picked
+    private Dictionary<string, string> proficiencyNames = [];
+    private HashSet<string> proficienciesHeld = [];
+
     protected override Task OnInitializedAsync() => LoadAsync(LoadImprovementsAsync, "Failed to load ASI data");
 
     private async Task LoadImprovementsAsync()
@@ -283,19 +309,35 @@
             ? ((race?.FeatChoiceCount ?? 0) + subrace.FeatChoiceCount, subrace.FeatChoiceCategory)
             : (race?.FeatChoiceCount ?? 0, race?.FeatChoiceCategory);
 
+        var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
+        var editionFeats = await LookupService.GetFeatsAsync(draft.Edition, draft.AllowedSources);
+
         // Only the feats of the character's rules edition and books, less one the background
         // already gave (a 2024 criminal's Alert) unless it can be taken again
         if (asiCount + bonusFeatCount > 0)
         {
-            var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
-            var backgroundFeat = background?.Feat is { IsRepeatable: false } feat ? feat.Id : null;
+            var nonRepeatableBackgroundFeat = background?.Feat is { IsRepeatable: false } feat ? feat.Id : null;
 
-            feats = (await LookupService.GetFeatsAsync(draft.Edition, draft.AllowedSources))
-                .Where(f => f.Name != AbilityScoreImprovementFeat && f.Id != backgroundFeat && f.CanBeTakenForImprovement)
+            feats = editionFeats
+                .Where(f => f.Name != AbilityScoreImprovementFeat && f.Id != nonRepeatableBackgroundFeat && f.CanBeTakenForImprovement)
                 .ToList();
         }
 
+        // The background's own feat, or the one picked for it (a Mist Wanderer's Dark Gift)
+        var backgroundFeatId = background?.Feat?.Id ?? (background?.FeatChoiceCategory == null ? null : draft.BackgroundFeatId);
+        backgroundFeat = editionFeats.FirstOrDefault(f => f.Id == backgroundFeatId && f.Choice is { } choice && AsksForProficiencies(choice));
+
+        proficiencyNames = (await LookupService.GetProficienciesAsync()).ToDictionary(p => p.Id, p => p.Name);
+        proficienciesHeld =
+        [
+            .. background?.Proficiencies.Select(p => p.Id) ?? [],
+            .. draft.SelectedRaceSkillIds ?? [],
+            .. draft.SelectedClassProficiencyIds ?? [],
+            .. (draft.ToolPicks ?? []).SelectMany(pick => pick),
+        ];
+
         slots = RestoreSlots(draft);
+        RestoreProficiencyPicks(draft);
 
         var fightingStyles = await DraftService.GetFightingStylesAsync(DraftId);
         fightingStylesOwed = fightingStyles.Owed;
@@ -360,6 +402,79 @@
         FeatAbility = increase?.FirstOrDefault(kvp => kvp.Value > 0).Key,
     };
 
+    /// <summary>
+    /// Puts the saved skill and tool picks back, one per feat that asks, in the order the API keeps
+    /// them: the background's feat, then the feats in slot order. A pick for another feat is dropped.
+    /// </summary>
+    private void RestoreProficiencyPicks(CharacterDraftDetailsApiResponse draft)
+    {
+        var saved = new Queue<FeatProficiencyPickApiModel>(draft.FeatProficiencyPicks ?? []);
+
+        if (backgroundFeat is { Choice: { } backgroundChoice })
+        {
+            backgroundFeatPicks = RestoredPicks(backgroundFeat.Id, backgroundChoice, saved);
+        }
+
+        foreach (var slot in slots.Where(s => s.TakesFeat))
+        {
+            if (SelectedFeat(slot) is { Choice: { } choice } feat && AsksForProficiencies(choice))
+            {
+                slot.ProficiencyPicks = RestoredPicks(feat.Id, choice, saved);
+            }
+        }
+    }
+
+    private static List<string?> RestoredPicks(string featId, FeatChoiceApiResponse choice, Queue<FeatProficiencyPickApiModel> saved)
+    {
+        var ids = saved.TryPeek(out var next) && next.FeatId == featId ? saved.Dequeue().ProficiencyIds : [];
+        return Enumerable.Range(0, choice.Count).Select(i => ids.ElementAtOrDefault(i)).ToList();
+    }
+
+    private static bool AsksForProficiencies(FeatChoiceApiResponse choice) => choice.Type is FeatChoiceApiResponse.Skills or FeatChoiceApiResponse.SkillsTools;
+
+    // One select per pick the feat gives, each leaving out what another pick or step already has
+    private RenderFragment ProficiencySelects(FeatChoiceApiResponse choice, List<string?> picks) => __builder =>
+    {
+        <p class="text-gray-300 text-sm mt-4 mb-2">
+            Pick @choice.Count @(choice.Type == FeatChoiceApiResponse.SkillsTools ? "skill(s) or tool(s)" : "skill(s)") <span class="text-red-400">*</span>
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            @for (var p = 0; p < picks.Count; p++)
+            {
+                var pickIndex = p;
+                <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2"
+                        value="@picks[pickIndex]" @onchange="e => picks[pickIndex] = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
+                    <option value="">Choose...</option>
+                    @foreach (var option in OptionsFor(choice, picks[pickIndex]))
+                    {
+                        <option value="@option">@proficiencyNames.GetValueOrDefault(option, option)</option>
+                    }
+                </select>
+            }
+        </div>
+    };
+
+    // A feat's options less what the character has from elsewhere or picked in another select
+    private IEnumerable<string> OptionsFor(FeatChoiceApiResponse choice, string? current)
+    {
+        var taken = AllProficiencyPicks().Where(id => id != current).ToHashSet();
+
+        return choice.Options
+            .Where(id => id == current || (!taken.Contains(id) && !proficienciesHeld.Contains(id)))
+            .OrderBy(id => proficiencyNames.GetValueOrDefault(id, id));
+    }
+
+    private IEnumerable<string> AllProficiencyPicks() =>
+        backgroundFeatPicks
+            .Concat(slots.Where(s => s.TakesFeat).SelectMany(s => s.ProficiencyPicks))
+            .OfType<string>();
+
+    // The picks for a feat just chosen: as many empty ones as it gives, or none
+    private List<string?> EmptyPicksFor(string? featId) =>
+        feats.FirstOrDefault(f => f.Id == featId)?.Choice is { } choice && AsksForProficiencies(choice)
+            ? Enumerable.Repeat<string?>(null, choice.Count).ToList()
+            : [];
+
     // A race's feat may be of one category only: a 2024 human's is an Origin feat
     private IEnumerable<FeatApiResponse> FilteredFeats(int index)
     {
@@ -403,6 +518,7 @@
         {
             slot.FeatId = null;
             slot.FeatAbility = null;
+            slot.ProficiencyPicks = [];
         }
     }
 
@@ -410,6 +526,7 @@
     {
         slots[index].FeatId = slots[index].FeatId == featId ? null : featId;
         slots[index].FeatAbility = null;
+        slots[index].ProficiencyPicks = EmptyPicksFor(slots[index].FeatId);
     }
 
     private void SetFeatSearch(int index, string? search)
@@ -438,8 +555,9 @@
 
     private bool CanProceed() =>
         chosenStyles.All(id => !string.IsNullOrEmpty(id))
+        && backgroundFeatPicks.All(id => !string.IsNullOrEmpty(id))
         && slots.All(slot => slot.TakesFeat
-            ? !string.IsNullOrEmpty(slot.FeatId) && HasAbilityPick(slot)
+            ? !string.IsNullOrEmpty(slot.FeatId) && HasAbilityPick(slot) && slot.ProficiencyPicks.All(id => !string.IsNullOrEmpty(id))
             : slot.Improvement.Values.Sum() == 2);
 
     // A feat raising one of several abilities needs the pick; one raising a fixed ability does not
@@ -481,13 +599,25 @@
         var featIds = featSlots.Select(s => s.FeatId!).ToList();
         var featAbilityIncreases = featSlots.Select(FeatIncrease).ToList();
 
+        // The background's feat first, then each feat that asks, in the order of the feats
+        var proficiencyPicks = new List<FeatProficiencyPickApiModel>();
+
+        if (backgroundFeat is not null)
+        {
+            proficiencyPicks.Add(new FeatProficiencyPickApiModel { FeatId = backgroundFeat.Id, ProficiencyIds = [.. backgroundFeatPicks.OfType<string>()] });
+        }
+
+        proficiencyPicks.AddRange(featSlots
+            .Where(s => s.ProficiencyPicks.Count > 0)
+            .Select(s => new FeatProficiencyPickApiModel { FeatId = s.FeatId!, ProficiencyIds = [.. s.ProficiencyPicks.OfType<string>()] }));
+
         var styleIds = chosenStyles.OfType<string>().ToList();
 
         // The improvements first: the styles are checked against the feats they take
         if (await SaveAsync(
                 async () =>
                 {
-                    await DraftService.SetAbilityScoreImprovementsAsync(DraftId, improvements, featIds, featAbilityIncreases);
+                    await DraftService.SetAbilityScoreImprovementsAsync(DraftId, improvements, featIds, featAbilityIncreases, proficiencyPicks);
 
                     if (fightingStylesOwed > 0)
                     {

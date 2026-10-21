@@ -6,6 +6,7 @@ using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 
@@ -129,6 +130,12 @@ public static class BonusSpells
             {
                 return featError;
             }
+
+            if (!AllowsAbility(slot.Choice, pick.AbilityId))
+            {
+                return CharacterDraftErrors.InvalidSpellcastingAbility(
+                    slot.Name, slot.Choice.AbilityOptions.ConvertAll(id => AbilityScore.FromId(id).Name));
+            }
         }
 
         return null;
@@ -143,11 +150,23 @@ public static class BonusSpells
 
         if (fixedClassId != null)
         {
-            choice = new BonusSpellChoice { ClassIds = [fixedClassId], Cantrips = choice.Cantrips, FirstLevelSpells = choice.FirstLevelSpells };
+            choice = new BonusSpellChoice
+            {
+                ClassIds = [fixedClassId],
+                Cantrips = choice.Cantrips,
+                FirstLevelSpells = choice.FirstLevelSpells,
+                AbilityOptions = choice.AbilityOptions,
+            };
         }
 
         slots.Add(new BonusSpellSlot(featId, feat.Name, choice));
     }
+
+    // The 2024 Magic Initiate's spellcasting ability, in any spelling; none where the feat offers none
+    private static bool AllowsAbility(BonusSpellChoice choice, string? abilityId) =>
+        abilityId is null
+            ? choice.AbilityOptions.Count == 0
+            : AbilityScore.TryNormalize(abilityId, out var id) && choice.AbilityOptions.Contains(id);
 
     private static Error? FindInvalidSpells(
         CharacterDraft draft,

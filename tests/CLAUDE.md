@@ -21,7 +21,7 @@ migration tests live in an integration project but don't.
 
 | Area | Test classes | Project | Docker |
 |---|---|---|---|
-| Domain rules: drafts, ability scores and increases, feats, races, classes, tools | `CharacterDraftTests`, `CharacterDraftBooksTests`, `CharacterDraftFeatAndRaceChoicesTests`, `AbilityScoreTests`, `AbilityScoreMethodTests`, `AbilityIncreaseChoiceTests`, `FeatAbilityIncreaseTests`, `FeatPrerequisitesTests`, `RaceTests`, `ClassTests`, `BackgroundTests`, `ToolPicksTests` | Domain.UnitTests | no |
+| Domain rules: drafts, ability scores and increases, feats, races, classes, tools | `CharacterDraftTests`, `CharacterDraftBooksTests`, `CharacterDraftFeatAndRaceChoicesTests`, `AbilityScoreTests`, `AbilityScoreMethodTests`, `AbilityIncreaseChoiceTests`, `FeatAbilityIncreaseTests`, `FeatChoiceTests`, `FeatPrerequisitesTests`, `RaceTests`, `ClassTests`, `BackgroundTests`, `ToolPicksTests` | Domain.UnitTests | no |
 | Sheet numbers and features | `CharacterStatsCalculatorTests`, `CharacterFeaturesTests`, `CharacterTests` | Domain.UnitTests | no |
 | Backticked names in every CLAUDE.md still declared in the code | `ClaudeMdReferencesTests` (allowlist inside, each with a reason) | Domain.UnitTests | no |
 | Wizard steps (one handler each) | `Set*CommandHandlerTests`, `Choose*CommandHandlerTests`, `BonusSpellsHandlersTests`, `ToolChoicesHandlersTests` | Application.UnitTests | no |

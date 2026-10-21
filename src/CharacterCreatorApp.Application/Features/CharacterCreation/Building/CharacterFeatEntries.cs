@@ -35,11 +35,12 @@ public static class CharacterFeatEntries
                 continue;
             }
 
-            List<string> spellIds = picksByFeat.TryGetValue(featId, out var picks) && picks.TryDequeue(out var pick) ? pick.SpellIds : [];
+            var pick = picksByFeat.TryGetValue(featId, out var picks) && picks.TryDequeue(out var next) ? next : null;
             entries.Add(new CharacterFeatReadModel
             {
                 Feat = feat,
-                Spells = [.. spellIds.Where(spellsById.ContainsKey).Select(id => spellsById[id])],
+                Spells = [.. (pick?.SpellIds ?? []).Where(spellsById.ContainsKey).Select(id => spellsById[id])],
+                SpellcastingAbilityId = pick?.AbilityId,
             });
         }
 

@@ -111,6 +111,16 @@ public static class DraftCompletenessChecker
             return toolError;
         }
 
+        // Keen Mind's skill, Skilled's three: another background or set of feats clears them
+        var featProficiencyError = FeatProficiencyPicks.FindInvalidPick(
+            draft.FeatProficiencyPicks,
+            FeatProficiencyPicks.SlotsFor(CharacterBuilder.BackgroundFeatIds(background, draft), draft.SelectedFeatIds, sources.Feats.ToDictionary(f => f.Id)));
+
+        if (featProficiencyError is not null)
+        {
+            return featProficiencyError;
+        }
+
         // The race's skills were picked before the background was known
         var repeatedProficiency = ProficiencyPickCheck.FindRepeated(draft, race, subrace, background, @class);
 

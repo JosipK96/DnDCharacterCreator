@@ -75,6 +75,10 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Characters
                 .HasColumnType("jsonb")
                 .HasJsonConversion();
 
+            builder.Property(x => x.FeatProficiencyPicks)
+                .HasColumnType("jsonb")
+                .HasJsonConversion();
+
             builder.Property(x => x.AbilityScoreImprovements)
                 .HasColumnType("jsonb")
                 .HasJsonConversion();

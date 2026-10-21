@@ -97,8 +97,15 @@ Ability keys, language ids and proficiency ids are explained at more length in
   Style", "Spellcasting" or "Pact Magic", from `CharacterFeatures.ClassFeaturesFor`). What it
   cannot check (another feat, a campaign) is shown, not enforced. Classes, subclasses, their
   features, races, backgrounds, spells and feats are generated from 5etools; Tasha's optional
-  class features, and the choices the app does not ask for yet (a feat's skills, a 2014 House
-  Agent's set of tools), are left out.
+  class features, and the choices the app does not ask for yet (a 2014 House Agent's set of
+  tools, Skill Expert's expertise), are left out.
+- The skills or tools a feat lets the player pick are its `Choice` (`FeatChoice.IsProficiencyPick`:
+  `skills`, Keen Mind's one of five, or `skills_tools`, Skilled's three; `FeatChoice.Allows`
+  checks a pick, `Skill.IsSkill` for a skills one). They are picked in the improvements step,
+  the background's feat (a Noble's Skilled) among them, and kept in
+  `CharacterDraft.FeatProficiencyPicks`, one per such feat: the background's feat, then
+  `SelectedFeatIds`, so Skilled taken twice has two. Another background feat or set of feats clears them, and a pick
+  the race, background, class or another pick gives is refused as other proficiency picks are.
 - Tools, instruments and gaming sets a race, background or class lets the player pick (a 2014
   dwarf's artisan's tools, a Criminal's gaming set, a bard's three instruments) are
   `ToolChoice`s on `Race`, `Background` and `Class`; a kind ("any gaming set") is every
@@ -111,7 +118,10 @@ Ability keys, language ids and proficiency ids are explained at more length in
   the spells step and kept in `CharacterDraft.RaceSpellIds` and `FeatSpells`, one pick per such
   feat in the character's feat order. `Character.FeatSpells` keeps the feat picks after
   finalize, so the sheet, like the review step, lists a feat taken twice twice, each with its
-  own spells (`CharacterFeatEntries` pairs them for both). `BonusSpells` lists what a draft owes and checks the
+  own spells (`CharacterFeatEntries` pairs them for both). A feat whose data lets the player pick
+  the spellcasting ability (`BonusSpellChoice.AbilityOptions`: the 2024 Magic Initiate's INT, WIS
+  or CHA) keeps the pick with its spells (`FeatSpellPick.AbilityId`), and the sheet shows it with
+  them. `BonusSpells` lists what a draft owes and checks the
   picks, for `ChooseBonusSpells` and finalize alike; a background may fix its feat's list
   (`Background.FeatSpellListClassId`: an Acolyte's is the cleric's). A 2024 species that is
   "Small or Medium" keeps its pick in `CharacterDraft.Size`, a background that lets the player

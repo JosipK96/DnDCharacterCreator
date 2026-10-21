@@ -12,6 +12,7 @@ public class CharacterDraftMappingConfig : IRegister
     {
         config.NewConfig<CharacterDraftDetailsReadModel, CharacterDraftDetailsApiResponse>();
         config.NewConfig<FeatSpellPick, FeatSpellPickApiModel>();
+        config.NewConfig<FeatProficiencyPick, FeatProficiencyPickApiModel>();
 
         config.NewConfig<BonusSpellChoiceReadModel, BonusSpellChoiceApiResponse>()
             .MapToConstructor(true);

@@ -66,6 +66,7 @@ public class GetBonusSpellsQueryHandler(
                     .ThenBy(s => s.Name, StringComparer.Ordinal)
                     .ToList(),
             }),
+            AbilityOptions = slot.Choice.AbilityOptions,
         });
     }
 }

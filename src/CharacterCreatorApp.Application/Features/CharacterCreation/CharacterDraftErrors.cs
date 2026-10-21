@@ -37,6 +37,7 @@ public static class CharacterDraftErrors
         public const string BooksRequired = "CharacterDraft.BooksRequired";
         public const string ImprovementsRequired = "CharacterDraft.ImprovementsRequired";
         public const string FeatAbilityIncreasesMismatch = "CharacterDraft.FeatAbilityIncreasesMismatch";
+        public const string FeatProficiencyPicksRequired = "CharacterDraft.FeatProficiencyPicksRequired";
         public const string InvalidAbilityScoreCount = "CharacterDraft.InvalidAbilityScoreCount";
         public const string InvalidAbilityScoreKeys = "CharacterDraft.InvalidAbilityScoreKeys";
         public const string InvalidAbilityScoreMethod = "CharacterDraft.InvalidAbilityScoreMethod";
@@ -207,6 +208,10 @@ public static class CharacterDraftErrors
         return Error.Validation("CharacterDraft.InvalidFeatAbilityIncrease", description);
     }
 
+    /// <summary>A feat's skill or tool pick of the wrong count, with a repeat, or with one the feat does not offer.</summary>
+    public static Error InvalidFeatProficiencyPick(string featName, int count, IEnumerable<string> options) =>
+        Error.Validation("CharacterDraft.InvalidFeatProficiencyPick", $"{featName} offers {count} different pick(s) from {string.Join(", ", options)}.");
+
     // --- Size and the background's feat ---
     public static Error SizeNotOffered(string raceName, string size, IEnumerable<string> sizes) =>
         Error.Validation("CharacterDraft.SizeNotOffered", $"A {raceName} is {string.Join(" or ", sizes)}, not {size}.");
@@ -240,6 +245,16 @@ public static class CharacterDraftErrors
 
     public static Error BonusSpellNotOnList(string name, string spellId, string classId) =>
         Error.Validation("CharacterDraft.BonusSpellNotOnList", $"{spellId} is not on the {classId} list {name}'s spells come from.");
+
+    /// <summary>A feat's spellcasting ability left open, not one it offers, or picked for a feat that offers none.</summary>
+    public static Error InvalidSpellcastingAbility(string featName, IReadOnlyCollection<string> abilityNames)
+    {
+        var description = abilityNames.Count == 0
+            ? $"{featName} has no spellcasting ability to pick."
+            : $"{featName}'s spellcasting ability is one of {string.Join(", ", abilityNames)}; pick it with the spells.";
+
+        return Error.Validation("CharacterDraft.InvalidSpellcastingAbility", description);
+    }
 
     // --- Subrace and subclass ---
     public static Error NoSubracesAvailable(string raceName) =>

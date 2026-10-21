@@ -215,6 +215,22 @@
                     </select>
                 }
 
+                <!-- The 2024 Magic Initiate's spellcasting ability: Intelligence, Wisdom or Charisma -->
+                @if (choice.FeatId != null && choice.AbilityOptions.Count > 0)
+                {
+                    <label class="block text-sm text-gray-300 mb-4 md:w-1/2">
+                        Spellcasting ability <span class="text-red-400">*</span>
+                        <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
+                                value="@bonusAbilities[index]" @onchange="e => bonusAbilities[index] = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
+                            <option value="">Choose...</option>
+                            @foreach (var ability in choice.AbilityOptions)
+                            {
+                                <option value="@ability">@AbilityNames.Of(ability)</option>
+                            }
+                        </select>
+                    </label>
+                }
+
                 @if (list != null)
                 {
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
@@ -280,6 +296,9 @@
     private List<string?> bonusListIds = [];
     private List<HashSet<string>> bonusPicks = [];
 
+    // The spellcasting ability picked for a feat that asks for one (the 2024 Magic Initiate's)
+    private List<string?> bonusAbilities = [];
+
     protected override Task OnInitializedAsync() =>
         LoadAsync(
             async () =>
@@ -294,6 +313,7 @@
         bonusChoices = await DraftService.GetBonusSpellsAsync(DraftId);
         bonusListIds = bonusChoices.ConvertAll(c => c.Lists.Count == 1 ? c.Lists[0].ClassId : null);
         bonusPicks = bonusChoices.ConvertAll(_ => new HashSet<string>());
+        bonusAbilities = bonusChoices.ConvertAll(_ => (string?)null);
 
         // What the draft already holds: the race's spells, and the feats' picks in the same order
         var featPicks = draft?.FeatSpells ?? [];
@@ -308,6 +328,7 @@
             else if (featIndex < featPicks.Count && featPicks[featIndex].FeatId == bonusChoices[i].FeatId)
             {
                 bonusListIds[i] = featPicks[featIndex].ClassId;
+                bonusAbilities[i] = featPicks[featIndex].AbilityId;
                 bonusPicks[i] = [.. featPicks[featIndex++].SpellIds];
             }
         }
@@ -354,7 +375,10 @@
     }
 
     private bool BonusComplete() =>
-        bonusChoices.Select((choice, i) => bonusListIds[i] != null && bonusPicks[i].Count == choice.Cantrips + choice.FirstLevelSpells).All(done => done);
+        bonusChoices.Select((choice, i) => bonusListIds[i] != null
+                && bonusPicks[i].Count == choice.Cantrips + choice.FirstLevelSpells
+                && (choice.FeatId == null || choice.AbilityOptions.Count == 0 || choice.AbilityOptions.Contains(bonusAbilities[i] ?? string.Empty)))
+            .All(done => done);
 
     private async Task LoadSpellsAsync()
     {
@@ -529,7 +553,13 @@
         var raceSpellIds = indexed.Where(c => c.Choice.FeatId == null).SelectMany(c => bonusPicks[c.Index]).ToList();
         var featSpells = indexed
             .Where(c => c.Choice.FeatId != null)
-            .Select(c => new FeatSpellPickApiModel { FeatId = c.Choice.FeatId!, ClassId = bonusListIds[c.Index]!, SpellIds = [.. bonusPicks[c.Index]] })
+            .Select(c => new FeatSpellPickApiModel
+            {
+                FeatId = c.Choice.FeatId!,
+                ClassId = bonusListIds[c.Index]!,
+                SpellIds = [.. bonusPicks[c.Index]],
+                AbilityId = c.Choice.AbilityOptions.Count > 0 ? bonusAbilities[c.Index] : null,
+            })
             .ToList();
 
         return DraftService.ChooseBonusSpellsAsync(DraftId, raceSpellIds, featSpells);

@@ -19,6 +19,15 @@ public class BonusSpellsTests
 
     private static readonly BonusSpellChoice MagicInitiate = new() { ClassIds = ["cleric", "wizard"], Cantrips = 2, FirstLevelSpells = 1 };
 
+    // The same lists, and the spellcasting ability picked with them
+    private static readonly BonusSpellChoice MagicInitiate2024 = new()
+    {
+        ClassIds = ["cleric", "wizard"],
+        Cantrips = 2,
+        FirstLevelSpells = 1,
+        AbilityOptions = ["INT", "WIS", "CHA"],
+    };
+
     private static readonly Dictionary<string, List<SpellReadModel>> Lists = new Dictionary<string, List<SpellReadModel>>
     {
         ["cleric"] = [Spell("light", 0), Spell("guidance", 0), Spell("bless", 1), Spell("aid", 2)],
@@ -216,6 +225,70 @@ public class BonusSpellsTests
         error!.Value.Code.Should().Be("CharacterDraft.BonusSpellCount");
     }
 
+    [Theory]
+    [InlineData("WIS")]
+    [InlineData("wisdom")]
+    public void FindInvalidPick_WithASpellcastingAbilityTheFeatOffers_ReturnsNull(string abilityId)
+    {
+        // Arrange - the 2024 Magic Initiate's ability is Intelligence, Wisdom or Charisma, in any spelling
+        var pick = Pick("cleric", "light", "guidance", "bless");
+        pick.AbilityId = abilityId;
+
+        // Act
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiate2024Slot()], [], [pick], Lists);
+
+        // Assert
+        error.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("STR")]
+    [InlineData("luck")]
+    public void FindInvalidPick_WithoutASpellcastingAbilityTheFeatOffers_ReturnsInvalidSpellcastingAbility(string? abilityId)
+    {
+        // Arrange - none picked, one it does not offer, and one that is no ability
+        var pick = Pick("cleric", "light", "guidance", "bless");
+        pick.AbilityId = abilityId;
+
+        // Act
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiate2024Slot()], [], [pick], Lists);
+
+        // Assert
+        error!.Value.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
+        error.Value.Description.Should().Be(
+            "Magic Initiate's spellcasting ability is one of Intelligence, Wisdom, Charisma; pick it with the spells.");
+    }
+
+    [Fact]
+    public void FindInvalidPick_WithASpellcastingAbilityForAFeatOfferingNone_ReturnsInvalidSpellcastingAbility()
+    {
+        // Arrange - the 2014 Magic Initiate's ability comes with the list
+        var pick = Pick("cleric", "light", "guidance", "bless");
+        pick.AbilityId = "WIS";
+
+        // Act
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiateSlot()], [], [pick], Lists);
+
+        // Assert
+        error!.Value.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
+        error.Value.Description.Should().Be("Magic Initiate has no spellcasting ability to pick.");
+    }
+
+    [Fact]
+    public void FeatSlots_ForABackgroundThatFixesTheList_KeepsTheAbilityToPick()
+    {
+        // Arrange - a 2024 Acolyte's Magic Initiate is the cleric's, its ability still the player's
+        var draft = Draft();
+        var feats = FeatsById(Feat("magic_initiate", MagicInitiate2024));
+
+        // Act
+        var slot = BonusSpells.FeatSlots(draft, Background("magic_initiate", fixedClassId: "cleric"), feats).Single();
+
+        // Assert
+        slot.Choice.AbilityOptions.Should().Equal("INT", "WIS", "CHA");
+    }
+
     private static Error? Find(List<string> raceSpellIds, List<FeatSpellPick> featSpells) =>
         BonusSpells.FindInvalidPick(
             Draft(),
@@ -226,6 +299,8 @@ public class BonusSpellsTests
             Lists);
 
     private static BonusSpellSlot MagicInitiateSlot() => new("magic_initiate", "Magic Initiate", MagicInitiate);
+
+    private static BonusSpellSlot MagicInitiate2024Slot() => new("magic_initiate", "Magic Initiate", MagicInitiate2024);
 
     private static FeatSpellPick Pick(string classId, params string[] spellIds) =>
         new() { FeatId = "magic_initiate", ClassId = classId, SpellIds = [.. spellIds] };

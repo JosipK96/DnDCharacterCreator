@@ -44,6 +44,12 @@ public class CharacterDraftDetailsApiResponse
     /// <summary>What each of SelectedFeatIds raises, in the same order; empty for a feat that raises nothing.</summary>
     public List<Dictionary<string, int>> FeatAbilityIncreases { get; set; } = [];
 
+    /// <summary>
+    /// The skills or tools picked for each feat that asks for them (Keen Mind, Skilled): the
+    /// background's feat first, then SelectedFeatIds' in order.
+    /// </summary>
+    public List<FeatProficiencyPickApiModel> FeatProficiencyPicks { get; set; } = [];
+
     /// <summary>The Fighting Style feats picked for the class's Fighting Style features.</summary>
     public List<string> FightingStyleIds { get; set; } = [];
 

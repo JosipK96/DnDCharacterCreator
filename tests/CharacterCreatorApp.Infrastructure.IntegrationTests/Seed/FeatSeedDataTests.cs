@@ -143,6 +143,22 @@ public class FeatSeedDataTests
     }
 
     [Theory]
+    [InlineData("magic_initiate_2024", new[] { "INT", "WIS", "CHA" })]
+    [InlineData("arcane_warrior", new[] { "INT", "WIS", "CHA" })]
+
+    // The 2014 one's ability comes with the list, and Aberrant Dragonmark's is Constitution
+    [InlineData("magic_initiate_2014", new string[0])]
+    [InlineData("aberrant_dragonmark_2024", new string[0])]
+    public async Task Feat_OffersTheSpellcastingAbilitiesItsBookLetsThePlayerPick(string featId, string[] abilityIds)
+    {
+        // Act
+        var feat = (await ReadFeatsAsync()).Single(f => f.Id == featId);
+
+        // Assert
+        feat.SpellChoice!.AbilityOptions.Should().Equal(abilityIds);
+    }
+
+    [Theory]
     // A school or ritual filter is not a class list
     [InlineData("fey_touched_2024")]
     [InlineData("ritual_caster_2014")]

@@ -261,6 +261,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<string>("FeatProficiencyPicks")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.Property<string>("FeatSpells")
                         .IsRequired()
                         .HasColumnType("jsonb");
@@ -1605,6 +1609,9 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         {
                             b1.Property<string>("FeatId");
 
+                            b1.PrimitiveCollection<string>("AbilityOptions")
+                                .IsRequired();
+
                             b1.Property<int>("Cantrips");
 
                             b1.PrimitiveCollection<string>("ClassIds")
@@ -1775,6 +1782,9 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         {
                             b1.Property<string>("RaceId");
 
+                            b1.PrimitiveCollection<string>("AbilityOptions")
+                                .IsRequired();
+
                             b1.Property<int>("Cantrips");
 
                             b1.PrimitiveCollection<string>("ClassIds")
@@ -1879,6 +1889,9 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.OwnsOne("CharacterCreatorApp.Domain.DomainModels.Spells.BonusSpellChoice", "SpellChoice", b1 =>
                         {
                             b1.Property<string>("SubraceId");
+
+                            b1.PrimitiveCollection<string>("AbilityOptions")
+                                .IsRequired();
 
                             b1.Property<int>("Cantrips");
 

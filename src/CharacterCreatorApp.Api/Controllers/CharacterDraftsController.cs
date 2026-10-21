@@ -215,7 +215,10 @@ namespace CharacterCreatorApp.Api.Controllers
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SetAbilityScoreImprovements(Guid draftId, [FromBody] SetAbilityScoreImprovementsApiRequest request, CancellationToken cancellationToken)
         {
-            var response = await _sender.Send(new SetAbilityScoreImprovementsCommand(draftId, request.Improvements, request.FeatIds, request.FeatAbilityIncreases), cancellationToken);
+            var proficiencyPicks = request.FeatProficiencyPicks?.ConvertAll(pick => new FeatProficiencyPick { FeatId = pick.FeatId, ProficiencyIds = pick.ProficiencyIds });
+            var response = await _sender.Send(
+                new SetAbilityScoreImprovementsCommand(draftId, request.Improvements, request.FeatIds, request.FeatAbilityIncreases, proficiencyPicks),
+                cancellationToken);
 
             return NoContentOrProblem(response);
         }
@@ -267,7 +270,7 @@ namespace CharacterCreatorApp.Api.Controllers
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ChooseBonusSpells(Guid draftId, [FromBody] ChooseBonusSpellsApiRequest request, CancellationToken cancellationToken)
         {
-            var featSpells = request.FeatSpells.ConvertAll(pick => new FeatSpellPick { FeatId = pick.FeatId, ClassId = pick.ClassId, SpellIds = pick.SpellIds });
+            var featSpells = request.FeatSpells.ConvertAll(pick => new FeatSpellPick { FeatId = pick.FeatId, ClassId = pick.ClassId, SpellIds = pick.SpellIds, AbilityId = pick.AbilityId });
             var response = await _sender.Send(new ChooseBonusSpellsCommand(draftId, request.RaceSpellIds, featSpells), cancellationToken);
 
             return NoContentOrProblem(response);

@@ -13,4 +13,10 @@ public class BonusSpellChoice
     public int Cantrips { get; set; }
 
     public int FirstLevelSpells { get; set; }
+
+    /// <summary>
+    /// The spellcasting abilities the player picks one of for these spells, by canonical id: the
+    /// 2024 Magic Initiate's INT, WIS or CHA. Empty when there is no pick.
+    /// </summary>
+    public List<string> AbilityOptions { get; set; } = [];
 }

@@ -13,6 +13,9 @@ public class BonusSpellChoiceReadModel
     public int Cantrips { get; set; }
     public int FirstLevelSpells { get; set; }
     public List<BonusSpellListReadModel> Lists { get; set; } = [];
+
+    /// <summary>The spellcasting abilities to pick one of with the spells (the 2024 Magic Initiate's); empty when none.</summary>
+    public List<string> AbilityOptions { get; set; } = [];
 }
 
 public class BonusSpellListReadModel

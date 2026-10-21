@@ -14,5 +14,11 @@ public class SetAbilityScoreImprovementsCommandValidator : AbstractValidator<Set
             .Must((command, increases) => increases == null || increases.Count == command.FeatIds.Count)
             .WithMessage("Give one ability increase per feat, in the order of the feats, or none at all.")
             .WithErrorCode(CharacterDraftErrors.Codes.FeatAbilityIncreasesMismatch);
+
+        RuleForEach(x => x.FeatProficiencyPicks).ChildRules(pick =>
+        {
+            pick.RuleFor(p => p.FeatId).NotEmpty().WithErrorCode(CharacterDraftErrors.Codes.FeatProficiencyPicksRequired);
+            pick.RuleFor(p => p.ProficiencyIds).NotNull().WithErrorCode(CharacterDraftErrors.Codes.FeatProficiencyPicksRequired);
+        });
     }
 }

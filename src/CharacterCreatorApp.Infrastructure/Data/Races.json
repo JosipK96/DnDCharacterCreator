@@ -344,7 +344,8 @@
             "wizard"
           ],
           "Cantrips": 1,
-          "FirstLevelSpells": 0
+          "FirstLevelSpells": 0,
+          "AbilityOptions": []
         }
       },
       {
@@ -1445,7 +1446,12 @@
             "wizard-2024"
           ],
           "Cantrips": 1,
-          "FirstLevelSpells": 0
+          "FirstLevelSpells": 0,
+          "AbilityOptions": [
+            "INT",
+            "WIS",
+            "CHA"
+          ]
         }
       },
       {

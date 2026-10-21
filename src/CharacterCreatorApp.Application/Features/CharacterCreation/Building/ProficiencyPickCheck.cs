@@ -11,8 +11,9 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 /// background, so a half-elf could pick Athletics and then take Soldier, and the sheet quietly
 /// counted it once. The rules let the player pick another instead, so a pick that repeats what
 /// the race, subrace, background or class gives, or another step's pick, is refused: in the race
-/// skill, proficiency and tool steps for what is known by then, and at finalize for all of it. A
-/// tool picked twice (a dwarf's smith's tools and a Guild Artisan's) is refused the same way.
+/// skill, proficiency, tool and improvements steps for what is known by then, and at finalize for
+/// all of it. A tool picked twice (a dwarf's smith's tools and a Guild Artisan's), or a skill two
+/// Skilled feats both pick, is refused the same way.
 /// </summary>
 public static class ProficiencyPickCheck
 {
@@ -30,7 +31,8 @@ public static class ProficiencyPickCheck
         Class? @class,
         IReadOnlyList<string>? raceSkillPicks = null,
         IReadOnlyList<string>? classPicks = null,
-        IReadOnlyList<List<string>>? toolPicks = null)
+        IReadOnlyList<List<string>>? toolPicks = null,
+        IReadOnlyList<FeatProficiencyPick>? featPicks = null)
     {
         var sources = new Dictionary<string, string>();
 
@@ -42,6 +44,7 @@ public static class ProficiencyPickCheck
         var racePicks = $"the {subrace?.Name ?? race?.Name} skill picks";
         var classPicksName = $"the {@class?.Name} proficiency picks";
         const string toolPicksName = "another tool pick";
+        const string featPicksName = "a feat's skill or tool picks";
 
         if (raceSkillPicks is not null)
         {
@@ -62,9 +65,19 @@ public static class ProficiencyPickCheck
             return FirstRepeated(toolPicks.SelectMany(p => p), toolPicksName);
         }
 
+        // The improvements step comes after the others, so every other pick is known by then
+        if (featPicks is not null)
+        {
+            Add(draft.SelectedRaceSkillIds, racePicks);
+            Add(draft.SelectedClassProficiencyIds, classPicksName);
+            Add(draft.ToolPicks.SelectMany(p => p), toolPicksName);
+            return FirstRepeated(featPicks.SelectMany(p => p.ProficiencyIds), featPicksName);
+        }
+
         return FirstRepeated(draft.SelectedRaceSkillIds, racePicks)
             ?? FirstRepeated(draft.SelectedClassProficiencyIds, classPicksName)
-            ?? FirstRepeated(draft.ToolPicks.SelectMany(p => p), toolPicksName);
+            ?? FirstRepeated(draft.ToolPicks.SelectMany(p => p), toolPicksName)
+            ?? FirstRepeated(draft.FeatProficiencyPicks.SelectMany(p => p.ProficiencyIds), featPicksName);
 
         Error? FirstRepeated(IEnumerable<string> picks, string pickedIn)
         {

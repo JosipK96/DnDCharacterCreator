@@ -71,6 +71,9 @@ public class LookupService(HttpClient http)
 
     public Task<ProficiencyApiResponse?> GetProficiencyByIdAsync(string id) => GetCachedOrNullAsync<ProficiencyApiResponse>($"/api/proficiencies/{id}");
 
+    /// <summary>Every proficiency: skills, tools, armour and weapons.</summary>
+    public Task<List<ProficiencyApiResponse>> GetProficienciesAsync() => GetCachedAsync<List<ProficiencyApiResponse>>("/api/proficiencies");
+
     public async Task<List<ProficiencyApiResponse>> GetSkillProficienciesAsync()
     {
         // The data spells the type "skill"; this compared with "Skill", found nothing, and left

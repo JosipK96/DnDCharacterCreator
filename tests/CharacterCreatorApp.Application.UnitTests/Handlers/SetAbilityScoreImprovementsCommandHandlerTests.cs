@@ -2,6 +2,7 @@
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScoreImprovements;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
@@ -583,12 +584,163 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         result.IsSuccess.Should().BeTrue();
     }
 
+    [Fact]
+    public async Task Handle_WithAFeatAskingForASkill_StoresThePick()
+    {
+        // Arrange - Keen Mind's one skill of five
+        var draft = ArrangeDraft(level: 4, Fighter2024());
+        ArrangeFeats(KeenMind2024());
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [], ["keen_mind_2024"], null, [Pick("keen_mind_2024", "arcana")]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.FeatProficiencyPicks.Should().BeEquivalentTo([Pick("keen_mind_2024", "arcana")]);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_WithSkilledFromTheBackgroundAndTheRace_StoresBothSetsInOrder()
+    {
+        // Arrange - a Noble human: Skilled from the background, then again as the human's Origin feat
+        var draft = ArrangeNobleHuman();
+        FeatProficiencyPick[] picks = [Pick("skilled_2024", "stealth", "lute", "arcana"), Pick("skilled_2024", "insight", "thieves-tools", "deception")];
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [], ["skilled_2024"], null, [.. picks]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.FeatProficiencyPicks.Should().Equal(picks);
+    }
+
+    public static TheoryData<string, string[], string> RepeatedPicks => new()
+    {
+        // History comes with the Noble
+        { "the background's", ["insight", "thieves-tools", "history"], "history comes with Noble already; pick another in its place." },
+
+        // Stealth is the first Skilled's already
+        { "the other Skilled's", ["insight", "thieves-tools", "stealth"], "stealth comes with a feat's skill or tool picks already; pick another in its place." },
+    };
+
+    [Theory]
+    [MemberData(nameof(RepeatedPicks))]
+    public async Task Handle_WithAFeatPickTheCharacterHasAlready_ReturnsProficiencyAlreadyGiven(string whose, string[] secondPicks, string expected)
+    {
+        // Arrange
+        var draft = ArrangeNobleHuman();
+
+        var command = new SetAbilityScoreImprovementsCommand(
+            _draftId, [], ["skilled_2024"], null, [Pick("skilled_2024", "stealth", "lute", "arcana"), Pick("skilled_2024", secondPicks)]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse(because: $"the pick is {whose}");
+        result.Errors[0].Code.Should().Be("CharacterDraft.ProficiencyAlreadyGiven");
+        result.Errors[0].Description.Should().Be(expected);
+        draft.FeatProficiencyPicks.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatPickTheProficienciesStepPicked_ReturnsProficiencyAlreadyGiven()
+    {
+        // Arrange - the fighter's class skills are picked a step before the feats
+        var draft = ArrangeDraft(level: 4, Fighter2024());
+        draft.SetClassProficiencies(["arcana"]);
+        ArrangeFeats(KeenMind2024());
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [], ["keen_mind_2024"], null, [Pick("keen_mind_2024", "arcana")]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("CharacterDraft.ProficiencyAlreadyGiven");
+    }
+
+    public static TheoryData<string[]> PicksKeenMindDoesNotOffer => new()
+    {
+        // Too many, too few, and one that is not among its five
+        { ["arcana", "history"] },
+        { [] },
+        { ["stealth"] },
+    };
+
+    [Theory]
+    [MemberData(nameof(PicksKeenMindDoesNotOffer))]
+    public async Task Handle_WithAFeatPickTheFeatDoesNotOffer_ReturnsInvalidFeatProficiencyPick(string[] picks)
+    {
+        // Arrange
+        ArrangeDraft(level: 4, Fighter2024());
+        ArrangeFeats(KeenMind2024());
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [], ["keen_mind_2024"], null, [Pick("keen_mind_2024", picks)]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("CharacterDraft.InvalidFeatProficiencyPick");
+        result.Errors[0].Description.Should().Be("Keen Mind offers 1 different pick(s) from arcana, history, investigation, nature, religion.");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    public static TheoryData<string[], FeatProficiencyPick[]> PicksNotOnePerFeat => new()
+    {
+        // Keen Mind's pick left out
+        { ["keen_mind_2024"], [] },
+
+        // A pick for Alert, which asks for none
+        { ["alert_2024"], [new FeatProficiencyPick { FeatId = "alert_2024", ProficiencyIds = ["arcana"] }] },
+    };
+
+    [Theory]
+    [MemberData(nameof(PicksNotOnePerFeat))]
+    public async Task Handle_WithPicksNotOnePerFeatThatAsks_ReturnsFeatProficiencyPicksIncomplete(string[] featIds, FeatProficiencyPick[] picks)
+    {
+        // Arrange
+        ArrangeDraft(level: 4, Fighter2024());
+        ArrangeFeats(KeenMind2024(), Feat("alert_2024", name: "Alert", edition: RulesEdition.Edition2024, category: "Origin"));
+
+        var command = new SetAbilityScoreImprovementsCommand(_draftId, [], [.. featIds], null, [.. picks]);
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Character.FeatProficiencyPicksIncomplete");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    // A level 1 Noble human fighter: Skilled from the background, and Skilled again as the human's feat
+    private CharacterDraft ArrangeNobleHuman()
+    {
+        var draft = ArrangeDraft(level: 1, Fighter2024(), Noble2024(), new Dictionary<string, int> { ["STR"] = 2, ["CHA"] = 1 }, Human2024());
+
+        // Pinned: the race's Skilled and the background's are the one feat, loaded once
+        _featRepositoryMock
+            .Setup(r => r.GetByIdsAsync(It.Is<IEnumerable<string>>(ids => ids.SequenceEqual(new[] { "skilled_2024" })), _cts.Token))
+            .ReturnsAsync([Skilled2024()]);
+        return draft;
+    }
+
     // The races and backgrounds of the class's edition: a 2014 dwarf soldier gets CON +2 from
     // the race, a 2024 one +2/+1 from the background
     private CharacterDraft ArrangeDraft(
         int level,
         Class? @class = null,
-        BackgroundReadModel? background = null,
+        Background? background = null,
         Dictionary<string, int>? backgroundIncreases = null,
         Race? race = null,
         string? subraceId = null,
@@ -628,7 +780,7 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
             .Setup(r => r.GetByIdWithDetailsAsync(race.Id, _cts.Token))
             .ReturnsAsync(race);
         _backgroundRepositoryMock
-            .Setup(r => r.GetByIdAsync(background.Id, _cts.Token))
+            .Setup(r => r.GetByIdWithDetailsAsync(background.Id, _cts.Token))
             .ReturnsAsync(background);
 
         return draft;
@@ -710,35 +862,91 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         FeatChoiceCategory = "Origin"
     };
 
-    private static BackgroundReadModel Soldier2014() => new()
+    // Athletics and Intimidation
+    private static Background Soldier2014() => new()
     {
         Id = "soldier",
         Name = "Soldier",
         Edition = RulesEdition.Edition2014,
-        Source = "PHB"
+        Source = "PHB",
+        BackgroundProficiencies =
+        [
+            new BackgroundProficiency { BackgroundId = "soldier", ProficiencyId = "athletics" },
+            new BackgroundProficiency { BackgroundId = "soldier", ProficiencyId = "intimidation" },
+        ],
     };
 
     // Savage Attacker, and +2/+1 or +1 to each of Strength, Dexterity and Constitution
-    private static BackgroundReadModel Soldier2024() => new()
+    private static Background Soldier2024() => new()
     {
         Id = "soldier_2024",
         Name = "Soldier",
         Edition = RulesEdition.Edition2024,
         Source = "XPHB",
         AbilityScoreOptions = ["STR", "DEX", "CON"],
-        Feat = new BackgroundFeatReadModel { Id = "savage_attacker_2024", Name = "Savage Attacker" }
+        FeatId = "savage_attacker_2024",
     };
 
     // Alert, and +2/+1 or +1 to each of Dexterity, Constitution and Intelligence
-    private static BackgroundReadModel Criminal2024() => new()
+    private static Background Criminal2024() => new()
     {
         Id = "criminal_2024",
         Name = "Criminal",
         Edition = RulesEdition.Edition2024,
         Source = "XPHB",
         AbilityScoreOptions = ["DEX", "CON", "INT"],
-        Feat = new BackgroundFeatReadModel { Id = "alert_2024", Name = "Alert" }
+        FeatId = "alert_2024",
     };
+
+    // Skilled, History and Persuasion, and +2/+1 or +1 to each of Strength, Intelligence and Charisma
+    private static Background Noble2024() => new()
+    {
+        Id = "noble_2024",
+        Name = "Noble",
+        Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
+        AbilityScoreOptions = ["STR", "INT", "CHA"],
+        FeatId = "skilled_2024",
+        BackgroundProficiencies =
+        [
+            new BackgroundProficiency { BackgroundId = "noble_2024", ProficiencyId = "history" },
+            new BackgroundProficiency { BackgroundId = "noble_2024", ProficiencyId = "persuasion" },
+        ],
+    };
+
+    // Three skills or tools, as many times as it is taken
+    private static FeatReadModel Skilled2024() => new()
+    {
+        Id = "skilled_2024",
+        Name = "Skilled",
+        Description = "A feat.",
+        Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
+        Category = "Origin",
+        IsRepeatable = true,
+        Choice = new FeatChoice
+        {
+            Type = FeatChoice.SkillsTools,
+            Count = 3,
+            Options = ["arcana", "deception", "history", "insight", "persuasion", "stealth", "lute", "thieves-tools"],
+        },
+    };
+
+    // One of five skills, and +1 Intelligence
+    private static FeatReadModel KeenMind2024() => new()
+    {
+        Id = "keen_mind_2024",
+        Name = "Keen Mind",
+        Description = "A feat.",
+        Edition = RulesEdition.Edition2024,
+        Source = "XPHB",
+        Category = "General",
+        AbilityIncrease = new FeatAbilityIncrease { Options = ["INT"] },
+        Choice = new FeatChoice { Type = FeatChoice.Skills, Count = 1, Options = ["arcana", "history", "investigation", "nature", "religion"] },
+    };
+
+    private static FeatProficiencyPick Pick(string featId, params string[] proficiencyIds) =>
+        new() { FeatId = featId, ProficiencyIds = [.. proficiencyIds] };
 
     private void ArrangeFeats(params FeatReadModel[] feats) =>
         _featRepositoryMock

@@ -25,6 +25,7 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                 ToolChoices = row.ToolChoices,
                 FeatId = row.FeatId,
                 FeatChoiceCategory = row.FeatChoiceCategory,
+                FeatAlternativeCategory = row.FeatAlternativeCategory,
                 FeatSpellListClassId = row.FeatSpellListClassId,
                 FeatureId = row.FeatureId,
                 BackgroundProficiencies = row.ProficiencyIds.ConvertAll(id => new BackgroundProficiency { BackgroundId = row.Id, ProficiencyId = id }),

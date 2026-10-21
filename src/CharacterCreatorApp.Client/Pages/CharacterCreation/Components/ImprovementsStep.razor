@@ -312,19 +312,21 @@
         var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
         var editionFeats = await LookupService.GetFeatsAsync(draft.Edition, draft.AllowedSources);
 
+        // The feat picked for the background (a Mist Wanderer's Dark Gift, or a Haunted One's in
+        // place of Survivor), or else its own
+        var backgroundFeatId = background == null ? null : BackgroundFeats.FeatIdWith(background, draft.BackgroundFeatId);
+
         // Only the feats of the character's rules edition and books, less one the background
         // already gave (a 2024 criminal's Alert) unless it can be taken again
         if (asiCount + bonusFeatCount > 0)
         {
-            var nonRepeatableBackgroundFeat = background?.Feat is { IsRepeatable: false } feat ? feat.Id : null;
+            var nonRepeatableBackgroundFeat = background?.Feat is { IsRepeatable: false } feat && feat.Id == backgroundFeatId ? feat.Id : null;
 
             feats = editionFeats
                 .Where(f => f.Name != AbilityScoreImprovementFeat && f.Id != nonRepeatableBackgroundFeat && f.CanBeTakenForImprovement)
                 .ToList();
         }
 
-        // The background's own feat, or the one picked for it (a Mist Wanderer's Dark Gift)
-        var backgroundFeatId = background?.Feat?.Id ?? (background?.FeatChoiceCategory == null ? null : draft.BackgroundFeatId);
         backgroundFeat = editionFeats.FirstOrDefault(f => f.Id == backgroundFeatId && f.Choice is { } choice && AsksForProficiencies(choice));
 
         proficiencyNames = (await LookupService.GetProficienciesAsync()).ToDictionary(p => p.Id, p => p.Name);

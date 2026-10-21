@@ -221,6 +221,36 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
         result.Value.Stats.Skills.Single(s => s.SkillId == "arcana").IsProficient.Should().BeTrue();
     }
 
+    [Theory]
+    [InlineData(null, "survivor")]
+    [InlineData("mist_walker", "mist_walker")]
+    public async Task Handle_WithABackgroundThatAllowsADarkGift_ListsThePickOrElseItsOwnFeat(string? pickedFeatId, string expectedFeatId)
+    {
+        // Arrange
+        ArrangeHauntedOneDraft(pickedFeatId);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.BlockingIssue.Should().BeNull();
+        result.Value.Feats.Should().ContainSingle().Which.Feat.Id.Should().Be(expectedFeatId);
+    }
+
+    [Fact]
+    public async Task Handle_WithAnotherCategoryPickedInPlaceOfTheBackgroundsFeat_SaysWhatIsWrong()
+    {
+        // Arrange
+        ArrangeHauntedOneDraft("alert");
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.BlockingIssue.Should().Be("A feat picked for the Haunted One background is a Dark Gift; Alert is not.");
+    }
+
     [Fact]
     public async Task Handle_ShowsTheRacesSize()
     {
@@ -291,6 +321,31 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
             },
         ]);
         return draft;
+    }
+
+    // A level 1 fighter whose background gives Survivor, or a Dark Gift in its place
+    private void ArrangeHauntedOneDraft(string? pickedFeatId)
+    {
+        var draft = ArrangeDraft(level: 1);
+        draft.SetBackground("haunted_one", null, pickedFeatId);
+
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("haunted_one", _cts.Token)).ReturnsAsync(new Background
+        {
+            Id = "haunted_one",
+            Name = "Haunted One",
+            Edition = RulesEdition.Edition2014,
+            Source = "PHB",
+            FeatId = "survivor",
+            FeatAlternativeCategory = "Dark Gift",
+            Languages = [],
+            BackgroundProficiencies = []
+        });
+        _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync(
+        [
+            new FeatReadModel { Id = "survivor", Name = "Survivor", Description = "A feat.", Edition = RulesEdition.Edition2014, Source = "PHB", Category = "Origin" },
+            new FeatReadModel { Id = "mist_walker", Name = "Mist Walker", Description = "A feat.", Edition = RulesEdition.Edition2014, Source = "PHB", Category = "Dark Gift" },
+            new FeatReadModel { Id = "alert", Name = "Alert", Description = "A feat.", Edition = RulesEdition.Edition2014, Source = "PHB", Category = "General" },
+        ]);
     }
 
     private CharacterDraft ArrangeDraft(int level)

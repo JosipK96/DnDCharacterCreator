@@ -16,6 +16,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "acolyte_shelter_of_the_faithful"
   },
@@ -36,6 +37,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "anthropologist_adept_linguist"
   },
@@ -63,6 +65,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "archaeologist_historical_knowledge"
   },
@@ -83,6 +86,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "magic_initiate_2014",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "astral_drifter_divine_contact"
   },
@@ -103,6 +107,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "athlete_echoes_of_victory"
   },
@@ -123,6 +128,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "azorius_functionary_legal_authority"
   },
@@ -150,6 +156,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "boros_legionnaire_legion_station"
   },
@@ -171,6 +178,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "celebrity_adventurers_scion_name_dropping"
   },
@@ -190,6 +198,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "charlatan_false_identity"
   },
@@ -210,6 +219,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "city_watch_watchers_eye"
   },
@@ -253,6 +263,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "clan_crafter_respect_of_the_stout_folk"
   },
@@ -272,6 +283,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "cloistered_scholar_library_access"
   },
@@ -292,6 +304,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "courtier_court_functionary"
   },
@@ -320,6 +333,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "criminal_criminal_contact"
   },
@@ -337,6 +351,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "custom_background_choose_a_feature"
   },
@@ -357,6 +372,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "dimir_operative_false_identity"
   },
@@ -391,6 +407,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "entertainer_by_popular_demand"
   },
@@ -411,6 +428,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "faceless_dual_personalities"
   },
@@ -430,6 +448,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "faction_agent_safe_haven"
   },
@@ -472,6 +491,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "failed_merchant_supply_chain"
   },
@@ -511,6 +531,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "far_traveler_all_eyes_on_you"
   },
@@ -546,6 +567,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "feylost_feywild_connection"
   },
@@ -565,6 +587,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "fisher_harvest_the_water"
   },
@@ -606,6 +629,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "folk_hero_rustic_hospitality"
   },
@@ -635,6 +659,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "gambler_never_tell_me_the_odds"
   },
@@ -655,6 +680,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "scion_of_the_outer_planes",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "gate_warden_planar_infusion"
   },
@@ -675,6 +701,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "strike_of_the_giants",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "giant_foundling_strike_of_the_giants"
   },
@@ -693,6 +720,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "golgari_agent_undercity_paths"
   },
@@ -727,6 +755,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "grinner_ballad_of_the_grinning_fool"
   },
@@ -745,6 +774,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "gruul_anarch_rubblebelt_refuge"
   },
@@ -787,6 +817,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "guild_artisan_guild_membership"
   },
@@ -803,6 +834,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "haunted_one_heart_of_darkness"
   },
@@ -823,6 +855,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "hermit_discovery"
   },
@@ -854,6 +887,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "house_agent_house_connections"
   },
@@ -892,6 +926,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "inheritor_inheritance"
   },
@@ -920,6 +955,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "initiate_trials_of_the_five_gods"
   },
@@ -961,6 +997,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "inquisitor_legal_authority"
   },
@@ -978,6 +1015,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "investigator_official_inquiry"
   },
@@ -1018,6 +1056,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "izzet_engineer_urban_infrastructure"
   },
@@ -1038,6 +1077,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "squire_of_solamnia",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "knight_of_solamnia_squire_of_solamnia"
   },
@@ -1076,6 +1116,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "knight_of_the_order_knightly_regard"
   },
@@ -1096,6 +1137,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "strixhaven_initiate",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "lorehold_student_lorehold_initiate"
   },
@@ -1116,6 +1158,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "initiate_of_high_sorcery",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "mage_of_high_sorcery_initiate_of_high_sorcery"
   },
@@ -1135,6 +1178,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "marine_steady"
   },
@@ -1163,6 +1207,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "mercenary_veteran_mercenary_life"
   },
@@ -1192,6 +1237,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "noble_position_of_privilege"
   },
@@ -1212,6 +1258,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "orzhov_representative_leverage"
   },
@@ -1247,6 +1294,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "outlander_wanderer"
   },
@@ -1289,6 +1337,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "plaintiff_legalese"
   },
@@ -1308,6 +1357,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "scion_of_the_outer_planes",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "planar_philosopher_conviction"
   },
@@ -1360,6 +1410,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "strixhaven_initiate",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "prismari_student_prismari_initiate"
   },
@@ -1402,6 +1453,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "strixhaven_initiate",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "quandrix_student_quandrix_initiate"
   },
@@ -1435,6 +1487,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "rakdos_cultist_a_flair_for_the_dramatic"
   },
@@ -1464,6 +1517,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "lucky_2014",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "rewarded_fortunes_favor"
   },
@@ -1506,6 +1560,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "rival_intern_inside_informant"
   },
@@ -1535,6 +1590,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "alert_2014",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "ruined_still_standing"
   },
@@ -1577,6 +1633,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "rune_shaper",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "rune_carver_rune_shaper"
   },
@@ -1597,6 +1654,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "sage_researcher"
   },
@@ -1616,6 +1674,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "sailor_ships_passage"
   },
@@ -1666,6 +1725,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "selesnya_initiate_conclaves_shelter"
   },
@@ -1685,6 +1745,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "shipwright_ill_patch_it"
   },
@@ -1705,6 +1766,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "strixhaven_initiate",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "silverquill_student_silverquill_initiate"
   },
@@ -1725,6 +1787,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "simic_scientist_researcher"
   },
@@ -1743,6 +1806,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "smuggler_down_low"
   },
@@ -1771,6 +1835,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "soldier_military_rank"
   },
@@ -1806,6 +1871,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "urban_bounty_hunter_ear_to_the_ground"
   },
@@ -1825,6 +1891,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "urchin_city_secrets"
   },
@@ -1877,6 +1944,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "uthgardt_tribe_member_uthgardt_heritage"
   },
@@ -1897,6 +1965,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "variant_city_watch_investigator_watchers_eye"
   },
@@ -1952,6 +2021,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "vizier_voice_of_authority"
   },
@@ -1972,6 +2042,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "volstrucker_agent_shadow_network"
   },
@@ -2011,6 +2082,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "waterdhavian_noble_kept_in_style"
   },
@@ -2030,6 +2102,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "tough_2014",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "wildspacer_wildspace_adaptation"
   },
@@ -2066,6 +2139,7 @@
     "AbilityScoreOptions": [],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "witchlight_hand_carnival_fixture"
   },
@@ -2086,6 +2160,7 @@
     "AbilityScoreOptions": [],
     "FeatId": "strixhaven_initiate",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": "witherbloom_student_witherbloom_initiate"
   },
@@ -2112,6 +2187,7 @@
     ],
     "FeatId": "aberrant_dragonmark_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2138,6 +2214,7 @@
     ],
     "FeatId": "magic_initiate_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": "cleric-2024",
     "FeatureId": null
   },
@@ -2164,6 +2241,7 @@
     ],
     "FeatId": "arcane_infiltrator",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2190,6 +2268,7 @@
     ],
     "FeatId": "skilled_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2238,6 +2317,7 @@
     ],
     "FeatId": "crafter",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2264,6 +2344,7 @@
     ],
     "FeatId": "arcane_eloquence",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2299,6 +2380,7 @@
     ],
     "FeatId": "tireless_reveler",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2325,6 +2407,7 @@
     ],
     "FeatId": "skilled_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2351,6 +2434,7 @@
     ],
     "FeatId": "skilled_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2399,6 +2483,7 @@
     ],
     "FeatId": "transmuted_anatomy",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2425,6 +2510,7 @@
     ],
     "FeatId": "arcane_undertaker",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2451,6 +2537,7 @@
     ],
     "FeatId": "alert_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2477,6 +2564,7 @@
     ],
     "FeatId": "arcane_overload",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2503,6 +2591,7 @@
     ],
     "FeatId": "healer_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2529,6 +2618,7 @@
     ],
     "FeatId": "cult_of_the_dragon_initiate",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2555,6 +2645,7 @@
     ],
     "FeatId": "emerald_enclave_fledgling",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2596,6 +2687,7 @@
     ],
     "FeatId": "musician",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2631,6 +2723,7 @@
     ],
     "FeatId": "familiar_friend",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2657,6 +2750,7 @@
     ],
     "FeatId": "tough_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2683,6 +2777,7 @@
     ],
     "FeatId": "tough_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2709,6 +2804,7 @@
     ],
     "FeatId": null,
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2744,6 +2840,7 @@
     ],
     "FeatId": "alert_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2770,6 +2867,7 @@
     ],
     "FeatId": "magic_initiate_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": "druid-2024",
     "FeatureId": null
   },
@@ -2796,6 +2894,7 @@
     ],
     "FeatId": "harper_agent",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2831,6 +2930,7 @@
     ],
     "FeatId": "survivor",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": "Dark Gift",
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2857,6 +2957,7 @@
     ],
     "FeatId": "healer_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2883,6 +2984,7 @@
     ],
     "FeatId": "portal_jumper",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2931,6 +3033,7 @@
     ],
     "FeatId": "lucky_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -2979,6 +3082,7 @@
     ],
     "FeatId": "mark_of_making",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3014,6 +3118,7 @@
     ],
     "FeatId": "mark_of_sentinel",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3040,6 +3145,7 @@
     ],
     "FeatId": "mark_of_hospitality",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3066,6 +3172,7 @@
     ],
     "FeatId": "mark_of_healing",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3092,6 +3199,7 @@
     ],
     "FeatId": "mark_of_warding",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3118,6 +3226,7 @@
     ],
     "FeatId": "mark_of_storm",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3144,6 +3253,7 @@
     ],
     "FeatId": "mark_of_detection",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3170,6 +3280,7 @@
     ],
     "FeatId": "mark_of_passage",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3196,6 +3307,7 @@
     ],
     "FeatId": "mark_of_shadow",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3222,6 +3334,7 @@
     ],
     "FeatId": "mark_of_scribing",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3257,6 +3370,7 @@
     ],
     "FeatId": "mark_of_finding",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3298,6 +3412,7 @@
     ],
     "FeatId": "mark_of_shadow",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3324,6 +3439,7 @@
     ],
     "FeatId": "mark_of_handling",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3350,6 +3466,7 @@
     ],
     "FeatId": "alert_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3376,6 +3493,7 @@
     ],
     "FeatId": "alert_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3402,6 +3520,7 @@
     ],
     "FeatId": "sharp_eye",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": "Dark Gift",
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3428,6 +3547,7 @@
     ],
     "FeatId": "tyro_of_the_gauntlet",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3454,6 +3574,7 @@
     ],
     "FeatId": "lords_alliance_agent",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3480,6 +3601,7 @@
     ],
     "FeatId": "child_of_the_sun",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3506,6 +3628,7 @@
     ],
     "FeatId": "lucky_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3554,6 +3677,7 @@
     ],
     "FeatId": null,
     "FeatChoiceCategory": "Dark Gift",
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3580,6 +3704,7 @@
     ],
     "FeatId": "magic_initiate_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": "druid-2024",
     "FeatureId": null
   },
@@ -3606,6 +3731,7 @@
     ],
     "FeatId": "lucky_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3632,6 +3758,7 @@
     ],
     "FeatId": "crafter",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3667,6 +3794,7 @@
     ],
     "FeatId": "skilled_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3693,6 +3821,7 @@
     ],
     "FeatId": "arcane_artist",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3719,6 +3848,7 @@
     ],
     "FeatId": "purple_dragon_rook",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3745,6 +3875,7 @@
     ],
     "FeatId": "tough_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3771,6 +3902,7 @@
     ],
     "FeatId": "magic_initiate_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": "wizard-2024",
     "FeatureId": null
   },
@@ -3797,6 +3929,7 @@
     ],
     "FeatId": "tavern_brawler_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3823,6 +3956,7 @@
     ],
     "FeatId": "skilled_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3849,6 +3983,7 @@
     ],
     "FeatId": "arcane_omens",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3875,6 +4010,7 @@
     ],
     "FeatId": "savage_attacker_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3901,6 +4037,7 @@
     ],
     "FeatId": "shadowmoor_hexer",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3936,6 +4073,7 @@
     ],
     "FeatId": "savage_attacker_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -3971,6 +4109,7 @@
     ],
     "FeatId": "spellfire_spark",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -4006,6 +4145,7 @@
     ],
     "FeatId": null,
     "FeatChoiceCategory": "Dark Gift",
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -4032,6 +4172,7 @@
     ],
     "FeatId": "vampires_plaything",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -4058,6 +4199,7 @@
     ],
     "FeatId": "vampire_hunter",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -4084,6 +4226,7 @@
     ],
     "FeatId": "arcane_safeguard",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -4110,6 +4253,7 @@
     ],
     "FeatId": "lucky_2024",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   },
@@ -4136,6 +4280,7 @@
     ],
     "FeatId": "zhentarim_ruffian",
     "FeatChoiceCategory": null,
+    "FeatAlternativeCategory": null,
     "FeatSpellListClassId": null,
     "FeatureId": null
   }

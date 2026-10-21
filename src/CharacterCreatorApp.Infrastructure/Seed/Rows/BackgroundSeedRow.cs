@@ -31,6 +31,9 @@ public sealed record BackgroundSeedRow
     /// <summary>The category the player picks the feat from instead ("Dark Gift" for a Mist Wanderer); null when it is fixed.</summary>
     public string? FeatChoiceCategory { get; init; }
 
+    /// <summary>The category the player may pick a feat from in place of FeatId ("Dark Gift" for a Haunted One); null when there is none.</summary>
+    public string? FeatAlternativeCategory { get; init; }
+
     /// <summary>The class whose list the feat's spells come from: "cleric-2024" for an Acolyte's Magic Initiate.</summary>
     public string? FeatSpellListClassId { get; init; }
 

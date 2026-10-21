@@ -50,6 +50,8 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
                 features.Add(feature);
             }
 
+            var (featChoiceCategory, featAlternativeCategory) = FeatCategories(background);
+
             backgrounds.Add(new BackgroundSeedRow
             {
                 Id = id,
@@ -61,7 +63,8 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
                 Languages = edition == RulesEdition.Edition2024 ? Languages2024 : Languages(background),
                 AbilityScoreOptions = AbilityScoreOptions(background),
                 FeatId = FeatId(id, background, featIdsByKey),
-                FeatChoiceCategory = FeatChoiceCategory(id, background),
+                FeatChoiceCategory = featChoiceCategory,
+                FeatAlternativeCategory = featAlternativeCategory,
                 FeatSpellListClassId = FeatSpellListClassId(background, edition),
                 FeatureId = feature?.Id,
             });
@@ -164,7 +167,7 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
     {
         var reference = FeatReference(background);
 
-        // Mist Wanderer and Spirit Medium let the player pick the feat (FeatChoiceCategory)
+        // Mist Wanderer and Spirit Medium let the player pick the feat (FeatCategories)
         if (reference is null or AnyFromCategory)
         {
             return null;
@@ -183,18 +186,24 @@ internal sealed class BackgroundImporter(FiveEToolsSource source, EntryRenderer 
         return null;
     }
 
-    // {"anyFromCategory": {"category": ["DG"]}}: any Dark Gift. A second entry is an alternative
-    // to the first (a Haunted One's Survivor or a Dark Gift), which the app does not offer.
-    private string? FeatChoiceCategory(string backgroundId, JsonObject background)
+    /// <summary>
+    /// The categories a background's feat may be picked from. {"anyFromCategory": {"category": ["DG"]}}
+    /// first is any Dark Gift, picked in place of a feat of its own (a Mist Wanderer's). Each entry
+    /// after the first is an alternative to it, so one of those is a Dark Gift the player may take
+    /// instead of the background's own feat (a Haunted One's, instead of Survivor).
+    /// </summary>
+    internal static (string? ChoiceCategory, string? AlternativeCategory) FeatCategories(JsonObject background)
     {
         var entries = background.Objects("feats").ToList();
 
-        if (entries.Skip(1).Any(entry => entry.ContainsKey(AnyFromCategory)))
-        {
-            SkippedChoices.Add($"{backgroundId}: a feat of the player's choice in place of its own");
-        }
+        return (
+            CategoryOf(entries.FirstOrDefault()),
+            entries.Skip(1).Select(CategoryOf).FirstOrDefault(category => category != null));
+    }
 
-        var code = entries.FirstOrDefault()?[AnyFromCategory].Arr("category").FirstOrDefault().AsString();
+    private static string? CategoryOf(JsonObject? entry)
+    {
+        var code = entry?[AnyFromCategory].Arr("category").FirstOrDefault().AsString();
 
         return code == null ? null : FeatImporter.CategoryNames.GetValueOrDefault(code, code);
     }

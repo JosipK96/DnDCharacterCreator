@@ -30,6 +30,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Backgrounds
                 .HasJsonConversion();
             builder.Property(b => b.FeatChoiceCategory)
                 .HasMaxLength(30);
+            builder.Property(b => b.FeatAlternativeCategory)
+                .HasMaxLength(30);
             builder.Property(b => b.FeatSpellListClassId)
                 .HasMaxLength(50);
 

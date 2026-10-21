@@ -59,8 +59,9 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public Dictionary<string, int> BackgroundAbilityIncreases { get; private set; } = [];
 
         /// <summary>
-        /// The feat picked for a background that lets the player choose it (Background.FeatChoiceCategory:
-        /// a Mist Wanderer's Dark Gift). Null for a background whose feat is fixed.
+        /// The feat picked for a background that lets the player choose it (Background.PickableFeatCategory:
+        /// a Mist Wanderer's Dark Gift, or a Haunted One's in place of Survivor). Null for a background
+        /// whose feat is fixed, or one that keeps its own.
         /// </summary>
         public string? BackgroundFeatId { get; private set; }
 
@@ -391,7 +392,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// <summary>
         /// Sets the background, for a 2024 one the ability increases picked from it (see
         /// Background.AllowsAbilityIncreases), stored under canonical ability ids, and the feat
-        /// picked for one that lets the player choose it (Background.FeatChoiceCategory).
+        /// picked for one that lets the player choose it (Background.PickableFeatCategory).
         /// </summary>
         public void SetBackground(string backgroundId, IReadOnlyDictionary<string, int>? abilityIncreases = null, string? featId = null)
         {

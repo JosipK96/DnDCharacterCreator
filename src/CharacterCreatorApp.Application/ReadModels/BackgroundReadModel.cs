@@ -24,6 +24,9 @@ public class BackgroundReadModel
     /// <summary>The category the player picks the feat from when the background has none of its own ("Dark Gift").</summary>
     public string? FeatChoiceCategory { get; set; }
 
+    /// <summary>The category the player may pick a feat from in place of Feat ("Dark Gift" for a Haunted One).</summary>
+    public string? FeatAlternativeCategory { get; set; }
+
     /// <summary>A 2014 background's feature; null for a 2024 one.</summary>
     public BackgroundFeatureReadModel? Feature { get; set; }
 }

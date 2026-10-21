@@ -173,6 +173,81 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         created.FeatIds.Should().Equal("mist_walker");
     }
 
+    [Fact]
+    public async Task Handle_WithNoFeatPickedForABackgroundThatAllowsADarkGift_GivesTheCharacterItsOwn()
+    {
+        // Arrange
+        var draft = Draft();
+        draft.SetBackground("haunted_one");
+        ArrangeFeats(Feat("survivor", "Survivor", category: "Origin"));
+
+        // Act
+        var created = await FinalizeSuccessfully(draft, background: HauntedOne());
+
+        // Assert
+        created.FeatIds.Should().Equal("survivor");
+    }
+
+    [Fact]
+    public async Task Handle_WithADarkGiftPickedInPlaceOfTheBackgroundsFeat_GivesTheCharacterTheDarkGiftOnly()
+    {
+        // Arrange
+        var draft = Draft();
+        draft.SetBackground("haunted_one", null, "mist_walker");
+        ArrangeFeats(Feat("mist_walker", "Mist Walker", category: "Dark Gift"));
+
+        // Act
+        var created = await FinalizeSuccessfully(draft, background: HauntedOne());
+
+        // Assert
+        created.FeatIds.Should().Equal("mist_walker");
+    }
+
+    [Fact]
+    public async Task Handle_WithAnotherCategoryPickedInPlaceOfTheBackgroundsFeat_ReturnsBackgroundFeatNotOfCategory()
+    {
+        // Arrange
+        var draft = Draft();
+        draft.SetBackground("haunted_one", null, "alert");
+        ArrangeFeats(Feat("alert", "Alert", category: "General"));
+
+        // Act
+        var result = await Finalize(draft, background: HauntedOne());
+
+        // Assert
+        AssertRefused(result, "CharacterDraft.BackgroundFeatNotOfCategory");
+    }
+
+    [Fact]
+    public async Task Handle_WithADarkGiftFromABookNotAllowedInPlaceOfTheBackgroundsFeat_ReturnsSourceNotAllowed()
+    {
+        // Arrange
+        var draft = Draft();
+        draft.SetBackground("haunted_one", null, "mist_walker");
+        ArrangeFeats(Feat("mist_walker", "Mist Walker", category: "Dark Gift", source: "RHW"));
+
+        // Act
+        var result = await Finalize(draft, background: HauntedOne());
+
+        // Assert
+        AssertRefused(result, "CharacterDraft.SourceNotAllowed");
+    }
+
+    [Fact]
+    public async Task Handle_WithAFeatPickedForABackgroundThatAllowsNone_ReturnsBackgroundFeatNotChoosable()
+    {
+        // Arrange - a pick saved before a reseed took the background's alternative away
+        var draft = Draft();
+        draft.SetBackground("soldier", null, "mist_walker");
+        ArrangeFeats(Feat("mist_walker", "Mist Walker", category: "Dark Gift"));
+
+        // Act
+        var result = await Finalize(draft);
+
+        // Assert
+        AssertRefused(result, "CharacterDraft.BackgroundFeatNotChoosable");
+    }
+
     // --- The race's spells ---
 
     [Fact]
@@ -518,6 +593,17 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         background.Id = "mist_wanderer";
         background.Name = "Mist Wanderer";
         background.FeatChoiceCategory = "Dark Gift";
+        return background;
+    }
+
+    // Survivor, or a Dark Gift in its place
+    private static Background HauntedOne()
+    {
+        var background = Soldier();
+        background.Id = "haunted_one";
+        background.Name = "Haunted One";
+        background.FeatId = "survivor";
+        background.FeatAlternativeCategory = "Dark Gift";
         return background;
     }
 

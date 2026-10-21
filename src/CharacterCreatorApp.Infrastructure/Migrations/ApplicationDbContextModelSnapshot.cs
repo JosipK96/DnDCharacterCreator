@@ -38,6 +38,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(4)
                         .HasColumnType("character varying(4)");
 
+                    b.Property<string>("FeatAlternativeCategory")
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("FeatChoiceCategory")
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");

@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
@@ -1424,10 +1424,10 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
         var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
 
-        // Assert - the human's Origin feat beside the background's
+        // Assert - the human's Origin feat and the Fighting Style beside the background's
         preview!.BlockingIssue.Should().BeNull();
-        preview.Feats.Select(f => f.Feat.Id).Should().BeEquivalentTo([expectedFeatId, "alert_2024"]);
-        character!.Feats.Select(f => f.Feat.Id).Should().BeEquivalentTo([expectedFeatId, "alert_2024"]);
+        preview.Feats.Select(f => f.Feat.Id).Should().BeEquivalentTo([expectedFeatId, "alert_2024", "defense_2024"]);
+        character!.Feats.Select(f => f.Feat.Id).Should().BeEquivalentTo([expectedFeatId, "alert_2024", "defense_2024"]);
     }
 
     // A level 1 2024 human fighter from RHW's background, ready to finalize: the human's Origin

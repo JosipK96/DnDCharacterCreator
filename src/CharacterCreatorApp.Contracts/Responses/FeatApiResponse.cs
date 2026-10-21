@@ -31,7 +31,11 @@ public record FeatChoiceApiResponse(
     string Type,
     int Count,
     List<string> Options
-);
+)
+{
+    public const string Skills = "skills";
+    public const string SkillsTools = "skills_tools";
+}
 
 /// <summary>
 /// Points to spend on Options (ability ids, "STR"), all on one if the player likes, up to Maximum:

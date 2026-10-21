@@ -727,7 +727,11 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
     private CharacterDraft ArrangeNobleHuman()
     {
         var draft = ArrangeDraft(level: 1, Fighter2024(), Noble2024(), new Dictionary<string, int> { ["STR"] = 2, ["CHA"] = 1 }, Human2024());
-        ArrangeFeats(Skilled2024());
+
+        // Pinned: the race's Skilled and the background's are the one feat, loaded once
+        _featRepositoryMock
+            .Setup(r => r.GetByIdsAsync(It.Is<IEnumerable<string>>(ids => ids.SequenceEqual(new[] { "skilled_2024" })), _cts.Token))
+            .ReturnsAsync([Skilled2024()]);
         return draft;
     }
 

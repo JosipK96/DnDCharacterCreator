@@ -430,13 +430,13 @@
         return Enumerable.Range(0, choice.Count).Select(i => ids.ElementAtOrDefault(i)).ToList();
     }
 
-    private static bool AsksForProficiencies(FeatChoiceApiResponse choice) => choice.Type is "skills" or "skills_tools";
+    private static bool AsksForProficiencies(FeatChoiceApiResponse choice) => choice.Type is FeatChoiceApiResponse.Skills or FeatChoiceApiResponse.SkillsTools;
 
     // One select per pick the feat gives, each leaving out what another pick or step already has
     private RenderFragment ProficiencySelects(FeatChoiceApiResponse choice, List<string?> picks) => __builder =>
     {
         <p class="text-gray-300 text-sm mt-4 mb-2">
-            Pick @choice.Count @(choice.Type == "skills_tools" ? "skill(s) or tool(s)" : "skill(s)") <span class="text-red-400">*</span>
+            Pick @choice.Count @(choice.Type == FeatChoiceApiResponse.SkillsTools ? "skill(s) or tool(s)" : "skill(s)") <span class="text-red-400">*</span>
         </p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             @for (var p = 0; p < picks.Count; p++)

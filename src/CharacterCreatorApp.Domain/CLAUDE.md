@@ -103,8 +103,8 @@ Ability keys, language ids and proficiency ids are explained at more length in
   `skills`, Keen Mind's one of five, or `skills_tools`, Skilled's three; `FeatChoice.Allows`
   checks a pick, `Skill.IsSkill` for a skills one). They are picked in the improvements step,
   the background's feat (a Noble's Skilled) among them, and kept in
-  `CharacterDraft.FeatProficiencyPicks`, one per such feat: the background's feat, then `SelectedFeatIds`, so
-  Skilled taken twice has two. Another background feat or set of feats clears them, and a pick
+  `CharacterDraft.FeatProficiencyPicks`, one per such feat: the background's feat, then
+  `SelectedFeatIds`, so Skilled taken twice has two. Another background feat or set of feats clears them, and a pick
   the race, background, class or another pick gives is refused as other proficiency picks are.
 - Tools, instruments and gaming sets a race, background or class lets the player pick (a 2014
   dwarf's artisan's tools, a Criminal's gaming set, a bard's three instruments) are

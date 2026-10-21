@@ -105,11 +105,11 @@ public static class CharacterBuilder
 
     /// <summary>
     /// The feat a background gives, as a list of none or one: its own, or the one the player
-    /// picked for a background that lets them choose (Background.FeatChoiceCategory).
+    /// picked for a background that lets them choose (Background.FeatIdWith).
     /// </summary>
     public static IEnumerable<string> BackgroundFeatIds(Background background, CharacterDraft draft)
     {
-        var featId = background.FeatChoiceCategory == null ? background.FeatId : draft.BackgroundFeatId;
+        var featId = background.FeatIdWith(draft.BackgroundFeatId);
         return featId is null ? [] : [featId];
     }
 

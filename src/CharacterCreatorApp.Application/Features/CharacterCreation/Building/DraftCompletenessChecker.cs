@@ -162,14 +162,21 @@ public static class DraftCompletenessChecker
                 sources.BonusSpellLists);
     }
 
-    // A Mist Wanderer's Dark Gift: the step checks it, but a reseed may have moved the feat
+    // A Mist Wanderer's Dark Gift, or a Haunted One's in place of Survivor: the step checks it,
+    // but a reseed may have moved the feat
     private static Error? FindInvalidBackgroundFeat(CharacterDraft draft, CharacterSources sources)
     {
         var background = sources.Background;
 
-        if (background.FeatChoiceCategory is not { } category)
+        if (background.PickableFeatCategory is not { } category)
         {
             return draft.BackgroundFeatId == null ? null : CharacterDraftErrors.BackgroundFeatNotChoosable(background.Name);
+        }
+
+        // Without a pick a background with an alternative keeps its own feat
+        if (draft.BackgroundFeatId == null && background.FeatChoiceCategory == null)
+        {
+            return null;
         }
 
         var feat = sources.Feats.FirstOrDefault(f => f.Id == draft.BackgroundFeatId);

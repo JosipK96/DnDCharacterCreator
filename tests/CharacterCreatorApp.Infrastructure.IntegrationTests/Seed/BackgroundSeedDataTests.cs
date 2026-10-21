@@ -70,6 +70,32 @@ public class BackgroundSeedDataTests
         // Assert
         background.FeatId.Should().BeNull();
         background.FeatChoiceCategory.Should().Be("Dark Gift");
+        background.FeatAlternativeCategory.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData("haunted_one_2024", "survivor")]
+    [InlineData("investigator_2024", "sharp_eye")]
+    public async Task Background2024_ThatAllowsADarkGiftInsteadOfItsFeat_HasBoth(string backgroundId, string featId)
+    {
+        // Act
+        var background = (await ReadBackgroundsAsync()).Single(b => b.Id == backgroundId);
+
+        // Assert
+        background.Source.Should().Be("RHW");
+        background.FeatId.Should().Be(featId);
+        background.FeatAlternativeCategory.Should().Be("Dark Gift");
+        background.FeatChoiceCategory.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task Backgrounds_OnlyTheHauntedOneAndInvestigatorHaveAnAlternativeToTheirFeat()
+    {
+        // Act
+        var backgrounds = await ReadBackgroundsAsync();
+
+        // Assert
+        backgrounds.Where(b => b.FeatAlternativeCategory != null).Select(b => b.Id).Should().Equal("haunted_one_2024", "investigator_2024");
     }
 
     [Theory]

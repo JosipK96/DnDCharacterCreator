@@ -70,10 +70,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetBackgrou
             return Response.Success();
         }
 
-        // Only a background without a feat of its own takes one, and only from its category
+        // Only a background that lets the player pick its feat takes one, and only from its category:
+        // a Mist Wanderer's Dark Gift, or a Haunted One's in place of Survivor
         private async Task<Error?> FindInvalidFeatAsync(Background background, string featId, CharacterDraft draft, CancellationToken cancellationToken)
         {
-            if (background.FeatChoiceCategory is not { } category)
+            if (background.PickableFeatCategory is not { } category)
             {
                 return CharacterDraftErrors.BackgroundFeatNotChoosable(background.Name);
             }

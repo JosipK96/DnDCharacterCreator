@@ -125,5 +125,8 @@ Ability keys, language ids and proficiency ids are explained at more length in
   picks, for `ChooseBonusSpells` and finalize alike; a background may fix its feat's list
   (`Background.FeatSpellListClassId`: an Acolyte's is the cleric's). A 2024 species that is
   "Small or Medium" keeps its pick in `CharacterDraft.Size`, a background that lets the player
-  pick its feat (`Background.FeatChoiceCategory`) in `BackgroundFeatId`, and Resilient's saving
-  throw is the ability it raised (`FeatChoice.SavingThrow`).
+  pick its feat in `BackgroundFeatId`, and Resilient's saving throw is the ability it raised
+  (`FeatChoice.SavingThrow`). A Mist Wanderer must pick a Dark Gift (`Background.FeatChoiceCategory`);
+  a 2024 Haunted One or Investigator may take one in place of its own feat
+  (`Background.FeatAlternativeCategory`) and keeps its own without a pick. `Background.FeatIdWith`
+  says which feat the character gets, and a pick for any other background is refused.

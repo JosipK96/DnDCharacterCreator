@@ -43,7 +43,7 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | **Proficiency** | Something the character is trained in: a skill, a weapon, armour, a tool. Adds the proficiency bonus where it applies | `Proficiency`, `Type` of `skill`, `armor`, `weapon`, `tool`… |
 | **Skill** | One of the eighteen: Athletics, Stealth, Perception… Each checked against a fixed ability | `Skill` |
 | **ASI** | Ability Score Improvement. Earned at class-specific levels; **either** +2 ability points **or** a feat | `Class.AsiLevels`, `CharacterDraft.AbilityScoreImprovements` |
-| **Feat** | A special ability taken in place of an ASI, given by a background (a 2024 origin feat), or picked for a race (a variant human's, a 2024 human's Origin feat). May have prerequisites, and may raise an ability | `Feat`, `CharacterDraft.SelectedFeatIds`, `Background.FeatId`, `Race.BonusFeatsWith` |
+| **Feat** | A special ability taken in place of an ASI, given by a background (a 2024 origin feat, or a Dark Gift a few RHW backgrounds let the player pick, some in place of their own), or picked for a race (a variant human's, a 2024 human's Origin feat). May have prerequisites, and may raise an ability | `Feat`, `CharacterDraft.SelectedFeatIds`, `Background.FeatId`, `Background.FeatIdWith`, `CharacterDraft.BackgroundFeatId`, `Race.BonusFeatsWith` |
 | **Ability increase** | +1 or +2 to an ability from a race, a 2024 background, a feat or an ASI. Some are fixed (a dwarf's CON +2), some the player places (a half-elf's two +1s) | `AbilityIncreaseChoice`, `FeatAbilityIncrease` |
 | **Cantrip** | A spell of level 0, castable at will | Spell `Level == 0` |
 | **Spell slot** | A per-day resource for casting. **Not modelled yet** | — |

@@ -272,6 +272,96 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         AssertRefused(result, draft, "Feat.NotFound");
     }
 
+    [Theory]
+    [InlineData("haunted_one_2024")]
+    [InlineData("investigator_2024")]
+    public async Task Handle_WithADarkGiftForABackgroundThatAllowsOneInsteadOfItsFeat_StoresTheFeat(string backgroundId)
+    {
+        // Arrange
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        draft.AllowBooks(["RHW"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeBackground(DarkGiftAlternatives()[backgroundId]);
+        ArrangeFeat(DarkGift());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, backgroundId, WisdomAndCharisma(), "mist_walker"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.BackgroundId.Should().Be(backgroundId);
+        draft.BackgroundFeatId.Should().Be("mist_walker");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_WithNoFeatForABackgroundThatAllowsADarkGift_KeepsItsOwn()
+    {
+        // Arrange - the Haunted One keeps Survivor, which no pick replaces
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        draft.AllowBooks(["RHW"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeBackground(HauntedOne());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "haunted_one_2024", WisdomAndCharisma()), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.BackgroundId.Should().Be("haunted_one_2024");
+        draft.BackgroundFeatId.Should().BeNull();
+        _featRepositoryMock.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task Handle_WithAnOriginFeatInPlaceOfAHauntedOnesOwn_ReturnsBackgroundFeatNotOfCategory()
+    {
+        // Arrange - only a Dark Gift may replace Survivor
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        draft.AllowBooks(["RHW"], new DraftChoiceSources(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>()));
+        ArrangeBackground(HauntedOne());
+        var feat = DarkGift();
+        feat.Category = "Origin";
+        ArrangeFeat(feat);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "haunted_one_2024", WisdomAndCharisma(), "mist_walker"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.BackgroundFeatNotOfCategory");
+        result.Errors[0].Description.Should().Be("A feat picked for the Haunted One background is a Dark Gift; Mist Walker is not.");
+    }
+
+    [Fact]
+    public async Task Handle_WithADarkGiftFromABookTheDraftDoesNotAllowForAHauntedOne_ReturnsSourceNotAllowed()
+    {
+        // Arrange - the background is allowed, the Dark Gift's book is not
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        var background = HauntedOne();
+        background.Source = "XPHB";
+        ArrangeBackground(background);
+        ArrangeFeat(DarkGift());
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterBackgroundCommand(_draftId, "haunted_one_2024", WisdomAndCharisma(), "mist_walker"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.SourceNotAllowed");
+    }
+
+    [Fact]
+    public async Task Handle_WithADarkGiftForASoldier_ReturnsBackgroundFeatNotChoosable()
+    {
+        // Arrange - the 2024 soldier has Savage Attacker and no alternative
+        var draft = ArrangeDraft(RulesEdition.Edition2024);
+        ArrangeBackground(Soldier2024());
+
+        // Act
+        var result = await _sut.Handle(
+            new SetCharacterBackgroundCommand(_draftId, "soldier_2024", new() { ["STR"] = 2, ["CON"] = 1 }, "mist_walker"), _cts.Token);
+
+        // Assert
+        AssertRefused(result, draft, "CharacterDraft.BackgroundFeatNotChoosable");
+    }
+
     private void AssertRefused(Response result, CharacterDraft draft, string code)
     {
         result.IsSuccess.Should().BeFalse();
@@ -287,6 +377,9 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
 
     private static Dictionary<string, int> Increases() => new() { ["DEX"] = 2, ["WIS"] = 1 };
 
+    // Two of the three a Haunted One and an Investigator both raise
+    private static Dictionary<string, int> WisdomAndCharisma() => new() { ["WIS"] = 2, ["CHA"] = 1 };
+
     // Any Dark Gift, and +2/+1 or +1 to each of Dexterity, Wisdom and Charisma
     private static Background MistWanderer() => new()
     {
@@ -296,6 +389,34 @@ public class SetCharacterBackgroundCommandHandlerTests : IDisposable
         Source = "RHW",
         AbilityScoreOptions = ["DEX", "WIS", "CHA"],
         FeatChoiceCategory = "Dark Gift",
+    };
+
+    // Survivor, or a Dark Gift in its place; the ability options are trimmed to the Mist Wanderer's
+    // so that Increases() fits every background here
+    private static Background HauntedOne() => new()
+    {
+        Id = "haunted_one_2024",
+        Name = "Haunted One",
+        Edition = RulesEdition.Edition2024,
+        Source = "RHW",
+        AbilityScoreOptions = ["CON", "WIS", "CHA"],
+        FeatId = "survivor",
+        FeatAlternativeCategory = "Dark Gift",
+    };
+
+    private static Dictionary<string, Background> DarkGiftAlternatives() => new()
+    {
+        ["haunted_one_2024"] = HauntedOne(),
+        ["investigator_2024"] = new()
+        {
+            Id = "investigator_2024",
+            Name = "Investigator",
+            Edition = RulesEdition.Edition2024,
+            Source = "RHW",
+            AbilityScoreOptions = ["INT", "WIS", "CHA"],
+            FeatId = "sharp_eye",
+            FeatAlternativeCategory = "Dark Gift",
+        },
     };
 
     private static FeatReadModel DarkGift() => new()

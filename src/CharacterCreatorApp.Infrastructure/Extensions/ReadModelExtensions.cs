@@ -148,6 +148,7 @@ public static class ReadModelExtensions
                 ? new BackgroundFeatReadModel { Id = feat.Id, Name = feat.Name, IsRepeatable = feat.IsRepeatable }
                 : null,
             FeatChoiceCategory = background.FeatChoiceCategory,
+            FeatAlternativeCategory = background.FeatAlternativeCategory,
 
             LanguageChoiceCount = background.Languages.Count(l => l.Equals("any", StringComparison.OrdinalIgnoreCase)),
 

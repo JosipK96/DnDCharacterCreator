@@ -60,6 +60,52 @@ public class BackgroundTests
         allowed.Should().Be(expected);
     }
 
+    [Theory]
+    [InlineData("soldier_2024", null, "savage_attacker_2024")]
+    [InlineData("soldier_2024", "mist_walker", "savage_attacker_2024")]
+    [InlineData("soldier", null, null)]
+    [InlineData("mist_wanderer_2024", "mist_walker", "mist_walker")]
+    [InlineData("mist_wanderer_2024", null, null)]
+    [InlineData("haunted_one_2024", "mist_walker", "mist_walker")]
+    [InlineData("haunted_one_2024", null, "survivor")]
+    public void FeatIdWith_APickOrNone_GivesThePickOnlyWhereTheBackgroundAllowsOne(string backgroundId, string? pickedFeatId, string? expected)
+    {
+        // Arrange
+        var background = FeatBackgrounds()[backgroundId];
+
+        // Act
+        var featId = background.FeatIdWith(pickedFeatId);
+
+        // Assert
+        featId.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData("soldier_2024", null)]
+    [InlineData("soldier", null)]
+    [InlineData("mist_wanderer_2024", "Dark Gift")]
+    [InlineData("haunted_one_2024", "Dark Gift")]
+    public void PickableFeatCategory_ForEachKindOfBackground_IsTheCategoryAPickMustBeFrom(string backgroundId, string? expected)
+    {
+        // Act
+        var category = FeatBackgrounds()[backgroundId].PickableFeatCategory;
+
+        // Assert
+        category.Should().Be(expected);
+    }
+
+    // A feat of its own, none, one the player must pick, and one the player may pick in its place
+    private static Dictionary<string, Background> FeatBackgrounds() => new()
+    {
+        ["soldier_2024"] = Soldier2024,
+        ["soldier"] = Soldier2014,
+        ["mist_wanderer_2024"] = new() { Id = "mist_wanderer_2024", Name = "Mist Wanderer", Edition = RulesEdition.Edition2024, FeatChoiceCategory = "Dark Gift" },
+        ["haunted_one_2024"] = new()
+        {
+            Id = "haunted_one_2024", Name = "Haunted One", Edition = RulesEdition.Edition2024, FeatId = "survivor", FeatAlternativeCategory = "Dark Gift",
+        },
+    };
+
     // "STR:2 CON:1" as {"STR": 2, "CON": 1}; keys that differ only in case stay apart
     private static Dictionary<string, int> Increases(string text) =>
         text.Split(' ', StringSplitOptions.RemoveEmptyEntries)

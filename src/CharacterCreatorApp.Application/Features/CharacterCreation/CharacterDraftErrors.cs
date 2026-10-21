@@ -220,7 +220,7 @@ public static class CharacterDraftErrors
         Error.Validation("CharacterDraft.BackgroundFeatNotChoosable", $"The {backgroundName} background gives its own feat, or none; there is no feat to pick.");
 
     public static Error BackgroundFeatNotOfCategory(string backgroundName, string featName, string category) =>
-        Error.Validation("CharacterDraft.BackgroundFeatNotOfCategory", $"The {backgroundName} background's feat is a {category}; {featName} is not.");
+        Error.Validation("CharacterDraft.BackgroundFeatNotOfCategory", $"A feat picked for the {backgroundName} background is a {category}; {featName} is not.");
 
     // --- Spells a race or feat lets the player pick ---
     public static Error BonusSpellPicksMismatch(IReadOnlyCollection<string> featNames, int picked)

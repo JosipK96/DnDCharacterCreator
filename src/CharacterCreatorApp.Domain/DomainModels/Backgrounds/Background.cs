@@ -45,6 +45,12 @@ public class Background
     public string? FeatChoiceCategory { get; set; }
 
     /// <summary>
+    /// The category the player may pick a feat from in place of FeatId: any Dark Gift for a 2024
+    /// Haunted One or Investigator. Null when the background's feat, if any, is the only one.
+    /// </summary>
+    public string? FeatAlternativeCategory { get; set; }
+
+    /// <summary>
     /// The class whose spell list the feat's spells come from, when the background fixes it: the
     /// cleric's ("cleric-2024") for an Acolyte's Magic Initiate.
     /// </summary>
@@ -67,4 +73,17 @@ public class Background
     /// be in any spelling ("str", "Strength").
     /// </summary>
     public bool AllowsAbilityIncreases(IReadOnlyDictionary<string, int> increases) => AbilityChoice().Allows(increases);
+
+    /// <summary>
+    /// The category a feat picked for the background must be from: the one it must be picked from
+    /// (FeatChoiceCategory) or the alternative to its own (FeatAlternativeCategory). Null when no
+    /// feat may be picked.
+    /// </summary>
+    public string? PickableFeatCategory => FeatChoiceCategory ?? FeatAlternativeCategory;
+
+    /// <summary>
+    /// The feat the character gets from the background: the one picked, when the background lets
+    /// the player pick one, and otherwise its own (null for none).
+    /// </summary>
+    public string? FeatIdWith(string? pickedFeatId) => PickableFeatCategory == null ? FeatId : pickedFeatId ?? FeatId;
 }

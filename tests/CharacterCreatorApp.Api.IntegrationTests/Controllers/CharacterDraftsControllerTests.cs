@@ -1388,6 +1388,88 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task SetBackground_WithADarkGiftForASoldier_ReturnsBackgroundFeatNotChoosable()
+    {
+        // Arrange - the draft allows RHW, but only a Haunted One or an Investigator swaps its feat
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Bruenor", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "books", new SetAllowedBooksApiRequest(["RHW"]));
+
+        // Act
+        var request = Soldier2024();
+        request.FeatId = "mist_walker";
+        var response = await _client.PutAsJsonAsync($"/api/character-drafts/{draftId}/background", request, TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.BackgroundFeatNotChoosable");
+    }
+
+    [Theory]
+    [InlineData("haunted_one_2024", "mist_walker", "mist_walker")]
+    [InlineData("haunted_one_2024", null, "survivor")]
+    [InlineData("investigator_2024", "echoing_soul", "echoing_soul")]
+    [InlineData("investigator_2024", null, "sharp_eye")]
+    public async Task Finalize_ABackgroundThatAllowsADarkGift_GivesThePickOrElseItsOwnFeat(string backgroundId, string? pickedFeatId, string expectedFeatId)
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateRhwHumanFighterAsync(backgroundId, pickedFeatId);
+
+        // Act
+        var preview = await _client.GetFromJsonAsync<CharacterPreviewApiResponse>($"/api/character-drafts/{draftId}/preview", cancellationToken);
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK, await finalizeResponse.Content.ReadAsStringAsync(cancellationToken));
+        var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        // Assert - the human's Origin feat beside the background's
+        preview!.BlockingIssue.Should().BeNull();
+        preview.Feats.Select(f => f.Feat.Id).Should().BeEquivalentTo([expectedFeatId, "alert_2024"]);
+        character!.Feats.Select(f => f.Feat.Id).Should().BeEquivalentTo([expectedFeatId, "alert_2024"]);
+    }
+
+    // A level 1 2024 human fighter from RHW's background, ready to finalize: the human's Origin
+    // feat is Alert, and the background's feat the one picked or else its own
+    private async Task<Guid> CreateRhwHumanFighterAsync(string backgroundId, string? featId)
+    {
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Ezra", Level = 1, Edition = RulesEdition.Edition2024 });
+        await PutStepAsync(draftId, "books", new SetAllowedBooksApiRequest(["RHW"]));
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "human_2024", Size = "Medium" });
+        await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["stealth"]));
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest
+        {
+            BackgroundId = backgroundId,
+            AbilityIncreases = new() { ["WIS"] = 2, ["CHA"] = 1 },
+            FeatId = featId,
+        });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+
+        // The Haunted One picks a gaming set; the Investigator has its disguise kit
+        if (backgroundId == "haunted_one_2024")
+        {
+            await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
+        }
+
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
+
+        // Echoing Soul asks for a skill
+        List<FeatProficiencyPickApiModel> featPicks = featId == "echoing_soul" ? [new() { FeatId = "echoing_soul", ProficiencyIds = ["history"] }] : [];
+        await PutStepAsync(draftId, "ability-score-improvements", new SetAbilityScoreImprovementsApiRequest([], ["alert_2024"], [[]], featPicks));
+
+        return draftId;
+    }
+
+    [Fact]
     public async Task ToolChoices_ForADwarfCriminalBard_ListsTheThreeAndSavesThePicks()
     {
         // Arrange

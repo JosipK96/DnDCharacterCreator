@@ -167,7 +167,8 @@ raw 5etools data by
 `tools/CharacterCreatorApp.SeedDataGenerator` (see the README); don't edit them by
 hand, change the generator and run it again. The
 row types they share with the seeders are in `Infrastructure/Seed/Rows`. A
-class's spell table (cantrips, spells to pick, highest spell level per level),
+class's spell table (cantrips, spells to pick, spell slots or Pact Magic, highest
+spell level per level),
 its spellcasting ability and how a 2014 one counts its prepared spells, subclass
 level, ability score improvement levels and saving throws are all read from the
 class data, not written in C#.

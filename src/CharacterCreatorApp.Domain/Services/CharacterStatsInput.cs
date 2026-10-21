@@ -7,7 +7,8 @@ namespace CharacterCreatorApp.Domain.Services;
 /// throws and speed come from the chosen class and race, which the character stores only by id.
 /// Race, subrace, subclass and feats are here for the hit points they add (see HitPointBonuses),
 /// and speed is the race's with its subrace's change (Race.SpeedWith). The unarmoured armour
-/// classes are the class's and subclass's (Class.UnarmoredArmorClassesWith). Nothing has a
+/// classes are the class's and subclass's (Class.UnarmoredArmorClassesWith), and the spell slots
+/// the class's or subclass's table row for the level (Class.SpellSlotsAt). Nothing has a
 /// default, so a caller cannot leave a part out without the compiler saying so.
 /// </summary>
 public sealed record CharacterStatsInput(
@@ -21,4 +22,5 @@ public sealed record CharacterStatsInput(
     string? SubraceId,
     string? SubclassId,
     IReadOnlyCollection<string> FeatIds,
-    IReadOnlyCollection<UnarmoredArmorClass> UnarmoredArmorClasses);
+    IReadOnlyCollection<UnarmoredArmorClass> UnarmoredArmorClasses,
+    SpellSlots SpellSlots);

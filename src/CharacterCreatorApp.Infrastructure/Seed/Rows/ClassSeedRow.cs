@@ -65,6 +65,12 @@ public sealed record SpellProgressionSeedRow
     public int SpellsKnown { get; init; }
 
     public int MaxSpellLevel { get; init; }
+
+    /// <summary>The spell slots per spell level, index 0 for 1st level; empty for a warlock.</summary>
+    public List<int> SpellSlots { get; init; } = [];
+
+    /// <summary>A warlock's Pact Magic slots, all of MaxSpellLevel; 0 otherwise.</summary>
+    public int PactMagicSlots { get; init; }
 }
 
 /// <summary>One entry of Subclasses.json.</summary>

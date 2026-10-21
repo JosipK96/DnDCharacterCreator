@@ -5,6 +5,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.Services;
 
 namespace CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
@@ -41,8 +42,8 @@ public class GetCharacterDetailsQueryHandler(
             return CharacterErrors.NotFoundById(query.CharacterId);
         }
 
-        // Hit die, saving throws, features and an unarmoured armour class come from the class and
-        // subclass, speed from the race and subrace, and one feature from the background; the
+        // Hit die, saving throws, features, an unarmoured armour class and spell slots come from
+        // the class and subclass, speed from the race and subrace, and one feature from the background; the
         // character stores only their ids
         var @class = await _classRepository.GetByIdWithDetailsAsync(character.ClassId, cancellationToken);
         var race = await _raceRepository.GetByIdWithDetailsAsync(character.RaceId, cancellationToken);
@@ -74,7 +75,8 @@ public class GetCharacterDetailsQueryHandler(
             SubraceId: character.SubraceId,
             SubclassId: character.SubclassId,
             FeatIds: character.FeatIds,
-            UnarmoredArmorClasses: @class?.UnarmoredArmorClassesWith(subclass) ?? []));
+            UnarmoredArmorClasses: @class?.UnarmoredArmorClassesWith(subclass) ?? [],
+            SpellSlots: @class?.SpellSlotsAt(character.Level, subclass) ?? SpellSlots.None));
 
         return character;
     }

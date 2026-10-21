@@ -43,6 +43,8 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
                         CantripsKnown = p.CantripsKnown,
                         SpellsKnown = p.SpellsKnown,
                         MaxSpellLevel = p.MaxSpellLevel,
+                        SpellSlots = p.SpellSlots,
+                        PactMagicSlots = p.PactMagicSlots,
                         SpellcastingAbility = row.SpellcastingAbility!
                     })
                     .ToList()

@@ -635,109 +635,205 @@
         "Level": 3,
         "CantripsKnown": 2,
         "SpellsKnown": 3,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 4,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 5,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 6,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 7,
         "CantripsKnown": 2,
         "SpellsKnown": 5,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 8,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 9,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 10,
         "CantripsKnown": 3,
         "SpellsKnown": 7,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 11,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 12,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 13,
         "CantripsKnown": 3,
         "SpellsKnown": 9,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 14,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 15,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 16,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 17,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 18,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 19,
         "CantripsKnown": 3,
         "SpellsKnown": 12,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 20,
         "CantripsKnown": 3,
         "SpellsKnown": 13,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       }
     ],
     "SpellSchools": [
@@ -1136,109 +1232,205 @@
         "Level": 3,
         "CantripsKnown": 2,
         "SpellsKnown": 3,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 4,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 5,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 6,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 7,
         "CantripsKnown": 2,
         "SpellsKnown": 5,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 8,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 9,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 10,
         "CantripsKnown": 3,
         "SpellsKnown": 7,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 11,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 12,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 13,
         "CantripsKnown": 3,
         "SpellsKnown": 9,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 14,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 15,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 16,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 17,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 18,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 19,
         "CantripsKnown": 3,
         "SpellsKnown": 12,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 20,
         "CantripsKnown": 3,
         "SpellsKnown": 13,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       }
     ],
     "SpellSchools": [
@@ -2113,109 +2305,205 @@
         "Level": 3,
         "CantripsKnown": 2,
         "SpellsKnown": 3,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 4,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 5,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 6,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 7,
         "CantripsKnown": 2,
         "SpellsKnown": 5,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 8,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 9,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 10,
         "CantripsKnown": 3,
         "SpellsKnown": 7,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 11,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 12,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 13,
         "CantripsKnown": 3,
         "SpellsKnown": 9,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 14,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 15,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 16,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 17,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 18,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 19,
         "CantripsKnown": 3,
         "SpellsKnown": 12,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 20,
         "CantripsKnown": 3,
         "SpellsKnown": 13,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       }
     ],
     "SpellSchools": [],
@@ -2282,109 +2570,205 @@
         "Level": 3,
         "CantripsKnown": 2,
         "SpellsKnown": 3,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 4,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 5,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 6,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 7,
         "CantripsKnown": 2,
         "SpellsKnown": 5,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 8,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 9,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 10,
         "CantripsKnown": 3,
         "SpellsKnown": 7,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 11,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 12,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 13,
         "CantripsKnown": 3,
         "SpellsKnown": 9,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 14,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 15,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 16,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 17,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 18,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 19,
         "CantripsKnown": 3,
         "SpellsKnown": 12,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 20,
         "CantripsKnown": 3,
         "SpellsKnown": 13,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       }
     ],
     "SpellSchools": [],
@@ -2551,109 +2935,205 @@
         "Level": 3,
         "CantripsKnown": 2,
         "SpellsKnown": 3,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 4,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 5,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 6,
         "CantripsKnown": 2,
         "SpellsKnown": 4,
-        "MaxSpellLevel": 1
+        "MaxSpellLevel": 1,
+        "SpellSlots": [
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 7,
         "CantripsKnown": 2,
         "SpellsKnown": 5,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 8,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 9,
         "CantripsKnown": 2,
         "SpellsKnown": 6,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 10,
         "CantripsKnown": 3,
         "SpellsKnown": 7,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 11,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 12,
         "CantripsKnown": 3,
         "SpellsKnown": 8,
-        "MaxSpellLevel": 2
+        "MaxSpellLevel": 2,
+        "SpellSlots": [
+          4,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 13,
         "CantripsKnown": 3,
         "SpellsKnown": 9,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 14,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 15,
         "CantripsKnown": 3,
         "SpellsKnown": 10,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          2
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 16,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 17,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 18,
         "CantripsKnown": 3,
         "SpellsKnown": 11,
-        "MaxSpellLevel": 3
+        "MaxSpellLevel": 3,
+        "SpellSlots": [
+          4,
+          3,
+          3
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 19,
         "CantripsKnown": 3,
         "SpellsKnown": 12,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       },
       {
         "Level": 20,
         "CantripsKnown": 3,
         "SpellsKnown": 13,
-        "MaxSpellLevel": 4
+        "MaxSpellLevel": 4,
+        "SpellSlots": [
+          4,
+          3,
+          3,
+          1
+        ],
+        "PactMagicSlots": 0
       }
     ],
     "SpellSchools": [],

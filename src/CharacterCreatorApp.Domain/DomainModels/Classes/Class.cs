@@ -87,6 +87,26 @@ public class Class
             : null;
     }
 
+    /// <summary>
+    /// The spell slots a character of this level has, from the class's table, or from the
+    /// subclass's when the class has none (an Eldritch Knight's fighter), as in SpellAllowanceAt.
+    /// None when the character casts no spells yet.
+    /// </summary>
+    public SpellSlots SpellSlotsAt(int level, Subclass? subclass)
+    {
+        if (SpellProgression.Find(p => p.CharacterLevel == level) is { } row)
+        {
+            return SlotsOf(row.SpellSlots, row.PactMagicSlots, row.MaxSpellLevel);
+        }
+
+        return subclass?.SpellProgression.Find(p => p.CharacterLevel == level) is { } subclassRow
+            ? SlotsOf(subclassRow.SpellSlots, subclassRow.PactMagicSlots, subclassRow.MaxSpellLevel)
+            : SpellSlots.None;
+    }
+
+    private static SpellSlots SlotsOf(List<int> perSpellLevel, int pactMagicSlots, int maxSpellLevel) =>
+        new(perSpellLevel, pactMagicSlots > 0 ? new PactMagicSlots(pactMagicSlots, maxSpellLevel) : null);
+
     private int PreparedSpellCount(int level, IReadOnlyDictionary<string, int> abilityScores)
     {
         // A score the draft lacks counts as 10, as on the sheet; finalize refuses such a draft anyway

@@ -5,5 +5,6 @@
 - The wizard's step order, numbers and names come from `Client/Pages/CharacterCreation/
   WizardSteps`; a step reads its heading and "Next" label from `WizardStepBase`, never a literal.
 - Sheet numbers come from `CharacterStatsCalculator` through the API; don't recompute a modifier
-  in a Razor page. What each step may offer follows the D&D rules in
+  in a Razor page. The sheet and the review step show spell slots and Pact Magic through the
+  one shared component, Shared/SpellSlotsPanel.razor. What each step may offer follows the D&D rules in
   `src/CharacterCreatorApp.Domain/CLAUDE.md`.

@@ -38,6 +38,12 @@ public class CharacterMappingConfig : IRegister
         config.NewConfig<SkillStat, SkillStatApiResponse>()
             .MapToConstructor(true);
 
+        config.NewConfig<SpellSlotStat, SpellSlotStatApiResponse>()
+            .MapToConstructor(true);
+
+        config.NewConfig<PactMagicStat, PactMagicStatApiResponse>()
+            .MapToConstructor(true);
+
         config.NewConfig<CharacterStats, CharacterStatsApiResponse>()
             .MapToConstructor(true);
 

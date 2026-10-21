@@ -428,6 +428,13 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Property<int>("MaxSpellLevel")
                         .HasColumnType("integer");
 
+                    b.Property<int>("PactMagicSlots")
+                        .HasColumnType("integer");
+
+                    b.PrimitiveCollection<List<int>>("SpellSlots")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
+
                     b.Property<int>("SpellsKnown")
                         .HasColumnType("integer");
 
@@ -546,6 +553,13 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
 
                     b.Property<int>("MaxSpellLevel")
                         .HasColumnType("integer");
+
+                    b.Property<int>("PactMagicSlots")
+                        .HasColumnType("integer");
+
+                    b.PrimitiveCollection<List<int>>("SpellSlots")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
 
                     b.Property<string>("SpellcastingAbility")
                         .IsRequired()

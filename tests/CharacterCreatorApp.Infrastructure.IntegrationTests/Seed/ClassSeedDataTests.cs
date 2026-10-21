@@ -118,6 +118,97 @@ public class ClassSeedDataTests
     }
 
     [Theory]
+    // Full casters, 1st level first
+    [InlineData("wizard", 1, new[] { 2 })]
+    [InlineData("wizard", 5, new[] { 4, 3, 2 })]
+    [InlineData("cleric", 20, new[] { 4, 3, 3, 3, 3, 2, 2, 1, 1 })]
+    [InlineData("wizard-2024", 5, new[] { 4, 3, 2 })]
+    [InlineData("bard-2024", 11, new[] { 4, 3, 3, 3, 2, 1 })]
+    // Half casters: the 2014 paladin's start at level 2, the 2024 one's at 1; the artificer
+    // rounds up, so it has two at level 1 in both
+    [InlineData("paladin", 2, new[] { 2 })]
+    [InlineData("paladin", 9, new[] { 4, 3, 2 })]
+    [InlineData("paladin-2024", 1, new[] { 2 })]
+    [InlineData("ranger-2024", 20, new[] { 4, 3, 3, 3, 2 })]
+    [InlineData("artificer", 1, new[] { 2 })]
+    // A warlock's are Pact Magic, kept apart
+    [InlineData("warlock", 11, new int[0])]
+    public async Task Class_HasTheBooksSpellSlots(string classId, int level, int[] slots)
+    {
+        // Act
+        var row = (await ClassAsync(classId)).SpellProgression.Single(p => p.Level == level);
+
+        // Assert
+        row.SpellSlots.Should().Equal(slots);
+    }
+
+    [Theory]
+    [InlineData("warlock", 1, 1, 1)]
+    [InlineData("warlock", 2, 2, 1)]
+    [InlineData("warlock", 11, 3, 5)]
+    [InlineData("warlock", 17, 4, 5)]
+    [InlineData("warlock-2024", 1, 1, 1)]
+    [InlineData("warlock-2024", 9, 2, 5)]
+    [InlineData("warlock-2024", 20, 4, 5)]
+    public async Task Warlock_HasTheBooksPactMagicSlots(string classId, int level, int slots, int slotLevel)
+    {
+        // Act
+        var row = (await ClassAsync(classId)).SpellProgression.Single(p => p.Level == level);
+
+        // Assert
+        (row.PactMagicSlots, row.MaxSpellLevel).Should().Be((slots, slotLevel));
+    }
+
+    [Fact]
+    public async Task Classes_OnlyTheWarlocksHavePactMagic()
+    {
+        // Act
+        var classes = (await ReadAsync<ClassSeedRow>("Classes.json")).Where(c => c.SpellProgression.Any(p => p.PactMagicSlots > 0)).Select(c => c.Id);
+        var subclasses = (await ReadAsync<SubclassSeedRow>("Subclasses.json")).Where(s => s.SpellProgression.Any(p => p.PactMagicSlots > 0));
+
+        // Assert
+        classes.Should().BeEquivalentTo("warlock", "warlock-2024");
+        subclasses.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task Casters_EveryRowsSlotsEndAtItsHighestSpellLevel()
+    {
+        // Arrange
+        var classes = await ReadAsync<ClassSeedRow>("Classes.json");
+        var subclasses = await ReadAsync<SubclassSeedRow>("Subclasses.json");
+
+        // Act - every row but a warlock's, whose highest spell level is its Pact Magic slots'
+        var rows = classes.SelectMany(c => c.SpellProgression).Concat(subclasses.SelectMany(s => s.SpellProgression))
+            .Where(p => p.PactMagicSlots == 0)
+            .ToList();
+
+        // Assert
+        rows.Should().NotBeEmpty();
+        rows.Should().OnlyContain(p => p.SpellSlots.Count == p.MaxSpellLevel && (p.SpellSlots.Count == 0 || p.SpellSlots[p.SpellSlots.Count - 1] > 0));
+    }
+
+    [Theory]
+    // Third casters, through their subclass: nothing before level 3
+    [InlineData("eldritch-knight", 3, new[] { 2 })]
+    [InlineData("eldritch-knight", 7, new[] { 4, 2 })]
+    [InlineData("arcane-trickster", 19, new[] { 4, 3, 3, 1 })]
+    [InlineData("eldritch-knight-2024", 13, new[] { 4, 3, 2 })]
+    [InlineData("arcane-trickster-2024", 3, new[] { 2 })]
+    public async Task ThirdCaster_HasTheBooksSpellSlots(string subclassId, int level, int[] slots)
+    {
+        // Arrange
+        var subclass = (await ReadAsync<SubclassSeedRow>("Subclasses.json")).Single(s => s.Id == subclassId);
+
+        // Act
+        var row = subclass.SpellProgression.Single(p => p.Level == level);
+
+        // Assert
+        row.SpellSlots.Should().Equal(slots);
+        subclass.SpellProgression.Should().NotContain(p => p.Level < 3);
+    }
+
+    [Theory]
     // A 2014 cleric or druid prepares its modifier plus its level; the wizard too, from its spellbook
     [InlineData("cleric", "Wisdom", 1)]
     [InlineData("druid", "Wisdom", 1)]

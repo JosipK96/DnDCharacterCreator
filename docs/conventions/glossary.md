@@ -47,7 +47,8 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | **Ability increase** | +1 or +2 to an ability from a race, a 2024 background, a feat or an ASI. Some are fixed (a dwarf's CON +2), some the player places (a half-elf's two +1s) | `AbilityIncreaseChoice`, `FeatAbilityIncrease` |
 | **Cantrip** | A spell of level 0, castable at will | Spell `Level == 0` |
 | **Prepared spells** | The levelled spells a prepared caster can cast that day. A 2024 class's table gives the number; a 2014 cleric, druid, paladin or artificer prepares its spellcasting modifier plus its level (half of it for a paladin or artificer), at least one. Domain and oath spells come on top | `Class.SpellAllowanceAt`, `Spellcasting.PreparedSpellsLevelDivisor`, `Subclass.AlwaysPreparedSpellIdsAt` |
-| **Spell slot** | A per-day resource for casting. **Not modelled yet** | — |
+| **Spell slot** | What casting a levelled spell spends, so many of each spell level, back on a long rest. From the class's spell table, or the subclass's for a third caster (Eldritch Knight, Arcane Trickster). The sheet shows them; using them is not tracked | `ClassSpellProgression.SpellSlots`, `SubclassSpellProgression.SpellSlots`, `Class.SpellSlotsAt`, `CharacterStats.SpellSlots` |
+| **Pact Magic** | A warlock's slots: fewer, all of one spell level (the table's highest), back on a short rest. Shown apart from spell slots | `ClassSpellProgression.PactMagicSlots`, `PactMagicSlots`, `CharacterStats.PactMagic` |
 
 ## Terms that mean something specific here
 

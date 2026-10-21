@@ -349,6 +349,63 @@ public class CharacterStatsCalculatorTests
         charisma.Modifier.Should().Be(0);
     }
 
+    // The slots are the books' tables, 1st level first: a full caster (wizard 5), a half caster
+    // (2014 paladin 5) and a third caster (Eldritch Knight 7)
+    [Theory]
+    [InlineData(5, new[] { 4, 3, 2 })]
+    [InlineData(5, new[] { 4, 2 })]
+    [InlineData(7, new[] { 4, 2 })]
+    public void Calculate_ACasterWithSpellSlots_ReturnsARowPerSpellLevel(int level, int[] slots)
+    {
+        // Arrange
+        var input = Input(level: level, spellSlots: new SpellSlots(slots, PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(slots.Select((count, index) => new SpellSlotStat(SpellLevel: index + 1, Slots: count)));
+        stats.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void Calculate_ASpellLevelWithNoSlots_IsLeftOut()
+    {
+        // Arrange - a table's column the character has not reached yet
+        var input = Input(spellSlots: new SpellSlots([2, 0, 0], PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 2));
+    }
+
+    [Fact]
+    public void Calculate_AWarlock_ReturnsPactMagicApartFromSpellSlots()
+    {
+        // Arrange - a level 11 warlock has three Pact Magic slots, all of 5th level
+        var input = Input(level: 11, spellSlots: new SpellSlots([], new PactMagicSlots(Slots: 3, SlotLevel: 5)));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.PactMagic.Should().Be(new PactMagicStat(SlotLevel: 5, Slots: 3));
+        stats.SpellSlots.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void Calculate_ANonCaster_HasNoSpellSlots()
+    {
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(Input(spellSlots: SpellSlots.None));
+
+        // Assert
+        stats.SpellSlots.Should().BeEmpty();
+        stats.PactMagic.Should().BeNull();
+    }
+
     private static Dictionary<string, int> Scores(
         int strength = 15,
         int dexterity = 12,
@@ -376,7 +433,8 @@ public class CharacterStatsCalculatorTests
         string? subraceId = null,
         string? subclassId = null,
         string[]? feats = null,
-        UnarmoredArmorClass[]? unarmoredArmorClasses = null) =>
+        UnarmoredArmorClass[]? unarmoredArmorClasses = null,
+        SpellSlots? spellSlots = null) =>
         new(level, scores ?? Scores(), proficiencies ?? [], hitDie, savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? [],
-            unarmoredArmorClasses ?? []);
+            unarmoredArmorClasses ?? [], spellSlots ?? SpellSlots.None);
 }

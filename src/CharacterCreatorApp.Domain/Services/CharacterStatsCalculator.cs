@@ -9,6 +9,7 @@ namespace CharacterCreatorApp.Domain.Services;
 /// Works out the parts of a character sheet that follow from the character's own numbers.
 /// Armour and shields are not modelled yet, so armour class is the unarmoured one: 10 + DEX, or
 /// what the class or subclass gives instead (a barbarian's Unarmored Defense) when that is higher.
+/// Spell slots come from the class's or subclass's spell table, a warlock's Pact Magic apart.
 /// </summary>
 public static class CharacterStatsCalculator
 {
@@ -66,8 +67,20 @@ public static class CharacterStatsCalculator
             PassivePerception: 10 + perception.Modifier,
             Abilities: abilities,
             SavingThrows: savingThrows,
-            Skills: skills);
+            Skills: skills,
+            SpellSlots: GetSpellSlots(input.SpellSlots),
+            PactMagic: GetPactMagic(input.SpellSlots));
     }
+
+    private static PactMagicStat? GetPactMagic(SpellSlots spellSlots) =>
+        spellSlots.PactMagic is { Slots: > 0 } pactMagic ? new PactMagicStat(pactMagic.SlotLevel, pactMagic.Slots) : null;
+
+    /// <summary>A row per spell level the character has slots of; a table's empty columns are left out.</summary>
+    private static List<SpellSlotStat> GetSpellSlots(SpellSlots spellSlots) =>
+        spellSlots.PerSpellLevel
+            .Select((slots, index) => new SpellSlotStat(SpellLevel: index + 1, Slots: slots))
+            .Where(s => s.Slots > 0)
+            .ToList();
 
     /// <summary>+2 at levels 1-4, rising by one every four levels to +6 at level 17.</summary>
     public static int GetProficiencyBonus(int level) => 2 + ((Math.Clamp(level, 1, 20) - 1) / 4);

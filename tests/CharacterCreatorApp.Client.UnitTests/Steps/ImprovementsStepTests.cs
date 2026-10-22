@@ -15,8 +15,8 @@ namespace CharacterCreatorApp.Client.UnitTests.Steps;
 
 public class ImprovementsStepTests : WizardStepTestBase
 {
-    private const string ImprovementsRoute = "PUT /api/character-drafts/0b6f3a52-7d2e-4c1a-9a51-3f0c2d7e8b14/ability-score-improvements";
-    private const string StylesRoute = "PUT /api/character-drafts/0b6f3a52-7d2e-4c1a-9a51-3f0c2d7e8b14/fighting-styles";
+    private static readonly string ImprovementsRoute = SaveRoute("ability-score-improvements");
+    private static readonly string StylesRoute = SaveRoute("fighting-styles");
 
     private static readonly ClassApiResponse Fighter = Class("fighter-phb", "Fighter", 4, 6, 8, 12, 14, 16, 19);
     private static readonly FeatApiResponse Alert = Feat("alert-phb", "Alert");

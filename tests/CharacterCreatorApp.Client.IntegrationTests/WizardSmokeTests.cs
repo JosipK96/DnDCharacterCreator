@@ -45,12 +45,12 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
     }
 
     [Fact]
-    public async Task Wizard_ForA2014AndA2024Character_FinishesBothAndListsThem()
+    public async Task Wizard_ForA2014Fighter_FinishesTheCharacterAndListsIt()
     {
         // Arrange
-        await RegisterAndSignInAsync("wizard-smoke");
+        await RegisterAndSignInAsync("wizard-2014");
 
-        // Act: a 2014 half-orc fighter, then a 2024 human wizard
+        // Act: a half-orc fighter, with skills, the Soldier's tool and a Fighting Style to pick
         await StartCharacterAsync("Grom", "2014 rules");
         await PickAsync("Half-Orc");
         await NextAsync("Class");
@@ -62,7 +62,7 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await StandardArrayAsync();
         await NextAsync("Proficiencies");
         await PickFirstAsync(2);
-        await PickToolsAsync();
+        await PickToolAsync();
         await NextAsync("Improvements");
         await _page.GetByRole(AriaRole.Combobox).SelectOptionAsync(new SelectOptionValue { Label = "Defense" });
         await NextAsync("Spells");
@@ -70,6 +70,19 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await NextAsync("Review");
         await CreateAsync("Grom");
 
+        // Assert
+        await _page.GotoAsync("/characters");
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToBeVisibleAsync();
+    }
+
+    [Fact]
+    public async Task Wizard_ForA2024Wizard_FinishesTheCharacterAndListsIt()
+    {
+        // Arrange
+        await RegisterAndSignInAsync("wizard-2024");
+
+        // Act: a human wizard, with a size, a skill and an Origin feat from the species, the
+        // background's ability increases, languages, cantrips and spells to pick
         await StartCharacterAsync("Elara", "2024 rules");
         await PickAsync("Human");
         await _page.GetByRole(AriaRole.Button, new() { Name = "Medium", Exact = true }).ClickAsync();
@@ -97,7 +110,6 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
 
         // Assert
         await _page.GotoAsync("/characters");
-        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToBeVisibleAsync();
         await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Elara", Exact = true })).ToBeVisibleAsync();
     }
 
@@ -201,15 +213,10 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
     [GeneratedRegex(@"^Choose (\d+)")]
     private static partial Regex ChooseCount();
 
-    private async Task PickToolsAsync()
-    {
-        var toolChoice = _page.Locator("h4", new() { HasTextRegex = new Regex("choose \\d+ tool") });
-
-        if (await toolChoice.CountAsync() > 0)
-        {
-            await toolChoice.Locator("xpath=../..").Locator("button:not([disabled])").First.ClickAsync();
-        }
-    }
+    // The first tool of the one tool choice the step offers ("Soldier: choose 1 tool")
+    private Task PickToolAsync() =>
+        _page.Locator("h4", new() { HasTextRegex = new Regex("choose 1 tool") })
+            .Locator("xpath=../..").Locator("button:not([disabled])").First.ClickAsync();
 
     private async Task StandardArrayAsync()
     {

@@ -41,7 +41,7 @@ src/
   CharacterCreatorApp.Api              HTTP API; also serves the client
   CharacterCreatorApp.Contracts        request and response types shared with the client
   CharacterCreatorApp.Client           Blazor WebAssembly front end
-tests/                                 unit and integration test projects, one per layer
+tests/                                 unit and integration test projects: one per layer, two for the client
 tools/CharacterCreatorApp.SeedDataGenerator   turns 5etools data into the reference data JSON
 docs/conventions/                      coding, error, data and testing conventions
 configurations/Env_files/              non-secret container settings

@@ -1,4 +1,4 @@
-﻿using AngleSharp.Dom;
+using AngleSharp.Dom;
 
 using Bunit;
 
@@ -12,7 +12,7 @@ namespace CharacterCreatorApp.Client.UnitTests.Steps;
 
 public class AbilityScoresStepTests : WizardStepTestBase
 {
-    private const string SaveRoute = "PUT /api/character-drafts/0b6f3a52-7d2e-4c1a-9a51-3f0c2d7e8b14/ability-scores";
+    private static readonly string Saved = SaveRoute("ability-scores");
 
     private int _movedOn;
 
@@ -30,7 +30,7 @@ public class AbilityScoresStepTests : WizardStepTestBase
         Button(cut, "Next: Proficiencies").Click();
 
         // Assert
-        var sent = Api.BodyOf<SetAbilityScoresApiRequest>(SaveRoute);
+        var sent = Api.BodyOf<SetAbilityScoresApiRequest>(Saved);
         sent.Method.Should().Be("standard-array");
         sent.Scores.Should().Equal(new Dictionary<string, int>
         {
@@ -84,7 +84,7 @@ public class AbilityScoresStepTests : WizardStepTestBase
         Button(cut, "Next: Proficiencies").Click();
 
         // Assert
-        var sent = Api.BodyOf<SetAbilityScoresApiRequest>(SaveRoute);
+        var sent = Api.BodyOf<SetAbilityScoresApiRequest>(Saved);
         sent.Method.Should().Be("point-buy");
         sent.Scores.Should().Equal(new Dictionary<string, int>
         {
@@ -121,7 +121,7 @@ public class AbilityScoresStepTests : WizardStepTestBase
         Button(cut, "Next: Proficiencies").Click();
 
         // Assert
-        var sent = Api.BodyOf<SetAbilityScoresApiRequest>(SaveRoute);
+        var sent = Api.BodyOf<SetAbilityScoresApiRequest>(Saved);
         sent.Method.Should().Be("rolled");
         sent.Scores.Should().Equal(new Dictionary<string, int>
         {

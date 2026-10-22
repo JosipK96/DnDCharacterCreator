@@ -15,7 +15,7 @@ namespace CharacterCreatorApp.Client.UnitTests.Steps;
 
 public class SpellsStepTests : WizardStepTestBase
 {
-    private const string SaveRoute = "PUT /api/character-drafts/0b6f3a52-7d2e-4c1a-9a51-3f0c2d7e8b14/spells";
+    private static readonly string Saved = SaveRoute("spells");
 
     private static readonly List<SpellApiResponse> WizardSpells =
     [
@@ -77,7 +77,7 @@ public class SpellsStepTests : WizardStepTestBase
         Button(cut, "Next: Review").Click();
 
         // Assert
-        Api.BodyOf<ChooseSpellsApiRequest>(SaveRoute).SpellIds.Should().Equal("mage-hand-phb", "shield-phb", "sleep-phb");
+        Api.BodyOf<ChooseSpellsApiRequest>(Saved).SpellIds.Should().Equal("mage-hand-phb", "shield-phb", "sleep-phb");
         _movedOn.Should().Be(1);
     }
 
@@ -126,7 +126,7 @@ public class SpellsStepTests : WizardStepTestBase
         Button(cut, "Next: Review").Click();
 
         // Assert
-        Api.Requests.Should().NotContain(SaveRoute);
+        Api.Requests.Should().NotContain(Saved);
         _movedOn.Should().Be(1);
     }
 

@@ -13,8 +13,8 @@ namespace CharacterCreatorApp.Client.UnitTests.Steps;
 
 public class NameAndLevelStepTests : WizardStepTestBase
 {
-    private const string NameRoute = "PUT /api/character-drafts/0b6f3a52-7d2e-4c1a-9a51-3f0c2d7e8b14/name-and-level";
-    private const string BooksRoute = "PUT /api/character-drafts/0b6f3a52-7d2e-4c1a-9a51-3f0c2d7e8b14/books";
+    private static readonly string NameRoute = SaveRoute("name-and-level");
+    private static readonly string BooksRoute = SaveRoute("books");
 
     private static readonly List<BookApiResponse> Books2024 =
         [new("XPHB", "Player's Handbook (2024)", "2024", true), new("EFA", "Eberron: Forge of the Artificer", "2024", false)];

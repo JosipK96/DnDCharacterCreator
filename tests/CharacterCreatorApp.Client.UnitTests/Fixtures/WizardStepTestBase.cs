@@ -29,6 +29,9 @@ public abstract class WizardStepTestBase : BunitContext
     protected static string DraftPath(string? step = null) =>
         step is null ? $"/api/character-drafts/{DraftId}" : $"/api/character-drafts/{DraftId}/{step}";
 
+    /// <summary>A step's save as <see cref="FakeApi.Requests"/> lists it: "PUT /api/character-drafts/{id}/{step}".</summary>
+    protected static string SaveRoute(string step) => $"PUT {DraftPath(step)}";
+
     /// <summary>The first button whose text holds the given text.</summary>
     protected static IElement Button<TComponent>(IRenderedComponent<TComponent> cut, string text)
         where TComponent : IComponent =>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Playwright;
 
 using Testcontainers.PostgreSql;
@@ -97,5 +98,8 @@ public sealed class WizardHost : WebApplicationFactory<Program>, IAsyncLifetime
         // The client's files are served from where the build left them, which only Development
         // turns on by itself; a published app has them in wwwroot instead
         builder.UseStaticWebAssets();
+
+        // Every SQL command at Information buries a failed test's message in the output
+        builder.ConfigureLogging(logging => logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning));
     }
 }

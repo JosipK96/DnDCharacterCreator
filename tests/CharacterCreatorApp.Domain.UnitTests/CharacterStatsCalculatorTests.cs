@@ -349,22 +349,45 @@ public class CharacterStatsCalculatorTests
         charisma.Modifier.Should().Be(0);
     }
 
-    // The slots are the books' tables, 1st level first: a full caster (wizard 5), a half caster
-    // (2014 paladin 5) and a third caster (Eldritch Knight 7)
-    [Theory]
-    [InlineData(5, new[] { 4, 3, 2 })]
-    [InlineData(5, new[] { 4, 2 })]
-    [InlineData(7, new[] { 4, 2 })]
-    public void Calculate_ACasterWithSpellSlots_ReturnsARowPerSpellLevel(int level, int[] slots)
+    [Fact]
+    public void Calculate_AFullCaster_ReturnsARowPerSpellLevel()
     {
-        // Arrange
-        var input = Input(level: level, spellSlots: new SpellSlots(slots, PactMagic: null));
+        // Arrange - a level 5 wizard: four 1st, three 2nd and two 3rd-level slots
+        var input = Input(level: 5, spellSlots: new SpellSlots([4, 3, 2], PactMagic: null));
 
         // Act
         var stats = CharacterStatsCalculator.Calculate(input);
 
         // Assert
-        stats.SpellSlots.Should().Equal(slots.Select((count, index) => new SpellSlotStat(SpellLevel: index + 1, Slots: count)));
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 4), new SpellSlotStat(2, 3), new SpellSlotStat(3, 2));
+        stats.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void Calculate_AHalfCaster_ReturnsARowPerSpellLevel()
+    {
+        // Arrange - a level 5 paladin (2014): four 1st and two 2nd-level slots
+        var input = Input(level: 5, spellSlots: new SpellSlots([4, 2], PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 4), new SpellSlotStat(2, 2));
+        stats.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void Calculate_AThirdCaster_ReturnsARowPerSpellLevel()
+    {
+        // Arrange - a level 13 Eldritch Knight, whose slots come from its subclass's table
+        var input = Input(level: 13, spellSlots: new SpellSlots([4, 3, 2], PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 4), new SpellSlotStat(2, 3), new SpellSlotStat(3, 2));
         stats.PactMagic.Should().BeNull();
     }
 

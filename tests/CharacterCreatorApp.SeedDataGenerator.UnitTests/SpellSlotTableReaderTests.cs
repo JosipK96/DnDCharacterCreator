@@ -87,6 +87,21 @@ public class SpellSlotTableReaderTests
     }
 
     [Fact]
+    public void Read_TwoGroupsOfSpellSlots_Throws()
+    {
+        // Arrange
+        var tableGroups = JsonNode.Parse("""
+            [{ "rowsSpellProgression": [[2]] }, { "rowsSpellProgression": [[3]] }]
+            """);
+
+        // Act
+        var read = () => SpellSlotTableReader.Read(tableGroups);
+
+        // Assert
+        read.Should().Throw<InvalidOperationException>().WithMessage("*more than one group*");
+    }
+
+    [Fact]
     public void Read_ASlotLevelWithoutASlotCount_Throws()
     {
         // Arrange

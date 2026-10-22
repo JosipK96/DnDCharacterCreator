@@ -19,9 +19,17 @@ internal static partial class SpellSlotTableReader
         var pactMagicSlots = new int[21];
         var slotLevels = new int[21];
 
+        var slotTables = 0;
+
         foreach (var group in tableGroups as JsonArray ?? [])
         {
             var slotRows = group.Arr("rowsSpellProgression");
+
+            // Two slot tables would need merging, and no class has one; stop rather than guess
+            if (slotRows.Count > 0 && ++slotTables > 1)
+            {
+                throw new InvalidOperationException("A spell table with more than one group of spell slots.");
+            }
 
             for (var i = 0; i < slotRows.Count && i < 20; i++)
             {

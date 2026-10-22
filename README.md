@@ -126,6 +126,37 @@ else; the integration test projects start PostgreSQL through Testcontainers, so 
 running Docker daemon. CI runs all of them on every pull request, with the build's warnings
 treated as errors, a vulnerable-package check, and a build of the Docker image.
 
+The wizard has two test projects of its own:
+
+- `tests/CharacterCreatorApp.Client.UnitTests`: bUnit tests of the steps with rules of their own
+  (point buy, the dice roll, improvements and Fighting Styles, spell counts, the books). They
+  render the components in memory over a fake API, so they need neither Docker nor a browser.
+
+  ```bash
+  dotnet test --project tests/CharacterCreatorApp.Client.UnitTests
+  ```
+
+- `tests/CharacterCreatorApp.Client.IntegrationTests`: a Playwright smoke test that registers
+  with an invite code and builds a 2014 and a 2024 character through the real wizard, in a
+  headless Chromium, against the Api on a local port and a Testcontainers PostgreSQL. It needs
+  Docker. The first run downloads Chromium (about 150 MB, into the user's Playwright cache);
+  to do that up front, build the project and run its install script (with Windows PowerShell
+  instead of PowerShell 7, `powershell -ExecutionPolicy Bypass -File` in place of `pwsh`):
+
+  ```bash
+  dotnet build tests/CharacterCreatorApp.Client.IntegrationTests
+  ```
+
+  ```bash
+  pwsh tests/CharacterCreatorApp.Client.IntegrationTests/bin/Debug/net10.0/playwright.ps1 install chromium
+  ```
+
+  ```bash
+  dotnet test --project tests/CharacterCreatorApp.Client.IntegrationTests
+  ```
+
+  A failed run attaches a screenshot of where the wizard stopped to the test results.
+
 ## Deploying
 
 The image built from `src/CharacterCreatorApp.Api/Dockerfile` is the whole app. A host needs

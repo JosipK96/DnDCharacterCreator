@@ -41,6 +41,8 @@ solutions are passed with `--project`/`--solution`, and xunit's `--filter-class`
 | `CharacterCreatorApp.Application.UnitTests` | no |
 | `CharacterCreatorApp.Infrastructure.IntegrationTests` | **yes** — Testcontainers starts PostgreSQL |
 | `CharacterCreatorApp.Api.IntegrationTests` | **yes** |
+| `CharacterCreatorApp.Client.UnitTests` | no — bUnit renders the wizard's steps in memory |
+| `CharacterCreatorApp.Client.IntegrationTests` | **yes**, and Chromium, which the tests install on their first run |
 
 Which test classes cover which area, and which of them need Docker, is in `tests/CLAUDE.md`.
 

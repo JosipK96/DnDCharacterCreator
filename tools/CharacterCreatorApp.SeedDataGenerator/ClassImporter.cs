@@ -284,13 +284,14 @@ internal sealed partial class ClassImporter
     }
 
     /// <summary>
-    /// What a caster has at each level: cantrips, the levelled spells the player picks, and the
-    /// highest spell level with a slot. A level with neither slots nor cantrips has no row, which
-    /// is how the 2014 Paladin and Ranger show they cast nothing at level 1.
+    /// What a caster has at each level: cantrips, the levelled spells the player picks, its spell
+    /// slots (or a warlock's Pact Magic), and the highest spell level with a slot. A level with
+    /// neither slots nor cantrips has no row, which is how the 2014 Paladin and Ranger show they
+    /// cast nothing at level 1.
     /// </summary>
     private static List<SpellProgressionSeedRow> SpellProgression(JsonObject caster, JsonNode? tableGroups)
     {
-        var maxSpellLevels = MaxSpellLevels(tableGroups);
+        var slotRows = SpellSlotTableReader.Read(tableGroups);
         var cantrips = caster.Ints("cantripProgression");
         var known = caster.Ints("spellsKnownProgression");
         var spellbook = caster.Ints("spellsKnownProgressionFixed");
@@ -302,7 +303,9 @@ internal sealed partial class ClassImporter
         {
             var cantripsKnown = level <= cantrips.Count ? cantrips[level - 1] : 0;
 
-            if (maxSpellLevels[level] == 0 && cantripsKnown == 0)
+            var slots = slotRows[level];
+
+            if (slots.MaxSpellLevel == 0 && cantripsKnown == 0)
             {
                 continue;
             }
@@ -318,72 +321,13 @@ internal sealed partial class ClassImporter
                 Level = level,
                 CantripsKnown = cantripsKnown,
                 SpellsKnown = spellsKnown,
-                MaxSpellLevel = maxSpellLevels[level]
+                MaxSpellLevel = slots.MaxSpellLevel,
+                SpellSlots = slots.SpellSlots,
+                PactMagicSlots = slots.PactMagicSlots
             });
         }
 
         return rows;
-    }
-
-    /// <summary>
-    /// The highest spell level with a slot, per character level (index 1 to 20): from the spell
-    /// slot table, or from the Warlock's "Slot Level" column.
-    /// </summary>
-    private static int[] MaxSpellLevels(JsonNode? tableGroups)
-    {
-        var levels = new int[21];
-
-        foreach (var group in tableGroups as JsonArray ?? [])
-        {
-            var slotRows = group.Arr("rowsSpellProgression");
-
-            for (var i = 0; i < slotRows.Count && i < 20; i++)
-            {
-                var slots = slotRows[i] as JsonArray ?? [];
-
-                for (var spellLevel = slots.Count; spellLevel > 0; spellLevel--)
-                {
-                    if (slots[spellLevel - 1] is JsonValue value && value.TryGetValue<int>(out var count) && count > 0)
-                    {
-                        levels[i + 1] = Math.Max(levels[i + 1], spellLevel);
-                        break;
-                    }
-                }
-            }
-
-            var slotLevelColumn = group.Arr("colLabels")
-                .Select(l => FiveEToolsMarkup.ToPlainText(l.AsString() ?? string.Empty))
-                .ToList()
-                .IndexOf("Slot Level");
-
-            if (slotLevelColumn < 0)
-            {
-                continue;
-            }
-
-            var rows = group.Arr("rows");
-
-            for (var i = 0; i < rows.Count && i < 20; i++)
-            {
-                levels[i + 1] = Math.Max(levels[i + 1], SlotLevelIn((rows[i] as JsonArray)?.ElementAtOrDefault(slotLevelColumn)));
-            }
-        }
-
-        return levels;
-    }
-
-    // The 2014 table writes a slot level as a link, "{@filter 1st|spells|level=1|class=Warlock}";
-    // the 2024 one as the number
-    private static int SlotLevelIn(JsonNode? cell)
-    {
-        if (cell is JsonValue value && value.TryGetValue<int>(out var level))
-        {
-            return level;
-        }
-
-        return cell.AsString() is { } text && SlotLevel().Match(text) is { Success: true } match
-            ? int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture)
-            : 0;
     }
 
     /// <summary>
@@ -611,9 +555,6 @@ internal sealed partial class ClassImporter
     private static string? Level(JsonObject feature) => feature.Int("level")?.ToString(CultureInfo.InvariantCulture);
 
     private static string Key(params string?[] parts) => string.Join('|', parts.Select(p => p?.Trim() ?? string.Empty));
-
-    [GeneratedRegex(@"level=(\d)")]
-    private static partial Regex SlotLevel();
 
     [GeneratedRegex(@"class=([A-Za-z]+)")]
     private static partial Regex ClassFilter();

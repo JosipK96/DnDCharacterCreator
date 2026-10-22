@@ -275,6 +275,77 @@ public class ClassTests
         armorClasses.Should().BeEmpty();
     }
 
+    [Fact]
+    public void SpellSlotsAt_AClassWithARowAtTheLevel_ReturnsItsSlots()
+    {
+        // Arrange - a level 5 wizard
+        var wizard = Class("wizard", new ClassSpellProgression
+        {
+            ClassId = "wizard", CharacterLevel = 5, CantripsKnown = 4, SpellsKnown = 14, MaxSpellLevel = 3, SpellSlots = [4, 3, 2]
+        });
+
+        // Act
+        var slots = wizard.SpellSlotsAt(5, subclass: null);
+
+        // Assert
+        slots.PerSpellLevel.Should().Equal(4, 3, 2);
+        slots.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void SpellSlotsAt_AWarlock_ReturnsItsPactMagicAtItsHighestSpellLevel()
+    {
+        // Arrange - a level 11 warlock: three slots of 5th level
+        var warlock = Class("warlock", new ClassSpellProgression
+        {
+            ClassId = "warlock", CharacterLevel = 11, CantripsKnown = 4, SpellsKnown = 11, MaxSpellLevel = 5, PactMagicSlots = 3
+        });
+
+        // Act
+        var slots = warlock.SpellSlotsAt(11, subclass: null);
+
+        // Assert
+        slots.PerSpellLevel.Should().BeEmpty();
+        slots.PactMagic.Should().Be(new PactMagicSlots(Slots: 3, SlotLevel: 5));
+    }
+
+    [Fact]
+    public void SpellSlotsAt_AClassWithoutATable_ReturnsTheSubclassSlots()
+    {
+        // Arrange - a level 7 Eldritch Knight, whose fighter casts nothing
+        var eldritchKnight = new Subclass
+        {
+            Id = "eldritch-knight",
+            Name = "Eldritch Knight",
+            ClassId = "fighter",
+            SpellProgression =
+            [
+                new SubclassSpellProgression
+                {
+                    SubclassId = "eldritch-knight", CharacterLevel = 7, CantripsKnown = 2, SpellsKnown = 5, MaxSpellLevel = 2,
+                    SpellSlots = [4, 2], SpellcastingAbility = "Intelligence"
+                }
+            ]
+        };
+
+        // Act
+        var slots = Class("fighter").SpellSlotsAt(7, eldritchKnight);
+
+        // Assert
+        slots.PerSpellLevel.Should().Equal(4, 2);
+        slots.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void SpellSlotsAt_ALevelWithoutARow_ReturnsNone()
+    {
+        // Act - a fighter before its subclass, or a 2014 paladin at level 1
+        var slots = Class("fighter").SpellSlotsAt(1, subclass: null);
+
+        // Assert
+        slots.Should().Be(SpellSlots.None);
+    }
+
     private static readonly Dictionary<string, int> NoScores = [];
 
     private static Dictionary<string, int> Scores(string abilityId, int score) => new() { [abilityId] = score };

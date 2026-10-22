@@ -1716,8 +1716,65 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         return draftId;
     }
 
+    [Fact]
+    public async Task CompleteWorkflow_With2014Cleric_ShowsItsSpellSlotsOnThePreviewAndTheSheet()
+    {
+        // Arrange - a level 1 Life cleric
+        await SignInAsync();
+        var draftId = await CreateHillDwarfLifeClericAsync();
+        await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(
+            ["guidance", "sacred_flame", "thaumaturgy", "guiding_bolt", "healing_word", "shield_of_faith", "sanctuary"]));
+
+        // Act
+        var (preview, sheet) = await PreviewAndFinalizeStatsAsync(draftId);
+
+        // Assert - two 1st-level slots, and no Pact Magic
+        preview.SpellSlots.Should().Equal(new SpellSlotStatApiResponse(SpellLevel: 1, Slots: 2));
+        preview.PactMagic.Should().BeNull();
+        sheet.SpellSlots.Should().Equal(preview.SpellSlots);
+        sheet.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task CompleteWorkflow_With2014Warlock_ShowsPactMagicApartOnThePreviewAndTheSheet()
+    {
+        // Arrange - a level 1 hill dwarf Fiend warlock Acolyte
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Vex", Level = 1, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "warlock", SubclassId = "fiend" });
+        await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "acolyte" });
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["celestial-phb", "elvish-phb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["smith_tools"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 8, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 10, ["WIS"] = 12, ["CHA"] = 15 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["arcana", "deception"]));
+        await PutStepAsync(draftId, "spells", new ChooseSpellsApiRequest(["eldritch_blast", "minor_illusion", "hex", "armor_of_agathys"]));
+
+        // Act
+        var (preview, sheet) = await PreviewAndFinalizeStatsAsync(draftId);
+
+        // Assert - one Pact Magic slot of 1st level, and no other slots
+        preview.PactMagic.Should().Be(new PactMagicStatApiResponse(SlotLevel: 1, Slots: 1));
+        preview.SpellSlots.Should().BeEmpty();
+        sheet.PactMagic.Should().Be(preview.PactMagic);
+        sheet.SpellSlots.Should().BeEmpty();
+    }
+
     // The armour class the review step shows, then the one the saved sheet shows
     private async Task<(int Preview, int Sheet)> PreviewAndFinalizeArmorClassAsync(Guid draftId)
+    {
+        var (preview, sheet) = await PreviewAndFinalizeStatsAsync(draftId);
+
+        return (preview.ArmorClass, sheet.ArmorClass);
+    }
+
+    // The stats the review step shows, then the ones the saved sheet shows
+    private async Task<(CharacterStatsApiResponse Preview, CharacterStatsApiResponse Sheet)> PreviewAndFinalizeStatsAsync(Guid draftId)
     {
         var cancellationToken = TestContext.Current.CancellationToken;
         var preview = await _client.GetFromJsonAsync<CharacterPreviewApiResponse>($"/api/character-drafts/{draftId}/preview", cancellationToken);
@@ -1728,7 +1785,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         var characterId = await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken);
         var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
 
-        return (preview.Stats!.ArmorClass, character!.Stats!.ArmorClass);
+        return (preview.Stats!, character!.Stats!);
     }
 
     // A level 1 hill dwarf bard with the Criminal background: a tool pick from each

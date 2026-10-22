@@ -1,0 +1,44 @@
+@* The spell slots a character's stats give, for the sheet and the review step alike: a row per
+   spell level, and a warlock's Pact Magic apart, since those come back on a short rest. The
+   page shows it only for a character with slots of either kind. *@
+
+<div class="bg-gray-700 rounded-lg p-4 space-y-3">
+    @if (Stats.SpellSlots.Count > 0)
+    {
+        <div>
+            <p class="text-gray-400 text-sm mb-2">Spell slots, back on a long rest</p>
+            <div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-2">
+                @foreach (var slot in Stats.SpellSlots)
+                {
+                    <div class="bg-gray-600 rounded px-3 py-2 text-center">
+                        <div class="text-gray-400 text-xs">@Ordinal(slot.SpellLevel)</div>
+                        <div class="text-white font-bold text-lg">@slot.Slots</div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    @if (Stats.PactMagic is { } pactMagic)
+    {
+        <div>
+            <p class="text-gray-400 text-sm mb-2">Pact Magic, back on a short rest</p>
+            <div class="bg-gray-600 rounded px-3 py-2 inline-block">
+                <span class="text-white font-bold text-lg">@pactMagic.Slots</span>
+                <span class="text-gray-300">@(pactMagic.Slots == 1 ? "slot" : "slots") of @Ordinal(pactMagic.SlotLevel) level</span>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public CharacterStatsApiResponse Stats { get; set; } = null!;
+
+    private static string Ordinal(int level) => level switch
+    {
+        1 => "1st",
+        2 => "2nd",
+        3 => "3rd",
+        _ => $"{level}th"
+    };
+}

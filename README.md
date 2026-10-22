@@ -18,8 +18,8 @@ the 2014 or the 2024 rules, and keeping them on a character sheet.
   the race or background cannot be picked again, and changing an earlier step clears the
   choices that depended on it. The review step and saving use the same checks, so the preview
   never promises a character that saving would refuse.
-- **A computed sheet.** Hit points, armour class, saving throws, skills, features and spells
-  are worked out from the choices, not stored, so they stay right when the rules data changes.
+- **A computed sheet.** Hit points, armour class, saving throws, skills, features, spells and
+  spell slots (a warlock's Pact Magic apart) are worked out from the choices, not stored, so they stay right when the rules data changes.
 
 ## Built with
 

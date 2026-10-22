@@ -7,6 +7,7 @@ using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.DomainModels.Races;
+using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;
@@ -181,6 +182,34 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
         // Assert
         result.Value.BlockingIssue.Should().BeNull();
         result.Value.Spells.Select(s => s.Id).Should().Equal(spellIds);
+    }
+
+    [Fact]
+    public async Task Handle_ForACaster_ListsTheSpellSlotsOfItsLevel()
+    {
+        // Arrange - a level 1 cleric, whose table row gives two 1st-level slots
+        ArrangePreparedCasterDraft("cleric", "Wisdom", 1, 14, ["level_1_spell_1", "level_1_spell_2", "level_1_spell_3"]);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.Stats.SpellSlots.Should().Equal(new SpellSlotStat(SpellLevel: 1, Slots: 2));
+        result.Value.Stats.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task Handle_ForANonCaster_ListsNoSpellSlots()
+    {
+        // Arrange - a champion fighter
+        ArrangeDraft(level: 5);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.Stats.SpellSlots.Should().BeEmpty();
+        result.Value.Stats.PactMagic.Should().BeNull();
     }
 
     [Fact]
@@ -406,7 +435,10 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
                 IsPreparedCaster = true,
                 PreparedSpellsLevelDivisor = classId is "paladin" or "artificer" ? 2 : 1,
             },
-            SpellProgression = [new ClassSpellProgression { ClassId = classId, CharacterLevel = level, CantripsKnown = 0, SpellsKnown = 0, MaxSpellLevel = 1 }],
+            SpellProgression =
+            [
+                new ClassSpellProgression { ClassId = classId, CharacterLevel = level, CantripsKnown = 0, SpellsKnown = 0, MaxSpellLevel = 1, SpellSlots = [2] }
+            ],
         });
 
         var spells = Enumerable.Range(1, 6).Select(i => PreviewSpell($"level_1_spell_{i}")).ToList();

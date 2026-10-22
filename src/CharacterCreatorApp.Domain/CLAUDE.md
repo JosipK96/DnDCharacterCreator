@@ -10,7 +10,7 @@ Ability keys, language ids and proficiency ids are explained at more length in
 - `Character` and `CharacterDraft` derive from `Entity<TId>` and expose intent-named methods
   (`ApplyAbilityScoreImprovements`, `SetRaceSkills`), never public setters on the interesting
   state.
-- Derived sheet numbers (hit points, armour class, saves, skills) come from
+- Derived sheet numbers (hit points, armour class, saves, skills, spell slots) come from
   `Domain/Services/CharacterStatsCalculator`. Don't recompute a modifier in a Razor page. A
   character's features aren't stored either: `CharacterFeatures` works them out from class,
   subclass, level and background, so regenerated seed data never leaves a sheet with dead ids.
@@ -63,6 +63,11 @@ Ability keys, language ids and proficiency ids are explained at more length in
   so the count follows the character's final scores: `SpellChoice.AllowanceForAsync` builds the
   character for the spells step and `GET spell-allowance`, and finalize passes the built one's
   scores to `DraftCompletenessChecker`. The wizard's table gives its spellbook, which it keeps.
+- The spell table also gives the slots per spell level (`ClassSpellProgression.SpellSlots`, the
+  subclass's for an Eldritch Knight or Arcane Trickster) and a warlock's Pact Magic apart
+  (`PactMagicSlots`, all of the row's `MaxSpellLevel`, back on a short rest). Both handlers
+  pass `Class.SpellSlotsAt` through `CharacterStatsInput`, and the calculator turns it into a
+  row per spell level and `CharacterStats.PactMagic`; never pick a caster type by class id.
 - A class's rules (`Class.SubclassLevel`, `Class.AsiLevels`, `Class.SavingThrowAbilityIds`,
   `Class.UnarmoredArmorClass`, the spell table) and a race's (`Race.SkillChoiceCount` and its options, `Race.
   LanguageChoiceCount`) are read from the 5etools data by the generator. Read them from the

@@ -73,7 +73,8 @@ public class PreviewCharacterQueryHandler(
             SubraceId: character.SubraceId,
             SubclassId: character.SubclassId,
             FeatIds: character.FeatIds,
-            UnarmoredArmorClasses: sources.Class.UnarmoredArmorClassesWith(sources.Subclass)));
+            UnarmoredArmorClasses: sources.Class.UnarmoredArmorClassesWith(sources.Subclass),
+            SpellSlots: sources.Class.SpellSlotsAt(character.Level, sources.Subclass)));
 
         var spells = character.SpellIds.Count > 0
             ? await _spellRepository.GetByIdsAsync(character.SpellIds, cancellationToken)

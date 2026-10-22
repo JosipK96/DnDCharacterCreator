@@ -349,6 +349,86 @@ public class CharacterStatsCalculatorTests
         charisma.Modifier.Should().Be(0);
     }
 
+    [Fact]
+    public void Calculate_AFullCaster_ReturnsARowPerSpellLevel()
+    {
+        // Arrange - a level 5 wizard: four 1st, three 2nd and two 3rd-level slots
+        var input = Input(level: 5, spellSlots: new SpellSlots([4, 3, 2], PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 4), new SpellSlotStat(2, 3), new SpellSlotStat(3, 2));
+        stats.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void Calculate_AHalfCaster_ReturnsARowPerSpellLevel()
+    {
+        // Arrange - a level 5 paladin (2014): four 1st and two 2nd-level slots
+        var input = Input(level: 5, spellSlots: new SpellSlots([4, 2], PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 4), new SpellSlotStat(2, 2));
+        stats.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void Calculate_AThirdCaster_ReturnsARowPerSpellLevel()
+    {
+        // Arrange - a level 13 Eldritch Knight, whose slots come from its subclass's table
+        var input = Input(level: 13, spellSlots: new SpellSlots([4, 3, 2], PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 4), new SpellSlotStat(2, 3), new SpellSlotStat(3, 2));
+        stats.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void Calculate_ASpellLevelWithNoSlots_IsLeftOut()
+    {
+        // Arrange - a table's column the character has not reached yet
+        var input = Input(spellSlots: new SpellSlots([2, 0, 0], PactMagic: null));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.SpellSlots.Should().Equal(new SpellSlotStat(1, 2));
+    }
+
+    [Fact]
+    public void Calculate_AWarlock_ReturnsPactMagicApartFromSpellSlots()
+    {
+        // Arrange - a level 11 warlock has three Pact Magic slots, all of 5th level
+        var input = Input(level: 11, spellSlots: new SpellSlots([], new PactMagicSlots(Slots: 3, SlotLevel: 5)));
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.PactMagic.Should().Be(new PactMagicStat(SlotLevel: 5, Slots: 3));
+        stats.SpellSlots.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void Calculate_ANonCaster_HasNoSpellSlots()
+    {
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(Input(spellSlots: SpellSlots.None));
+
+        // Assert
+        stats.SpellSlots.Should().BeEmpty();
+        stats.PactMagic.Should().BeNull();
+    }
+
     private static Dictionary<string, int> Scores(
         int strength = 15,
         int dexterity = 12,
@@ -376,7 +456,8 @@ public class CharacterStatsCalculatorTests
         string? subraceId = null,
         string? subclassId = null,
         string[]? feats = null,
-        UnarmoredArmorClass[]? unarmoredArmorClasses = null) =>
+        UnarmoredArmorClass[]? unarmoredArmorClasses = null,
+        SpellSlots? spellSlots = null) =>
         new(level, scores ?? Scores(), proficiencies ?? [], hitDie, savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? [],
-            unarmoredArmorClasses ?? []);
+            unarmoredArmorClasses ?? [], spellSlots ?? SpellSlots.None);
 }

@@ -195,7 +195,7 @@
         </button>
         <button @onclick="HandleNext" disabled="@(!CanProceed())"
                 class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            @(IsSaving ? "Creating..." : "Create Character")
+            @(IsSaving ? (IsEdit ? "Saving..." : "Creating...") : IsEdit ? "Save Changes" : "Create Character")
         </button>
     </div>
 </div>
@@ -203,6 +203,9 @@
 @code {
     [Parameter] public EventCallback OnNext { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
+
+    /// <summary>An edit of a saved character, which saving replaces rather than adds.</summary>
+    [Parameter] public bool IsEdit { get; set; }
 
     private CharacterPreviewApiResponse? preview;
 

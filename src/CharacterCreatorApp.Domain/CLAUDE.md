@@ -14,6 +14,14 @@ Ability keys, language ids and proficiency ids are explained at more length in
   `Domain/Services/CharacterStatsCalculator`. Don't recompute a modifier in a Razor page. A
   character's features aren't stored either: `CharacterFeatures` works them out from class,
   subclass, level and background, so regenerated seed data never leaves a sheet with dead ids.
+- A `Character` keeps most picks only merged (`ProficiencyIds`, `FeatIds`, the final scores), so
+  the completed draft that made it stays as its build (`CharacterDraft.CharacterId`, set by
+  `MarkAsCompleted`), and is never changed. An edit is a copy of it (`CharacterDraft.StartEdit`);
+  for an older character without one, `StartEdit` keeps what the character stores and lists the
+  rest in `ChoicesNeeded` (`DraftChoice`, each gone once its step is saved). Finalizing an edit
+  rebuilds the character and `Character.ReplaceWith` takes it all but the id, owner and
+  `CreatedAt`. A level up (#28) starts from the same copy; `SetNameAndLevel` clears the picks a
+  level changes, so it needs a method of its own.
 
 ## D&D rules
 

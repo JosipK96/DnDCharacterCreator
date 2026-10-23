@@ -25,17 +25,17 @@ migration tests live in an integration project but don't.
 
 | Area | Test classes | Project | Docker |
 |---|---|---|---|
-| Domain rules: drafts, ability scores and increases, feats, races, classes, tools | `CharacterDraftTests`, `CharacterDraftBooksTests`, `CharacterDraftFeatAndRaceChoicesTests`, `AbilityScoreTests`, `AbilityScoreMethodTests`, `AbilityIncreaseChoiceTests`, `FeatAbilityIncreaseTests`, `FeatChoiceTests`, `FeatPrerequisitesTests`, `RaceTests`, `ClassTests`, `BackgroundTests`, `ToolPicksTests` | Domain.UnitTests | no |
+| Domain rules: drafts and their edits, ability scores and increases, feats, races, classes, tools | `CharacterDraftTests`, `CharacterDraftEditTests`, `CharacterDraftBooksTests`, `CharacterDraftFeatAndRaceChoicesTests`, `AbilityScoreTests`, `AbilityScoreMethodTests`, `AbilityIncreaseChoiceTests`, `FeatAbilityIncreaseTests`, `FeatChoiceTests`, `FeatPrerequisitesTests`, `RaceTests`, `ClassTests`, `BackgroundTests`, `ToolPicksTests` | Domain.UnitTests | no |
 | Sheet numbers and features | `CharacterStatsCalculatorTests`, `CharacterFeaturesTests`, `CharacterTests` | Domain.UnitTests | no |
 | Backticked names in every CLAUDE.md still declared in the code | `ClaudeMdReferencesTests` (allowlist inside, each with a reason) | Domain.UnitTests | no |
 | Wizard steps (one handler each) | `Set*CommandHandlerTests`, `Choose*CommandHandlerTests`, `BonusSpellsHandlersTests`, `ToolChoicesHandlersTests`, `GetSpellAllowanceQueryHandlerTests` | Application.UnitTests | no |
-| Finalize and preview | `FinalizeCharacterCommandHandlerTests`, `FinalizeFeatAndRaceChoicesTests`, `PreviewCharacterQueryHandlerTests`, `BonusSpellsTests`, `CharacterFeatEntriesTests` | Application.UnitTests | no |
+| Finalize (an edit too), preview, and opening a character for editing | `FinalizeCharacterCommandHandlerTests`, `StartCharacterEditCommandHandlerTests`, `FinalizeFeatAndRaceChoicesTests`, `PreviewCharacterQueryHandlerTests`, `BonusSpellsTests`, `CharacterFeatEntriesTests` | Application.UnitTests | no |
 | Validators and pipeline | `*ValidatorTests`, `ValidationBehaviourTests` | Application.UnitTests | no |
 | Seed JSON content (ids, SRD text, rows per class and race) | `SeedDataIntegrityTests`, `ClassSeedDataTests`, `RaceSeedDataTests`, `BackgroundSeedDataTests`, `FeatSeedDataTests`, `SpellSeedDataTests` | Infrastructure.IntegrationTests | no |
 | Migrations (model snapshot in sync) | `MigrationsTests` | Infrastructure.IntegrationTests | no |
 | Seeding into the database | `SeedServiceTests` | Infrastructure.IntegrationTests | **yes** |
-| Repositories | `CharacterDraftRepositoryTests` | Infrastructure.IntegrationTests | **yes** |
+| Repositories, and the EditCharacter migration's backfill | `CharacterDraftRepositoryTests`, `EditCharacterMigrationTests` | Infrastructure.IntegrationTests | **yes** |
 | HTTP endpoints | `CharacterDraftsControllerTests`, `CharactersControllerTests`, `LookupControllersTests`, `UsersControllerTests` | Api.IntegrationTests | **yes** |
-| Wizard steps in the client: point buy and the dice roll, improvements and Fighting Styles, spell counts, books | `PointBuyComponentTests`, `AbilityScoresStepTests`, `ImprovementsStepTests`, `SpellsStepTests`, `NameAndLevelStepTests` | Client.UnitTests | no |
-| The wizard in a browser: register, a 2014 and a 2024 character, a refused pick | `WizardSmokeTests` (Playwright, Chromium) | Client.IntegrationTests | **yes** |
+| Wizard steps in the client: point buy and the dice roll, improvements and Fighting Styles, spell counts, books, steps filled in from the draft, the marks of an edit | `PointBuyComponentTests`, `AbilityScoresStepTests`, `ImprovementsStepTests`, `SpellsStepTests`, `NameAndLevelStepTests`, `SavedChoicesStepTests`, `WizardProgressTests` | Client.UnitTests | no |
+| The wizard in a browser: register, a 2014 and a 2024 character, an edit, a refused pick | `WizardSmokeTests` (Playwright, Chromium) | Client.IntegrationTests | **yes** |
 | Seed data generator (5etools parsing, SRD filter) | `FiveEToolsMarkupTests`, `SrdTextTests`, `SourceBooksTests`, `FeatPrerequisiteParserTests`, … | SeedDataGenerator.UnitTests | no |

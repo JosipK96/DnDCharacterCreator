@@ -22,6 +22,11 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   `CharacterFeatEntries` lists the feats taken, one entry per take with its spells, for the
   review step and the sheet alike. `ToolPicks`, `FeatProficiencyPicks` and `BonusSpells` list the
   picks a draft owes and check them, for their step and finalize alike.
+- Editing a saved character (`StartCharacterEditCommandHandler`) opens a copy of its build as a
+  new draft, dropping an edit left unsaved; finalize then replaces the character it names and
+  deletes the old build. `ICharacterDraftRepository.GetByIdForUpdateAsync` finds only unfinished
+  drafts, so no step, finalize or delete can touch a build; an edit is never the
+  `GetIncompleteDraft` a new character resumes.
 - Application reaches ASP.NET Core Identity through `IIdentityService`.
 
 ## Errors and validation  → docs/conventions/errors-and-validation.md

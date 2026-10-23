@@ -7,7 +7,9 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | Term | Meaning | In the code |
 |---|---|---|
 | **Draft** | A character being built. Survives across sessions; becomes a `Character` when finalized | `CharacterDraft` |
-| **Finalize** | Turning a completed draft into a character. One-way | `FinalizeCharacterCommandHandler` |
+| **Finalize** | Turning a completed draft into a character, or an edit draft into the character it edits. The draft is kept, completed | `FinalizeCharacterCommandHandler` |
+| **Build** | The completed draft a character was made or last edited from: every choice it holds now, which the character itself keeps only merged. Never changed; it goes with the character | `CharacterDraft.CharacterId`, `ICharacterDraftRepository.GetBuildAsync` |
+| **Edit** | A draft copied from a character's build (or, for an older character without one, from what it stores, its other steps marked as needing a pick). Finalizing it replaces the character in place; never the draft resumed for a new character | `CharacterDraft.StartEdit`, `CharacterDraft.ChoicesNeeded`, `DraftChoice`, `Character.ReplaceWith` |
 | **Preview** | The character a draft *would* produce, worked out without saving | `PreviewCharacterQueryHandler` |
 
 ## The rulebook

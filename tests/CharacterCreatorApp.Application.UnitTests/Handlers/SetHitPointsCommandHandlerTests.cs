@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Application.Common.Interfaces;
+using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;

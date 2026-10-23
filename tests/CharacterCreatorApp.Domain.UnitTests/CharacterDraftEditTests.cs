@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.ValueObjects;
 

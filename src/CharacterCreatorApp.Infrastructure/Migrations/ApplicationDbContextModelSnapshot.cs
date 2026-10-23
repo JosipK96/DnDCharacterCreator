@@ -143,6 +143,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<string>("HitDieResults")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.Property<string>("LanguageIds")
                         .IsRequired()
                         .HasColumnType("jsonb");
@@ -284,11 +288,19 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text[]");
 
+                    b.Property<string>("HitDieResults")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 
                     b.Property<int?>("Level")
                         .HasColumnType("integer");
+
+                    b.PrimitiveCollection<List<string>>("LevelUpChoices")
+                        .IsRequired()
+                        .HasColumnType("text[]");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)

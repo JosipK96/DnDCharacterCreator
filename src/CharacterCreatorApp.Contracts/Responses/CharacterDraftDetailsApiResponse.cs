@@ -66,6 +66,18 @@ public class CharacterDraftDetailsApiResponse
     /// <summary>The character the draft edits, or made once completed; null for a new character's draft.</summary>
     public Guid? CharacterId { get; set; }
 
-    /// <summary>The steps an edit could not fill in from the character, by DraftChoice name ("ability-scores").</summary>
+    /// <summary>
+    /// The steps still needing a pick, by DraftChoice name ("ability-scores"): what an edit could
+    /// not fill in from the character, or what a level-up has yet to pick.
+    /// </summary>
     public List<string> ChoicesNeeded { get; set; } = [];
+
+    /// <summary>
+    /// The steps a level-up asks for, by DraftChoice name ("hit-points", "subclass",
+    /// "improvements", "spells"); empty for any other draft. The wizard shows only these.
+    /// </summary>
+    public List<string> LevelUpChoices { get; set; } = [];
+
+    /// <summary>The hit die's result for each level a level-up reached, by level.</summary>
+    public Dictionary<int, int> HitDieResults { get; set; } = [];
 }

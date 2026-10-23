@@ -5,6 +5,7 @@ using CharacterCreatorApp.Application.Features.CharacterManagement.DeleteCharact
 using CharacterCreatorApp.Application.Features.CharacterManagement.EditCharacter;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacters;
+using CharacterCreatorApp.Application.Features.CharacterManagement.LevelUpCharacter;
 using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.Character;
 using CharacterCreatorApp.Contracts.Responses;
@@ -72,6 +73,24 @@ namespace CharacterCreatorApp.Api.Controllers
         public async Task<IActionResult> EditCharacter(Guid id, CancellationToken cancellationToken)
         {
             var response = await _sender.Send(new StartCharacterEditCommand(id), cancellationToken);
+
+            return OkOrProblem(response);
+        }
+
+        /// <summary>
+        /// Opens the character one level up as a draft, with every earlier pick kept; the draft's id
+        /// comes back. Its LevelUpChoices are the steps the new level asks for: its hit points, and
+        /// a subclass, an improvement or spells where the class data gives one. Finalizing it
+        /// (POST api/characters) replaces the character and keeps its id.
+        /// </summary>
+        [HttpPost("{id:guid}/level-up")]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> LevelUpCharacter(Guid id, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new StartCharacterLevelUpCommand(id), cancellationToken);
 
             return OkOrProblem(response);
         }

@@ -33,6 +33,11 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetClass
                 return ClassErrors.NotFoundById(command.ClassId);
             }
 
+            if (characterDraft.IsLevelUp && classEntity.Id != characterDraft.ClassId)
+            {
+                return CharacterDraftErrors.LevelUpKeepsClass(classEntity.Name);
+            }
+
             if (classEntity.Edition != characterDraft.Edition)
             {
                 return CharacterDraftErrors.EditionMismatch("class", classEntity.Name, classEntity.Edition, characterDraft.Edition);

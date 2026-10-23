@@ -67,6 +67,7 @@ public class PreviewCharacterQueryHandler(
             AbilityScores: character.AbilityScores,
             ProficiencyIds: character.ProficiencyIds,
             HitDie: sources.Class.HitDie,
+            HitDieResults: character.HitDieResults,
             SavingThrowAbilityIds: sources.Class.SavingThrowAbilityIds.Concat(character.FeatSavingThrowAbilityIds).Distinct().ToList(),
             Speed: sources.Race.SpeedWith(sources.Subrace),
             RaceId: character.RaceId,

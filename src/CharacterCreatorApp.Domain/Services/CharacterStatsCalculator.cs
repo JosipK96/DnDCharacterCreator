@@ -90,21 +90,35 @@ public static class CharacterStatsCalculator
         (int)Math.Floor((score - 10) / 2.0);
 
     /// <summary>
-    /// Maximum hit die at level 1, then the die's average rounded up for each level after,
-    /// with the constitution modifier added every level. A level always adds at least 1, plus
+    /// Maximum hit die at level 1, then for each level after what a level-up rolled for it, or
+    /// the die's fixed value (its average rounded up), with the constitution modifier added every
+    /// level, so a CON raised later raises them all. A level always adds at least 1, plus
     /// whatever <see cref="HitPointBonuses"/> the character's race, subrace, subclass and feats give.
     /// </summary>
     private static int GetMaxHitPoints(CharacterStatsInput input, int constitutionModifier)
     {
         var dieSize = ParseDieSize(input.HitDie);
         var clampedLevel = Math.Clamp(input.Level, 1, 20);
+        var fixedValue = (dieSize / 2) + 1;
 
         var total = Math.Max(1, dieSize + constitutionModifier);
-        var perLevelAfterFirst = Math.Max(1, (dieSize / 2) + 1 + constitutionModifier);
+
+        for (var level = 2; level <= clampedLevel; level++)
+        {
+            var dieResult = input.HitDieResults.TryGetValue(level, out var result) ? result : fixedValue;
+            total += Math.Max(1, dieResult + constitutionModifier);
+        }
+
         var bonusPerLevel = HitPointBonuses.PerLevel(input.RaceId, input.SubraceId, input.SubclassId, input.FeatIds);
 
-        return total + ((clampedLevel - 1) * perLevelAfterFirst) + (clampedLevel * bonusPerLevel);
+        return total + (clampedLevel * bonusPerLevel);
     }
+
+    /// <summary>The hit die's fixed value, which a level takes in place of a roll: a d10's is 6.</summary>
+    public static int GetHitDieFixedValue(string hitDie) => (ParseDieSize(hitDie) / 2) + 1;
+
+    /// <summary>The hit die's size: 10 for "1d10", "d10" or "10".</summary>
+    public static int GetHitDieSize(string hitDie) => ParseDieSize(hitDie);
 
     /// <summary>
     /// The best of the ways the character has to work out armour class without armour: both rule

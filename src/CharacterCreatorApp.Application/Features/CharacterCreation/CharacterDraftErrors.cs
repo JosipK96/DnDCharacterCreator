@@ -42,10 +42,25 @@ public static class CharacterDraftErrors
         public const string InvalidAbilityScoreKeys = "CharacterDraft.InvalidAbilityScoreKeys";
         public const string InvalidAbilityScoreMethod = "CharacterDraft.InvalidAbilityScoreMethod";
         public const string AbilityScoresDoNotFitMethod = "CharacterDraft.AbilityScoresDoNotFitMethod";
+        public const string InvalidHitDieResult = "CharacterDraft.InvalidHitDieResult";
     }
 
     public static Error NotFoundById(Guid draftId) =>
         Error.NotFound("CharacterDraft.NotFound", $"Character draft not found by id {draftId}");
+
+    // --- A level-up ---
+    public static Error HitPointsOnlyOnLevelUp() =>
+        Error.Validation(
+            "CharacterDraft.HitPointsOnlyOnLevelUp",
+            "Hit points are rolled or taken on a level-up; the levels a character is created with take the fixed value.");
+
+    public static Error HitDieResultOutOfRange(int result, string hitDie) =>
+        Error.Validation("CharacterDraft.HitDieResultOutOfRange", $"A {hitDie} cannot roll {result}.");
+
+    public static Error LevelUpKeepsClass(string className) =>
+        Error.Validation(
+            "CharacterDraft.LevelUpKeepsClass",
+            $"A level-up keeps the character's class: taking a level of {className} is multiclassing, which the app does not support yet.");
 
     public static Error NoIncompleteDraft() =>
         Error.NotFound("CharacterDraft.NoIncompleteDraft", "There is no unfinished character draft to resume");

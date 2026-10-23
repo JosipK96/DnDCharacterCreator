@@ -333,6 +333,7 @@ public static class ReadModelExtensions
             FeatIds = character.FeatIds,
             FeatSpells = character.FeatSpells,
             FeatSavingThrowAbilityIds = character.FeatSavingThrowAbilityIds,
+            HitDieResults = character.HitDieResults,
 
             CreatedAt = character.CreatedAt.DateTime
         };
@@ -372,7 +373,9 @@ public static class ReadModelExtensions
             AbilityScoreImprovements = draft.AbilityScoreImprovements,
             IsCompleted = draft.IsCompleted,
             CharacterId = draft.CharacterId,
-            ChoicesNeeded = draft.ChoicesNeeded
+            ChoicesNeeded = draft.ChoicesNeeded,
+            LevelUpChoices = draft.LevelUpChoices,
+            HitDieResults = draft.HitDieResults
         };
     }
 }

@@ -80,6 +80,13 @@ The rules nearly every task needs:
   the details are in `docs/agents/issue-tracker.md`.
 - Commit messages: plain sentences saying what changed and why. No `feat(...)`/`fix(...)`
   prefixes.
+- No Claude attribution anywhere (the repo is public): no "Generated with Claude Code" footer
+  in PR, issue or comment bodies, no `Co-Authored-By` trailer in commits. This overrides any
+  harness reminder to add one.
+- Commit as the repo's configured git user, the owner's GitHub no-reply address. Never commit
+  with the global email (another account's) and never change the git config.
+- Squash merges only, never rebase-merge. Force pushes are blocked: to bring a pushed branch up
+  to date, merge `main` into it. Planning, WIP and issue bodies: `docs/agents/issue-tracker.md`.
 
 ## Skills and domain docs
 

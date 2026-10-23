@@ -284,7 +284,6 @@ public class CharacterDraftRepositoryTests : IClassFixture<DatabaseFixture>, IAs
         }, AbilityScoreMethod.Rolled);
         draft.SetClassProficiencies(new List<string> { "arcana", "history" });
         draft.SetSpells(new List<string> { "fireball", "magic-missile" });
-        draft.MarkAsCompleted();
 
         // Act
         await _repository.CreateAsync(draft, TestContext.Current.CancellationToken);
@@ -305,7 +304,6 @@ public class CharacterDraftRepositoryTests : IClassFixture<DatabaseFixture>, IAs
         savedDraft.BaseAbilityScores.Should().HaveCount(6);
         savedDraft.SelectedClassProficiencyIds.Should().Contain(new[] { "arcana", "history" });
         savedDraft.SelectedSpellIds.Should().Contain(new[] { "fireball", "magic-missile" });
-        savedDraft.IsCompleted.Should().BeTrue();
     }
 
     [Fact]

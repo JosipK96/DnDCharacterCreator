@@ -2,6 +2,7 @@ using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.CharacterCreation.FinalizeCharacter;
 using CharacterCreatorApp.Application.Features.CharacterManagement.DeleteCharacter;
+using CharacterCreatorApp.Application.Features.CharacterManagement.EditCharacter;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacters;
 using CharacterCreatorApp.Contracts.Common;
@@ -57,6 +58,22 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new GetCharacterDetailsQuery(id), cancellationToken);
 
             return OkOrProblem(response, character => _mapper.Map<CharacterDetailsApiResponse>(character));
+        }
+
+        /// <summary>
+        /// Opens the character as a draft with every choice it was made with, for the wizard; the
+        /// draft's id comes back. Finalizing that draft (POST api/characters) replaces the character
+        /// and keeps its id; leaving it unsaved changes nothing. Editing again starts over.
+        /// </summary>
+        [HttpPost("{id:guid}/edit")]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> EditCharacter(Guid id, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new StartCharacterEditCommand(id), cancellationToken);
+
+            return OkOrProblem(response);
         }
 
         [HttpDelete("{id:guid}")]

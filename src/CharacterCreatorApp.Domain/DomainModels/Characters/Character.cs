@@ -100,6 +100,38 @@ public class Character : Entity<Guid>, IAuditable
     }
 
     /// <summary>
+    /// Takes everything an edit built (CharacterBuilder makes a new Character from the edit draft)
+    /// but what makes this one this character: its id, its owner and when it was made. UpdatedAt is
+    /// stamped on save.
+    /// </summary>
+    public void ReplaceWith(Character rebuilt)
+    {
+        ArgumentNullException.ThrowIfNull(rebuilt);
+
+        if (rebuilt.UserId != UserId)
+        {
+            throw new ArgumentException("A character is only rebuilt for its owner.", nameof(rebuilt));
+        }
+
+        Name = rebuilt.Name;
+        Level = rebuilt.Level;
+        Edition = rebuilt.Edition;
+        RaceId = rebuilt.RaceId;
+        SubraceId = rebuilt.SubraceId;
+        ClassId = rebuilt.ClassId;
+        SubclassId = rebuilt.SubclassId;
+        BackgroundId = rebuilt.BackgroundId;
+        AbilityScores = new Dictionary<string, int>(rebuilt.AbilityScores);
+        ProficiencyIds = [.. rebuilt.ProficiencyIds];
+        LanguageIds = [.. rebuilt.LanguageIds];
+        SpellIds = [.. rebuilt.SpellIds];
+        FeatIds = [.. rebuilt.FeatIds];
+        FeatSpells = [.. rebuilt.FeatSpells];
+        Size = rebuilt.Size;
+        FeatSavingThrowAbilityIds = [.. rebuilt.FeatSavingThrowAbilityIds];
+    }
+
+    /// <summary>
     /// Ability keys reach us in several spellings ("CON" from the draft, "con" from race
     /// seed data, "constitution" from ability score improvements). Everything is stored
     /// under the canonical id so the three sources land on the same entry.

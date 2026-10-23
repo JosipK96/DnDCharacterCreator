@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 
 namespace CharacterCreatorApp.Application.ReadModels;
 
@@ -34,6 +34,9 @@ public class CharacterDraftDetailsReadModel
     /// <summary>The feat picked for a background that lets the player choose it.</summary>
     public string? BackgroundFeatId { get; set; }
 
+    /// <summary>How the base scores were made (AbilityScoreMethod); null for a draft from before it was kept.</summary>
+    public string? BaseAbilityScoreMethod { get; set; }
+
     public Dictionary<string, int> BaseAbilityScores { get; set; } = [];
     public List<string> SelectedClassProficiencyIds { get; set; } = [];
     public List<string> SelectedRaceSkillIds { get; set; } = [];
@@ -58,4 +61,10 @@ public class CharacterDraftDetailsReadModel
     public List<FeatSpellPick> FeatSpells { get; set; } = [];
     public List<Dictionary<string, int>> AbilityScoreImprovements { get; set; } = [];
     public bool IsCompleted { get; set; }
+
+    /// <summary>The character the draft edits, or made once completed; null for a new character's draft.</summary>
+    public Guid? CharacterId { get; set; }
+
+    /// <summary>The steps an edit could not fill in from the character, by DraftChoice name ("ability-scores").</summary>
+    public List<string> ChoicesNeeded { get; set; } = [];
 }

@@ -246,6 +246,13 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("jsonb");
 
+                    b.Property<Guid?>("CharacterId")
+                        .HasColumnType("uuid");
+
+                    b.PrimitiveCollection<List<string>>("ChoicesNeeded")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.Property<string>("ClassId")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
@@ -339,6 +346,8 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
 
                     b.HasIndex("CreatedAt");
 
@@ -1491,6 +1500,14 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Navigation("Subclass");
 
                     b.Navigation("Subrace");
+                });
+
+            modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Characters.CharacterDraft", b =>
+                {
+                    b.HasOne("CharacterCreatorApp.Domain.DomainModels.Characters.Character", null)
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CharacterCreatorApp.Domain.DomainModels.Classes.Class", b =>

@@ -431,17 +431,19 @@ public class CharacterDraftTests
     }
 
     [Fact]
-    public void MarkAsCompleted_SetsIsCompletedToTrue()
+    public void MarkAsCompleted_SetsIsCompletedAndTheCharacterItMade()
     {
         // Arrange
         var draft = CreateTestDraft();
+        var characterId = Guid.NewGuid();
         draft.IsCompleted.Should().BeFalse();
 
         // Act
-        draft.MarkAsCompleted();
+        draft.MarkAsCompleted(characterId);
 
         // Assert
         draft.IsCompleted.Should().BeTrue();
+        draft.CharacterId.Should().Be(characterId);
     }
 
     [Fact]

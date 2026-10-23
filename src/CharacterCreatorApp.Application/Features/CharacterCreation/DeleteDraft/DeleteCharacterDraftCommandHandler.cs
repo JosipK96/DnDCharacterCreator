@@ -17,10 +17,11 @@ public class DeleteCharacterDraftCommandHandler(
 
     public async Task<Response> Handle(DeleteCharacterDraftCommand command, CancellationToken cancellationToken)
     {
-        var draft = await _characterDraftRepository.GetByIdAsync(command.DraftId, _userContext.UserId, cancellationToken);
+        var draft = await _characterDraftRepository.GetByIdForUpdateAsync(command.DraftId, _userContext.UserId, cancellationToken);
 
         // The repository only finds drafts that belong to this user, so someone else's draft is
-        // simply not found; that also avoids telling a caller that the id exists.
+        // simply not found; that also avoids telling a caller that the id exists. So is a completed
+        // draft: it is a character's build, which goes only with the character.
         if (draft is null)
         {
             return CharacterDraftErrors.NotFoundById(command.DraftId);

@@ -1,4 +1,4 @@
-﻿namespace CharacterCreatorApp.Contracts.Responses;
+namespace CharacterCreatorApp.Contracts.Responses;
 
 public class CharacterDraftDetailsApiResponse
 {
@@ -32,6 +32,9 @@ public class CharacterDraftDetailsApiResponse
     /// <summary>A 2024 background's ability increases by ability id ("STR"); empty otherwise.</summary>
     public Dictionary<string, int> BackgroundAbilityIncreases { get; set; } = [];
 
+    /// <summary>How the base scores were made (AbilityScoreMethod); null for a draft from before it was kept.</summary>
+    public string? BaseAbilityScoreMethod { get; set; }
+
     public Dictionary<string, int> BaseAbilityScores { get; set; } = [];
     public List<string> SelectedClassProficiencyIds { get; set; } = [];
     public List<string> SelectedRaceSkillIds { get; set; } = [];
@@ -59,4 +62,10 @@ public class CharacterDraftDetailsApiResponse
     public List<FeatSpellPickApiModel> FeatSpells { get; set; } = [];
     public List<Dictionary<string, int>> AbilityScoreImprovements { get; set; } = [];
     public bool IsCompleted { get; set; }
+
+    /// <summary>The character the draft edits, or made once completed; null for a new character's draft.</summary>
+    public Guid? CharacterId { get; set; }
+
+    /// <summary>The steps an edit could not fill in from the character, by DraftChoice name ("ability-scores").</summary>
+    public List<string> ChoicesNeeded { get; set; } = [];
 }

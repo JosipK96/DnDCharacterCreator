@@ -25,8 +25,10 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
     {
         _context = await _host.Browser.NewContextAsync(new BrowserNewContextOptions { BaseURL = _host.Address });
 
-        // A WebAssembly app's first load downloads the runtime, so the first step gets longer
+        // A WebAssembly app's load downloads and starts the runtime, so a step after a page load
+        // gets longer; the assertions' own default (5 seconds) is too short for it on a slow runner
         _context.SetDefaultTimeout(30_000);
+        Assertions.SetDefaultExpectTimeout(30_000);
         _page = await _context.NewPageAsync();
     }
 
@@ -87,6 +89,10 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await PickAsync("Human");
         await _page.GetByRole(AriaRole.Button, new() { Name = "Medium", Exact = true }).ClickAsync();
         await _page.GetByRole(AriaRole.Button, new() { Name = "Next: Choose Skills" }).ClickAsync();
+
+        // The race's skills are a second page of the same step: wait for it, or the pick lands
+        // on the size buttons still on screen (as it did on a slower CI runner)
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex("^Step 2: .+ Skill Proficiencies$") })).ToBeVisibleAsync();
         await PickFirstAsync(1);
         await NextAsync("Class");
         await PickAsync("Wizard");
@@ -235,8 +241,21 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
     {
         var number = WizardSteps.Names.ToList().IndexOf(step) + 1;
 
-        await _page.GetByRole(AriaRole.Button, new() { Name = $"Next: {step}" }).ClickAsync();
-        await Expect(_page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex($"^Step {number}: ") })).ToBeVisibleAsync();
+        var next = _page.GetByRole(AriaRole.Button, new() { Name = $"Next: {step}" });
+
+        // A pick left undone keeps Next disabled; say so now rather than after the click's timeout
+        await Expect(next).ToBeEnabledAsync(new() { Timeout = 5_000 });
+        await next.ClickAsync();
+
+        // Either the next step shows, or this one shows why the server refused the save
+        var heading = _page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex($"^Step {number}: ") });
+        var refusal = _page.Locator("div.bg-red-900 p");
+        await heading.Or(refusal).First.WaitForAsync();
+
+        if (await refusal.IsVisibleAsync())
+        {
+            Assert.Fail($"Moving on to {step} was refused: {await refusal.InnerTextAsync()}");
+        }
     }
 
     private async Task CreateAsync(string name)

@@ -1118,6 +1118,69 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_AnEditThatChangesTheScores_ReplacesTheCharacterAndKeepsItsId()
+    {
+        // Arrange - Thorin saved with STR 15, then edited to roll STR 17
+        var (saved, build) = SavedCharacterWithBuild();
+        var edit = CharacterDraft.StartEdit(build, _timeProvider);
+        edit.SetBaseAbilityScores(
+            new Dictionary<string, int> { ["STR"] = 17, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 12, ["WIS"] = 10, ["CHA"] = 8 },
+            AbilityScoreMethod.Rolled);
+        var savedAt = saved.CreatedAt;
+
+        ArrangeRepositories(_draftId, _userId, edit);
+        _characterRepositoryMock.Setup(r => r.GetByIdAsync(saved.Id, _userId, _cts.Token)).ReturnsAsync(saved);
+        _draftRepositoryMock.Setup(r => r.GetBuildAsync(saved.Id, _userId, _cts.Token)).ReturnsAsync(build);
+        _draftRepositoryMock.Setup(r => r.DeleteAsync(build, _cts.Token)).Returns(Task.CompletedTask);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
+        result.Value.Should().Be(saved.Id);
+        saved.AbilityScores["STR"].Should().Be(17);
+        saved.CreatedAt.Should().Be(savedAt);
+        edit.IsCompleted.Should().BeTrue();
+        edit.CharacterId.Should().Be(saved.Id);
+
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+        _draftRepositoryMock.Verify(r => r.DeleteAsync(build, _cts.Token), Times.Once);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_AnEditOfACharacterSinceDeleted_ReturnsCharacterNotFound()
+    {
+        // Arrange
+        var (saved, build) = SavedCharacterWithBuild();
+        var edit = CharacterDraft.StartEdit(build, _timeProvider);
+
+        ArrangeRepositories(_draftId, _userId, edit);
+        _characterRepositoryMock.Setup(r => r.GetByIdAsync(saved.Id, _userId, _cts.Token)).ReturnsAsync((Character?)null);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Character.NotFound");
+        edit.IsCompleted.Should().BeFalse();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    // Thorin as finalize left him: the character, and the completed draft holding his choices
+    private (Character Saved, CharacterDraft Build) SavedCharacterWithBuild()
+    {
+        var build = CreateCompleteDraft(_userId, level: 1);
+        var saved = Character.Create(
+            _userId, build.Name!, 1, build.Edition, build.RaceId!, null, build.ClassId!, null, build.BackgroundId!, build.BaseAbilityScores, _timeProvider);
+        build.MarkAsCompleted(saved.Id);
+
+        return (saved, build);
+    }
+
+    [Fact]
     public async Task Handle_WithNonExistentDraft_ReturnsNotFoundError()
     {
         // Arrange

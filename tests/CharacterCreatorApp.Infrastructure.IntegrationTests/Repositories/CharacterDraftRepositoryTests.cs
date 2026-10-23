@@ -354,6 +354,116 @@ public class CharacterDraftRepositoryTests : IClassFixture<DatabaseFixture>, IAs
     }
 
     [Fact]
+    public async Task GetByIdForUpdateAsync_ACompletedDraft_ReturnsNull()
+    {
+        // Arrange - a completed draft is a character's build, which no step may change
+        await using var transaction = await BeginWithoutReferenceDataAsync();
+        var userId = Guid.NewGuid();
+        var character = await AddCharacterAsync(userId);
+        var build = await AddBuildAsync(userId, character);
+
+        // Act
+        var result = await _repository.GetByIdForUpdateAsync(build.Id, userId, TestContext.Current.CancellationToken);
+
+        // Assert
+        result.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task GetBuildAndGetEdit_FindTheCharactersCompletedDraftAndItsUnfinishedEdit()
+    {
+        // Arrange
+        await using var transaction = await BeginWithoutReferenceDataAsync();
+        var userId = Guid.NewGuid();
+        var character = await AddCharacterAsync(userId);
+        var build = await AddBuildAsync(userId, character);
+        var edit = CharacterDraft.StartEdit(build, _timeProvider);
+        await _repository.CreateAsync(edit, TestContext.Current.CancellationToken);
+        await _fixture.DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        // Act
+        var foundBuild = await _repository.GetBuildAsync(character.Id, userId, TestContext.Current.CancellationToken);
+        var foundEdit = await _repository.GetEditAsync(character.Id, userId, TestContext.Current.CancellationToken);
+        var someoneElses = await _repository.GetBuildAsync(character.Id, Guid.NewGuid(), TestContext.Current.CancellationToken);
+
+        // Assert
+        foundBuild!.Id.Should().Be(build.Id);
+        foundEdit!.Id.Should().Be(edit.Id);
+        someoneElses.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task GetIncompleteDraft_WithOnlyAnEdit_ReturnsNull()
+    {
+        // Arrange - an edit is never the new character to resume
+        await using var transaction = await BeginWithoutReferenceDataAsync();
+        var userId = Guid.NewGuid();
+        var character = await AddCharacterAsync(userId);
+        var edit = CharacterDraft.StartEdit(await AddBuildAsync(userId, character), _timeProvider);
+        await _repository.CreateAsync(edit, TestContext.Current.CancellationToken);
+        await _fixture.DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        // Act
+        var result = await _repository.GetIncompleteDraft(userId, TestContext.Current.CancellationToken);
+
+        // Assert
+        result.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task DeletingACharacter_DeletesItsBuildAndEdit()
+    {
+        // Arrange
+        await using var transaction = await BeginWithoutReferenceDataAsync();
+        var userId = Guid.NewGuid();
+        var character = await AddCharacterAsync(userId);
+        var edit = CharacterDraft.StartEdit(await AddBuildAsync(userId, character), _timeProvider);
+        await _repository.CreateAsync(edit, TestContext.Current.CancellationToken);
+        await _fixture.DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        // Act
+        await _fixture.DbContext.Database.ExecuteSqlAsync(
+            $"""DELETE FROM "Characters" WHERE "Id" = {character.Id}""", TestContext.Current.CancellationToken);
+
+        // Assert
+        var left = await _fixture.DbContext.CharacterDrafts.AsNoTracking()
+            .CountAsync(d => d.CreatedByUserId == userId, TestContext.Current.CancellationToken);
+        left.Should().Be(0);
+    }
+
+    /// <summary>
+    /// A transaction that is rolled back when disposed, whose character keys to the race, class
+    /// and background wait for a commit that never comes, so a character needs no reference data.
+    /// </summary>
+    private async Task<Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction> BeginWithoutReferenceDataAsync()
+    {
+        var transaction = await _fixture.DbContext.Database.BeginTransactionAsync(TestContext.Current.CancellationToken);
+        await _fixture.DbContext.Database.ExecuteSqlRawAsync("SET CONSTRAINTS ALL DEFERRED", TestContext.Current.CancellationToken);
+        return transaction;
+    }
+
+    private async Task<Character> AddCharacterAsync(Guid userId)
+    {
+        var character = Character.Create(
+            userId, "Gandalf", 10, RulesEdition.Edition2014, "elf", null, "wizard", null, "sage",
+            new Dictionary<string, int> { ["STR"] = 8, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 18, ["WIS"] = 15, ["CHA"] = 12 },
+            _timeProvider);
+        _fixture.DbContext.Characters.Add(character);
+        await _fixture.DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        return character;
+    }
+
+    private async Task<CharacterDraft> AddBuildAsync(Guid userId, Character character)
+    {
+        var build = CharacterDraft.CreateEmpty(userId, _timeProvider);
+        build.SetNameAndLevel(character.Name, character.Level);
+        build.MarkAsCompleted(character.Id);
+        await _repository.CreateAsync(build, TestContext.Current.CancellationToken);
+        await _fixture.DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        return build;
+    }
+
+    [Fact]
     public async Task Repository_IsolatesDataBetweenUsers()
     {
         // Arrange

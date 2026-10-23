@@ -132,6 +132,46 @@ public class CharactersControllerTests : IAsyncLifetime
         await response.ShouldFailWithAsync(HttpStatusCode.NotFound, "Character.NotFound");
     }
 
+    [Fact]
+    public async Task EditCharacter_WithoutABuild_OpensWhatItStoresAndMarksTheRest()
+    {
+        // Arrange - a character written straight to the database has no draft, like one saved
+        // before the drafts were linked to their characters
+        var email = await AuthenticateAsync();
+        var characterId = (await SeedCharactersAsync(email, "Aragorn")).Single();
+
+        // Act
+        var response = await _client.PostAsync($"/api/characters/{characterId}/edit", null, TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var draftId = await response.Content.ReadFromJsonAsync<Guid>(TestContext.Current.CancellationToken);
+        var draft = await _client.GetFromJsonAsync<CharacterDraftDetailsApiResponse>(
+            $"/api/character-drafts/{draftId}", TestContext.Current.CancellationToken);
+
+        draft!.CharacterId.Should().Be(characterId);
+        (draft.Name, draft.Level, draft.Edition, draft.RaceId, draft.ClassId, draft.BackgroundId)
+            .Should().Be(("Aragorn", 5, "2014", "elf", "wizard", "sage"));
+        draft.AllowedSources.Should().Contain("PHB");
+        draft.BaseAbilityScores.Should().BeEmpty();
+        draft.ChoicesNeeded.Should().Equal(DraftChoice.NotKeptByCharacter);
+    }
+
+    [Fact]
+    public async Task EditCharacter_OfAnotherUser_ReturnsNotFound()
+    {
+        // Arrange
+        var email = await AuthenticateAsync();
+        var characterId = (await SeedCharactersAsync(email, "Aragorn")).Single();
+        await AuthenticateAsync();
+
+        // Act
+        var response = await _client.PostAsync($"/api/characters/{characterId}/edit", null, TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.NotFound, "Character.NotFound");
+    }
+
     private async Task<string> AuthenticateAsync()
     {
         var email = $"test-{Guid.NewGuid()}@example.com";

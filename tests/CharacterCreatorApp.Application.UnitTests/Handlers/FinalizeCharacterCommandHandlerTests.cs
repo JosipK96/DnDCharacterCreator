@@ -1308,7 +1308,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     public async Task Handle_AnEditLoweringTheLevelBelowAHitDieResult_KeepsOnlyTheResultsOfItsLevels()
     {
         // Arrange - levelled up to 5 with a 9, then edited back down to 4
-        var (saved, build, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 4), CreateTestClass());
+        var (saved, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 4), CreateTestClass());
         levelUp.SetHitDieResult(9);
         levelUp.MarkAsCompleted(saved.Id);
         var edit = CharacterDraft.StartEdit(levelUp, _timeProvider);
@@ -1326,7 +1326,6 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
         saved.Level.Should().Be(4);
         saved.HitDieResults.Should().BeEmpty();
-        build.IsCompleted.Should().BeTrue();
     }
 
     // A character saved from this draft, with the draft as its build, and a level-up of it

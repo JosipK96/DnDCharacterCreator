@@ -1,5 +1,3 @@
-using AngleSharp.Dom;
-
 using Bunit;
 
 using CharacterCreatorApp.Client.Pages.CharacterCreation;

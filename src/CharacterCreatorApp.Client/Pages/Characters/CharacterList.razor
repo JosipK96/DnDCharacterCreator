@@ -201,7 +201,7 @@
                                     class="mr-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
                                 Edit
                             </button>
-                            @if (character.Level < MaxLevel)
+                            @if (character.Level < CharacterLevels.Max)
                             {
                                 <button @onclick="() => LevelUpCharacter(character.Id)"
                                         class="mr-2 bg-emerald-700 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
@@ -490,9 +490,6 @@
             errorMessage = $"Failed to open the character for editing: {ex.Message}";
         }
     }
-
-    // The highest level a character reaches; the API refuses a level-up past it too
-    private const int MaxLevel = 20;
 
     // The character opens one level up in the wizard, which asks only what the new level brings
     private async Task LevelUpCharacter(Guid characterId)

@@ -151,6 +151,12 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
 
         public bool IsLevelUp => LevelUpChoices.Count != 0;
 
+        /// <summary>
+        /// Whether the draft may take this class: any for a new character or an edit, only its own
+        /// for a level-up, where a level of another class would be multiclassing.
+        /// </summary>
+        public bool AllowsClass(string classId) => !IsLevelUp || classId == ClassId;
+
         public static CharacterDraft CreateEmpty(Guid userId, TimeProvider timeProvider)
         {
             var now = timeProvider.GetUtcNow();
@@ -490,6 +496,11 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// </summary>
         public void SetClass(string classId, string? subclassId = null)
         {
+            if (!AllowsClass(classId))
+            {
+                throw new InvalidOperationException($"A level-up keeps its class, {ClassId}.");
+            }
+
             if (ClassId != classId)
             {
                 // Proficiency options, spell lists, improvement levels, the class features feats

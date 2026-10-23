@@ -40,7 +40,7 @@
                 </button>
 
                 <div class="flex space-x-3">
-                    @if (character.Level < MaxLevel)
+                    @if (character.Level < CharacterLevels.Max)
                     {
                         <button @onclick="LevelUpCharacter" disabled="@isStartingEdit"
                                 class="bg-emerald-700 hover:bg-emerald-600 disabled:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
@@ -372,9 +372,6 @@
             isStartingEdit = false;
         }
     }
-
-    // The highest level a character reaches; the API refuses a level-up past it too
-    private const int MaxLevel = 20;
 
     // The character opens one level up in the wizard, which asks only what the new level brings
     private async Task LevelUpCharacter()

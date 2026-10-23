@@ -416,6 +416,23 @@ public class CharacterDraftEditTests
     }
 
     [Fact]
+    public void SetClass_AnotherClassOnALevelUp_Throws()
+    {
+        // Arrange - a level of another class would be multiclassing
+        var levelUp = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
+        levelUp.LevelUp(Cleric(), Life(), StandardArray());
+
+        // Act
+        var act = () => levelUp.SetClass("wizard");
+
+        // Assert
+        levelUp.AllowsClass("wizard").Should().BeFalse();
+        levelUp.AllowsClass("cleric").Should().BeTrue();
+        act.Should().Throw<InvalidOperationException>();
+        levelUp.ClassId.Should().Be("cleric");
+    }
+
+    [Fact]
     public void SetSubclass_WhereThereWasNone_KeepsTheSpellsAndFightingStylesAndTakesAwayItsMark()
     {
         // Arrange - a level-up to a fighter's third level keeps its style from level 1

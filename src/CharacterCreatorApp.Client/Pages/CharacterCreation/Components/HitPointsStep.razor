@@ -116,7 +116,10 @@
         hitDie = $"d{DieSizeOf(@class.HitDie)}";
         dieSize = DieSizeOf(@class.HitDie);
 
-        // The die's average rounded up, as the sheet takes for a level without a result
+        // The die's average rounded up, as the sheet takes for a level without a result.
+        // shortcut: this and DieSizeOf repeat CharacterStatsCalculator.GetHitDieFixedValue and
+        // GetHitDieSize, which the client cannot reference; the server checks the result's range
+        // anyway. Upgrade by sending both numbers with the class (ClassApiResponse) if the rule changes.
         fixedValue = (dieSize / 2) + 1;
 
         // Coming back to this step shows what was saved

@@ -172,6 +172,57 @@ public class CharactersControllerTests : IAsyncLifetime
         await response.ShouldFailWithAsync(HttpStatusCode.NotFound, "Character.NotFound");
     }
 
+    [Fact]
+    public async Task LevelUpCharacter_WithoutABuild_OpensItOneLevelUpWithTheStepsItCouldNotFillInMarked()
+    {
+        // Arrange - a level 5 wizard written straight to the database, with no draft
+        var email = await AuthenticateAsync();
+        var characterId = (await SeedCharactersAsync(email, "Aragorn")).Single();
+
+        // Act
+        var response = await _client.PostAsync($"/api/characters/{characterId}/level-up", null, TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var draftId = await response.Content.ReadFromJsonAsync<Guid>(TestContext.Current.CancellationToken);
+        var draft = await _client.GetFromJsonAsync<CharacterDraftDetailsApiResponse>(
+            $"/api/character-drafts/{draftId}", TestContext.Current.CancellationToken);
+
+        (draft!.CharacterId, draft.Level).Should().Be((characterId, 6));
+        draft.LevelUpChoices.Should().StartWith(DraftChoice.HitPoints);
+        draft.LevelUpChoices.Should().Contain(DraftChoice.NotKeptByCharacter);
+        draft.ChoicesNeeded.Should().BeEquivalentTo(draft.LevelUpChoices);
+    }
+
+    [Fact]
+    public async Task LevelUpCharacter_AtTheHighestLevel_ReturnsAtMaxLevel()
+    {
+        // Arrange
+        var email = await AuthenticateAsync();
+        var characterId = (await SeedCharactersAsync(email, CharacterDraft.MaxLevel, "Elminster")).Single();
+
+        // Act
+        var response = await _client.PostAsync($"/api/characters/{characterId}/level-up", null, TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "Character.AtMaxLevel");
+    }
+
+    [Fact]
+    public async Task LevelUpCharacter_OfAnotherUser_ReturnsNotFound()
+    {
+        // Arrange
+        var email = await AuthenticateAsync();
+        var characterId = (await SeedCharactersAsync(email, "Aragorn")).Single();
+        await AuthenticateAsync();
+
+        // Act
+        var response = await _client.PostAsync($"/api/characters/{characterId}/level-up", null, TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.NotFound, "Character.NotFound");
+    }
+
     private async Task<string> AuthenticateAsync()
     {
         var email = $"test-{Guid.NewGuid()}@example.com";
@@ -196,7 +247,9 @@ public class CharactersControllerTests : IAsyncLifetime
 
     // Finalizing a draft through the API takes a dozen calls; these tests only need characters
     // to exist, so they are written straight to the database.
-    private async Task<List<Guid>> SeedCharactersAsync(string email, params string[] names)
+    private Task<List<Guid>> SeedCharactersAsync(string email, params string[] names) => SeedCharactersAsync(email, 5, names);
+
+    private async Task<List<Guid>> SeedCharactersAsync(string email, int level, params string[] names)
     {
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -211,7 +264,7 @@ public class CharactersControllerTests : IAsyncLifetime
             // A minute apart, so the default sort on CreatedAt has an order to follow
             _timeProvider.Advance(TimeSpan.FromMinutes(1));
             return Character.Create(
-                userId, name, level: 5, edition: RulesEdition.Edition2014, raceId: "elf", subraceId: null, classId: "wizard",
+                userId, name, level, edition: RulesEdition.Edition2014, raceId: "elf", subraceId: null, classId: "wizard",
                 subclassId: null, backgroundId: "sage", StandardArray(), _timeProvider);
         }).ToList();
 

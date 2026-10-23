@@ -32,6 +32,26 @@ public class WizardProgressTests : BunitContext
     }
 
     [Fact]
+    public void Render_InALevelUp_ShowsOnlyTheHitPointsWhatTheLevelBringsAndTheReview()
+    {
+        // Arrange - a wizard's level-up to 4: an improvement and spells; the hit points still to pick
+        var flow = WizardSteps.LevelUpOf(["hit-points", "spells", "improvements"]);
+
+        // Act
+        var cut = Render<WizardProgress>(parameters => parameters
+            .Add(p => p.CurrentStep, 8)
+            .Add(p => p.Flow, flow)
+            .Add(p => p.StepsNeedingPick, WizardSteps.StepsOf(["hit-points"]).ToHashSet())
+            .Add(p => p.OnSelectStep, _ => { }));
+
+        // Assert - numbered as shown, in the order picked: the hit points first
+        flow.Should().Equal(WizardSteps.HitPoints, 8, 9, 10);
+        cut.FindAll("button").Select(b => b.GetAttribute("title"))
+            .Should().Equal("Hit Points: needs a pick", "Improvements", "Spells", "Review");
+        cut.FindAll("button")[2].TextContent.Trim().Should().Be("3");
+    }
+
+    [Fact]
     public void Render_ForANewCharacter_HasNoStepToClick()
     {
         // Act

@@ -100,6 +100,32 @@ public class ImprovementsStepTests : WizardStepTestBase
     }
 
     [Fact]
+    public void Next_InALevelUpToANewImprovement_KeepsTheEarlierOneAndSendsBoth()
+    {
+        // Arrange - a fighter levelled up to 6 took Strength at 4; the slot for 6 is new
+        var draft = Draft(level: 6);
+        draft.AbilityScoreImprovements = [new Dictionary<string, int> { ["STR"] = 2 }];
+        ArrangeLoad(draft, [Alert]);
+        Api.Put(DraftPath("ability-score-improvements"));
+        var cut = RenderStep(level: 6);
+        var secondSlotDexterity = cut.FindAll("p").Where(p => p.TextContent.Trim() == "Dexterity").ElementAt(1).ParentElement!
+            .QuerySelectorAll("button").Single(b => b.TextContent.Trim() == "+");
+
+        // Act
+        secondSlotDexterity.Click();
+        cut.FindAll("p").Where(p => p.TextContent.Trim() == "Dexterity").ElementAt(1).ParentElement!
+            .QuerySelectorAll("button").Single(b => b.TextContent.Trim() == "+").Click();
+        Button(cut, "Next: Spells").Click();
+
+        // Assert
+        var sent = Api.BodyOf<SetAbilityScoreImprovementsApiRequest>(ImprovementsRoute);
+        sent.Improvements.Should().HaveCount(2);
+        sent.Improvements[0].Should().Equal(new Dictionary<string, int> { ["STR"] = 2 });
+        sent.Improvements[1].Should().Equal(new Dictionary<string, int> { ["dexterity"] = 2 });
+        _movedOn.Should().Be(1);
+    }
+
+    [Fact]
     public void Next_WithTheSlotTakingAFeat_SendsTheFeatInsteadOfAnImprovement()
     {
         // Arrange

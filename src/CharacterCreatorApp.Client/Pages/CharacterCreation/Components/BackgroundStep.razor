@@ -282,8 +282,30 @@
     private string? featId;
     private List<FeatApiResponse> categoryFeats = [];
 
-    protected override Task OnInitializedAsync() =>
-        LoadAsync(async () => backgrounds = await LookupService.GetBackgroundsAsync(Edition, Sources), "Failed to load backgrounds");
+    protected override async Task OnInitializedAsync()
+    {
+        CharacterDraftDetailsApiResponse? draft = null;
+
+        var loaded = await LoadAsync(async () =>
+        {
+            backgrounds = await LookupService.GetBackgroundsAsync(Edition, Sources);
+            draft = await DraftService.GetDraftDetailsAsync(DraftId);
+        }, "Failed to load backgrounds");
+
+        // Coming back to this step, or editing a saved character, shows what the draft holds
+        if (!loaded || backgrounds.Find(b => b.Id == draft?.BackgroundId) is not { } saved)
+        {
+            return;
+        }
+
+        await SelectBackground(saved);
+
+        var increases = draft!.BackgroundAbilityIncreases;
+        oneToEach = increases.Count > 2 && increases.Values.All(points => points == 1);
+        plusTwo = increases.FirstOrDefault(i => i.Value == 2).Key;
+        plusOne = oneToEach ? null : increases.FirstOrDefault(i => i.Value == 1).Key;
+        featId = draft.BackgroundFeatId;
+    }
 
     private async Task SelectBackground(BackgroundApiResponse background)
     {

@@ -1,4 +1,4 @@
-﻿@using CharacterCreatorApp.Contracts.Requests.CharacterDrafts
+@using CharacterCreatorApp.Contracts.Requests.CharacterDrafts
 @inject CharacterDraftService DraftService
 @inject IJSRuntime JS
 @inherits WizardStepBase
@@ -259,6 +259,45 @@
             assignedScores[ability] = -1; // -1 means unassigned
         }
     }
+
+    // Coming back to this step, or editing a saved character, shows the scores the draft holds
+    // assigned as they were; a draft from before the method was kept picks them again
+    protected override async Task OnInitializedAsync()
+    {
+        CharacterDraftDetailsApiResponse? draft = null;
+
+        if (!await LoadAsync(async () => draft = await DraftService.GetDraftDetailsAsync(DraftId), "Failed to load the draft")
+            || draft?.BaseAbilityScoreMethod is not { } methodId
+            || !AbilityIds.All(draft.BaseAbilityScores.ContainsKey))
+        {
+            return;
+        }
+
+        selectedMethod = methodId switch
+        {
+            "standard-array" => AbilityScoreMethod.StandardArray,
+            "point-buy" => AbilityScoreMethod.PointBuy,
+            "rolled" => AbilityScoreMethod.RollDice,
+            _ => AbilityScoreMethod.None,
+        };
+
+        if (selectedMethod == AbilityScoreMethod.None)
+        {
+            return;
+        }
+
+        availableScores = AbilityIds.Select(id => draft.BaseAbilityScores[id]).ToList();
+        hasRolledScores = selectedMethod == AbilityScoreMethod.RollDice;
+        hasGeneratedScores = !hasRolledScores;
+
+        for (var i = 0; i < AbilityIds.Length; i++)
+        {
+            assignedScores[AbilityNames.Of(AbilityIds[i])] = i;
+        }
+    }
+
+    // The abilities by the API's ids, in the order the scores are assigned
+    private static readonly string[] AbilityIds = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 
     private void SelectMethod(AbilityScoreMethod method)
     {

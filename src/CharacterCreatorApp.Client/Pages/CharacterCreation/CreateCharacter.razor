@@ -33,11 +33,26 @@
         else
         {
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-white mb-2">Create New Character</h1>
-                <p class="text-gray-400">Follow the steps below to create your D&D 5E character</p>
+                @if (IsEdit)
+                {
+                    <h1 class="text-3xl font-bold text-white mb-2">Edit @existingDraft?.Name</h1>
+                    <p class="text-gray-400">Every choice is filled in. Change what you like, or pick a step above; saving replaces the character.</p>
+                }
+                else
+                {
+                    <h1 class="text-3xl font-bold text-white mb-2">Create New Character</h1>
+                    <p class="text-gray-400">Follow the steps below to create your D&D 5E character</p>
+                }
             </div>
 
-            <WizardProgress CurrentStep="@currentStep" />
+            @if (IsEdit)
+            {
+                <WizardProgress CurrentStep="@currentStep" StepsNeedingPick="@stepsNeedingPick" OnSelectStep="GoTo" />
+            }
+            else
+            {
+                <WizardProgress CurrentStep="@currentStep" />
+            }
 
             @* The order here has to match WizardSteps.Names, which gives each step its number and name *@
             <div class="bg-gray-800 rounded-lg shadow-xl p-8 mt-6">
@@ -52,7 +67,7 @@
                     <RaceStep DraftId="@draftId" Step="@currentStep"
                               Edition="@edition"
                               Sources="@sources"
-                              OnNext="MoveToStep3"
+                              OnNext="() => Next(2)"
                               OnBack="MoveToStep1" />
                 }
                 else if (currentStep == 3)
@@ -61,7 +76,7 @@
                                CharacterLevel="@characterLevel"
                                Edition="@edition"
                                Sources="@sources"
-                               OnNext="MoveToStep4"
+                               OnNext="() => Next(3)"
                                OnBack="MoveToStep2" />
                 }
                 else if (currentStep == 4)
@@ -69,25 +84,25 @@
                     <BackgroundStep DraftId="@draftId" Step="@currentStep"
                                     Edition="@edition"
                                     Sources="@sources"
-                                    OnNext="MoveToStep5"
+                                    OnNext="() => Next(4)"
                                     OnBack="MoveToStep3" />
                 }
                 else if (currentStep == 5)
                 {
                     <LanguagesStep DraftId="@draftId" Step="@currentStep"
-                                   OnNext="MoveToStep6"
+                                   OnNext="() => Next(5)"
                                    OnBack="MoveToStep4" />
                 }
                 else if (currentStep == 6)
                 {
                     <AbilityScoresStep DraftId="@draftId" Step="@currentStep"
-                                       OnNext="MoveToStep7"
+                                       OnNext="() => Next(6)"
                                        OnBack="MoveToStep5" />
                 }
                 else if (currentStep == 7)
                 {
                     <ProficienciesStep DraftId="@draftId" Step="@currentStep"
-                                       OnNext="MoveToStep8"
+                                       OnNext="() => Next(7)"
                                        OnBack="MoveToStep6" />
                 }
                 else if (currentStep == 8)
@@ -95,13 +110,13 @@
                     @* Before the spells: a feat can grant a spell, and an improvement changes how many a prepared caster gets *@
                     <ImprovementsStep DraftId="@draftId" Step="@currentStep"
                                       CharacterLevel="@characterLevel"
-                                      OnNext="MoveToStep9"
+                                      OnNext="() => Next(8)"
                                       OnBack="MoveToStep7" />
                 }
                 else if (currentStep == 9)
                 {
                     <SpellsStep DraftId="@draftId" Step="@currentStep"
-                                OnNext="MoveToStep10"
+                                OnNext="() => Next(9)"
                                 OnBack="MoveToStep8" />
                 }
                 else if (currentStep == 10)
@@ -114,7 +129,7 @@
 
             <div class="mt-6 text-center">
                 <button @onclick="ConfirmCancel" class="text-gray-400 hover:text-white">
-                    Cancel Character Creation
+                    @(IsEdit ? "Cancel Editing" : "Cancel Character Creation")
                 </button>
             </div>
         }
@@ -123,12 +138,20 @@
         {
             <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 px-4">
                 <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
-                    <h3 class="text-xl font-bold text-white mb-4">Cancel Character Creation?</h3>
-                    <p class="text-gray-300 mb-6">Are you sure you want to cancel? All progress will be lost.</p>
+                    @if (IsEdit)
+                    {
+                        <h3 class="text-xl font-bold text-white mb-4">Cancel Editing?</h3>
+                        <p class="text-gray-300 mb-6">The character stays as it was saved; the changes made here are lost.</p>
+                    }
+                    else
+                    {
+                        <h3 class="text-xl font-bold text-white mb-4">Cancel Character Creation?</h3>
+                        <p class="text-gray-300 mb-6">Are you sure you want to cancel? All progress will be lost.</p>
+                    }
                     <div class="flex justify-end space-x-3">
                         <button @onclick="() => showCancelConfirm = false"
                                 class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium">
-                            Continue Creating
+                            @(IsEdit ? "Continue Editing" : "Continue Creating")
                         </button>
                         <button @onclick="Cancel"
                                 class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium">
@@ -190,6 +213,12 @@
     private CharacterDraftDetailsApiResponse? existingDraft;
     private string? errorMessage;
 
+    // An edit of a saved character: the draft names it, and some of its steps may need a pick
+    private Guid? editedCharacterId;
+    private HashSet<int> stepsNeedingPick = [];
+
+    private bool IsEdit => editedCharacterId != null;
+
     protected override async Task OnInitializedAsync()
     {
         if (!string.IsNullOrEmpty(DraftIdParam) && Guid.TryParse(DraftIdParam, out var parsedDraftId))
@@ -218,9 +247,13 @@
                 return;
             }
 
-            currentStep = DetermineCurrentStep(existingDraft);
             edition = existingDraft.Edition;
             sources = existingDraft.AllowedSources;
+            editedCharacterId = existingDraft.CharacterId;
+            stepsNeedingPick = [.. WizardSteps.StepsOf(existingDraft.ChoicesNeeded)];
+
+            // An edit has every step filled in: it opens at the first one that needs a pick, if any
+            currentStep = IsEdit ? stepsNeedingPick.DefaultIfEmpty(1).Min() : DetermineCurrentStep(existingDraft);
 
             if (existingDraft.Level.HasValue)
                 characterLevel = existingDraft.Level.Value;
@@ -320,12 +353,21 @@
     private void MoveToStep7() { currentStep = 7; StateHasChanged(); }
     private void MoveToStep8() { currentStep = 8; StateHasChanged(); }
     private void MoveToStep9() { currentStep = 9; StateHasChanged(); }
-    private void MoveToStep10() { currentStep = 10; StateHasChanged(); }
+
+    // A step the player has been through needs no pick any more, even one that had nothing to save
+    private void Next(int fromStep)
+    {
+        stepsNeedingPick.Remove(fromStep);
+        GoTo(fromStep + 1);
+    }
+
+    private void GoTo(int step) { currentStep = step; StateHasChanged(); }
 
     private async Task FinalizeCharacter()
     {
         try
         {
+            // An edit comes back with the character's own id: it replaced it
             var characterId = await CharacterService.FinalizeCharacterAsync(draftId);
             Navigation.NavigateTo($"/character/{characterId}");
         }
@@ -342,8 +384,25 @@
         StateHasChanged();
     }
 
-    private void Cancel()
+    private async Task Cancel()
     {
-        Navigation.NavigateTo("/characters");
+        if (editedCharacterId is not { } characterId)
+        {
+            Navigation.NavigateTo("/characters");
+            return;
+        }
+
+        // The edit goes, and the character stays as it was saved. Should the delete fail, the next
+        // edit of the character drops the draft anyway.
+        try
+        {
+            await DraftService.DeleteDraftAsync(draftId);
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            // Nothing to tell the player: leaving is what they asked for
+        }
+
+        Navigation.NavigateTo($"/character/{characterId}");
     }
 }

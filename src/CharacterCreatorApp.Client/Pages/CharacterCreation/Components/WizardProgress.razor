@@ -5,51 +5,37 @@
             var stepNumber = step;
             var isActive = stepNumber == CurrentStep;
             var isCompleted = stepNumber < CurrentStep;
+            var needsPick = StepsNeedingPick.Contains(stepNumber) && !isActive;
 
-            if (stepNumber < TotalSteps)
-            {
-                <!-- Step with connecting line -->
-                <div class="flex items-center flex-1">
-                    <div class="flex flex-col items-center">
-                        <!-- Step Circle -->
-                        <div class="@GetStepClass(isActive, isCompleted)">
-                            @if (isCompleted)
-                            {
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            }
-                            else
-                            {
-                                <span>@stepNumber</span>
-                            }
+            <div class="flex items-center @(stepNumber < TotalSteps ? "flex-1" : "")">
+                <div class="flex flex-col items-center">
+                    @* An edit can go to any step: every step shows what the draft holds *@
+                    @if (OnSelectStep.HasDelegate)
+                    {
+                        <button type="button" class="@GetStepClass(isActive, isCompleted, needsPick)"
+                                title="@StepTitle(stepNumber, needsPick)"
+                                @onclick="() => OnSelectStep.InvokeAsync(stepNumber)">
+                            @StepMark(stepNumber, isCompleted, needsPick)
+                        </button>
+                    }
+                    else
+                    {
+                        <div class="@GetStepClass(isActive, isCompleted, needsPick)" title="@StepTitle(stepNumber, needsPick)">
+                            @StepMark(stepNumber, isCompleted, needsPick)
                         </div>
-                        <!-- Step Label -->
-                        <span class="text-xs mt-1 text-center @(isActive ? "text-indigo-400 font-medium" : "text-gray-500")">@GetStepLabel(stepNumber)</span>
-                    </div>
+                    }
+                    <span class="text-xs mt-1 text-center @(isActive ? "text-indigo-400 font-medium" : "text-gray-500")">@GetStepLabel(stepNumber)</span>
+                    @if (needsPick)
+                    {
+                        <span class="text-xs text-amber-400 text-center">Needs a pick</span>
+                    }
+                </div>
+                @if (stepNumber < TotalSteps)
+                {
                     <!-- Connecting line -->
                     <div class="flex-1 h-0.5 mx-2 mb-4 @(isCompleted ? "bg-indigo-600" : "bg-gray-700")"></div>
-                </div>
-            }
-            else
-            {
-                <!-- Last step — no line -->
-                <div class="flex flex-col items-center">
-                    <div class="@GetStepClass(isActive, isCompleted)">
-                        @if (isCompleted)
-                        {
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                            </svg>
-                        }
-                        else
-                        {
-                            <span>@stepNumber</span>
-                        }
-                    </div>
-                    <span class="text-xs mt-1 text-center @(isActive ? "text-indigo-400 font-medium" : "text-gray-500")">@GetStepLabel(stepNumber)</span>
-                </div>
-            }
+                }
+            </div>
         }
     </div>
 </div>
@@ -58,11 +44,22 @@
     [Parameter]
     public int CurrentStep { get; set; }
 
+    /// <summary>The steps an edit could not fill in from the saved character (WizardSteps.StepsOf).</summary>
+    [Parameter]
+    public IReadOnlySet<int> StepsNeedingPick { get; set; } = new HashSet<int>();
+
+    /// <summary>Set when the player may go to any step by its number, as in an edit.</summary>
+    [Parameter]
+    public EventCallback<int> OnSelectStep { get; set; }
+
     private static int TotalSteps => WizardSteps.Count;
 
-    private string GetStepClass(bool isActive, bool isCompleted)
+    private static string GetStepClass(bool isActive, bool isCompleted, bool needsPick)
     {
         var baseClass = "w-10 h-10 rounded-full flex items-center justify-center font-medium";
+
+        if (needsPick)
+            return $"{baseClass} bg-amber-600 text-white ring-2 ring-amber-400";
 
         if (isCompleted)
             return $"{baseClass} bg-indigo-600 text-white";
@@ -72,6 +69,27 @@
 
         return $"{baseClass} bg-gray-700 text-gray-400";
     }
+
+    private static RenderFragment StepMark(int stepNumber, bool isCompleted, bool needsPick) => __builder =>
+    {
+        if (needsPick)
+        {
+            <span>!</span>
+        }
+        else if (isCompleted)
+        {
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+        }
+        else
+        {
+            <span>@stepNumber</span>
+        }
+    };
+
+    private static string StepTitle(int step, bool needsPick) =>
+        needsPick ? $"{GetStepLabel(step)}: needs a pick" : GetStepLabel(step);
 
     private static string GetStepLabel(int step) => WizardSteps.NameOf(step);
 }

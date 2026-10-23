@@ -265,8 +265,23 @@
     private int subStep = 1;
     private bool isLoadingSkills = false;
 
-    protected override Task OnInitializedAsync() =>
-        LoadAsync(async () => races = await LookupService.GetRacesAsync(Edition, Sources), "Failed to load races");
+    // Coming back to this step, or editing a saved character, shows what the draft holds
+    protected override Task OnInitializedAsync() => LoadAsync(async () =>
+    {
+        races = await LookupService.GetRacesAsync(Edition, Sources);
+        var draft = await DraftService.GetDraftDetailsAsync(DraftId);
+
+        if (draft?.RaceId is not { } raceId || races.Find(r => r.Id == raceId) is not { } race)
+        {
+            return;
+        }
+
+        selectedRace = race;
+        selectedSubrace = race.Subraces?.Find(s => s.Id == draft.SubraceId);
+        abilityPicks = [.. draft.RaceAbilityIncreases.Keys];
+        selectedSize = draft.Size;
+        selectedRaceSkills = [.. draft.SelectedRaceSkillIds];
+    }, "Failed to load races");
 
     // The 2024 book calls them lineages ("Drow Lineage"), ancestries or legacies: the word the
     // options end in, and an ancestry for the dragonborn's dragons, which are just colours

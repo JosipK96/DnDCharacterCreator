@@ -45,5 +45,9 @@ before changing what a seed file holds.
   CharacterCreatorApp.Api.csproj` from the Infrastructure project. **Read what it scaffolds**:
   it emitted `defaultValue: ""` for a `jsonb` column once, which Postgres rejects.
 - Lists and dictionaries on `Character` are `jsonb` via `HasJsonConversion`.
+- A draft's `CharacterId` cascades: deleting a character deletes its build and any unsaved edit.
+  The `EditCharacter` migration linked the characters saved before it to their drafts by name,
+  level and choices (`EditCharacter.LinkCharactersToTheirDraftsSql`, tested by
+  `EditCharacterMigrationTests`).
 - Anything implementing `IAuditable` gets `CreatedAt`/`UpdatedAt` stamped by
   `AuditableEntityInterceptor`; don't set them by hand.

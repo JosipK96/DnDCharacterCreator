@@ -83,6 +83,16 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Characters
                 .HasColumnType("jsonb")
                 .HasJsonConversion();
 
+            builder.Property(x => x.ChoicesNeeded);
+
+            // A character's build and its unsaved edit go with it
+            builder.HasOne<Character>()
+                .WithMany()
+                .HasForeignKey(x => x.CharacterId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
+
+            builder.HasIndex(x => x.CharacterId);
             builder.HasIndex(x => x.CreatedByUserId);
             builder.HasIndex(x => new { x.CreatedByUserId, x.IsCompleted });
             builder.HasIndex(x => x.CreatedAt);

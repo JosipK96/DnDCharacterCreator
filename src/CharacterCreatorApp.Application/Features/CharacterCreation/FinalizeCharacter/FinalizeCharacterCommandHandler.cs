@@ -60,11 +60,34 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.FinalizeCha
                 return incompleteChoice.Value;
             }
 
-            await _characterRepository.Create(character, cancellationToken);
-            draft.MarkAsCompleted();
+            if (draft.CharacterId is not { } editedId)
+            {
+                await _characterRepository.Create(character, cancellationToken);
+                draft.MarkAsCompleted(character.Id);
+
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                return character.Id;
+            }
+
+            // An edit: the character keeps its id and when it was made, and the edit becomes its build
+            var edited = await _characterRepository.GetByIdAsync(editedId, _userContext.UserId, cancellationToken);
+
+            if (edited == null)
+            {
+                return CharacterErrors.NotFoundById(editedId);
+            }
+
+            edited.ReplaceWith(character);
+
+            if (await _characterDraftRepository.GetBuildAsync(editedId, _userContext.UserId, cancellationToken) is { } oldBuild)
+            {
+                await _characterDraftRepository.DeleteAsync(oldBuild, cancellationToken);
+            }
+
+            draft.MarkAsCompleted(editedId);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return character.Id;
+            return editedId;
         }
     }
 }

@@ -40,6 +40,10 @@
                 </button>
 
                 <div class="flex space-x-3">
+                    <button @onclick="EditCharacter" disabled="@isStartingEdit"
+                            class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                        @(isStartingEdit ? "Opening..." : "Edit Character")
+                    </button>
                     <button @onclick="() => ConfirmDelete(character)"
                             class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
                         Delete Character
@@ -306,6 +310,7 @@
     private CharacterDetailsApiResponse? characterToDelete;
     private bool isLoading = true;
     private bool isDeleting = false;
+    private bool isStartingEdit;
     private string? errorMessage;
 
     protected override async Task OnInitializedAsync()
@@ -342,6 +347,23 @@
     private void BackToList()
     {
         Navigation.NavigateTo("/characters");
+    }
+
+    // The character opens in the wizard as a draft; saving it replaces this character
+    private async Task EditCharacter()
+    {
+        isStartingEdit = true;
+
+        try
+        {
+            var draftId = await CharacterService.StartEditAsync(Id);
+            Navigation.NavigateTo($"/character/create/{draftId}");
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            errorMessage = $"Failed to open the character for editing: {ex.Message}";
+            isStartingEdit = false;
+        }
     }
 
     private void ConfirmDelete(CharacterDetailsApiResponse charDetails)

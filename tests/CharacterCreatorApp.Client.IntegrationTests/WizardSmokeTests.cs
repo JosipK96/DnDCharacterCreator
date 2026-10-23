@@ -52,29 +52,44 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         // Arrange
         await RegisterAndSignInAsync("wizard-2014");
 
-        // Act: a half-orc fighter, with skills, the Soldier's tool and a Fighting Style to pick
-        await StartCharacterAsync("Grom", "2014 rules");
-        await PickAsync("Half-Orc");
-        await NextAsync("Class");
-        await PickAsync("Fighter");
-        await NextAsync("Background");
-        await PickAsync("Soldier");
-        await NextAsync("Languages");
-        await NextAsync("Ability Scores");
-        await StandardArrayAsync();
-        await NextAsync("Proficiencies");
-        await PickFirstAsync(2);
-        await PickToolAsync();
-        await NextAsync("Improvements");
-        await _page.GetByRole(AriaRole.Combobox).SelectOptionAsync(new SelectOptionValue { Label = "Defense" });
-        await NextAsync("Spells");
-        await Expect(_page.GetByText("No Spells Available")).ToBeVisibleAsync();
-        await NextAsync("Review");
-        await CreateAsync("Grom");
+        // Act
+        await CreateGromAsync();
 
         // Assert
         await _page.GotoAsync("/characters");
         await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToBeVisibleAsync();
+    }
+
+    [Fact]
+    public async Task Edit_ThatRenamesTheCharacter_KeepsEveryOtherChoiceAndReplacesIt()
+    {
+        // Arrange
+        await RegisterAndSignInAsync("wizard-edit");
+        await CreateGromAsync();
+        var sheet = new Uri(_page.Url).AbsolutePath;
+
+        // Act: a new name, then every step as it opens: each has to hold what Grom was made
+        // with, or its Next would stay disabled
+        await _page.GetByRole(AriaRole.Button, new() { Name = "Edit Character" }).ClickAsync();
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Edit Grom" })).ToBeVisibleAsync();
+        await Expect(_page.GetByPlaceholder("Enter your character's name")).ToHaveValueAsync("Grom");
+        await _page.GetByPlaceholder("Enter your character's name").FillAsync("Grom the Bold");
+
+        foreach (var step in WizardSteps.Names.Skip(1))
+        {
+            await NextAsync(step);
+        }
+
+        await _page.GetByRole(AriaRole.Button, new() { Name = "Save Changes" }).ClickAsync();
+
+        // Assert: the same sheet, renamed, and one character on the list
+        await _page.WaitForURLAsync($"**{sheet}");
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom the Bold", Exact = true })).ToBeVisibleAsync();
+        await Expect(_page.GetByText("Half-Orc").First).ToBeVisibleAsync();
+
+        await _page.GotoAsync("/characters");
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom the Bold", Exact = true })).ToBeVisibleAsync();
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToHaveCountAsync(0);
     }
 
     [Fact]
@@ -177,6 +192,29 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await _page.Locator("#password").FillAsync(Password);
         await _page.GetByRole(AriaRole.Button, new() { Name = "Sign In" }).ClickAsync();
         await _page.WaitForURLAsync(url => !url.Contains("/login", StringComparison.Ordinal));
+    }
+
+    // A half-orc fighter, with skills, the Soldier's tool and a Fighting Style to pick; ends on his sheet
+    private async Task CreateGromAsync()
+    {
+        await StartCharacterAsync("Grom", "2014 rules");
+        await PickAsync("Half-Orc");
+        await NextAsync("Class");
+        await PickAsync("Fighter");
+        await NextAsync("Background");
+        await PickAsync("Soldier");
+        await NextAsync("Languages");
+        await NextAsync("Ability Scores");
+        await StandardArrayAsync();
+        await NextAsync("Proficiencies");
+        await PickFirstAsync(2);
+        await PickToolAsync();
+        await NextAsync("Improvements");
+        await _page.GetByRole(AriaRole.Combobox).SelectOptionAsync(new SelectOptionValue { Label = "Defense" });
+        await NextAsync("Spells");
+        await Expect(_page.GetByText("No Spells Available")).ToBeVisibleAsync();
+        await NextAsync("Review");
+        await CreateAsync("Grom");
     }
 
     private async Task StartCharacterAsync(string name, string rules)

@@ -119,6 +119,19 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
 
         public bool IsCompleted { get; private set; }
 
+        /// <summary>
+        /// The character this draft made, once finalized, or the one it edits. A completed draft
+        /// with one is that character's build: every choice it was made with, which an edit copies.
+        /// Null for a new character's draft until it is finalized.
+        /// </summary>
+        public Guid? CharacterId { get; private set; }
+
+        /// <summary>
+        /// The steps an edit could not fill in from the character (DraftChoice), so the wizard marks
+        /// them as needing a pick. Each goes when its step is saved; empty for every other draft.
+        /// </summary>
+        public List<string> ChoicesNeeded { get; private set; } = [];
+
         public static CharacterDraft CreateEmpty(Guid userId, TimeProvider timeProvider)
         {
             var now = timeProvider.GetUtcNow();
@@ -132,6 +145,98 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 CreatedAt = now,
                 IsCompleted = false
             };
+        }
+
+        /// <summary>
+        /// An edit of the character a completed draft made: a new draft holding a copy of every
+        /// choice, so the edit can be left unsaved without touching the build. A build from before
+        /// the ability score method was kept has its scores picked again.
+        /// </summary>
+        public static CharacterDraft StartEdit(CharacterDraft build, TimeProvider timeProvider)
+        {
+            ArgumentNullException.ThrowIfNull(build);
+
+            if (!build.IsCompleted || build.CharacterId is null)
+            {
+                throw new ArgumentException("Only a finalized draft holds a character's choices.", nameof(build));
+            }
+
+            var draft = CreateEmpty(build.CreatedByUserId, timeProvider);
+
+            draft.CharacterId = build.CharacterId;
+            draft.Name = build.Name;
+            draft.Level = build.Level;
+            draft.Edition = build.Edition;
+            draft.AllowedSources = [.. build.AllowedSources];
+            draft.RaceId = build.RaceId;
+            draft.SubraceId = build.SubraceId;
+            draft.Size = build.Size;
+            draft.RaceSpellIds = [.. build.RaceSpellIds];
+            draft.RaceAbilityIncreases = new Dictionary<string, int>(build.RaceAbilityIncreases);
+            draft.ClassId = build.ClassId;
+            draft.SubclassId = build.SubclassId;
+            draft.BackgroundId = build.BackgroundId;
+            draft.BackgroundAbilityIncreases = new Dictionary<string, int>(build.BackgroundAbilityIncreases);
+            draft.BackgroundFeatId = build.BackgroundFeatId;
+            draft.BaseAbilityScores = new Dictionary<string, int>(build.BaseAbilityScores);
+            draft.BaseAbilityScoreMethod = build.BaseAbilityScoreMethod;
+            draft.SelectedClassProficiencyIds = [.. build.SelectedClassProficiencyIds];
+            draft.SelectedRaceSkillIds = [.. build.SelectedRaceSkillIds];
+            draft.SelectedLanguageIds = [.. build.SelectedLanguageIds];
+            draft.ToolPicks = build.ToolPicks.ConvertAll(pick => new List<string>(pick));
+            draft.SelectedFeatIds = [.. build.SelectedFeatIds];
+            draft.FeatAbilityIncreases = build.FeatAbilityIncreases.ConvertAll(increase => new Dictionary<string, int>(increase));
+            draft.FeatProficiencyPicks = build.FeatProficiencyPicks.ConvertAll(pick => new FeatProficiencyPick
+            {
+                FeatId = pick.FeatId,
+                ProficiencyIds = [.. pick.ProficiencyIds],
+            });
+            draft.FightingStyleIds = [.. build.FightingStyleIds];
+            draft.SelectedSpellIds = [.. build.SelectedSpellIds];
+            draft.FeatSpells = build.FeatSpells.ConvertAll(pick => new FeatSpellPick
+            {
+                FeatId = pick.FeatId,
+                ClassId = pick.ClassId,
+                SpellIds = [.. pick.SpellIds],
+                AbilityId = pick.AbilityId,
+            });
+            draft.AbilityScoreImprovements = build.AbilityScoreImprovements.ConvertAll(improvement => new Dictionary<string, int>(improvement));
+
+            if (build.BaseAbilityScoreMethod is null)
+            {
+                draft.ChoicesNeeded = [DraftChoice.AbilityScores];
+            }
+
+            return draft;
+        }
+
+        /// <summary>
+        /// An edit of a character no build is kept for, made before the drafts were linked to
+        /// their characters: what the character stores as it was picked (the name, level,
+        /// edition, race, subrace, size, class, subclass and background), with the books they
+        /// come from. The steps of everything else are marked as needing a pick.
+        /// </summary>
+        public static CharacterDraft StartEdit(Character character, IEnumerable<string> books, TimeProvider timeProvider)
+        {
+            ArgumentNullException.ThrowIfNull(character);
+            ArgumentNullException.ThrowIfNull(books);
+
+            var draft = CreateEmpty(character.UserId, timeProvider);
+
+            draft.CharacterId = character.Id;
+            draft.Name = character.Name;
+            draft.Level = character.Level;
+            draft.Edition = character.Edition;
+            draft.AllowedSources = books.Prepend(RulesEdition.PlayersHandbook(character.Edition)).Distinct().ToList();
+            draft.RaceId = character.RaceId;
+            draft.SubraceId = character.SubraceId;
+            draft.Size = character.Size;
+            draft.ClassId = character.ClassId;
+            draft.SubclassId = character.SubclassId;
+            draft.BackgroundId = character.BackgroundId;
+            draft.ChoicesNeeded = [.. DraftChoice.NotKeptByCharacter];
+
+            return draft;
         }
 
         /// <summary>
@@ -371,6 +476,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             SubraceId = subraceId;
             RaceAbilityIncreases = Canonical(abilityIncreases);
             Size = size;
+            Made(DraftChoice.Race);
         }
 
         /// <summary>
@@ -387,6 +493,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             }
 
             SubraceId = subraceId;
+            Made(DraftChoice.Race);
         }
 
         /// <summary>
@@ -413,17 +520,20 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             BackgroundId = backgroundId;
             BackgroundAbilityIncreases = Canonical(abilityIncreases);
             BackgroundFeatId = featId;
+            Made(DraftChoice.Background);
         }
 
         public void SetBaseAbilityScores(Dictionary<string, int> scores, string method)
         {
             BaseAbilityScores = new Dictionary<string, int>(scores);
             BaseAbilityScoreMethod = method;
+            Made(DraftChoice.AbilityScores);
         }
 
         public void SetClassProficiencies(List<string> proficiencyIds)
         {
             SelectedClassProficiencyIds = proficiencyIds;
+            Made(DraftChoice.Proficiencies);
         }
 
         public void SetRaceSkills(List<string> proficiencyIds)
@@ -434,6 +544,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public void SetLanguages(List<string> languageIds)
         {
             SelectedLanguageIds = languageIds;
+            Made(DraftChoice.Languages);
         }
 
         /// <summary>Sets the tools picked, one list per tool choice in the order ToolPicks describes.</summary>
@@ -442,6 +553,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             ArgumentNullException.ThrowIfNull(picks);
 
             ToolPicks = picks;
+            Made(DraftChoice.Proficiencies);
         }
 
         /// <summary>
@@ -470,6 +582,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             FeatAbilityIncreases = abilityIncreases?.ConvertAll(increase => Canonical(increase)) ?? featIds.ConvertAll(_ => new Dictionary<string, int>());
             FeatProficiencyPicks = proficiencyPicks ?? [];
             SelectedFeatIds = featIds;
+            Made(DraftChoice.Improvements);
         }
 
         /// <summary>
@@ -482,6 +595,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public void SetAbilityScoreImprovements(List<Dictionary<string, int>> improvements)
         {
             AbilityScoreImprovements = improvements;
+            Made(DraftChoice.Improvements);
         }
 
         public void ChooseFightingStyles(List<string> featIds)
@@ -495,11 +609,13 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             }
 
             FightingStyleIds = featIds;
+            Made(DraftChoice.Improvements);
         }
 
         public void SetSpells(List<string> spellIds)
         {
             SelectedSpellIds = spellIds;
+            Made(DraftChoice.Spells);
         }
 
         /// <summary>
@@ -521,6 +637,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 SpellIds = pick.SpellIds,
                 AbilityId = pick.AbilityId is { } abilityId ? AbilityScore.Normalize(abilityId) : null,
             });
+            Made(DraftChoice.Spells);
         }
 
         // The improvements step as a whole: the points, the feats taken instead and what they
@@ -541,9 +658,24 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             FeatSpells = [];
         }
 
-        public void MarkAsCompleted()
+        // A step an edit marked as needing a pick has been saved
+        private void Made(string choice)
+        {
+            if (ChoicesNeeded.Contains(choice))
+            {
+                ChoicesNeeded = ChoicesNeeded.FindAll(c => c != choice);
+            }
+        }
+
+        /// <summary>
+        /// Marks the draft as the build of the character it made or edited: it holds every choice
+        /// the character has now, and the finalize that passed left none needing a pick.
+        /// </summary>
+        public void MarkAsCompleted(Guid characterId)
         {
             IsCompleted = true;
+            CharacterId = characterId;
+            ChoicesNeeded = [];
         }
 
         /// <summary>

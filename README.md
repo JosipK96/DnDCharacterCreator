@@ -13,6 +13,9 @@ the 2014 or the 2024 rules, and keeping them on a character sheet.
 - **A guided wizard.** Name and level, race, class, background, languages, ability scores,
   proficiencies, spells and improvements, then a review of the finished sheet before saving.
   A draft is saved after every step, so it can be left and picked up again.
+- **Saved characters can be edited.** "Edit" opens a character in the same wizard with every
+  choice it was made with; saving replaces it and keeps its id, and leaving the edit unsaved
+  changes nothing.
 - **The rules are checked, not just offered.** Spell counts and levels come from the class's
   spell table, feat prerequisites are checked against the character, a skill already given by
   the race or background cannot be picked again, and changing an earlier step clears the
@@ -137,7 +140,7 @@ The wizard has two test projects of its own:
   ```
 
 - `tests/CharacterCreatorApp.Client.IntegrationTests`: a Playwright smoke test that registers
-  with an invite code and builds a 2014 and a 2024 character through the real wizard, in a
+  with an invite code, builds a 2014 and a 2024 character and edits one through the real wizard, in a
   headless Chromium, against the Api on a local port and a Testcontainers PostgreSQL. It needs
   Docker. The first run downloads Chromium (about 150 MB, into the user's Playwright cache);
   to do that up front, build the project and run its install script (with Windows PowerShell

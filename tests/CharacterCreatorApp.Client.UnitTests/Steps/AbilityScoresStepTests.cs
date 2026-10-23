@@ -5,6 +5,7 @@ using Bunit;
 using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
+using CharacterCreatorApp.Contracts.Responses;
 
 using FluentAssertions;
 
@@ -15,6 +16,9 @@ public class AbilityScoresStepTests : WizardStepTestBase
     private static readonly string Saved = SaveRoute("ability-scores");
 
     private int _movedOn;
+
+    // A new draft, with no scores yet, unless a test saves some first
+    private CharacterDraftDetailsApiResponse _draft = new() { Id = DraftId };
 
     [Fact]
     public void Next_WithTheStandardArrayAssigned_SavesItAsTheStandardArray()
@@ -56,7 +60,7 @@ public class AbilityScoresStepTests : WizardStepTestBase
 
         // Assert
         Button(cut, "Next: Proficiencies").HasAttribute("disabled").Should().BeTrue();
-        Api.Requests.Should().BeEmpty();
+        Api.Requests.Should().NotContain(Saved);
     }
 
     [Fact]
@@ -148,6 +152,48 @@ public class AbilityScoresStepTests : WizardStepTestBase
         _movedOn.Should().Be(0);
     }
 
+    [Fact]
+    public void Render_WithScoresSaved_ShowsThemAssignedAndSavesThemUnchanged()
+    {
+        // Arrange - coming back to the step, or editing a saved character: point buy, with
+        // Strength and Charisma swapped from the usual order
+        _draft = new CharacterDraftDetailsApiResponse
+        {
+            Id = DraftId,
+            BaseAbilityScoreMethod = "point-buy",
+            BaseAbilityScores = new Dictionary<string, int> { ["STR"] = 8, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 12, ["WIS"] = 10, ["CHA"] = 15 },
+        };
+        Api.Put(DraftPath("ability-scores"));
+
+        // Act
+        var cut = RenderStep();
+        Button(cut, "Next: Proficiencies").Click();
+
+        // Assert
+        var sent = Api.BodyOf<SetAbilityScoresApiRequest>(Saved);
+        sent.Method.Should().Be("point-buy");
+        sent.Scores.Should().Equal(_draft.BaseAbilityScores);
+        _movedOn.Should().Be(1);
+    }
+
+    [Fact]
+    public void Render_WithScoresSavedBeforeTheMethodWasKept_AsksForThemAgain()
+    {
+        // Arrange
+        _draft = new CharacterDraftDetailsApiResponse
+        {
+            Id = DraftId,
+            BaseAbilityScores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 14, ["CON"] = 13, ["INT"] = 12, ["WIS"] = 10, ["CHA"] = 8 },
+        };
+
+        // Act
+        var cut = RenderStep();
+
+        // Assert
+        ScoreCards(cut).Should().BeEmpty();
+        Button(cut, "Next: Proficiencies").HasAttribute("disabled").Should().BeTrue();
+    }
+
     // The score cards are the buttons holding a big number; the first unassigned ability takes each
     private static List<IElement> ScoreCards(IRenderedComponent<AbilityScoresStep> cut) =>
         cut.FindAll("button").Where(b => b.QuerySelector("div.text-4xl") is not null).ToList();
@@ -161,9 +207,13 @@ public class AbilityScoresStepTests : WizardStepTestBase
         }
     }
 
-    private IRenderedComponent<AbilityScoresStep> RenderStep() =>
-        Render<AbilityScoresStep>(parameters => parameters
+    private IRenderedComponent<AbilityScoresStep> RenderStep()
+    {
+        Api.Get(DraftPath(), _draft);
+
+        return Render<AbilityScoresStep>(parameters => parameters
             .Add(p => p.DraftId, DraftId)
             .Add(p => p.Step, 6)
             .Add(p => p.OnNext, () => _movedOn++));
+    }
 }

@@ -197,6 +197,10 @@
                                     class="flex-1 mr-2 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
                                 View Details
                             </button>
+                            <button @onclick="() => EditCharacter(character.Id)"
+                                    class="mr-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                Edit
+                            </button>
                             <button @onclick="() => ConfirmDelete(character)"
                                     class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
                                 Delete
@@ -464,6 +468,20 @@
     private void NavigateToCharacterDetails(Guid characterId)
     {
         Navigation.NavigateTo($"/character/{characterId}");
+    }
+
+    // The character opens in the wizard as a draft; saving it replaces the character
+    private async Task EditCharacter(Guid characterId)
+    {
+        try
+        {
+            var draftId = await CharacterService.StartEditAsync(characterId);
+            Navigation.NavigateTo($"/character/create/{draftId}");
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            errorMessage = $"Failed to open the character for editing: {ex.Message}";
+        }
     }
 
     private void ConfirmDelete(CharacterSummaryApiResponse character)

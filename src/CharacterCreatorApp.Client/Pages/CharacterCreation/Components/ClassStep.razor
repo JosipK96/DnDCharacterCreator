@@ -215,11 +215,21 @@
     protected override async Task OnInitializedAsync()
     {
         characterLevel = CharacterLevel;
-        await LoadClasses();
-    }
+        CharacterDraftDetailsApiResponse? draft = null;
 
-    private Task LoadClasses() =>
-        LoadAsync(async () => classes = await LookupService.GetClassesAsync(Edition, Sources), "Failed to load classes");
+        var loaded = await LoadAsync(async () =>
+        {
+            classes = await LookupService.GetClassesAsync(Edition, Sources);
+            draft = await DraftService.GetDraftDetailsAsync(DraftId);
+        }, "Failed to load classes");
+
+        // Coming back to this step, or editing a saved character, shows what the draft holds
+        if (loaded && classes.Find(c => c.Id == draft?.ClassId) is { } saved)
+        {
+            await SelectClass(saved);
+            selectedSubclass = subclasses.Find(s => s.Id == draft!.SubclassId);
+        }
+    }
 
     private async Task SelectClass(ClassApiResponse classOption)
     {

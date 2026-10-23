@@ -57,6 +57,16 @@ public class CharacterService(HttpClient http)
         return await response.ReadOrNullIfNotFoundAsync<CharacterDetailsApiResponse>();
     }
 
+    /// <summary>
+    /// Opens the character as a draft with every choice it was made with; returns the draft's id
+    /// for the wizard. Finalizing the draft replaces the character.
+    /// </summary>
+    public async Task<Guid> StartEditAsync(Guid id)
+    {
+        var response = await _http.PostAsync($"/api/characters/{id}/edit", null);
+        return await response.ReadAsync<Guid>();
+    }
+
     public async Task DeleteCharacterAsync(Guid id)
     {
         var response = await _http.DeleteAsync($"/api/characters/{id}");

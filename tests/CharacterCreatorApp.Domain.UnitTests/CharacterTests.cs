@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.ValueObjects;
 
@@ -496,6 +496,52 @@ public class CharacterTests
 
         // Assert
         act.Should().Throw<ArgumentException>().WithMessage("Invalid ability score key: luck*");
+    }
+
+    [Fact]
+    public void ReplaceWith_TakesEveryBuiltValueButTheIdOwnerAndCreation()
+    {
+        // Arrange - the edit is built a day later, as a new Character with an id of its own
+        var userId = Guid.NewGuid();
+        var saved = Character.Create(
+            userId, "Old Name", 1, RulesEdition.Edition2014, "human", null, "fighter", null, "soldier", CreateValidAbilityScores(), FakeTimeProvider);
+        var later = new FakeTimeProvider(FakeTimeProvider.GetUtcNow().AddDays(1));
+        var rebuilt = Character.Create(
+            userId, "New Name", 2, RulesEdition.Edition2014, "elf", "elf_high", "wizard", null, "sage",
+            new Dictionary<string, int> { ["INT"] = 17 }, later);
+        rebuilt.SetProficiencies(["arcana"]);
+        rebuilt.SetLanguages(["elvish-phb"]);
+        rebuilt.SetSpells(["fire_bolt"]);
+        rebuilt.SetFeats(["alert_2014"]);
+        rebuilt.SetFeatSpells([new FeatSpellPick { FeatId = "magic_initiate_2014", ClassId = "wizard", SpellIds = ["light"] }]);
+        rebuilt.SetSize("Medium");
+        rebuilt.SetFeatSavingThrows(["CON"]);
+
+        // Act
+        saved.ReplaceWith(rebuilt);
+
+        // Assert
+        saved.Should().BeEquivalentTo(rebuilt, options => options
+            .ComparingByMembers<Character>()
+            .Excluding(c => c.Id)
+            .Excluding(c => c.CreatedAt));
+        saved.Id.Should().NotBe(rebuilt.Id);
+        saved.CreatedAt.Should().Be(FakeTimeProvider.GetUtcNow());
+        saved.UserId.Should().Be(userId);
+    }
+
+    [Fact]
+    public void ReplaceWith_AnotherUsersCharacter_Throws()
+    {
+        // Arrange
+        var saved = CreateTestCharacter();
+        var someoneElses = CreateTestCharacter();
+
+        // Act
+        var act = () => saved.ReplaceWith(someoneElses);
+
+        // Assert
+        act.Should().Throw<ArgumentException>();
     }
 
     // Helper methods

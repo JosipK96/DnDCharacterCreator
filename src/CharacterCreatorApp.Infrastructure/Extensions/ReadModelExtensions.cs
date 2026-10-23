@@ -358,6 +358,7 @@ public static class ReadModelExtensions
             BackgroundAbilityIncreases = draft.BackgroundAbilityIncreases,
             BackgroundFeatId = draft.BackgroundFeatId,
             BaseAbilityScores = draft.BaseAbilityScores,
+            BaseAbilityScoreMethod = draft.BaseAbilityScoreMethod,
             SelectedClassProficiencyIds = draft.SelectedClassProficiencyIds,
             SelectedRaceSkillIds = draft.SelectedRaceSkillIds,
             ToolPicks = draft.ToolPicks,
@@ -369,7 +370,9 @@ public static class ReadModelExtensions
             SelectedSpellIds = draft.SelectedSpellIds,
             FeatSpells = draft.FeatSpells,
             AbilityScoreImprovements = draft.AbilityScoreImprovements,
-            IsCompleted = draft.IsCompleted
+            IsCompleted = draft.IsCompleted,
+            CharacterId = draft.CharacterId,
+            ChoicesNeeded = draft.ChoicesNeeded
         };
     }
 }

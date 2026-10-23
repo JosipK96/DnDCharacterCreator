@@ -21,7 +21,25 @@ namespace CharacterCreatorApp.Infrastructure.Repositories
         public async Task<CharacterDraft?> GetByIdForUpdateAsync(Guid id, Guid userId, CancellationToken cancellationToken)
         {
             return await _dbContext.CharacterDrafts
-                .Where(x => x.Id == id && x.CreatedByUserId == userId)
+                .Where(x => x.Id == id && x.CreatedByUserId == userId && !x.IsCompleted)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<CharacterDraft?> GetBuildAsync(Guid characterId, Guid userId, CancellationToken cancellationToken)
+        {
+            // Finalizing an edit deletes the build it replaces, so a character has one; the latest
+            // wins should two ever be left
+            return await _dbContext.CharacterDrafts
+                .Where(x => x.CharacterId == characterId && x.CreatedByUserId == userId && x.IsCompleted)
+                .OrderByDescending(x => x.CreatedAt)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<CharacterDraft?> GetEditAsync(Guid characterId, Guid userId, CancellationToken cancellationToken)
+        {
+            return await _dbContext.CharacterDrafts
+                .Where(x => x.CharacterId == characterId && x.CreatedByUserId == userId && !x.IsCompleted)
+                .OrderByDescending(x => x.CreatedAt)
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
@@ -46,7 +64,7 @@ namespace CharacterCreatorApp.Infrastructure.Repositories
         {
             return await _dbContext.CharacterDrafts
                 .AsNoTracking()
-                .Where(d => !d.IsCompleted && d.CreatedByUserId == userId)
+                .Where(d => !d.IsCompleted && d.CharacterId == null && d.CreatedByUserId == userId)
                 .Select(d => d.ToDetailsReadModel())
                 .FirstOrDefaultAsync(cancellationToken);
         }

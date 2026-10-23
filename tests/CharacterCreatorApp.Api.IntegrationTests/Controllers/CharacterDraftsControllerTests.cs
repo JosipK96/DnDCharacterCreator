@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 using CharacterCreatorApp.Api.IntegrationTests.Fixtures;
+using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.Character;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
 using CharacterCreatorApp.Contracts.Requests.User;
@@ -983,6 +984,133 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
 
         // A d10 and CON 15 (+2), and 1 more from the 2024 dwarf's own Dwarven Toughness
         character.Stats.MaxHitPoints.Should().Be(10 + 2 + 1);
+    }
+
+    [Fact]
+    public async Task Edit_ThatChangesTheScores_ReplacesTheCharacterAndKeepsItsId()
+    {
+        // Arrange - Bruenor saved with STR 15 and CON 14, then edited to swap the two
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var characterId = await FinalizeBruenorAsync();
+        var savedAt = (await ListCharactersAsync()).Single().CreatedAt;
+
+        // Act
+        var draftId = await StartEditAsync(characterId);
+        var edit = await GetDraftAsync(draftId);
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 14, ["DEX"] = 13, ["CON"] = 15, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+
+        // Assert - the edit opened with every choice the character was made with
+        (edit.CharacterId, edit.Name, edit.BaseAbilityScoreMethod).Should().Be((characterId, "Bruenor", "standard-array"));
+        edit.SelectedLanguageIds.Should().BeEquivalentTo(["draconic-xphb", "giant-xphb"]);
+        edit.ChoicesNeeded.Should().BeEmpty();
+
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        (await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken)).Should().Be(characterId);
+
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+        (character!.AbilityScores["STR"], character.AbilityScores["CON"]).Should().Be((14 + 2, 15 + 1));
+        character.Feats.Select(f => f.Feat.Name).Should().BeEquivalentTo(["Savage Attacker", "Defense"]);
+        character.LanguageIds.Should().BeEquivalentTo(["common-xphb", "draconic-xphb", "giant-xphb"]);
+
+        var list = await ListCharactersAsync();
+        list.Should().ContainSingle().Which.CreatedAt.Should().Be(savedAt);
+    }
+
+    [Fact]
+    public async Task Edit_AfterASavedEdit_OpensWhatThatEditSaved()
+    {
+        // Arrange - the saved edit is the character's build now
+        await SignInAsync();
+        var characterId = await FinalizeBruenorAsync();
+        var firstEditId = await StartEditAsync(characterId);
+        await PutStepAsync(firstEditId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 14, ["DEX"] = 13, ["CON"] = 15, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        var saved = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(firstEditId), TestContext.Current.CancellationToken);
+        saved.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        // Act
+        var again = await GetDraftAsync(await StartEditAsync(characterId));
+
+        // Assert
+        (again.BaseAbilityScores["STR"], again.BaseAbilityScores["CON"]).Should().Be((14, 15));
+    }
+
+    [Fact]
+    public async Task Edit_LeftUnsaved_ChangesNothingAndEditingAgainStartsOver()
+    {
+        // Arrange
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var characterId = await FinalizeBruenorAsync();
+        var abandonedId = await StartEditAsync(characterId);
+        await PutStepAsync(abandonedId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 8, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 15, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+
+        // Act
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+        var resumable = await _client.GetAsync("/api/character-drafts/incomplete", cancellationToken);
+        var againId = await StartEditAsync(characterId);
+
+        // Assert - the sheet is as saved, the edit is no new character to resume, and the next
+        // edit starts from the saved scores
+        character!.AbilityScores["STR"].Should().Be(15 + 2);
+        await resumable.ShouldFailWithAsync(HttpStatusCode.NotFound, "CharacterDraft.NoIncompleteDraft");
+        againId.Should().NotBe(abandonedId);
+        (await GetDraftAsync(againId)).BaseAbilityScores["STR"].Should().Be(15);
+
+        var abandoned = await _client.GetAsync($"/api/character-drafts/{abandonedId}", cancellationToken);
+        abandoned.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    // A level 1 2024 dwarf fighter, finalized through the wizard's steps
+    private async Task<Guid> FinalizeBruenorAsync()
+    {
+        var draftId = await CreateDraftAsync();
+
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Bruenor", Level = 1, Edition = "2024" });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf_2024" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+        await PutStepAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(["defense_2024"]));
+        await PutStepAsync(draftId, "background", Soldier2024());
+        await PutStepAsync(draftId, "languages", new ChooseLanguagesApiRequest(["draconic-xphb", "giant-xphb"]));
+        await PutStepAsync(draftId, "tools", new ChooseToolsApiRequest([["dice_set"]]));
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 15, ["DEX"] = 13, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        await PutStepAsync(draftId, "proficiencies", new ChooseProficienciesApiRequest(["acrobatics", "perception"]));
+
+        var response = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), TestContext.Current.CancellationToken);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        return await response.Content.ReadFromJsonAsync<Guid>(TestContext.Current.CancellationToken);
+    }
+
+    private async Task<Guid> StartEditAsync(Guid characterId)
+    {
+        var response = await _client.PostAsync($"/api/characters/{characterId}/edit", null, TestContext.Current.CancellationToken);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        return await response.Content.ReadFromJsonAsync<Guid>(TestContext.Current.CancellationToken);
+    }
+
+    private async Task<List<CharacterSummaryApiResponse>> ListCharactersAsync()
+    {
+        var response = await _client.PostAsJsonAsync(
+            "/api/characters/get-list", new FilterRequest<GetCharactersApiRequest>(), TestContext.Current.CancellationToken);
+        var page = await response.Content.ReadFromJsonAsync<FilterResponse<CharacterSummaryApiResponse>>(TestContext.Current.CancellationToken);
+        return page!.Items.ToList();
     }
 
     [Fact]

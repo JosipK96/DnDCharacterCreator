@@ -1020,10 +1020,28 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
 
         var list = await ListCharactersAsync();
         list.Should().ContainSingle().Which.CreatedAt.Should().Be(savedAt);
+    }
 
-        // The edit is the character's build now, so editing again opens the new scores
+    [Fact]
+    public async Task Edit_AfterASavedEdit_OpensWhatThatEditSaved()
+    {
+        // Arrange - the saved edit is the character's build now
+        await SignInAsync();
+        var characterId = await FinalizeBruenorAsync();
+        var firstEditId = await StartEditAsync(characterId);
+        await PutStepAsync(firstEditId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 14, ["DEX"] = 13, ["CON"] = 15, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+        var saved = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(firstEditId), TestContext.Current.CancellationToken);
+        saved.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        // Act
         var again = await GetDraftAsync(await StartEditAsync(characterId));
-        again.BaseAbilityScores["CON"].Should().Be(15);
+
+        // Assert
+        (again.BaseAbilityScores["STR"], again.BaseAbilityScores["CON"]).Should().Be((14, 15));
     }
 
     [Fact]

@@ -2,7 +2,9 @@
 
 ## Git
 
-- Commit only when asked. Never push — that is the developer's call.
+- Work arrives through an issue, a branch and a pull request, never a push to `main`: the
+  steps are in `docs/agents/issue-tracker.md`, and the attribution, identity and merge rules in
+  the root CLAUDE.md's Git section.
 - Commit messages are plain sentences saying what changed and why. No
   `feat(...)` / `fix(...)` prefixes, no padded bodies.
 - Say what the change *fixes*, not just what it touches. "Apply ASIs, chosen

@@ -71,6 +71,13 @@ jobs:
               --report-xunit-trx --report-xunit-trx-filename "$(basename "$project" .csproj).trx"
           done
 
+      # The wizard's browser tests (Client.IntegrationTests) drive Chromium through Playwright.
+      # The script comes with that project's build; --with-deps adds the system libraries too.
+      - name: Install Chromium
+        if: (success() || failure()) && steps.build.outcome == 'success'
+        shell: pwsh
+        run: tests/CharacterCreatorApp.Client.IntegrationTests/bin/Release/net10.0/playwright.ps1 install --with-deps chromium
+
       # Runs when the unit tests failed too, so one run shows both; not when nothing was built.
       # PostgreSQL starts through Testcontainers on the runner's Docker.
       - name: Integration tests

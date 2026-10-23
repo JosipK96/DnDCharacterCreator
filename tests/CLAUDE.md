@@ -12,6 +12,10 @@ Long form: `docs/conventions/git-and-testing.md`.
   fixture is unrealistic, not that the validation is wrong.
 - The `*.IntegrationTests` projects start PostgreSQL through Testcontainers, so Docker must be
   running. The unit test projects don't need it.
+- The client's services are concrete classes over an HttpClient, so the bUnit tests run the real
+  services over `FakeApi`, a strict handler: set up each route a step calls, and assert what it
+  sent with `BodyOf<T>`, read as the API binds it. Client.IntegrationTests also needs Chromium,
+  which its `WizardHost` installs on the first run (and CI in a step of its own).
 
 ## Which tests cover what
 
@@ -32,4 +36,6 @@ migration tests live in an integration project but don't.
 | Seeding into the database | `SeedServiceTests` | Infrastructure.IntegrationTests | **yes** |
 | Repositories | `CharacterDraftRepositoryTests` | Infrastructure.IntegrationTests | **yes** |
 | HTTP endpoints | `CharacterDraftsControllerTests`, `CharactersControllerTests`, `LookupControllersTests`, `UsersControllerTests` | Api.IntegrationTests | **yes** |
+| Wizard steps in the client: point buy and the dice roll, improvements and Fighting Styles, spell counts, books | `PointBuyComponentTests`, `AbilityScoresStepTests`, `ImprovementsStepTests`, `SpellsStepTests`, `NameAndLevelStepTests` | Client.UnitTests | no |
+| The wizard in a browser: register, a 2014 and a 2024 character, a refused pick | `WizardSmokeTests` (Playwright, Chromium) | Client.IntegrationTests | **yes** |
 | Seed data generator (5etools parsing, SRD filter) | `FiveEToolsMarkupTests`, `SrdTextTests`, `SourceBooksTests`, `FeatPrerequisiteParserTests`, … | SeedDataGenerator.UnitTests | no |

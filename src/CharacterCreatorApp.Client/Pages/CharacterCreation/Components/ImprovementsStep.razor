@@ -382,10 +382,13 @@
             saved.Add(FeatSlot(featIds[i], increases.ElementAtOrDefault(i), isRaceFeat: false));
         }
 
-        // Only trust the restored slots if they still match what this character has earned
-        if (saved.Count(s => s.IsRaceFeat) == bonusFeatCount && saved.Count(s => !s.IsRaceFeat) == asiCount)
+        // Only trust the restored slots if they still fit what this character has earned. A
+        // level-up's new improvement comes after the ones already taken, which stay as they were.
+        var taken = saved.Count(s => !s.IsRaceFeat);
+
+        if (saved.Count(s => s.IsRaceFeat) == bonusFeatCount && taken <= asiCount)
         {
-            return saved;
+            return [.. saved, .. Enumerable.Range(0, asiCount - taken).Select(_ => new AsiSlot())];
         }
 
         return

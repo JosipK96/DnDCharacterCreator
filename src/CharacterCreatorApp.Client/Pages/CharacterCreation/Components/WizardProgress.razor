@@ -1,13 +1,15 @@
 <div class="mb-8">
     <div class="flex items-start">
-        @for (int step = 1; step <= TotalSteps; step++)
+        @for (int position = 0; position < Flow.Count; position++)
         {
-            var stepNumber = step;
+            var stepNumber = Flow[position];
+            var shownNumber = position + 1;
+            var isLast = position == Flow.Count - 1;
             var isActive = stepNumber == CurrentStep;
-            var isCompleted = stepNumber < CurrentStep;
+            var isCompleted = position < CurrentPosition;
             var needsPick = StepsNeedingPick.Contains(stepNumber) && !isActive;
 
-            <div class="flex items-center @(stepNumber < TotalSteps ? "flex-1" : "")">
+            <div class="flex items-center @(isLast ? "" : "flex-1")">
                 <div class="flex flex-col items-center">
                     @* An edit can go to any step: every step shows what the draft holds *@
                     @if (OnSelectStep.HasDelegate)
@@ -15,13 +17,13 @@
                         <button type="button" class="@GetStepClass(isActive, isCompleted, needsPick)"
                                 title="@StepTitle(stepNumber, needsPick)"
                                 @onclick="() => OnSelectStep.InvokeAsync(stepNumber)">
-                            @StepMark(stepNumber, isCompleted, needsPick)
+                            @StepMark(shownNumber, isCompleted, needsPick)
                         </button>
                     }
                     else
                     {
                         <div class="@GetStepClass(isActive, isCompleted, needsPick)" title="@StepTitle(stepNumber, needsPick)">
-                            @StepMark(stepNumber, isCompleted, needsPick)
+                            @StepMark(shownNumber, isCompleted, needsPick)
                         </div>
                     }
                     <span class="text-xs mt-1 text-center @(isActive ? "text-indigo-400 font-medium" : "text-gray-500")">@GetStepLabel(stepNumber)</span>
@@ -30,7 +32,7 @@
                         <span class="text-xs text-amber-400 text-center">Needs a pick</span>
                     }
                 </div>
-                @if (stepNumber < TotalSteps)
+                @if (!isLast)
                 {
                     <!-- Connecting line -->
                     <div class="flex-1 h-0.5 mx-2 mb-4 @(isCompleted ? "bg-indigo-600" : "bg-gray-700")"></div>
@@ -44,7 +46,14 @@
     [Parameter]
     public int CurrentStep { get; set; }
 
-    /// <summary>The steps an edit could not fill in from the saved character (WizardSteps.StepsOf).</summary>
+    /// <summary>
+    /// The steps shown, by number (WizardSteps): all of them for a new character or an edit, and
+    /// only what the new level brings for a level-up (WizardSteps.LevelUpOf), numbered as shown.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<int> Flow { get; set; } = WizardSteps.Creation;
+
+    /// <summary>The steps still needing a pick: what an edit could not fill in, or a level-up has yet to pick (WizardSteps.StepsOf).</summary>
     [Parameter]
     public IReadOnlySet<int> StepsNeedingPick { get; set; } = new HashSet<int>();
 
@@ -52,7 +61,7 @@
     [Parameter]
     public EventCallback<int> OnSelectStep { get; set; }
 
-    private static int TotalSteps => WizardSteps.Count;
+    private int CurrentPosition => Flow.ToList().IndexOf(CurrentStep);
 
     private static string GetStepClass(bool isActive, bool isCompleted, bool needsPick)
     {
@@ -70,7 +79,7 @@
         return $"{baseClass} bg-gray-700 text-gray-400";
     }
 
-    private static RenderFragment StepMark(int stepNumber, bool isCompleted, bool needsPick) => __builder =>
+    private static RenderFragment StepMark(int shownNumber, bool isCompleted, bool needsPick) => __builder =>
     {
         if (needsPick)
         {
@@ -84,7 +93,7 @@
         }
         else
         {
-            <span>@stepNumber</span>
+            <span>@shownNumber</span>
         }
     };
 

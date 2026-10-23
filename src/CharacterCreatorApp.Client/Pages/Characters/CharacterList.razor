@@ -201,6 +201,13 @@
                                     class="mr-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
                                 Edit
                             </button>
+                            @if (character.Level < CharacterLevels.Max)
+                            {
+                                <button @onclick="() => LevelUpCharacter(character.Id)"
+                                        class="mr-2 bg-emerald-700 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                                    Level Up
+                                </button>
+                            }
                             <button @onclick="() => ConfirmDelete(character)"
                                     class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
                                 Delete
@@ -481,6 +488,20 @@
         catch (Exception ex) when (ex is ApiException or HttpRequestException)
         {
             errorMessage = $"Failed to open the character for editing: {ex.Message}";
+        }
+    }
+
+    // The character opens one level up in the wizard, which asks only what the new level brings
+    private async Task LevelUpCharacter(Guid characterId)
+    {
+        try
+        {
+            var draftId = await CharacterService.StartLevelUpAsync(characterId);
+            Navigation.NavigateTo($"/character/create/{draftId}");
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            errorMessage = $"Failed to level the character up: {ex.Message}";
         }
     }
 

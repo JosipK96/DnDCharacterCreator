@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 
 using CharacterCreatorApp.Domain.Common;
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Domain.DomainModels.Characters
@@ -132,6 +133,30 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// </summary>
         public List<string> ChoicesNeeded { get; private set; } = [];
 
+        /// <summary>
+        /// The steps a level-up asks for (DraftChoice), fixed when it starts: its hit points, and
+        /// what the new level brings (Class.ChoicesGainedAt). Empty for every other draft.
+        /// </summary>
+        public List<string> LevelUpChoices { get; private set; } = [];
+
+        /// <summary>
+        /// The hit die's result for each level a level-up reached, by level: what the player rolled,
+        /// or the die's fixed value. A level without one, such as every level a character was
+        /// created with, takes the fixed value.
+        /// </summary>
+        public Dictionary<int, int> HitDieResults { get; private set; } = [];
+
+        /// <summary>The highest level a character reaches.</summary>
+        public const int MaxLevel = 20;
+
+        public bool IsLevelUp => LevelUpChoices.Count != 0;
+
+        /// <summary>
+        /// Whether the draft may take this class: any for a new character or an edit, only its own
+        /// for a level-up, where a level of another class would be multiclassing.
+        /// </summary>
+        public bool AllowsClass(string classId) => !IsLevelUp || classId == ClassId;
+
         public static CharacterDraft CreateEmpty(Guid userId, TimeProvider timeProvider)
         {
             var now = timeProvider.GetUtcNow();
@@ -201,6 +226,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 AbilityId = pick.AbilityId,
             });
             draft.AbilityScoreImprovements = build.AbilityScoreImprovements.ConvertAll(improvement => new Dictionary<string, int>(improvement));
+            draft.HitDieResults = new Dictionary<int, int>(build.HitDieResults);
 
             if (build.BaseAbilityScoreMethod is null)
             {
@@ -234,9 +260,63 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             draft.ClassId = character.ClassId;
             draft.SubclassId = character.SubclassId;
             draft.BackgroundId = character.BackgroundId;
+            draft.HitDieResults = new Dictionary<int, int>(character.HitDieResults);
             draft.ChoicesNeeded = [.. DraftChoice.NotKeptByCharacter];
 
             return draft;
+        }
+
+        /// <summary>
+        /// Raises an edit of a saved character by one level and keeps every pick, where
+        /// SetNameAndLevel clears what a level changes. The level-up then asks for its hit points
+        /// and what the new level brings (Class.ChoicesGainedAt, from the class and subclass data),
+        /// with any step an older character's edit already marks: they become LevelUpChoices, and
+        /// each is marked as needing a pick. The scores are the character's final ones.
+        /// </summary>
+        public void LevelUp(Class @class, Subclass? subclass, IReadOnlyDictionary<string, int> abilityScores)
+        {
+            ArgumentNullException.ThrowIfNull(@class);
+            ArgumentNullException.ThrowIfNull(abilityScores);
+
+            if (CharacterId is null || IsCompleted || IsLevelUp)
+            {
+                throw new InvalidOperationException("Only a new edit of a saved character levels up.");
+            }
+
+            if (@class.Id != ClassId)
+            {
+                throw new ArgumentException($"The draft's class is {ClassId}, not {@class.Id}.", nameof(@class));
+            }
+
+            if (Level is not { } level || level >= MaxLevel)
+            {
+                throw new InvalidOperationException($"A character of level {Level} cannot level up.");
+            }
+
+            Level = level + 1;
+            LevelUpChoices = @class.ChoicesGainedAt(level + 1, subclass, abilityScores)
+                .Prepend(DraftChoice.HitPoints)
+                .Concat(ChoicesNeeded)
+                .Distinct()
+                .ToList();
+            ChoicesNeeded = [.. LevelUpChoices];
+        }
+
+        /// <summary>
+        /// The hit die's result for the level this level-up reaches: what the player rolled, or the
+        /// die's fixed value. The caller checks it is no more than the class's hit die.
+        /// </summary>
+        public void SetHitDieResult(int result)
+        {
+            if (!IsLevelUp)
+            {
+                throw new InvalidOperationException("Hit points are picked only on a level-up.");
+            }
+
+            ArgumentOutOfRangeException.ThrowIfLessThan(result, 1);
+
+            HitDieResults = new Dictionary<int, int>(HitDieResults) { [Level!.Value] = result };
+            Made(DraftChoice.HitPoints);
         }
 
         /// <summary>
@@ -280,6 +360,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             FeatSpells = [];
             SelectedSpellIds = [];
             AbilityScoreImprovements = [];
+            HitDieResults = [];
         }
 
         public bool AllowsSource(string source) => AllowedSources.Contains(source);
@@ -343,6 +424,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 SelectedClassProficiencyIds = [];
                 SelectedSpellIds = [];
                 ToolPicks = [];
+                HitDieResults = [];
                 ClearFightingStyles();
                 ClearImprovements();
             }
@@ -399,6 +481,9 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 ClearImprovements();
                 SelectedSpellIds = [];
                 ClearFightingStyles();
+
+                // The hit points of the levels below stay as they were rolled
+                HitDieResults = HitDieResults.Where(r => r.Key <= level).ToDictionary();
             }
 
             Name = name;
@@ -411,13 +496,19 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// </summary>
         public void SetClass(string classId, string? subclassId = null)
         {
+            if (!AllowsClass(classId))
+            {
+                throw new InvalidOperationException($"A level-up keeps its class, {ClassId}.");
+            }
+
             if (ClassId != classId)
             {
-                // Proficiency options, spell lists, improvement levels and the class features feats
-                // ask for are all class-specific
+                // Proficiency options, spell lists, improvement levels, the class features feats
+                // ask for and the hit die are all class-specific
                 SelectedClassProficiencyIds = [];
                 ToolPicks = [];
                 SelectedSpellIds = [];
+                HitDieResults = [];
                 ClearFightingStyles();
                 ClearImprovements();
             }
@@ -432,19 +523,26 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         /// - Changing subclass selection
         /// - Adding subclass after class is already set
         /// - Level-up requiring subclass selection
-        /// Another subclass clears the spells: it changes the lists they come from (an Eldritch
-        /// Knight's wizard spells) and the spell table itself. It clears the Fighting Styles too,
-        /// a Champion having one more than another fighter.
+        /// Another subclass in place of one clears the spells: it changes the lists they come from
+        /// (an Eldritch Knight's wizard spells) and the spell table itself. It clears the Fighting
+        /// Styles too, a Champion having one more than another fighter. A first subclass, as a
+        /// level-up picks it, keeps both: a fighter's style from level 1 stays, and the spells
+        /// step and finalize check the picks against what the subclass brings.
         /// </summary>
         public void SetSubclass(string? subclassId)
         {
-            if (SubclassId != subclassId)
+            if (SubclassId != null && SubclassId != subclassId)
             {
                 SelectedSpellIds = [];
                 ClearFightingStyles();
             }
 
             SubclassId = subclassId;
+
+            if (subclassId != null)
+            {
+                Made(DraftChoice.Subclass);
+            }
         }
 
         /// <summary>
@@ -669,13 +767,15 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
 
         /// <summary>
         /// Marks the draft as the build of the character it made or edited: it holds every choice
-        /// the character has now, and the finalize that passed left none needing a pick.
+        /// the character has now, and the finalize that passed left none needing a pick. A build is
+        /// no level-up any more, so an edit of it is a plain edit.
         /// </summary>
         public void MarkAsCompleted(Guid characterId)
         {
             IsCompleted = true;
             CharacterId = characterId;
             ChoicesNeeded = [];
+            LevelUpChoices = [];
         }
 
         /// <summary>

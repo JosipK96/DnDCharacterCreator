@@ -45,6 +45,9 @@ public sealed class CharacterDetailsReadModel
     /// <summary>Saving throws feats add beside the class's: Resilient's.</summary>
     public List<string> FeatSavingThrowAbilityIds { get; set; } = [];
 
+    /// <summary>The hit die's result for each level a level-up reached (Character.HitDieResults).</summary>
+    public Dictionary<int, int> HitDieResults { get; set; } = [];
+
     /// <summary>Derived numbers (modifiers, hit points, armour class, saves, skills).</summary>
     public CharacterStats? Stats { get; set; }
 

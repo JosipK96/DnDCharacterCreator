@@ -20,6 +20,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.SetAbilityScore
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetAllowedBooks;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetBackground;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetClass;
+using CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetNameAndLevel;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetRace;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetSubclass;
@@ -120,6 +121,21 @@ namespace CharacterCreatorApp.Api.Controllers
         public async Task<IActionResult> SetSubclass(Guid draftId, [FromBody] SetSubclassApiRequest request, CancellationToken cancellationToken)
         {
             var response = await _sender.Send(new SetCharacterSubclassCommand(draftId, request.SubclassId), cancellationToken);
+
+            return NoContentOrProblem(response);
+        }
+
+        /// <summary>
+        /// The hit die's result for the level a level-up reaches: what the player rolled, or the
+        /// die's fixed value. Only a level-up takes one.
+        /// </summary>
+        [HttpPut("{draftId:guid}/hit-points")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> SetHitPoints(Guid draftId, [FromBody] SetHitPointsApiRequest request, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new SetHitPointsCommand(draftId, request.Result), cancellationToken);
 
             return NoContentOrProblem(response);
         }

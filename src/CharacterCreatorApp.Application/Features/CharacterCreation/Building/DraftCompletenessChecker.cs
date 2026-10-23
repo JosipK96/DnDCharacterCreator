@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
@@ -68,6 +69,13 @@ public static class DraftCompletenessChecker
         if (level >= @class.SubclassLevel && string.IsNullOrWhiteSpace(draft.SubclassId))
         {
             return CharacterErrors.SubclassRequired(level, @class.Name, @class.SubclassLevel);
+        }
+
+        var hitPointsError = FindInvalidHitDieResult(draft, @class.HitDie, level);
+
+        if (hitPointsError is not null)
+        {
+            return hitPointsError;
         }
 
         var requiredProficiencies = @class.ProficiencyChoice?.Count ?? 0;
@@ -164,6 +172,21 @@ public static class DraftCompletenessChecker
                 draft.RaceSpellIds,
                 draft.FeatSpells,
                 sources.BonusSpellLists);
+    }
+
+    // A level-up adds its hit points, and every result kept is for a level the character has and
+    // one its die rolls: an edit may have lowered the level, or a reseed changed the die
+    private static Error? FindInvalidHitDieResult(CharacterDraft draft, string hitDie, int level)
+    {
+        if (draft.IsLevelUp && !draft.HitDieResults.ContainsKey(level))
+        {
+            return CharacterErrors.HitPointsRequired(level);
+        }
+
+        var dieSize = CharacterStatsCalculator.GetHitDieSize(hitDie);
+        var invalid = draft.HitDieResults.Where(r => r.Key < 2 || r.Key > level || r.Value < 1 || r.Value > dieSize).ToList();
+
+        return invalid.Count == 0 ? null : CharacterErrors.HitDieResultInvalid(invalid[0].Key, invalid[0].Value, dieSize);
     }
 
     // A Mist Wanderer's Dark Gift, or a Haunted One's in place of Survivor: the step checks it,

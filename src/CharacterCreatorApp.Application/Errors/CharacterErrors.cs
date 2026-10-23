@@ -36,6 +36,20 @@ public static class CharacterErrors
     public static Error NotFoundById(Guid characterId) =>
         Error.NotFound("Character.NotFound", $"Character with id {characterId} was not found.");
 
+    public static Error AtMaxLevel(string name, int maxLevel) =>
+        Error.Validation("Character.AtMaxLevel", $"{name} is level {maxLevel}, the highest a character reaches.");
+
+    // --- Raised when finalizing a level-up ---
+    public static Error HitPointsRequired(int level) =>
+        Error.Validation(
+            "Character.HitPointsRequired",
+            $"Level {level} adds hit points: roll the hit die or take its fixed value in the hit points step.");
+
+    public static Error HitDieResultInvalid(int level, int result, int dieSize) =>
+        Error.Validation(
+            "Character.HitDieResultInvalid",
+            $"The hit die result {result} for level {level} is not one a d{dieSize} rolls for a level the character has.");
+
     // --- Raised when finalizing a draft ---
     public static Error AbilityScoreMethodRequired() =>
         Error.Validation(

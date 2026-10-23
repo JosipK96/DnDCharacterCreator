@@ -20,8 +20,19 @@ public abstract class WizardStepBase : ComponentBase
     [Parameter]
     public int Step { get; set; }
 
-    /// <summary>The "Next" button's text, naming the step that follows this one.</summary>
-    protected string NextLabel => $"Next: {WizardSteps.NameOf(Step + 1)}";
+    /// <summary>
+    /// The steps this wizard goes through, by number: every one for a new character or an edit,
+    /// only what the new level brings for a level-up (<see cref="WizardSteps.LevelUpOf"/>).
+    /// </summary>
+    [Parameter]
+    public IReadOnlyList<int> Flow { get; set; } = WizardSteps.Creation;
+
+    /// <summary>The "Next" button's text, naming the step that follows this one in the flow.</summary>
+    protected string NextLabel => $"Next: {WizardSteps.NameOf(NextStep)}";
+
+    private int Position => Flow.ToList().IndexOf(Step);
+
+    private int NextStep => Position >= 0 && Position + 1 < Flow.Count ? Flow[Position + 1] : Step + 1;
 
     protected bool IsLoading { get; private set; }
 
@@ -29,8 +40,8 @@ public abstract class WizardStepBase : ComponentBase
 
     protected string? ErrorMessage { get; set; }
 
-    /// <summary>"Step 6: Ability Scores", numbered by where the step sits rather than by hand.</summary>
-    protected string StepHeading(string title) => $"Step {Step}: {title}";
+    /// <summary>"Step 6: Ability Scores", numbered by where the step sits in the flow rather than by hand.</summary>
+    protected string StepHeading(string title) => $"Step {(Position >= 0 ? Position + 1 : Step)}: {title}";
 
     protected Task<bool> LoadAsync(Func<Task> load, string whatFailed) =>
         RunAsync(load, busy => IsLoading = busy, whatFailed);

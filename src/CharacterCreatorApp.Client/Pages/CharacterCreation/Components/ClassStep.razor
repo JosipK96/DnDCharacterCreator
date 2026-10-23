@@ -102,10 +102,14 @@
                                 }
                             </div>
                         </div>
-                        <button @onclick="() => selectedClass = null"
-                                class="text-gray-400 hover:text-white ml-4">
-                            Change
-                        </button>
+                        @* A level-up keeps the class: a level of another one would be multiclassing *@
+                        @if (!ClassLocked)
+                        {
+                            <button @onclick="() => selectedClass = null"
+                                    class="text-gray-400 hover:text-white ml-4">
+                                Change
+                            </button>
+                        }
                     </div>
                 </div>
 
@@ -198,6 +202,10 @@
     /// <summary>The books the draft allows, by code; only what comes from them is offered.</summary>
     [Parameter]
     public IReadOnlyList<string> Sources { get; set; } = [];
+
+    /// <summary>Set in a level-up: the class stays what it is, and only the subclass is picked.</summary>
+    [Parameter]
+    public bool ClassLocked { get; set; }
 
     [Parameter]
     public EventCallback OnNext { get; set; }

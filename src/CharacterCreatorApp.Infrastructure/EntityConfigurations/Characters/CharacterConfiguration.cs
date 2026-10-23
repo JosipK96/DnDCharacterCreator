@@ -95,6 +95,10 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Character>
             .HasColumnType("jsonb")
             .HasJsonConversion();
 
+        builder.Property(c => c.HitDieResults)
+            .HasColumnType("jsonb")
+            .HasJsonConversion();
+
         builder.HasIndex(c => c.UserId);
         builder.HasIndex(c => new { c.UserId, c.Name });
         builder.HasIndex(c => new { c.UserId, c.Level });

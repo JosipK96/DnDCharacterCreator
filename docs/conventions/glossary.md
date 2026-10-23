@@ -10,6 +10,7 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | **Finalize** | Turning a completed draft into a character, or an edit draft into the character it edits. The draft is kept, completed | `FinalizeCharacterCommandHandler` |
 | **Build** | The completed draft a character was made or last edited from: every choice it holds now, which the character itself keeps only merged. Never changed; it goes with the character | `CharacterDraft.CharacterId`, `ICharacterDraftRepository.GetBuildAsync` |
 | **Edit** | A draft copied from a character's build (or, for an older character without one, from what it stores, its other steps marked as needing a pick). Finalizing it replaces the character in place; never the draft resumed for a new character | `CharacterDraft.StartEdit`, `CharacterDraft.ChoicesNeeded`, `DraftChoice`, `Character.ReplaceWith` |
+| **Level-up** | An edit one level up that keeps every pick and asks only what the new level brings: its hit points, and a subclass, an improvement or spells where the class and subclass data give one. The class stays the same (another would be multiclassing) | `CharacterDraft.LevelUp`, `CharacterDraft.LevelUpChoices`, `Class.ChoicesGainedAt` |
 | **Preview** | The character a draft *would* produce, worked out without saving | `PreviewCharacterQueryHandler` |
 
 ## The rulebook
@@ -33,7 +34,7 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | **Modifier** | `(score - 10) / 2`, rounded **down**, including below 10 | `CharacterStatsCalculator.GetAbilityModifier` |
 | **Proficiency bonus** | +2 at levels 1–4, rising every four levels to +6 | `CharacterStatsCalculator.GetProficiencyBonus` |
 | **Hit die** | The die a class rolls for hit points per level — `1d10` for a fighter | `Class.HitDie` |
-| **Hit points** | Max die at level 1, then the die's average rounded up per level, plus the CON modifier each level | `CharacterStatsCalculator` |
+| **Hit points** | Max die at level 1, then for each later level the die's result a level-up kept for it (rolled, or the fixed value taken), or the fixed value (the die's average rounded up) where none is kept, plus the CON modifier each level | `CharacterStatsCalculator`, `CharacterDraft.HitDieResults`, `Character.HitDieResults` |
 | **AC** | Armour class. Unarmoured it is `10 + DEX`, or a class's or subclass's own when higher: a barbarian's 10 + DEX + CON, a monk's 10 + DEX + WIS, a draconic sorcerer's 13 + DEX (2014) or 10 + DEX + CHA (2024). Armour is not modelled | `CharacterStats.ArmorClass`, `Class.UnarmoredArmorClass`, `Subclass.UnarmoredArmorClass` |
 | **Saving throw** | A roll to resist something. A class is proficient in exactly two | `Class.SavingThrowAbilityIds` |
 | **Passive Perception** | `10 + the Perception skill modifier` | `CharacterStats.PassivePerception` |

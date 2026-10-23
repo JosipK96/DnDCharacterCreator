@@ -67,6 +67,16 @@ public class CharacterService(HttpClient http)
         return await response.ReadAsync<Guid>();
     }
 
+    /// <summary>
+    /// Opens the character one level up as a draft that keeps every pick; returns the draft's id
+    /// for the wizard, which asks only what the new level brings. Finalizing it replaces the character.
+    /// </summary>
+    public async Task<Guid> StartLevelUpAsync(Guid id)
+    {
+        var response = await _http.PostAsync($"/api/characters/{id}/level-up", null);
+        return await response.ReadAsync<Guid>();
+    }
+
     public async Task DeleteCharacterAsync(Guid id)
     {
         var response = await _http.DeleteAsync($"/api/characters/{id}");

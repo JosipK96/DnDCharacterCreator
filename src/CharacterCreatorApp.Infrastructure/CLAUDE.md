@@ -44,7 +44,9 @@ before changing what a seed file holds.
 - Migrations: `dotnet ef migrations add <Name> --startup-project ..\CharacterCreatorApp.Api\
   CharacterCreatorApp.Api.csproj` from the Infrastructure project. **Read what it scaffolds**:
   it emitted `defaultValue: ""` for a `jsonb` column once, which Postgres rejects.
-- Lists and dictionaries on `Character` are `jsonb` via `HasJsonConversion`.
+- Lists and dictionaries on `Character` are `jsonb` via `HasJsonConversion`. A new `jsonb`
+  column on a table with rows needs `defaultValueSql: "'{}'::jsonb"` in place of the scaffold's
+  `defaultValue: ""` (the `LevelUp` migration's hit die results).
 - A draft's `CharacterId` cascades: deleting a character deletes its build and any unsaved edit.
   The `EditCharacter` migration linked the characters saved before it to their drafts by name,
   level and choices (`EditCharacter.LinkCharactersToTheirDraftsSql`, tested by

@@ -1,5 +1,6 @@
 using Bunit;
 
+using CharacterCreatorApp.Client.Pages.CharacterCreation;
 using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
@@ -68,6 +69,40 @@ public class SavedChoicesStepTests : WizardStepTestBase
         Button(cut, "Next: Background").Click();
 
         // Assert
+        var sent = Api.BodyOf<SetClassApiRequest>(SaveRoute("class"));
+        (sent.ClassId, sent.SubclassId).Should().Be(("fighter", "champion"));
+        _movedOn.Should().Be(1);
+    }
+
+    [Fact]
+    public void ClassStep_InALevelUpToTheSubclassLevel_KeepsTheClassAndAsksOnlyForTheSubclass()
+    {
+        // Arrange - a fighter levelled up to 3; its class cannot change, its subclass is picked now
+        Api.Get(DraftPath(), new CharacterDraftDetailsApiResponse { Id = DraftId, ClassId = "fighter" });
+        Api.Get("/api/classes/get-list?edition=2014", new List<ClassApiResponse> { Class("wizard", "Wizard"), Class("fighter", "Fighter") });
+        Api.Get("/api/subclasses?classId=fighter", new List<SubclassApiResponse>
+        {
+            new("battle_master", "Battle Master", "fighter", "PHB", null, []),
+            new("champion", "Champion", "fighter", "PHB", null, []),
+        });
+        Api.Put(DraftPath("class"));
+
+        var cut = Render<ClassStep>(parameters => parameters
+            .Add(p => p.DraftId, DraftId)
+            .Add(p => p.Step, 3)
+            .Add(p => p.Flow, WizardSteps.LevelUpOf(["hit-points", "subclass"]))
+            .Add(p => p.CharacterLevel, 3)
+            .Add(p => p.Edition, "2014")
+            .Add(p => p.ClassLocked, true)
+            .Add(p => p.OnNext, () => _movedOn++));
+
+        // Act
+        Button(cut, "Champion").Click();
+        Button(cut, "Next: Review").Click();
+
+        // Assert
+        cut.Find("h2").TextContent.Should().Be("Step 2: Choose Your Class");
+        Buttons(cut, "Change").Should().BeEmpty("a level-up keeps the class");
         var sent = Api.BodyOf<SetClassApiRequest>(SaveRoute("class"));
         (sent.ClassId, sent.SubclassId).Should().Be(("fighter", "champion"));
         _movedOn.Should().Be(1);

@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -103,6 +104,60 @@ public class Class
             ? SlotsOf(subclassRow.SpellSlots, subclassRow.PactMagicSlots, subclassRow.MaxSpellLevel)
             : SpellSlots.None;
     }
+
+    /// <summary>
+    /// The choices a character of this class gains on reaching this level from the one before,
+    /// as DraftChoice names: a subclass from SubclassLevel on, an improvement at one of AsiLevels
+    /// or a Fighting Style a feature gives, and spells when the spell table, the prepared count
+    /// or the subclass's own spells change. A subclass picked at this level may be any of the
+    /// class's, so what any of them would bring counts. The scores are the character's final
+    /// ones, which a 2014 cleric's prepared count follows.
+    /// </summary>
+    public IReadOnlyList<string> ChoicesGainedAt(int level, Subclass? subclass, IReadOnlyDictionary<string, int> abilityScores)
+    {
+        ArgumentOutOfRangeException.ThrowIfLessThan(level, 2);
+
+        var choices = new List<string>();
+        var picksSubclass = subclass == null && level >= SubclassLevel;
+        var subclassesAfter = picksSubclass && Subclasses.Count != 0 ? Subclasses.ConvertAll<Subclass?>(s => s) : [subclass];
+
+        if (picksSubclass)
+        {
+            choices.Add(DraftChoice.Subclass);
+        }
+
+        var gainsImprovement = AsiLevels.Contains(level);
+        var stylesBefore = CharacterFeatures.FightingStylesOwed(this, subclass, level - 1);
+
+        if (gainsImprovement || subclassesAfter.Any(s => CharacterFeatures.FightingStylesOwed(this, s, level) > stylesBefore))
+        {
+            choices.Add(DraftChoice.Improvements);
+        }
+
+        // A domain or oath spell the subclass gives may be one already picked, which finalize refuses
+        var spellsBefore = SpellAllowanceAt(level - 1, subclass, abilityScores);
+        var preparedBefore = subclass?.AlwaysPreparedSpellIdsAt(level - 1).Count() ?? 0;
+        var gainsSpells = subclassesAfter.Any(s =>
+                !SameCounts(SpellAllowanceAt(level, s, abilityScores), spellsBefore)
+                || (s?.AlwaysPreparedSpellIdsAt(level).Count() ?? 0) > preparedBefore)
+            || (gainsImprovement && PreparesSpellsFromScoresAt(level));
+
+        if (gainsSpells)
+        {
+            choices.Add(DraftChoice.Spells);
+        }
+
+        return choices;
+    }
+
+    // The school limit's lists are compared by reference in the record, so the numbers are compared one by one
+    private static bool SameCounts(SpellAllowance? after, SpellAllowance? before) =>
+        after == null || before == null
+            ? after == before
+            : after.Cantrips == before.Cantrips
+                && after.Spells == before.Spells
+                && after.MaxSpellLevel == before.MaxSpellLevel
+                && after.SchoolLimit?.AnySchoolSpells == before.SchoolLimit?.AnySchoolSpells;
 
     private static SpellSlots SlotsOf(List<int> perSpellLevel, int pactMagicSlots, int maxSpellLevel) =>
         new(perSpellLevel, pactMagicSlots > 0 ? new PactMagicSlots(pactMagicSlots, maxSpellLevel) : null);

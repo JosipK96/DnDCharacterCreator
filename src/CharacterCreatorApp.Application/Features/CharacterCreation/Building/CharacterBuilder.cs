@@ -51,6 +51,7 @@ public static class CharacterBuilder
         character.SetFeats(BackgroundFeatIds(sources.Background, draft).Concat(draft.FightingStyleIds).Concat(draft.SelectedFeatIds));
         character.SetFeatSpells(draft.FeatSpells);
         character.SetFeatSavingThrows(FeatSavingThrowAbilityIds(draft, sources.Feats));
+        character.SetHitDieResults(draft.HitDieResults);
 
         // A species that may be Small or Medium is the size picked for it
         character.SetSize(draft.Size ?? sources.Race.Size);

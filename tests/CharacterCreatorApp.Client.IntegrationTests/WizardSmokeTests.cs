@@ -93,6 +93,41 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
     }
 
     [Fact]
+    public async Task LevelUp_TwiceAsksOnlyWhatEachLevelBringsAndKeepsTheCharacter()
+    {
+        // Arrange
+        await RegisterAndSignInAsync("wizard-level-up");
+        await CreateGromAsync();
+        var sheet = new Uri(_page.Url).AbsolutePath;
+
+        // Act: a 2014 fighter's second level brings nothing but its hit points
+        await _page.GetByRole(AriaRole.Button, new() { Name = "Level Up" }).ClickAsync();
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Level up Grom to level 2" })).ToBeVisibleAsync();
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Step 1: Hit Points" })).ToBeVisibleAsync();
+        await _page.GetByRole(AriaRole.Button, new() { Name = "Take 6" }).ClickAsync();
+        await LevelUpNextAsync("Review", 2);
+        await SaveLevelUpAsync(sheet, "Level 2 Fighter");
+
+        // The third brings the subclass too, and the spells an Eldritch Knight would cast
+        await _page.GetByRole(AriaRole.Button, new() { Name = "Level Up" }).ClickAsync();
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Level up Grom to level 3" })).ToBeVisibleAsync();
+        await _page.Locator("#hit-die-roll").FillAsync("8");
+        await _page.Locator("#hit-die-roll").DispatchEventAsync("change");
+        await LevelUpNextAsync("Class", 2);
+        await Expect(_page.GetByRole(AriaRole.Button, new() { Name = "Change" })).ToHaveCountAsync(0);
+        await PickAsync("Champion");
+        await LevelUpNextAsync("Spells", 3);
+        await Expect(_page.GetByText("No Spells Available")).ToBeVisibleAsync();
+        await LevelUpNextAsync("Review", 4);
+        await SaveLevelUpAsync(sheet, "Level 3 Fighter (Champion)");
+
+        // Assert: still one Grom, at the new level
+        await _page.GotoAsync("/characters");
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToHaveCountAsync(1);
+        await Expect(_page.GetByText("Level 3 · 2014 rules")).ToBeVisibleAsync();
+    }
+
+    [Fact]
     public async Task Wizard_ForA2024Wizard_FinishesTheCharacterAndListsIt()
     {
         // Arrange
@@ -294,6 +329,31 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         {
             Assert.Fail($"Moving on to {step} was refused: {await refusal.InnerTextAsync()}");
         }
+    }
+
+    // A level-up numbers its few steps as it shows them: the step comes up as "Step {shownAs}"
+    private async Task LevelUpNextAsync(string step, int shownAs)
+    {
+        var next = _page.GetByRole(AriaRole.Button, new() { Name = $"Next: {step}" });
+        await Expect(next).ToBeEnabledAsync(new() { Timeout = 5_000 });
+        await next.ClickAsync();
+
+        var heading = _page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex($"^Step {shownAs}: ") });
+        var refusal = _page.Locator("div.bg-red-900 p");
+        await heading.Or(refusal).First.WaitForAsync();
+
+        if (await refusal.IsVisibleAsync())
+        {
+            Assert.Fail($"Moving on to {step} was refused: {await refusal.InnerTextAsync()}");
+        }
+    }
+
+    // Saving a level-up replaces the character, so the wizard goes back to the same sheet
+    private async Task SaveLevelUpAsync(string sheet, string levelAndClass)
+    {
+        await _page.GetByRole(AriaRole.Button, new() { Name = "Save Changes" }).ClickAsync();
+        await _page.WaitForURLAsync($"**{sheet}");
+        await Expect(_page.GetByText(levelAndClass, new() { Exact = true })).ToBeVisibleAsync();
     }
 
     private async Task CreateAsync(string name)

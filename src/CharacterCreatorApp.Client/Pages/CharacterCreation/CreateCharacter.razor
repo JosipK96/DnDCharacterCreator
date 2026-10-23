@@ -33,7 +33,12 @@
         else
         {
             <div class="mb-8">
-                @if (IsEdit)
+                @if (IsLevelUp)
+                {
+                    <h1 class="text-3xl font-bold text-white mb-2">Level up @existingDraft?.Name to level @characterLevel</h1>
+                    <p class="text-gray-400">Every earlier choice stays. Pick what the new level brings; saving replaces the character.</p>
+                }
+                else if (IsEdit)
                 {
                     <h1 class="text-3xl font-bold text-white mb-2">Edit @existingDraft?.Name</h1>
                     <p class="text-gray-400">Every choice is filled in. Change what you like, or pick a step above; saving replaces the character.</p>
@@ -47,89 +52,96 @@
 
             @if (IsEdit)
             {
-                <WizardProgress CurrentStep="@currentStep" StepsNeedingPick="@stepsNeedingPick" OnSelectStep="GoTo" />
+                <WizardProgress CurrentStep="@currentStep" Flow="@flow" StepsNeedingPick="@stepsNeedingPick" OnSelectStep="GoTo" />
             }
             else
             {
                 <WizardProgress CurrentStep="@currentStep" />
             }
 
-            @* The order here has to match WizardSteps.Names, which gives each step its number and name *@
+            @* The numbers here are WizardSteps', which gives each step its name; the flow says which a draft goes through *@
             <div class="bg-gray-800 rounded-lg shadow-xl p-8 mt-6">
                 @if (currentStep == 1)
                 {
-                    <NameAndLevelStep DraftId="@draftId" Step="@currentStep"
+                    <NameAndLevelStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                       OnNext="@((choice) => MoveToStep2(choice.Level, choice.Edition, choice.Sources))"
                                       OnCancel="Cancel" />
                 }
                 else if (currentStep == 2)
                 {
-                    <RaceStep DraftId="@draftId" Step="@currentStep"
+                    <RaceStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                               Edition="@edition"
                               Sources="@sources"
                               OnNext="() => Next(2)"
-                              OnBack="MoveToStep1" />
+                              OnBack="() => Back(2)" />
                 }
                 else if (currentStep == 3)
                 {
-                    <ClassStep DraftId="@draftId" Step="@currentStep"
+                    <ClassStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                CharacterLevel="@characterLevel"
                                Edition="@edition"
                                Sources="@sources"
+                               ClassLocked="@IsLevelUp"
                                OnNext="() => Next(3)"
-                               OnBack="MoveToStep2" />
+                               OnBack="() => Back(3)" />
                 }
                 else if (currentStep == 4)
                 {
-                    <BackgroundStep DraftId="@draftId" Step="@currentStep"
+                    <BackgroundStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                     Edition="@edition"
                                     Sources="@sources"
                                     OnNext="() => Next(4)"
-                                    OnBack="MoveToStep3" />
+                                    OnBack="() => Back(4)" />
                 }
                 else if (currentStep == 5)
                 {
-                    <LanguagesStep DraftId="@draftId" Step="@currentStep"
+                    <LanguagesStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                    OnNext="() => Next(5)"
-                                   OnBack="MoveToStep4" />
+                                   OnBack="() => Back(5)" />
                 }
                 else if (currentStep == 6)
                 {
-                    <AbilityScoresStep DraftId="@draftId" Step="@currentStep"
+                    <AbilityScoresStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                        OnNext="() => Next(6)"
-                                       OnBack="MoveToStep5" />
+                                       OnBack="() => Back(6)" />
                 }
                 else if (currentStep == 7)
                 {
-                    <ProficienciesStep DraftId="@draftId" Step="@currentStep"
+                    <ProficienciesStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                        OnNext="() => Next(7)"
-                                       OnBack="MoveToStep6" />
+                                       OnBack="() => Back(7)" />
                 }
                 else if (currentStep == 8)
                 {
                     @* Before the spells: a feat can grant a spell, and an improvement changes how many a prepared caster gets *@
-                    <ImprovementsStep DraftId="@draftId" Step="@currentStep"
+                    <ImprovementsStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                       CharacterLevel="@characterLevel"
                                       OnNext="() => Next(8)"
-                                      OnBack="MoveToStep7" />
+                                      OnBack="() => Back(8)" />
                 }
                 else if (currentStep == 9)
                 {
-                    <SpellsStep DraftId="@draftId" Step="@currentStep"
+                    <SpellsStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
                                 OnNext="() => Next(9)"
-                                OnBack="MoveToStep8" />
+                                OnBack="() => Back(9)" />
                 }
-                else if (currentStep == 10)
+                else if (currentStep == WizardSteps.Review)
                 {
-                    <ReviewStep DraftId="@draftId" Step="@currentStep" IsEdit="@IsEdit"
+                    <ReviewStep DraftId="@draftId" Step="@currentStep" Flow="@flow" IsEdit="@IsEdit"
                                 OnNext="FinalizeCharacter"
-                                OnBack="MoveToStep9" />
+                                OnBack="() => Back(WizardSteps.Review)" />
+                }
+                else if (currentStep == WizardSteps.HitPoints)
+                {
+                    <HitPointsStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
+                                   OnNext="() => Next(WizardSteps.HitPoints)"
+                                   OnBack="() => Back(WizardSteps.HitPoints)" />
                 }
             </div>
 
             <div class="mt-6 text-center">
                 <button @onclick="ConfirmCancel" class="text-gray-400 hover:text-white">
-                    @(IsEdit ? "Cancel Editing" : "Cancel Character Creation")
+                    @(IsLevelUp ? "Cancel Level Up" : IsEdit ? "Cancel Editing" : "Cancel Character Creation")
                 </button>
             </div>
         }
@@ -138,7 +150,12 @@
         {
             <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 px-4">
                 <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
-                    @if (IsEdit)
+                    @if (IsLevelUp)
+                    {
+                        <h3 class="text-xl font-bold text-white mb-4">Cancel Level Up?</h3>
+                        <p class="text-gray-300 mb-6">The character stays at the level it was saved; the picks made here are lost.</p>
+                    }
+                    else if (IsEdit)
                     {
                         <h3 class="text-xl font-bold text-white mb-4">Cancel Editing?</h3>
                         <p class="text-gray-300 mb-6">The character stays as it was saved; the changes made here are lost.</p>
@@ -151,7 +168,7 @@
                     <div class="flex justify-end space-x-3">
                         <button @onclick="() => showCancelConfirm = false"
                                 class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium">
-                            @(IsEdit ? "Continue Editing" : "Continue Creating")
+                            @(IsLevelUp ? "Continue Levelling Up" : IsEdit ? "Continue Editing" : "Continue Creating")
                         </button>
                         <button @onclick="Cancel"
                                 class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium">
@@ -217,7 +234,14 @@
     private Guid? editedCharacterId;
     private HashSet<int> stepsNeedingPick = [];
 
+    // The steps this draft goes through: all of them, or a level-up's few (WizardSteps.LevelUpOf)
+    private IReadOnlyList<int> flow = WizardSteps.Creation;
+    private bool isLevelUp;
+
+    // A level-up is an edit too: it names the character it replaces
     private bool IsEdit => editedCharacterId != null;
+
+    private bool IsLevelUp => isLevelUp;
 
     protected override async Task OnInitializedAsync()
     {
@@ -251,9 +275,13 @@
             sources = existingDraft.AllowedSources;
             editedCharacterId = existingDraft.CharacterId;
             stepsNeedingPick = [.. WizardSteps.StepsOf(existingDraft.ChoicesNeeded)];
+            isLevelUp = existingDraft.LevelUpChoices.Count != 0;
+            flow = isLevelUp ? WizardSteps.LevelUpOf(existingDraft.LevelUpChoices) : WizardSteps.Creation;
 
             // An edit has every step filled in: it opens at the first one that needs a pick, if any
-            currentStep = IsEdit ? stepsNeedingPick.DefaultIfEmpty(1).Min() : DetermineCurrentStep(existingDraft);
+            currentStep = IsEdit
+                ? flow.Where(stepsNeedingPick.Contains).DefaultIfEmpty(flow[0]).First()
+                : DetermineCurrentStep(existingDraft);
 
             if (existingDraft.Level.HasValue)
                 characterLevel = existingDraft.Level.Value;
@@ -343,22 +371,27 @@
         }
     }
 
-    private void MoveToStep1() { currentStep = 1; StateHasChanged(); }
-    private void MoveToStep2() { currentStep = 2; StateHasChanged(); }
-    private void MoveToStep2(int level, string chosenEdition, IReadOnlyList<string> chosenSources) { characterLevel = level; edition = chosenEdition; sources = chosenSources; currentStep = 2; StateHasChanged(); }
-    private void MoveToStep3() { currentStep = 3; StateHasChanged(); }
-    private void MoveToStep4() { currentStep = 4; StateHasChanged(); }
-    private void MoveToStep5() { currentStep = 5; StateHasChanged(); }
-    private void MoveToStep6() { currentStep = 6; StateHasChanged(); }
-    private void MoveToStep7() { currentStep = 7; StateHasChanged(); }
-    private void MoveToStep8() { currentStep = 8; StateHasChanged(); }
-    private void MoveToStep9() { currentStep = 9; StateHasChanged(); }
+    private void MoveToStep2(int level, string chosenEdition, IReadOnlyList<string> chosenSources) { characterLevel = level; edition = chosenEdition; sources = chosenSources; Next(1); }
 
     // A step the player has been through needs no pick any more, even one that had nothing to save
     private void Next(int fromStep)
     {
         stepsNeedingPick.Remove(fromStep);
-        GoTo(fromStep + 1);
+        GoTo(flow[flow.ToList().IndexOf(fromStep) + 1]);
+    }
+
+    // Back from a level-up's first step leaves it, as cancelling does
+    private void Back(int fromStep)
+    {
+        var position = flow.ToList().IndexOf(fromStep);
+
+        if (position <= 0)
+        {
+            ConfirmCancel();
+            return;
+        }
+
+        GoTo(flow[position - 1]);
     }
 
     private void GoTo(int step) { currentStep = step; StateHasChanged(); }

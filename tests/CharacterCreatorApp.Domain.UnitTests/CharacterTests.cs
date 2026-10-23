@@ -516,6 +516,7 @@ public class CharacterTests
         rebuilt.SetFeatSpells([new FeatSpellPick { FeatId = "magic_initiate_2014", ClassId = "wizard", SpellIds = ["light"] }]);
         rebuilt.SetSize("Medium");
         rebuilt.SetFeatSavingThrows(["CON"]);
+        rebuilt.SetHitDieResults(new Dictionary<int, int> { [2] = 4 });
 
         // Act
         saved.ReplaceWith(rebuilt);

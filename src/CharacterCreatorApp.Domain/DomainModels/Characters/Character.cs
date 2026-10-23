@@ -54,6 +54,12 @@ public class Character : Entity<Guid>, IAuditable
     /// <summary>Saving throws a feat adds beside the class's (Resilient), by canonical ability id.</summary>
     public List<string> FeatSavingThrowAbilityIds { get; private set; } = [];
 
+    /// <summary>
+    /// The hit die's result for each level a level-up reached, by level (rolled, or the fixed
+    /// value taken). Every other level takes the fixed value; the sheet adds the CON modifier.
+    /// </summary>
+    public Dictionary<int, int> HitDieResults { get; private set; } = [];
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor
     private Character() { }
 #pragma warning restore CS8618
@@ -129,6 +135,7 @@ public class Character : Entity<Guid>, IAuditable
         FeatSpells = [.. rebuilt.FeatSpells];
         Size = rebuilt.Size;
         FeatSavingThrowAbilityIds = [.. rebuilt.FeatSavingThrowAbilityIds];
+        HitDieResults = new Dictionary<int, int>(rebuilt.HitDieResults);
     }
 
     /// <summary>
@@ -257,6 +264,12 @@ public class Character : Entity<Guid>, IAuditable
     public void SetSize(string size)
     {
         Size = size;
+    }
+
+    /// <summary>The hit die's result for each level a level-up reached, as the draft kept them.</summary>
+    public void SetHitDieResults(IReadOnlyDictionary<int, int> results)
+    {
+        HitDieResults = new Dictionary<int, int>(results);
     }
 
     /// <summary>The saving throws feats add, by canonical ability id: Resilient's, which is the ability it raised.</summary>

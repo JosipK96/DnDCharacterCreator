@@ -8,6 +8,7 @@ using CharacterCreatorApp.Contracts.Requests.Character;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
 using CharacterCreatorApp.Contracts.Requests.User;
 using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure;
 
@@ -1072,6 +1073,120 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
 
         var abandoned = await _client.GetAsync($"/api/character-drafts/{abandonedId}", cancellationToken);
         abandoned.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public async Task LevelUp_WithItsHitPointsRolled_SavesTheCharacterAtTheNextLevelWithTheSameId()
+    {
+        // Arrange - a 2024 fighter's second level brings nothing to pick but its hit points
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var characterId = await FinalizeBruenorAsync();
+        var before = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+
+        // Act
+        var draftId = await StartLevelUpAsync(characterId);
+        var levelUp = await GetDraftAsync(draftId);
+        await PutStepAsync(draftId, "hit-points", new SetHitPointsApiRequest(8));
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
+
+        // Assert - the level-up opened one level up with every pick, asking only for the hit points
+        (levelUp.CharacterId, levelUp.Level).Should().Be((characterId, 2));
+        levelUp.LevelUpChoices.Should().Equal(DraftChoice.HitPoints);
+        levelUp.FightingStyleIds.Should().Equal("defense_2024");
+
+        finalizeResponse.StatusCode.Should().Be(HttpStatusCode.OK);
+        (await finalizeResponse.Content.ReadFromJsonAsync<Guid>(cancellationToken)).Should().Be(characterId);
+
+        var after = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+        after!.Level.Should().Be(2);
+        after.AbilityScores.Should().BeEquivalentTo(before!.AbilityScores);
+        after.Feats.Select(f => f.Feat.Name).Should().BeEquivalentTo(["Savage Attacker", "Defense"]);
+
+        // The 8 rolled, the CON modifier and the 2024 dwarf's Dwarven Toughness
+        var constitutionModifier = (int)Math.Floor((after.AbilityScores["CON"] - 10) / 2.0);
+        after.Stats!.MaxHitPoints.Should().Be(before.Stats!.MaxHitPoints + 8 + constitutionModifier + 1);
+        (await ListCharactersAsync()).Should().ContainSingle();
+    }
+
+    [Fact]
+    public async Task LevelUp_ToTheSubclassLevelWithoutTheSubclass_CannotBeSaved()
+    {
+        // Arrange - levelled up to 2, then to 3, where the 2024 fighter's data gives the subclass
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var characterId = await FinalizeBruenorAsync();
+        var toTwo = await StartLevelUpAsync(characterId);
+        await PutStepAsync(toTwo, "hit-points", new SetHitPointsApiRequest(6));
+        (await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(toTwo), cancellationToken)).EnsureSuccessStatusCode();
+
+        // Act
+        var toThree = await StartLevelUpAsync(characterId);
+        var levelUp = await GetDraftAsync(toThree);
+        await PutStepAsync(toThree, "hit-points", new SetHitPointsApiRequest(6));
+        var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(toThree), cancellationToken);
+
+        // Assert
+        levelUp.Level.Should().Be(3);
+        levelUp.LevelUpChoices.Should().StartWith([DraftChoice.HitPoints, DraftChoice.Subclass]);
+        await finalizeResponse.ShouldFailWithAsync(HttpStatusCode.BadRequest, "Character.SubclassRequired");
+
+        var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
+        character!.Level.Should().Be(2, "the level-up was never saved");
+    }
+
+    [Fact]
+    public async Task SetHitPoints_AboveTheHitDie_ReturnsHitDieResultOutOfRange()
+    {
+        // Arrange - a fighter's d10
+        await SignInAsync();
+        var draftId = await StartLevelUpAsync(await FinalizeBruenorAsync());
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/hit-points", new SetHitPointsApiRequest(11), TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.HitDieResultOutOfRange");
+    }
+
+    [Fact]
+    public async Task SetHitPoints_OnANewCharactersDraft_ReturnsHitPointsOnlyOnLevelUp()
+    {
+        // Arrange
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Bruenor", Level = 3, Edition = "2024" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/hit-points", new SetHitPointsApiRequest(6), TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.HitPointsOnlyOnLevelUp");
+    }
+
+    [Fact]
+    public async Task SetClass_OnALevelUpWithAnotherClass_ReturnsLevelUpKeepsClass()
+    {
+        // Arrange
+        await SignInAsync();
+        var draftId = await StartLevelUpAsync(await FinalizeBruenorAsync());
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/class", new SetClassApiRequest { ClassId = "wizard-2024" }, TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.LevelUpKeepsClass");
+    }
+
+    private async Task<Guid> StartLevelUpAsync(Guid characterId)
+    {
+        var response = await _client.PostAsync($"/api/characters/{characterId}/level-up", null, TestContext.Current.CancellationToken);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        return await response.Content.ReadFromJsonAsync<Guid>(TestContext.Current.CancellationToken);
     }
 
     // A level 1 2024 dwarf fighter, finalized through the wizard's steps

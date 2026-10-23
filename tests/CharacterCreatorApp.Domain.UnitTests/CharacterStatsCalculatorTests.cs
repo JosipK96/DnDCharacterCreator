@@ -68,6 +68,43 @@ public class CharacterStatsCalculatorTests
         stats.HitDice.Should().Be("5d10");
     }
 
+    [Fact]
+    public void Calculate_WithHitDieResults_AddsEachLevelsResultAndTheFixedValueForTheOthers()
+    {
+        // Arrange - d10 and CON 14 (+2): 12 at level 1, a 9 rolled at 3 and a 1 at 4, the fixed 6 at 2 and 5
+        var input = Input(level: 5, hitDie: "1d10", hitDieResults: new() { [3] = 9, [4] = 1 });
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.MaxHitPoints.Should().Be(12 + (6 + 2) + (9 + 2) + (1 + 2) + (6 + 2));
+    }
+
+    [Fact]
+    public void Calculate_WithARolledOneAndAPunishingConstitution_StillGivesThatLevelOneHitPoint()
+    {
+        // Arrange - CON 6 (-2): a d8's 1 rolled at level 2 would add -1
+        var input = Input(level: 2, hitDie: "1d8", scores: Scores(constitution: 6), hitDieResults: new() { [2] = 1 });
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert - 8 - 2 at level 1, then 1
+        stats.MaxHitPoints.Should().Be(7);
+    }
+
+    [Theory]
+    [InlineData("1d6", 4, 6)]
+    [InlineData("d8", 5, 8)]
+    [InlineData("10", 6, 10)]
+    [InlineData("1d12", 7, 12)]
+    public void GetHitDieFixedValueAndSize_ReadTheDieWhicheverWayItIsWritten(string hitDie, int fixedValue, int size)
+    {
+        CharacterStatsCalculator.GetHitDieFixedValue(hitDie).Should().Be(fixedValue);
+        CharacterStatsCalculator.GetHitDieSize(hitDie).Should().Be(size);
+    }
+
     [Theory]
     [InlineData("1d6", 8)]
     [InlineData("d6", 8)]
@@ -457,7 +494,8 @@ public class CharacterStatsCalculatorTests
         string? subclassId = null,
         string[]? feats = null,
         UnarmoredArmorClass[]? unarmoredArmorClasses = null,
-        SpellSlots? spellSlots = null) =>
-        new(level, scores ?? Scores(), proficiencies ?? [], hitDie, savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? [],
+        SpellSlots? spellSlots = null,
+        Dictionary<int, int>? hitDieResults = null) =>
+        new(level, scores ?? Scores(), proficiencies ?? [], hitDie, hitDieResults ?? [], savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? [],
             unarmoredArmorClasses ?? [], spellSlots ?? SpellSlots.None);
 }

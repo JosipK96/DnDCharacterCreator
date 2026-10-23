@@ -1,0 +1,194 @@
+@using System.Globalization
+@using CharacterCreatorApp.Contracts.Responses
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Hit Points")</h2>
+
+    @if (IsLoading)
+    {
+        <div class="flex justify-center items-center py-20">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+        </div>
+    }
+    else
+    {
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+                <p class="text-sm">@ErrorMessage</p>
+            </div>
+        }
+
+        @if (dieSize > 0)
+        {
+            <p class="text-gray-400 mb-6">
+                Level @level adds a @hitDie and your Constitution modifier to your hit points.
+                Take the hit die's fixed value, roll it here, or enter what you rolled with your own dice.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <button type="button" @onclick="TakeFixedValue" class="@ChoiceClass(chosenBy == ChosenBy.Fixed)">
+                    <span class="block font-bold text-white">Take @fixedValue</span>
+                    <span class="block text-xs text-gray-400 mt-1">The fixed value of a @hitDie</span>
+                </button>
+
+                <button type="button" @onclick="Roll" disabled="@hasRolled" class="@ChoiceClass(chosenBy == ChosenBy.Rolled)">
+                    <span class="block font-bold text-white">@(hasRolled ? $"Rolled {rolled}" : $"Roll a {hitDie}")</span>
+                    <span class="block text-xs text-gray-400 mt-1">Rolled once, here in the browser</span>
+                </button>
+
+                <div class="@ChoiceClass(chosenBy == ChosenBy.Entered)">
+                    <label for="hit-die-roll" class="block font-bold text-white">I rolled</label>
+                    <input id="hit-die-roll" type="number" min="1" max="@dieSize" value="@entered"
+                           @onchange="Enter"
+                           class="mt-2 w-24 bg-gray-800 border border-gray-600 text-white rounded px-2 py-1" />
+                    <span class="block text-xs text-gray-400 mt-1">From 1 to @dieSize</span>
+                </div>
+            </div>
+
+            @if (chosen is { } result)
+            {
+                <p class="text-indigo-300">Level @level: @result on the @hitDie, plus your Constitution modifier.</p>
+            }
+        }
+    }
+
+    <div class="flex justify-between mt-8">
+        <button @onclick="() => OnBack.InvokeAsync()"
+                type="button"
+                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            Back
+        </button>
+
+        <button @onclick="HandleNext"
+                disabled="@(chosen == null || IsSaving)"
+                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
+            @(IsSaving ? "Saving..." : NextLabel)
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback OnNext { get; set; }
+
+    [Parameter]
+    public EventCallback OnBack { get; set; }
+
+    private enum ChosenBy { None, Fixed, Rolled, Entered }
+
+    private int level;
+    private string hitDie = string.Empty;
+    private int dieSize;
+    private int fixedValue;
+
+    private ChosenBy chosenBy;
+    private int? chosen;
+    private bool hasRolled;
+    private int rolled;
+    private int? entered;
+
+    protected override async Task OnInitializedAsync()
+    {
+        CharacterDraftDetailsApiResponse? draft = null;
+        ClassApiResponse? @class = null;
+
+        var loaded = await LoadAsync(async () =>
+        {
+            draft = await DraftService.GetDraftDetailsAsync(DraftId);
+
+            if (draft?.ClassId is { } classId)
+            {
+                @class = await LookupService.GetClassByIdAsync(classId);
+            }
+        }, "Failed to load the hit die");
+
+        if (!loaded || draft?.Level is not { } draftLevel || @class == null)
+        {
+            ErrorMessage ??= "The character's class could not be loaded.";
+            return;
+        }
+
+        level = draftLevel;
+        hitDie = $"d{DieSizeOf(@class.HitDie)}";
+        dieSize = DieSizeOf(@class.HitDie);
+
+        // The die's average rounded up, as the sheet takes for a level without a result.
+        // shortcut: this and DieSizeOf repeat CharacterStatsCalculator.GetHitDieFixedValue and
+        // GetHitDieSize, which the client cannot reference; the server checks the result's range
+        // anyway. Upgrade by sending both numbers with the class (ClassApiResponse) if the rule changes.
+        fixedValue = (dieSize / 2) + 1;
+
+        // Coming back to this step shows what was saved
+        if (draft.HitDieResults.TryGetValue(level, out var saved))
+        {
+            chosen = saved;
+            chosenBy = saved == fixedValue ? ChosenBy.Fixed : ChosenBy.Entered;
+            entered = chosenBy == ChosenBy.Entered ? saved : null;
+        }
+    }
+
+    // "1d10", "d10" and "10" are all a d10
+    private static int DieSizeOf(string hitDie)
+    {
+        var separator = hitDie.IndexOf('d', StringComparison.OrdinalIgnoreCase);
+
+        return int.TryParse(separator >= 0 ? hitDie[(separator + 1)..] : hitDie, NumberStyles.Integer, CultureInfo.InvariantCulture, out var size) && size > 0
+            ? size
+            : 8;
+    }
+
+    private void TakeFixedValue()
+    {
+        chosen = fixedValue;
+        chosenBy = ChosenBy.Fixed;
+    }
+
+    private void Roll()
+    {
+        rolled = Random.Shared.Next(1, dieSize + 1);
+        hasRolled = true;
+        chosen = rolled;
+        chosenBy = ChosenBy.Rolled;
+    }
+
+    private void Enter(ChangeEventArgs args)
+    {
+        if (int.TryParse(args.Value?.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var value) && value >= 1 && value <= dieSize)
+        {
+            entered = value;
+            chosen = value;
+            chosenBy = ChosenBy.Entered;
+            ErrorMessage = null;
+            return;
+        }
+
+        entered = null;
+        ErrorMessage = $"A {hitDie} rolls from 1 to {dieSize}.";
+
+        if (chosenBy == ChosenBy.Entered)
+        {
+            chosen = null;
+            chosenBy = ChosenBy.None;
+        }
+    }
+
+    private static string ChoiceClass(bool isChosen) =>
+        $"border-2 rounded-lg p-4 text-left transition-all duration-200 disabled:cursor-not-allowed {(isChosen ? "border-indigo-500 bg-gray-600" : "border-gray-600 bg-gray-700 hover:border-indigo-500")}";
+
+    private async Task HandleNext()
+    {
+        if (chosen is not { } result)
+        {
+            return;
+        }
+
+        if (await SaveAsync(() => DraftService.SetHitPointsAsync(DraftId, result), "Failed to save the hit points"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+}

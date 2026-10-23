@@ -1169,6 +1169,208 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_ALevelUpToTheSubclassLevelWithoutTheSubclass_ReturnsSubclassRequired()
+    {
+        // Arrange - Thorin, a level 2 fighter, levels up to 3, where the class data gives the subclass
+        var (_, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 2), CreateTestClass());
+        levelUp.SetHitDieResult(7);
+        ArrangeRepositories(_draftId, _userId, levelUp);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        levelUp.LevelUpChoices.Should().Equal(DraftChoice.HitPoints, DraftChoice.Subclass);
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Character.SubclassRequired");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_ALevelUpWithItsSubclassPicked_ReplacesTheCharacterAtTheNewLevelAndKeepsItsId()
+    {
+        // Arrange
+        var (saved, build, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 2), CreateTestClass());
+        levelUp.SetHitDieResult(7);
+        levelUp.SetSubclass("champion");
+        ArrangeRepositories(_draftId, _userId, levelUp);
+        ArrangeLevelUpSave(saved, build);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
+        result.Value.Should().Be(saved.Id);
+        saved.Level.Should().Be(3);
+        saved.SubclassId.Should().Be("champion");
+        saved.HitDieResults.Should().Equal(new Dictionary<int, int> { [3] = 7 });
+        levelUp.IsCompleted.Should().BeTrue();
+        levelUp.IsLevelUp.Should().BeFalse();
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+        _draftRepositoryMock.Verify(r => r.DeleteAsync(build, _cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_ALevelUpToAnImprovementLevelWithoutIt_ReturnsAbilityScoreImprovementsIncomplete()
+    {
+        // Arrange - level 3 to 4, where the fighter's data gives an improvement
+        var (_, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 3), CreateTestClass());
+        levelUp.SetHitDieResult(6);
+        ArrangeRepositories(_draftId, _userId, levelUp);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        levelUp.LevelUpChoices.Should().Equal(DraftChoice.HitPoints, DraftChoice.Improvements);
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Character.AbilityScoreImprovementsIncomplete");
+    }
+
+    [Fact]
+    public async Task Handle_ALevelUpWithItsImprovementPicked_RaisesTheScoreAndKeepsTheId()
+    {
+        // Arrange
+        var (saved, build, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 3), CreateTestClass());
+        levelUp.SetHitDieResult(6);
+        levelUp.SetAbilityScoreImprovements([new Dictionary<string, int> { ["STR"] = 2 }]);
+        ArrangeRepositories(_draftId, _userId, levelUp);
+        ArrangeLevelUpSave(saved, build);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
+        result.Value.Should().Be(saved.Id);
+        saved.Level.Should().Be(4);
+        saved.SubclassId.Should().Be("champion");
+        saved.AbilityScores["STR"].Should().Be(17);
+    }
+
+    [Fact]
+    public async Task Handle_ALevelUpOfACasterGainingASpellLevelWithoutTheNewSpell_ReturnsSpellCountMismatch()
+    {
+        // Arrange - a wizard's third level opens 2nd-level spells and one more for the spellbook
+        var (_, _, levelUp) = LevelUpOf(LevelTwoWizardDraft(), WizardGainingASpellLevel());
+        levelUp.SetHitDieResult(4);
+        ArrangeWizardSpellList();
+        ArrangeRepositories(_draftId, _userId, levelUp, @class: WizardGainingASpellLevel());
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        levelUp.LevelUpChoices.Should().Equal(DraftChoice.HitPoints, DraftChoice.Spells);
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Spell.SpellCountMismatch");
+    }
+
+    [Fact]
+    public async Task Handle_ALevelUpOfACasterWithItsNewSpellPicked_KeepsTheEarlierSpellsAndTheNewOne()
+    {
+        // Arrange
+        var (saved, build, levelUp) = LevelUpOf(LevelTwoWizardDraft(), WizardGainingASpellLevel());
+        levelUp.SetHitDieResult(4);
+        levelUp.SetSpells([.. levelUp.SelectedSpellIds, "hold_person"]);
+        ArrangeWizardSpellList();
+        ArrangeRepositories(_draftId, _userId, levelUp, @class: WizardGainingASpellLevel());
+        ArrangeLevelUpSave(saved, build);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
+        saved.Level.Should().Be(3);
+        saved.SpellIds.Should().BeEquivalentTo(["fire_bolt", "light", "shield", "magic_missile", "hold_person"]);
+    }
+
+    [Fact]
+    public async Task Handle_ALevelUpWithoutItsHitPoints_ReturnsHitPointsRequired()
+    {
+        // Arrange - level 4 to 5 brings nothing else to pick for this fighter
+        var (_, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 4), CreateTestClass());
+        ArrangeRepositories(_draftId, _userId, levelUp);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        levelUp.LevelUpChoices.Should().Equal(DraftChoice.HitPoints);
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Character.HitPointsRequired");
+    }
+
+    [Fact]
+    public async Task Handle_AnEditLoweringTheLevelBelowAHitDieResult_KeepsOnlyTheResultsOfItsLevels()
+    {
+        // Arrange - levelled up to 5 with a 9, then edited back down to 4
+        var (saved, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 4), CreateTestClass());
+        levelUp.SetHitDieResult(9);
+        levelUp.MarkAsCompleted(saved.Id);
+        var edit = CharacterDraft.StartEdit(levelUp, _timeProvider);
+        edit.SetNameAndLevel("Thorin Oakenshield", 4);
+        edit.SetAbilityScoreImprovements(AsisForLevel(4));
+        ArrangeRepositories(_draftId, _userId, edit);
+        _characterRepositoryMock.Setup(r => r.GetByIdAsync(saved.Id, _userId, _cts.Token)).ReturnsAsync(saved);
+        _draftRepositoryMock.Setup(r => r.GetBuildAsync(saved.Id, _userId, _cts.Token)).ReturnsAsync(levelUp);
+        _draftRepositoryMock.Setup(r => r.DeleteAsync(levelUp, _cts.Token)).Returns(Task.CompletedTask);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue(because: string.Join("; ", result.Errors.Select(e => e.Description)));
+        saved.Level.Should().Be(4);
+        saved.HitDieResults.Should().BeEmpty();
+    }
+
+    // A character saved from this draft, with the draft as its build, and a level-up of it
+    private (Character Saved, CharacterDraft Build, CharacterDraft LevelUp) LevelUpOf(CharacterDraft build, Class @class)
+    {
+        var saved = Character.Create(
+            _userId, build.Name!, build.Level!.Value, build.Edition, build.RaceId!, null, build.ClassId!, build.SubclassId, build.BackgroundId!,
+            build.BaseAbilityScores, _timeProvider);
+        build.MarkAsCompleted(saved.Id);
+
+        var levelUp = CharacterDraft.StartEdit(build, _timeProvider);
+        levelUp.LevelUp(@class, @class.Subclasses.Find(s => s.Id == build.SubclassId), saved.AbilityScores);
+
+        return (saved, build, levelUp);
+    }
+
+    private void ArrangeLevelUpSave(Character saved, CharacterDraft build)
+    {
+        _characterRepositoryMock.Setup(r => r.GetByIdAsync(saved.Id, _userId, _cts.Token)).ReturnsAsync(saved);
+        _draftRepositoryMock.Setup(r => r.GetBuildAsync(saved.Id, _userId, _cts.Token)).ReturnsAsync(build);
+        _draftRepositoryMock.Setup(r => r.DeleteAsync(build, _cts.Token)).Returns(Task.CompletedTask);
+    }
+
+    // A level 2 dwarf wizard soldier with its two cantrips and two spells
+    private CharacterDraft LevelTwoWizardDraft()
+    {
+        var draft = CreateCompleteDraft(_userId, level: 2);
+        draft.SetClass("wizard");
+        draft.SetSpells(["fire_bolt", "light", "shield", "magic_missile"]);
+        return draft;
+    }
+
+    // A shorter table than the book's: 1st-level spells at 2, 2nd-level ones and one more spell at 3
+    private static Class WizardGainingASpellLevel()
+    {
+        var wizard = Wizard();
+        wizard.SubclassLevel = 20;
+        wizard.SpellProgression =
+        [
+            new ClassSpellProgression { ClassId = "wizard", CharacterLevel = 2, CantripsKnown = 2, SpellsKnown = 2, MaxSpellLevel = 1 },
+            new ClassSpellProgression { ClassId = "wizard", CharacterLevel = 3, CantripsKnown = 2, SpellsKnown = 3, MaxSpellLevel = 2 },
+        ];
+        return wizard;
+    }
+
     // Thorin as finalize left him: the character, and the completed draft holding his choices
     private (Character Saved, CharacterDraft Build) SavedCharacterWithBuild()
     {

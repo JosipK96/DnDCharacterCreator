@@ -1,4 +1,6 @@
+using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;
@@ -345,6 +347,160 @@ public class ClassTests
         // Assert
         slots.Should().Be(SpellSlots.None);
     }
+
+    [Fact]
+    public void ChoicesGainedAt_TheSubclassLevel_AsksForTheSubclassAndTheSpellsOneOfThemCasts()
+    {
+        // Arrange - a fighter picks at 3; a Champion casts nothing, an Eldritch Knight starts its table
+        var fighter = Fighter();
+        fighter.Subclasses = [Champion(), EldritchKnight()];
+
+        // Act
+        var choices = fighter.ChoicesGainedAt(3, subclass: null, NoScores);
+
+        // Assert
+        choices.Should().Equal(DraftChoice.Subclass, DraftChoice.Spells);
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_AnImprovementLevel_AsksForTheImprovement()
+    {
+        // Act
+        var choices = Fighter().ChoicesGainedAt(4, Champion(), NoScores);
+
+        // Assert
+        choices.Should().Equal(DraftChoice.Improvements);
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_ALevelThatBringsNothingToPick_AsksForNothing()
+    {
+        // Act
+        var choices = Fighter().ChoicesGainedAt(5, Champion(), NoScores);
+
+        // Assert
+        choices.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_ACasterGainingASpellLevel_AsksForSpells()
+    {
+        // Arrange - a wizard's third level opens 2nd-level spells and adds two to its spellbook
+        var wizard = Class(
+            "wizard",
+            new ClassSpellProgression { ClassId = "wizard", CharacterLevel = 2, CantripsKnown = 3, SpellsKnown = 8, MaxSpellLevel = 1 },
+            new ClassSpellProgression { ClassId = "wizard", CharacterLevel = 3, CantripsKnown = 3, SpellsKnown = 10, MaxSpellLevel = 2 });
+        wizard.SubclassLevel = 2;
+
+        // Act
+        var choices = wizard.ChoicesGainedAt(3, new Subclass { Id = "evocation", Name = "Evocation", ClassId = "wizard" }, NoScores);
+
+        // Assert
+        choices.Should().Equal(DraftChoice.Spells);
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_AFightingStyleFeature_AsksForTheImprovementsStep()
+    {
+        // Arrange - a paladin's Fighting Style and first spells both come at 2
+        var paladin = Class("paladin", new ClassSpellProgression { ClassId = "paladin", CharacterLevel = 2, SpellsKnown = 2, MaxSpellLevel = 1 });
+        paladin.SubclassLevel = 3;
+        paladin.Features = [Feature("paladin_fighting_style", "Fighting Style", 2)];
+
+        // Act
+        var choices = paladin.ChoicesGainedAt(2, subclass: null, NoScores);
+
+        // Assert
+        choices.Should().Equal(DraftChoice.Improvements, DraftChoice.Spells);
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_ASubclassFightingStyle_AsksForTheImprovementsStep()
+    {
+        // Arrange - a 2014 Champion's Additional Fighting Style at 10
+        var champion = Champion();
+        champion.Features = [Feature("champion_additional_fighting_style", "Additional Fighting Style", 10, champion.Id)];
+
+        // Act
+        var choices = Fighter().ChoicesGainedAt(10, champion, NoScores);
+
+        // Assert
+        choices.Should().Equal(DraftChoice.Improvements);
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_ASubclassWithAlwaysPreparedSpells_AsksForTheSpellsAPickMayRepeat()
+    {
+        // Arrange - a 2014 paladin's count is the same at 2 and 3, but Devotion's Bless may be a pick already
+        var paladin = PreparedCaster("paladin", "CHA", divisor: 2, level: 2);
+        paladin.SpellProgression.Add(new ClassSpellProgression { ClassId = "paladin", CharacterLevel = 3, CantripsKnown = 2, MaxSpellLevel = 1 });
+        paladin.SubclassLevel = 3;
+        var devotion = new Subclass { Id = "devotion", Name = "Devotion", ClassId = "paladin" };
+        devotion.Spells = [new SpellSubclass { SpellId = "bless", SubclassId = devotion.Id, Level = 3, IsAlwaysPrepared = true }];
+        paladin.Subclasses = [devotion];
+
+        // Act
+        var choices = paladin.ChoicesGainedAt(3, subclass: null, Scores("CHA", 14));
+
+        // Assert
+        choices.Should().Equal(DraftChoice.Subclass, DraftChoice.Spells);
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_AnImprovementForAPreparedCasterWhoseLevelCountStays_StillAsksForSpells()
+    {
+        // Arrange - a 2014 artificer prepares INT + half its level: 9 at both 18 and 19, but 19's
+        // improvement may raise INT
+        var artificer = PreparedCaster("artificer", "INT", divisor: 2, level: 18);
+        artificer.SpellProgression.Add(new ClassSpellProgression { ClassId = "artificer", CharacterLevel = 19, CantripsKnown = 2, MaxSpellLevel = 1 });
+        artificer.AsiLevels = [19];
+        var subclass = new Subclass { Id = "alchemist", Name = "Alchemist", ClassId = "artificer" };
+
+        // Act
+        var choices = artificer.ChoicesGainedAt(19, subclass, Scores("INT", 16));
+
+        // Assert
+        choices.Should().Equal(DraftChoice.Improvements, DraftChoice.Spells);
+    }
+
+    [Fact]
+    public void ChoicesGainedAt_TheFirstLevel_Throws()
+    {
+        // Act - level 1 is never reached by a level-up
+        var act = () => Fighter().ChoicesGainedAt(1, subclass: null, NoScores);
+
+        // Assert
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
+
+    // A 2014 fighter: a subclass at 3, improvements at 4, 6 and 8, its style at 1, no spells of its own
+    private static Class Fighter()
+    {
+        var fighter = Class("fighter");
+        fighter.SubclassLevel = 3;
+        fighter.AsiLevels = [4, 6, 8];
+        fighter.Features = [Feature("fighter_fighting_style", "Fighting Style", 1)];
+        return fighter;
+    }
+
+    private static Subclass Champion() => new() { Id = "champion", Name = "Champion", ClassId = "fighter" };
+
+    private static Subclass EldritchKnight() => new()
+    {
+        Id = "eldritch_knight",
+        Name = "Eldritch Knight",
+        ClassId = "fighter",
+        SpellProgression =
+        [
+            new SubclassSpellProgression
+            {
+                SubclassId = "eldritch_knight", CharacterLevel = 3, CantripsKnown = 2, SpellsKnown = 3, MaxSpellLevel = 1, SpellcastingAbility = "INT"
+            },
+        ],
+    };
+
+    private static Feature Feature(string id, string name, int level, string? subclassId = null) =>
+        new() { Id = id, Name = name, Description = name, Level = level, SubclassId = subclassId, Type = "class" };
 
     private static readonly Dictionary<string, int> NoScores = [];
 

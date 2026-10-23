@@ -84,6 +84,11 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Characters
                 .HasJsonConversion();
 
             builder.Property(x => x.ChoicesNeeded);
+            builder.Property(x => x.LevelUpChoices);
+
+            builder.Property(x => x.HitDieResults)
+                .HasColumnType("jsonb")
+                .HasJsonConversion();
 
             // A character's build and its unsaved edit go with it
             builder.HasOne<Character>()

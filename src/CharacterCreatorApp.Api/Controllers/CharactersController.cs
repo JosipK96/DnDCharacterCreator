@@ -4,6 +4,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.FinalizeCharact
 using CharacterCreatorApp.Application.Features.CharacterManagement.DeleteCharacter;
 using CharacterCreatorApp.Application.Features.CharacterManagement.EditCharacter;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
+using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterSheetPdf;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacters;
 using CharacterCreatorApp.Application.Features.CharacterManagement.LevelUpCharacter;
 using CharacterCreatorApp.Contracts.Common;
@@ -59,6 +60,25 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new GetCharacterDetailsQuery(id), cancellationToken);
 
             return OkOrProblem(response, character => _mapper.Map<CharacterDetailsApiResponse>(character));
+        }
+
+        /// <summary>
+        /// The character sheet as a PDF to print: the familiar first page, then features and spells
+        /// on as many pages as they take. ?paper=letter lays it out for US Letter, else A4.
+        /// </summary>
+        [HttpGet("{id:guid}/sheet.pdf")]
+        [Produces("application/pdf")]
+        [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetCharacterSheetPdf(Guid id, [FromQuery] SheetPaper paper, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new GetCharacterSheetPdfQuery(id, paper), cancellationToken);
+
+            return response.IsSuccess
+                ? File(response.Value.Content, "application/pdf", response.Value.FileName)
+                : Problem(response.Errors);
         }
 
         /// <summary>

@@ -1,7 +1,9 @@
-﻿using CharacterCreatorApp.Application.Features.Authentication;
+using CharacterCreatorApp.Application.Features.Authentication;
+using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterSheetPdf;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Infrastructure.Identity;
 using CharacterCreatorApp.Infrastructure.Interceptors;
+using CharacterCreatorApp.Infrastructure.Pdf;
 using CharacterCreatorApp.Infrastructure.Seed;
 
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +44,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddRepositories();
         services.AddScoped<SeedService>();
+        services.AddSingleton<ICharacterSheetPdfRenderer, CharacterSheetPdfRenderer>();
         services.AddSeeders();
 
         return services;

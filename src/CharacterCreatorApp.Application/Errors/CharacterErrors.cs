@@ -16,6 +16,7 @@ public static class CharacterErrors
     public static class Codes
     {
         public const string CharacterIdRequired = "Character.CharacterIdRequired";
+        public const string SheetPaperInvalid = "Character.SheetPaperInvalid";
     }
 
     public static Error RaceNotFoundById(string raceId) =>

@@ -108,3 +108,60 @@ are not suppressed — fix the code.
 A local `[SuppressMessage]` is for a case where the analyzer is right in general
 and wrong here. It carries a `Justification` that says what the analyzer cannot
 see. "The build failed" is not a justification.
+
+## Before a pull request
+
+The root CLAUDE.md lists these as a checklist. Each came out of the code-quality
+audit before 1.0 (#78-#90), which found every one of them in code that had
+passed review, because nothing in the build catches them. Here is why each
+matters.
+
+**One copy of each rule.** A rule the domain model owns (how many improvements a
+level gives, how many languages a background lets the player pick, what a hit
+die is) is a member of the entity, and everything else reads it from there:
+handlers, `DraftCompletenessChecker`, the read-model mappings in Infrastructure,
+and the wizard's Razor steps. The audit found the improvement count written in
+three places, a background's language count in an Infrastructure mapping, and
+the race's picks worked out again in the race and improvements steps. A copy
+works until the rule changes, and then the step offers what finalize refuses.
+The wizard asks the API for what a draft owes, as the spells step asks
+`GET spell-allowance` and the improvements step `GET fighting-styles`.
+
+**One builder for what two flows share.** The review step's preview and the
+saved sheet (and its PDF) show the same thing; a step and finalize check the
+same thing; the character list and the sheet offer the same actions. When two
+places assemble it separately they drift: the review step once listed feats
+differently from the sheet (#52), and armour class had to be added to both
+(#53). Share the piece; when a change touches one side, look for the other.
+
+**Nothing without a caller.** An endpoint, repository method, package reference
+or helper arrives with the code that uses it, and goes when the last use goes.
+Unused code is still read, kept compiling and extended: an endpoint the client
+never calls has to repeat every check of the one it does call, or it becomes a
+way around them.
+
+**Tests that run without Docker.** A new or changed handler has unit tests for
+its success path, its not-found path and each refusal, asserting the error code.
+A new or changed wizard step has bUnit tests of what it offers, what it sends
+and how it restores a saved draft. The Api integration tests reach most
+handlers too, but they need Docker, so they fail late; they are a second check,
+not the first.
+
+**Hardcoded ids, guarded both ways.** Some rules can only name seed ids
+(`HitPointBonuses`: the hill dwarf, Draconic Resilience, Tough). A test that the
+ids still exist is half the guard. The other half is a test that the data holds
+nothing the list should name and doesn't: otherwise a regenerated seed file with
+a new book's dwarf gives that character too few hit points and every test
+passes. Prefer reading the rule from the data, as armour class does.
+
+**Rules no analyzer checks.** The analyzers don't run on Razor, so the brace
+rule there is on whoever writes it. `ApiController`'s helpers are the only way a
+controller turns a `Response` into a result, file responses included; a
+controller that branches on `IsSuccess` itself skips the problem-details shape
+the client reads.
+
+**Docs in the same pull request.** When a change renames, removes or changes
+what something means, search the README, every CLAUDE.md and `docs/` for it and
+fix them in the same pull request. `ClaudeMdReferencesTests` catches a
+backticked name in a CLAUDE.md that the code no longer declares, but not a
+statement that stopped being true.

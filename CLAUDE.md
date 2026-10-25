@@ -72,6 +72,29 @@ The rules nearly every task needs:
 - Comments explain *why*. No commented-out code: a commented-out test body passed vacuously for
   a long time before anyone noticed.
 
+## Before a pull request  → docs/conventions/coding-standards.md
+
+Check the change against these before opening it. Each one was a finding of the 1.0 code-quality
+audit, so a session that skips them leaves the next audit something to find.
+
+- A rule the domain model owns is read from the entity everywhere it is needed: handlers,
+  `DraftCompletenessChecker`, Infrastructure mappings and Razor alike. A wizard step that needs a
+  count asks the API for it (as the spells step asks `GET spell-allowance`), never works it out.
+- What two flows both show or check is built by one shared piece: the review step and the sheet
+  (and so the PDF), a step and finalize, the character list and the sheet. Changing one side,
+  find the other.
+- Nothing arrives without a caller, and nothing stays without one: an endpoint, repository
+  method, package reference or helper the change stops using goes in the same pull request.
+- A new or changed handler has unit tests for success, not found and each refusal, asserting the
+  error code; a new or changed wizard step has bUnit tests. The Docker-backed integration tests
+  don't count for this.
+- A hardcoded list of seed ids (`HitPointBonuses`) is tested both ways: every id is in the data,
+  and nothing in the data that the list should name is missing from it.
+- The brace rule holds in Razor too, and no controller branches on `IsSuccess`, file responses
+  included. No analyzer checks either.
+- Every doc that names what the change touches is updated in the same pull request: search the
+  README, every CLAUDE.md and `docs/` for each name renamed, removed or changed in meaning.
+
 ## Git  → docs/conventions/git-and-testing.md
 
 - Work arrives through pull requests: a branch per issue, a PR that starts with `Closes #N`

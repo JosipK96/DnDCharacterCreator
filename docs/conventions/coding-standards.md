@@ -155,10 +155,11 @@ a new book's dwarf gives that character too few hit points and every test
 passes. Prefer reading the rule from the data, as armour class does.
 
 **Rules no analyzer checks.** The analyzers don't run on Razor, so the brace
-rule there is on whoever writes it. `ApiController`'s helpers are the only way a
-controller turns a `Response` into a result, file responses included; a
-controller that branches on `IsSuccess` itself skips the problem-details shape
-the client reads.
+rule there is on whoever writes it. A controller turns a `Response` into a
+result through `ApiController`'s helpers and never branches on `IsSuccess`
+itself, so which status a success or failure gets is decided in one place. The
+PDF endpoint still branches, for want of a helper that returns a file; #82 adds
+one, and later file endpoints use it.
 
 **Docs in the same pull request.** When a change renames, removes or changes
 what something means, search the README, every CLAUDE.md and `docs/` for it and

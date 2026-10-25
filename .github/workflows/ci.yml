@@ -32,7 +32,11 @@ jobs:
 
       - uses: actions/setup-dotnet@v6
         with:
-          global-json-file: global.json
+          # An exact version, not global.json's roll-forward: for a channel the install script follows an
+          # aka.ms link to dotnetorigin.blob.core.windows.net, which answered 409 for every SDK on
+          # 2026-10-25, while an exact version downloads from builds.dotnet.microsoft.com.
+          # shortcut: bump this by hand with global.json until channel installs work again.
+          dotnet-version: 10.0.403
           cache: true
           cache-dependency-path: |
             Directory.Packages.props

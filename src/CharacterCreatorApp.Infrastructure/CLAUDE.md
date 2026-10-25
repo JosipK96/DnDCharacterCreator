@@ -12,6 +12,16 @@ before changing what a seed file holds.
   private `…WithDetails` query every method starts from. Per-method copies drifted, and every
   finalized character lost its race languages.
 
+## The character sheet PDF
+
+- `CharacterSheetPdfRenderer` draws it with QuestPDF under its Community licence (checked on #29:
+  free for individuals, open-source projects and anyone under USD 1M revenue). Its package brings
+  the Lato font and the native libraries, so the Linux image needs nothing installed.
+- `CharacterSheetDocument`: page 1 is fixed and fills the page on A4 and Letter; features and
+  spells follow on as many pages as they take, each entry kept whole (QuestPDF's PreventPageBreak). Black
+  on white only, and what the app does not model is an empty box. It shows the numbers in the read
+  model and never works one out.
+
 ## Seed data
 
 - Don't hand-edit a seed file the generator writes: every one but `Proficiencies.json`, which it

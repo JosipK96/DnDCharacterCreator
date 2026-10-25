@@ -40,6 +40,17 @@
                 </button>
 
                 <div class="flex space-x-3">
+                    <div class="flex">
+                        <button @onclick="DownloadPdf" disabled="@isDownloading"
+                                class="bg-gray-700 hover:bg-gray-600 disabled:opacity-50 text-white px-4 py-2 rounded-l-lg font-medium transition-colors duration-200">
+                            @(isDownloading ? "Preparing..." : "Download PDF")
+                        </button>
+                        <select @bind="paper" aria-label="Paper size"
+                                class="bg-gray-700 text-white text-sm border-l border-gray-600 rounded-r-lg px-2">
+                            <option value="a4">A4</option>
+                            <option value="letter">Letter</option>
+                        </select>
+                    </div>
                     @if (character.Level < CharacterLevels.Max)
                     {
                         <button @onclick="LevelUpCharacter" disabled="@isStartingEdit"
@@ -318,6 +329,8 @@
     private bool isLoading = true;
     private bool isDeleting = false;
     private bool isStartingEdit;
+    private bool isDownloading;
+    private string paper = "a4";
     private string? errorMessage;
 
     protected override async Task OnInitializedAsync()
@@ -387,6 +400,26 @@
         {
             errorMessage = $"Failed to level the character up: {ex.Message}";
             isStartingEdit = false;
+        }
+    }
+
+    // The API draws the sheet; the browser is handed the file to save, since the request needs the user's token
+    private async Task DownloadPdf()
+    {
+        isDownloading = true;
+
+        try
+        {
+            var file = await CharacterService.GetCharacterSheetPdfAsync(Id, paper);
+            await JS.InvokeVoidAsync("saveFile", file.FileName, "application/pdf", file.Content);
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            errorMessage = $"Failed to download the character sheet: {ex.Message}";
+        }
+        finally
+        {
+            isDownloading = false;
         }
     }
 

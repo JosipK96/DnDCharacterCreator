@@ -77,6 +77,22 @@ public class CharacterService(HttpClient http)
         return await response.ReadAsync<Guid>();
     }
 
+    /// <summary>
+    /// The character sheet as a PDF, laid out for A4 or, with paper "letter", US Letter; the file
+    /// name is the one the API gives it.
+    /// </summary>
+    public async Task<DownloadedFile> GetCharacterSheetPdfAsync(Guid id, string paper)
+    {
+        var response = await _http.GetAsync($"/api/characters/{id}/sheet.pdf?paper={Uri.EscapeDataString(paper)}");
+        await response.EnsureSuccessAsync();
+
+        var fileName = response.Content.Headers.ContentDisposition?.FileNameStar
+            ?? response.Content.Headers.ContentDisposition?.FileName?.Trim('"')
+            ?? "character.pdf";
+
+        return new DownloadedFile(fileName, await response.Content.ReadAsByteArrayAsync());
+    }
+
     public async Task DeleteCharacterAsync(Guid id)
     {
         var response = await _http.DeleteAsync($"/api/characters/{id}");

@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -22,6 +23,16 @@ public sealed class FakeApi : HttpMessageHandler
 
     public void Get(string pathAndQuery, object response) =>
         _routes[$"GET {pathAndQuery}"] = () => new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(response) };
+
+    /// <summary>A file the API sends to be saved, named in its Content-Disposition as ASP.NET Core's File() names it.</summary>
+    public void GetFile(string pathAndQuery, string fileName, string contentType, byte[] content) =>
+        _routes[$"GET {pathAndQuery}"] = () =>
+        {
+            var file = new ByteArrayContent(content);
+            file.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+            file.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName, FileNameStar = fileName };
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = file };
+        };
 
     /// <summary>A step's save, which the API answers with no content.</summary>
     public void Put(string path) =>

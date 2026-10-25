@@ -29,6 +29,9 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   die result, and `SetCharacterClassCommandHandler` refuses another class in one. `ICharacterDraftRepository.GetByIdForUpdateAsync` finds only unfinished
   drafts, so no step, finalize or delete can touch a build; an edit is never the
   `GetIncompleteDraft` a new character resumes.
+- A saved character's sheet, on the page and as a PDF, is loaded and worked out by one
+  `CharacterDetailsLoader`, so the two cannot disagree. The PDF is drawn behind
+  `ICharacterSheetPdfRenderer`, so Application references no PDF library.
 - Application reaches ASP.NET Core Identity through `IIdentityService`.
 
 ## Errors and validation  → docs/conventions/errors-and-validation.md

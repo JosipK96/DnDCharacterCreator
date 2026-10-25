@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 
 using CharacterCreatorApp.Api.IntegrationTests.Fixtures;
 using CharacterCreatorApp.Contracts.Common;
@@ -16,6 +17,8 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Time.Testing;
+
+using UglyToad.PdfPig;
 
 namespace CharacterCreatorApp.Api.IntegrationTests.Controllers;
 
@@ -98,6 +101,75 @@ public class CharactersControllerTests : IAsyncLifetime
 
         // Act
         var response = await _client.GetAsync($"/api/characters/{characterId}", TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.NotFound, "Character.NotFound");
+    }
+
+    [Fact]
+    public async Task GetCharacterSheetPdf_OfTheirCharacter_ReturnsAPdfWithItsNameClassAndAbilityScores()
+    {
+        // Arrange - a level 5 wizard with STR 15
+        var email = await AuthenticateAsync();
+        var characterId = (await SeedCharactersAsync(email, "Aragorn")).Single();
+
+        // Act
+        var response = await _client.GetAsync($"/api/characters/{characterId}/sheet.pdf", TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.Content.Headers.ContentType!.MediaType.Should().Be("application/pdf");
+        response.Content.Headers.ContentDisposition!.FileName.Should().Be("Aragorn.pdf");
+
+        var pdf = await response.Content.ReadAsByteArrayAsync(TestContext.Current.CancellationToken);
+        Encoding.ASCII.GetString(pdf, 0, 4).Should().Be("%PDF");
+
+        using var document = PdfDocument.Open(pdf);
+        var firstPage = document.GetPage(1).GetWords().Select(w => w.Text).ToList();
+        // PdfPig reads words in drawing order, not reading order, so only that they are there
+        firstPage.Should().Contain(["Aragorn", "Wizard", "5", "STRENGTH", "15"]);
+    }
+
+    [Fact]
+    public async Task GetCharacterSheetPdf_OfALevelTenWizard_DrawsItsSlotsAndRunsItsSpellsOntoMorePages()
+    {
+        // Arrange
+        var email = await AuthenticateAsync();
+        var characterId = await SeedCharacterAsync(email, userId =>
+        {
+            var wizard = Character.Create(
+                userId, "Elminster", 10, edition: RulesEdition.Edition2014, raceId: "elf", subraceId: null, classId: "wizard",
+                subclassId: "evocation", backgroundId: "sage", StandardArray(), _timeProvider);
+            wizard.SetSpells(LevelTenWizardSpells);
+            return wizard;
+        });
+
+        // Act
+        var response = await _client.GetAsync($"/api/characters/{characterId}/sheet.pdf?paper=letter", TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        using var document = PdfDocument.Open(await response.Content.ReadAsByteArrayAsync(TestContext.Current.CancellationToken));
+
+        document.NumberOfPages.Should().BeGreaterThan(2);
+        ((int)document.GetPage(1).Height).Should().Be(792, "a Letter page is 11 inches tall");
+
+        var laterPages = string.Join(' ', Enumerable.Range(2, document.NumberOfPages - 1)
+            .SelectMany(n => document.GetPage(n).GetWords().Select(w => w.Text)));
+        laterPages.Should().Contain("Evocation Savant").And.Contain("Cone of Cold").And.Contain("Fire Bolt");
+        laterPages.Should().Contain("1st level: 4").And.Contain("5th level: 2");
+    }
+
+    [Fact]
+    public async Task GetCharacterSheetPdf_OfAnotherUser_ReturnsNotFound()
+    {
+        // Arrange
+        var email = await AuthenticateAsync();
+        var characterId = (await SeedCharactersAsync(email, "Aragorn")).Single();
+        await AuthenticateAsync();
+
+        // Act
+        var response = await _client.GetAsync($"/api/characters/{characterId}/sheet.pdf", TestContext.Current.CancellationToken);
 
         // Assert
         await response.ShouldFailWithAsync(HttpStatusCode.NotFound, "Character.NotFound");
@@ -273,6 +345,34 @@ public class CharactersControllerTests : IAsyncLifetime
 
         return characters.ConvertAll(c => c.Id);
     }
+
+    private async Task<Guid> SeedCharacterAsync(string email, Func<Guid, Character> create)
+    {
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        var userId = await db.Users
+            .Where(u => u.Email == email)
+            .Select(u => u.Id)
+            .SingleAsync(TestContext.Current.CancellationToken);
+
+        var character = create(userId);
+        db.Characters.Add(character);
+        await db.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        return character.Id;
+    }
+
+    // Cantrips and spells of each level a level 10 wizard casts, from the 2014 Player's Handbook
+    private static readonly string[] LevelTenWizardSpells =
+    [
+        "acid_splash", "fire_bolt", "chill_touch", "dancing_lights",
+        "alarm", "burning_hands", "charm_person", "chromatic_orb", "color_spray", "comprehend_languages",
+        "melfs_acid_arrow", "alter_self", "arcane_lock", "augury",
+        "animate_dead", "bestow_curse", "blink", "counterspell", "dispel_magic",
+        "arcane_eye", "banishment", "evards_black_tentacles", "confusion",
+        "animate_objects", "bigbys_hand", "cloudkill", "cone_of_cold",
+    ];
 
     private static async Task<FilterResponse<CharacterSummaryApiResponse>> ReadPageAsync(HttpResponseMessage response)
     {

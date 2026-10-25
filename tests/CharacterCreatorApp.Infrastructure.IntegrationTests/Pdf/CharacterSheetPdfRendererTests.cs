@@ -44,7 +44,7 @@ public class CharacterSheetPdfRendererTests
         using var document = PdfDocument.Open(pdf);
         var firstPage = WordsOf(document, 1);
 
-        firstPage.Should().ContainInOrder("Bruenor", "Fighter", "1");
+        firstPage.Should().Contain(["Bruenor", "Fighter", "1"]);
         firstPage.Should().Contain(["Strength", "+3", "16", "Athletics", "CURRENT", "HIT", "POINTS", "Second", "Wind"]);
         firstPage.Should().Contain(["ATTACKS", "&", "SPELLCASTING", "EQUIPMENT"]);
         firstPage.Should().NotContain("Longsword", "equipment is not modelled, so nothing fills its box");
@@ -112,9 +112,6 @@ public class CharacterSheetPdfRendererTests
         text.Should().Contain("1st level: 4").And.Contain("4th level: 3").And.Contain("5th level: 2");
         text.Should().NotContain("6th level:");
     }
-
-    internal static CharacterDetailsReadModel FighterForDump() => Fighter();
-    internal static CharacterDetailsReadModel WizardForDump() => Wizard();
 
     private static List<string> WordsOf(PdfDocument document, int pageNumber) =>
         document.GetPage(pageNumber).GetWords().Select(w => w.Text).ToList();

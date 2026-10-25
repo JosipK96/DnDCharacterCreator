@@ -94,9 +94,10 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
             {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.RelativeColumn();
-                    columns.RelativeColumn();
-                    columns.RelativeColumn();
+                    // Class and subclass is the longest: "Wizard (School of Evocation) 10"
+                    columns.RelativeColumn(4);
+                    columns.RelativeColumn(3);
+                    columns.RelativeColumn(3);
                 });
 
                 HeaderField(table, ClassAndLevel(), "Class & level");
@@ -370,6 +371,13 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
                         c => Entry(c, spell.Name, SpellLine(spell), spell.Description, null)));
                 }
             }
+
+            // The text above includes SRD material, whose CC BY 4.0 licence asks for this wherever it is shared (NOTICE.md)
+            column.Item().PaddingTop(10).Text(
+                "Includes material from the System Reference Documents 5.1 and 5.2 by Wizards of the Coast LLC, licensed under "
+                + "CC BY 4.0 (creativecommons.org/licenses/by/4.0). Unofficial Fan Content permitted under the Fan Content Policy; "
+                + "not approved or endorsed by Wizards.")
+                .FontSize(6).FontColor(LabelColor);
         });
     }
 

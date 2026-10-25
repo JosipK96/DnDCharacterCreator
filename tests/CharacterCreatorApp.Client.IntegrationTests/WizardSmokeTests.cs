@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
@@ -90,6 +91,26 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await _page.GotoAsync("/characters");
         await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom the Bold", Exact = true })).ToBeVisibleAsync();
         await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToHaveCountAsync(0);
+    }
+
+    [Fact]
+    public async Task DownloadPdf_FromTheSheet_SavesTheCharacterSheetAsAPdf()
+    {
+        // Arrange
+        await RegisterAndSignInAsync("wizard-pdf");
+        await CreateGromAsync();
+
+        // Act
+        var download = await _page.RunAndWaitForDownloadAsync(() =>
+            _page.GetByRole(AriaRole.Button, new() { Name = "Download PDF" }).ClickAsync());
+
+        // Assert: the browser saves the API's PDF under the character's name
+        Assert.Equal("Grom.pdf", download.SuggestedFilename);
+
+        await using var file = await download.CreateReadStreamAsync();
+        var header = new byte[4];
+        await file.ReadExactlyAsync(header, TestContext.Current.CancellationToken);
+        Assert.Equal("%PDF", Encoding.ASCII.GetString(header));
     }
 
     [Fact]

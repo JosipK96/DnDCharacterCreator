@@ -31,6 +31,25 @@ public class CharacterSheetPdfRendererTests
             ((int)Math.Round(page.Width), (int)Math.Round(page.Height)).Should().Be((width, height)));
     }
 
+    [Theory]
+    [InlineData("Đurđica Šimić")]
+    [InlineData("Ελένη")]
+    [InlineData("龍の騎士")]
+    [InlineData("Smaug 🐉")]
+    public void Render_ANameInAnyScript_DrawsTheSheet(string name)
+    {
+        // Arrange - a player names a character anything; text the font lacks must not stop the sheet
+        var fighter = Fighter();
+        fighter.Name = name;
+
+        // Act
+        var pdf = _renderer.Render(fighter, SheetPaper.A4);
+
+        // Assert
+        using var document = PdfDocument.Open(pdf);
+        document.NumberOfPages.Should().Be(2);
+    }
+
     [Fact]
     public void Render_ALevelOneFighter_FillsTheFirstPageAndLeavesEquipmentAndAttacksEmpty()
     {

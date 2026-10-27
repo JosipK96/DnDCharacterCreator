@@ -2,7 +2,7 @@
 
 Writes the seed JSON in `src/CharacterCreatorApp.Infrastructure/Data` from 5etools data; how the
 app reads it is in `src/CharacterCreatorApp.Infrastructure/CLAUDE.md`, and the D&D rules the
-data feeds in `src/CharacterCreatorApp.Domain/CLAUDE.md`.
+data feeds in `docs/conventions/dnd-rules.md`.
 
 - Only SRD text (5.1 and 5.2, CC-BY 4.0; attribution in NOTICE.md) may be in the seed files.
   The generator's `SrdText` keeps a description only for an entry 5etools marks `srd`/`srd52`

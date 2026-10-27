@@ -20,8 +20,27 @@ A failed run is red on the Actions tab, and GitHub emails the repository owner a
 The repository is public, so anyone signed in to GitHub can download the artifacts. Without
 the passphrase they are unreadable, and nothing unencrypted is ever uploaded.
 
+## What guards the schedule
+
 GitHub turns off scheduled workflows in a public repository after 60 days without activity in
-it. If that happens, the Actions tab says so and has a button to turn the workflow back on.
+it. A disabled workflow doesn't run, so it doesn't fail and nobody is told. The
+[`backup-watch.yml`](../../.github/workflows/backup-watch.yml) workflow guards against that. It
+runs every day at 08:30 UTC, on every push to `main`, on every published release, and on demand,
+and has two jobs:
+
+- **Keep the schedules enabled:** calls GitHub's enable-workflow API for `backup.yml` and for
+  itself. That is a no-op on an enabled workflow, switches a disabled one back on, and restarts
+  the 60 days.
+- **Check a recent backup exists:** fails when no unexpired `backup-*` artifact is newer than
+  48 hours (or there is none), so GitHub emails the owner.
+
+The push and release triggers don't depend on a schedule. If the repository goes quiet for more
+than 60 days, both schedules are switched off together and nothing runs until the next push or
+release; the check then fails if the backup is stale, and the keep-alive job turns the schedules
+back on. So the longest the group can go without a backup unnoticed is a quiet stretch of 60
+days, until the next push. To see the last good backup, open the Actions tab > Backup watch >
+the latest run, whose log says when the newest backup was made; or list the artifacts with
+`gh api repos/JosipK96/DnDCharacterCreator/actions/artifacts --jq '.artifacts[] | [.name, .created_at] | @tsv'`.
 
 ## The secrets
 

@@ -8,8 +8,9 @@ PostgreSQL, one solution, clean architecture. Setup and how to run it: see READM
 Each project has its own CLAUDE.md, loaded when you read a file in it. Sessions start in `src/`,
 so the two outside it never load on their own: read them before working there.
 
-- `src/CharacterCreatorApp.Domain/CLAUDE.md`: the D&D rules (editions, books, races, classes,
-  backgrounds, feats, spells, languages, tools, hit points) and the domain model.
+- `src/CharacterCreatorApp.Domain/CLAUDE.md`: the domain model and the rules that caused bugs;
+  each D&D rule at length (editions, books, races, classes, backgrounds, feats, spells,
+  languages, tools, hit points) is in `docs/conventions/dnd-rules.md`.
 - `src/CharacterCreatorApp.Application/CLAUDE.md`: CQRS, character building, errors and validation.
 - `src/CharacterCreatorApp.Infrastructure/CLAUDE.md`: seed data, migrations, repositories, Identity.
 - `src/CharacterCreatorApp.Api/CLAUDE.md`: controllers, configuration and secrets.
@@ -35,6 +36,10 @@ The rules nearly every task needs:
   `--filter-class "*.<Class>"` for one class. Tests run on Microsoft.Testing.Platform
   (`global.json`'s `test` runner, xunit.v3 4), so VSTest's `--filter "FullyQualifiedName~..."`
   and a positional project path no longer work.
+- Run only the test classes a change touches (the table in `tests/CLAUDE.md` says which), not
+  whole test projects: CI runs the full suite on the PR. Run more only for a change that crosses
+  layers, such as a seed data, migration or shared-type change. Build with `-v q -nologo` so
+  only warnings and errors come back.
 - `TreatWarningsAsErrors` is on, with StyleCop, AsyncFixer and `EnforceCodeStyleInBuild`. A
   change is not done until it builds clean. Don't suppress to get green: `analyzers/
   GlobalSuppressions.cs` holds formatting-only rules and a few named domain-vocabulary

@@ -131,7 +131,8 @@ The tests run on Microsoft.Testing.Platform (set in `global.json`), so a project
 Each project under `tests/` runs on its own the same way. The unit test projects need nothing
 else; the integration test projects start PostgreSQL through Testcontainers, so they need a
 running Docker daemon. CI runs all of them on every pull request, with the build's warnings
-treated as errors, a vulnerable-package check, and a build of the Docker image.
+treated as errors, test coverage with a floor for Domain and Application (see
+docs/conventions/git-and-testing.md), a vulnerable-package check, and a build of the Docker image.
 
 The wizard has two test projects of its own:
 

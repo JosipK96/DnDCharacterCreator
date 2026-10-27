@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NetArchTest.Rules" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <!-- Every layer the rules look at. The Api brings the Client with it. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Api\CharacterCreatorApp.Api.csproj" />
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Application\CharacterCreatorApp.Application.csproj" />
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Contracts\CharacterCreatorApp.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Domain\CharacterCreatorApp.Domain.csproj" />
+    <ProjectReference Include="..\..\src\CharacterCreatorApp.Infrastructure\CharacterCreatorApp.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,72 @@
+# Guards the nightly backup (#73). GitHub disables scheduled workflows in a public repository
+# after 60 days without activity: a disabled workflow doesn't run, so it doesn't fail and nobody
+# is told. This workflow keeps the schedule enabled, and fails (so GitHub emails the owner) when
+# no backup is newer than 48 hours. The push and release triggers don't depend on a schedule,
+# so they catch a backup that stopped even when the schedules were switched off. What guards
+# the backup: docs/operations/backup-and-restore.md.
+name: Backup watch
+
+on:
+  schedule:
+    # Six hours after the backup (02:30 UTC), so last night's artifact exists by now
+    - cron: "30 8 * * *"
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+# The default token gets no permissions; each job asks for the one it needs
+permissions: {}
+
+jobs:
+  keep-alive:
+    name: Keep the schedules enabled
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      # Enabling a workflow that is already enabled changes nothing; one that GitHub disabled for
+      # inactivity is switched back on, and the call restarts the 60 days
+      - name: Enable the backup and this workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          for workflow in backup.yml backup-watch.yml; do
+            gh api --method PUT "repos/$GH_REPO/actions/workflows/$workflow/enable"
+            echo "Enabled $workflow"
+          done
+
+  check-backup:
+    name: Check a recent backup exists
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      MAX_AGE_HOURS: 48
+    steps:
+      # Expired artifacts are excluded, so a backup that fell out of its 30 days doesn't count
+      - name: Find the newest backup
+        shell: bash
+        run: |
+          set -euo pipefail
+          newest=$(gh api --paginate "repos/$GH_REPO/actions/artifacts?per_page=100" \
+            --jq '.artifacts[] | select((.name | startswith("backup-")) and (.expired | not)) | .created_at' \
+            | sort | tail -n 1)
+          if [ -z "$newest" ]; then
+            echo "::error::There is no backup artifact at all"
+            exit 1
+          fi
+          age_hours=$(( ($(date --utc +%s) - $(date --utc --date="$newest" +%s)) / 3600 ))
+          echo "The newest backup was made at $newest, $age_hours hours ago"
+          if [ "$age_hours" -ge "$MAX_AGE_HOURS" ]; then
+            echo "::error::The newest backup is $age_hours hours old; the limit is $MAX_AGE_HOURS. Look at the Backup workflow in the Actions tab"
+            exit 1
+          fi

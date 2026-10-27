@@ -48,7 +48,8 @@ The rules nearly every task needs:
   `Directory.Build.props` (and `tests/Directory.Build.props`, which inherits and relaxes it).
   Never put a `Version=` on a `PackageReference`.
 - CI (`.github/workflows/ci.yml`) runs on every pull request and push to `main`: restore,
-  build (warnings as errors), unit tests, integration tests and a vulnerable-package check as
+  build (warnings as errors), unit tests, integration tests, test coverage (with a floor for Domain and
+  Application, `docs/conventions/git-and-testing.md`) and a vulnerable-package check as
   separate steps, and the Api's Docker image (skipped when a PR changes only Markdown or
   `docs/`). `.github/workflows/codeql.yml` scans the C# code for security flaws (not a required
   check; its alerts are under the Security tab). Branch protection requires both jobs before a PR can merge: once reviewed, turn on

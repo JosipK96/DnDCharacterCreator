@@ -15,4 +15,9 @@
     <NoWarn>$(NoWarn);CA1707;CA1861;CS1591;CA1816</NoWarn>
   </PropertyGroup>
 
+  <!-- Coverage for every test project; CI and docs/conventions/git-and-testing.md say how it is collected. -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" />
+  </ItemGroup>
+
 </Project>

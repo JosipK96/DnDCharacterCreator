@@ -127,7 +127,10 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   level. Both editions let the player roll or take the fixed value; the owner chose to offer
   both on every level-up (#28). The levels a character is created with take the fixed value.
 - Hit points some choices add every level (Dwarven Toughness, a 2014 hill dwarf's and every
-  2024 dwarf's; Draconic Resilience; Tough) are in `Domain/Services/HitPointBonuses`.
+  2024 dwarf's; Draconic Resilience; Tough) are in `Domain/Services/HitPointBonuses`, by id.
+  `SeedDataIntegrityTests` checks both ways: the ids exist, and no trait, feature or feat of
+  those names in the data belongs to a row the list leaves out, so a new book's bonus fails the
+  build until the list names it.
   `CharacterStatsInput` has no defaults, so the preview and the sheet cannot build it
   differently.
 

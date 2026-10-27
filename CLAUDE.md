@@ -51,7 +51,8 @@ The rules nearly every task needs:
   build (warnings as errors), unit tests, integration tests, test coverage (with a floor for Domain and
   Application, `docs/conventions/git-and-testing.md`) and a vulnerable-package check as
   separate steps, and the Api's Docker image (skipped when a PR changes only Markdown or
-  `docs/`). Branch protection requires both jobs before a PR can merge: once reviewed, turn on
+  `docs/`). `.github/workflows/codeql.yml` scans the C# code for security flaws (not a required
+  check; its alerts are under the Security tab). Branch protection requires both jobs before a PR can merge: once reviewed, turn on
   auto-merge (`gh pr merge <n> --auto --squash`) and GitHub merges it when they pass.
 
 ## Where code goes

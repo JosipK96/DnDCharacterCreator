@@ -29,7 +29,8 @@ public sealed class WizardHost : WebApplicationFactory<Program>, IAsyncLifetime
         "JwtSettings__ExpiryInMinutes", "Registration__InviteCode",
     ];
 
-    private readonly PostgreSqlContainer _database = new PostgreSqlBuilder("postgres:16-alpine")
+    // Neon's major version; keep in step with docker-compose.yml and the other two fixtures.
+    private readonly PostgreSqlContainer _database = new PostgreSqlBuilder("postgres:18-alpine")
         .WithDatabase("charactercreator_wizard_test")
         .WithUsername("testuser")
         .WithPassword("testpass")

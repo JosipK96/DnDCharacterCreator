@@ -98,6 +98,11 @@ last start, the reference tables are replaced with what the files say; users and
 characters stay. A change that removes a race, class or background a character uses stops
 startup instead, and changes nothing.
 
+The compose database and the Testcontainers databases run PostgreSQL 18, the major version Neon runs
+(see Hosting). A volume created by an older compose file holds PostgreSQL 16 data, which 18 cannot
+open: the container exits at start. Delete it (local users and characters go with it; the reference
+data reloads on the next start), or `pg_dump` it first from the old image and restore into the new one.
+
 To start from nothing, users and characters included, delete the compose database volume:
 
 ```bash
@@ -204,6 +209,9 @@ Render's `*.onrender.com` one, over Render's HTTPS.
     shows: `Host=<ep-…>.eu-central-1.aws.neon.tech;Database=<db>;Username=<user>;Password=<password>;SSL Mode=VerifyFull;GSS Encryption Mode=Disable`
   - `JwtSettings__Key`: a random key of at least 32 characters
   - `Registration__InviteCode`: the invite code (see Deploying)
+- **Database version:** Neon runs PostgreSQL 18. `docker-compose.yml` and the three Testcontainers
+  fixtures use `postgres:18-alpine` so CI and local runs see what production sees; when Neon
+  upgrades, move them (and the `postgres:18` in the backup workflow) in the same change.
 - **Backups:** Neon's free plan keeps only 6 hours of history, so a nightly workflow keeps an
   encrypted `pg_dump` for 30 days. Its secrets, and how to restore a dump, are in
   [docs/operations/backup-and-restore.md](docs/operations/backup-and-restore.md).

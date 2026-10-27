@@ -30,7 +30,11 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   drafts, so no step, finalize or delete can touch a build; an edit is never the
   `GetIncompleteDraft` a new character resumes.
 - A saved character's sheet, on the page and as a PDF, is loaded and worked out by one
-  `CharacterDetailsLoader`, so the two cannot disagree. The PDF is drawn behind
+  `CharacterDetailsLoader`, so the two cannot disagree. It returns a not-found error when the
+  character's class, race, background, subclass or subrace can't be loaded, never a sheet built
+  on fallbacks. What the sheet lists (proficiencies, features, spells, languages, feats) is
+  resolved by `CharacterSheetContentLoader` and its numbers by `CharacterStatsInput.For`; the
+  review step's preview calls the same two, so only the read models differ. The PDF is drawn behind
   `ICharacterSheetPdfRenderer`, so Application references no PDF library.
 - Application reaches ASP.NET Core Identity through `IIdentityService`.
 

@@ -128,8 +128,8 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   both on every level-up (#28). The levels a character is created with take the fixed value.
 - Hit points some choices add every level (Dwarven Toughness, a 2014 hill dwarf's and every
   2024 dwarf's; Draconic Resilience; Tough) are in `Domain/Services/HitPointBonuses`.
-  `CharacterStatsInput` has no defaults, so the preview and the sheet cannot build it
-  differently.
+  `CharacterStatsInput` has no defaults and `CharacterStatsInput.For` is the one place it is
+  assembled, so the preview and the sheet cannot build it differently.
 
 ## Feats and the picks they bring
 

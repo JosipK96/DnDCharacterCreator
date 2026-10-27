@@ -2,7 +2,6 @@ using System.Text;
 
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
-using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
@@ -32,12 +31,14 @@ public class GetCharacterSheetPdfQueryHandler(
 
     public async Task<Response<CharacterSheetPdf>> Handle(GetCharacterSheetPdfQuery query, CancellationToken cancellationToken)
     {
-        var character = await _loader.LoadAsync(query.CharacterId, _userContext.UserId, cancellationToken);
+        var response = await _loader.LoadAsync(query.CharacterId, _userContext.UserId, cancellationToken);
 
-        if (character == null)
+        if (!response.IsSuccess)
         {
-            return CharacterErrors.NotFoundById(query.CharacterId);
+            return response.Errors;
         }
+
+        var character = response.Value;
 
         return new CharacterSheetPdf(FileNameFor(character.Name), _renderer.Render(character, query.Paper));
     }

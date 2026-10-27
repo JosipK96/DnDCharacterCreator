@@ -65,14 +65,18 @@ jobs:
           done
 
       # global.json runs dotnet test on Microsoft.Testing.Platform (xunit.v3 4): a project is
-      # passed with --project, and xunit writes its own .trx
+      # passed with --project, and xunit writes its own .trx. Each project also writes Cobertura
+      # coverage (settings in coverage.settings.xml) to TestResults/<project>.cobertura.xml.
       - name: Unit tests
         shell: bash
         run: |
           set -euo pipefail
           for project in tests/*.UnitTests/*.csproj; do
+            name="$(basename "$project" .csproj)"
             dotnet test --project "$project" --configuration Release --no-build --results-directory TestResults \
-              --report-xunit-trx --report-xunit-trx-filename "$(basename "$project" .csproj).trx"
+              --report-xunit-trx --report-xunit-trx-filename "$name.trx" \
+              --coverage --coverage-output-format cobertura --coverage-output "$name.cobertura.xml" \
+              --coverage-settings "$PWD/coverage.settings.xml"
           done
 
       # The wizard's browser tests (Client.IntegrationTests) drive Chromium through Playwright.
@@ -90,9 +94,19 @@ jobs:
         run: |
           set -euo pipefail
           for project in tests/*.IntegrationTests/*.csproj; do
+            name="$(basename "$project" .csproj)"
             dotnet test --project "$project" --configuration Release --no-build --results-directory TestResults \
-              --report-xunit-trx --report-xunit-trx-filename "$(basename "$project" .csproj).trx"
+              --report-xunit-trx --report-xunit-trx-filename "$name.trx" \
+              --coverage --coverage-output-format cobertura --coverage-output "$name.cobertura.xml" \
+              --coverage-settings "$PWD/coverage.settings.xml"
           done
+
+      # The numbers per project, and the floors for Domain and Application (set in the script).
+      # Runs when a test step failed too, on whatever was written.
+      - name: Coverage
+        if: (success() || failure()) && steps.build.outcome == 'success'
+        shell: pwsh
+        run: scripts/Check-Coverage.ps1 -Path TestResults
 
       # Restore's own audit did not fail this job for a high-severity advisory that failed the
       # Docker build's restore of the same package, so the check is made explicitly
@@ -119,6 +133,15 @@ jobs:
           name: test-results
           path: TestResults
           retention-days: 7
+
+      # The Cobertura files, for whoever looks for untested code
+      - name: Keep the coverage
+        if: (success() || failure()) && steps.build.outcome == 'success'
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage
+          path: TestResults/*.cobertura.xml
+          retention-days: 14
 
   # Not a deploy: proves on every pull request that the app still packages into the image a
   # deploy will use. The Dockerfile breaks in ways the build above never sees (a project or

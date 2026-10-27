@@ -51,6 +51,32 @@ Which test classes cover which area, and which of them need Docker, is in `tests
 If the integration tests fail with `DockerUnavailableException`, start Docker
 Desktop and wait for the daemon rather than assuming the tests are broken.
 
+## Test coverage
+
+CI measures every test project with Microsoft.Testing.Platform's code-coverage extension, prints
+line and branch coverage per assembly in the job log and summary, and keeps the Cobertura files
+as the `coverage` run artifact. There is no browsable report: the numbers and the Cobertura files
+are what a session reads to find untested code.
+
+```bash
+dotnet test --project tests/CharacterCreatorApp.Domain.UnitTests --coverage --coverage-output-format cobertura \
+  --coverage-output CharacterCreatorApp.Domain.UnitTests.cobertura.xml --coverage-settings "$PWD/coverage.settings.xml" \
+  --results-directory TestResults
+pwsh scripts/Check-Coverage.ps1 -Path TestResults
+```
+
+- **What is counted** is set in `coverage.settings.xml` (XML comments in it break the runner, so
+  the reasons are here): only the repository's own assemblies, not the test projects or packages;
+  not `Migrations/`, `Program.cs`, `*.g.cs` or code marked `GeneratedCode`/`ExcludeFromCodeCoverage`.
+  Read models and Contracts DTOs are counted: they are plain records that any test of the code
+  using them reaches, and leaving them out would hide a mapping nobody tests.
+- **The floors** are in `scripts/Check-Coverage.ps1`: Domain 90% and Application 70% line coverage,
+  each measured from its own unit test project (`*.UnitTests.cobertura.xml`) so it needs no Docker.
+  CI fails with the assembly and the numbers when one is below. Raise a floor when its coverage
+  has gone up (Application's when #81 lands); never lower one to get a pull request green.
+- Only the report named after an assembly's own unit test project counts toward its floor.
+  Domain also appears in the Application report, and Application in the integration tests', where it is
+  covered further; those numbers are for reading, not for the check.
 ## Running the app
 
 The API needs its two secrets (see README.md) and a PostgreSQL instance. On

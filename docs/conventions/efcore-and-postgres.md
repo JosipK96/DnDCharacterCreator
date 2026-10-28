@@ -1,5 +1,12 @@
 # EF Core and PostgreSQL
 
+## Version
+
+Production's database (Neon) runs PostgreSQL 18, and the compose database and every Testcontainers
+fixture run `postgres:18-alpine` to match, so a migration or query that fails only on 18 fails in
+CI. A Neon major-version upgrade means changing all of them, and `postgres:18` in the backup
+workflow and restore docs, in one pull request.
+
 ## Migrations
 
 Run from the Infrastructure project, which holds both the `DbContext` and the

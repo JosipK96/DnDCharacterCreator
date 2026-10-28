@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.DomainModels.Races;
 
 namespace CharacterCreatorApp.Domain.Services;
 
@@ -25,4 +26,37 @@ public sealed record CharacterStatsInput(
     string? SubclassId,
     IReadOnlyCollection<string> FeatIds,
     IReadOnlyCollection<UnarmoredArmorClass> UnarmoredArmorClasses,
-    SpellSlots SpellSlots);
+    SpellSlots SpellSlots)
+{
+    /// <summary>
+    /// The input for a character at its level: the class's saving throws joined with the ones
+    /// feats add, the race's speed with its subrace's change, and the class's and subclass's
+    /// armour classes and spell slots. The review step and the saved sheet both come here, so
+    /// they cannot work the same character out differently.
+    /// </summary>
+    public static CharacterStatsInput For(
+        int level,
+        IReadOnlyDictionary<string, int> abilityScores,
+        IReadOnlyCollection<string> proficiencyIds,
+        IReadOnlyDictionary<int, int> hitDieResults,
+        IReadOnlyCollection<string> featIds,
+        IEnumerable<string> featSavingThrowAbilityIds,
+        Race race,
+        Subrace? subrace,
+        Class @class,
+        Subclass? subclass) =>
+        new(
+            Level: level,
+            AbilityScores: abilityScores,
+            ProficiencyIds: proficiencyIds,
+            HitDie: @class.HitDie,
+            HitDieResults: hitDieResults,
+            SavingThrowAbilityIds: @class.SavingThrowAbilityIds.Concat(featSavingThrowAbilityIds).Distinct().ToList(),
+            Speed: race.SpeedWith(subrace),
+            RaceId: race.Id,
+            SubraceId: subrace?.Id,
+            SubclassId: subclass?.Id,
+            FeatIds: featIds,
+            UnarmoredArmorClasses: @class.UnarmoredArmorClassesWith(subclass),
+            SpellSlots: @class.SpellSlotsAt(level, subclass));
+}

@@ -1,6 +1,5 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
-using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.Common.Results;
@@ -26,13 +25,6 @@ public class GetCharacterDetailsQueryHandler(
 
     public async Task<Response<CharacterDetailsReadModel>> Handle(GetCharacterDetailsQuery query, CancellationToken cancellationToken)
     {
-        var character = await _loader.LoadAsync(query.CharacterId, _userContext.UserId, cancellationToken);
-
-        if (character == null)
-        {
-            return CharacterErrors.NotFoundById(query.CharacterId);
-        }
-
-        return character;
+        return await _loader.LoadAsync(query.CharacterId, _userContext.UserId, cancellationToken);
     }
 }

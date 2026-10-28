@@ -18,8 +18,9 @@ public class DatabaseFixture : IAsyncLifetime
 
     public async ValueTask InitializeAsync()
     {
-        // Create and start PostgreSQL container with specific version
-        _container = new PostgreSqlBuilder("postgres:16-alpine")
+        // Create and start PostgreSQL container
+        // Neon's major version; keep in step with docker-compose.yml and the other two fixtures.
+        _container = new PostgreSqlBuilder("postgres:18-alpine")
             .WithDatabase("charactercreator_test")
             .WithUsername("testuser")
             .WithPassword("testpass")

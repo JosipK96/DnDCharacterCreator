@@ -38,7 +38,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
         JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
 
         // Create and start PostgreSQL container
-        _container = new PostgreSqlBuilder("postgres:16-alpine")
+        // Neon's major version; keep in step with docker-compose.yml and the other two fixtures.
+        _container = new PostgreSqlBuilder("postgres:18-alpine")
             .WithDatabase("charactercreator_api_test")
             .WithUsername("testuser")
             .WithPassword("testpass")

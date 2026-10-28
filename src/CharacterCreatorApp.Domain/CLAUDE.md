@@ -40,5 +40,7 @@ section for the area you are changing. Ability keys, language ids and proficienc
   ids.
 - Whether a proficiency is a skill is `Skill.IsSkill`, never a comparison with its `Type`
   string: comparing with `"Skill"` against the data's `"skill"` locked half-elves out.
+- Per-level hit point bonuses (Dwarven Toughness, Draconic Resilience, Tough) are found by id in
+  `HitPointBonuses`; `SeedDataIntegrityTests` fails when the data has one that list doesn't name.
 - A pick the race, background, class or another pick already gives is refused, in the step
   handler and again at finalize (`DraftCompletenessChecker`); keep both in step.

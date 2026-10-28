@@ -224,6 +224,34 @@ public partial class SeedDataIntegrityTests
     }
 
     [Fact]
+    public async Task EveryHitPointBonusInTheSeedData_IsOneHitPointBonusesCounts()
+    {
+        // Arrange - the other way round from the test above: HitPointBonuses finds its sources by
+        // id, so a regeneration that adds another dwarf subrace with Dwarven Toughness, another
+        // draconic subclass or a reprinted Tough feat would give those characters too few hit
+        // points. The bonuses are found by name, as the data words no bonus in a field
+        var races = await ReadAsync<RaceSeedRow>("Races.json");
+        var features = await ReadAsync<FeatureOwnerRow>("ClassFeatures.json");
+        var feats = await ReadAsync<FeatEditionRow>("Feats.json");
+
+        // Act
+        var racial = races
+            .SelectMany(r => r.Traits.Select(t => (Owner: r.Id, t.Name)))
+            .Concat(races.SelectMany(r => r.Subraces).SelectMany(s => s.Traits.Select(t => (Owner: s.Id, t.Name))))
+            .Where(t => t.Name == "Dwarven Toughness" && t.Owner != HitPointBonuses.HillDwarfSubraceId && t.Owner != HitPointBonuses.Dwarf2024RaceId)
+            .Select(t => $"trait of {t.Owner}: {t.Name}");
+        var subclass = features
+            .Where(f => f.Name == "Draconic Resilience" && (f.SubclassId == null || !HitPointBonuses.DraconicSorcererSubclassIds.Contains(f.SubclassId)))
+            .Select(f => $"feature of {f.SubclassId ?? f.ClassId}: {f.Name}");
+        var tough = feats
+            .Where(f => f.Name == "Tough" && !HitPointBonuses.ToughFeatIds.Contains(f.Id))
+            .Select(f => $"feat {f.Id}");
+
+        // Assert
+        racial.Concat(subclass).Concat(tough).Should().BeEmpty("HitPointBonuses has to list every source of a per-level hit point bonus");
+    }
+
+    [Fact]
     public async Task FeatsInBothEditions_HaveTheirEditionInTheirIdAndOneNamePerEdition()
     {
         // Arrange - "alert_2014" and "alert_2024" are both named "Alert": the id has to agree
@@ -331,6 +359,8 @@ public partial class SeedDataIntegrityTests
     private sealed record FeatPrerequisitesRow(List<string>? ClassIds, List<string>? Features);
 
     private sealed record FeatureNameRow(string Name);
+
+    private sealed record FeatureOwnerRow(string Name, string? ClassId, string? SubclassId);
 
     private sealed record LanguageRow(string Id, string Name, string Source);
 

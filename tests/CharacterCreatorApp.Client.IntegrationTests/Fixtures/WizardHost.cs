@@ -26,7 +26,7 @@ public sealed class WizardHost : WebApplicationFactory<Program>, IAsyncLifetime
     private static readonly string[] Settings =
     [
         "ConnectionStrings__DefaultConnection", "JwtSettings__Key", "JwtSettings__Issuer", "JwtSettings__Audience",
-        "JwtSettings__ExpiryInMinutes", "Registration__InviteCode",
+        "JwtSettings__ExpiryInMinutes", "Registration__InviteCode", "RateLimiting__PermitLimit",
     ];
 
     // Neon's major version; keep in step with docker-compose.yml and the other two fixtures.
@@ -54,6 +54,8 @@ public sealed class WizardHost : WebApplicationFactory<Program>, IAsyncLifetime
         Environment.SetEnvironmentVariable("JwtSettings__Audience", "CharacterCreatorWizardTests");
         Environment.SetEnvironmentVariable("JwtSettings__ExpiryInMinutes", "60");
         Environment.SetEnvironmentVariable("Registration__InviteCode", InviteCode);
+        // Every test registers and signs in from this one address, which the default limit would refuse
+        Environment.SetEnvironmentVariable("RateLimiting__PermitLimit", "1000");
 
         // Port 0: the OS picks a free one. The environment is not "Testing", so Program.cs
         // migrates and seeds the database itself, as it does on a host.

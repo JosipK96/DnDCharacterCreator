@@ -16,7 +16,7 @@
   (`RegistrationSettings`, checked by `InviteCodeGate`). It is never in appsettings, and left
   unset registration stays open, as in local development and the integration tests.
 - Sign-in and registration share one per-address rate limit (`RateLimitingExtensions`,
-  `RateLimiting__PermitLimit`/`WindowSeconds`, 429 `RateLimit.TooManyRequests`); the address is
+  `RateLimiting__PermitLimit`/`WindowSeconds`, 429 with `TooManyRequestsCode`); the address is
   what `ASPNETCORE_FORWARDEDHEADERS_ENABLED` leaves on the connection, so the limiter sits
   after it. Account lockout is `Identity__Lockout__*`, applied in `IdentityService`; every failed
   sign-in answers `UserErrors.InvalidCredentials`, so none says whether an email has an account.

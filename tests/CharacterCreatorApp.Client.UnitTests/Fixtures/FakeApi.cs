@@ -50,6 +50,24 @@ public sealed class FakeApi : HttpMessageHandler
             }),
         };
 
+    /// <summary>A POST the API answers with no content (a password change), or with the given body.</summary>
+    public void Post(string path, object? response = null) =>
+        _routes[$"POST {path}"] = () => response is null
+            ? new HttpResponseMessage(HttpStatusCode.NoContent)
+            : new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(response) };
+
+    /// <summary>A POST the API refuses with a 400 problem carrying this code.</summary>
+    public void RefusePost(string path, string code, string detail) =>
+        _routes[$"POST {path}"] = () => new HttpResponseMessage(HttpStatusCode.BadRequest)
+        {
+            Content = JsonContent.Create(new
+            {
+                status = 400,
+                title = "Bad Request",
+                errors = new[] { new { code, detail } },
+            }),
+        };
+
     /// <summary>The body of the last request to the route, read as the API would bind it.</summary>
     public T BodyOf<T>(string route)
     {

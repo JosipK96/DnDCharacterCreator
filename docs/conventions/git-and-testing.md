@@ -71,10 +71,10 @@ pwsh scripts/Check-Coverage.ps1 -Path TestResults
   not `Migrations/`, `Program.cs`, `*.g.cs` or code marked `GeneratedCode`/`ExcludeFromCodeCoverage`.
   Read models and Contracts DTOs are counted: they are plain records that any test of the code
   using them reaches, and leaving them out would hide a mapping nobody tests.
-- **The floors** are in `scripts/Check-Coverage.ps1`: Domain 90% and Application 70% line coverage,
+- **The floors** are in `scripts/Check-Coverage.ps1`: Domain 90% and Application 83% line coverage,
   each measured from its own unit test project (`*.UnitTests.cobertura.xml`) so it needs no Docker.
   CI fails with the assembly and the numbers when one is below. Raise a floor when its coverage
-  has gone up (Application's when #81 lands); never lower one to get a pull request green.
+  has gone up; never lower one to get a pull request green.
 - Only the report named after an assembly's own unit test project counts toward its floor.
   Domain also appears in the Application report, and Application in the integration tests', where it is
   covered further; those numbers are for reading, not for the check.

@@ -143,6 +143,57 @@ public class StartCharacterEditCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_WithoutABuildWhoseRaceClassAndBackgroundAreGone_AllowsOnlyTheDefaultBook()
+    {
+        // Arrange - an older character the seed data no longer has any of; there are no books to add
+        _draftRepositoryMock.Setup(r => r.GetBuildAsync(_character.Id, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithSubracesAsync("elf", _cts.Token)).ReturnsAsync((Race?)null);
+        _classRepositoryMock.Setup(r => r.GetByIdWithSubclassesAsync("wizard", _cts.Token)).ReturnsAsync((Class?)null);
+        _backgroundRepositoryMock.Setup(r => r.GetByIdAsync("sage", _cts.Token)).ReturnsAsync((BackgroundReadModel?)null);
+
+        // Act
+        var result = await _sut.Handle(new StartCharacterEditCommand(_character.Id), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        _created!.CharacterId.Should().Be(_character.Id);
+        _created.AllowedSources.Should().Equal("PHB");
+    }
+
+    [Fact]
+    public async Task Handle_WithoutABuildWhoseSubraceAndSubclassAreGone_AllowsTheBooksOfTheRest()
+    {
+        // Arrange - the race, class and background still exist but no longer list the subrace or subclass
+        _draftRepositoryMock.Setup(r => r.GetBuildAsync(_character.Id, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithSubracesAsync("elf", _cts.Token)).ReturnsAsync(new Race
+        {
+            Id = "elf",
+            Name = "Elf",
+            Edition = RulesEdition.Edition2014,
+            Source = "PHB",
+            Size = "Medium",
+            Subraces = [],
+        });
+        _classRepositoryMock.Setup(r => r.GetByIdWithSubclassesAsync("wizard", _cts.Token)).ReturnsAsync(new Class
+        {
+            Id = "wizard",
+            Name = "Wizard",
+            Edition = RulesEdition.Edition2014,
+            Source = "PHB",
+            HitDie = "1d6",
+            Subclasses = [],
+        });
+        _backgroundRepositoryMock.Setup(r => r.GetByIdAsync("sage", _cts.Token))
+            .ReturnsAsync(new BackgroundReadModel { Id = "sage", Name = "Sage", Edition = RulesEdition.Edition2014, Source = "PHB" });
+
+        // Act
+        var result = await _sut.Handle(new StartCharacterEditCommand(_character.Id), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        _created!.AllowedSources.Should().Equal("PHB");
+    }
+    [Fact]
     public async Task Handle_SomeoneElsesCharacter_ReturnsNotFoundAndOpensNothing()
     {
         // Arrange - the repository finds only the user's own characters

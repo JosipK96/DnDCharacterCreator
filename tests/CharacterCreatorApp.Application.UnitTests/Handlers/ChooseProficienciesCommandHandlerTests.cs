@@ -105,6 +105,187 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
         draft.SelectedClassProficiencyIds.Should().Equal("perception", "survival");
     }
 
+    [Fact]
+    public async Task Handle_WhenTheDraftIsNotTheirs_ReturnsNotFound()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_BeforeAClassIsChosen_ReturnsClassRequired()
+    {
+        // Arrange
+        var draft = NewDraft();
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.ClassRequired");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheClassIsGone_ReturnsClassNotFound()
+    {
+        // Arrange
+        var draft = NewDraft();
+        draft.SetClass("fighter");
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("fighter", _cts.Token)).ReturnsAsync((Class?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Class.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_ForAClassWithNoProficiencyChoice_SavesNone()
+    {
+        // Arrange
+        var draft = ArrangeFighterDraft(null);
+        draft.SetClassProficiencies(["perception"]);
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["survival"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.SelectedClassProficiencyIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_WithTooFewPicks_ReturnsInvalidProficiencyCount()
+    {
+        // Arrange
+        var draft = ArrangeFighterDraft(FighterChoice());
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.InvalidProficiencyCount");
+        draft.SelectedClassProficiencyIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithASkillTheClassDoesNotOffer_ReturnsInvalidProficiencySelection()
+    {
+        // Arrange
+        var draft = ArrangeFighterDraft(FighterChoice());
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "arcana"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.InvalidProficiencySelection");
+        result.Errors[0].Description.Should().StartWith("Invalid proficiency selections: arcana.");
+        draft.SelectedClassProficiencyIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithTheSameSkillTwice_ReturnsDuplicateProficiencies()
+    {
+        // Arrange
+        var draft = ArrangeFighterDraft(FighterChoice());
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "perception"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.DuplicateProficiencies");
+        draft.SelectedClassProficiencyIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithASkillMissingFromTheSeedData_ReturnsProficiencyNotFound()
+    {
+        // Arrange - the class lists it but no proficiency row has it
+        var draft = ArrangeFighterDraft(FighterChoice());
+        _proficiencyRepositoryMock.Setup(r => r.GetByIdAsync("perception", _cts.Token)).ReturnsAsync((ProficiencyReadModel?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Proficiency.NotFound");
+        draft.SelectedClassProficiencyIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_BeforeARaceAndABackgroundAreChosen_SavesTheClassPicks()
+    {
+        // Arrange - nothing else to repeat yet
+        var draft = ArrangeFighterDraft(FighterChoice());
+        ArrangeProficiencies("perception", "survival");
+
+        // Act
+        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.SelectedClassProficiencyIds.Should().Equal("perception", "survival");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    private CharacterDraft NewDraft()
+    {
+        var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
+        draft.ChooseEdition(RulesEdition.Edition2014);
+
+        return draft;
+    }
+
+    // A draft with only its class chosen: a fighter that picks two of four skills
+    private CharacterDraft ArrangeFighterDraft(ProficiencyChoice? choice)
+    {
+        var draft = NewDraft();
+        draft.SetClass("fighter");
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("fighter", _cts.Token)).ReturnsAsync(new Class
+        {
+            Id = "fighter",
+            Name = "Fighter",
+            Edition = RulesEdition.Edition2014,
+            Source = "PHB",
+            HitDie = "1d10",
+            ProficiencyChoice = choice,
+        });
+
+        return draft;
+    }
+
+    private static ProficiencyChoice FighterChoice() => new()
+    {
+        ClassId = "fighter",
+        Type = "skill",
+        Count = 2,
+        Options = [.. new[] { "athletics", "perception", "survival", "intimidation" }.Select(id => new ProficiencyChoiceOption { ProficiencyId = id })]
+    };
     // A level 1 half-elf fighter with these race skills picked, and no background yet
     private CharacterDraft ArrangeHalfElfFighterDraft(List<string> raceSkills)
     {

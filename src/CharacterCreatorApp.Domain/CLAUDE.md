@@ -31,7 +31,7 @@ section for the area you are changing. Ability keys, language ids and proficienc
   and a step handler refuses an entity from the other edition with
   `CharacterDraftErrors.EditionMismatch`. A draft's books (`CharacterDraft.AllowedSources`) are
   refused the same way with `CharacterDraftErrors.SourceNotAllowed`.
-- Read a class's and race's rules from the entity (`Class.SubclassLevel`, `Class.AsiLevels`,
+- Read a class's and race's rules from the entity (`Class.SubclassLevel`, `Class.ImprovementsAt`, `Class.HitDieSize`, `Background.LanguageChoiceCount`,
   `Class.SpellSlotsAt`, `Class.UnarmoredArmorClassesWith`, `Race.SkillChoiceCount`), never
   hardcode one or check a class id at a call site: two separate bugs came from assuming every
   class picks a subclass at level 3. `ClassSeedDataTests` and `RaceSeedDataTests` pin the values.

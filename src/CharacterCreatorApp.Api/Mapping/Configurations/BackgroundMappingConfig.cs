@@ -11,7 +11,6 @@ public class BackgroundMappingConfig : IRegister
     {
         config.NewConfig<BackgroundReadModel, BackgroundApiResponse>()
             .MapToConstructor(true);
-        config.NewConfig<BackgroundLanguageReadModel, BackgroundLanguageApiResponse>();
         config.NewConfig<BackgroundProficiencyReadModel, BackgroundProficiencyApiResponse>();
         config.NewConfig<BackgroundFeatReadModel, BackgroundFeatApiResponse>();
         config.NewConfig<BackgroundFeatureReadModel, BackgroundFeatureApiResponse>();

@@ -25,6 +25,28 @@ public class BackgroundTests
         FeatureId = "soldier_military_rank"
     };
 
+    [Fact]
+    public void LanguageChoiceCount_For2014Background_CountsItsAnyPlaceholders()
+    {
+        // Arrange - an Acolyte: two languages of the player's choice
+        var acolyte = new Background { Id = "acolyte", Name = "Acolyte", Edition = RulesEdition.Edition2014, Languages = ["any", "ANY"] };
+
+        // Assert
+        acolyte.LanguageChoiceCount.Should().Be(2);
+        acolyte.NamedLanguages.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void LanguageChoiceCount_For2024Background_IsTwoBesideCommon()
+    {
+        // Arrange
+        var soldier = new Background { Id = "soldier_2024", Name = "Soldier", Edition = RulesEdition.Edition2024, Languages = ["Common", "any", "any"] };
+
+        // Assert
+        soldier.LanguageChoiceCount.Should().Be(2);
+        soldier.NamedLanguages.Should().Equal("Common");
+    }
+
     [Theory]
     [InlineData("STR:2 CON:1", true)]
     [InlineData("CON:1 STR:2", true)]

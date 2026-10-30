@@ -72,7 +72,8 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
 
 ## Class and race rules from the data
 
-- A class's rules (`Class.SubclassLevel`, `Class.AsiLevels`, `Class.SavingThrowAbilityIds`,
+- A class's rules (`Class.SubclassLevel`, `Class.AsiLevels` through `Class.ImprovementsAt`, `Class.HitDieSize`,
+  `Class.SavingThrowAbilityIds`,
   `Class.UnarmoredArmorClass`, the spell table) and a race's (`Race.SkillChoiceCount` and its
   options, `Race.LanguageChoiceCount`) are read from the 5etools data by the generator. Read them from the
   entity and never hardcode one at a call site — two separate bugs came from assuming every
@@ -105,7 +106,7 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
 
 - Language ids are source-suffixed (`common-phb`, `common-xphb`): a 2014 character's are the
   PHB's, a 2024 one's the 2024 book's (`Language.SourceFor`). Race languages are stored as
-  display names and background languages contain `"any"` placeholders; `LanguageResolver`
+  display names and background languages contain `"any"` placeholders (`Background.LanguageChoiceCount`); `LanguageResolver`
   resolves all three against the edition's languages, for `CharacterBuilder` and
   `ChooseLanguages` alike. What a player may pick is `ILanguageRepository.GetChoosableAsync`
   (`Language.ChoosableTypes`: any PHB language but the secret ones in 2014, the standard ones

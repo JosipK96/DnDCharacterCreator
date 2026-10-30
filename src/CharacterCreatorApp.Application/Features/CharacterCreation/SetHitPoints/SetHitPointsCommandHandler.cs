@@ -4,6 +4,7 @@ using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.Services;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 
@@ -44,7 +45,7 @@ public class SetHitPointsCommandHandler(
             return CharacterErrors.ClassNotFoundById(draft.ClassId!);
         }
 
-        if (command.Result > CharacterStatsCalculator.GetHitDieSize(@class.HitDie))
+        if (command.Result > HitDieNotation.SizeOf(@class.HitDie))
         {
             return CharacterDraftErrors.HitDieResultOutOfRange(command.Result, @class.HitDie);
         }

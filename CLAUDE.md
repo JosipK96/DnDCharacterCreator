@@ -26,7 +26,7 @@ The rules nearly every task needs:
   `CharacterDraftErrors.EditionMismatch`.
 - Ability keys always go through `AbilityScore.Normalize`/`TryNormalize`;
   `Character.AbilityScores` only ever holds canonical ids.
-- Read a class's and race's rules from the entity (`Class.SubclassLevel`, `Class.AsiLevels`,
+- Read a class's and race's rules from the entity (`Class.SubclassLevel`, `Class.ImprovementsAt`,
   `Race.SkillChoiceCount`), never hardcode one at a call site.
 - Whether a proficiency is a skill is `Skill.IsSkill`, never a comparison with its `Type` string.
 

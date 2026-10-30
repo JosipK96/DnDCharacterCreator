@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
@@ -71,7 +72,7 @@ public static class DraftCompletenessChecker
             return CharacterErrors.SubclassRequired(level, @class.Name, @class.SubclassLevel);
         }
 
-        var hitPointsError = FindInvalidHitDieResult(draft, @class.HitDie, level);
+        var hitPointsError = FindInvalidHitDieResult(draft, @class, level);
 
         if (hitPointsError is not null)
         {
@@ -105,9 +106,7 @@ public static class DraftCompletenessChecker
             return CharacterErrors.BackgroundAbilityIncreasesIncomplete(background.Name);
         }
 
-        var backgroundLanguageChoices = background.Languages
-            .Count(l => l.Equals("any", StringComparison.OrdinalIgnoreCase));
-        var requiredLanguages = race.LanguageChoiceCountWith(subrace) + backgroundLanguageChoices;
+        var requiredLanguages = race.LanguageChoiceCountWith(subrace) + background.LanguageChoiceCount;
 
         if (draft.SelectedLanguageIds.Count != requiredLanguages)
         {
@@ -176,14 +175,14 @@ public static class DraftCompletenessChecker
 
     // A level-up adds its hit points, and every result kept is for a level the character has and
     // one its die rolls: an edit may have lowered the level, or a reseed changed the die
-    private static Error? FindInvalidHitDieResult(CharacterDraft draft, string hitDie, int level)
+    private static Error? FindInvalidHitDieResult(CharacterDraft draft, Class @class, int level)
     {
         if (draft.IsLevelUp && !draft.HitDieResults.ContainsKey(level))
         {
             return CharacterErrors.HitPointsRequired(level);
         }
 
-        var dieSize = CharacterStatsCalculator.GetHitDieSize(hitDie);
+        var dieSize = @class.HitDieSize;
         var invalid = draft.HitDieResults.Where(r => r.Key < 2 || r.Key > level || r.Value < 1 || r.Value > dieSize).ToList();
 
         return invalid.Count == 0 ? null : CharacterErrors.HitDieResultInvalid(invalid[0].Key, invalid[0].Value, dieSize);
@@ -264,12 +263,18 @@ public static class DraftCompletenessChecker
             return CharacterErrors.BonusFeatsIncomplete(raceName, bonusFeats.Count, bonusFeats.Category);
         }
 
-        var requiredAsis = sources.Class.AsiLevels.Count(l => l <= level);
+        var requiredAsis = sources.Class.ImprovementsAt(level);
         var spentAsis = draft.AbilityScoreImprovements.Count + draft.SelectedFeatIds.Count - bonusFeats.Count;
 
         if (spentAsis != requiredAsis)
         {
             return CharacterErrors.AbilityScoreImprovementsIncomplete(level, sources.Class.Name, requiredAsis, spentAsis);
+        }
+
+        // The step refuses these too, but a draft written another way is not trusted
+        if (draft.AbilityScoreImprovements.Exists(improvement => !AbilityIncreaseChoice.Improvement.Allows(improvement)))
+        {
+            return CharacterErrors.AbilityScoreImprovementInvalid(sources.Class.Name);
         }
 
         for (var i = 0; i < draft.SelectedFeatIds.Count; i++)

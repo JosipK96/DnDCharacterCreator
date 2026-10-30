@@ -21,6 +21,12 @@ public class Class
 
     public required string HitDie { get; set; }
 
+    /// <summary>The hit die's size (10 for "1d10"); throws when HitDie cannot be read, which the seed tests catch.</summary>
+    public int HitDieSize => HitDieNotation.SizeOf(HitDie);
+
+    /// <summary>The hit die's fixed value, which a level takes in place of a roll: a d10's is 6.</summary>
+    public int HitDieFixedValue => HitDieNotation.FixedValueOf(HitDie);
+
     /// <summary>
     /// The level at which the class picks its subclass. 2014 classes differ (a cleric picks at 1,
     /// a wizard at 2, most at 3); every 2024 class picks at 3. From the class data, never assumed.
@@ -32,6 +38,9 @@ public class Class
     /// Epic Boon at level 19 counts: it is a feat in the same place.
     /// </summary>
     public List<int> AsiLevels { get; set; } = [];
+
+    /// <summary>How many improvements (ability points or a feat) a character of this level has made in all: the AsiLevels it has reached.</summary>
+    public int ImprovementsAt(int level) => AsiLevels.Count(l => l <= level);
 
     /// <summary>The two saving throws the class is proficient in, as canonical ids ("STR").</summary>
     public List<string> SavingThrowAbilityIds { get; set; } = [];

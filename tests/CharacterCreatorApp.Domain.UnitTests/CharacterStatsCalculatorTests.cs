@@ -94,15 +94,17 @@ public class CharacterStatsCalculatorTests
         stats.MaxHitPoints.Should().Be(7);
     }
 
-    [Theory]
-    [InlineData("1d6", 4, 6)]
-    [InlineData("d8", 5, 8)]
-    [InlineData("10", 6, 10)]
-    [InlineData("1d12", 7, 12)]
-    public void GetHitDieFixedValueAndSize_ReadTheDieWhicheverWayItIsWritten(string hitDie, int fixedValue, int size)
+    [Fact]
+    public void Calculate_WithAHitDieItCannotRead_Throws()
     {
-        CharacterStatsCalculator.GetHitDieFixedValue(hitDie).Should().Be(fixedValue);
-        CharacterStatsCalculator.GetHitDieSize(hitDie).Should().Be(size);
+        // Arrange - a typo in the class data must not become a d8
+        var input = Input(hitDie: "1dx");
+
+        // Act
+        var act = () => CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        act.Should().Throw<FormatException>();
     }
 
     [Theory]

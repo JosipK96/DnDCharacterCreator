@@ -139,7 +139,7 @@ public static class CharacterBuilder
     private static List<string> ResolveLanguageIds(CharacterDraft draft, CharacterSources sources) =>
         LanguageResolver.ResolveIds(
             sources.Race.RaceLanguages.Select(x => x.Language)
-                .Concat(sources.Background.Languages)
+                .Concat(sources.Background.NamedLanguages)
                 .Concat(sources.Feats.SelectMany(f => f.GrantedLanguageIds))
                 .Concat(draft.SelectedLanguageIds),
             sources.Languages);

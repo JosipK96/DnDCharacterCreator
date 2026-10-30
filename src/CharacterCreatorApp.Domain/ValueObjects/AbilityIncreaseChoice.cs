@@ -11,6 +11,13 @@ public sealed record AbilityIncreaseChoice(IReadOnlyCollection<string> Options, 
     public static readonly AbilityIncreaseChoice None = new([], 0, 0);
 
     /// <summary>
+    /// One ability score improvement a class gives when it is spent on ability points: 2 points
+    /// over any of the six abilities, at most 2 on one (+2, or +1 to two). Spending it on a feat
+    /// instead is not an improvement of this kind.
+    /// </summary>
+    public static readonly AbilityIncreaseChoice Improvement = new(AbilityScore.All.Select(a => a.Id).ToList(), 2, 2);
+
+    /// <summary>
     /// Whether these increases are the choice's: every ability one of the options, named once
     /// (keys in any spelling, "str" or "Strength"), none above MaxPerAbility, all of Points spent.
     /// </summary>

@@ -71,7 +71,7 @@ public class GetCharacterSheetPdfQueryHandlerTests : IDisposable
 
     [Theory]
     [InlineData("  Thorin Oakenshield  ", "Thorin Oakenshield.pdf")]
-    [InlineData("Éowyn-the_Fair 2", "Éowyn-the_Fair 2.pdf")]
+    [InlineData("Ã‰owyn-the_Fair 2", "Ã‰owyn-the_Fair 2.pdf")]
     [InlineData("a/b\\c:d\"e\r\nf", "a_b_c_d_e__f.pdf")]
     [InlineData("Thorin.pdf", "Thorin_pdf.pdf")]
     [InlineData("   ", "character.pdf")]

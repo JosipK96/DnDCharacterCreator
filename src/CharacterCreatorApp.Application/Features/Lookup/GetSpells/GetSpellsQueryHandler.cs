@@ -13,56 +13,24 @@ public class GetSpellsQueryHandler(ISpellRepository spellRepository) : IQueryHan
     {
         List<SpellReadModel> spells;
 
-        if (!string.IsNullOrEmpty(query.ClassId) && query.MaxLevel.HasValue)
+        if (!string.IsNullOrEmpty(query.ClassId))
         {
-            spells = await _spellRepository.GetByClassIdAndMaxLevelAsync(query.ClassId, query.MaxLevel.Value, cancellationToken);
-        }
-        else if (!string.IsNullOrEmpty(query.ClassId) && query.Level.HasValue)
-        {
-            spells = await _spellRepository.GetByClassIdAndLevelAsync(query.ClassId, query.Level.Value, cancellationToken);
-        }
-        else if (!string.IsNullOrEmpty(query.ClassId))
-        {
-            spells = await _spellRepository.GetByClassIdAsync(query.ClassId, cancellationToken);
+            spells = query.MaxLevel.HasValue
+                ? await _spellRepository.GetByClassIdAndMaxLevelAsync(query.ClassId, query.MaxLevel.Value, cancellationToken)
+                : await _spellRepository.GetByClassIdAsync(query.ClassId, cancellationToken);
         }
         else if (!string.IsNullOrEmpty(query.SubclassId))
         {
             spells = await _spellRepository.GetBySubclassIdAsync(query.SubclassId, cancellationToken);
-        }
-        else if (query.Level.HasValue)
-        {
-            spells = await _spellRepository.GetByLevelAsync(query.Level.Value, cancellationToken);
-        }
-        else if (query.MaxLevel.HasValue)
-        {
-            spells = await _spellRepository.GetByMaxLevelAsync(query.MaxLevel.Value, cancellationToken);
-        }
-        else if (!string.IsNullOrEmpty(query.School))
-        {
-            spells = await _spellRepository.GetBySchoolAsync(query.School, cancellationToken);
-        }
-        else if (query.IsRitual == true)
-        {
-            spells = await _spellRepository.GetRitualSpellsAsync(cancellationToken);
+
+            if (query.MaxLevel.HasValue)
+            {
+                spells = spells.FindAll(s => s.Level <= query.MaxLevel.Value);
+            }
         }
         else
         {
-            spells = await _spellRepository.GetAllAsync(cancellationToken);
-        }
-
-        if (query.IsRitual.HasValue && query.IsRitual.Value)
-        {
-            spells = spells.Where(s => s.IsRitual).ToList();
-        }
-
-        if (!string.IsNullOrEmpty(query.School))
-        {
-            spells = spells.Where(s => s.School == query.School).ToList();
-        }
-
-        if (query.MaxLevel.HasValue && (!string.IsNullOrEmpty(query.ClassId) || !string.IsNullOrEmpty(query.SubclassId)))
-        {
-            spells = spells.Where(s => s.Level <= query.MaxLevel.Value).ToList();
+            return new List<SpellReadModel>();
         }
 
         if (query.Sources is { Count: > 0 } sources)

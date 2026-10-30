@@ -19,6 +19,9 @@ public abstract class ApiController : ControllerBase
     protected IActionResult OkOrProblem<T, TResult>(Response<T> response, Func<T, TResult> map) =>
         response.IsSuccess ? Ok(map(response.Value)) : Problem(response.Errors);
 
+    protected IActionResult FileOrProblem<T>(Response<T> response, Func<T, FileResult> toFile) =>
+        response.IsSuccess ? toFile(response.Value) : Problem(response.Errors);
+
     protected IActionResult NoContentOrProblem(Response response) =>
         response.IsSuccess ? NoContent() : Problem(response.Errors);
 

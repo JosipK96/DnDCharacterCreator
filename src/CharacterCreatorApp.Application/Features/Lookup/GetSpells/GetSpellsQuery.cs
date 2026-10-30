@@ -4,13 +4,10 @@ using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.Lookup.GetSpells;
 
-/// <summary>Spells by class, subclass, level, school or ritual; Sources, when given, keeps only those from these books.</summary>
+/// <summary>The spells a class picks from, or the ones a subclass adds to its class's list (the class wins when both are given); MaxLevel and Sources, when given, keep only spells up to that level and from those books.</summary>
 public record GetSpellsQuery(
     string? ClassId = null,
     string? SubclassId = null,
-    int? Level = null,
     int? MaxLevel = null,
-    string? School = null,
-    bool? IsRitual = null,
     IReadOnlyCollection<string>? Sources = null
 ) : IQuery<Response<List<SpellReadModel>>>;

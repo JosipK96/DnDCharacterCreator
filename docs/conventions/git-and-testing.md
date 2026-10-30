@@ -42,6 +42,7 @@ solutions are passed with `--project`/`--solution`, and xunit's `--filter-class`
 | `CharacterCreatorApp.Domain.UnitTests` | no |
 | `CharacterCreatorApp.Application.UnitTests` | no |
 | `CharacterCreatorApp.Architecture.UnitTests` | no |
+| `CharacterCreatorApp.SeedDataGenerator.UnitTests` | no |
 | `CharacterCreatorApp.Infrastructure.IntegrationTests` | **yes** — Testcontainers starts PostgreSQL |
 | `CharacterCreatorApp.Api.IntegrationTests` | **yes** |
 | `CharacterCreatorApp.Client.UnitTests` | no — bUnit renders the wizard's steps in memory |

@@ -86,6 +86,89 @@ public class GetFightingStylesQueryHandlerTests : IDisposable
         result.Value.Options.Select(o => o.Id).Should().Equal("arcane_warrior", "defense_2024");
     }
 
+    [Fact]
+    public async Task Handle_WhenTheDraftIsNotTheirs_ReturnsNotFound()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+
+        // Act
+        var result = await _sut.Handle(new GetFightingStylesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.NotFound");
+    }
+
+    [Fact]
+    public async Task Handle_BeforeAClassIsChosen_ReturnsClassAndLevelRequired()
+    {
+        // Arrange
+        var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
+        draft.SetNameAndLevel("Tester", 1);
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await _sut.Handle(new GetFightingStylesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.ClassAndLevelRequired");
+    }
+
+    [Fact]
+    public async Task Handle_BeforeALevelIsChosen_ReturnsClassAndLevelRequired()
+    {
+        // Arrange
+        var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
+        draft.SetClass("fighter-2024");
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await _sut.Handle(new GetFightingStylesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.ClassAndLevelRequired");
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheClassIsGone_ReturnsClassNotFound()
+    {
+        // Arrange
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("fighter-2024", _cts.Token)).ReturnsAsync((Class?)null);
+
+        // Act
+        var result = await _sut.Handle(new GetFightingStylesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Class.NotFound");
+    }
+
+    [Fact]
+    public async Task Handle_ForAClassThatOwesNoStyle_OffersNoneAndSkipsTheFeats()
+    {
+        // Arrange - a wizard has no Fighting Style feature
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("fighter-2024", _cts.Token)).ReturnsAsync(new Class
+        {
+            Id = "fighter-2024",
+            Name = "Wizard",
+            Edition = RulesEdition.Edition2024,
+            Source = "XPHB",
+            HitDie = "1d6",
+            Features = [],
+        });
+
+        // Act
+        var result = await _sut.Handle(new GetFightingStylesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Owed.Should().Be(0);
+        result.Value.Options.Should().BeEmpty();
+        _featRepositoryMock.Verify(r => r.GetAllAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
     private static FeatReadModel Style(string id, string name, string source) => new()
     {
         Id = id,

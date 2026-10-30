@@ -241,6 +241,258 @@ public class ToolChoicesHandlersTests : IDisposable
         result.Value[0].Options.Select(o => o.Name).Should().Equal("BREWER_SUPPLIES", "MASON_TOOLS", "SMITH_TOOLS");
     }
 
+    [Fact]
+    public async Task Handle_WhenTheDraftIsNotTheirs_ReturnsNotFound()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseToolsCommand(_draftId, []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_BeforeARaceIsChosen_ReturnsRaceRequired()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(NewDraft());
+
+        // Act
+        var result = await _sut.Handle(new ChooseToolsCommand(_draftId, []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.RaceRequired");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_BeforeABackgroundIsChosen_ReturnsBackgroundRequired()
+    {
+        // Arrange
+        var draft = NewDraft();
+        draft.SetRace("dwarf");
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await _sut.Handle(new ChooseToolsCommand(_draftId, []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.BackgroundRequired");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheRaceIsGone_ReturnsRaceNotFound()
+    {
+        // Arrange
+        ArrangeCompleteDraft(forUpdate: true);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token)).ReturnsAsync((Race?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseToolsCommand(_draftId, []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Race.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheBackgroundIsGone_ReturnsBackgroundNotFound()
+    {
+        // Arrange
+        ArrangeCompleteDraft(forUpdate: true);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token)).ReturnsAsync(Dwarf());
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("criminal", _cts.Token)).ReturnsAsync((Background?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseToolsCommand(_draftId, []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Background.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheClassIsGone_ReturnsClassNotFound()
+    {
+        // Arrange
+        ArrangeCompleteDraft(forUpdate: true);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token)).ReturnsAsync(Dwarf());
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("criminal", _cts.Token)).ReturnsAsync(Criminal());
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("bard", _cts.Token)).ReturnsAsync((Class?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseToolsCommand(_draftId, []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Class.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task GetToolChoices_WhenTheDraftIsNotTheirs_ReturnsNotFound()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.NotFound");
+    }
+
+    [Fact]
+    public async Task GetToolChoices_BeforeARaceIsChosen_ReturnsRaceRequired()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(NewDraft());
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.RaceRequired");
+    }
+
+    [Fact]
+    public async Task GetToolChoices_BeforeABackgroundIsChosen_ReturnsBackgroundRequired()
+    {
+        // Arrange
+        var draft = NewDraft();
+        draft.SetRace("dwarf");
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.BackgroundRequired");
+    }
+
+    [Fact]
+    public async Task GetToolChoices_BeforeAClassIsChosen_ReturnsClassRequired()
+    {
+        // Arrange
+        var draft = NewDraft();
+        draft.SetRace("dwarf");
+        draft.SetBackground("criminal");
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.ClassRequired");
+    }
+
+    [Fact]
+    public async Task GetToolChoices_WhenTheRaceIsGone_ReturnsRaceNotFound()
+    {
+        // Arrange
+        ArrangeCompleteDraft(forUpdate: false);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token)).ReturnsAsync((Race?)null);
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Race.NotFound");
+    }
+
+    [Fact]
+    public async Task GetToolChoices_WhenTheBackgroundIsGone_ReturnsBackgroundNotFound()
+    {
+        // Arrange
+        ArrangeCompleteDraft(forUpdate: false);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token)).ReturnsAsync(Dwarf());
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("criminal", _cts.Token)).ReturnsAsync((Background?)null);
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Background.NotFound");
+    }
+
+    [Fact]
+    public async Task GetToolChoices_WhenTheClassIsGone_ReturnsClassNotFound()
+    {
+        // Arrange
+        ArrangeCompleteDraft(forUpdate: false);
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token)).ReturnsAsync(Dwarf());
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("criminal", _cts.Token)).ReturnsAsync(Criminal());
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("bard", _cts.Token)).ReturnsAsync((Class?)null);
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Class.NotFound");
+    }
+
+    [Fact]
+    public async Task GetToolChoices_WhenNothingOffersATool_ListsNoChoicesAndSkipsTheProficiencies()
+    {
+        // Arrange
+        var draft = NewDraft();
+        draft.SetRace("elf");
+        draft.SetBackground("sage");
+        draft.SetClass("fighter");
+        _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+        ArrangeSources(Race("elf", "Elf"), Background("sage", "Sage"), Fighter());
+
+        // Act
+        var result = await NewGetToolChoicesHandler().Handle(new GetToolChoicesQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().BeEmpty();
+        _proficiencyRepositoryMock.Verify(r => r.GetByIdsAsync(It.IsAny<List<string>>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    private GetToolChoicesQueryHandler NewGetToolChoicesHandler() => new(
+        _draftRepositoryMock.Object,
+        _raceRepositoryMock.Object,
+        _backgroundRepositoryMock.Object,
+        _classRepositoryMock.Object,
+        _proficiencyRepositoryMock.Object,
+        _userContextMock.Object);
+
+    // A dwarf criminal bard whose sources the caller arranges
+    private void ArrangeCompleteDraft(bool forUpdate)
+    {
+        var draft = NewDraft();
+        draft.SetRace("dwarf");
+        draft.SetBackground("criminal");
+        draft.SetClass("bard");
+
+        if (forUpdate)
+        {
+            _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+        }
+        else
+        {
+            _draftRepositoryMock.Setup(r => r.GetByIdAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+        }
+    }
     private CharacterDraft ArrangeDwarfCriminalBard() => ArrangeDraft(Dwarf(), Criminal(), Bard());
 
     private CharacterDraft ArrangeDraft(Race race, Background background, Class @class)

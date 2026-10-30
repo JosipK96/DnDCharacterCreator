@@ -91,10 +91,15 @@ The rules that say *when* a character gets something are members of the entity i
 
 - `Class.SubclassLevel` — in the 2014 rules clerics, sorcerers and warlocks choose at 1, druids
   and wizards at 2, everyone else at 3.
-- `Class.AsiLevels` — fighters and rogues get extra ability score improvements.
+- `Class.AsiLevels` — fighters and rogues get extra ability score improvements; `Class.ImprovementsAt(level)`
+  counts what a level has, and `AbilityIncreaseChoice.Improvement` says what one may be.
+- `Class.HitDieSize` — the hit die read once (`HitDieNotation`); a die it cannot read throws and
+  `ClassSeedDataTests` fails on it, rather than becoming a d8.
 - `Class.SavingThrowAbilityIds` — the two saves a class is proficient in.
 - `Race.SkillChoiceCount` and `Race.SkillChoiceOptions` (`Race.OffersSkill`), and
   `Race.LanguageChoiceCount`, which a subrace can add to (`Race.LanguageChoiceCountWith`).
+- `Background.LanguageChoiceCount` and `Background.NamedLanguages` — the `"any"` placeholders in
+  its languages are the picks; the rest are named.
 - `Background.AbilityScoreOptions` (`Background.AllowsAbilityIncreases`) — the three abilities a
   2024 background raises, +2 and +1 or +1 to each; none for a 2014 one.
 

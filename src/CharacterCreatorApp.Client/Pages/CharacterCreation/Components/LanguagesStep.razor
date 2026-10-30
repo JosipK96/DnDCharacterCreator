@@ -110,7 +110,7 @@
         // A language the race or background already gives can't be picked again; the server
         // refuses it, since the pick would be spent on nothing
         var knownNames = (race?.Languages ?? [])
-            .Concat(background?.Languages.Select(l => l.Name) ?? [])
+            .Concat(background?.Languages ?? [])
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         alreadyKnownNames = allLanguages

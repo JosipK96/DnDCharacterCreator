@@ -67,7 +67,7 @@ public class CharacterDetailsLoader(
             Level: character.Level,
             AbilityScores: character.AbilityScores,
             ProficiencyIds: character.ProficiencyIds,
-            HitDie: @class?.HitDie ?? string.Empty,
+            HitDie: @class?.HitDie ?? "d8", // a class the data no longer has: the sheet shows the lowest die
             HitDieResults: character.HitDieResults,
             SavingThrowAbilityIds: (@class?.SavingThrowAbilityIds ?? []).Concat(character.FeatSavingThrowAbilityIds).Distinct().ToList(),
             Speed: race?.SpeedWith(race.Subraces.FirstOrDefault(s => s.Id == character.SubraceId)) ?? 30,

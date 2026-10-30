@@ -11,7 +11,8 @@ public class BackgroundReadModel
     /// <summary>The code of the book it comes from ("PHB", "XGE").</summary>
     public string Source { get; set; } = string.Empty;
 
-    public List<BackgroundLanguageReadModel> Languages { get; set; } = new();
+    /// <summary>The languages the background names; the ones the player picks are counted in LanguageChoiceCount.</summary>
+    public List<string> Languages { get; set; } = new();
     public int LanguageChoiceCount { get; set; }
     public List<BackgroundProficiencyReadModel> Proficiencies { get; set; } = new();
 
@@ -29,12 +30,6 @@ public class BackgroundReadModel
 
     /// <summary>A 2014 background's feature; null for a 2024 one.</summary>
     public BackgroundFeatureReadModel? Feature { get; set; }
-}
-
-public class BackgroundLanguageReadModel
-{
-    public string Id { get; set; } = string.Empty;
-    public string Name { get; set; } = string.Empty;
 }
 
 public class BackgroundProficiencyReadModel

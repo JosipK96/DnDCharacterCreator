@@ -27,6 +27,17 @@ public class Background
     /// </summary>
     public List<string> Languages { get; set; } = [];
 
+    /// <summary>The placeholder in Languages for a language the player picks.</summary>
+    public const string AnyLanguage = "any";
+
+    /// <summary>How many languages the background lets the player pick: the AnyLanguage placeholders in Languages.</summary>
+    public int LanguageChoiceCount => Languages.Count(IsLanguageChoice);
+
+    /// <summary>The languages the background names, without the placeholders ("Common" for a 2024 background).</summary>
+    public IEnumerable<string> NamedLanguages => Languages.Where(l => !IsLanguageChoice(l));
+
+    private static bool IsLanguageChoice(string language) => language.Equals(AnyLanguage, StringComparison.OrdinalIgnoreCase);
+
     /// <summary>
     /// The three abilities a 2024 background raises: +2 to one and +1 to another, or +1 to each.
     /// Empty for a 2014 background, whose character's race raises them instead.

@@ -473,6 +473,33 @@ public class ClassTests
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
 
+    [Theory]
+    [InlineData(1, 0)]
+    [InlineData(3, 0)]
+    [InlineData(4, 1)]
+    [InlineData(6, 2)]
+    [InlineData(7, 2)]
+    [InlineData(20, 3)]
+    public void ImprovementsAt_CountsTheAsiLevelsReached(int level, int expected)
+    {
+        // Act - a fighter with improvements at 4, 6 and 8, though here the table ends at 8
+        var improvements = Fighter().ImprovementsAt(level);
+
+        // Assert
+        improvements.Should().Be(expected);
+    }
+
+    [Fact]
+    public void HitDieSizeAndFixedValue_ReadTheClassesDie()
+    {
+        // Arrange
+        var fighter = Fighter();
+        fighter.HitDie = "1d10";
+
+        // Assert
+        (fighter.HitDieSize, fighter.HitDieFixedValue).Should().Be((10, 6));
+    }
+
     // A 2014 fighter: a subclass at 3, improvements at 4, 6 and 8, its style at 1, no spells of its own
     private static Class Fighter()
     {

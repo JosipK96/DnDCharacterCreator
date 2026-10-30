@@ -188,6 +188,11 @@ and one it should have before the link is shared:
   long and random (a password manager's generator will do): registration is rate limited
   (see Hosting), but the code is still what stops someone guessing.
 
+and one the owner needs to help a friend who forgot their password (see Resetting a password):
+
+- `Admin__Email`, the email of the owner's own account. Only that account can create reset links;
+  left unset, nobody can.
+
 `configurations/Env_files/api.env` holds the non-secret container settings. To run the compose
 file without its Development override, use `docker compose -f docker-compose.yml up -d`.
 
@@ -211,6 +216,7 @@ Render's `*.onrender.com` one, over Render's HTTPS.
     shows: `Host=<ep-…>.eu-central-1.aws.neon.tech;Database=<db>;Username=<user>;Password=<password>;SSL Mode=VerifyFull;GSS Encryption Mode=Disable`
   - `JwtSettings__Key`: a random key of at least 32 characters
   - `Registration__InviteCode`: the invite code (see Deploying)
+  - `Admin__Email`: the owner's email (see Resetting a password)
 - **Sign-in protection** (#72), all optional, each with a default. Environment variables on the
   service, like the secrets, but not secret:
   - `Identity__Lockout__MaxFailedAccessAttempts` (default 5) and
@@ -227,6 +233,18 @@ Render's `*.onrender.com` one, over Render's HTTPS.
     a caller could forge the address.
   - Passwords need at least 8 characters, an uppercase letter and a digit. Accounts made before
     keep working with their old password.
+- **Resetting a password** (#71): the app sends no email, so a friend who forgot their password
+  asks the owner. The owner signs in with the account named by `Admin__Email`, opens
+  `/admin/reset-link`, types the friend's email and sends them the link it shows, by any
+  message. The link opens a page where the friend chooses a new password; it works once and
+  expires after 24 hours, and a newer link or any password change makes an older one stop
+  working. A used, expired or invalid link, and an email with no account, all get the same
+  answer. A reset also ends a lockout. Anyone signed in can change their own password at
+  `/account/password` with their current one. The same limits as sign-in apply to all of it
+  (the per-address rate limit; a wrong current password counts toward lockout). A sign-in token
+  issued before a reset or change stays valid until it expires (`JwtSettings__ExpiryInMinutes`,
+  60 by default): tokens are not checked against the account's security stamp, which would cost
+  a database read on every request.
 - **Database version:** Neon runs PostgreSQL 18. `docker-compose.yml` and the three Testcontainers
   fixtures use `postgres:18-alpine` so CI and local runs see what production sees; when Neon
   upgrades, move them (and the `postgres:18` in the backup workflow) in the same change.

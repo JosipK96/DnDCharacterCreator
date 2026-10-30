@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 
 using CharacterCreatorApp.Api.Helpers.Jwt;
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Infrastructure.Admin;
 using CharacterCreatorApp.Api.Infrastructure.Authentication;
 using CharacterCreatorApp.Api.Infrastructure.ExceptionHandling;
 using CharacterCreatorApp.Api.Infrastructure.RateLimiting;
@@ -37,6 +38,8 @@ namespace CharacterCreatorApp.Api
 
             services.AddOptions<RegistrationSettings>().BindConfiguration(RegistrationSettings.SectionName);
             services.AddScoped<IInviteCodeGate, InviteCodeGate>();
+            services.AddOptions<AdminSettings>().BindConfiguration(AdminSettings.SectionName);
+            services.AddScoped<IAdminGate, AdminGate>();
             services.AddAuthRateLimiting();
 
             return services;

@@ -85,6 +85,9 @@ public static class DependencyInjection
 
         services.Configure<IdentityOptions>(configuration.GetSection("Identity"));
 
+        // A reset link is good for a day (a longer one is a longer window for a forwarded link to be used)
+        services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(24));
+
         services.AddScoped<IIdentityService, IdentityService>();
 
         return services;

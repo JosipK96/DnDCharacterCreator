@@ -38,6 +38,7 @@ builder.Services.AddScoped(sp => new HttpClient(new BearerTokenHandler(
 });
 
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<PasswordService>();
 builder.Services.AddScoped<CharacterDraftService>();
 builder.Services.AddScoped<CharacterService>();
 builder.Services.AddScoped<LookupService>();

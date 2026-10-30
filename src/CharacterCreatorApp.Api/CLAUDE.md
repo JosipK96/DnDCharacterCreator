@@ -21,6 +21,14 @@
   after it. Account lockout is `Identity__Lockout__*`, applied in `IdentityService`; every failed
   sign-in answers `UserErrors.InvalidCredentials`, so none says whether an email has an account.
   The test host sets no forwarded headers: its tests put the address on the connection themselves.
+- Password recovery (#71): no email is sent. The owner, the account whose email is
+  `Admin__Email` (`AdminSettings`, checked by `AdminGate`; unset means nobody), makes a one-time
+  link at `POST api/admin/password-reset-links`; `POST api/users/reset-password` uses it and
+  `POST api/users/change-password` changes a signed-in user's password, both on the sign-in
+  rate limit. A used, expired or wrong link and an unknown email all answer
+  `UserErrors.InvalidResetLink`. The link lasts 24 hours (the data-protection token provider options
+  in `AddIdentity`) and the reset changes the security stamp, which is what makes it single-use.
+  The JWT carries no stamp, so tokens issued earlier live until they expire.
 - `docker-compose.yml` (+ `.override.yml`, `.dcproj`) sits at the repository root because the
   Dockerfile builds from there: restore needs `Directory.*.props`, `.editorconfig` and
   `analyzers/`. Non-secret container settings are in `configurations/Env_files/api.env`.

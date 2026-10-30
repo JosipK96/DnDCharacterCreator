@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 
 using CharacterCreatorApp.Api;
 using CharacterCreatorApp.Application;
@@ -16,7 +16,7 @@ builder.Services.AddApiServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddIdentity();
+builder.Services.AddIdentity(builder.Configuration);
 builder.Services.AddJwtAuthorization(builder.Configuration);
 builder.Services.AddHealthChecks();
 
@@ -63,6 +63,10 @@ app.UseHttpsRedirection();
 // fingerprinted framework files under their plain names; UseBlazorFrameworkFiles must not be
 // added beside it, because its /_framework branch never reaches the endpoint and answers 500.
 app.MapStaticAssets();
+
+// After the forwarded headers (ASPNETCORE_FORWARDEDHEADERS_ENABLED adds them first of all), so a
+// limit applies to the caller's own address and not the proxy's
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();

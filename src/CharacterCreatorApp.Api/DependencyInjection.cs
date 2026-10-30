@@ -6,6 +6,7 @@ using CharacterCreatorApp.Api.Helpers.Jwt;
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Api.Infrastructure.Authentication;
 using CharacterCreatorApp.Api.Infrastructure.ExceptionHandling;
+using CharacterCreatorApp.Api.Infrastructure.RateLimiting;
 using CharacterCreatorApp.Api.Infrastructure.Registration;
 using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Common.Interfaces;
@@ -36,6 +37,7 @@ namespace CharacterCreatorApp.Api
 
             services.AddOptions<RegistrationSettings>().BindConfiguration(RegistrationSettings.SectionName);
             services.AddScoped<IInviteCodeGate, InviteCodeGate>();
+            services.AddAuthRateLimiting();
 
             return services;
         }

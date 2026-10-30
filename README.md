@@ -185,8 +185,8 @@ and one it should have before the link is shared:
 
 - `Registration__InviteCode`, the code registering asks for. Give it to the group by hand; it
   is never in the repository. Without it anyone with the address can make an account. Make it
-  long and random (a password manager's generator will do): register has no rate limit, so
-  the code is all that stops someone guessing.
+  long and random (a password manager's generator will do): registration is rate limited
+  (see Hosting), but the code is still what stops someone guessing.
 
 `configurations/Env_files/api.env` holds the non-secret container settings. To run the compose
 file without its Development override, use `docker compose -f docker-compose.yml up -d`.
@@ -211,6 +211,22 @@ Render's `*.onrender.com` one, over Render's HTTPS.
     shows: `Host=<ep-…>.eu-central-1.aws.neon.tech;Database=<db>;Username=<user>;Password=<password>;SSL Mode=VerifyFull;GSS Encryption Mode=Disable`
   - `JwtSettings__Key`: a random key of at least 32 characters
   - `Registration__InviteCode`: the invite code (see Deploying)
+- **Sign-in protection** (#72), all optional, each with a default. Environment variables on the
+  service, like the secrets, but not secret:
+  - `Identity__Lockout__MaxFailedAccessAttempts` (default 5) and
+    `Identity__Lockout__DefaultLockoutTimeSpan` (default `00:15:00`): wrong passwords before an
+    account is locked, and for how long. A locked account is refused even with the right
+    password, with the same "Wrong email or password" answer as any failed sign-in.
+  - `RateLimiting__PermitLimit` (default 10) and `RateLimiting__WindowSeconds` (default 60):
+    sign-in and registration attempts one client address may make per window, counted together
+    and including wrong invite codes; past it the API answers 429. The address is the one
+    `ASPNETCORE_FORWARDEDHEADERS_ENABLED` (already set in `render.yaml`) takes from Render's
+    `X-Forwarded-For`: only the last entry, which Render's proxy appended, so a header a caller
+    adds is ignored. That setting trusts the connection it comes in on, which is right because
+    the container is reachable only through Render; behind a host that exposes it directly,
+    a caller could forge the address.
+  - Passwords need at least 8 characters, an uppercase letter and a digit. Accounts made before
+    keep working with their old password.
 - **Database version:** Neon runs PostgreSQL 18. `docker-compose.yml` and the three Testcontainers
   fixtures use `postgres:18-alpine` so CI and local runs see what production sees; when Neon
   upgrades, move them (and the `postgres:18` in the backup workflow) in the same change.

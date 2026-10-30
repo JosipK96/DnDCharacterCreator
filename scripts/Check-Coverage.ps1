@@ -20,7 +20,7 @@ $ErrorActionPreference = 'Stop'
 # Line coverage, in percent, of the assembly measured by its own unit test project.
 $floors = @(
     @{ Report = 'CharacterCreatorApp.Domain.UnitTests'; Assembly = 'CharacterCreatorApp.Domain'; MinLine = 90 }
-    @{ Report = 'CharacterCreatorApp.Application.UnitTests'; Assembly = 'CharacterCreatorApp.Application'; MinLine = 80 }
+    @{ Report = 'CharacterCreatorApp.Application.UnitTests'; Assembly = 'CharacterCreatorApp.Application'; MinLine = 83 }
 )
 
 function Get-AssemblyCoverage($package) {

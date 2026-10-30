@@ -13,7 +13,7 @@ public record BackgroundApiResponse(
     string Name,
     string Edition,
     string Source,
-    List<BackgroundLanguageApiResponse> Languages,
+    List<string> Languages,
     int LanguageChoiceCount,
     List<BackgroundProficiencyApiResponse> Proficiencies,
     List<string> AbilityScoreOptions,
@@ -21,11 +21,6 @@ public record BackgroundApiResponse(
     BackgroundFeatureApiResponse? Feature,
     string? FeatChoiceCategory,
     string? FeatAlternativeCategory
-);
-
-public record BackgroundLanguageApiResponse(
-    string Id,
-    string Name
 );
 
 public record BackgroundProficiencyApiResponse(

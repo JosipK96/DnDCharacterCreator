@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 
 using CharacterCreatorApp.Application.Common.Filtering;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacters;
@@ -25,15 +25,6 @@ namespace CharacterCreatorApp.Infrastructure.Repositories
             return await _dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.UserId == userId, cancellationToken);
         }
 
-        public async Task<List<Character>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken)
-        {
-            return await _dbContext.Characters
-                 .Where(c => c.UserId == userId)
-                 .OrderByDescending(c => c.Level)
-                 .ThenBy(c => c.Name)
-                 .ToListAsync(cancellationToken);
-        }
-
         public async Task<bool> DeleteAsync(Guid characterId, Guid userId, CancellationToken cancellationToken)
         {
             var character = await _dbContext.Characters.FirstOrDefaultAsync(c => c.Id == characterId && c.UserId == userId, cancellationToken);
@@ -45,11 +36,6 @@ namespace CharacterCreatorApp.Infrastructure.Repositories
 
             _dbContext.Characters.Remove(character);
             return true;
-        }
-
-        public async Task<bool> ExistsAsync(Guid characterId, Guid userId, CancellationToken cancellationToken)
-        {
-            return await _dbContext.Characters.AnyAsync(c => c.Id == characterId && c.UserId == userId, cancellationToken);
         }
 
         public async Task<CharacterDetailsReadModel?> GetByIdWithDetailsAsync(Guid characterId, Guid userId, CancellationToken cancellationToken)

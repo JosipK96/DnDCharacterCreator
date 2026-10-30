@@ -64,7 +64,7 @@ public class SetAbilityScoreImprovementsCommandHandler(
         }
 
         var level = draft.Level.Value;
-        var expectedAsiCount = @class.AsiLevels.Count(l => l <= level);
+        var expectedAsiCount = @class.ImprovementsAt(level);
         var chosenCount = command.Improvements.Count + command.FeatIds.Count - bonusFeats.Count;
 
         if (chosenCount != expectedAsiCount)
@@ -141,6 +141,12 @@ public class SetAbilityScoreImprovementsCommandHandler(
     {
         foreach (var improvement in improvements)
         {
+            // The rule is AbilityIncreaseChoice.Improvement's; what follows only says which part was broken
+            if (AbilityIncreaseChoice.Improvement.Allows(improvement))
+            {
+                continue;
+            }
+
             if (improvement.Count == 0)
             {
                 return CharacterDraftErrors.EmptyAsi();
@@ -164,6 +170,9 @@ public class SetAbilityScoreImprovementsCommandHandler(
             {
                 return CharacterDraftErrors.InvalidAsiValue();
             }
+
+            // The same ability twice under two spellings ("str" and "Strength")
+            return CharacterDraftErrors.InvalidAsiValue();
         }
 
         return null;

@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.Features.Authentication;
+﻿using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Domain.Common.Results;
 
 using Microsoft.AspNetCore.Identity;
@@ -42,14 +42,29 @@ public class IdentityService(UserManager<ApplicationUser> userManager) : IIdenti
 
         var user = await _userManager.FindByEmailAsync(email);
 
+        // shortcut: an unknown email returns sooner than a wrong password (no hash is checked), so
+        // timing can still tell them apart; the per-IP rate limit bounds how often it can be tried
         if (user is null)
         {
-            return UserErrors.NotFoundByEmail();
+            return UserErrors.InvalidCredentials();
+        }
+
+        // Even the right password is refused while locked, with the same answer as a wrong one
+        if (await _userManager.IsLockedOutAsync(user))
+        {
+            return UserErrors.InvalidCredentials();
         }
 
         if (!await _userManager.CheckPasswordAsync(user, password))
         {
-            return UserErrors.WrongPassword();
+            await _userManager.AccessFailedAsync(user);
+
+            return UserErrors.InvalidCredentials();
+        }
+
+        if (user.AccessFailedCount > 0)
+        {
+            await _userManager.ResetAccessFailedCountAsync(user);
         }
 
         // Found by its email, so Email is set

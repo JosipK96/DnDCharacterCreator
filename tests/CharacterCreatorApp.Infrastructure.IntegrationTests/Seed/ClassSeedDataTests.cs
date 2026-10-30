@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
@@ -13,6 +14,17 @@ namespace CharacterCreatorApp.Infrastructure.IntegrationTests.Seed;
 /// </summary>
 public class ClassSeedDataTests
 {
+    [Fact]
+    public async Task Classes_EveryHitDieIsOneTheDomainCanRead()
+    {
+        // Act
+        var classes = await ReadAsync<ClassSeedRow>("Classes.json");
+
+        // Assert - an unreadable die would otherwise fail only when a character of the class is built
+        classes.Should().NotBeEmpty();
+        classes.Should().OnlyContain(c => Readable(c.HitDie), "every class needs a die the domain can read");
+    }
+
     [Theory]
     [InlineData("artificer", 3)]
     [InlineData("barbarian", 3)]
@@ -495,6 +507,8 @@ public class ClassSeedDataTests
         // Assert
         bard.ToolChoices.Should().ContainSingle().Which.Options.Should().Contain(["lute", "lyre", "bagpipes"]).And.NotContain("dice_set");
     }
+
+    private static bool Readable(string hitDie) => HitDieNotation.TryParse(hitDie, out _);
 
     private static async Task<ClassSeedRow> ClassAsync(string id) =>
         (await ReadAsync<ClassSeedRow>("Classes.json")).Single(c => c.Id == id);

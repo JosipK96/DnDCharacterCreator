@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Domain.Common.Results;
+﻿using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.Authentication;
 
@@ -17,8 +17,9 @@ public interface IIdentityService
     Task<Response> CreateUserAsync(string userName, string email, string password, string? displayName, CancellationToken cancellationToken);
 
     /// <summary>
-    /// The account the email and password belong to, or <see cref="UserErrors.NotFoundByEmail"/>
-    /// or <see cref="UserErrors.WrongPassword"/>.
+    /// The account the email and password belong to, or <see cref="UserErrors.InvalidCredentials"/>\r
+    /// for an unknown email, a wrong password and a locked account alike. A wrong password counts\r
+    /// toward locking the account; a successful sign-in resets the count.
     /// </summary>
     Task<Response<AuthenticatedUser>> CheckCredentialsAsync(string email, string password, CancellationToken cancellationToken);
 }

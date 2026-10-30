@@ -208,7 +208,7 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
         acolyte.AbilityScoreOptions.Should().Equal("INT", "WIS", "CHA");
         acolyte.Feat!.Name.Should().Be("Magic Initiate");
         acolyte.Feature.Should().BeNull();
-        (acolyte.Languages.Select(l => l.Name).Single(), acolyte.LanguageChoiceCount).Should().Be(("Common", 2));
+        (acolyte.Languages.Single(), acolyte.LanguageChoiceCount).Should().Be(("Common", 2));
     }
 
     [Fact]

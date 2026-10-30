@@ -10,7 +10,7 @@ the parameters compile to mutable private fields, so capturing them in a
 readonly field is what keeps the dependency immutable.
 
 ```csharp
-public class SetCharacterSubclassCommandHandler(IClassRepository classRepository)
+public class SetCharacterClassCommandHandler(IClassRepository classRepository)
 {
     private readonly IClassRepository _classRepository = classRepository;
 

@@ -6,9 +6,10 @@ using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.Lookup.GetBackgrounds
 {
-    public class GetBackgroundByIdQueryHandler(IBackgroundRepository backgroundRepository) : IQueryHandler<GetBackgroundByIdQuery, Response<BackgroundReadModel>>
+    public class GetBackgroundByIdQueryHandler(IBackgroundRepository backgroundRepository, ILanguageRepository languageRepository) : IQueryHandler<GetBackgroundByIdQuery, Response<BackgroundReadModel>>
     {
         private readonly IBackgroundRepository _backgroundRepository = backgroundRepository;
+        private readonly ILanguageRepository _languageRepository = languageRepository;
 
         public async Task<Response<BackgroundReadModel>> Handle(GetBackgroundByIdQuery query, CancellationToken cancellationToken)
         {
@@ -18,6 +19,8 @@ namespace CharacterCreatorApp.Application.Features.Lookup.GetBackgrounds
             {
                 return BackgroundErrors.NotFoundById(query.Id);
             }
+
+            await BackgroundLanguageNames.ApplyAsync([background], _languageRepository, cancellationToken);
 
             return background;
         }

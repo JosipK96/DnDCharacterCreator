@@ -787,7 +787,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public bool IsReadyToFinalize()
         {
             return !string.IsNullOrWhiteSpace(Name)
-                && Level is >= 1 and <= 20
+                && Level is >= 1 and <= MaxLevel
                 && !string.IsNullOrWhiteSpace(RaceId)
                 && !string.IsNullOrWhiteSpace(ClassId)
                 && !string.IsNullOrWhiteSpace(BackgroundId)

@@ -31,6 +31,24 @@ public class AbilityIncreaseChoiceTests
     }
 
     [Theory]
+    [InlineData("STR:2", true)]
+    [InlineData("strength:1 DEX:1", true)]
+    [InlineData("", false)]
+    [InlineData("STR:1", false)]
+    [InlineData("STR:3", false)]
+    [InlineData("STR:1 DEX:1 CON:1", false)]
+    [InlineData("STR:1 str:1", false)]
+    [InlineData("luck:2", false)]
+    public void Allows_ForAnImprovement_IsTwoPointsOverTheSixAbilitiesAtMostTwoOnOne(string increases, bool expected)
+    {
+        // Act
+        var allowed = AbilityIncreaseChoice.Improvement.Allows(Increases(increases));
+
+        // Assert
+        allowed.Should().Be(expected);
+    }
+
+    [Theory]
     [InlineData("", true)]
     [InlineData("STR:0", true)]
     [InlineData("STR:1", false)]

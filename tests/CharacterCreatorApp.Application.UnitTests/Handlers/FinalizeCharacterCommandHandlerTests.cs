@@ -351,6 +351,25 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_WithAnImprovementTheStepWouldRefuse_ReturnsValidationError()
+    {
+        // Arrange - a level 4 fighter owes one improvement; this one spends a single point
+        var draft = CreateCompleteDraft(_userId, level: 4);
+        draft.SetAbilityScoreImprovements([new Dictionary<string, int> { ["strength"] = 1 }]);
+
+        ArrangeRepositories(_draftId, _userId, draft);
+
+        // Act
+        var result = await _sut.Handle(new FinalizeCharacterCommand(_draftId), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be("Character.AbilityScoreImprovementInvalid");
+
+        _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
     public async Task Handle_WithMissingAbilityScoreImprovements_ReturnsValidationError()
     {
         // Arrange - a level 4 fighter owes one ASI

@@ -69,6 +69,31 @@ public class SetAbilityScoreImprovementsCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
     }
 
+    [Theory]
+    [InlineData("", "CharacterDraft.EmptyAsi")]
+    [InlineData("strength:1", "CharacterDraft.InvalidAsiPoints")]
+    [InlineData("strength:3", "CharacterDraft.InvalidAsiPoints")]
+    [InlineData("strength:3 dexterity:-1", "CharacterDraft.InvalidAsiValue")]
+    [InlineData("luck:2", "CharacterDraft.InvalidAsiAbility")]
+    [InlineData("strength:1 Strength:1", "CharacterDraft.InvalidAsiValue")]
+    public async Task Handle_WithAnImprovementThatIsNotTwoPoints_ReturnsTheBrokenPart(string improvement, string code)
+    {
+        // Arrange - a level 4 fighter has one improvement
+        ArrangeDraft(level: 4);
+
+        var spread = improvement.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+            .Select(pair => pair.Split(':'))
+            .ToDictionary(p => p[0], p => int.Parse(p[1], System.Globalization.CultureInfo.InvariantCulture), StringComparer.Ordinal);
+
+        // Act
+        var result = await _sut.Handle(new SetAbilityScoreImprovementsCommand(_draftId, [spread], []), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors[0].Code.Should().Be(code);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
     [Fact]
     public async Task Handle_WhenImprovementsAndFeatsDoNotAddUp_ReturnsValidationError()
     {

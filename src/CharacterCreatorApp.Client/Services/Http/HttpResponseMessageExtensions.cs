@@ -78,6 +78,7 @@ public static class HttpResponseMessageExtensions
         401 => "Your session has expired. Please sign in again.",
         403 => "You don't have access to that.",
         404 => "That could not be found.",
+        429 => "Too many attempts. Please wait a minute and try again.",
         >= 500 => "The server ran into a problem. Please try again.",
         _ => "The request could not be completed."
     };

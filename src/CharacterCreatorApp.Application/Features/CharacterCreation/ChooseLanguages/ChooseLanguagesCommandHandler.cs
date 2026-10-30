@@ -48,7 +48,7 @@ public class ChooseLanguagesCommandHandler(
             return RaceErrors.NotFoundById(draft.RaceId);
         }
 
-        var background = await _backgroundRepository.GetByIdAsync(draft.BackgroundId, cancellationToken);
+        var background = await _backgroundRepository.GetByIdWithDetailsAsync(draft.BackgroundId, cancellationToken);
 
         if (background == null)
         {
@@ -90,7 +90,7 @@ public class ChooseLanguagesCommandHandler(
         // A pick the character already has from their race or background would be wasted: the
         // built character knows each language once, so it would end up a language short.
         var alreadyKnown = LanguageResolver
-            .ResolveIds(race.RaceLanguages.Select(l => l.Language).Concat(background.Languages.Select(l => l.Name)), choosable)
+            .ResolveIds(race.RaceLanguages.Select(l => l.Language).Concat(background.NamedLanguages), choosable)
             .ToHashSet();
 
         var repeated = choosable

@@ -76,7 +76,9 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
                 ["JwtSettings:Issuer"] = TestIssuer,
                 ["JwtSettings:Audience"] = TestAudience,
                 ["JwtSettings:ExpiryInMinutes"] = "60",
-                ["ConnectionStrings:DefaultConnection"] = _container!.GetConnectionString()
+                ["ConnectionStrings:DefaultConnection"] = _container!.GetConnectionString(),
+                // Every test shares one address, so the default limit would refuse most of them
+                ["RateLimiting:PermitLimit"] = "1000"
             }!);
         });
 

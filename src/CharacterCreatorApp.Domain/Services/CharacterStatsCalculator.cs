@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -97,7 +97,7 @@ public static class CharacterStatsCalculator
     /// </summary>
     private static int GetMaxHitPoints(CharacterStatsInput input, int constitutionModifier)
     {
-        var dieSize = ParseDieSize(input.HitDie);
+        var dieSize = HitDieNotation.SizeOf(input.HitDie);
         var clampedLevel = Math.Clamp(input.Level, 1, 20);
         var fixedValue = (dieSize / 2) + 1;
 
@@ -114,12 +114,6 @@ public static class CharacterStatsCalculator
         return total + (clampedLevel * bonusPerLevel);
     }
 
-    /// <summary>The hit die's fixed value, which a level takes in place of a roll: a d10's is 6.</summary>
-    public static int GetHitDieFixedValue(string hitDie) => (ParseDieSize(hitDie) / 2) + 1;
-
-    /// <summary>The hit die's size: 10 for "1d10", "d10" or "10".</summary>
-    public static int GetHitDieSize(string hitDie) => ParseDieSize(hitDie);
-
     /// <summary>
     /// The best of the ways the character has to work out armour class without armour: both rule
     /// books let a character with more than one pick which, so a barbarian with CON 8 keeps 10 + DEX.
@@ -135,24 +129,8 @@ public static class CharacterStatsCalculator
             .Max();
     }
 
-    /// <summary>Reads the die size out of "1d10", "d10" or "10".</summary>
-    private static int ParseDieSize(string hitDie)
-    {
-        if (string.IsNullOrWhiteSpace(hitDie))
-        {
-            return 8;
-        }
-
-        var separatorIndex = hitDie.IndexOf('d', StringComparison.OrdinalIgnoreCase);
-        var sizePart = separatorIndex >= 0 ? hitDie[(separatorIndex + 1)..] : hitDie;
-
-        return int.TryParse(sizePart, NumberStyles.Integer, CultureInfo.InvariantCulture, out var size) && size > 0
-            ? size
-            : 8;
-    }
-
     /// <summary>"1d10" and "d10" both describe a d10, so hit dice read as "5d10" either way.</summary>
-    private static string NormalizeHitDie(string hitDie) => $"d{ParseDieSize(hitDie)}";
+    private static string NormalizeHitDie(string hitDie) => $"d{HitDieNotation.SizeOf(hitDie)}";
 
     private static Dictionary<string, int> NormalizeScores(IReadOnlyDictionary<string, int> scores)
     {

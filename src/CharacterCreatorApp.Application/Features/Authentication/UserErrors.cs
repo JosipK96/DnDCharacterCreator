@@ -1,12 +1,13 @@
-using CharacterCreatorApp.Domain.Common.Results;
+﻿using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.Authentication;
 
 public static class UserErrors
 {
     public static Error EmailAlreadyInUse() => Error.Conflict(code: "User.EmailAlreadyInUse", description: "Email is already in use");
-    public static Error NotFoundByEmail() => Error.NotFound(code: "User.NotFoundByEmail", description: "User is not found by email");
-    public static Error WrongPassword() => Error.Unauthorized(code: "User.WrongPassword", description: "Wrong password");
+
+    /// <summary>One answer for an unknown email, a wrong password and a locked account, so a failed sign-in never says which emails have accounts.</summary>
+    public static Error InvalidCredentials() => Error.Unauthorized(code: "User.InvalidCredentials", description: "Wrong email or password");
     public static Error InvalidInviteCode() => Error.Forbidden(code: "User.InvalidInviteCode", description: "The invite code is missing or wrong");
 
     /// <summary>

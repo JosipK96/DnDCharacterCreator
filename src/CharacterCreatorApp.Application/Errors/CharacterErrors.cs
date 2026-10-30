@@ -140,6 +140,11 @@ public static class CharacterErrors
             "Character.FeatAbilityIncreaseIncomplete",
             $"{featName} raises an ability score of the player's choice; pick it with the feat.");
 
+    public static Error AbilityScoreImprovementInvalid(string className) =>
+        Error.Validation(
+            "Character.AbilityScoreImprovementInvalid",
+            $"Each {className} ability score improvement spent on ability points is 2 points over the six abilities, at most 2 on one.");
+
     public static Error AbilityScoreImprovementsIncomplete(int level, string className, int required, int actual) =>
         Error.Validation(
             "Character.AbilityScoreImprovementsIncomplete",

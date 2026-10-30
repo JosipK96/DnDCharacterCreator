@@ -2,6 +2,7 @@ using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseLanguages;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -107,18 +108,12 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         // human adds Common and one more
         var draft = ArrangeDraft(raceId: "human", backgroundId: "feylost");
         ArrangeRace(RaceWithLanguages("human", "Human", ["Common"], languageChoiceCount: 1));
-        ArrangeBackground(new BackgroundReadModel
+        ArrangeBackground(new Background
         {
             Id = "feylost",
             Name = "Feylost",
-            LanguageChoiceCount = 1,
-            Languages =
-            [
-                new BackgroundLanguageReadModel { Id = "elvish", Name = "Elvish" },
-                new BackgroundLanguageReadModel { Id = "gnomish", Name = "Gnomish" },
-                new BackgroundLanguageReadModel { Id = "goblin", Name = "Goblin" },
-                new BackgroundLanguageReadModel { Id = "sylvan", Name = "Sylvan" },
-            ],
+            Edition = RulesEdition.Edition2014,
+            Languages = ["Elvish", "Gnomish", "Goblin", "Sylvan", "any"],
         });
 
         // Act
@@ -159,7 +154,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         var elf = RaceWithLanguages("elf", "Elf", ["Common", "Elvish"]);
         elf.Subraces = [new Subrace { Id = "high_elf", Name = "High Elf", Source = "PHB", RaceId = "elf", LanguageChoiceCount = 1 }];
         ArrangeRace(elf);
-        ArrangeBackground(new BackgroundReadModel { Id = "acolyte", Name = "Acolyte", LanguageChoiceCount = 2 });
+        ArrangeBackground(new Background { Id = "acolyte", Name = "Acolyte", Edition = RulesEdition.Edition2014, Languages = ["any", "any"] });
 
         // Act
         var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, [.. languageIds]), _cts.Token);
@@ -277,7 +272,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         // Arrange
         ArrangeDraft(raceId: "dwarf", backgroundId: "acolyte");
         ArrangeRace(RaceWithLanguages("dwarf", "Dwarf", ["Common", "Dwarvish"]));
-        _backgroundRepositoryMock.Setup(r => r.GetByIdAsync("acolyte", _cts.Token)).ReturnsAsync((BackgroundReadModel?)null);
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("acolyte", _cts.Token)).ReturnsAsync((Background?)null);
 
         // Act
         var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb", "elvish-phb"]), _cts.Token);
@@ -295,7 +290,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         var draft = ArrangeDraft(raceId: "dwarf", backgroundId: "soldier");
         draft.SetLanguages(["celestial-phb"]);
         ArrangeRace(RaceWithLanguages("dwarf", "Dwarf", ["Common", "Dwarvish"]));
-        ArrangeBackground(new BackgroundReadModel { Id = "soldier", Name = "Soldier", LanguageChoiceCount = 0 });
+        ArrangeBackground(new Background { Id = "soldier", Name = "Soldier", Edition = RulesEdition.Edition2014, Languages = [] });
 
         // Act
         var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["elvish-phb"]), _cts.Token);
@@ -349,7 +344,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
     {
         var draft = ArrangeDraft(raceId: "dwarf", backgroundId: "acolyte");
         ArrangeRace(RaceWithLanguages("dwarf", "Dwarf", ["Common", "Dwarvish"]));
-        ArrangeBackground(new BackgroundReadModel { Id = "acolyte", Name = "Acolyte", LanguageChoiceCount = 2 });
+        ArrangeBackground(new Background { Id = "acolyte", Name = "Acolyte", Edition = RulesEdition.Edition2014, Languages = ["any", "any"] });
         return draft;
     }
 
@@ -358,14 +353,13 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
     {
         var draft = ArrangeDraft(raceId: "dwarf_2024", backgroundId: "acolyte_2024", edition: RulesEdition.Edition2024);
         ArrangeRace(new Race { Id = "dwarf_2024", Name = "Dwarf", Edition = RulesEdition.Edition2024, Source = "XPHB", Size = "Medium", Speed = 30 });
-        ArrangeBackground(new BackgroundReadModel
+        ArrangeBackground(new Background
         {
             Id = "acolyte_2024",
             Name = "Acolyte",
             Edition = RulesEdition.Edition2024,
             Source = "XPHB",
-            LanguageChoiceCount = 2,
-            Languages = [new BackgroundLanguageReadModel { Id = "common", Name = "Common" }],
+            Languages = ["Common", "any", "any"],
         });
         return draft;
     }
@@ -401,8 +395,8 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         RaceLanguages = languages.Select(language => new RaceLanguage { RaceId = id, Language = language }).ToList(),
     };
 
-    private void ArrangeBackground(BackgroundReadModel background) =>
-        _backgroundRepositoryMock.Setup(r => r.GetByIdAsync(background.Id, _cts.Token)).ReturnsAsync(background);
+    private void ArrangeBackground(Background background) =>
+        _backgroundRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync(background.Id, _cts.Token)).ReturnsAsync(background);
 
     private static LanguageReadModel Language(string id, string name, string type) =>
         new() { Id = id, Name = name, Type = type };

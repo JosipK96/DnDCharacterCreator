@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.Features.Authentication;
+﻿using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Application.Features.Authentication.Login;
 using CharacterCreatorApp.Domain.Common.Results;
 
@@ -48,7 +48,7 @@ public class LoginUserCommandHandlerTests : IDisposable
         // Arrange
         _identityServiceMock
             .Setup(s => s.CheckCredentialsAsync(Email, Password, _cts.Token))
-            .ReturnsAsync((Response<AuthenticatedUser>)UserErrors.WrongPassword());
+            .ReturnsAsync((Response<AuthenticatedUser>)UserErrors.InvalidCredentials());
 
         // Act
         var result = await _sut.Handle(new LoginUserCommand(Email, Password), _cts.Token);
@@ -56,7 +56,7 @@ public class LoginUserCommandHandlerTests : IDisposable
         // Assert
         result.IsSuccess.Should().BeFalse();
         result.Errors.Should().ContainSingle();
-        result.Errors[0].Code.Should().Be("User.WrongPassword");
+        result.Errors[0].Code.Should().Be("User.InvalidCredentials");
         _jwtHelperMock.Verify(j => j.GenerateJwtToken(It.IsAny<AuthenticatedUser>()), Times.Never);
     }
 

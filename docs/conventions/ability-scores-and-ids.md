@@ -45,7 +45,9 @@ Every increase stops at 20, except an Epic Boon's, which goes to 30
 
 A race's own feats (`Race.BonusFeatsWith`: the variant human's one of any kind, the 2024 human's
 Origin one) are not improvements. They come first in `SelectedFeatIds`, and the improvements step
-checks their count and category before counting the rest against `Class.AsiLevels`.
+checks their count and category before counting the rest against `Class.ImprovementsAt(level)`. What one improvement spent on
+ability points may be (2 points, at most 2 on one, real abilities) is
+`AbilityIncreaseChoice.Improvement`, which the step and finalize both check.
 
 A feat's spellcasting ability, where the player picks it (the 2024 Magic Initiate's Intelligence,
 Wisdom or Charisma, `BonusSpellChoice.AbilityOptions`), is an ability id too: it arrives in any
@@ -56,7 +58,8 @@ spelling with the feat's spells and is kept under its canonical id in `FeatSpell
 Languages arrive in three shapes too:
 
 - Race languages are **display names**: `"Common"`, `"Dwarvish"`.
-- Background languages contain the literal placeholder `"any"`, meaning the player chooses.
+- Background languages contain the literal placeholder `"any"`, meaning the player chooses. `Background.LanguageChoiceCount` counts them and
+  `Background.NamedLanguages` is the rest; nothing else counts the literal.
 - A draft's `SelectedLanguageIds` holds **language ids of its edition**: `"common-phb"` for a 2014
   character, `"common-xphb"` for a 2024 one (`Language.SourceFor`).
 

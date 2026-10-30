@@ -150,14 +150,9 @@ public static class ReadModelExtensions
             FeatChoiceCategory = background.FeatChoiceCategory,
             FeatAlternativeCategory = background.FeatAlternativeCategory,
 
-            LanguageChoiceCount = background.Languages.Count(l => l.Equals("any", StringComparison.OrdinalIgnoreCase)),
+            LanguageChoiceCount = background.LanguageChoiceCount,
 
-            Languages = background.Languages
-                .Where(l => !l.Equals("any", StringComparison.OrdinalIgnoreCase))
-                .Select(MapLanguageNameToStandard)
-                .Where(lang => lang != null)
-                .Cast<BackgroundLanguageReadModel>()
-                .ToList(),
+            Languages = background.NamedLanguages.ToList(),
 
             Proficiencies = background.BackgroundProficiencies
                 .Select(bp => new BackgroundProficiencyReadModel
@@ -171,49 +166,6 @@ public static class ReadModelExtensions
             Feature = background.Feature is { } feature
                 ? new BackgroundFeatureReadModel { Id = feature.Id, Name = feature.Name, Description = feature.Description }
                 : null
-        };
-    }
-
-    private static BackgroundLanguageReadModel? MapLanguageNameToStandard(string languageName)
-    {
-        // Map background language names to PHB standard language IDs
-        var languageMap = new Dictionary<string, (string Id, string Name)>(StringComparer.OrdinalIgnoreCase)
-        {
-            // Standard Languages (PHB)
-            ["Common"] = ("common", "Common"),
-            ["Dwarvish"] = ("dwarvish", "Dwarvish"),
-            ["Elvish"] = ("elvish", "Elvish"),
-            ["Giant"] = ("giant", "Giant"),
-            ["Gnomish"] = ("gnomish", "Gnomish"),
-            ["Goblin"] = ("goblin", "Goblin"),
-            ["Halfling"] = ("halfling", "Halfling"),
-            ["Orc"] = ("orc", "Orc"),
-
-            // Exotic Languages (PHB)
-            ["Abyssal"] = ("abyssal", "Abyssal"),
-            ["Celestial"] = ("celestial", "Celestial"),
-            ["Draconic"] = ("draconic", "Draconic"),
-            ["Deep Speech"] = ("deep-speech", "Deep Speech"),
-            ["Infernal"] = ("infernal", "Infernal"),
-            ["Primordial"] = ("primordial", "Primordial"),
-            ["Sylvan"] = ("sylvan", "Sylvan"),
-            ["Undercommon"] = ("undercommon", "Undercommon")
-        };
-
-        if (languageMap.TryGetValue(languageName, out var mapped))
-        {
-            return new BackgroundLanguageReadModel
-            {
-                Id = mapped.Id,
-                Name = mapped.Name
-            };
-        }
-
-        // Fallback for unknown languages
-        return new BackgroundLanguageReadModel
-        {
-            Id = languageName.ToLowerInvariant().Replace(" ", "-", StringComparison.Ordinal),
-            Name = languageName
         };
     }
 

@@ -76,9 +76,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetCharacterSheetPdfQuery(id, paper), cancellationToken);
 
-            return response.IsSuccess
-                ? File(response.Value.Content, "application/pdf", response.Value.FileName)
-                : Problem(response.Errors);
+            return FileOrProblem(response, sheet => File(sheet.Content, "application/pdf", sheet.FileName));
         }
 
         /// <summary>

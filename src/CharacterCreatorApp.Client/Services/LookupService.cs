@@ -46,20 +46,14 @@ public class LookupService(HttpClient http)
     public Task<List<SpellApiResponse>> GetSpellsAsync(
         string? classId = null,
         string? subclassId = null,
-        int? level = null,
         int? maxLevel = null,
-        string? school = null,
-        bool? isRitual = null,
         IEnumerable<string>? sources = null)
     {
         var query = ToQueryString(new Dictionary<string, string?>
         {
             ["classId"] = classId,
             ["subclassId"] = subclassId,
-            ["level"] = level?.ToString(CultureInfo.InvariantCulture),
-            ["maxLevel"] = maxLevel?.ToString(CultureInfo.InvariantCulture),
-            ["school"] = school,
-            ["isRitual"] = isRitual?.ToString()
+            ["maxLevel"] = maxLevel?.ToString(CultureInfo.InvariantCulture)
         }, sources);
 
         return GetCachedAsync<List<SpellApiResponse>>($"/api/spells{query}");

@@ -23,8 +23,6 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.SetClass;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetNameAndLevel;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetRace;
-using CharacterCreatorApp.Application.Features.CharacterCreation.SetSubclass;
-using CharacterCreatorApp.Application.Features.CharacterCreation.SetSubrace;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
 using CharacterCreatorApp.Contracts.Responses;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
@@ -92,17 +90,6 @@ namespace CharacterCreatorApp.Api.Controllers
             return NoContentOrProblem(response);
         }
 
-        [HttpPut("{draftId:guid}/subrace")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> SetSubrace(Guid draftId, [FromBody] SetSubraceApiRequest request, CancellationToken cancellationToken)
-        {
-            var response = await _sender.Send(new SetCharacterSubraceCommand(draftId, request.SubraceId), cancellationToken);
-
-            return NoContentOrProblem(response);
-        }
-
         [HttpPut("{draftId:guid}/class")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
@@ -110,17 +97,6 @@ namespace CharacterCreatorApp.Api.Controllers
         public async Task<IActionResult> SetClass(Guid draftId, [FromBody] SetClassApiRequest request, CancellationToken cancellationToken)
         {
             var response = await _sender.Send(new SetCharacterClassCommand(draftId, request.ClassId, request.SubclassId), cancellationToken);
-
-            return NoContentOrProblem(response);
-        }
-
-        [HttpPut("{draftId:guid}/subclass")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> SetSubclass(Guid draftId, [FromBody] SetSubclassApiRequest request, CancellationToken cancellationToken)
-        {
-            var response = await _sender.Send(new SetCharacterSubclassCommand(draftId, request.SubclassId), cancellationToken);
 
             return NoContentOrProblem(response);
         }

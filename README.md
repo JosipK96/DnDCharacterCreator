@@ -219,8 +219,8 @@ Render's `*.onrender.com` one, over Render's HTTPS.
   build, the region, the `/health` check, port 8080, and the non-secret settings from
   `configurations/Env_files/api.env`. It was created in the Render dashboard with New >
   Blueprint, and changes to the file are applied from there.
-- **Deploys:** a push to `main` deploys once CI on that commit has passed. Migrations and the
-  reference data load run at startup; the deploy log shows "Applying pending migrations" and
+- **Deploys:** publishing a release deploys it (see Releasing); merging to `main` does not.
+  Migrations and the reference data load run at startup; the deploy log shows "Applying pending migrations" and
   "Seeding reference data". If either fails, the new version never passes the health check and
   the previous one keeps serving.
 - **Secrets** live only in the Render dashboard (the service's Environment page), never here:
@@ -269,6 +269,55 @@ Render's `*.onrender.com` one, over Render's HTTPS.
   minute to wake; Neon's free database suspends after 5 minutes and wakes in under a second.
   To stop the sleeping, change the service's instance type to Starter ($7/month) on its
   Settings page, and `plan: free` in `render.yaml` to `plan: starter`. Nothing else changes.
+
+## Releasing
+
+Merging to `main` deploys nothing. A version goes live when the owner publishes a GitHub Release
+`vX.Y.Z` (semantic versioning: major for breaking changes, minor for features, patch for fixes),
+and what goes live is exactly that tag's commit. The decision is in
+[docs/adr/0004-release-by-tag.md](docs/adr/0004-release-by-tag.md).
+
+- **Releasing:** on GitHub, Releases > Draft a new release, create the tag `vX.Y.Z` on the
+  `main` commit to ship, and publish. [release.yml](.github/workflows/release.yml) then checks
+  the tag looks like `vX.Y.Z` and that CI passed on its commit, moves the `production` branch to
+  that commit plus a `version.txt`, and adds the pull requests since the previous tag, with
+  their labels and Deployment notes, to the release. Render deploys `production`; the Actions
+  run's summary names the commit. A `db-migration`, `reference-data`, `config-change` or
+  `container-change` label in the notes means the release takes more than a build.
+- **The version** is built into the image (the Dockerfile reads `version.txt`) and shown in the
+  footer and at `/health`, which answers `{"status":"Healthy","version":"1.0.0"}`. A build that
+  is not a release shows `0.0.0-dev`.
+- **A hotfix:** branch `hotfix/vX.Y.Z` from the live tag (`git switch -c hotfix/v1.0.1 v1.0.0`),
+  fix it, and open the fix as a pull request to `main` as well, so CI runs on it and `main`
+  gets it. Then publish a release `v1.0.1` with its target set to that hotfix branch (the
+  tagged commit must be the one CI passed on). Delete the branch after the tag.
+- **Rolling back:** open the older release's Actions run and re-run it: that moves `production`
+  back to that tag. A database migration is not undone by this; restore from a backup if it
+  must be.
+- **A dry run** is a pre-release: its tag, say `v0.0.0-dryrun.1`, goes through the same workflow
+  but moves `production-dryrun`, which Render does not follow. Delete the release, the tag and
+  that branch afterwards.
+- **Never** edit or merge into `production` by hand, or protect it against force pushes: the
+  workflow rewrites it for every release.
+
+### One-time Render and GitHub setup (owner only)
+
+Done once, in this order. `render.yaml` already says `branch: production` and
+`autoDeployTrigger: commit`, but Render applies it only from the dashboard, and the branch must
+exist before Render follows it.
+
+1. Merge the pull request that introduced this model. Render still follows `main`, so it
+   deploys that merge one last time; the code is the same plus the version.
+2. In the Render dashboard, service > Settings > Build & Deploy, set Auto-Deploy to Off until
+   step 4, so a merge in between does not go live.
+3. Publish the first release (`v1.0.0`, on the `main` commit to ship). The workflow creates the
+   `production` branch. Check the Actions run is green.
+4. In Render, service > Settings > Build & Deploy, set Branch to `production` and Auto-Deploy to
+   On Commit (or sync the Blueprint). Render deploys `v1.0.0`; `/health` should now show `1.0.0`.
+5. In GitHub, add no protection rule for `production`; the workflow asks for `contents: write`
+   itself, so Settings > Actions > General needs no change.
+
+No new secret or deploy hook is involved; Render's and Neon's secrets are untouched.
 
 ## Contributing
 

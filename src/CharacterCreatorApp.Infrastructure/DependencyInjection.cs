@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.Features.Authentication;
+﻿using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterSheetPdf;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Infrastructure.Identity;
@@ -64,20 +64,26 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddIdentity(this IServiceCollection services)
+    public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
         {
-            options.Password.RequiredLength = 6;
+            options.Password.RequiredLength = 8;
             options.Password.RequireUppercase = true;
             options.Password.RequireDigit = true;
             options.Password.RequireNonAlphanumeric = false;
             options.Password.RequireLowercase = false;
 
             options.User.RequireUniqueEmail = true;
+
+            // Defaults; the Identity:Lockout section overrides them (Identity__Lockout__MaxFailedAccessAttempts)
+            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
         })
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
+
+        services.Configure<IdentityOptions>(configuration.GetSection("Identity"));
 
         services.AddScoped<IIdentityService, IdentityService>();
 

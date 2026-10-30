@@ -206,6 +206,145 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_WhenTheDraftIsNotTheirs_ReturnsNotFound()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb", "elvish-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_BeforeARaceIsChosen_ReturnsRaceRequired()
+    {
+        // Arrange
+        var draft = NewDraft();
+        draft.SetBackground("acolyte");
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb", "elvish-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.RaceRequired");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_BeforeABackgroundIsChosen_ReturnsBackgroundRequired()
+    {
+        // Arrange
+        var draft = NewDraft();
+        draft.SetRace("dwarf");
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb", "elvish-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.BackgroundRequired");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheRaceIsGone_ReturnsRaceNotFound()
+    {
+        // Arrange
+        ArrangeDraft(raceId: "dwarf", backgroundId: "acolyte");
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("dwarf", _cts.Token)).ReturnsAsync((Race?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb", "elvish-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Race.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheBackgroundIsGone_ReturnsBackgroundNotFound()
+    {
+        // Arrange
+        ArrangeDraft(raceId: "dwarf", backgroundId: "acolyte");
+        ArrangeRace(RaceWithLanguages("dwarf", "Dwarf", ["Common", "Dwarvish"]));
+        _backgroundRepositoryMock.Setup(r => r.GetByIdAsync("acolyte", _cts.Token)).ReturnsAsync((BackgroundReadModel?)null);
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb", "elvish-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Background.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenNeitherGivesAChoice_SavesNone()
+    {
+        // Arrange
+        var draft = ArrangeDraft(raceId: "dwarf", backgroundId: "soldier");
+        draft.SetLanguages(["celestial-phb"]);
+        ArrangeRace(RaceWithLanguages("dwarf", "Dwarf", ["Common", "Dwarvish"]));
+        ArrangeBackground(new BackgroundReadModel { Id = "soldier", Name = "Soldier", LanguageChoiceCount = 0 });
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["elvish-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.SelectedLanguageIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_WithTooFewLanguages_ReturnsInvalidLanguageCount()
+    {
+        // Arrange
+        var draft = ArrangeHillDwarfAcolyte();
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.InvalidLanguageCount");
+        draft.SelectedLanguageIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithTheSameLanguageTwice_ReturnsDuplicateLanguages()
+    {
+        // Arrange
+        var draft = ArrangeHillDwarfAcolyte();
+
+        // Act
+        var result = await _sut.Handle(new ChooseLanguagesCommand(_draftId, ["celestial-phb", "celestial-phb"]), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.DuplicateLanguages");
+        draft.SelectedLanguageIds.Should().BeEmpty();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    private CharacterDraft NewDraft()
+    {
+        var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
+        draft.ChooseEdition(RulesEdition.Edition2014);
+
+        return draft;
+    }
     private CharacterDraft ArrangeHillDwarfAcolyte()
     {
         var draft = ArrangeDraft(raceId: "dwarf", backgroundId: "acolyte");

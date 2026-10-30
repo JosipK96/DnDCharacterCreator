@@ -84,6 +84,105 @@ public class SetCharacterSubraceCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task Handle_WithNoSubrace_ClearsItWithoutLookingUpTheRace()
+    {
+        // Arrange
+        _draft.SetSubrace("high_elf");
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubraceCommand(_draftId, null), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        _draft.SubraceId.Should().BeNull();
+        _raceRepositoryMock.Verify(r => r.GetByIdWithDetailsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheDraftIsNotTheirs_ReturnsNotFound()
+    {
+        // Arrange
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync((CharacterDraft?)null);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubraceCommand(_draftId, "high_elf"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_BeforeARaceIsChosen_ReturnsRaceRequired()
+    {
+        // Arrange
+        var draft = CharacterDraft.CreateEmpty(_userId, new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
+        _draftRepositoryMock.Setup(r => r.GetByIdForUpdateAsync(_draftId, _userId, _cts.Token)).ReturnsAsync(draft);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubraceCommand(_draftId, "high_elf"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.RaceRequired");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheRaceIsGone_ReturnsRaceNotFound()
+    {
+        // Arrange
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("elf", _cts.Token)).ReturnsAsync((Race?)null);
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubraceCommand(_draftId, "high_elf"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Race.NotFound");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_ForARaceWithNoSubraces_ReturnsNoSubracesAvailable()
+    {
+        // Arrange
+        _raceRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("elf", _cts.Token)).ReturnsAsync(new Race
+        {
+            Id = "elf",
+            Name = "Elf",
+            Edition = RulesEdition.Edition2014,
+            Source = "PHB",
+            Size = "Medium",
+            Subraces = [],
+        });
+
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubraceCommand(_draftId, "high_elf"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.NoSubracesAvailable");
+        _draft.SubraceId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task Handle_WithASubraceTheRaceDoesNotHave_ReturnsInvalidSubraceListingTheRealOnes()
+    {
+        // Act
+        var result = await _sut.Handle(new SetCharacterSubraceCommand(_draftId, "hill_dwarf"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.InvalidSubrace");
+        result.Errors[0].Description.Should().EndWith("Available subraces: High Elf, Sea Elf");
+        _draft.SubraceId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
     public void Dispose()
     {
         _cts.Dispose();

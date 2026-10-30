@@ -7,7 +7,7 @@
     Reads every <test project>.cobertura.xml in -Path (the name the test steps in
     .github/workflows/ci.yml give them), prints the numbers for each assembly in it, and to the
     GitHub job summary when there is one. A floor applies only to the report of that assembly's own
-    unit test project, so the check needs no Docker; Application's rises when #81 lands.
+    unit test project, so the check needs no Docker.
 #>
 [CmdletBinding()]
 param(
@@ -20,7 +20,7 @@ $ErrorActionPreference = 'Stop'
 # Line coverage, in percent, of the assembly measured by its own unit test project.
 $floors = @(
     @{ Report = 'CharacterCreatorApp.Domain.UnitTests'; Assembly = 'CharacterCreatorApp.Domain'; MinLine = 90 }
-    @{ Report = 'CharacterCreatorApp.Application.UnitTests'; Assembly = 'CharacterCreatorApp.Application'; MinLine = 70 }
+    @{ Report = 'CharacterCreatorApp.Application.UnitTests'; Assembly = 'CharacterCreatorApp.Application'; MinLine = 80 }
 )
 
 function Get-AssemblyCoverage($package) {

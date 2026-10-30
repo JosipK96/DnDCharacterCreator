@@ -132,8 +132,8 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   `SeedDataIntegrityTests` checks both ways: the ids exist, and no trait, feature or feat of
   those names in the data belongs to a row the list leaves out, so a new book's bonus fails the
   build until the list names it.
-  `CharacterStatsInput` has no defaults, so the preview and the sheet cannot build it
-  differently.
+  `CharacterStatsInput` has no defaults and `CharacterStatsInput.For` is the one place it is
+  assembled, so the preview and the sheet cannot build it differently.
 
 ## Feats and the picks they bring
 

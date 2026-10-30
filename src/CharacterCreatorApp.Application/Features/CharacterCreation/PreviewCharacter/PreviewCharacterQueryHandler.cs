@@ -27,12 +27,11 @@ public class PreviewCharacterQueryHandler(
     TimeProvider timeProvider) : IQueryHandler<PreviewCharacterQuery, Response<CharacterPreviewReadModel>>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IProficiencyRepository _proficiencyRepository = proficiencyRepository;
-    private readonly IFeatureRepository _featureRepository = featureRepository;
-    private readonly ISpellRepository _spellRepository = spellRepository;
-    private readonly ILanguageRepository _languageRepository = languageRepository;
     private readonly IUserContext _userContext = userContext;
     private readonly TimeProvider _timeProvider = timeProvider;
+
+    private readonly CharacterSheetContentLoader _contentLoader = new(
+        proficiencyRepository, featureRepository, spellRepository, languageRepository, featRepository);
 
     private readonly DraftSourceLoader _sourceLoader = new(
         raceRepository, classRepository, backgroundRepository, languageRepository, featRepository, spellRepository);
@@ -62,24 +61,26 @@ public class PreviewCharacterQueryHandler(
 
         var character = CharacterBuilder.Build(_userContext.UserId, draft, sources, _timeProvider);
 
-        var stats = CharacterStatsCalculator.Calculate(new CharacterStatsInput(
-            Level: character.Level,
-            AbilityScores: character.AbilityScores,
-            ProficiencyIds: character.ProficiencyIds,
-            HitDie: sources.Class.HitDie,
-            HitDieResults: character.HitDieResults,
-            SavingThrowAbilityIds: sources.Class.SavingThrowAbilityIds.Concat(character.FeatSavingThrowAbilityIds).Distinct().ToList(),
-            Speed: sources.Race.SpeedWith(sources.Subrace),
-            RaceId: character.RaceId,
-            SubraceId: character.SubraceId,
-            SubclassId: character.SubclassId,
-            FeatIds: character.FeatIds,
-            UnarmoredArmorClasses: sources.Class.UnarmoredArmorClassesWith(sources.Subclass),
-            SpellSlots: sources.Class.SpellSlotsAt(character.Level, sources.Subclass)));
+        var stats = CharacterStatsCalculator.Calculate(CharacterStatsInput.For(
+            character.Level,
+            character.AbilityScores,
+            character.ProficiencyIds,
+            character.HitDieResults,
+            character.FeatIds,
+            character.FeatSavingThrowAbilityIds,
+            sources.Race,
+            sources.Subrace,
+            sources.Class,
+            sources.Subclass));
 
-        var spells = character.SpellIds.Count > 0
-            ? await _spellRepository.GetByIdsAsync(character.SpellIds, cancellationToken)
-            : [];
+        var content = await _contentLoader.LoadAsync(
+            character.ProficiencyIds,
+            CharacterFeatures.IdsFor(sources.Class, sources.Subclass, sources.Background, character.Level),
+            character.SpellIds,
+            character.LanguageIds,
+            character.FeatIds,
+            character.FeatSpells,
+            cancellationToken);
 
         var preview = new CharacterPreviewReadModel
         {
@@ -93,12 +94,11 @@ public class PreviewCharacterQueryHandler(
             BackgroundName = sources.Background.Name,
             Size = character.Size ?? sources.Race.Size,
             Stats = stats,
-            Feats = CharacterFeatEntries.Build(character.FeatIds, character.FeatSpells, sources.Feats, spells),
-            Proficiencies = await _proficiencyRepository.GetByIdsAsync(character.ProficiencyIds, cancellationToken),
-            Features = await _featureRepository.GetByIdsAsync(
-                CharacterFeatures.IdsFor(sources.Class, sources.Subclass, sources.Background, character.Level), cancellationToken),
-            Spells = spells,
-            Languages = await _languageRepository.GetByIdsAsync(character.LanguageIds, cancellationToken)
+            Feats = content.Feats,
+            Proficiencies = content.Proficiencies,
+            Features = content.Features,
+            Spells = content.Spells,
+            Languages = content.Languages
         };
 
         // Surfaced rather than returned as an error: the player should see the sheet so far

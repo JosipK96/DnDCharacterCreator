@@ -15,8 +15,9 @@ section for the area you are changing. Ability keys, language ids and proficienc
   state.
 - Derived sheet numbers (hit points, armour class, saves, skills, spell slots) come from
   `Domain/Services/CharacterStatsCalculator`. Don't recompute a modifier in a Razor page.
-  `CharacterStatsInput` has no defaults, so the preview and the sheet cannot build it
-  differently. A character's features aren't stored either: `CharacterFeatures` works them out
+  `CharacterStatsInput` has no defaults and `CharacterStatsInput.For` is the one place it is
+  assembled, so the preview and the sheet cannot build it differently. A character's features
+  aren't stored either: `CharacterFeatures` works them out
   from class, subclass, level and background, so regenerated seed data never leaves a sheet
   with dead ids.
 - A completed draft stays as its character's build and is never changed; an edit or a level-up

@@ -10,7 +10,7 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | **Finalize** | Turning a completed draft into a character, or an edit draft into the character it edits. The draft is kept, completed | `FinalizeCharacterCommandHandler` |
 | **Build** | The completed draft a character was made or last edited from: every choice it holds now, which the character itself keeps only merged. Never changed; it goes with the character | `CharacterDraft.CharacterId`, `ICharacterDraftRepository.GetBuildAsync` |
 | **Edit** | A draft copied from a character's build (or, for an older character without one, from what it stores, its other steps marked as needing a pick). Finalizing it replaces the character in place; never the draft resumed for a new character | `CharacterDraft.StartEdit`, `CharacterDraft.ChoicesNeeded`, `DraftChoice`, `Character.ReplaceWith` |
-| **Level-up** | An edit one level up that keeps every pick and asks only what the new level brings: its hit points, and a subclass, an improvement or spells where the class and subclass data give one. The class stays the same (another would be multiclassing) | `CharacterDraft.LevelUp`, `CharacterDraft.LevelUpChoices`, `Class.ChoicesGainedAt` |
+| **Level-up** | An edit one level up that keeps every pick and asks only what the new level brings: its hit points, and a subclass, an improvement, spells or a Fighting Style where the class and subclass data give one. The class stays the same (another would be multiclassing) | `CharacterDraft.LevelUp`, `CharacterDraft.LevelUpChoices`, `Class.ChoicesGainedAt` |
 | **Preview** | The character a draft *would* produce, worked out without saving | `PreviewCharacterQueryHandler` |
 
 ## The rulebook
@@ -30,13 +30,13 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 
 | Term | Meaning | In the code |
 |---|---|---|
-| **Ability score** | One of the six: Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma. 1–20 in practice | `AbilityScore`, keys `STR`…`CHA` |
+| **Ability score** | One of the six: Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma. 1–20 in practice; an Epic Boon raises one to 30 | `AbilityScore`, keys `STR`…`CHA` |
 | **Modifier** | `(score - 10) / 2`, rounded **down**, including below 10 | `CharacterStatsCalculator.GetAbilityModifier` |
 | **Proficiency bonus** | +2 at levels 1–4, rising every four levels to +6 | `CharacterStatsCalculator.GetProficiencyBonus` |
 | **Hit die** | The die a class rolls for hit points per level — `1d10` for a fighter | `Class.HitDie`, `Class.HitDieSize` |
 | **Hit points** | Max die at level 1, then for each later level the die's result a level-up kept for it (rolled, or the fixed value taken), or the fixed value (the die's average rounded up) where none is kept, plus the CON modifier each level | `CharacterStatsCalculator`, `CharacterDraft.HitDieResults`, `Character.HitDieResults` |
 | **AC** | Armour class. Unarmoured it is `10 + DEX`, or a class's or subclass's own when higher: a barbarian's 10 + DEX + CON, a monk's 10 + DEX + WIS, a draconic sorcerer's 13 + DEX (2014) or 10 + DEX + CHA (2024). Armour is not modelled | `CharacterStats.ArmorClass`, `Class.UnarmoredArmorClass`, `Subclass.UnarmoredArmorClass` |
-| **Saving throw** | A roll to resist something. A class is proficient in exactly two | `Class.SavingThrowAbilityIds` |
+| **Saving throw** | A roll to resist something. A class is proficient in exactly two, and the Resilient feat adds one | `Class.SavingThrowAbilityIds`, `Character.FeatSavingThrowAbilityIds` |
 | **Passive Perception** | `10 + the Perception skill modifier` | `CharacterStats.PassivePerception` |
 
 ## Choices
@@ -47,11 +47,19 @@ D&D 5th Edition terms as this codebase uses them, and where each one lives.
 | **Skill** | One of the eighteen: Athletics, Stealth, Perception… Each checked against a fixed ability | `Skill` |
 | **ASI** | Ability Score Improvement. Earned at class-specific levels; **either** +2 ability points **or** a feat | `Class.AsiLevels`, `CharacterDraft.AbilityScoreImprovements` |
 | **Feat** | A special ability taken in place of an ASI, given by a background (a 2024 origin feat, or a Dark Gift a few RHW backgrounds let the player pick, some in place of their own), or picked for a race (a variant human's, a 2024 human's Origin feat). May have prerequisites, and may raise an ability | `Feat`, `CharacterDraft.SelectedFeatIds`, `Background.FeatId`, `Background.FeatIdWith`, `CharacterDraft.BackgroundFeatId`, `Race.BonusFeatsWith` |
+| **Fighting Style** | A feat of the Fighting Style category that a class gives at a level (a fighter's at 1, a paladin's at 2), picked in the improvements step and kept apart from the ASI feats. The class and subclass data say how many are owed | `CharacterDraft.FightingStyleIds`, `CharacterFeatures.FightingStylesOwed` |
 | **Ability increase** | +1 or +2 to an ability from a race, a 2024 background, a feat or an ASI. Some are fixed (a dwarf's CON +2), some the player places (a half-elf's two +1s) | `AbilityIncreaseChoice`, `FeatAbilityIncrease` |
 | **Cantrip** | A spell of level 0, castable at will | Spell `Level == 0` |
 | **Prepared spells** | The levelled spells a prepared caster can cast that day. A 2024 class's table gives the number; a 2014 cleric, druid, paladin or artificer prepares its spellcasting modifier plus its level (half of it for a paladin or artificer), at least one. Domain and oath spells come on top | `Class.SpellAllowanceAt`, `Spellcasting.PreparedSpellsLevelDivisor`, `Subclass.AlwaysPreparedSpellIdsAt` |
 | **Spell slot** | What casting a levelled spell spends, so many of each spell level, back on a long rest. From the class's spell table, or the subclass's for a third caster (Eldritch Knight, Arcane Trickster). The sheet shows them; using them is not tracked | `ClassSpellProgression.SpellSlots`, `SubclassSpellProgression.SpellSlots`, `Class.SpellSlotsAt`, `CharacterStats.SpellSlots` |
 | **Pact Magic** | A warlock's slots: fewer, all of one spell level (the table's highest), back on a short rest. Shown apart from spell slots | `ClassSpellProgression.PactMagicSlots`, `PactMagicSlots`, `CharacterStats.PactMagic` |
+
+## Hosting
+
+| Term | Meaning | In the code |
+|---|---|---|
+| **Invite code** | The one code, set in the host's settings and given to the group by hand, that registering asks for. Unset, anyone may register. Wrong codes count toward the rate limit | `RegistrationSettings`, `InviteCodeGate` |
+| **Sheet PDF** | A saved character's computed sheet as a PDF, on A4 or Letter | `ICharacterSheetPdfRenderer`, `GetCharacterSheetPdfQuery` |
 
 ## Terms that mean something specific here
 

@@ -26,13 +26,22 @@ the 2014 or the 2024 rules, and keeping them on a character sheet.
   choices that depended on it. The review step and saving use the same checks, so the preview
   never promises a character that saving would refuse.
 - **A computed sheet.** Hit points, armour class, saving throws, skills, features, spells and
-  spell slots (a warlock's Pact Magic apart) are worked out from the choices, not stored, so they stay right when the rules data changes.
+  spell slots (a warlock's Pact Magic apart) are worked out from the choices, not stored, so they
+  stay right when the rules data changes.
+- **A character sheet PDF.** The sheet's "Download PDF" button gives the computed sheet as a PDF,
+  on A4 or Letter.
+- **Sign-up with an invite code.** Registering asks for a code the host gives the group, so the
+  address alone is not enough to make an account. Sign-in and registration are rate limited, and
+  an account is locked after repeated wrong passwords.
+- **Nightly backups.** A workflow keeps an encrypted dump of the database for 30 days (see
+  Hosting).
 
 ## Built with
 
 .NET 10: an ASP.NET Core API and a Blazor WebAssembly client served by it, over PostgreSQL with
 EF Core. The code follows clean architecture with CQRS over MediatR, FluentValidation, and
-ASP.NET Core Identity with JWT. Tests use xUnit v3, Moq, FluentAssertions and Testcontainers.
+ASP.NET Core Identity with JWT. The sheet PDF is drawn with QuestPDF. Tests use xUnit v3, Moq, FluentAssertions, bUnit,
+Playwright and Testcontainers.
 
 The game data (classes, subclasses, races, backgrounds, feats, spells and languages for both
 editions) is generated from [5etools](https://github.com/5etools-mirror-3/5etools-src) data by a
@@ -51,6 +60,9 @@ src/
 tests/                                 unit and integration test projects: one per layer, two for the client
 tools/CharacterCreatorApp.SeedDataGenerator   turns 5etools data into the reference data JSON
 docs/conventions/                      coding, error, data and testing conventions
+docs/adr/                              decisions that are not obvious from the code
+docs/operations/                       running the live site: backup and restore
+docs/agents/                           how issues, branches and pull requests are handled
 configurations/Env_files/              non-secret container settings
 ```
 
@@ -144,18 +156,19 @@ and shows its alerts under the repository's Security tab.
 The wizard has two test projects of its own:
 
 - `tests/CharacterCreatorApp.Client.UnitTests`: bUnit tests of the steps with rules of their own
-  (point buy, the dice roll, improvements and Fighting Styles, spell counts, the books). They
-  render the components in memory over a fake API, so they need neither Docker nor a browser.
+  (point buy, the dice roll, improvements and Fighting Styles, spell counts, the books), steps
+  filled in from the draft, the marks of an edit, a level-up's flow and hit points, and the
+  sheet's Download PDF. They render the components in memory over a fake API, so they need
+  neither Docker nor a browser.
 
   ```bash
   dotnet test --project tests/CharacterCreatorApp.Client.UnitTests
   ```
 
 - `tests/CharacterCreatorApp.Client.IntegrationTests`: a Playwright smoke test that registers
-  with an invite code, builds a 2014 and a 2024 character, edits one and levels one up twice
-  through the real wizard, in a
-  headless Chromium, against the Api on a local port and a Testcontainers PostgreSQL. It needs
-  Docker. The first run downloads Chromium (about 150 MB, into the user's Playwright cache);
+  with an invite code, builds a 2014 and a 2024 character, edits one, levels one up twice,
+  downloads a sheet PDF and sees a refused pick, all through the real wizard in a headless
+  Chromium, against the Api on a local port and a Testcontainers PostgreSQL. It needs Docker. The first run downloads Chromium (about 150 MB, into the user's Playwright cache);
   to do that up front, build the project and run its install script (with Windows PowerShell
   instead of PowerShell 7, `powershell -ExecutionPolicy Bypass -File` in place of `pwsh`):
 
@@ -231,7 +244,8 @@ Render's `*.onrender.com` one, over Render's HTTPS.
   fixtures use `postgres:18-alpine` so CI and local runs see what production sees; when Neon
   upgrades, move them (and the `postgres:18` in the backup workflow) in the same change.
 - **Backups:** Neon's free plan keeps only 6 hours of history, so a nightly workflow keeps an
-  encrypted `pg_dump` for 30 days. Its secrets, and how to restore a dump, are in
+  encrypted `pg_dump` for 30 days, and a watch workflow fails when no backup is newer than 48
+  hours or the schedule was switched off. Its secrets, and how to restore a dump, are in
   [docs/operations/backup-and-restore.md](docs/operations/backup-and-restore.md).
 - **Sleeping:** the free service sleeps after 15 minutes without traffic and takes about a
   minute to wake; Neon's free database suspends after 5 minutes and wakes in under a second.

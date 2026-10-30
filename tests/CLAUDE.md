@@ -6,8 +6,7 @@ Long form: `docs/conventions/git-and-testing.md`.
   the private `unit-test-common` skill; the short version is strict mocks, one `_cts` token
   threaded through setups and verifies, pinned arguments, exact assertions, and a row per class
   for any rule that differs by class.
-- Tests are `Method_Scenario_Expectation`, Arrange/Act/Assert, xUnit v3 + FluentAssertions +
-  Moq. Fake the clock with `FakeTimeProvider`, never `DateTime.Now`.
+- Tests are `Method_Scenario_Expectation`, Arrange/Act/Assert. Fake the clock with `FakeTimeProvider`, never `DateTime.Now`.
 - A test fixture that cannot produce a draft the validation would accept is telling you the
   fixture is unrealistic, not that the validation is wrong.
 - The `*.IntegrationTests` projects start PostgreSQL through Testcontainers, so Docker must be
@@ -25,14 +24,17 @@ migration tests live in an integration project but don't.
 
 | Area | Test classes | Project | Docker |
 |---|---|---|---|
-| Domain rules: drafts, their edits and level-ups, ability scores and increases, feats, races, classes and what a level brings, tools | `CharacterDraftTests`, `CharacterDraftEditTests`, `CharacterDraftBooksTests`, `CharacterDraftFeatAndRaceChoicesTests`, `AbilityScoreTests`, `AbilityScoreMethodTests`, `AbilityIncreaseChoiceTests`, `FeatAbilityIncreaseTests`, `FeatChoiceTests`, `FeatPrerequisitesTests`, `RaceTests`, `ClassTests`, `BackgroundTests`, `ToolPicksTests` | Domain.UnitTests | no |
+| Domain rules: drafts, their edits and level-ups, ability scores and increases, feats, races, classes and what a level brings, tools | `CharacterDraftTests`, `CharacterDraftEditTests`, `CharacterDraftBooksTests`, `CharacterDraftFeatAndRaceChoicesTests`, `AbilityScoreTests`, `AbilityScoreMethodTests`, `AbilityIncreaseChoiceTests`, `FeatAbilityIncreaseTests`, `FeatCategoryTests`, `FeatChoiceTests`, `FeatPrerequisitesTests`, `RaceTests`, `ClassTests`, `BackgroundTests`, `ToolPicksTests` | Domain.UnitTests | no |
 | Sheet numbers and features | `CharacterStatsCalculatorTests`, `CharacterStatsInputTests`, `CharacterFeaturesTests`, `CharacterTests` | Domain.UnitTests | no |
 | Layering rules from the root CLAUDE.md: Domain has no package, Application no ASP.NET Core or Contracts, the DbContext only in Infrastructure, no repository returns an `IQueryable` | `LayeringTests` (NetArchTest and reflection over the built assemblies; the Api entry point may name the context to migrate at startup) | Architecture.UnitTests | no |
 | Backticked names in every CLAUDE.md still declared in the code | `ClaudeMdReferencesTests` (allowlist inside, each with a reason) | Domain.UnitTests | no |
 | Wizard steps (one handler each), hit points among them | `Set*CommandHandlerTests` (`SetCharacterNameAndLevelCommandHandlerTests` among them), `Choose*CommandHandlerTests`, `BonusSpellsHandlersTests`, `ToolChoicesHandlersTests`, `GetFightingStylesQueryHandlerTests`, `GetSpellAllowanceQueryHandlerTests` | Application.UnitTests | no |
 | Finalize (an edit and a level-up too), preview, the saved sheet, and opening a character for editing or a level-up | `FinalizeCharacterCommandHandlerTests`, `StartCharacterEditCommandHandlerTests`, `StartCharacterLevelUpCommandHandlerTests`, `FinalizeFeatAndRaceChoicesTests`, `PreviewCharacterQueryHandlerTests`, `BonusSpellsTests`, `CharacterFeatEntriesTests`, `CharacterSheetContentLoaderTests`, `CharacterDetailsLoaderTests`, `GetCharacterDetailsQueryHandlerTests`, `GetCharacterSheetPdfQueryHandlerTests` | Application.UnitTests | no |
 | Deleting a draft or a character | `DeleteCharacterDraftCommandHandlerTests`, `DeleteCharacterCommandHandlerTests` | Application.UnitTests | no |
-| Validators and pipeline | `*ValidatorTests`, `ValidationBehaviourTests` | Application.UnitTests | no |
+| Validators and pipeline | `*ValidatorTests`, `ValidationBehaviourTests`, `LoggingBehaviourTests` | Application.UnitTests | no |
+| Authentication: signing in and registering | `LoginUserCommandHandlerTests`, `RegisterUserCommandHandlerTests` | Application.UnitTests | no |
+| Lookups and read models | `GetRacesQueryHandlerTests`, `SpellReadModelTests`, `PageOptionsTests` | Application.UnitTests | no |
+| Shared plumbing: the response type and the entity base | `ResponseTests`, `EntityTests` | Domain.UnitTests | no |
 | Seed JSON content (ids, SRD text, rows per class and race) | `SeedDataIntegrityTests`, `ClassSeedDataTests`, `RaceSeedDataTests`, `BackgroundSeedDataTests`, `FeatSeedDataTests`, `SpellSeedDataTests` | Infrastructure.IntegrationTests | no |
 | The character sheet PDF: page 1 on A4 and Letter, entries kept whole, slots | `CharacterSheetPdfRendererTests` (reads the PDF back with PdfPig) | Infrastructure.IntegrationTests | no |
 | Migrations (model snapshot in sync) | `MigrationsTests` | Infrastructure.IntegrationTests | no |

@@ -30,6 +30,26 @@ public partial class ClaudeMdReferencesTests
         ["EnforceCodeStyleInBuild"] = "MSBuild property",
         ["PackageReference"] = "MSBuild item",
         ["Async"] = "the method-name suffix convention, not a name",
+        ["DockerUnavailableException"] = "Testcontainers type",
+        ["GeneratedCode"] = "BCL attribute",
+        ["ExcludeFromCodeCoverage"] = "BCL attribute",
+        ["Common"] = "a language name in the seed data, not code",
+        ["Testing"] = "ASP.NET Core environment name",
+        ["ILogger"] = "Microsoft.Extensions.Logging type",
+        ["Guid"] = "BCL type",
+        ["Justification"] = "SuppressMessage property",
+        ["ValueComparer"] = "EF Core type",
+        ["StringComparison"] = "BCL type",
+        ["EnableSensitiveDataLogging"] = "EF Core method",
+        ["Information"] = "Microsoft.Extensions.Logging LogLevel value",
+        ["System.Text.Json"] = "BCL namespace",
+        ["Restrict"] = "EF Core DeleteBehavior value",
+        ["CopyToOutputDirectory"] = "MSBuild item metadata",
+        ["AppContext.BaseDirectory"] = "BCL member",
+        ["Dto"] = "an acronym the coding standards spell out",
+        ["Xml"] = "an acronym the coding standards spell out",
+        ["Url"] = "an acronym the coding standards spell out",
+        ["Phb"] = "an acronym the coding standards spell out",
     };
 
     [Fact]
@@ -37,19 +57,29 @@ public partial class ClaudeMdReferencesTests
     {
         // Arrange
         var root = FindRepositoryRoot();
-        var declared = DeclaredNames(root);
 
         // Act
-        var stale = EnumerateRepositoryFiles(root, "CLAUDE.md")
-            .SelectMany(file => CodeReferences(File.ReadAllText(file))
-                .Where(reference => !Allowlist.ContainsKey(reference))
-                .Where(reference => !reference.Split('.').All(declared.Contains))
-                .Select(reference => $"{Path.GetRelativePath(root, file)}: `{reference}`"))
-            .Distinct()
-            .ToList();
+        var stale = StaleReferences(root, EnumerateRepositoryFiles(root, "CLAUDE.md"));
 
         // Assert
         stale.Should().BeEmpty("every name a CLAUDE.md puts in backticks should be declared in the code, or be in the allowlist with a reason");
+    }
+
+    // The README and docs/ drifted the same way before this was checked: a jsonb column list kept naming
+    // FeatureIds long after the property was gone.
+    [Fact]
+    public void ReadmeAndDocs_NameOnlyDeclaredCode()
+    {
+        // Arrange
+        var root = FindRepositoryRoot();
+        var documents = EnumerateRepositoryFiles(root, "*.md")
+            .Where(file => Path.GetRelativePath(root, file).Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) is ["README.md"] or ["docs", ..]);
+
+        // Act
+        var stale = StaleReferences(root, documents);
+
+        // Assert
+        stale.Should().BeEmpty("every name the README or a doc puts in backticks should be declared in the code, or be in the allowlist with a reason");
     }
 
     [Fact]
@@ -100,6 +130,23 @@ public partial class ClaudeMdReferencesTests
 
         // Assert
         references.Should().BeEmpty();
+    }
+
+    private static List<string> StaleReferences(string root, IEnumerable<string> files)
+    {
+        var declared = DeclaredNames(root);
+
+        // A project is named by its file, not declared in code.
+        var projects = EnumerateRepositoryFiles(root, "*.csproj")
+            .Select(Path.GetFileNameWithoutExtension)
+            .ToHashSet(StringComparer.Ordinal);
+        return files
+            .SelectMany(file => CodeReferences(File.ReadAllText(file))
+                .Where(reference => !Allowlist.ContainsKey(reference) && !projects.Contains(reference))
+                .Where(reference => !reference.Split('.').All(declared.Contains))
+                .Select(reference => $"{Path.GetRelativePath(root, file)}: `{reference}`"))
+            .Distinct()
+            .ToList();
     }
 
     private static List<string> CodeReferences(string markdown)

@@ -48,9 +48,14 @@ builder.Property(c => c.AbilityScores)
 
 There are two overloads in `ModelBuilderExtensions`, and both set a
 `ValueComparer`, so every such column is change-tracked by content: the
-`Dictionary<string, int>` one compares entries, and the generic one, used for the
-`List<string>` columns (`ProficiencyIds`, `LanguageIds`, `FeatureIds`, `SpellIds`,
-`FeatIds`) and for `CharacterDraft.AbilityScoreImprovements`, compares the JSON.
+`Dictionary<string, int>` one compares entries, and the generic one compares the JSON.
+It serves `Character`'s lists (`ProficiencyIds`, `LanguageIds`, `SpellIds`, `FeatIds`,
+`FeatSavingThrowAbilityIds`), its `FeatSpells` and `HitDieResults`, and the draft's
+choices (`AbilityScoreImprovements`, `RaceAbilityIncreases`, `BackgroundAbilityIncreases`,
+`FeatAbilityIncreases`, `FeatProficiencyPicks`, `FeatSpells`, `ToolPicks`,
+`HitDieResults`); the full list is in `CharacterConfiguration` and
+`CharacterDraftConfiguration`. A character's features are not stored: `CharacterFeatures`
+works them out.
 The generic one used to have none; EF then compared the list reference, so an
 `Add` to a loaded list was never saved, and it warned about each column at
 startup.
@@ -162,9 +167,9 @@ Spells load from their subfolder — `Spells/Spells.json` and its companion file
 and everything else from a file at the root of `Data/`. `Races.json` holds each
 race with its subraces, traits, bonuses and spells inside it, in place of the nine
 hand-made files that were in `Races/`. Every file there is read by a seeder but
-two, which only `SeedDataIntegrityTests` reads: `SrdIds.json`, and `Books.json`,
+two: `SrdIds.json`, which only `SeedDataIntegrityTests` reads, and `Books.json`,
 the books every row's `Source` names with their edition and which is each
-edition's Player's Handbook, until the book filter uses it.
+edition's Player's Handbook, which `BookRepository` reads for the book filter.
 
 Every file but `Proficiencies.json` (`Classes.json`, `Subclasses.json`,
 `ClassFeatures.json`, `Races.json`, `Backgrounds.json`, `BackgroundFeatures.json`,

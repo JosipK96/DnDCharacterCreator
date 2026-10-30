@@ -50,7 +50,8 @@ repositories.
 ### What the client receives
 
 Controllers never branch on `IsSuccess` themselves; they return `OkOrProblem(response)`,
-`OkOrProblem(response, map)` or `NoContentOrProblem(response)` from `ApiController`. Every
+`OkOrProblem(response, map)`, `FileOrProblem(response, toFile)` or `NoContentOrProblem(response)`
+from `ApiController`. Every
 failure, including a 500 from `GlobalExceptionHandler`, has the same body:
 
 ```json
@@ -72,8 +73,8 @@ failure, including a 500 from `GlobalExceptionHandler`, has the same body:
 - Every error keeps its own `code`. `propertyName` is set only when a validator rule named a
   field.
 - A request MVC could not bind at all (malformed JSON) never reaches a handler; its entries
-  have the code `Request.Invalid`.
-- A 500 has the code `Server.Unexpected`. Its `detail` is the exception message only in
+  have the code "Request.Invalid" (`InvalidRequestCode`).
+- A 500 has the code "Server.Unexpected" (`UnexpectedErrorCode`). Its `detail` is the exception message only in
   Development, because messages can name tables and ids.
 
 A client should show `detail` and branch on `code`. It should never parse the message.

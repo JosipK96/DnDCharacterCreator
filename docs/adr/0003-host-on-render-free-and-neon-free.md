@@ -6,4 +6,4 @@ The app serves the owner and at most eight friends. Paid hosts with the app and 
 
 - The Render service sleeps after 15 minutes idle and takes about a minute to wake; the fix, if it annoys, is Render Starter ($7/month), with nothing else changing.
 - Neon keeps only 6 hours of history, so our own nightly `pg_dump` is the backup (#41). The repository is public and the dump holds emails and password hashes, so it is encrypted before upload or kept in the private archive.
-- Registration is open to anyone with the link, so sign-ups are limited by a single invite code in the host's settings (#40), not per-user or expiring codes. The link isn't shared until #40, #42 and #41 are done.
+- Registration is open to anyone with the link, so sign-ups are limited by a single invite code in the host's settings (#40), not per-user or expiring codes. The invite code (#40), the deploy (#42) and the backups (#41) are done, so the link can be shared.

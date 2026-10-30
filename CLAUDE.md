@@ -41,8 +41,8 @@ The rules nearly every task needs:
   layers, such as a seed data, migration or shared-type change. Build with `-v q -nologo` so
   only warnings and errors come back.
 - `TreatWarningsAsErrors` is on, with StyleCop, AsyncFixer and `EnforceCodeStyleInBuild`. A
-  change is not done until it builds clean. Don't suppress to get green: `analyzers/
-  GlobalSuppressions.cs` holds formatting-only rules and a few named domain-vocabulary
+  change is not done until it builds clean. Don't suppress to get green:
+  `analyzers/GlobalSuppressions.cs` holds formatting-only rules and a few named domain-vocabulary
   collisions, and anything you add there needs a justification that is not "the build failed".
 - Package versions go in `Directory.Packages.props` only; shared build settings in
   `Directory.Build.props` (and `tests/Directory.Build.props`, which inherits and relaxes it).
@@ -120,11 +120,19 @@ audit, so a session that skips them leaves the next audit something to find.
 
 ## Skills and domain docs
 
-`/unit-test-cases`, `/unit-test-write`, `/unit-test-review`, `/pr-review`, `/user-story`,
-`/release-labels`. They are private and not part of this repository: `.claude/` is ignored, and
-`.claude/skills` is a clone of a separate private repository. Without it, the conventions in
-`docs/conventions` still apply. Single-context: the glossary is `docs/conventions/glossary.md`
-(and `CONTEXT.md` once one exists), decisions in `docs/adr/`. See `docs/agents/domain.md`.
+The private skills live in `.claude/skills`, an ignored clone of a separate private repository,
+and Claude Code lists them every session; without them the conventions in `docs/conventions`
+still apply. Domain vocabulary is in `docs/conventions/glossary.md`, decisions in `docs/adr/`.
+
+## Reading code
+
+- For a large C# file, get its outline with the LSP tool's `documentSymbol`, then read only the
+  lines needed: `CharacterDraft.cs` is about 5 KB as an outline against 36 KB whole. The same
+  goes for the big test files (`CharacterDraftsControllerTests.cs` is 117 KB,
+  `FinalizeCharacterCommandHandlerTests.cs` 91 KB).
+- For "who uses X", use `findReferences`, not Grep plus reads.
+- In a long doc, Grep its `^## ` headings and read only that section.
+- The LSP does not read `.razor`: Grep, then read with an offset.
 
 ## Don't
 

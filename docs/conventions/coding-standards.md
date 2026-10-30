@@ -68,7 +68,7 @@ visible locally:
 interpolation — the template *is* the structured event.
 
 ```csharp
-logger.LogInformation("Races: {Races}, Subraces: {Subraces}", races.Count, subraces.Count);   // good, from RaceSeeder
+logger.LogInformation("Races: {Races}, Subraces: {Subraces}", races.Count, subraces.Count);   // good
 logger.LogInformation($"Races: {races.Count}, Subraces: {subraces.Count}");                   // bad
 ```
 
@@ -91,8 +91,8 @@ Nullable reference types are on everywhere. A `!` is a claim you are making —
 if the compiler cannot see why a value is non-null, say why in a comment:
 
 ```csharp
-// IsReadyToFinalize above has already rejected a draft with no level
-var abilityScoreError = ValidateBaseAbilityScores(draft.Level!.Value, draft.BaseAbilityScores);
+// The draft is complete here: DraftCompletenessChecker has already rejected one with no level
+var level = draft.Level!.Value;
 ```
 
 Prefer a type that cannot be null over a `!` at every use. `IUserContext.UserId`

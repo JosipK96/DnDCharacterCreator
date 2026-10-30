@@ -25,8 +25,8 @@ before changing what a seed file holds.
 ## Seed data
 
 - Don't hand-edit a seed file the generator writes: every one but `Proficiencies.json`, which it
-  reads to name what the others grant. The next run overwrites it. Change `tools/
-  CharacterCreatorApp.SeedDataGenerator` and run it again.
+  reads to name what the others grant. The next run overwrites it. Change
+  `tools/CharacterCreatorApp.SeedDataGenerator` and run it again.
 - Reference data is seeded from JSON in `Infrastructure/Data` on startup. When the files' hash
   differs from `ReferenceDataVersions`, `SeedService` deletes every reference row and reads the
   files again in one transaction. Users stay; a draft loses only the choices the new data drops
@@ -51,8 +51,8 @@ before changing what a seed file holds.
 
 - `Character` and `CharacterDraft` ids are UUIDv7 (`Guid.CreateVersion7` from the injected
   `TimeProvider`); Identity's user ids are v7 from Npgsql. Sort by `CreatedAt`, not by id.
-- Migrations: `dotnet ef migrations add <Name> --startup-project ..\CharacterCreatorApp.Api\
-  CharacterCreatorApp.Api.csproj` from the Infrastructure project. **Read what it scaffolds**:
+- Migrations: `dotnet ef migrations add <Name>
+  --startup-project ..\CharacterCreatorApp.Api\CharacterCreatorApp.Api.csproj` from the Infrastructure project. **Read what it scaffolds**:
   it emitted `defaultValue: ""` for a `jsonb` column once, which Postgres rejects.
 - Lists and dictionaries on `Character` are `jsonb` via `HasJsonConversion`. A new `jsonb`
   column on a table with rows needs `defaultValueSql: "'{}'::jsonb"` in place of the scaffold's

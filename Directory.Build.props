@@ -7,6 +7,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
 
+    <!-- Every build is a development build; the release image overrides this with the tag
+         (Dockerfile, .github/workflows/release.yml). Shown in the footer and by /health. -->
+    <Version>0.0.0-dev</Version>
+
     <!-- Documentation. CS1591 is "missing XML comment for publicly visible type"; comments are
          written where they explain something, not on every member. -->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

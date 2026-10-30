@@ -179,4 +179,4 @@ jobs:
       # As docker-compose builds it: the repository root is the context. Nothing is pushed.
       - name: Build the Api image
         if: steps.changes.outputs.image == 'true'
-        run: docker build --file src/CharacterCreatorApp.Api/Dockerfile --tag charactercreatorapi:ci .
+        run: docker build --file src/CharacterCreatorApp.Api/Dockerfile --build-arg GIT_SHA=${{ github.sha }} --tag charactercreatorapi:ci .

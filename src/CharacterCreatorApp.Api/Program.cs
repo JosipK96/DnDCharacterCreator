@@ -2,9 +2,11 @@
 
 using CharacterCreatorApp.Api;
 using CharacterCreatorApp.Application;
+using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Infrastructure;
 using CharacterCreatorApp.Infrastructure.Seed;
 
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -72,7 +74,15 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHealthChecks("/health");
+// The version is what the release workflow built; Render only looks at the status code
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = (context, report) => context.Response.WriteAsJsonAsync(new
+    {
+        status = report.Status.ToString(),
+        version = BuildVersion.Of(typeof(Program).Assembly)
+    })
+});
 
 // An unknown API route is a 404, not the client's index.html with a 200
 app.MapFallback("/api/{**path}", () => Results.NotFound());

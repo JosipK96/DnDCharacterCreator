@@ -1,6 +1,7 @@
 # Render Blueprint for the hosted app (#31, #42): Render's free web service, with the database
 # on Neon's free plan. In the Render dashboard: New > Blueprint, pick this repository, and paste
-# the three secrets when asked. The README's Hosting section has the whole setup.
+# the three secrets when asked. The README's Hosting section has the whole setup,
+# and its Releasing section how a version goes live.
 services:
   - type: web
     name: charactercreator
@@ -11,9 +12,10 @@ services:
     # Build context the repository root: the restore needs Directory.*.props and analyzers/
     dockerfilePath: ./src/CharacterCreatorApp.Api/Dockerfile
     dockerContext: .
-    branch: main
-    # Deploy a push to main only once CI on that commit has passed
-    autoDeployTrigger: checksPass
+    # Not main: .github/workflows/release.yml moves this branch to the tag when a GitHub Release
+    # is published, so merging to main deploys nothing (#70)
+    branch: production
+    autoDeployTrigger: commit
     # Migrations and the reference data load run before Kestrel listens, and a failure stops
     # the process, so a broken deploy never passes this and the previous one keeps serving
     healthCheckPath: /health

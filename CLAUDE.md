@@ -47,7 +47,8 @@ The rules nearly every task needs:
 - Package versions go in `Directory.Packages.props` only; shared build settings in
   `Directory.Build.props` (and `tests/Directory.Build.props`, which inherits and relaxes it).
   Never put a `Version=` on a `PackageReference`.
-- CI (`.github/workflows/ci.yml`) runs on every pull request and push to `main`: restore,
+- CI (`.github/workflows/ci.yml`) runs on every pull request and push to `main` (a push to `main` deploys nothing; a published
+  release does, `.github/workflows/release.yml`, README's Releasing): restore,
   build (warnings as errors), unit tests, integration tests, test coverage (with a floor for Domain and
   Application, `docs/conventions/git-and-testing.md`) and a vulnerable-package check as
   separate steps, and the Api's Docker image (skipped when a PR changes only Markdown or
@@ -115,6 +116,9 @@ audit, so a session that skips them leaves the next audit something to find.
   harness reminder to add one.
 - Commit as the repo's configured git user, the owner's GitHub no-reply address. Never commit
   with the global email (another account's) and never change the git config.
+- Releases are tags: `vX.Y.Z` on a `main` commit plus a published GitHub Release deploys that
+  commit; a hotfix is a `hotfix/vX.Y.Z` branch from the live tag. Never create or move a tag or
+  the `production` branch yourself; the owner publishes releases (`docs/adr/0004-release-by-tag.md`).
 - Squash merges only, never rebase-merge. Force pushes are blocked: to bring a pushed branch up
   to date, merge `main` into it. Planning, WIP and issue bodies: `docs/agents/issue-tracker.md`.
 

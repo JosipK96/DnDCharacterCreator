@@ -1,0 +1,96 @@
+# Deploys a release (#70). Merging to main deploys nothing; publishing a GitHub Release `vX.Y.Z`
+# does. Render follows the `production` branch, and this workflow moves that branch to a commit
+# holding exactly the tagged tree plus version.txt (the version the Dockerfile builds in). The
+# README's Releasing section has the steps, including the one-time Render settings.
+name: Release
+
+on:
+  release:
+    types: [published]
+
+# Two releases at once would race for the same branch
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ github.event.release.tag_name }}
+      PRERELEASE: ${{ github.event.release.prerelease }}
+    steps:
+      # The release event runs at the commit the tag points to, and a tag cannot be moved after
+      # the release is published without this running again for the wrong commit
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check the tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::The tag '$TAG' is not vX.Y.Z (or vX.Y.Z-suffix for a pre-release)"
+            exit 1
+          fi
+          if [ "$(git rev-parse HEAD)" != "$(git rev-parse "refs/tags/$TAG^{commit}")" ]; then
+            echo "::error::The checkout is not the tagged commit"
+            exit 1
+          fi
+
+      # What goes live is what CI approved. For a hotfix tagged on its branch this is the pull
+      # request's head commit, which CI ran on.
+      - name: Check CI passed on the tagged commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          for check in "Build and test" "Docker image"; do
+            result=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/check-runs?per_page=100" \
+              --jq "[.check_runs[] | select(.name == \"$check\")] | sort_by(.started_at) | last | .conclusion")
+            if [ "$result" != "success" ]; then
+              echo "::error::'$check' did not pass on $GITHUB_SHA (result: ${result:-none}). Open a pull request with this commit, or re-run CI, then publish the release again."
+              exit 1
+            fi
+          done
+
+      # A pre-release is a dry run: it goes to its own branch, which Render does not follow
+      - name: Move the deploy branch to the tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch=production
+          if [ "$PRERELEASE" = "true" ]; then
+            branch=production-dryrun
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch --detach
+          echo "${TAG#v}" > version.txt
+          git add version.txt
+          git commit --message "Release $TAG"
+          # A hotfix tag is older than the live one, so this is not a fast-forward
+          git push --force origin "HEAD:refs/heads/$branch"
+          echo "Deploy branch '$branch' is at $(git rev-parse --short HEAD), the tree of $TAG plus version.txt." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Write the release notes
+        shell: pwsh
+        run: |
+          $previous = git describe --tags --abbrev=0 --match 'v[0-9]*' "$env:TAG^" 2>$null
+          if ($LASTEXITCODE -ne 0) { $previous = '' }
+          scripts/New-ReleaseNotes.ps1 -Tag $env:TAG -Previous $previous -OutFile release-notes.md
+
+      # Keeps anything the owner typed when publishing, and puts the generated list under it
+      - name: Add them to the release
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release view "$TAG" --json body --jq .body | sed '/<!-- release-notes -->/,$d' > body.md
+          { cat body.md; printf '\n<!-- release-notes -->\n'; cat release-notes.md; } > full.md
+          gh release edit "$TAG" --notes-file full.md

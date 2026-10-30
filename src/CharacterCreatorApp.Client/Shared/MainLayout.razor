@@ -6,4 +6,12 @@
     <main class="container mx-auto px-4 py-8">
         @Body
     </main>
+
+    <footer class="container mx-auto px-4 pb-6 text-xs text-gray-500" data-testid="app-version">
+        Version @_version
+    </footer>
 </div>
+
+@code {
+    private static readonly string _version = BuildVersion.Of(typeof(MainLayout).Assembly);
+}

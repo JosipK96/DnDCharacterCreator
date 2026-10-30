@@ -25,6 +25,7 @@ Infer the repo from `git remote -v`; `gh` does this automatically when run insid
 - **One at a time, in the agreed order.** Strict protection leaves the other open pull requests behind after each merge; bring the next one up to date with `gh pr update-branch <number>`.
 - **A stale head** (no CI on the new commit, "checking ability to merge" forever, or merge says out of date while compare shows nothing behind): close and reopen the pull request, which resyncs it and starts CI, then turn auto-merge on again.
 - **After the merge**, tick the issue's acceptance boxes (edit the body with `--body-file`), noting any box that was not verified and why.
+- **Releases are the owner's.** A merge to `main` deploys nothing. The owner publishes a GitHub Release `vX.Y.Z` on a `main` commit, and `.github/workflows/release.yml` deploys that tag; an issue session never creates a tag or release (a dry run on a pre-release tag is the one exception, with the owner's say-so). A hotfix is a branch `hotfix/vX.Y.Z` from the live tag, fixed there, with the fix also opened as a pull request to `main`, then released with the hotfix branch as the tag's target. Steps: README, Releasing; why: `docs/adr/0004-release-by-tag.md`.
 - **No attribution** in anything posted to GitHub: no "Generated with" footers or co-author lines.
 
 ## Pull requests as a triage surface

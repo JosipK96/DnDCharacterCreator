@@ -13,8 +13,8 @@
   <ItemGroup>
     <PackageVersion Include="FluentValidation" Version="12.2.0" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.2.0" />
-    <PackageVersion Include="Mapster" Version="10.0.13" />
-    <PackageVersion Include="Mapster.DependencyInjection" Version="10.0.13" />
+    <PackageVersion Include="Mapster" Version="10.0.14" />
+    <PackageVersion Include="Mapster.DependencyInjection" Version="10.0.14" />
     <!-- 12.x is the last Apache 2.0 MediatR; 13 and later need a Lucky Penny license in
          production, and 12.5.0 changes the pipeline delegate. Moved only by hand. -->
     <PackageVersion Include="MediatR" Version="12.4.1" />

@@ -33,7 +33,7 @@
          and anyone under USD 1M revenue (checked on #29); comes with the Lato font built in -->
     <PackageVersion Include="QuestPDF" Version="2026.9.1" />
     <PackageVersion Include="Scrutor" Version="7.0.0" />
-    <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.3.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="11.0.0" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
   </ItemGroup>
 

@@ -302,7 +302,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         Button(cut, "Next: Spells").Click();
 
         // Assert
-        cut.Find("div.bg-red-900 p").TextContent.Should().Be("Failed to save improvements: You don't meet the feat's prerequisites");
+        cut.Find("[role=alert] p").TextContent.Should().Be("Failed to save improvements: You don't meet the feat's prerequisites");
         Api.Requests.Should().NotContain(StylesRoute);
         _movedOn.Should().Be(0);
     }

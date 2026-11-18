@@ -15,9 +15,9 @@
     }
     else if (!string.IsNullOrEmpty(ErrorMessage))
     {
-        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+        <Message Kind="MessageKind.Error" Class="mb-6">
             <p class="text-sm">@ErrorMessage</p>
-        </div>
+        </Message>
     }
     else
     {
@@ -146,7 +146,7 @@
                                             </div>
                                             @if (selectedSubclass?.Id == subclass.Id)
                                             {
-                                                <svg class="w-6 h-6 text-indigo-400 ml-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg class="w-6 h-6 text-indigo-400 ml-2 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                                 </svg>
                                             }
@@ -158,18 +158,18 @@
                     }
                     else if (characterLevel >= selectedClass.SubclassLevel && !loadingSubclasses && !subclasses.Any())
                     {
-                        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg">
+                        <Message Kind="MessageKind.Error">
                             <p class="text-sm">Failed to load subclasses. Please go back and try again.</p>
-                        </div>
+                        </Message>
                     }
                 }
                 else
                 {
-                    <div class="bg-blue-900 border border-blue-700 text-blue-200 px-4 py-3 rounded-lg">
+                    <Message Kind="MessageKind.Info">
                         <p class="text-sm">
                             <strong>Note:</strong> You'll choose a subclass when you reach level @selectedClass.SubclassLevel.
                         </p>
-                    </div>
+                    </Message>
                 }
             </div>
         }

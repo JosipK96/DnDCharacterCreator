@@ -22,6 +22,9 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
     private IBrowserContext _context = null!;
     private IPage _page = null!;
 
+    // Set by the phone test: every step then checks the compact progress map and the page's width
+    private bool _onAPhone;
+
     public async ValueTask InitializeAsync()
     {
         _context = await _host.Browser.NewContextAsync(new BrowserNewContextOptions { BaseURL = _host.Address });
@@ -59,6 +62,34 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         // Assert
         await _page.GotoAsync("/characters");
         await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToBeVisibleAsync();
+    }
+
+    [Fact]
+    public async Task Wizard_OnAPhone_ShowsTheCompactMapAndNeverScrollsSideways()
+    {
+        // Arrange - a 375px-wide window, where the progress map folds to one line
+        await _page.SetViewportSizeAsync(375, 812);
+        _onAPhone = true;
+
+        await _page.GotoAsync("/login");
+        await Expect(_page.GetByRole(AriaRole.Button, new() { Name = "Sign In" })).ToBeVisibleAsync();
+        await ExpectNoSidewaysScrollAsync();
+        await _page.GotoAsync("/register");
+        await Expect(_page.GetByRole(AriaRole.Button, new() { Name = "Create Account" })).ToBeVisibleAsync();
+        await ExpectNoSidewaysScrollAsync();
+        await RegisterAndSignInAsync("wizard-phone");
+
+        // Act - each step checks itself on the way (NextAsync)
+        await CreateGromAsync();
+
+        // Assert - the sheet, the list and the account page fit as well
+        await ExpectNoSidewaysScrollAsync();
+        await _page.GotoAsync("/characters");
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Grom", Exact = true })).ToBeVisibleAsync();
+        await ExpectNoSidewaysScrollAsync();
+        await _page.GotoAsync("/account/password");
+        await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Change password" })).ToBeVisibleAsync();
+        await ExpectNoSidewaysScrollAsync();
     }
 
     [Fact]
@@ -343,13 +374,27 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
 
         // Either the next step shows, or this one shows why the server refused the save
         var heading = _page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex($"^Step {number}: ") });
-        var refusal = _page.Locator("div.bg-red-900 p");
+        var refusal = _page.Locator("[role=alert] p");
         await heading.Or(refusal).First.WaitForAsync();
 
         if (await refusal.IsVisibleAsync())
         {
             Assert.Fail($"Moving on to {step} was refused: {await refusal.InnerTextAsync()}");
         }
+
+        if (_onAPhone)
+        {
+            await Expect(_page.GetByText($"Room {number} of {WizardSteps.Count}: {step}", new() { Exact = true })).ToBeVisibleAsync();
+            await ExpectNoSidewaysScrollAsync();
+        }
+    }
+
+    // At 375px wide nothing may push the page wider than the window
+    private async Task ExpectNoSidewaysScrollAsync()
+    {
+        var overflow = await _page.EvaluateAsync<int>("() => document.documentElement.scrollWidth - window.innerWidth");
+
+        Assert.True(overflow <= 0, $"{_page.Url} scrolls sideways by {overflow}px at 375px wide");
     }
 
     // A level-up numbers its few steps as it shows them: the step comes up as "Step {shownAs}"
@@ -360,7 +405,7 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await next.ClickAsync();
 
         var heading = _page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex($"^Step {shownAs}: ") });
-        var refusal = _page.Locator("div.bg-red-900 p");
+        var refusal = _page.Locator("[role=alert] p");
         await heading.Or(refusal).First.WaitForAsync();
 
         if (await refusal.IsVisibleAsync())

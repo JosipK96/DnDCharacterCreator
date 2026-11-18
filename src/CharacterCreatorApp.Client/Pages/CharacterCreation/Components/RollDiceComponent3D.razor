@@ -16,9 +16,7 @@
 
         @if (!string.IsNullOrEmpty(errorMessage))
         {
-            <div class="mt-4 p-4 bg-red-900/50 border border-red-700 rounded-lg text-red-200">
-                @errorMessage
-            </div>
+            <Message Kind="MessageKind.Error" Class="mt-4">@errorMessage</Message>
         }
     </div>
 

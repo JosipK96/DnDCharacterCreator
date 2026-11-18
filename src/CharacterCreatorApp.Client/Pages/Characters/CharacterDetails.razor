@@ -6,40 +6,41 @@
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
 
-<div class="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+@* The page sits on the graph paper; the sheet below keeps its look until it is restyled *@
+<div>
     <div class="max-w-5xl mx-auto">
         @if (isLoading)
         {
             <!-- Loading State -->
             <div class="flex justify-center items-center py-20">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-plum"></div>
             </div>
         }
         else if (!string.IsNullOrEmpty(errorMessage))
         {
             <!-- Error State -->
-            <div class="bg-red-900 border border-red-700 text-red-200 px-6 py-4 rounded-lg">
+            <Message Kind="MessageKind.Error">
                 <p class="font-medium">Error loading character</p>
                 <p class="text-sm mt-1">@errorMessage</p>
                 <button @onclick="LoadCharacter"
-                        class="mt-4 bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm">
+                        class="btn-secondary mt-4">
                     Try Again
                 </button>
-            </div>
+            </Message>
         }
         else if (character != null)
         {
             <!-- Header with Actions -->
-            <div class="flex justify-between items-center mb-8">
+            <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
                 <button @onclick="BackToList"
-                        class="text-gray-400 hover:text-white flex items-center">
+                        class="font-medium text-ink hover:underline underline-offset-4 flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Back to Characters
                 </button>
 
-                <div class="flex space-x-3">
+                <div class="flex flex-wrap gap-3">
                     <div class="flex">
                         <button @onclick="DownloadPdf" disabled="@isDownloading"
                                 class="bg-gray-700 hover:bg-gray-600 disabled:opacity-50 text-white px-4 py-2 rounded-l-lg font-medium transition-colors duration-200">
@@ -63,7 +64,7 @@
                         @(isStartingEdit ? "Opening..." : "Edit Character")
                     </button>
                     <button @onclick="() => ConfirmDelete(character)"
-                            class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                            class="btn-danger">
                         Delete Character
                     </button>
                 </div>
@@ -194,7 +195,7 @@
                                 @foreach (var proficiency in character.Proficiencies.OrderBy(p => p.Name))
                                 {
                                     <div class="flex items-center space-x-2">
-                                        <svg class="w-4 h-4 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg class="w-4 h-4 text-indigo-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                         </svg>
                                         <span class="text-gray-300">@proficiency.Name</span>
@@ -232,7 +233,7 @@
                             @foreach (var feature in character.Features.OrderBy(f => f.Name))
                             {
                                 <div class="flex items-start space-x-2">
-                                    <svg class="w-5 h-5 mt-0.5 text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 mt-0.5 text-purple-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                                     </svg>
                                     <span class="text-gray-300">@feature.Name</span>
@@ -280,7 +281,7 @@
                                 @foreach (var spell in character.Spells.OrderBy(s => s.Name))
                                 {
                                     <div class="bg-gray-600 rounded-lg px-4 py-2 flex items-center space-x-2">
-                                        <svg class="w-4 h-4 text-yellow-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                        <svg class="w-4 h-4 text-yellow-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                         </svg>
                                         <span class="text-gray-300">@spell.Name</span>
@@ -296,7 +297,7 @@
         <!-- Delete Confirmation Modal -->
         @if (characterToDelete != null)
         {
-            <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 px-4">
+            <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
                 <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
                     <h3 class="text-xl font-bold text-white mb-4">Delete Character?</h3>
                     <p class="text-gray-300 mb-6">
@@ -463,7 +464,7 @@
     private static string Signed(int value) => value >= 0 ? $"+{value}" : value.ToString();
 
     private static string ProficiencyDotClass(bool isProficient) => isProficient
-        ? "w-2 h-2 rounded-full bg-indigo-400 flex-shrink-0"
-        : "w-2 h-2 rounded-full border border-gray-400 flex-shrink-0";
+        ? "w-2 h-2 rounded-full bg-indigo-400 shrink-0"
+        : "w-2 h-2 rounded-full border border-gray-400 shrink-0";
 
 }

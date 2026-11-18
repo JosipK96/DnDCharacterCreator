@@ -43,6 +43,14 @@ EF Core. The code follows clean architecture with CQRS over MediatR, FluentValid
 ASP.NET Core Identity with JWT. The sheet PDF is drawn with QuestPDF. Tests use xUnit v3, Moq, FluentAssertions, bUnit,
 Playwright and Testcontainers.
 
+The client is styled with Tailwind CSS, built at build time by Tailwind's standalone CLI: no
+Node install is needed. The first build of the client downloads the pinned CLI (about 110 MB,
+checked against its SHA-256) into the client's `obj` folder, so that build needs the network;
+later builds reuse it. The theme (the palette and the fonts) is in
+`src/CharacterCreatorApp.Client/Styles/app.css`, the download and build steps in
+`src/CharacterCreatorApp.Client/Tailwind.targets`. The fonts, Barlow and Barlow Condensed, are
+served from the client's own `wwwroot/fonts` under the SIL Open Font License.
+
 The game data (classes, subclasses, races, backgrounds, feats, spells and languages for both
 editions) is generated from [5etools](https://github.com/5etools-mirror-3/5etools-src) data by a
 tool in this repository.

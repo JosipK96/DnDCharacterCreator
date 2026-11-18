@@ -7,9 +7,9 @@
 
     @if (!string.IsNullOrEmpty(ErrorMessage))
     {
-        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+        <Message Kind="MessageKind.Error" Class="mb-6">
             <p class="text-sm">@ErrorMessage</p>
-        </div>
+        </Message>
     }
 
     @if (IsLoading)
@@ -34,7 +34,7 @@
                        class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-600 focus:border-transparent" />
                 @if (!string.IsNullOrWhiteSpace(characterName) && characterName.Length < 2)
                 {
-                    <p class="text-red-400 text-sm mt-1">Name must be at least 2 characters</p>
+                    <Message Kind="MessageKind.Error" Class="mt-2">Name must be at least 2 characters</Message>
                 }
             </div>
 
@@ -73,9 +73,9 @@
                 </div>
                 @if (ClearsChoices)
                 {
-                    <p class="text-yellow-400 text-sm mt-2">
+                    <Message Kind="MessageKind.Warning" Class="mt-2">
                         Switching rules clears the race, class, background, feats and spells chosen so far.
-                    </p>
+                    </Message>
                 }
             </div>
 
@@ -99,9 +99,9 @@
                 </div>
                 @if (ClearsBookChoices)
                 {
-                    <p class="text-yellow-400 text-sm mt-2">
+                    <Message Kind="MessageKind.Warning" Class="mt-2">
                         Choices made from a book you untick are cleared.
-                    </p>
+                    </Message>
                 }
             </div>
         </div>

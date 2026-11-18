@@ -1,0 +1,95 @@
+<Project>
+
+  <!--
+    Builds the client's stylesheet with Tailwind's standalone CLI, so no Node install is needed.
+    Styles/app.css (the theme: palette, fonts, shared pieces) goes in; wwwroot/css/app.css comes
+    out, gitignored, and is served like any other wwwroot file. The CLI is downloaded once per
+    obj folder and checked against the release's SHA-256 before it runs. To move to a new
+    version, change TailwindVersion and the five hashes, from the release's asset digests
+    (gh api repos/tailwindlabs/tailwindcss/releases/tags/vX.Y.Z).
+  -->
+  <PropertyGroup>
+    <TailwindVersion>4.3.5</TailwindVersion>
+    <TailwindDirectory>$(MSBuildProjectDirectory)/$(BaseIntermediateOutputPath)tailwind/$(TailwindVersion)/</TailwindDirectory>
+    <TailwindInput>$(MSBuildProjectDirectory)/Styles/app.css</TailwindInput>
+    <TailwindOutput>wwwroot/css/app.css</TailwindOutput>
+    <_TailwindArchitecture>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</_TailwindArchitecture>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <TailwindAsset>tailwindcss-windows-x64.exe</TailwindAsset>
+    <TailwindSha256>2803583268c53f4713e89943e211081fddb186c0a4a7d07b5c342c6ae853ec95</TailwindSha256>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux')) And '$(_TailwindArchitecture)' == 'X64'">
+    <TailwindAsset>tailwindcss-linux-x64</TailwindAsset>
+    <TailwindSha256>e47695cee3f0d90623a91f3939b08bdee610eb5ad99340adff9d4145b284d6cc</TailwindSha256>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux')) And '$(_TailwindArchitecture)' == 'Arm64'">
+    <TailwindAsset>tailwindcss-linux-arm64</TailwindAsset>
+    <TailwindSha256>ffcd0d21dbd7c605dc12743ff0c0b47debc963c86b399674084c1c8f2c96ecad</TailwindSha256>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX')) And '$(_TailwindArchitecture)' == 'X64'">
+    <TailwindAsset>tailwindcss-macos-x64</TailwindAsset>
+    <TailwindSha256>a63702686a3ed048b3135d84a73be49ea9d47f880c9b20e54b3ef60934ad8cdf</TailwindSha256>
+  </PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX')) And '$(_TailwindArchitecture)' == 'Arm64'">
+    <TailwindAsset>tailwindcss-macos-arm64</TailwindAsset>
+    <TailwindSha256>f3f4f5d1727e2b693b8f1c9a1492b5dd87008c86ea286bee1589cb458e6235fc</TailwindSha256>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TailwindExecutable>$(TailwindDirectory)$(TailwindAsset)</TailwindExecutable>
+  </PropertyGroup>
+
+  <Target Name="FetchTailwind" Condition="!Exists('$(TailwindExecutable)')">
+    <Error Condition="'$(TailwindAsset)' == ''"
+           Text="Tailwind's standalone CLI has no build for this machine ($(_TailwindArchitecture)); see Tailwind.targets." />
+
+    <DownloadFile SourceUrl="https://github.com/tailwindlabs/tailwindcss/releases/download/v$(TailwindVersion)/$(TailwindAsset)"
+                  DestinationFolder="$(TailwindDirectory)"
+                  DestinationFileName="$(TailwindAsset).download"
+                  Retries="2" />
+
+    <GetFileHash Files="$(TailwindDirectory)$(TailwindAsset).download" Algorithm="SHA256" HashEncoding="hex">
+      <Output TaskParameter="Hash" PropertyName="_TailwindDownloadedSha256" />
+    </GetFileHash>
+
+    <!-- A binary that is not the pinned release never runs: it is deleted and the build fails -->
+    <Delete Condition="'$(_TailwindDownloadedSha256.ToLowerInvariant())' != '$(TailwindSha256)'"
+            Files="$(TailwindDirectory)$(TailwindAsset).download" />
+    <Error Condition="'$(_TailwindDownloadedSha256.ToLowerInvariant())' != '$(TailwindSha256)'"
+           Text="$(TailwindAsset) v$(TailwindVersion) does not match its pinned SHA-256 ($(_TailwindDownloadedSha256)); it was deleted." />
+
+    <Move SourceFiles="$(TailwindDirectory)$(TailwindAsset).download" DestinationFiles="$(TailwindExecutable)" />
+    <Exec Condition="!$([MSBuild]::IsOSPlatform('Windows'))" Command="chmod +x &quot;$(TailwindExecutable)&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <TailwindSource Include="Styles/**/*.css;**/*.razor;wwwroot/index.html"
+                    Exclude="bin/**;obj/**;node_modules/**" />
+  </ItemGroup>
+
+  <!-- Before the build, so the static web assets (and the Api's publish of them) include the output.
+       Design-time builds in Visual Studio skip it.
+       shortcut: dotnet watch hot reload does not rerun it, so a class first used in a .razor file
+       shows after the next build; add a watch item for Styles and the .razor files if that starts to hurt. -->
+  <Target Name="BuildTailwindCss"
+          BeforeTargets="BeforeBuild"
+          DependsOnTargets="FetchTailwind"
+          Condition="'$(DesignTimeBuild)' != 'true'"
+          Inputs="@(TailwindSource);$(MSBuildThisFileFullPath)"
+          Outputs="$(TailwindOutput)">
+    <Exec Command="&quot;$(TailwindExecutable)&quot; -i &quot;$(TailwindInput)&quot; -o &quot;$(TailwindOutput)&quot; --minify"
+          WorkingDirectory="$(MSBuildProjectDirectory)"
+          StandardErrorImportance="low" />
+  </Target>
+
+  <!-- On a clean checkout the output did not exist when wwwroot was globbed: add it, and let clean remove it -->
+  <Target Name="IncludeTailwindCss" AfterTargets="BuildTailwindCss" Condition="'$(DesignTimeBuild)' != 'true'">
+    <ItemGroup>
+      <Content Include="$(TailwindOutput)" Exclude="@(Content)" />
+      <FileWrites Include="$(TailwindOutput)" />
+    </ItemGroup>
+  </Target>
+
+</Project>

@@ -8,9 +8,9 @@
 
     @if (!string.IsNullOrEmpty(ErrorMessage))
     {
-        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+        <Message Kind="MessageKind.Error" Class="mb-6">
             <p class="text-sm">@ErrorMessage</p>
-        </div>
+        </Message>
     }
 
     @if (IsLoading)
@@ -31,10 +31,10 @@
 
         @if (alreadyGrantedNames.Any())
         {
-            <div class="bg-amber-900/40 border border-amber-700 text-amber-200 px-4 py-3 rounded-lg mb-4 text-sm">
+            <Message Kind="MessageKind.Info" Class="mb-4">
                 <strong>Note:</strong> The following skills are already granted by your background and have been removed from the list:
                 @string.Join(", ", alreadyGrantedNames).
-            </div>
+            </Message>
         }
 
         <!-- Proficiency Selection -->
@@ -347,7 +347,7 @@
 
     private string GetCheckboxClass(bool isSelected)
     {
-        var baseClass = "w-6 h-6 rounded border-2 flex items-center justify-center flex-shrink-0";
+        var baseClass = "w-6 h-6 rounded border-2 flex items-center justify-center shrink-0";
         return isSelected ? $"{baseClass} bg-white border-white text-indigo-600" : $"{baseClass} border-gray-400";
     }
 }

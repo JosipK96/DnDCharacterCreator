@@ -42,7 +42,8 @@
                 diceBox = new DiceBox("#dice-canvas", {
                     assetPath: "/lib/dice-box/assets/",
                     theme: "default",
-                    themeColor: "#e5e7eb",
+                    // Plum, so the dice stand out from the graph paper; dice-box picks its light-numbered texture for a dark colour
+                    themeColor: "#6a3d7a",
                     scale: 5,
                     gravity: 2,
                     mass: 1,

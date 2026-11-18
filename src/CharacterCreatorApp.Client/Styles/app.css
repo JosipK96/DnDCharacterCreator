@@ -1,0 +1,235 @@
+/*
+  The client's stylesheet, built into wwwroot/css/app.css by Tailwind's standalone CLI at build
+  time (Tailwind.targets). The look is a dungeon map on graph paper: the palette and the font
+  families are named once, in @theme, and the shared pieces (rooms, buttons) are utilities below.
+  Shared/Room.razor uses the room utility; Shared/Message.razor takes its colours from the palette.
+*/
+@import "tailwindcss" source(none);
+
+/* Only the client's own markup: never wwwroot/lib or node_modules */
+@source "../Pages";
+@source "../Shared";
+@source "../App.razor";
+@source "../wwwroot/index.html";
+
+@theme {
+  /* Lettering: swap a family here and everything follows */
+  --font-sans: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Barlow Condensed", "Barlow", ui-sans-serif, system-ui, sans-serif;
+
+  /* The palette. Red is for errors and delete only; Plum marks where the player is and their picks. */
+  --color-paper: #cdd6dc;
+  --color-paper-grid: #b8c4cc;
+  --color-room: #e2e7ea;
+  --color-room-highlight: #eef1f3;
+  --color-ink: #233140;
+  --color-pencil: #4f5e6c;
+  --color-plum: #6a3d7a;
+  --color-plum-tint: #e8e0ee;
+  --color-red: #a3302a;
+  --color-red-tint: #f2dcd8;
+  --color-red-text: #7a231e;
+  --color-green: #2e6a3b;
+  --color-green-tint: #d9e8da;
+  --color-green-text: #1f4a29;
+  --color-amber: #b07a12;
+  --color-amber-tint: #f2e3bd;
+  --color-amber-text: #7d5300;
+}
+
+/* Served from wwwroot/fonts with their OFL licence; nothing is loaded from Google */
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/barlow-latin-400-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/barlow-latin-ext-400-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/barlow-latin-500-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/barlow-latin-ext-500-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/barlow-condensed-latin-600-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/barlow-condensed-latin-ext-600-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@layer base {
+  /*
+    Tailwind v3 defaults, kept while the steps, the sheet and the account pages still carry their
+    v3-era classes; their own restyle issues retire them: a border with no colour was gray-200, a
+    placeholder gray-400, and a button showed the pointer.
+  */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* The page is graph paper: 1px lines every 22px both ways */
+  body {
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(to right, var(--color-paper-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-paper-grid) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+  }
+
+  h1:focus {
+    outline: none;
+  }
+}
+
+/*
+  A room: Room fill, a 3px Ink wall, square corners, and a 20px door in the top wall 22px from
+  the left. Rooms are the only framed elements: no shadows, rounding or gradients.
+*/
+@utility room {
+  position: relative;
+  background-color: var(--color-room);
+  border: 3px solid var(--color-ink);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 19px;
+    width: 20px;
+    height: 3px;
+    background-color: var(--color-room);
+  }
+}
+
+/* A floor already walked: Room fill hatched with diagonal Pencil lines (the progress map's done rooms) */
+@utility hatch {
+  background-color: var(--color-room);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in srgb, var(--color-pencil) 55%, transparent) 0 1.5px,
+    transparent 1.5px 7px
+  );
+}
+
+@utility room-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+@utility page-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 1.1;
+}
+
+/* Buttons. A disabled one of any kind is a dashed grey outline with grey text. */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.375rem 1.25rem;
+  border: 2px solid transparent;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.5rem;
+  letter-spacing: 0.02em;
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    border: 2px dashed color-mix(in srgb, var(--color-pencil) 55%, var(--color-room));
+    background-color: transparent;
+    color: color-mix(in srgb, var(--color-pencil) 70%, var(--color-room));
+    cursor: not-allowed;
+  }
+}
+
+@utility btn-main {
+  @apply btn;
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-room);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-pencil);
+    border-color: var(--color-pencil);
+  }
+}
+
+@utility btn-secondary {
+  @apply btn;
+  background-color: var(--color-room);
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-room-highlight);
+  }
+}
+
+@utility btn-danger {
+  @apply btn;
+  background-color: var(--color-room);
+  border-color: var(--color-red);
+  color: var(--color-red);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-red-tint);
+  }
+}

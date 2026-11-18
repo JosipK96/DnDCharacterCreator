@@ -105,7 +105,7 @@ public class SpellsStepTests : WizardStepTestBase
         var cut = RenderStep();
 
         // Assert
-        var note = Squash(cut.Find("div.bg-blue-900").TextContent);
+        var note = Squash(cut.Find("[role=note]").TextContent);
         note.Should().Contain("Cleric prepares 4 spells from the Cleric spell list");
         note.Should().Contain("Your subclass's spells are always prepared on top of these: Bless, Cure Wounds.");
         cut.FindAll("h5").Select(h => h.TextContent.Trim()).Should().Equal("Guidance", "Guiding Bolt", "Healing Word");
@@ -144,7 +144,7 @@ public class SpellsStepTests : WizardStepTestBase
         Button(cut, "Next: Review").Click();
 
         // Assert
-        cut.Find("div.bg-red-900 p").TextContent.Should().Be("Failed to save spells: Shield is not on the Wizard spell list");
+        cut.Find("[role=alert] p").TextContent.Should().Be("Failed to save spells: Shield is not on the Wizard spell list");
         _movedOn.Should().Be(0);
     }
 

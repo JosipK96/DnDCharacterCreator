@@ -20,11 +20,15 @@ COPY ["Directory.Build.props", "Directory.Packages.props", ".editorconfig", "ver
 COPY ["analyzers/", "analyzers/"]
 COPY ["src/CharacterCreatorApp.Api/CharacterCreatorApp.Api.csproj", "src/CharacterCreatorApp.Api/"]
 COPY ["src/CharacterCreatorApp.Application/CharacterCreatorApp.Application.csproj", "src/CharacterCreatorApp.Application/"]
-COPY ["src/CharacterCreatorApp.Client/CharacterCreatorApp.Client.csproj", "src/CharacterCreatorApp.Client/"]
+COPY ["src/CharacterCreatorApp.Client/CharacterCreatorApp.Client.csproj", "src/CharacterCreatorApp.Client/Tailwind.targets", "src/CharacterCreatorApp.Client/"]
 COPY ["src/CharacterCreatorApp.Contracts/CharacterCreatorApp.Contracts.csproj", "src/CharacterCreatorApp.Contracts/"]
 COPY ["src/CharacterCreatorApp.Domain/CharacterCreatorApp.Domain.csproj", "src/CharacterCreatorApp.Domain/"]
 COPY ["src/CharacterCreatorApp.Infrastructure/CharacterCreatorApp.Infrastructure.csproj", "src/CharacterCreatorApp.Infrastructure/"]
 RUN dotnet restore "src/CharacterCreatorApp.Api/CharacterCreatorApp.Api.csproj"
+
+# Tailwind's standalone CLI (~110 MB, hash-checked; Tailwind.targets) in its own layer, so it is
+# downloaded again only when Tailwind.targets or a project file changes. The publish below runs it.
+RUN dotnet msbuild "src/CharacterCreatorApp.Client/CharacterCreatorApp.Client.csproj" -t:FetchTailwind -nologo -v:q
 
 COPY ["src/", "src/"]
 

@@ -8,9 +8,9 @@
 
     @if (!string.IsNullOrEmpty(ErrorMessage))
     {
-        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+        <Message Kind="MessageKind.Error" Class="mb-6">
             <p class="text-sm">@ErrorMessage</p>
-        </div>
+        </Message>
     }
 
     @if (IsLoading)
@@ -41,7 +41,7 @@
         <!-- A 2014 cleric, druid, paladin or artificer: the count follows its scores and level -->
         @if (spellsFollowScores)
         {
-            <div class="bg-blue-900 border border-blue-700 text-blue-200 px-5 py-4 rounded-lg mb-4">
+            <Message Kind="MessageKind.Info" Class="mb-4">
                 <p class="font-semibold mb-1">Prepared Spells</p>
                 <p class="text-sm">
                     @className prepares @spellsKnown @(spellsKnown == 1 ? "spell" : "spells") from the @className spell list:
@@ -51,7 +51,7 @@
                         <span>Your subclass's spells are always prepared on top of these: @string.Join(", ", alwaysPreparedSpells.Select(s => s.Name)).</span>
                     }
                 </p>
-            </div>
+            </Message>
         }
 
         <!-- Class heading -->
@@ -644,7 +644,7 @@
 
     private string GetCheckboxClass(bool isSelected)
     {
-        var baseClass = "w-7 h-7 rounded border-2 flex items-center justify-center flex-shrink-0";
+        var baseClass = "w-7 h-7 rounded border-2 flex items-center justify-center shrink-0";
         return isSelected ? $"{baseClass} bg-white border-white text-purple-600" : $"{baseClass} border-gray-400";
     }
 }

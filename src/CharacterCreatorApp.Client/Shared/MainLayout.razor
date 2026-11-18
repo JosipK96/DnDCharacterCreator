@@ -1,13 +1,14 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="min-h-screen bg-gray-900">
+@* The page is the graph paper (body in Styles/app.css); the header band sits on top of it *@
+<div class="min-h-screen">
     <NavMenu />
-    
+
     <main class="container mx-auto px-4 py-8">
         @Body
     </main>
 
-    <footer class="container mx-auto px-4 pb-6 text-xs text-gray-500" data-testid="app-version">
+    <footer class="container mx-auto px-4 pb-6 text-xs text-pencil" data-testid="app-version">
         Version @_version
     </footer>
 </div>

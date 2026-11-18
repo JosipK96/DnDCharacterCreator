@@ -54,5 +54,6 @@
   `field` filters and `pager` page numbers (`aria-current="page"` filled Ink). Both ask before a
   delete with `Shared/ConfirmDelete.razor` (role `dialog`). The PDF is drawn by the API and keeps
   its own look.
-- The account pages still carry Tailwind's default dark classes inside their panels until their
-  own restyle issue; a page itself sits on the paper.
+- The home, sign-in, register, password and admin pages are one `Shared/Room.razor` each on the
+  paper, with a `field` and a visible label per input and a `btn-main` for the action. No Razor
+  file uses a Tailwind default colour (`gray-`, `indigo-`, `red-` and so on).

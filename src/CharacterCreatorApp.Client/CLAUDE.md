@@ -28,6 +28,21 @@
   (#77): exception type, stack, route without query and version, never the message, at most five
   per page load. The client holds no error-tracker key.
 
+## Installable app (#128)
+
+- `wwwroot/manifest.webmanifest` (name, `standalone`, theme `ink` and background `paper` as hex,
+  the one place a hex value is right) and `index.html`'s `manifest` and `apple-touch-icon` links
+  make it installable. Icons are `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`
+  and `apple-touch-icon.png`.
+- The project file's ServiceWorker item makes `service-worker.js` the development worker (caches
+  nothing) and `service-worker.published.js` the published one, with the file list
+  `service-worker-assets.js` generated at publish. The published worker caches those files, never
+  anything under `/api/`, and does not `skipWaiting` on its own.
+- An update: a release changes the list, the browser installs the new worker, which waits.
+  `wwwroot/js/app-update.js` tells `Shared/UpdatePrompt.razor` (in MainLayout) through
+  its UpdateReady method; its Reload button posts `SKIP_WAITING` and the page reloads onto the new files.
+  A new static file type must match a pattern in the worker's `offlineAssetsInclude` to be cached.
+
 ## Styling
 
 - The look is a dungeon map on graph paper. `Styles/app.css` is the stylesheet's source: the

@@ -14,7 +14,8 @@ namespace CharacterCreatorApp.Client.IntegrationTests;
 /// character of each rules edition step by step, against the Api and its seeded database. The
 /// steps' own rules are in the client's bUnit tests; this checks the pieces work together.
 /// </summary>
-public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHost>, IAsyncLifetime
+[Collection(WizardHostGroup.Name)]
+public partial class WizardSmokeTests(WizardHost host) : IAsyncLifetime
 {
     private const string Password = "Mellon123";
 

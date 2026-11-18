@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
 @* The page is the graph paper (body in Styles/app.css); the header band sits on top of it *@
 <div class="min-h-screen">
@@ -11,8 +11,11 @@
     <footer class="container mx-auto px-4 pb-6 text-xs text-pencil" data-testid="app-version">
         Version @_version
     </footer>
+
+    <UpdatePrompt />
 </div>
 
 @code {
     private static readonly string _version = BuildVersion.Of(typeof(MainLayout).Assembly);
 }
+

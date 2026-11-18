@@ -47,8 +47,9 @@
 
     private string Role => Kind switch
     {
-        MessageKind.Error or MessageKind.Warning => "alert",
-        MessageKind.Success => "status",
+        // Only an error interrupts: a screen reader announces it at once, and a test finds a refusal by it
+        MessageKind.Error => "alert",
+        MessageKind.Success or MessageKind.Warning => "status",
         _ => "note",
     };
 

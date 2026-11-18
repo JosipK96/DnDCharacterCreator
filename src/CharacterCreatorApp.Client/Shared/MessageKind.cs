@@ -9,7 +9,7 @@ public enum MessageKind
     /// <summary>Something was done or saved: Green, role "status".</summary>
     Success,
 
-    /// <summary>A pick is still needed, or something to choose more of: Amber, role "alert".</summary>
+    /// <summary>A pick is still needed, or something to choose more of: Amber, role "status".</summary>
     Warning,
 
     /// <summary>A note that explains: Ink on the Room highlight, role "note".</summary>

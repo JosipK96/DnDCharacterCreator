@@ -11,7 +11,7 @@ public class MessageTests : BunitContext
     [Theory]
     [InlineData(MessageKind.Error, "alert", "bg-red-tint", "border-red")]
     [InlineData(MessageKind.Success, "status", "bg-green-tint", "border-green")]
-    [InlineData(MessageKind.Warning, "alert", "bg-amber-tint", "border-amber")]
+    [InlineData(MessageKind.Warning, "status", "bg-amber-tint", "border-amber")]
     [InlineData(MessageKind.Info, "note", "bg-room-highlight", "border-ink")]
     public void Render_EachKind_HasItsRoleTintAndBorder(MessageKind kind, string role, string tint, string border)
     {

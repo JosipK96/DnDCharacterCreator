@@ -37,7 +37,8 @@
                             </div>
                         }
                     </div>
-                    <span class="mt-1 w-full text-center text-[13px] leading-tight break-words hyphens-auto @LabelClass(state)">@WizardSteps.NameOf(step)</span>
+                    @* A label may reach past its room into the corridors beside it, so a long name stays one word *@
+                    <span class="mt-1 w-[calc(100%+1rem)] text-center text-xs leading-tight @LabelClass(state)">@WizardSteps.NameOf(step)</span>
                     @if (state == RoomState.NeedsPick)
                     {
                         <span class="text-center text-xs text-amber-text">Needs a pick</span>

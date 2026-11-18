@@ -1,10 +1,10 @@
-﻿@using CharacterCreatorApp.Contracts.Responses
+@using CharacterCreatorApp.Contracts.Responses
 @inject CharacterDraftService DraftService
 @inject LookupService LookupService
 @inherits WizardStepBase
 
-<div class="space-y-6">
-    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Proficiencies")</h2>
+<div>
+    <h2 class="step-title mb-2">@StepHeading("Proficiencies")</h2>
 
     @if (!string.IsNullOrEmpty(ErrorMessage))
     {
@@ -15,138 +15,63 @@
 
     @if (IsLoading)
     {
-        <div class="flex justify-center items-center py-12">
-            <div class="text-center">
-                <div class="inline-block w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-                <p class="text-gray-300">Loading proficiency options...</p>
-            </div>
-        </div>
+        <Spinner Text="Loading proficiency options..." />
     }
-    else if (classDetails?.ProficiencyChoice != null)
+    else
     {
-        <div class="bg-gray-800 rounded-lg p-6 mb-6">
-            <h3 class="text-xl font-bold text-white mb-2">@classDetails.Name Proficiencies</h3>
-            <p class="text-gray-300 text-sm">Choose your proficiencies from the options below.</p>
-        </div>
+        <div class="space-y-6">
+            @if (classDetails?.ProficiencyChoice != null)
+            {
+                <p class="text-pencil">Choose your @classDetails.Name proficiencies from the options below.</p>
 
-        @if (alreadyGrantedNames.Any())
-        {
-            <Message Kind="MessageKind.Info" Class="mb-4">
-                <strong>Note:</strong> The following skills are already granted by your background and have been removed from the list:
-                @string.Join(", ", alreadyGrantedNames).
-            </Message>
-        }
-
-        <!-- Proficiency Selection -->
-        <div class="bg-gray-800 rounded-lg p-6 border-2 @GetBorderClass()">
-            <!-- Header -->
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h4 class="text-lg font-bold text-white">
-                        Choose @proficiencyChoice!.Count @proficiencyChoice.Type Proficiencies
-                    </h4>
-                    <p class="text-sm text-gray-400 mt-1">
-                        Select @proficiencyChoice.Count from the options below
-                    </p>
-                </div>
-                <div class="text-right">
-                    <div class="text-3xl font-bold @GetCounterClass()">
-                        @selectedProficiencies.Count / @proficiencyChoice.Count
-                    </div>
-                    @if (IsComplete())
-                    {
-                        <div class="text-xs text-green-400 mt-1">✓ Complete</div>
-                    }
-                    else
-                    {
-                        <div class="text-xs text-yellow-400 mt-1">Choose @(proficiencyChoice.Count - selectedProficiencies.Count) more</div>
-                    }
-                </div>
-            </div>
-
-            <!-- Proficiency Options Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                @foreach (var proficiency in availableOptions)
+                @if (alreadyGrantedNames.Any())
                 {
-                    var isSelected = selectedProficiencies.Contains(proficiency.Id);
-                    var canSelect = selectedProficiencies.Count < proficiencyChoice.Count || isSelected;
-
-                    <button @onclick="() => ToggleProficiency(proficiency.Id)"
-                            disabled="@(!canSelect && !isSelected)"
-                            class="@GetProficiencyCardClass(isSelected, canSelect)">
-                        <div class="flex items-start gap-3">
-                            <div class="@GetCheckboxClass(isSelected)">
-                                @if (isSelected)
-                                {
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                    </svg>
-                                }
-                            </div>
-                            <div class="flex-1 text-left">
-                                <div class="font-medium text-white">@proficiency.Name</div>
-                                <div class="text-xs text-gray-400 mt-1">@proficiency.Type</div>
-                            </div>
-                        </div>
-                    </button>
+                    <Message Kind="MessageKind.Info">
+                        <strong>Note:</strong> The following skills are already granted by your background and have been removed from the list:
+                        @string.Join(", ", alreadyGrantedNames).
+                    </Message>
                 }
-            </div>
-        </div>
-    }
-    else if (!IsLoading && toolChoices.Count == 0)
-    {
-        <div class="bg-gray-800 rounded-lg p-8 text-center">
-            <div class="text-6xl mb-4">✨</div>
-            <p class="text-xl text-white font-medium mb-2">No Proficiency Choices</p>
-            <p class="text-gray-400">This class automatically grants all proficiencies.</p>
-            <p class="text-sm text-gray-500 mt-2">Click Next to continue.</p>
-        </div>
-    }
 
-    @if (!IsLoading)
-    {
-        @for (var i = 0; i < toolChoices.Count; i++)
-        {
-            var index = i;
-            var choice = toolChoices[index];
-            var picked = toolPicks[index];
+                <ChoiceSection Title="@($"{classDetails.Name} skills")" Chosen="@selectedProficiencies.Count" Total="@proficiencyChoice!.Count">
+                    @foreach (var proficiency in availableOptions)
+                    {
+                        var isSelected = selectedProficiencies.Contains(proficiency.Id);
+                        <ChoiceRow Name="@proficiency.Name" Picked="@isSelected"
+                                   Disabled="@(!isSelected && selectedProficiencies.Count >= proficiencyChoice.Count)"
+                                   OnClick="() => ToggleProficiency(proficiency.Id)" />
+                    }
+                </ChoiceSection>
+            }
+            else if (toolChoices.Count == 0)
+            {
+                <Room Title="No Proficiency Choices">
+                    <p>This class automatically grants all proficiencies.</p>
+                    <p class="mt-2 text-sm text-pencil">Click Next to continue.</p>
+                </Room>
+            }
 
-            <div class="bg-gray-800 rounded-lg p-6 border-2 @(picked.Count == choice.Count ? "border-green-600" : "border-gray-600")">
-                <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-lg font-bold text-white">@choice.OfferedBy: choose @choice.Count tool@(choice.Count == 1 ? "" : "s")</h4>
-                    <div class="text-2xl font-bold @(picked.Count == choice.Count ? "text-green-400" : "text-gray-400")">@picked.Count / @choice.Count</div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+            @for (var i = 0; i < toolChoices.Count; i++)
+            {
+                var index = i;
+                var choice = toolChoices[index];
+                var picked = toolPicks[index];
+
+                <ChoiceSection Title="@($"{choice.OfferedBy}: choose {choice.Count} tool{(choice.Count == 1 ? "" : "s")}")"
+                               Chosen="@picked.Count" Total="@choice.Count">
                     @foreach (var tool in choice.Options)
                     {
                         var isSelected = picked.Contains(tool.Id);
-                        var canSelect = isSelected || (picked.Count < choice.Count && !IsPickedElsewhere(index, tool.Id));
-
-                        <button @onclick="() => ToggleTool(index, tool.Id)"
-                                disabled="@(!canSelect)"
-                                class="@GetProficiencyCardClass(isSelected, canSelect)">
-                            <div class="font-medium">@tool.Name</div>
-                        </button>
+                        <ChoiceRow Name="@tool.Name" Picked="@isSelected"
+                                   Disabled="@(!isSelected && (picked.Count >= choice.Count || IsPickedElsewhere(index, tool.Id)))"
+                                   OnClick="() => ToggleTool(index, tool.Id)" />
                     }
-                </div>
-            </div>
-        }
+                </ChoiceSection>
+            }
+        </div>
     }
 
-    <!-- Navigation Buttons -->
-    <div class="flex justify-between mt-8">
-        <button @onclick="HandleBack"
-                type="button"
-                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            ← Previous
-        </button>
-
-        <button @onclick="HandleNext"
-                disabled="@(!CanProceed() || IsSaving)"
-                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            @(IsSaving ? "Saving..." : NextLabel)
-        </button>
-    </div>
+    <StepNavigation OnBack="HandleBack" OnNext="HandleNext" NextDisabled="@(!CanProceed() || IsSaving)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
 </div>
 
 @code {
@@ -317,37 +242,5 @@
     private async Task HandleBack()
     {
         await OnBack.InvokeAsync();
-    }
-
-    private string GetBorderClass()
-    {
-        return IsComplete() ? "border-green-600" : "border-gray-600";
-    }
-
-    private string GetCounterClass()
-    {
-        if (IsComplete())
-            return "text-green-400";
-
-        return selectedProficiencies.Count > 0 ? "text-yellow-400" : "text-gray-400";
-    }
-
-    private string GetProficiencyCardClass(bool isSelected, bool canSelect)
-    {
-        var baseClass = "p-4 rounded-lg border-2 transition-all duration-200 text-left";
-
-        if (isSelected)
-            return $"{baseClass} bg-indigo-600 border-indigo-500 text-white shadow-lg";
-
-        if (!canSelect)
-            return $"{baseClass} bg-gray-700 border-gray-600 text-gray-500 cursor-not-allowed opacity-50";
-
-        return $"{baseClass} bg-gray-700 border-gray-600 hover:border-indigo-500 hover:bg-gray-600 cursor-pointer";
-    }
-
-    private string GetCheckboxClass(bool isSelected)
-    {
-        var baseClass = "w-6 h-6 rounded border-2 flex items-center justify-center shrink-0";
-        return isSelected ? $"{baseClass} bg-white border-white text-indigo-600" : $"{baseClass} border-gray-400";
     }
 }

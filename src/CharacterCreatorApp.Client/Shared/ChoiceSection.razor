@@ -1,0 +1,39 @@
+@* One section of a long list of picks (spells, skills, tools, languages): a room whose head holds
+   the title and the count, with its ChoiceRow rows under it. Total is null for a list with no
+   count, such as a section that only shows what the character already has. *@
+
+<section class="room @Class" data-testid="choice-section">
+    <div class="flex flex-wrap items-center justify-between gap-2 px-4 pb-2 pt-4">
+        <h3 class="room-title">@Title</h3>
+        @if (Total is { } total)
+        {
+            <ChoiceCount Chosen="Chosen" Total="total" />
+        }
+    </div>
+    @if (Description is not null)
+    {
+        <div class="px-4 pb-3 text-sm text-pencil">@Description</div>
+    }
+    <div class="border-t-2 border-ink">@ChildContent</div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public int Chosen { get; set; }
+
+    [Parameter]
+    public int? Total { get; set; }
+
+    [Parameter]
+    public RenderFragment? Description { get; set; }
+
+    /// <summary>The <see cref="ChoiceRow"/> rows.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+}

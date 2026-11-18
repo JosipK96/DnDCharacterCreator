@@ -6,7 +6,7 @@ namespace CharacterCreatorApp.Client.UnitTests.Fixtures;
 public static class TestData
 {
     public static ClassApiResponse Class(string id, string name, params int[] asiLevels) =>
-        new(id, name, "2014", "PHB", "d10", 3, [.. asiLevels], [], null, null, []);
+        new(id, name, "2014", "PHB", "d10", 3, [.. asiLevels], [], null, null, [], ["STR", "CON"]);
 
     public static FeatApiResponse Feat(
         string id,

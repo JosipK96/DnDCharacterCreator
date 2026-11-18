@@ -7,9 +7,9 @@
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
 
-@* The page shell sits on the graph paper; the step panel below keeps its look until the steps are restyled *@
+@* The page sits on the graph paper; each step draws its own rooms on it *@
 <div>
-    <div class="max-w-4xl mx-auto">
+    <div class="max-w-6xl mx-auto">
 
         @if (isInitializing)
         {
@@ -61,7 +61,7 @@
             }
 
             @* The numbers here are WizardSteps', which gives each step its name; the flow says which a draft goes through *@
-            <div class="bg-gray-800 rounded-lg shadow-xl p-8 mt-6">
+            <div class="mt-8">
                 @if (currentStep == 1)
                 {
                     <NameAndLevelStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
@@ -150,29 +150,29 @@
         @if (showCancelConfirm)
         {
             <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
-                <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
+                <div class="room max-w-md w-full p-6">
                     @if (IsLevelUp)
                     {
-                        <h3 class="text-xl font-bold text-white mb-4">Cancel Level Up?</h3>
-                        <p class="text-gray-300 mb-6">The character stays at the level it was saved; the picks made here are lost.</p>
+                        <h3 class="room-title mb-4">Cancel Level Up?</h3>
+                        <p class="mb-6">The character stays at the level it was saved; the picks made here are lost.</p>
                     }
                     else if (IsEdit)
                     {
-                        <h3 class="text-xl font-bold text-white mb-4">Cancel Editing?</h3>
-                        <p class="text-gray-300 mb-6">The character stays as it was saved; the changes made here are lost.</p>
+                        <h3 class="room-title mb-4">Cancel Editing?</h3>
+                        <p class="mb-6">The character stays as it was saved; the changes made here are lost.</p>
                     }
                     else
                     {
-                        <h3 class="text-xl font-bold text-white mb-4">Cancel Character Creation?</h3>
-                        <p class="text-gray-300 mb-6">Are you sure you want to cancel? All progress will be lost.</p>
+                        <h3 class="room-title mb-4">Cancel Character Creation?</h3>
+                        <p class="mb-6">Are you sure you want to cancel? All progress will be lost.</p>
                     }
-                    <div class="flex justify-end space-x-3">
+                    <div class="flex flex-wrap justify-end gap-3">
                         <button @onclick="() => showCancelConfirm = false"
-                                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium">
+                                class="btn-secondary">
                             @(IsLevelUp ? "Continue Levelling Up" : IsEdit ? "Continue Editing" : "Continue Creating")
                         </button>
                         <button @onclick="Cancel"
-                                class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium">
+                                class="btn-danger">
                             Yes, Cancel
                         </button>
                     </div>
@@ -183,28 +183,28 @@
         @if (showResumePrompt && existingDraft != null)
         {
             <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
-                <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
-                    <h3 class="text-xl font-bold text-white mb-4">Resume Character Creation?</h3>
-                    <p class="text-gray-300 mb-2">You have an in-progress character:</p>
-                    <div class="bg-gray-700 rounded p-3 mb-6">
-                        <p class="text-white font-medium">
+                <div class="room max-w-md w-full p-6">
+                    <h3 class="room-title mb-4">Resume Character Creation?</h3>
+                    <p class="mb-2">You have an in-progress character:</p>
+                    <div class="border-l-[5px] border-plum bg-plum-tint p-3 mb-6">
+                        <p class="font-medium">
                             @(string.IsNullOrEmpty(existingDraft.Name) ? "Unnamed Character" : existingDraft.Name)
                         </p>
                         @if (existingDraft.Level.HasValue)
                         {
-                            <p class="text-gray-400 text-sm">Level @existingDraft.Level</p>
+                            <p class="text-pencil text-sm">Level @existingDraft.Level</p>
                         }
                     </div>
-                    <p class="text-gray-400 text-sm mb-6">
+                    <p class="text-pencil text-sm mb-6">
                         Would you like to continue where you left off, or start a new character?
                     </p>
                     <div class="flex flex-col space-y-3">
                         <button @onclick="ResumeDraft"
-                                class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg font-medium w-full">
+                                class="btn-main w-full">
                             Resume Character
                         </button>
                         <button @onclick="StartFresh"
-                                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-3 rounded-lg font-medium w-full">
+                                class="btn-secondary w-full">
                             Start Fresh
                         </button>
                     </div>

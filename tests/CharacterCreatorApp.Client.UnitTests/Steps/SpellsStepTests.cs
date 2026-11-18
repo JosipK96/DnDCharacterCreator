@@ -40,7 +40,7 @@ public class SpellsStepTests : WizardStepTestBase
 
         // Assert
         cut.Markup.Should().Contain("Choose 3 cantrips and 6 spells.");
-        cut.FindAll("div.text-3xl").Select(d => Squash(d.TextContent)).Should().Equal("0 / 3", "0 / 6");
+        Counts(cut).Should().Equal("0 of 3 chosen: choose 3 more", "0 of 6 chosen: choose 6 more");
         cut.Markup.Should().NotContain("Prepared Spells");
     }
 
@@ -58,7 +58,7 @@ public class SpellsStepTests : WizardStepTestBase
         // Assert
         SpellButton(cut, "Mage Hand").HasAttribute("disabled").Should().BeTrue();
         SpellButton(cut, "Fire Bolt").HasAttribute("disabled").Should().BeFalse();
-        Squash(cut.FindAll("div.text-3xl")[0].TextContent).Should().Be("2 / 2");
+        Counts(cut)[0].Should().Be("2 of 2 chosen");
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class SpellsStepTests : WizardStepTestBase
         var note = Squash(cut.Find("[role=note]").TextContent);
         note.Should().Contain("Cleric prepares 4 spells from the Cleric spell list");
         note.Should().Contain("Your subclass's spells are always prepared on top of these: Bless, Cure Wounds.");
-        cut.FindAll("h5").Select(h => h.TextContent.Trim()).Should().Equal("Guidance", "Guiding Bolt", "Healing Word");
+        RowNames(cut).Should().Equal("Guidance", "Guiding Bolt", "Healing Word");
     }
 
     [Fact]
@@ -148,6 +148,62 @@ public class SpellsStepTests : WizardStepTestBase
         _movedOn.Should().Be(0);
     }
 
+    [Fact]
+    public void ToggleSpell_UntilTheSectionIsFull_TurnsItsCountFromAmberToGreen()
+    {
+        // Arrange
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, []));
+        var cut = RenderStep();
+
+        // Act
+        SpellButton(cut, "Fire Bolt").Click();
+        var incomplete = CountBox(cut, 0);
+        var incompleteKind = incomplete.ClassList.Contains("border-amber");
+        SpellButton(cut, "Light").Click();
+
+        // Assert
+        incompleteKind.Should().BeTrue("one cantrip is still to choose");
+        Squash(incomplete.TextContent).Should().Be("1 of 2 chosen: choose 1 more");
+        var complete = CountBox(cut, 0);
+        complete.ClassList.Should().Contain("border-green");
+        Squash(complete.TextContent).Should().Be("2 of 2 chosen");
+        complete.QuerySelector("svg").Should().NotBeNull("a complete count shows its check");
+    }
+
+    [Fact]
+    public void Render_ForACaster_ShowsTheSpellbookWithThePicksAndTheSlotsStillOpen()
+    {
+        // Arrange
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 2, 1, false, []));
+        var cut = RenderStep();
+
+        // Act
+        SpellButton(cut, "Light").Click();
+        SpellButton(cut, "Shield").Click();
+        SpellButton(cut, "Sleep").Click();
+
+        // Assert
+        var sections = cut.FindAll("[data-testid=spellbook] [data-testid=spellbook-section]");
+        sections.Select(s => s.QuerySelector("h4")!.TextContent.Trim()).Should().Equal("Cantrips", "Spells");
+        sections[0].QuerySelectorAll("li").Select(li => li.TextContent.Trim()).Should().Equal("Light", "Not chosen yet");
+        sections[1].QuerySelectorAll("li").Select(li => li.TextContent.Trim()).Should().Equal("Shield", "Sleep");
+    }
+
+    [Fact]
+    public void Filter_ByASchool_ShowsOnlyThatSchoolsRows()
+    {
+        // Arrange
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, []));
+        var cut = RenderStep();
+
+        // Act
+        cut.FindAll("button.chip").Single(b => b.TextContent.Trim() == "Abjuration").Click();
+
+        // Assert
+        RowNames(cut).Should().Equal("Shield");
+        cut.FindAll("button.chip").Single(b => b.TextContent.Trim() == "Abjuration").GetAttribute("aria-pressed").Should().Be("true");
+    }
+
     private static CharacterDraftDetailsApiResponse Draft(string classId, string? subclassId = null) => new()
     {
         Id = DraftId,
@@ -160,8 +216,16 @@ public class SpellsStepTests : WizardStepTestBase
 
     private static string Squash(string text) => string.Join(' ', text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
 
+    private static List<string> Counts(IRenderedComponent<SpellsStep> cut) =>
+        cut.FindAll("[data-testid=choice-count]").Select(c => Squash(c.TextContent)).ToList();
+
+    private static IElement CountBox(IRenderedComponent<SpellsStep> cut, int index) =>
+        cut.FindAll("[data-testid=choice-count]")[index];
+
+    private static List<string> RowNames(IRenderedComponent<SpellsStep> cut) =>
+        cut.FindAll("[data-testid=choice-row] span.font-semibold").Select(s => s.TextContent.Trim()).ToList();
     private static IElement SpellButton(IRenderedComponent<SpellsStep> cut, string name) =>
-        cut.FindAll("button").Single(b => b.QuerySelector("h5")?.TextContent.Trim() == name);
+        cut.FindAll("[data-testid=choice-row]").Single(b => b.QuerySelector("span.font-semibold")?.TextContent.Trim() == name);
 
     private void ArrangeWizard(SpellAllowanceApiResponse allowance)
     {

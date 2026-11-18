@@ -4,222 +4,203 @@
 @inherits WizardStepBase
 
 <div>
-    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Ability Score Improvements")</h2>
+    <h2 class="step-title mb-4">@StepHeading("Ability Score Improvements")</h2>
 
     @if (IsLoading)
     {
-        <div class="flex justify-center items-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-        </div>
+        <Spinner />
     }
     else
     {
-        @if (!string.IsNullOrEmpty(ErrorMessage))
-        {
-            <Message Kind="MessageKind.Error" Class="mb-6">
-                <p class="text-sm">@ErrorMessage</p>
-            </Message>
-        }
+        <div class="space-y-6">
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <Message Kind="MessageKind.Error">
+                    <p class="text-sm">@ErrorMessage</p>
+                </Message>
+            }
 
-        <!-- The background's feat may ask for skills or tools too: a Noble's Skilled -->
-        @if (backgroundFeat is { Choice: { } backgroundChoice })
-        {
-            <div class="bg-gray-700 rounded-lg p-6 mb-6">
-                <h3 class="text-lg font-semibold text-white mb-1">Background Feat: @backgroundFeat.Name</h3>
-                @ProficiencySelects(backgroundChoice, backgroundFeatPicks)
-            </div>
-        }
+            @* The background's feat may ask for skills or tools too: a Noble's Skilled *@
+            @if (backgroundFeat is { Choice: { } backgroundChoice })
+            {
+                <Room Title="@($"Background Feat: {backgroundFeat.Name}")">
+                    @ProficiencySelects(backgroundChoice, backgroundFeatPicks)
+                </Room>
+            }
 
-        @if (fightingStylesOwed > 0)
-        {
-            <div class="bg-gray-700 rounded-lg p-6 mb-6">
-                <h3 class="text-lg font-semibold text-white mb-1">Fighting Style</h3>
-                <p class="text-gray-300 text-sm mb-4">
-                    Your class gives you <strong>@fightingStylesOwed</strong> Fighting Style(s). Pick @(fightingStylesOwed == 1 ? "one" : "them").
-                </p>
+            @if (fightingStylesOwed > 0)
+            {
+                <Room Title="Fighting Style">
+                    <p class="mb-4 text-sm text-pencil">
+                        Your class gives you <strong>@fightingStylesOwed</strong> Fighting Style(s). Pick @(fightingStylesOwed == 1 ? "one" : "them").
+                    </p>
 
-                @for (int s = 0; s < fightingStylesOwed; s++)
-                {
-                    var styleIndex = s;
-                    <label class="block text-sm text-gray-300 mb-3">
-                        @(fightingStylesOwed == 1 ? "Style" : $"Style {styleIndex + 1}") <span class="text-red-400">*</span>
-                        <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
-                                value="@chosenStyles[styleIndex]" @onchange="e => chosenStyles[styleIndex] = e.Value?.ToString()">
-                            <option value="">Choose...</option>
-                            @foreach (var style in fightingStyleOptions.Where(o => o.Id == chosenStyles[styleIndex] || (!chosenStyles.Contains(o.Id) && !slots.Any(slot => slot.TakesFeat && slot.FeatId == o.Id))))
+                    @for (int s = 0; s < fightingStylesOwed; s++)
+                    {
+                        var styleIndex = s;
+                        <label class="mb-3 block text-sm font-medium">
+                            @(fightingStylesOwed == 1 ? "Style" : $"Style {styleIndex + 1}")
+                            <select class="field mt-1" value="@chosenStyles[styleIndex]" @onchange="e => chosenStyles[styleIndex] = e.Value?.ToString()">
+                                <option value="">Choose...</option>
+                                @foreach (var style in fightingStyleOptions.Where(o => o.Id == chosenStyles[styleIndex] || (!chosenStyles.Contains(o.Id) && !slots.Any(slot => slot.TakesFeat && slot.FeatId == o.Id))))
+                                {
+                                    <option value="@style.Id">@style.Name</option>
+                                }
+                            </select>
+                            @if (fightingStyleOptions.FirstOrDefault(o => o.Id == chosenStyles[styleIndex]) is { } picked)
                             {
-                                <option value="@style.Id">@style.Name</option>
+                                <span class="mt-1 block text-xs font-normal text-pencil">@Truncate(picked.Description)</span>
                             }
-                        </select>
-                        @if (fightingStyleOptions.FirstOrDefault(o => o.Id == chosenStyles[styleIndex]) is { } picked)
-                        {
-                            <span class="block text-gray-400 text-xs mt-1">@Truncate(picked.Description)</span>
-                        }
-                    </label>
+                        </label>
+                    }
+                </Room>
+            }
+
+            @if (slots.Count == 0 && fightingStylesOwed == 0)
+            {
+                <Room Title="No Improvements">
+                    <p>No Ability Score Improvements available at this level.</p>
+                    <p class="mt-2 text-sm text-pencil">ASIs are gained at levels @(string.Join(", ", asiLevels)) for your class.</p>
+                </Room>
+            }
+            else if (slots.Count > 0)
+            {
+                @if (bonusFeatCount > 0)
+                {
+                    <Message Kind="MessageKind.Info">
+                        <p class="text-sm">
+                            As a <strong>@raceName</strong>, you take <strong>@bonusFeatCount</strong>
+                            @(bonusFeatCategory == null ? string.Empty : bonusFeatCategory + " ")feat(s) of your choice.
+                        </p>
+                    </Message>
                 }
-            </div>
-        }
 
-        @if (slots.Count == 0 && fightingStylesOwed == 0)
-        {
-            <div class="bg-gray-700 rounded-lg p-6 text-center">
-                <p class="text-gray-300 text-lg">No Ability Score Improvements available at this level.</p>
-                <p class="text-gray-500 text-sm mt-2">ASIs are gained at levels @(string.Join(", ", asiLevels)) for your class.</p>
-            </div>
-        }
-        else if (slots.Count > 0)
-        {
-            @if (bonusFeatCount > 0)
-            {
-                <Message Kind="MessageKind.Info" Class="mb-6">
-                    <p class="text-sm">
-                        As a <strong>@raceName</strong>, you take <strong>@bonusFeatCount</strong>
-                        @(bonusFeatCategory == null ? string.Empty : bonusFeatCategory + " ")feat(s) of your choice.
-                    </p>
-                </Message>
-            }
+                @if (asiCount > 0)
+                {
+                    <Message Kind="MessageKind.Info">
+                        <p class="text-sm">
+                            You have <strong>@asiCount</strong> Ability Score Improvement(s).
+                            Each one can either raise your ability scores by <strong>2 points</strong>
+                            (+2 to one score, or +1 to two different scores) or take a <strong>feat</strong> instead.
+                        </p>
+                    </Message>
+                }
 
-            @if (asiCount > 0)
-            {
-                <Message Kind="MessageKind.Info" Class="mb-6">
-                    <p class="text-sm">
-                        You have <strong>@asiCount</strong> Ability Score Improvement(s).
-                        Each one can either raise your ability scores by <strong>2 points</strong>
-                        (+2 to one score, or +1 to two different scores) or take a <strong>feat</strong> instead.
-                    </p>
-                </Message>
-            }
+                @for (int i = 0; i < slots.Count; i++)
+                {
+                    var index = i;
+                    var slot = slots[index];
 
-            @for (int i = 0; i < slots.Count; i++)
-            {
-                var index = i;
-                var slot = slots[index];
-
-                <div class="bg-gray-700 rounded-lg p-6 mb-4">
-                    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-                        <h3 class="text-lg font-bold text-white">
-                            @(slot.IsRaceFeat ? $"{raceName} Feat" : $"Improvement #{index + 1 - bonusFeatCount}")
-                        </h3>
-
+                    <Room Title="@(slot.IsRaceFeat ? $"{raceName} Feat" : $"Improvement #{index + 1 - bonusFeatCount}")" data-testid="improvement">
                         @if (!slot.IsRaceFeat)
                         {
-                            <div class="flex rounded-lg overflow-hidden border border-gray-500">
-                                <button type="button" @onclick="() => SetMode(index, false)"
-                                        class="@GetModeClass(!slot.TakesFeat)">
-                                    Ability Scores
-                                </button>
-                                <button type="button" @onclick="() => SetMode(index, true)"
-                                        class="@GetModeClass(slot.TakesFeat)">
-                                    Feat
-                                </button>
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "false" : "true")" @onclick="() => SetMode(index, false)">Ability Scores</button>
+                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "true" : "false")" @onclick="() => SetMode(index, true)">Feat</button>
                             </div>
                         }
-                    </div>
 
-                    @if (!slot.TakesFeat)
-                    {
-                        <p class="text-gray-400 text-sm mb-3">@GetPointsLeft(index) point(s) remaining</p>
+                        @if (!slot.TakesFeat)
+                        {
+                            <p class="mb-3 text-sm text-pencil">@GetPointsLeft(index) point(s) remaining</p>
 
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            @foreach (var ability in abilityScores)
-                            {
-                                var currentVal = slot.Improvement.TryGetValue(ability.Key, out var v) ? v : 0;
-                                <div class="bg-gray-600 rounded-lg p-3">
-                                    <p class="text-white font-medium text-sm mb-2">@ability.Value</p>
-                                    <div class="flex items-center gap-2">
-                                        <button @onclick="() => DecrementAbility(index, ability.Key)"
-                                                disabled="@(currentVal <= 0)"
-                                                class="w-8 h-8 bg-gray-500 hover:bg-gray-400 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded font-bold">
-                                            −
-                                        </button>
-                                        <span class="text-white font-bold text-lg w-6 text-center">@currentVal</span>
-                                        <button @onclick="() => IncrementAbility(index, ability.Key)"
-                                                disabled="@(GetPointsLeft(index) <= 0 || currentVal >= 2)"
-                                                class="w-8 h-8 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded font-bold">
-                                            +
-                                        </button>
+                            <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
+                                @foreach (var ability in abilityScores)
+                                {
+                                    var currentVal = slot.Improvement.TryGetValue(ability.Key, out var v) ? v : 0;
+                                    <div class="border-2 border-ink p-3 @(currentVal > 0 ? "bg-plum-tint" : "bg-room-highlight")">
+                                        <p class="mb-2 text-sm font-medium">@ability.Value</p>
+                                        <div class="flex items-center gap-2">
+                                            <button type="button" class="btn-step" aria-label="@($"Lower {ability.Value}")"
+                                                    @onclick="() => DecrementAbility(index, ability.Key)" disabled="@(currentVal <= 0)">−</button>
+                                            <span class="w-6 text-center font-display text-xl font-semibold">@currentVal</span>
+                                            <button type="button" class="btn-step" aria-label="@($"Raise {ability.Value}")"
+                                                    @onclick="() => IncrementAbility(index, ability.Key)" disabled="@(GetPointsLeft(index) <= 0 || currentVal >= 2)">+</button>
+                                        </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
-                    }
-                    else
-                    {
-                        <input type="search" placeholder="Search feats..."
-                               value="@slot.FeatSearch"
-                               @oninput="e => SetFeatSearch(index, e.Value?.ToString())"
-                               class="w-full bg-gray-600 border border-gray-500 text-white placeholder-gray-400 rounded-lg px-4 py-2 mb-3 focus:outline-hidden focus:border-indigo-500" />
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <input type="search" placeholder="Search feats..." aria-label="Search feats" class="field mb-4"
+                                   value="@slot.FeatSearch" @oninput="e => SetFeatSearch(index, e.Value?.ToString())" />
 
-                        <div class="max-h-72 overflow-y-auto space-y-2 pr-1">
-                            @foreach (var feat in FilteredFeats(index))
-                            {
-                                var featId = feat.Id;
-                                <button type="button" @onclick="() => SelectFeat(index, featId)"
-                                        class="@GetFeatClass(slot.FeatId == featId)">
-                                    <p class="text-white font-medium">
-                                        @feat.Name
-                                        @if (feat.Category != null)
+                            <div class="step-columns">
+                                <div class="max-h-[28rem] min-w-0 overflow-y-auto p-1">
+                                    <div class="option-grid">
+                                        @foreach (var feat in FilteredFeats(index))
                                         {
-                                            <span class="ml-2 bg-gray-500 text-gray-100 px-2 py-0.5 rounded text-xs font-normal">@feat.Category</span>
+                                            var featId = feat.Id;
+                                            <OptionRoom Name="@feat.Name" Picked="@(slot.FeatId == featId)" OnClick="() => SelectFeat(index, featId)">
+                                                @if (feat.Category != null)
+                                                {
+                                                    <span>@feat.Category</span>
+                                                }
+                                                @if (feat.AbilityIncrease is { } increase)
+                                                {
+                                                    <span>@IncreaseText(increase)</span>
+                                                }
+                                                @if (feat.Prerequisites.Any())
+                                                {
+                                                    <span>Requires: @string.Join(", ", feat.Prerequisites)</span>
+                                                }
+                                            </OptionRoom>
                                         }
-                                    </p>
-                                    @if (feat.Prerequisites.Any())
-                                    {
-                                        <p class="text-amber-300 text-xs mt-1">Requires: @string.Join(", ", feat.Prerequisites)</p>
-                                    }
-                                    @if (feat.AbilityIncrease is { } increase)
-                                    {
-                                        <p class="text-indigo-300 text-xs mt-1">@IncreaseText(increase)</p>
-                                    }
-                                    <p class="text-gray-300 text-xs mt-1">@Truncate(feat.Description)</p>
-                                </button>
-                            }
+                                    </div>
 
-                            @if (!FilteredFeats(index).Any())
+                                    @if (!FilteredFeats(index).Any())
+                                    {
+                                        <p class="py-4 text-center text-sm text-pencil">No feats match that search.</p>
+                                    }
+                                </div>
+
+                                @if (SelectedFeat(slot) is { } shownFeat)
+                                {
+                                    <KeyPanel Name="@shownFeat.Name">
+                                        <ChildContent>
+                                            @if (shownFeat.Category != null)
+                                            {
+                                                <KeyFact Label="Category">@shownFeat.Category</KeyFact>
+                                            }
+                                            <KeyFact Label="Requires">@(shownFeat.Prerequisites.Any() ? string.Join(", ", shownFeat.Prerequisites) : "None")</KeyFact>
+                                            <KeyFact Label="Raises">@(shownFeat.AbilityIncrease is { } raises ? IncreaseText(raises) : "Nothing")</KeyFact>
+                                        </ChildContent>
+                                        <Note>@shownFeat.Description</Note>
+                                    </KeyPanel>
+                                }
+                            </div>
+
+                            @* Athlete raises Strength or Dexterity: the player says which *@
+                            @if (SelectedFeat(slot) is { AbilityIncrease: { Options.Count: > 1 } choice } chosenFeat)
                             {
-                                <p class="text-gray-400 text-sm py-4 text-center">No feats match that search.</p>
+                                <label class="mt-4 block text-sm font-medium">
+                                    @chosenFeat.Name raises by @choice.Points
+                                    <select class="field mt-1" value="@slot.FeatAbility" @onchange="e => slot.FeatAbility = e.Value?.ToString()">
+                                        <option value="">Choose...</option>
+                                        @foreach (var ability in choice.Options)
+                                        {
+                                            <option value="@ability">@AbilityNames.Of(ability)</option>
+                                        }
+                                    </select>
+                                </label>
                             }
-                        </div>
 
-                        <!-- Athlete raises Strength or Dexterity: the player says which -->
-                        @if (SelectedFeat(slot) is { AbilityIncrease: { Options.Count: > 1 } choice } chosenFeat)
-                        {
-                            <label class="block text-sm text-gray-300 mt-4">
-                                @chosenFeat.Name raises by @choice.Points <span class="text-red-400">*</span>
-                                <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
-                                        value="@slot.FeatAbility" @onchange="e => slot.FeatAbility = e.Value?.ToString()">
-                                    <option value="">Choose...</option>
-                                    @foreach (var ability in choice.Options)
-                                    {
-                                        <option value="@ability">@AbilityNames.Of(ability)</option>
-                                    }
-                                </select>
-                            </label>
+                            @* Keen Mind's skill, Skilled's three skills or tools *@
+                            @if (SelectedFeat(slot) is { Choice: { } featChoice } && AsksForProficiencies(featChoice))
+                            {
+                                @ProficiencySelects(featChoice, slot.ProficiencyPicks)
+                            }
                         }
-
-                        <!-- Keen Mind's skill, Skilled's three skills or tools -->
-                        @if (SelectedFeat(slot) is { Choice: { } featChoice } && AsksForProficiencies(featChoice))
-                        {
-                            @ProficiencySelects(featChoice, slot.ProficiencyPicks)
-                        }
-                    }
-                </div>
+                    </Room>
+                }
             }
-        }
+        </div>
     }
 
-    <div class="flex justify-between mt-8">
-        <button @onclick="HandleBack" type="button"
-                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            Back
-        </button>
-        <button @onclick="HandleNext" disabled="@(!CanProceed() || IsSaving)"
-                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            @(IsSaving ? "Saving..." : NextLabel)
-        </button>
-    </div>
+    <StepNavigation OnBack="HandleBack" OnNext="HandleNext" NextDisabled="@(!CanProceed() || IsSaving)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
 </div>
-
 @code {
     [Parameter] public int CharacterLevel { get; set; }
     [Parameter] public EventCallback OnNext { get; set; }
@@ -440,14 +421,14 @@
     // One select per pick the feat gives, each leaving out what another pick or step already has
     private RenderFragment ProficiencySelects(FeatChoiceApiResponse choice, List<string?> picks) => __builder =>
     {
-        <p class="text-gray-300 text-sm mt-4 mb-2">
-            Pick @choice.Count @(choice.Type == FeatChoiceApiResponse.SkillsTools ? "skill(s) or tool(s)" : "skill(s)") <span class="text-red-400">*</span>
+        <p class="mb-2 mt-4 text-sm text-pencil">
+            Pick @choice.Count @(choice.Type == FeatChoiceApiResponse.SkillsTools ? "skill(s) or tool(s)" : "skill(s)")
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-3">
             @for (var p = 0; p < picks.Count; p++)
             {
                 var pickIndex = p;
-                <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2"
+                <select class="field" aria-label="@($"Pick {pickIndex + 1}")"
                         value="@picks[pickIndex]" @onchange="e => picks[pickIndex] = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
                     <option value="">Choose...</option>
                     @foreach (var option in OptionsFor(choice, picks[pickIndex]))
@@ -576,13 +557,6 @@
             ? new Dictionary<string, int> { [slot.FeatAbility] = increase.Points }
             : [];
 
-    private static string GetModeClass(bool isActive) => isActive
-        ? "px-4 py-2 text-sm font-medium bg-indigo-600 text-white"
-        : "px-4 py-2 text-sm font-medium bg-gray-600 text-gray-200 hover:bg-gray-500";
-
-    private static string GetFeatClass(bool isSelected) => isSelected
-        ? "w-full text-left bg-gray-600 border-2 border-indigo-500 rounded-lg p-3"
-        : "w-full text-left bg-gray-600 border-2 border-gray-500 hover:border-indigo-500 rounded-lg p-3";
 
     private static string Truncate(string text) =>
         text.Length <= 160 ? text : string.Concat(text.AsSpan(0, 160), "...");

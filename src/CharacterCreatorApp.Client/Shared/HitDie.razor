@@ -1,0 +1,52 @@
+@* A hit die drawn as its die, an outline with the number inside: a d6 is a square, a d8 a
+   diamond, a d10 a kite and a d12 a pentagon. Die is as the API writes it ("1d10" or "d10"). *@
+
+<span class="inline-flex shrink-0 items-center gap-1.5" title="Hit die @Label" data-testid="hit-die" data-die="@Label">
+    <svg class="text-ink" width="@Size" height="@Size" viewBox="0 0 40 40" aria-hidden="true">
+        @switch (Sides)
+        {
+            case 8:
+                <polygon points="20,2 38,20 20,38 2,20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+                break;
+            case 10:
+                <polygon points="20,2 37,16 20,38 3,16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+                break;
+            case 12:
+                <polygon points="20,2 38,15 31,37 9,37 2,15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" />
+                break;
+            default:
+                <rect x="4" y="4" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" />
+                break;
+        }
+        <text x="20" y="@(Sides == 10 ? 22 : 21)" text-anchor="middle" dominant-baseline="middle"
+              class="font-display" font-weight="600" font-size="15" fill="currentColor">@Sides</text>
+    </svg>
+    @if (ShowLabel)
+    {
+        <span>@Label</span>
+    }
+</span>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Die { get; set; } = string.Empty;
+
+    /// <summary>Width and height in pixels.</summary>
+    [Parameter]
+    public int Size { get; set; } = 32;
+
+    /// <summary>Writes "d10" beside the shape, for a screen reader and a reader who does not know the shapes.</summary>
+    [Parameter]
+    public bool ShowLabel { get; set; } = true;
+
+    private int Sides
+    {
+        get
+        {
+            var at = Die.IndexOf('d', StringComparison.OrdinalIgnoreCase);
+            return at >= 0 && int.TryParse(Die.AsSpan(at + 1), out var sides) ? sides : 0;
+        }
+    }
+
+    private string Label => $"d{Sides}";
+}

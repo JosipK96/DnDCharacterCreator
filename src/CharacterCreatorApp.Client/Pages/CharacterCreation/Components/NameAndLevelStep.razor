@@ -3,7 +3,7 @@
 @inherits WizardStepBase
 
 <div>
-    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Name & Level")</h2>
+    <h2 class="step-title mb-4">@StepHeading("Name & Level")</h2>
 
     @if (!string.IsNullOrEmpty(ErrorMessage))
     {
@@ -14,115 +14,86 @@
 
     @if (IsLoading)
     {
-        <div class="flex justify-center items-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-        </div>
+        <Spinner />
     }
     else
     {
-        <div class="space-y-6">
-            <!-- Character Name -->
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">
-                    Character Name <span class="text-red-400">*</span>
-                </label>
-                <input type="text"
-                       @bind="characterName"
-                       @bind:event="oninput"
-                       placeholder="Enter your character's name"
-                       maxlength="100"
-                       class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-600 focus:border-transparent" />
-                @if (!string.IsNullOrWhiteSpace(characterName) && characterName.Length < 2)
-                {
-                    <Message Kind="MessageKind.Error" Class="mt-2">Name must be at least 2 characters</Message>
-                }
-            </div>
-
-            <!-- Level -->
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">
-                    Starting Level <span class="text-red-400">*</span>
-                </label>
-                <select @bind="level"
-                        class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-3 focus:ring-2 focus:ring-indigo-600 focus:border-transparent">
-                    @for (int i = 1; i <= 20; i++)
+        <Room>
+            <div class="space-y-6">
+                <div>
+                    <label for="character-name" class="mb-2 block text-sm font-medium">Character Name</label>
+                    <input id="character-name" type="text"
+                           @bind="characterName"
+                           @bind:event="oninput"
+                           placeholder="Enter your character's name"
+                           maxlength="100"
+                           class="field" />
+                    @if (!string.IsNullOrWhiteSpace(characterName) && characterName.Length < 2)
                     {
-                        <option value="@i">Level @i</option>
-                    }
-                </select>
-                <p class="text-gray-400 text-sm mt-1">
-                    Most campaigns start at level 1-3
-                </p>
-            </div>
-
-            <!-- Rules edition -->
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">
-                    Rules <span class="text-red-400">*</span>
-                </label>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    @foreach (var option in EditionOptions)
-                    {
-                        <button type="button"
-                                @onclick="() => ChooseEditionAsync(option.Edition)"
-                                class="@EditionButtonClass(option.Edition)">
-                            <span class="block font-bold text-white">@option.Title</span>
-                            <span class="block text-sm text-gray-400 mt-1">@option.Description</span>
-                        </button>
+                        <Message Kind="MessageKind.Error" Class="mt-2">Name must be at least 2 characters</Message>
                     }
                 </div>
-                @if (ClearsChoices)
-                {
-                    <Message Kind="MessageKind.Warning" Class="mt-2">
-                        Switching rules clears the race, class, background, feats and spells chosen so far.
-                    </Message>
-                }
-            </div>
 
-            <!-- Books -->
-            <div>
-                <label class="block text-sm font-medium text-gray-300 mb-2">Books</label>
-                <p class="text-gray-400 text-sm mb-3">
-                    The Player's Handbook is always used. Tick the other books your table allows; only what they contain is offered.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    @foreach (var book in books)
+                <div>
+                    <label for="character-level" class="mb-2 block text-sm font-medium">Starting Level</label>
+                    <select id="character-level" @bind="level" class="field">
+                        @for (int i = 1; i <= 20; i++)
+                        {
+                            <option value="@i">Level @i</option>
+                        }
+                    </select>
+                    <p class="mt-1 text-sm text-pencil">Most campaigns start at level 1-3</p>
+                </div>
+
+                <div>
+                    <h3 class="mb-2 text-sm font-medium">Rules</h3>
+                    <div class="option-grid">
+                        @foreach (var option in EditionOptions)
+                        {
+                            <OptionRoom Name="@option.Title" Picked="@(option.Edition == edition)" OnClick="() => ChooseEditionAsync(option.Edition)">
+                                <span>@option.Description</span>
+                            </OptionRoom>
+                        }
+                    </div>
+                    @if (ClearsChoices)
                     {
-                        <label class="flex items-center gap-2 text-sm text-white">
-                            <input type="checkbox"
-                                   checked="@(book.IsPlayersHandbook || selectedBooks.Contains(book.Code))"
-                                   disabled="@book.IsPlayersHandbook"
-                                   @onchange="e => ToggleBook(book.Code, e.Value is true)" />
-                            <span>@book.Name</span>
-                        </label>
+                        <Message Kind="MessageKind.Warning" Class="mt-2">
+                            Switching rules clears the race, class, background, feats and spells chosen so far.
+                        </Message>
                     }
                 </div>
-                @if (ClearsBookChoices)
-                {
-                    <Message Kind="MessageKind.Warning" Class="mt-2">
-                        Choices made from a book you untick are cleared.
-                    </Message>
-                }
+
+                <div>
+                    <h3 class="mb-2 text-sm font-medium">Books</h3>
+                    <p class="mb-3 text-sm text-pencil">
+                        The Player's Handbook is always used. Tick the other books your table allows; only what they contain is offered.
+                    </p>
+                    <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+                        @foreach (var book in books)
+                        {
+                            <label class="flex items-center gap-2 text-sm">
+                                <input type="checkbox" class="h-4 w-4 accent-plum"
+                                       checked="@(book.IsPlayersHandbook || selectedBooks.Contains(book.Code))"
+                                       disabled="@book.IsPlayersHandbook"
+                                       @onchange="e => ToggleBook(book.Code, e.Value is true)" />
+                                <span>@book.Name</span>
+                            </label>
+                        }
+                    </div>
+                    @if (ClearsBookChoices)
+                    {
+                        <Message Kind="MessageKind.Warning" Class="mt-2">
+                            Choices made from a book you untick are cleared.
+                        </Message>
+                    }
+                </div>
             </div>
-        </div>
+        </Room>
     }
 
-    <!-- Navigation Buttons -->
-    <div class="flex justify-between mt-8">
-        <button @onclick="OnCancel"
-                type="button"
-                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            Cancel
-        </button>
-
-        <button @onclick="HandleNext"
-                disabled="@(!IsValid() || IsSaving || IsLoading)"
-                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            @(IsSaving ? "Saving..." : NextLabel)
-        </button>
-    </div>
+    <StepNavigation OnBack="OnCancel" BackText="Cancel" OnNext="HandleNext" NextDisabled="@(!IsValid() || IsSaving || IsLoading)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
 </div>
-
 @code {
     // The API's names for the two rulebooks
     private static readonly (string Edition, string Title, string Description)[] EditionOptions =
@@ -200,15 +171,6 @@
             && characterName.Length >= 2
             && level >= 1
             && level <= 20;
-    }
-
-    private string EditionButtonClass(string option)
-    {
-        var baseClass = "text-left bg-gray-700 border-2 rounded-lg p-4 transition-all duration-200";
-
-        return option == edition
-            ? $"{baseClass} border-indigo-500 bg-gray-600"
-            : $"{baseClass} border-gray-600 hover:border-indigo-500";
     }
 
     private async Task HandleNext()

@@ -1,0 +1,18 @@
+@* What a step shows while it loads: a Plum spinner, with an optional line under it. *@
+
+<div class="flex flex-col items-center justify-center @(Small ? "py-8" : "py-20")">
+    <div class="animate-spin rounded-full border-b-2 border-plum @(Small ? "h-8 w-8" : "h-12 w-12")"></div>
+    @if (Text is not null)
+    {
+        <p class="mt-2 text-pencil">@Text</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? Text { get; set; }
+
+    /// <summary>A smaller one, for a list that loads under one already shown.</summary>
+    [Parameter]
+    public bool Small { get; set; }
+}

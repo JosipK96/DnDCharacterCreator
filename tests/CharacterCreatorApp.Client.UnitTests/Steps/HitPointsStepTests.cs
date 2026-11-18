@@ -68,8 +68,8 @@ public class HitPointsStepTests : WizardStepTestBase
         var rollButton = Button(cut, "Rolled once");
         Button(cut, "Next: Improvements").Click();
 
-        // Assert - the button's first line says what came up ("Rolled 7")
-        var rolled = int.Parse(rollButton.QuerySelector("span")!.TextContent["Rolled ".Length..], System.Globalization.CultureInfo.InvariantCulture);
+        // Assert - the room's name says what came up ("Rolled 7")
+        var rolled = int.Parse(rollButton.QuerySelector("span.font-display")!.TextContent["Rolled ".Length..], System.Globalization.CultureInfo.InvariantCulture);
         rolled.Should().BeInRange(1, 10);
         rollButton.HasAttribute("disabled").Should().BeTrue("the die is rolled once");
         Api.BodyOf<SetHitPointsApiRequest>(HitPointsRoute).Result.Should().Be(rolled);

@@ -149,7 +149,223 @@
     left: 19px;
     width: 20px;
     height: 3px;
-    background-color: var(--color-room);
+    /* The door is the floor showing through, so it follows a hovered or picked room's fill */
+    background-color: inherit;
+  }
+}
+
+/*
+  The wizard's pieces (Shared/OptionRoom, KeyPanel, ChoiceSection, ChoiceRow, ChoiceCount):
+  options to pick as rooms on a grid, the picked one's key beside them, and long lists as rows.
+*/
+@utility option-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+}
+
+/* Options beside their key or spellbook panel; below 1024px the panel moves under them */
+@utility step-columns {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (width >= 64rem) {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    align-items: start;
+  }
+}
+
+@utility option-room {
+  @apply room;
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem 0.875rem;
+  text-align: left;
+  color: var(--color-ink);
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-room-highlight);
+  }
+
+  /* A picked option; data-picked marks one that is not a button, such as a room holding a field */
+  &[aria-pressed="true"],
+  &[aria-pressed="true"]:hover,
+  &[data-picked="true"] {
+    background-color: var(--color-plum-tint);
+  }
+}
+
+/* "You are here": a Plum ring with a Plum dot, in the picked room's top-right corner */
+@utility you-are-here {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--color-plum);
+  border-radius: 9999px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border-radius: 9999px;
+    background-color: var(--color-plum);
+  }
+}
+
+/* The key to the picked option: a room with a 4px double Ink wall */
+@utility key-room {
+  @apply room;
+  border: 4px double var(--color-ink);
+
+  &::before {
+    top: -4px;
+    height: 4px;
+  }
+}
+
+@utility choice-row {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  color: var(--color-ink);
+  border-bottom: 1px dashed color-mix(in srgb, var(--color-pencil) 50%, transparent);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-room-highlight);
+  }
+
+  &[aria-pressed="true"] {
+    background-color: var(--color-plum-tint);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: color-mix(in srgb, var(--color-pencil) 70%, var(--color-room));
+  }
+}
+
+/* A row's square checkbox: an Ink outline, filled Plum with a white tick once picked */
+@utility choice-box {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  border: 2px solid currentcolor;
+  color: inherit;
+
+  [aria-pressed="true"] > & {
+    border-color: var(--color-plum);
+    background-color: var(--color-plum);
+    color: white;
+  }
+}
+
+/* A small square − or + beside a number: the point buy's and the improvements' steps */
+@utility btn-step {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid var(--color-ink);
+  background-color: var(--color-room);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-room-highlight);
+  }
+
+  &:disabled {
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--color-pencil) 55%, var(--color-room));
+    color: color-mix(in srgb, var(--color-pencil) 70%, var(--color-room));
+    cursor: not-allowed;
+  }
+}
+
+/* "R" and "C" on a spell row: ritual and concentration */
+@utility row-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid currentcolor;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* A filter, such as a spell school: a small square chip, filled Ink when chosen */
+@utility chip {
+  padding: 0.125rem 0.625rem;
+  border: 2px solid var(--color-ink);
+  background-color: var(--color-room);
+  color: var(--color-ink);
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover:not([aria-pressed="true"]) {
+    background-color: var(--color-room-highlight);
+  }
+
+  &[aria-pressed="true"] {
+    background-color: var(--color-ink);
+    color: var(--color-room);
+  }
+}
+
+/* A text box or a select: a 2px Ink border on the room's highlight */
+@utility field {
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--color-ink);
+  background-color: var(--color-room-highlight);
+  color: var(--color-ink);
+
+  &:focus {
+    outline: 2px solid var(--color-plum);
+    outline-offset: 1px;
+  }
+
+  &:disabled {
+    border-style: dashed;
+    color: var(--color-pencil);
+  }
+
+  &::placeholder {
+    color: var(--color-pencil);
+  }
+}
+
+/* Back, and other ways out that are not the main action: a plain underlined link */
+@utility link-back {
+  color: var(--color-ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--color-plum);
   }
 }
 
@@ -168,6 +384,14 @@
   font-weight: 600;
   font-size: 22px;
   line-height: 1.2;
+}
+
+/* A wizard step's heading ("Step 3: Choose Your Class"), between a page title and a room title */
+@utility step-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.15;
 }
 
 @utility page-title {

@@ -40,7 +40,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         var cut = RenderStep(level: 6);
 
         // Assert
-        cut.FindAll("h3.font-bold").Select(h => h.TextContent.Trim()).Should().Equal("Improvement #1", "Improvement #2");
+        cut.FindAll("[data-testid=improvement] > h2").Select(h => h.TextContent.Trim()).Should().Equal("Improvement #1", "Improvement #2");
         Button(cut, "Next: Spells").HasAttribute("disabled").Should().BeTrue();
     }
 
@@ -213,7 +213,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         ArrangeLoad(Draft(level: 1, raceId: "human-phb", subraceId: "human-variant-phb"), [Alert], races: [human]);
         Api.Put(DraftPath("ability-score-improvements"));
         var cut = RenderStep(level: 1);
-        cut.FindAll("h3.font-bold").Select(h => h.TextContent.Trim()).Should().Equal("Variant Human Feat");
+        cut.FindAll("[data-testid=improvement] > h2").Select(h => h.TextContent.Trim()).Should().Equal("Variant Human Feat");
         Buttons(cut, "Ability Scores").Should().BeEmpty();
 
         // Act
@@ -234,7 +234,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         Api.Put(DraftPath("ability-score-improvements"));
         Api.Put(DraftPath("fighting-styles"));
         var cut = RenderStep(level: 1);
-        cut.FindAll("h3").Select(h => h.TextContent.Trim()).Should().Equal("Fighting Style");
+        cut.FindAll("h2.room-title").Select(h => h.TextContent.Trim()).Should().Equal("Fighting Style");
         Button(cut, "Next: Spells").HasAttribute("disabled").Should().BeTrue();
 
         // Act

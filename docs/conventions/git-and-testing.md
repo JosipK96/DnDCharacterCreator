@@ -14,8 +14,10 @@
   zero warnings.
 - Do not commit while something still needs a look — a generated migration, for
   instance.
-- Dependabot proposes NuGet updates weekly and Actions monthly; a workflow turns on auto-merge
-  for its minor and patch updates, while major ones wait for a review.
+- Dependabot proposes NuGet and Actions updates monthly; a workflow turns on auto-merge for its
+  minor and patch updates. It never proposes a NuGet major update (a new .NET version is one) or
+  StyleCop.Analyzers, whose next version adds rules the code does not follow yet: those move by
+  hand, each in its own issue (#120).
 
 ## What is ignored
 

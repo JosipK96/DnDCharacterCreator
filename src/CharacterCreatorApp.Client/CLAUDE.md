@@ -58,6 +58,9 @@
   pieces (`$"bg-{colour}"`).
 - Barlow and Barlow Condensed are served from `wwwroot/fonts` with their `OFL.txt`; nothing
   loads from Google.
+- Below 768px every button, link, select, text box and checkbox label is at least 44 by 44px,
+  by one rule in `app.css`'s base layer; `WizardSmokeTests`' phone run measures them on every
+  step and the sheet. Don't size a new control under that.
 - Every message box is `Shared/Message.razor` (`MessageKind` Error, Success, Warning, Info). Its
   role (`alert` for errors only, `status` for success and warnings, `note` for info) is how
   tests find it, never a colour class. A framed section is `Shared/Room.razor`.

@@ -15,6 +15,7 @@
 }
 
 .update-prompt button {
+    min-width: 2.75rem;
     min-height: 2.75rem;
     padding: 0 1rem;
     font-family: var(--font-display);

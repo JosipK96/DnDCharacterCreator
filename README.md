@@ -10,6 +10,10 @@ the 2014 or the 2024 rules, and keeping them on a character sheet.
 - **Both rules editions.** A character picks 2014 or 2024 in its first step, and every later
   step offers only that edition's classes, species and races, backgrounds, feats, spells and
   languages.
+- **Books to allow.** The first step also ticks the books the table allows besides the Player's
+  Handbook, and the later steps offer only what those hold. Under each such list a note says how
+  many more options the unticked books hold and which books, with a way back to the first step to
+  tick them, so a switched-off option is not taken for one the app lacks.
 - **A guided wizard.** Name and level, race, class, background, languages, ability scores,
   proficiencies, spells and improvements, then a review of the finished sheet before saving.
   A draft is saved after every step, so it can be left and picked up again.
@@ -164,7 +168,8 @@ and shows its alerts under the repository's Security tab.
 The wizard has two test projects of its own:
 
 - `tests/CharacterCreatorApp.Client.UnitTests`: bUnit tests of the steps with rules of their own
-  (point buy, the dice roll, improvements and Fighting Styles, spell counts, the books), steps
+  (point buy, the dice roll, improvements and Fighting Styles, spell counts, the books and the
+  notes on what the unticked ones hold), steps
   filled in from the draft, the marks of an edit, a level-up's flow and hit points, and the
   sheet's Download PDF. They render the components in memory over a fake API, so they need
   neither Docker nor a browser.

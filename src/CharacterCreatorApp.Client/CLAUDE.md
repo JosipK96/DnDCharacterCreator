@@ -14,6 +14,11 @@
   takes the flow (`WizardStepBase.Flow`), so its heading number and "Next" label follow it. The
   class step keeps the class (its ClassLocked parameter), and the improvements step keeps the
   earlier improvements beside a new one.
+- Under each list the draft's books filter (race, class, subclass, background, feats, spells),
+  `Components/HiddenOptionsNote.razor` says what the unticked books hold, counted by the API
+  (`LookupService.GetHiddenOptionsAsync`). Its button calls `WizardStepBase.OnChangeBooks`: the
+  wizard goes to step 1 and back to the step after, unless an edition change or an unticked book
+  cleared choices. A level-up has no step 1, so its notes have no button.
 - Sheet numbers come from `CharacterStatsCalculator` through the API; don't recompute a modifier
   in a Razor page. The sheet and the review step show spell slots and Pact Magic through the
   one shared component, Shared/SpellSlotsPanel.razor. What each step may offer follows the D&D rules in

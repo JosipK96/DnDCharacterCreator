@@ -70,7 +70,9 @@
   </ItemGroup>
 
   <!-- Before the build, so the static web assets (and the Api's publish of them) include the output.
-       Design-time builds in Visual Studio skip it. -->
+       Design-time builds in Visual Studio skip it.
+       shortcut: dotnet watch hot reload does not rerun it, so a class first used in a .razor file
+       shows after the next build; add a watch item for Styles and the .razor files if that starts to hurt. -->
   <Target Name="BuildTailwindCss"
           BeforeTargets="BeforeBuild"
           DependsOnTargets="FetchTailwind"

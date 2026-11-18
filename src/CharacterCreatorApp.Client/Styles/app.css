@@ -2,7 +2,7 @@
   The client's stylesheet, built into wwwroot/css/app.css by Tailwind's standalone CLI at build
   time (Tailwind.targets). The look is a dungeon map on graph paper: the palette and the font
   families are named once, in @theme, and the shared pieces (rooms, buttons) are utilities below.
-  Shared/Room.razor and Shared/Message.razor build on them.
+  Shared/Room.razor uses the room utility; Shared/Message.razor takes its colours from the palette.
 */
 @import "tailwindcss" source(none);
 

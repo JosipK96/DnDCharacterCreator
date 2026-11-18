@@ -31,7 +31,7 @@
 
         @if (alreadyGrantedNames.Any())
         {
-            <Message Kind="MessageKind.Warning" Class="mb-4">
+            <Message Kind="MessageKind.Info" Class="mb-4">
                 <strong>Note:</strong> The following skills are already granted by your background and have been removed from the list:
                 @string.Join(", ", alreadyGrantedNames).
             </Message>

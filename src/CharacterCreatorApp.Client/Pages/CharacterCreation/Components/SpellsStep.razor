@@ -108,6 +108,10 @@
                             <ChildContent>@SpellRows(availableLeveledSpells, selectedLeveledSpells, spellsKnown, ToggleLeveledSpell)</ChildContent>
                         </ChoiceSection>
                     }
+
+                    <HiddenOptionsNote List="spells" Edition="@(draft?.Edition ?? string.Empty)" Sources="@(draft?.AllowedSources ?? [])"
+                                       ClassId="@draft?.ClassId" SubclassId="@draft?.SubclassId" MaxLevel="@maxSpellLevel"
+                                       OnChangeBooks="@OnChangeBooks" />
                 }
 
                 @* Spells the race (a high elf's cantrip) and feats (Magic Initiate) let the character pick *@

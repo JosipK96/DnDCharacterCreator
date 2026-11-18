@@ -37,6 +37,8 @@
                         }
                     </div>
 
+                    <HiddenOptionsNote List="races" Edition="@(Edition ?? string.Empty)"Sources="@Sources" OnChangeBooks="@OnChangeBooks" />
+
                     @if (selectedRace?.Subraces?.Any() == true)
                     {
                         <Room Title="@SubraceHeading(selectedRace)">

@@ -40,6 +40,11 @@
                     }
                 </div>
 
+                @if (!ClassLocked)
+                {
+                    <HiddenOptionsNote List="classes" Edition="@Edition" Sources="@Sources" OnChangeBooks="@OnChangeBooks" />
+                }
+
                 @if (selectedClass is not null && characterLevel >= selectedClass.SubclassLevel)
                 {
                     @if (loadingSubclasses)
@@ -61,6 +66,8 @@
                                     </OptionRoom>
                                 }
                             </div>
+                            <HiddenOptionsNote List="subclasses" Edition="@Edition" Sources="@Sources" ClassId="@selectedClass.Id"
+                                               OnChangeBooks="@OnChangeBooks" Class="mt-4" />
                         </Room>
                     }
                     else

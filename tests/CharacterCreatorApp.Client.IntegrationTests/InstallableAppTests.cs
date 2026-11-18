@@ -7,7 +7,8 @@ using FluentAssertions;
 namespace CharacterCreatorApp.Client.IntegrationTests;
 
 /// <summary>What a phone needs to offer "Install app": the page links a manifest, and the Api serves it.</summary>
-public class InstallableAppTests(WizardHost host) : IClassFixture<WizardHost>, IDisposable
+[Collection(WizardHostGroup.Name)]
+public class InstallableAppTests(WizardHost host) : IDisposable
 {
     private readonly HttpClient _http = new() { BaseAddress = new Uri(host.Address) };
 

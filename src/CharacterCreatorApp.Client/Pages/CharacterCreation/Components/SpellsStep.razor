@@ -121,7 +121,7 @@
                     <ChoiceSection Title="@($"{choice.Name} Spells")" Chosen="@picks.Count" Total="@(choice.Cantrips + choice.FirstLevelSpells)">
                         <Description>
                             <p>@BonusText(choice)</p>
-                            <div class="mt-3 grid gap-3 md:grid-cols-2">
+                            <div class="grid gap-3 md:grid-cols-2 @(choice.Lists.Count > 1 || (choice.FeatId != null && choice.AbilityOptions.Count > 0) ? "mt-3" : string.Empty)">
                                 @if (choice.Lists.Count > 1)
                                 {
                                     <select class="field" aria-label="Spell list" value="@bonusListIds[index]" @onchange="e => SelectBonusList(index, e.Value?.ToString())">

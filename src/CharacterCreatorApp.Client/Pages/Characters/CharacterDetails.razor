@@ -6,320 +6,230 @@
 @inject NavigationManager Navigation
 @inject IJSRuntime JS
 
-@* The page sits on the graph paper; the sheet below keeps its look until it is restyled *@
-<div>
-    <div class="max-w-5xl mx-auto">
-        @if (isLoading)
-        {
-            <!-- Loading State -->
-            <div class="flex justify-center items-center py-20">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-plum"></div>
-            </div>
-        }
-        else if (!string.IsNullOrEmpty(errorMessage))
-        {
-            <!-- Error State -->
-            <Message Kind="MessageKind.Error">
-                <p class="font-medium">Error loading character</p>
-                <p class="text-sm mt-1">@errorMessage</p>
-                <button @onclick="LoadCharacter"
-                        class="btn-secondary mt-4">
-                    Try Again
-                </button>
-            </Message>
-        }
-        else if (character != null)
-        {
-            <!-- Header with Actions -->
-            <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
-                <button @onclick="BackToList"
-                        class="font-medium text-ink hover:underline underline-offset-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    Back to Characters
-                </button>
+@* The sheet, laid out like the paper one: rooms in three columns on a wide screen, two on a
+   tablet and one on a phone. Every number is the API's (CharacterStatsCalculator), shown as sent. *@
+<div class="mx-auto max-w-6xl">
+    @if (isLoading)
+    {
+        <Spinner />
+    }
+    else if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <Message Kind="MessageKind.Error">
+            <p class="font-medium">Error loading character</p>
+            <p class="mt-1 text-sm">@errorMessage</p>
+            <button @onclick="LoadCharacter" class="btn-secondary mt-4">Try again</button>
+        </Message>
+    }
+    else if (character != null)
+    {
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+            <button type="button" @onclick="BackToList" class="link-back">Back to characters</button>
 
-                <div class="flex flex-wrap gap-3">
-                    <div class="flex">
-                        <button @onclick="DownloadPdf" disabled="@isDownloading"
-                                class="bg-gray-700 hover:bg-gray-600 disabled:opacity-50 text-white px-4 py-2 rounded-l-lg font-medium transition-colors duration-200">
-                            @(isDownloading ? "Preparing..." : "Download PDF")
-                        </button>
-                        <select @bind="paper" aria-label="Paper size"
-                                class="bg-gray-700 text-white text-sm border-l border-gray-600 rounded-r-lg px-2">
-                            <option value="a4">A4</option>
-                            <option value="letter">Letter</option>
-                        </select>
-                    </div>
-                    @if (character.Level < CharacterLevels.Max)
-                    {
-                        <button @onclick="LevelUpCharacter" disabled="@isStartingEdit"
-                                class="bg-emerald-700 hover:bg-emerald-600 disabled:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
-                            Level Up
-                        </button>
-                    }
-                    <button @onclick="EditCharacter" disabled="@isStartingEdit"
-                            class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
-                        @(isStartingEdit ? "Opening..." : "Edit Character")
+            <div class="flex flex-wrap gap-3">
+                <div class="flex">
+                    <button @onclick="DownloadPdf" disabled="@isDownloading" class="btn-secondary">
+                        @(isDownloading ? "Preparing..." : "Download PDF")
                     </button>
-                    <button @onclick="() => ConfirmDelete(character)"
-                            class="btn-danger">
-                        Delete Character
-                    </button>
+                    <select @bind="paper" aria-label="Paper size"
+                            class="border-2 border-l-0 border-ink bg-room-highlight px-2 text-ink">
+                        <option value="a4">A4</option>
+                        <option value="letter">Letter</option>
+                    </select>
                 </div>
+                @if (character.Level < CharacterLevels.Max)
+                {
+                    <button @onclick="LevelUpCharacter" disabled="@isStartingEdit" class="btn-secondary">
+                        Level up
+                    </button>
+                }
+                <button @onclick="EditCharacter" disabled="@isStartingEdit" class="btn-main">
+                    @(isStartingEdit ? "Opening..." : "Edit character")
+                </button>
+                <button @onclick="() => ConfirmDelete(character)" class="btn-danger">
+                    Delete character
+                </button>
             </div>
+        </div>
 
-            <!-- Character Header -->
-            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-t-lg px-8 py-6">
-                <h1 class="text-4xl font-bold text-white mb-2">@character.Name</h1>
-                <p class="text-xl text-indigo-100">
+        <div class="sheet-columns">
+            <Room Class="sheet-wide">
+                <h1 class="font-display text-[46px] font-semibold leading-none">@character.Name</h1>
+                <p class="mt-2 text-[21px]">
                     Level @character.Level @character.ClassName@(character.SubclassName != null ? $" ({character.SubclassName})" : "")
                 </p>
-                <p class="text-indigo-200 mt-1">
-                    @character.RaceName@(character.SubraceName != null ? $" ({character.SubraceName})" : "") • @character.Size • @character.BackgroundName • @character.Edition rules
+                <p class="mt-1 text-pencil">
+                    @character.RaceName@(character.SubraceName != null ? $" ({character.SubraceName})" : "") · @character.Size · @character.BackgroundName · @character.Edition rules
                 </p>
-            </div>
+            </Room>
 
-            <!-- Character Sheet Content -->
-            <div class="bg-gray-800 rounded-b-lg shadow-xl p-8 space-y-8">
-
-                @if (character.Stats is { } stats)
-                {
-                    <!-- Combat -->
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Combat</h2>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                            <div class="bg-gray-700 rounded-lg p-4 text-center">
-                                <div class="text-gray-400 text-sm font-medium mb-1">Hit Points</div>
-                                <div class="text-3xl font-bold text-white">@stats.MaxHitPoints</div>
-                            </div>
-                            <div class="bg-gray-700 rounded-lg p-4 text-center">
-                                <div class="text-gray-400 text-sm font-medium mb-1">Armor Class</div>
-                                <div class="text-3xl font-bold text-white">@stats.ArmorClass</div>
-                            </div>
-                            <div class="bg-gray-700 rounded-lg p-4 text-center">
-                                <div class="text-gray-400 text-sm font-medium mb-1">Initiative</div>
-                                <div class="text-3xl font-bold text-white">@Signed(stats.Initiative)</div>
-                            </div>
-                            <div class="bg-gray-700 rounded-lg p-4 text-center">
-                                <div class="text-gray-400 text-sm font-medium mb-1">Speed</div>
-                                <div class="text-3xl font-bold text-white">@stats.Speed<span class="text-base text-gray-400"> ft</span></div>
-                            </div>
-                            <div class="bg-gray-700 rounded-lg p-4 text-center">
-                                <div class="text-gray-400 text-sm font-medium mb-1">Hit Dice</div>
-                                <div class="text-3xl font-bold text-white">@stats.HitDice</div>
-                            </div>
-                            <div class="bg-gray-700 rounded-lg p-4 text-center">
-                                <div class="text-gray-400 text-sm font-medium mb-1">Prof. Bonus</div>
-                                <div class="text-3xl font-bold text-indigo-400">@Signed(stats.ProficiencyBonus)</div>
-                            </div>
-                        </div>
-                        <p class="text-gray-500 text-sm mt-2">
-                            Armor class is unarmoured: 10 + DEX, or the class's or subclass's own when higher (a
-                            barbarian's, monk's or draconic sorcerer's) — equipment is not tracked yet.
-                        </p>
+            @if (character.Stats is { } stats)
+            {
+                <div class="sheet-wide">
+                    <h2 class="sr-only">Combat</h2>
+                    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+                        <CombatNumber Label="Hit points" Value="@stats.MaxHitPoints.ToString()" />
+                        <CombatNumber Label="Armor class" Value="@stats.ArmorClass.ToString()" />
+                        <CombatNumber Label="Initiative" Value="@Signed(stats.Initiative)" />
+                        <CombatNumber Label="Speed" Value="@stats.Speed.ToString()" Unit="ft" />
+                        <CombatNumber Label="Hit dice" Value="@stats.HitDice" />
+                        <CombatNumber Label="Proficiency bonus" Value="@Signed(stats.ProficiencyBonus)" IsPlum="true" />
                     </div>
+                    <p class="mt-2 text-sm text-pencil">
+                        Armor class is unarmoured: 10 + DEX, or the class's or subclass's own when higher (a
+                        barbarian's, monk's or draconic sorcerer's) — equipment is not tracked yet.
+                    </p>
+                </div>
 
-                    <!-- Ability Scores -->
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Ability Scores</h2>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <div class="sheet-stack">
+                    <Room Title="Ability Scores">
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-2">
                             @foreach (var ability in stats.Abilities)
                             {
-                                <div class="bg-gray-700 rounded-lg p-4 text-center">
-                                    <div class="text-gray-400 text-sm font-medium mb-1">@ability.AbilityId</div>
-                                    <div class="text-3xl font-bold text-white">@ability.Score</div>
-                                    <div class="text-indigo-400 text-lg">@Signed(ability.Modifier)</div>
+                                <div class="score-box" data-testid="ability" data-ability="@ability.AbilityId">
+                                    <div class="text-sm text-pencil">@AbilityNames.Of(ability.AbilityId)</div>
+                                    <div class="font-display text-[34px] font-semibold leading-tight">@ability.Score</div>
+                                    <div class="modifier-tab" data-testid="modifier">@Signed(ability.Modifier)</div>
                                 </div>
                             }
                         </div>
-                    </div>
+                    </Room>
 
-                    <!-- Saving Throws -->
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Saving Throws</h2>
-                        <div class="bg-gray-700 rounded-lg p-6 grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <Room Title="Saving Throws">
+                        <ul>
                             @foreach (var save in stats.SavingThrows)
                             {
-                                <div class="flex items-center justify-between bg-gray-600 rounded px-3 py-2">
-                                    <span class="flex items-center gap-2">
-                                        <span class="@ProficiencyDotClass(save.IsProficient)"></span>
-                                        <span class="text-gray-200">@save.AbilityId</span>
-                                    </span>
-                                    <span class="text-white font-bold">@Signed(save.Modifier)</span>
-                                </div>
+                                <li class="sheet-row" data-testid="saving-throw">
+                                    <span class="prof-dot" data-proficient="@Proficient(save.IsProficient)"></span>
+                                    <span class="flex-1" data-testid="name">@AbilityNames.Of(save.AbilityId)</span>
+                                    <span class="font-semibold tabular-nums">@Signed(save.Modifier)</span>
+                                </li>
                             }
-                        </div>
-                    </div>
+                        </ul>
+                    </Room>
+                </div>
 
-                    <!-- Skills -->
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Skills</h2>
-                        <div class="bg-gray-700 rounded-lg p-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                @foreach (var skill in stats.Skills)
-                                {
-                                    <div class="flex items-center justify-between bg-gray-600 rounded px-3 py-2">
-                                        <span class="flex items-center gap-2">
-                                            <span class="@ProficiencyDotClass(skill.IsProficient)"></span>
-                                            <span class="text-gray-200">@skill.Name</span>
-                                            <span class="text-gray-400 text-xs">(@skill.AbilityId)</span>
-                                        </span>
-                                        <span class="text-white font-bold">@Signed(skill.Modifier)</span>
-                                    </div>
-                                }
-                            </div>
-                            <p class="text-gray-400 text-sm mt-4">
-                                Passive Perception <span class="text-white font-bold">@stats.PassivePerception</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    @if (stats.SpellSlots.Count > 0 || stats.PactMagic != null)
-                    {
-                        <div>
-                            <h2 class="text-2xl font-bold text-white mb-4">Spell Slots</h2>
-                            @* The panel is drawn for a room, as the review step shows it *@
-                            <Room><SpellSlotsPanel Stats="stats" /></Room>
-                        </div>
-                    }
-                }
-
-                <!-- Proficiencies -->
-                @if (character.Proficiencies.Any())
-                {
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Proficiencies</h2>
-                        <div class="bg-gray-700 rounded-lg p-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                                @foreach (var proficiency in character.Proficiencies.OrderBy(p => p.Name))
-                                {
-                                    <div class="flex items-center space-x-2">
-                                        <svg class="w-4 h-4 text-indigo-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="text-gray-300">@proficiency.Name</span>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-
-                <!-- Languages -->
-                @if (character.Languages.Any())
-                {
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Languages</h2>
-                        <div class="bg-gray-700 rounded-lg p-6">
-                            <div class="flex flex-wrap gap-2">
-                                @foreach (var language in character.Languages.OrderBy(l => l.Name))
-                                {
-                                    <span class="bg-green-900 text-green-200 px-3 py-1 rounded-full text-sm">
-                                        @language.Name
-                                    </span>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-
-                <!-- Features -->
-                @if (character.Features.Any())
-                {
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Features & Traits</h2>
-                        <div class="bg-gray-700 rounded-lg p-6 space-y-2">
-                            @foreach (var feature in character.Features.OrderBy(f => f.Name))
+                <div class="sheet-stack">
+                    <Room Title="Skills">
+                        <ul>
+                            @foreach (var skill in stats.Skills)
                             {
-                                <div class="flex items-start space-x-2">
-                                    <svg class="w-5 h-5 mt-0.5 text-purple-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                                    </svg>
-                                    <span class="text-gray-300">@feature.Name</span>
-                                </div>
+                                <li class="sheet-row" data-testid="skill">
+                                    <span class="prof-dot" data-proficient="@Proficient(skill.IsProficient)"></span>
+                                    <span class="flex-1" data-testid="name">
+                                        @skill.Name <span class="text-xs text-pencil">@skill.AbilityId</span>
+                                    </span>
+                                    <span class="font-semibold tabular-nums">@Signed(skill.Modifier)</span>
+                                </li>
                             }
-                        </div>
-                    </div>
-                }
+                        </ul>
+                        <p class="mt-2 flex justify-between border-t-2 border-ink pt-2">
+                            <span>Passive Perception</span>
+                            <span class="font-semibold tabular-nums">@stats.PassivePerception</span>
+                        </p>
+                    </Room>
+                </div>
+            }
 
-                <!-- Feats -->
-                @if (character.Feats.Any())
+            <div class="sheet-stack">
+                @if (character.Stats is { } slotStats && (slotStats.SpellSlots.Count > 0 || slotStats.PactMagic != null))
                 {
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Feats</h2>
-                        <div class="bg-gray-700 rounded-lg p-6 space-y-4">
-                            @* One entry per feat taken: a repeatable feat taken twice shows twice, each with its own spells *@
-                            @foreach (var entry in character.Feats.OrderBy(f => f.Feat.Name))
-                            {
-                                <div>
-                                    <p class="text-white font-medium mb-1">
-                                        @entry.Feat.Name
-                                        @if (entry.Feat.Category != null)
-                                        {
-                                            <span class="ml-2 bg-gray-500 text-gray-100 px-2 py-0.5 rounded text-xs font-normal">@entry.Feat.Category</span>
-                                        }
-                                    </p>
-                                    <p class="text-gray-300 text-sm">@entry.Feat.Description</p>
-                                    @if (entry.Spells.Count > 0)
-                                    {
-                                        <p class="text-gray-400 text-sm mt-1">@AbilityNames.SpellsLabel(entry.SpellcastingAbilityId): @string.Join(", ", entry.Spells.Select(s => s.Name))</p>
-                                    }
-                                </div>
-                            }
-                        </div>
-                    </div>
+                    <Room Title="Spell Slots">
+                        <SpellSlotsPanel Stats="slotStats" />
+                    </Room>
                 }
 
-                <!-- Spells -->
                 @if (character.Spells.Any())
                 {
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-4">Spells Known</h2>
-                        <div class="bg-gray-700 rounded-lg p-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                @foreach (var spell in character.Spells.OrderBy(s => s.Name))
-                                {
-                                    <div class="bg-gray-600 rounded-lg px-4 py-2 flex items-center space-x-2">
-                                        <svg class="w-4 h-4 text-yellow-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                        </svg>
-                                        <span class="text-gray-300">@spell.Name</span>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
+                    <Room Title="Spells">
+                        <ul>
+                            @foreach (var spell in character.Spells.OrderBy(s => s.Level).ThenBy(s => s.Name))
+                            {
+                                <li class="sheet-row justify-between">
+                                    <span>@spell.Name</span>
+                                    <span class="text-sm text-pencil">@SpellLevel(spell.Level)</span>
+                                </li>
+                            }
+                        </ul>
+                    </Room>
+                }
+
+                @if (character.Proficiencies.Any())
+                {
+                    <Room Title="Proficiencies">
+                        <ul>
+                            @foreach (var proficiency in character.Proficiencies.OrderBy(p => p.Name))
+                            {
+                                <li class="sheet-row justify-between">
+                                    <span>@proficiency.Name</span>
+                                    <span class="text-sm text-pencil">@proficiency.Type</span>
+                                </li>
+                            }
+                        </ul>
+                    </Room>
+                }
+
+                @if (character.Languages.Any())
+                {
+                    <Room Title="Languages">
+                        <ul>
+                            @foreach (var language in character.Languages.OrderBy(l => l.Name))
+                            {
+                                <li class="sheet-row justify-between">
+                                    <span>@language.Name</span>
+                                    <span class="text-sm text-pencil">@language.Type</span>
+                                </li>
+                            }
+                        </ul>
+                    </Room>
                 }
             </div>
-        }
 
-        <!-- Delete Confirmation Modal -->
-        @if (characterToDelete != null)
-        {
-            <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
-                <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
-                    <h3 class="text-xl font-bold text-white mb-4">Delete Character?</h3>
-                    <p class="text-gray-300 mb-6">
-                        Are you sure you want to delete <span class="font-bold text-white">@characterToDelete.Name</span>?
-                        This action cannot be undone.
-                    </p>
-                    <div class="flex justify-end space-x-3">
-                        <button @onclick="CancelDelete"
-                                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
-                            Cancel
-                        </button>
-                        <button @onclick="DeleteCharacter"
-                                disabled="@isDeleting"
-                                class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                            @(isDeleting ? "Deleting..." : "Delete")
-                        </button>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+            @if (character.Features.Any())
+            {
+                <Room Title="Features & Traits" Class="sheet-wide">
+                    <ul class="grid gap-x-8 md:grid-cols-2 lg:grid-cols-3">
+                        @foreach (var feature in character.Features.OrderBy(f => f.Name))
+                        {
+                            <li class="sheet-row">@feature.Name</li>
+                        }
+                    </ul>
+                </Room>
+            }
+
+            @if (character.Feats.Any())
+            {
+                <Room Title="Feats" Class="sheet-wide">
+                    <ul>
+                        @* One entry per feat taken: a repeatable feat taken twice shows twice, each with its own spells *@
+                        @foreach (var entry in character.Feats.OrderBy(f => f.Feat.Name))
+                        {
+                            <li class="sheet-row block py-2">
+                                <p class="font-semibold">
+                                    @entry.Feat.Name
+                                    @if (entry.Feat.Category != null)
+                                    {
+                                        <span class="ml-2 text-sm font-normal text-pencil">@entry.Feat.Category</span>
+                                    }
+                                </p>
+                                <p class="text-sm">@entry.Feat.Description</p>
+                                @if (entry.Spells.Count > 0)
+                                {
+                                    <p class="mt-1 text-sm text-pencil">@AbilityNames.SpellsLabel(entry.SpellcastingAbilityId): @string.Join(", ", entry.Spells.Select(s => s.Name))</p>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </Room>
+            }
+        </div>
+    }
+
+    @if (characterToDelete != null)
+    {
+        <ConfirmDelete Name="@characterToDelete.Name" IsDeleting="isDeleting"
+                       OnConfirm="DeleteCharacter" OnCancel="CancelDelete" />
+    }
 </div>
 
 @code {
@@ -439,7 +349,10 @@
 
     private async Task DeleteCharacter()
     {
-        if (characterToDelete == null) return;
+        if (characterToDelete == null)
+        {
+            return;
+        }
 
         isDeleting = true;
         StateHasChanged();
@@ -461,11 +374,17 @@
         }
     }
 
-    // Helper methods
     private static string Signed(int value) => value >= 0 ? $"+{value}" : value.ToString();
 
-    private static string ProficiencyDotClass(bool isProficient) => isProficient
-        ? "w-2 h-2 rounded-full bg-indigo-400 shrink-0"
-        : "w-2 h-2 rounded-full border border-gray-400 shrink-0";
+    // Lower case, so the data attribute reads as the CSS and the tests expect it
+    private static string Proficient(bool isProficient) => isProficient ? "true" : "false";
 
+    private static string SpellLevel(int level) => level switch
+    {
+        0 => "Cantrip",
+        1 => "1st level",
+        2 => "2nd level",
+        3 => "3rd level",
+        _ => $"{level}th level"
+    };
 }

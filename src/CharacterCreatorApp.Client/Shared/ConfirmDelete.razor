@@ -1,0 +1,34 @@
+@* Asking before a character is deleted, on the sheet and the list alike: a room over the page
+   with a danger button and a secondary "Cancel". The page shows it only while it holds a
+   character to delete. *@
+
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 px-4">
+    <section class="room w-full max-w-md p-6" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title">
+        <h2 id="confirm-delete-title" class="room-title mb-3">Delete character?</h2>
+        <p class="mb-6">
+            Are you sure you want to delete <span class="font-semibold">@Name</span>? This cannot be undone.
+        </p>
+        <div class="flex flex-wrap justify-end gap-3">
+            <button type="button" class="btn-secondary" @onclick="OnCancel">Cancel</button>
+            <button type="button" class="btn-danger" disabled="@IsDeleting" @onclick="OnConfirm">
+                @(IsDeleting ? "Deleting..." : "Delete")
+            </button>
+        </div>
+    </section>
+</div>
+
+@code {
+    /// <summary>The name of the character to delete.</summary>
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>True while the delete is on its way; the danger button waits.</summary>
+    [Parameter]
+    public bool IsDeleting { get; set; }
+
+    [Parameter]
+    public EventCallback OnConfirm { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancel { get; set; }
+}

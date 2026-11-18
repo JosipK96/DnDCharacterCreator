@@ -3,10 +3,14 @@ using System.IdentityModel.Tokens.Jwt;
 using CharacterCreatorApp.Client;
 using CharacterCreatorApp.Client.Services;
 using CharacterCreatorApp.Client.Services.Auth;
+using CharacterCreatorApp.Client.Services.ErrorReporting;
+using CharacterCreatorApp.Contracts.Common;
 
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Logging;
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
@@ -36,6 +40,13 @@ builder.Services.AddScoped(sp => new HttpClient(new BearerTokenHandler(
 {
     BaseAddress = apiBaseAddress
 });
+
+// Unhandled errors go to the API, which sends them to the error tracker (#77). A plain HttpClient:
+// the endpoint is anonymous, and reporting must not depend on, or disturb, the signed-in one.
+builder.Services.AddSingleton<ILoggerProvider>(sp => new ClientErrorLoggerProvider(
+    new HttpClient { BaseAddress = apiBaseAddress },
+    () => new Uri(sp.GetRequiredService<NavigationManager>().Uri).AbsolutePath,
+    BuildVersion.Of(typeof(Program).Assembly)));
 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<PasswordService>();

@@ -35,6 +35,8 @@
          and anyone under USD 1M revenue (checked on #29); comes with the Lato font built in -->
     <PackageVersion Include="QuestPDF" Version="2026.9.2" />
     <PackageVersion Include="Scrutor" Version="7.0.0" />
+    <!-- Sends the hosted app's errors to Sentry (#77); off unless Sentry__Dsn is set -->
+    <PackageVersion Include="Sentry.AspNetCore" Version="6.13.0" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.3.1" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
   </ItemGroup>

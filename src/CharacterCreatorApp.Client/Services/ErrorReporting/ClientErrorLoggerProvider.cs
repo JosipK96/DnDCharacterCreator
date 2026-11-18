@@ -61,6 +61,8 @@ public sealed class ClientErrorLoggerProvider(HttpClient http, Func<string> curr
 
     private sealed class ClientErrorLogger(ClientErrorLoggerProvider provider) : ILogger
     {
+        private readonly ClientErrorLoggerProvider _provider = provider;
+
         public IDisposable? BeginScope<TState>(TState state)
             where TState : notnull => null;
 
@@ -70,7 +72,7 @@ public sealed class ClientErrorLoggerProvider(HttpClient http, Func<string> curr
         {
             if (exception is not null && IsEnabled(logLevel))
             {
-                provider.Report(exception);
+                _provider.Report(exception);
             }
         }
     }

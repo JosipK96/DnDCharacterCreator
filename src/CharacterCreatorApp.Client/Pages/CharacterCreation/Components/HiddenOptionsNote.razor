@@ -1,0 +1,107 @@
+@* Under a list the draft's books filter: how many more of its kind the books not ticked in step 1
+   hold, and which, so a player does not take a switched-off option for one the app lacks. The API
+   counts them (GET api/books/hidden-options), never the client. Nothing shows when none are left out. *@
+@inject LookupService LookupService
+
+@if (hidden is { Count: > 0 })
+{
+    <Message Kind="MessageKind.Info" Class="@Class" data-testid="hidden-options" data-list="@List">
+        <p class="text-sm">
+            @hidden.Count more @(hidden.Count == 1 ? Nouns.One : Nouns.Many) @(hidden.Count == 1 ? "is" : "are")
+            in books you haven't ticked: @string.Join(", ", hidden.Books.Select(b => $"{b.Name} ({b.Count})")).
+        </p>
+        @if (OnChangeBooks.HasDelegate)
+        {
+            <button type="button" class="mt-1 text-sm font-medium text-ink underline underline-offset-4" @onclick="OnChangeBooks">
+                Tick books in step 1
+            </button>
+        }
+    </Message>
+}
+
+@code {
+    // What each list holds, as the note names it: one, and more than one
+    private static readonly Dictionary<string, (string One, string Many)> NounsByList = new()
+    {
+        ["races"] = ("race or subrace", "races and subraces"),
+        ["classes"] = ("class", "classes"),
+        ["subclasses"] = ("subclass", "subclasses"),
+        ["backgrounds"] = ("background", "backgrounds"),
+        ["feats"] = ("feat", "feats"),
+        ["spells"] = ("spell", "spells"),
+    };
+
+    /// <summary>The list counted, by the API's name: "races", "classes", "subclasses", "backgrounds", "feats" or "spells".</summary>
+    [Parameter, EditorRequired]
+    public string List { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Edition { get; set; } = string.Empty;
+
+    /// <summary>The books the draft allows, by code.</summary>
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
+
+    /// <summary>The class whose subclasses or spells are counted.</summary>
+    [Parameter]
+    public string? ClassId { get; set; }
+
+    /// <summary>For spells: the subclass whose spells the step adds, and the highest level it lists.</summary>
+    [Parameter]
+    public string? SubclassId { get; set; }
+
+    [Parameter]
+    public int? MaxLevel { get; set; }
+
+    /// <summary>For feats: the one category a pick is of (a 2024 human's Origin feat, a Dark Gift), or null for any.</summary>
+    [Parameter]
+    public string? Category { get; set; }
+
+    /// <summary>Takes the player to step 1 to tick books; no button without it (a level-up has no step 1).</summary>
+    [Parameter]
+    public EventCallback OnChangeBooks { get; set; }
+
+    /// <summary>Spacing from the step, such as a top margin.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    private HiddenOptionsApiResponse? hidden;
+    private string? loadedFor;
+
+    private (string One, string Many) Nouns => NounsByList.GetValueOrDefault(List, ("option", "options"));
+
+    // The class step's subclass list changes class as the player clicks, so the count follows it
+    protected override async Task OnParametersSetAsync()
+    {
+        var key = $"{Edition}|{List}|{string.Join(',', Sources)}|{ClassId}|{SubclassId}|{MaxLevel}|{Category}";
+
+        if (key == loadedFor)
+        {
+            return;
+        }
+
+        loadedFor = key;
+        hidden = null;
+
+        // Before the draft's edition is known there is nothing to count against
+        if (string.IsNullOrEmpty(Edition))
+        {
+            return;
+        }
+
+        try
+        {
+            var result = await LookupService.GetHiddenOptionsAsync(Edition, List, Sources, ClassId, SubclassId, MaxLevel, Category);
+
+            // A class clicked while the last one's count loaded keeps its own
+            if (loadedFor == key)
+            {
+                hidden = result;
+            }
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            // The note only adds to the step: a count that failed to load leaves the step as it was
+        }
+    }
+}

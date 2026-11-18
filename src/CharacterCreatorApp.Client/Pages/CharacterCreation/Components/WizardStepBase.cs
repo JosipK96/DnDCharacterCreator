@@ -27,6 +27,13 @@ public abstract class WizardStepBase : ComponentBase
     [Parameter]
     public IReadOnlyList<int> Flow { get; set; } = WizardSteps.Creation;
 
+    /// <summary>
+    /// Takes the player to step 1 to tick more books, from a step's <c>HiddenOptionsNote</c>; the
+    /// wizard brings them back to this step after. Unset where the flow has no step 1 (a level-up).
+    /// </summary>
+    [Parameter]
+    public EventCallback OnChangeBooks { get; set; }
+
     /// <summary>The "Next" button's text, naming the step that follows this one in the flow.</summary>
     protected string NextLabel => $"Next: {WizardSteps.NameOf(NextStep)}";
 

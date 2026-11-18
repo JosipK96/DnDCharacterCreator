@@ -36,6 +36,12 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   handler refuses an entity from another book with `CharacterDraftErrors.SourceNotAllowed`, and
   `DraftCompletenessChecker` does the same at finalize. `CharacterDraft.AllowBooks` clears the
   choices from a book taken away, through the same cascades as changing them.
+- What a step's list leaves out is counted by the API, `GET api/books/hidden-options`
+  (`GetHiddenOptionsQuery`): the entries of the edition's unticked books, per book, for races
+  (and the subraces ticking their own book would offer), classes, a class's subclasses,
+  backgrounds, the feats an improvement can buy (or one category's) and the spells step's lists.
+  Each step shows it under its list (`Components/HiddenOptionsNote.razor`); the client never
+  counts it.
 
 ## Races and backgrounds
 

@@ -194,6 +194,13 @@
                         }
                     </Room>
                 }
+
+                @* One note for every feat list on the step; only the race's feats, when those are all it shows *@
+                @if (slots.Any(s => s.TakesFeat))
+                {
+                    <HiddenOptionsNote List="feats" Edition="@draftEdition" Sources="@draftSources" OnChangeBooks="@OnChangeBooks"
+                                       Category="@(slots.Where(s => s.TakesFeat).All(s => s.IsRaceFeat) ? bonusFeatCategory : null)" />
+                }
             }
         </div>
     }
@@ -251,6 +258,10 @@
     private List<AsiSlot> slots = [];
     private List<FeatApiResponse> feats = [];
 
+    // The draft's edition and books, which the feats come from
+    private string draftEdition = string.Empty;
+    private IReadOnlyList<string> draftSources = [];
+
     // The class's Fighting Style features: how many, and the styles it offers
     private int fightingStylesOwed;
     private List<FeatApiResponse> fightingStyleOptions = [];
@@ -292,6 +303,8 @@
 
         var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
         var editionFeats = await LookupService.GetFeatsAsync(draft.Edition, draft.AllowedSources);
+        draftEdition = draft.Edition;
+        draftSources = draft.AllowedSources;
 
         // The feat picked for the background (a Mist Wanderer's Dark Gift, or a Haunted One's in
         // place of Survivor), or else its own

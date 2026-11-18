@@ -100,6 +100,79 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     }
 
     [Fact]
+    public async Task GetHiddenOptions_ForA2014RangerWithOnlyThePlayersHandbook_NamesTheSubclassesOfXanatharsTashasAndFizbans()
+    {
+        // Act
+        var hidden = await _client.GetFromJsonAsync<HiddenOptionsApiResponse>(
+            "/api/books/hidden-options?edition=2014&list=subclasses&classId=ranger&sources=PHB", TestContext.Current.CancellationToken);
+
+        // Assert - Drakewarden; Fey Wanderer and Swarmkeeper; Gloom Stalker, Horizon Walker and Monster Slayer
+        hidden!.Count.Should().Be(6);
+        hidden.Books.Should().Equal(
+            new HiddenOptionsBookApiResponse("FTD", "Fizban's Treasury of Dragons", 1),
+            new HiddenOptionsBookApiResponse("TCE", "Tasha's Cauldron of Everything", 2),
+            new HiddenOptionsBookApiResponse("XGE", "Xanathar's Guide to Everything", 3));
+    }
+
+    [Fact]
+    public async Task GetHiddenOptions_ForA2024RangerWithOnlyThePlayersHandbook_NamesHollowWardenAndWinterWalkersBooks()
+    {
+        // Act
+        var hidden = await _client.GetFromJsonAsync<HiddenOptionsApiResponse>(
+            "/api/books/hidden-options?edition=2024&list=subclasses&classId=ranger-2024&sources=XPHB", TestContext.Current.CancellationToken);
+
+        // Assert - Winter Walker is in Heroes of Faerûn, Hollow Warden in The Horrors Within
+        hidden!.Count.Should().Be(2);
+        hidden.Books.Select(b => (b.Code, b.Count)).Should().Equal(("FRHoF", 1), ("RHW", 1));
+    }
+
+    [Theory]
+    [InlineData("list=races", false)] // the seed data's 2014 races are all the Player's Handbook's
+    [InlineData("list=classes", true)]
+    [InlineData("list=backgrounds", true)]
+    [InlineData("list=feats", true)]
+    [InlineData("list=spells&classId=wizard&maxLevel=1", true)]
+    public async Task GetHiddenOptions_For2014WithOnlyThePlayersHandbook_CountsEveryListAgainstItsBooks(string list, bool anyHidden)
+    {
+        // Act
+        var hidden = await _client.GetFromJsonAsync<HiddenOptionsApiResponse>(
+            $"/api/books/hidden-options?edition=2014&{list}&sources=PHB", TestContext.Current.CancellationToken);
+
+        // Assert - only books of the edition, and the total is theirs
+        (hidden!.Count > 0).Should().Be(anyHidden);
+        hidden.Count.Should().Be(hidden.Books.Sum(b => b.Count));
+        var editionBooks = await _client.GetFromJsonAsync<List<BookApiResponse>>("/api/books?edition=2014", TestContext.Current.CancellationToken);
+        hidden.Books.Select(b => b.Code).Should().BeSubsetOf(editionBooks!.Where(b => !b.IsPlayersHandbook).Select(b => b.Code));
+    }
+
+    [Fact]
+    public async Task GetHiddenOptions_WithTheBooksThatHoldThemTicked_HidesNothing()
+    {
+        // Act
+        var hidden = await _client.GetFromJsonAsync<HiddenOptionsApiResponse>(
+            "/api/books/hidden-options?edition=2014&list=subclasses&classId=ranger&sources=PHB&sources=XGE&sources=TCE&sources=FTD",
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        hidden!.Count.Should().Be(0);
+        hidden.Books.Should().BeEmpty();
+    }
+
+    [Theory]
+    [InlineData("edition=2014&list=monsters", HttpStatusCode.BadRequest, "Book.InvalidList")]
+    [InlineData("edition=2019&list=races", HttpStatusCode.BadRequest, "Book.InvalidEdition")]
+    [InlineData("edition=2014&list=subclasses", HttpStatusCode.BadRequest, "Book.ClassRequired")]
+    [InlineData("edition=2014&list=subclasses&classId=no-such-class", HttpStatusCode.NotFound, "Class.NotFound")]
+    public async Task GetHiddenOptions_WithABadRequest_ReturnsItsCode(string query, HttpStatusCode status, string code)
+    {
+        // Act
+        var response = await _client.GetAsync($"/api/books/hidden-options?{query}", TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(status, code);
+    }
+
+    [Fact]
     public async Task GetFeats_WithSources_ReturnsOnlyTheFeatsFromThoseBooks()
     {
         // Act - Arcane Warrior, a 2024 Fighting Style, is from Arcana Unleashed

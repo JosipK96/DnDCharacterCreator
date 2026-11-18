@@ -20,6 +20,34 @@ public class LookupService(HttpClient http)
         GetCachedAsync<List<BookApiResponse>>($"/api/books{ToQueryString(new() { ["edition"] = edition })}");
 
     /// <summary>
+    /// How many entries of a wizard list ("races", "classes", "subclasses", "backgrounds", "feats",
+    /// "spells") the edition's books outside sources hold, and which books: counted by the API, which
+    /// knows what each step offers. Subclasses and spells are of classId; spells narrow to the
+    /// subclass's and those up to maxLevel; feats to one category, when given.
+    /// </summary>
+    public Task<HiddenOptionsApiResponse> GetHiddenOptionsAsync(
+        string edition,
+        string list,
+        IEnumerable<string> sources,
+        string? classId = null,
+        string? subclassId = null,
+        int? maxLevel = null,
+        string? category = null)
+    {
+        var query = ToQueryString(new Dictionary<string, string?>
+        {
+            ["edition"] = edition,
+            ["list"] = list,
+            ["classId"] = classId,
+            ["subclassId"] = subclassId,
+            ["maxLevel"] = maxLevel?.ToString(CultureInfo.InvariantCulture),
+            ["category"] = category
+        }, sources);
+
+        return GetCachedAsync<HiddenOptionsApiResponse>($"/api/books/hidden-options{query}");
+    }
+
+    /// <summary>
     /// The races of one rules edition, "2014" or "2024", or of both when it is null; only those
     /// (and their subraces) from the given books, when there are any.
     /// </summary>

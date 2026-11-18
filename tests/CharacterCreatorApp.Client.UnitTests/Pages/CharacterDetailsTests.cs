@@ -95,21 +95,31 @@ public class CharacterDetailsTests : WizardStepTestBase
     }
 
     [Fact]
-    public void Delete_AsksInADialogAndCancelClosesItWithoutDeleting()
+    public void Delete_AsksInADialogWithTheNameACancelAndADangerButton()
     {
         // Arrange
         var cut = Render<CharacterDetails>(parameters => parameters.Add(p => p.Id, CharacterId));
 
         // Act
         Button(cut, "Delete character").Click();
+
+        // Assert
         var dialog = cut.Find("[role='dialog']");
-        var dialogText = dialog.TextContent;
-        var dialogButtons = dialog.QuerySelectorAll("button").Select(b => b.TextContent.Trim()).ToList();
+        dialog.TextContent.Should().Contain("Bruenor");
+        dialog.QuerySelectorAll("button").Select(b => b.TextContent.Trim()).Should().Equal("Cancel", "Delete");
+    }
+
+    [Fact]
+    public void Cancel_ClosesTheDeleteDialogWithoutDeleting()
+    {
+        // Arrange
+        var cut = Render<CharacterDetails>(parameters => parameters.Add(p => p.Id, CharacterId));
+        Button(cut, "Delete character").Click();
+
+        // Act
         Button(cut, "Cancel").Click();
 
         // Assert
-        dialogText.Should().Contain("Bruenor");
-        dialogButtons.Should().Equal("Cancel", "Delete");
         cut.FindAll("[role='dialog']").Should().BeEmpty();
         Api.Requests.Should().NotContain(r => r.StartsWith("DELETE", StringComparison.Ordinal));
     }

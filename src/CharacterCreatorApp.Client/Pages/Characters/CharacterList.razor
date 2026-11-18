@@ -123,16 +123,18 @@
                         </div>
                     </dl>
 
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <button @onclick="() => NavigateToCharacterDetails(character.Id)" class="btn-main flex-1">
+                    <div class="mt-4 space-y-2">
+                        <button @onclick="() => NavigateToCharacterDetails(character.Id)" class="btn-main w-full">
                             View details
                         </button>
-                        <button @onclick="() => EditCharacter(character.Id)" class="btn-secondary">Edit</button>
-                        @if (character.Level < CharacterLevels.Max)
-                        {
-                            <button @onclick="() => LevelUpCharacter(character.Id)" class="btn-secondary">Level up</button>
-                        }
-                        <button @onclick="() => ConfirmDelete(character)" class="btn-danger">Delete</button>
+                        <div class="flex flex-wrap gap-2">
+                            <button @onclick="() => EditCharacter(character.Id)" class="btn-secondary flex-1 whitespace-nowrap px-3">Edit</button>
+                            @if (character.Level < CharacterLevels.Max)
+                            {
+                                <button @onclick="() => LevelUpCharacter(character.Id)" class="btn-secondary flex-1 whitespace-nowrap px-3">Level up</button>
+                            }
+                            <button @onclick="() => ConfirmDelete(character)" class="btn-danger flex-1 whitespace-nowrap px-3">Delete</button>
+                        </div>
                     </div>
                 </Room>
             }

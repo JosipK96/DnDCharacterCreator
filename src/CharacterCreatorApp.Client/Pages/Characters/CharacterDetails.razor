@@ -162,7 +162,7 @@
                             {
                                 <li class="sheet-row justify-between">
                                     <span>@proficiency.Name</span>
-                                    <span class="text-sm text-pencil">@proficiency.Type</span>
+                                    <span class="text-sm text-pencil">@TypeLabel(proficiency.Type)</span>
                                 </li>
                             }
                         </ul>
@@ -177,7 +177,7 @@
                             {
                                 <li class="sheet-row justify-between">
                                     <span>@language.Name</span>
-                                    <span class="text-sm text-pencil">@language.Type</span>
+                                    <span class="text-sm text-pencil">@TypeLabel(language.Type)</span>
                                 </li>
                             }
                         </ul>
@@ -378,6 +378,10 @@
 
     // Lower case, so the data attribute reads as the CSS and the tests expect it
     private static string Proficient(bool isProficient) => isProficient ? "true" : "false";
+
+    // A proficiency's or language's type as the seed data spells it ("gaming_set"), for reading: "Gaming set"
+    private static string TypeLabel(string type) =>
+        string.IsNullOrEmpty(type) ? type : char.ToUpperInvariant(type[0]) + type[1..].Replace('_', ' ');
 
     private static string SpellLevel(int level) => level switch
     {

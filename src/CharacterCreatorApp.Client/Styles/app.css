@@ -94,7 +94,7 @@
 
 @layer base {
   /*
-    Tailwind v3 defaults, kept while the steps, the sheet and the account pages still carry their
+    Tailwind v3 defaults, kept while the steps and the account pages still carry their
     v3-era classes; their own restyle issues retire them: a border with no colour was gray-200, a
     placeholder gray-400, and a button showed the pointer.
   */
@@ -435,7 +435,8 @@
 @utility score-box {
   position: relative;
   padding: 0.5rem 0.5rem 1.25rem;
-  margin-bottom: 1rem;
+  /* Room for the tab hanging under the box, and a gap below it */
+  margin-bottom: 2rem;
   border: 2px solid var(--color-ink);
   background-color: var(--color-room-highlight);
   text-align: center;

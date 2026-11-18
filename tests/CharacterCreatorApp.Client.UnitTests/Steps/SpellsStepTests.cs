@@ -149,7 +149,7 @@ public class SpellsStepTests : WizardStepTestBase
     }
 
     [Fact]
-    public void ToggleSpell_UntilTheSectionIsFull_TurnsItsCountFromAmberToGreen()
+    public void ToggleSpell_WithPicksStillOpen_ShowsAnAmberCountOfWhatIsLeft()
     {
         // Arrange
         ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, []));
@@ -157,13 +157,26 @@ public class SpellsStepTests : WizardStepTestBase
 
         // Act
         SpellButton(cut, "Fire Bolt").Click();
+
+        // Assert
         var incomplete = CountBox(cut, 0);
-        var incompleteKind = incomplete.ClassList.Contains("border-amber");
+        incomplete.ClassList.Should().Contain("border-amber");
+        Squash(incomplete.TextContent).Should().Be("1 of 2 chosen: choose 1 more");
+        incomplete.QuerySelector("svg").Should().BeNull("only a complete count shows a check");
+    }
+
+    [Fact]
+    public void ToggleSpell_UntilTheSectionIsFull_ShowsAGreenCountWithACheck()
+    {
+        // Arrange
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, []));
+        var cut = RenderStep();
+        SpellButton(cut, "Fire Bolt").Click();
+
+        // Act
         SpellButton(cut, "Light").Click();
 
         // Assert
-        incompleteKind.Should().BeTrue("one cantrip is still to choose");
-        Squash(incomplete.TextContent).Should().Be("1 of 2 chosen: choose 1 more");
         var complete = CountBox(cut, 0);
         complete.ClassList.Should().Contain("border-green");
         Squash(complete.TextContent).Should().Be("2 of 2 chosen");

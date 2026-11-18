@@ -29,6 +29,15 @@
   `UserErrors.InvalidResetLink`. The link lasts 24 hours (the data-protection token provider options
   in `AddIdentity`) and the reset changes the security stamp, which is what makes it single-use.
   The JWT carries no stamp, so tokens issued earlier live until they expire.
+- Error reporting (#77): the Sentry.AspNetCore package, set up in `ErrorReportingExtensions`
+  (`AddErrorReporting`) and off without `Sentry__Dsn` (an empty DSN, which the options default to:
+  the SDK refuses to start with none at all). Every event goes through `ErrorScrubber` (no body,
+  headers, cookies, query, user or breadcrumbs; emails masked), and `TraceIdScopeMiddleware`, placed
+  before the exception handler, tags it with the `traceId` the 500 body carries. The client's
+  errors arrive at the anonymous, rate limited `POST api/client-errors` (`ClientErrorReporter`
+  cuts every field, since anyone can post), so the DSN never reaches the browser.
+  `POST api/admin/test-error` (owner only) throws on purpose to prove the setup. Only an
+  exception is reported: a 5xx that is not one must log an error to appear.
 - `docker-compose.yml` (+ `.override.yml`, `.dcproj`) sits at the repository root because the
   Dockerfile builds from there: restore needs `Directory.*.props`, `.editorconfig` and
   `analyzers/`. Non-secret container settings are in `configurations/Env_files/api.env`.

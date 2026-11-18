@@ -14,6 +14,9 @@ public static class RateLimitingExtensions
     /// <summary>The policy sign-in and registration share, so one address has one allowance for both.</summary>
     public const string AuthPolicy = "auth";
 
+    /// <summary>The policy for the client's error reports, apart from <see cref="AuthPolicy"/> so a failing page cannot use up a sign-in allowance.</summary>
+    public const string ClientErrorsPolicy = "client-errors";
+
     public const string TooManyRequestsCode = "RateLimit.TooManyRequests";
 
     public static IServiceCollection AddAuthRateLimiting(this IServiceCollection services)
@@ -28,6 +31,14 @@ public static class RateLimitingExtensions
             // Partitioned by the address the forwarded headers middleware resolved. Null (no
             // address at all) shares one bucket, which fails closed.
             limiter.AddPolicy(AuthPolicy, context => RateLimitPartition.GetFixedWindowLimiter(
+                context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = settings.Value.PermitLimit,
+                    Window = TimeSpan.FromSeconds(settings.Value.WindowSeconds),
+                    QueueLimit = 0
+                }));
+            limiter.AddPolicy(ClientErrorsPolicy, context => RateLimitPartition.GetFixedWindowLimiter(
                 context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
                 _ => new FixedWindowRateLimiterOptions
                 {

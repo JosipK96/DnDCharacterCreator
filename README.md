@@ -243,6 +243,24 @@ Render's `*.onrender.com` one, over Render's HTTPS.
   - `JwtSettings__Key`: a random key of at least 32 characters
   - `Registration__InviteCode`: the invite code (see Deploying)
   - `Admin__Email`: the owner's email (see Resetting a password)
+  - `Sentry__Dsn`: optional, the error tracker's DSN (see Errors, below)
+- **Errors** (#77): unhandled exceptions on the server, and the errors the client hits, go to
+  [Sentry](https://sentry.io)'s free plan. Each event has the release (the version `/health`
+  shows), the request path and a trace id: the `traceId` in the 500 answer's body, so a friend's
+  report can be matched to its event. Nothing else leaves the app: no request body, headers,
+  cookies, query string, user or address, no log lines, and email-like text is masked. The client
+  posts its errors to `POST api/client-errors` (rate limited, bounded), and the API passes them
+  on, so there is one key and one place to switch it off.
+  - `Sentry__Dsn`: the Sentry project's DSN, a secret in the Render dashboard (service >
+    Environment) like the others, never in this repository. **Empty or removed turns error
+    reporting off**; nothing is sent and the app runs as before. Local runs and the tests have
+    none.
+  - **Setting it up** (owner only): create a free Sentry project of platform ASP.NET Core, copy
+    its DSN into `Sentry__Dsn`, and redeploy (the setting is read at start). To check it works,
+    sign in as the owner (`Admin__Email`) and call `POST api/admin/test-error` (the Swagger page
+    exists only in development, so use any HTTP client with the sign-in token). It always answers
+    500, and the event appears in Sentry with its version and path. Open the event's JSON to see
+    nothing personal is in it.
 - **Sign-in protection** (#72), all optional, each with a default. Environment variables on the
   service, like the secrets, but not secret:
   - `Identity__Lockout__MaxFailedAccessAttempts` (default 5) and

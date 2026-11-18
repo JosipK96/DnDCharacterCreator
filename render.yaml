@@ -37,3 +37,6 @@ services:
         sync: false
       - key: Registration__InviteCode
         sync: false
+      # Optional: the Sentry project's DSN. Empty or removed turns error reporting off (#77)
+      - key: Sentry__Dsn
+        sync: false

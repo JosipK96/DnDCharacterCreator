@@ -11,7 +11,18 @@
     <ProjectReference Include="..\CharacterCreatorApp.Contracts\CharacterCreatorApp.Contracts.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <!-- The service worker: service-worker.js while developing, service-worker.published.js (with the file list service-worker-assets.js) once published -->
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
   <!-- The stylesheet is built from Styles/app.css by Tailwind's standalone CLI (Tailwind.targets) -->
   <Import Project="Tailwind.targets" />
 
 </Project>
+
+

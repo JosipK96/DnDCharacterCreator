@@ -11,6 +11,12 @@
     <link rel="stylesheet" href="css/app.css" />
 
     <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <meta name="theme-color" content="#233140" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Characters" />
 </head>
 
 <body>
@@ -37,6 +43,14 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="js/dice-box-loader.js"></script>
     <script src="js/save-file.js"></script>
+    <script src="js/app-update.js"></script>
+    <script>
+        // updateViaCache none: the worker file itself is always checked against the network
+        if ('serviceWorker' in navigator) {
+            window.swRegistration = navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });
+        }
+    </script>
 </body>
 
 </html>
+

@@ -55,6 +55,13 @@ later builds reuse it. The theme (the palette and the fonts) is in
 `src/CharacterCreatorApp.Client/Tailwind.targets`. The fonts, Barlow and Barlow Condensed, are
 served from the client's own `wwwroot/fonts` under the SIL Open Font License.
 
+The client is also an installable web app (a PWA; there is no native build).
+`wwwroot/manifest.webmanifest` names it and its icons, which the Android and iOS home screens use,
+and a service worker caches its static files so a later launch starts from the cache; nothing
+under `api/` is ever cached. A new release changes the service worker's file list, so an open or
+relaunched app shows a "new version is ready" bar and reloads into the release when the player
+taps Reload. While developing, the worker caches nothing.
+
 The game data (classes, subclasses, races, backgrounds, feats, spells and languages for both
 editions) is generated from [5etools](https://github.com/5etools-mirror-3/5etools-src) data by a
 tool in this repository.

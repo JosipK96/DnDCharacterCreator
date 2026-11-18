@@ -1,0 +1,43 @@
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+@* Shown when a release's new files are waiting (wwwroot/js/app-update.js signals it): reloading
+   on the player's say-so, so a client is never swapped under them mid-wizard. *@
+@if (_updateReady)
+{
+    <div role="status" class="update-prompt" data-testid="update-prompt">
+        <span>A new version is ready.</span>
+        <button type="button" @onclick="ApplyAsync">Reload</button>
+    </div>
+}
+
+@code {
+    private DotNetObjectReference<UpdatePrompt>? _self;
+    private bool _updateReady;
+
+    /// <summary>Called by app-update.js once a new service worker is waiting.</summary>
+    [JSInvokable]
+    public Task UpdateReady()
+    {
+        _updateReady = true;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _self = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("appUpdate.listen", _self);
+        }
+    }
+
+    private Task ApplyAsync() => JS.InvokeVoidAsync("appUpdate.apply").AsTask();
+
+    public ValueTask DisposeAsync()
+    {
+        _self?.Dispose();
+        return ValueTask.CompletedTask;
+    }
+}

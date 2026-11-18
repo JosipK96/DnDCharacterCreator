@@ -7,6 +7,8 @@
   <!-- Analyzers, referenced by every project through Directory.Build.props -->
   <ItemGroup>
     <PackageVersion Include="AsyncFixer" Version="2.1.0" />
+    <!-- 1.3 adds rules (SA1315, SA1115) the code does not follow yet, and warnings are errors.
+         Dependabot ignores it (#120); move it by hand, with the fixes, in its own issue. -->
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
   </ItemGroup>
 

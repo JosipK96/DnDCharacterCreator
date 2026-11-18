@@ -30,7 +30,13 @@ window.appUpdate = {
 
     apply: async () => {
         const registration = await window.swRegistration;
+        // Nothing waiting any more (another tab already took the update): a reload is all it needs
+        if (!registration.waiting) {
+            window.location.reload();
+            return;
+        }
+
         navigator.serviceWorker.addEventListener('controllerchange', () => window.location.reload(), { once: true });
-        registration.waiting?.postMessage('SKIP_WAITING');
+        registration.waiting.postMessage('SKIP_WAITING');
     },
 };

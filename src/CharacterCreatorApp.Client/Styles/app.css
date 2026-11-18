@@ -131,6 +131,30 @@
   h1:focus {
     outline: none;
   }
+
+  /*
+    On a phone everything a finger taps is at least 44 by 44px (WizardSmokeTests measures it).
+    The rule sits here, not on each utility, so a new button or link gets it without remembering.
+    A link is a flex box so the height holds when it sits in a sentence; a checkbox's label is
+    the target, since the box itself stays small.
+  */
+  @media (width < 48rem) {
+    button,
+    a[href],
+    select,
+    summary,
+    input:not([type="hidden"], [type="checkbox"], [type="radio"]),
+    label:has(> input[type="checkbox"], > input[type="radio"]) {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    a[href],
+    label:has(> input[type="checkbox"], > input[type="radio"]) {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
 }
 
 /*

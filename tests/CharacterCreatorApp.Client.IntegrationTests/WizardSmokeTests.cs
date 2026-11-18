@@ -65,7 +65,7 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
     }
 
     [Fact]
-    public async Task Wizard_OnAPhone_ShowsTheCompactMapAndNeverScrollsSideways()
+    public async Task Wizard_OnAPhone_ShowsTheCompactMapNeverScrollsSidewaysAndKeepsTapTargetsBigEnough()
     {
         // Arrange - a 375px-wide window, where the progress map folds to one line
         await _page.SetViewportSizeAsync(375, 812);
@@ -390,12 +390,39 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         }
     }
 
-    // At 375px wide nothing may push the page wider than the window
+    // At 375px wide nothing may push the page wider than the window, and nothing tapped is under 44px
     private async Task ExpectNoSidewaysScrollAsync()
     {
         var overflow = await _page.EvaluateAsync<int>("() => document.documentElement.scrollWidth - window.innerWidth");
 
         Assert.True(overflow <= 0, $"{_page.Url} scrolls sideways by {overflow}px at 375px wide");
+
+        // Every tap target on the page is big enough for a finger
+        var tooSmall = await _page.EvaluateAsync<string[]>(
+            """
+            () => {
+              const targets = document.querySelectorAll(
+                'button, a[href], select, summary, input:not([type=hidden])');
+              const small = [];
+              for (const element of targets) {
+                // A checkbox or radio is tapped through its label
+                const target = element.matches('input[type=checkbox], input[type=radio]')
+                  ? element.closest('label') ?? element
+                  : element;
+                const box = target.getBoundingClientRect();
+                if (box.width === 0 || box.height === 0 || getComputedStyle(target).visibility === 'hidden') {
+                  continue;
+                }
+                if (box.width < 44 - 0.5 || box.height < 44 - 0.5) {
+                  const label = (target.getAttribute('aria-label') || target.innerText || target.id || '').trim().slice(0, 30);
+                  small.push(`${target.tagName.toLowerCase()} "${label}" ${Math.round(box.width)}x${Math.round(box.height)}`);
+                }
+              }
+              return small;
+            }
+            """);
+
+        Assert.True(tooSmall.Length == 0, $"{_page.Url} has tap targets under 44x44px: {string.Join("; ", tooSmall)}");
     }
 
     // A level-up numbers its few steps as it shows them: the step comes up as "Step {shownAs}"

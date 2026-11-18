@@ -24,6 +24,10 @@
   one shared component, Shared/SpellSlotsPanel.razor. What each step may offer follows the D&D rules in
   `src/CharacterCreatorApp.Domain/CLAUDE.md`.
 
+- Unhandled errors (Blazor logs them) go to the API through `Services/ErrorReporting/ClientErrorLoggerProvider`
+  (#77): exception type, stack, route without query and version, never the message, at most five
+  per page load. The client holds no error-tracker key.
+
 ## Styling
 
 - The look is a dungeon map on graph paper. `Styles/app.css` is the stylesheet's source: the

@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Api.Infrastructure.RateLimiting;
 using CharacterCreatorApp.Application.Features.Authentication.CreatePasswordResetLink;
+using CharacterCreatorApp.Application.Features.Authentication.ThrowTestError;
 using CharacterCreatorApp.Contracts.Requests.User;
 using CharacterCreatorApp.Contracts.Responses;
 
@@ -35,4 +36,11 @@ public class AdminController(ISender sender) : ApiController
         return OkOrProblem(response, token => new PasswordResetLinkApiResponse(
             $"{origin}/reset-password?email={Uri.EscapeDataString(request.Email)}&token={Uri.EscapeDataString(token)}"));
     }
+
+    /// <summary>Always answers 500 for the owner: how they check that errors reach the error tracker (README, Hosting).</summary>
+    [HttpPost("test-error")]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> ThrowTestError(CancellationToken cancellationToken) =>
+        NoContentOrProblem(await _sender.Send(new ThrowTestErrorCommand(), cancellationToken));
 }

@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 
 using CharacterCreatorApp.Api;
+using CharacterCreatorApp.Api.Infrastructure.ErrorReporting;
 using CharacterCreatorApp.Application;
 using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Infrastructure;
@@ -13,6 +14,8 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.AddErrorReporting();
 
 builder.Services.AddApiServices();
 builder.Services.AddApplicationServices();
@@ -46,6 +49,9 @@ if (!app.Environment.IsEnvironment("Testing"))
         throw;
     }
 }
+
+// Before the handler, which the framework logs the exception ahead of (see the middleware)
+app.UseMiddleware<TraceIdScopeMiddleware>();
 
 // First, so it also catches what the middleware below it throws
 app.UseExceptionHandler();

@@ -8,7 +8,7 @@
   character ("Edit" on the list and the sheet), goes through it unchanged. In an edit
   (`CharacterDraftDetailsApiResponse.CharacterId` set) the progress map (`Components/WizardProgress.razor`) goes to any step and marks
   the ones in `ChoicesNeeded` (`WizardSteps.StepsOf`); saving returns to the same sheet.
-- A level-up ("Level Up" on the list and the sheet; `LevelUpChoices` set) goes through its own
+- A level-up ("Level up" on the list and the sheet; `LevelUpChoices` set) goes through its own
   flow, `WizardSteps.LevelUpOf`: the Hit Points step (`WizardSteps.HitPoints`, which a new
   character never visits), then only the steps the new level brings, then Review. Every step
   takes the flow (`WizardStepBase.Flow`), so its heading number and "Next" label follow it. The
@@ -47,5 +47,12 @@
   Green once complete and Amber otherwise. A hit die is `Shared/HitDie.razor`, a loading list
   `Shared/Spinner.razor`, a number on the review `Shared/StatBox.razor`, and a step's foot
   `Components/StepNavigation.razor`. Tests find them by data-testid and aria-pressed, never by a class.
-- The sheet, the list and the account pages still carry Tailwind's default dark classes inside
-  their panels until their own restyle issues; a page itself sits on the paper.
+- The sheet (`Pages/Characters/CharacterDetails.razor`) is rooms in `sheet-columns` (three wide,
+  two on a tablet, one on a phone), its combat numbers `Shared/CombatNumber.razor`, its ability
+  scores `score-box` with the modifier in a `modifier-tab`, and its saving throws and skills
+  `sheet-row` rows with a `prof-dot` (`data-proficient`). The list is a room per character with
+  `field` filters and `pager` page numbers (`aria-current="page"` filled Ink). Both ask before a
+  delete with `Shared/ConfirmDelete.razor` (role `dialog`). The PDF is drawn by the API and keeps
+  its own look.
+- The account pages still carry Tailwind's default dark classes inside their panels until their
+  own restyle issue; a page itself sits on the paper.

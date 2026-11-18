@@ -1,0 +1,29 @@
+@* One of the sheet's combat numbers (hit points, armor class and the rest): a small room with
+   its label in Pencil over the number, centred. *@
+
+<div class="room px-2 pb-3 pt-4 text-center" data-testid="combat-number">
+    <div class="text-[13px] text-pencil">@Label</div>
+    <div class="font-display text-[36px] font-semibold leading-tight tabular-nums @(IsPlum ? "text-plum" : null)">
+        <span>@Value</span>
+        @if (Unit is not null)
+        {
+            <span class="text-base text-pencil">@($" {Unit}")</span>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Value { get; set; } = string.Empty;
+
+    /// <summary>A unit after the number, such as "ft" for speed.</summary>
+    [Parameter]
+    public string? Unit { get; set; }
+
+    /// <summary>The proficiency bonus is drawn in Plum.</summary>
+    [Parameter]
+    public bool IsPlum { get; set; }
+}

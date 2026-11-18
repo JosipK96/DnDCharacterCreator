@@ -6,280 +6,175 @@
 @inject LookupService LookupService
 @inject NavigationManager Navigation
 
-@* The page sits on the graph paper; the panels below keep their look until the list is restyled *@
-<div>
-    <div class="max-w-7xl mx-auto">
-        <!-- Header Section with Create Button -->
-        <div class="flex flex-wrap justify-between items-center gap-4 mb-8">
-            <h1 class="page-title">My Characters</h1>
-            <button @onclick="NavigateToCreateCharacter"
-                    class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center">
-                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-                Create New Character
-            </button>
-        </div>
+@* The player's characters, each a room on the map, under the search, filter and sort controls *@
+<div class="mx-auto max-w-7xl">
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <h1 class="page-title">My Characters</h1>
+        <button @onclick="NavigateToCreateCharacter" class="btn-main">Create new character</button>
+    </div>
 
-        <!-- Filters and Search Section -->
-        <div class="bg-gray-800 rounded-lg shadow-xl p-6 mb-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Search -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Search by Name</label>
-                    <input type="text"
-                           @bind="searchTerm"
-                           @bind:event="oninput"
-                           placeholder="Search characters..."
-                           class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:border-transparent" />
-                </div>
-
-                <!-- Class Filter -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Class</label>
-                    <select @bind="classFilter"
-                            class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:border-transparent">
-                        <option value="">All Classes</option>
-                        @* Each class is there twice, once per rules edition *@
-                        @foreach (var classOption in classes.OrderBy(c => c.Name).ThenBy(c => c.Edition))
-                        {
-                            <option value="@classOption.Id">@classOption.Name (@classOption.Edition)</option>
-                        }
-                    </select>
-                </div>
-
-                <!-- Sort By -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Sort By</label>
-                    <select @bind="sortBy"
-                            class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:border-transparent">
-                        <option value="createdat">Date Created</option>
-                        <option value="name">Name</option>
-                        <option value="level">Level</option>
-                    </select>
-                </div>
-
-                <!-- Sort Order -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Sort Order</label>
-                    <select @bind="sortOrder"
-                            class="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-600 focus:border-transparent">
-                        <option value="desc">Newest First</option>
-                        <option value="asc">Oldest First</option>
-                    </select>
-                </div>
+    <Room Class="mb-6">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div>
+                <label for="character-search" class="mb-1 block text-sm font-medium">Search by name</label>
+                <input id="character-search"
+                       type="text"
+                       @bind="searchTerm"
+                       @bind:event="oninput"
+                       placeholder="Search characters..."
+                       class="field" />
             </div>
 
-            <!-- Filter Actions -->
-            <div class="flex justify-end space-x-3 mt-4">
-                <button @onclick="ClearFilters"
-                        class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-                    Clear Filters
-                </button>
-                <button @onclick="ApplyFilters"
-                        class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-                    Apply Filters
-                </button>
+            <div>
+                <label for="character-class" class="mb-1 block text-sm font-medium">Class</label>
+                <select id="character-class" @bind="classFilter" class="field">
+                    <option value="">All Classes</option>
+                    @* Each class is there twice, once per rules edition *@
+                    @foreach (var classOption in classes.OrderBy(c => c.Name).ThenBy(c => c.Edition))
+                    {
+                        <option value="@classOption.Id">@classOption.Name (@classOption.Edition)</option>
+                    }
+                </select>
+            </div>
+
+            <div>
+                <label for="character-sort" class="mb-1 block text-sm font-medium">Sort by</label>
+                <select id="character-sort" @bind="sortBy" class="field">
+                    <option value="createdat">Date Created</option>
+                    <option value="name">Name</option>
+                    <option value="level">Level</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="character-order" class="mb-1 block text-sm font-medium">Sort order</label>
+                <select id="character-order" @bind="sortOrder" class="field">
+                    <option value="desc">Newest First</option>
+                    <option value="asc">Oldest First</option>
+                </select>
             </div>
         </div>
 
-        <!-- Results Summary -->
-        @if (filterResponse != null && !isLoading && filterResponse.TotalCount > 0)
-        {
-            <div class="text-pencil text-sm mb-4">
-                Showing @GetFirstItemIndex()-@GetLastItemIndex() of @filterResponse.TotalCount characters
-            </div>
-        }
+        <div class="mt-4 flex flex-wrap justify-end gap-3">
+            <button @onclick="ClearFilters" class="btn-secondary">Clear filters</button>
+            <button @onclick="ApplyFilters" class="btn-main">Apply filters</button>
+        </div>
+    </Room>
 
-        @if (isLoading)
-        {
-            <!-- Loading State -->
-            <div class="flex justify-center items-center py-20">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-plum"></div>
-            </div>
-        }
-        else if (!string.IsNullOrEmpty(errorMessage))
-        {
-            <!-- Error State -->
-            <Message Kind="MessageKind.Error">
-                <p class="font-medium">Error loading characters</p>
-                <p class="text-sm mt-1">@errorMessage</p>
-                <button @onclick="LoadCharacters"
-                        class="btn-secondary mt-4">
-                    Try Again
-                </button>
-            </Message>
-        }
-        else if (filterResponse == null || filterResponse.Items.Count == 0)
-        {
-            <!-- Empty State -->
-            <div class="text-center py-20">
-                <div class="mb-6">
-                    <svg class="mx-auto h-24 w-24 text-pencil" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </div>
-                <h3 class="room-title text-ink mb-2">
-                    @(HasActiveFilters() ? "No characters match your filters" : "No characters yet")
-                </h3>
-                <p class="text-pencil mb-6">
-                    @(HasActiveFilters() ? "Try adjusting your filters" : "Create your first D&D character to get started!")
-                </p>
-                @if (HasActiveFilters())
-                {
-                    <button @onclick="ClearFilters"
-                            class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center">
-                        Clear Filters
-                    </button>
-                }
-                else
-                {
-                    <button @onclick="NavigateToCreateCharacter"
-                            class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200 inline-flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        Create Your First Character
-                    </button>
-                }
-            </div>
-        }
-        else
-        {
-            <!-- Character Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                @foreach (var character in filterResponse.Items)
-                {
-                    <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-200">
-                        <!-- Character Card Header -->
-                        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4">
-                            <h2 class="text-xl font-bold text-white truncate">@character.Name</h2>
-                            <p class="text-indigo-100 text-sm">Level @character.Level · @character.Edition rules</p>
+    @if (filterResponse != null && !isLoading && filterResponse.TotalCount > 0)
+    {
+        <p class="mb-4 text-sm text-pencil">
+            Showing @GetFirstItemIndex()-@GetLastItemIndex() of @filterResponse.TotalCount characters
+        </p>
+    }
+
+    @if (isLoading)
+    {
+        <Spinner />
+    }
+    else if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <Message Kind="MessageKind.Error">
+            <p class="font-medium">Error loading characters</p>
+            <p class="mt-1 text-sm">@errorMessage</p>
+            <button @onclick="LoadCharacters" class="btn-secondary mt-4">Try again</button>
+        </Message>
+    }
+    else if (filterResponse == null || filterResponse.Items.Count == 0)
+    {
+        <Room Class="py-12 text-center" data-testid="no-characters">
+            <h2 class="room-title mb-2">
+                @(HasActiveFilters() ? "No characters match your filters" : "No characters yet")
+            </h2>
+            <p class="mb-6 text-pencil">
+                @(HasActiveFilters() ? "Try adjusting your filters" : "Create your first D&D character to get started!")
+            </p>
+            @if (HasActiveFilters())
+            {
+                <button @onclick="ClearFilters" class="btn-secondary">Clear filters</button>
+            }
+            else
+            {
+                <button @onclick="NavigateToCreateCharacter" class="btn-main">Create your first character</button>
+            }
+        </Room>
+    }
+    else
+    {
+        <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            @foreach (var character in filterResponse.Items)
+            {
+                <Room Class="flex flex-col" data-testid="character">
+                    <h2 class="room-title truncate">@character.Name</h2>
+                    <p class="text-sm text-pencil">Level @character.Level · @character.Edition rules</p>
+
+                    <dl class="mt-3 flex-1">
+                        <div class="sheet-row justify-between">
+                            <dt class="text-sm text-pencil">Race</dt>
+                            <dd class="text-right">@character.RaceName@(character.SubraceName != null ? $" ({character.SubraceName})" : "")</dd>
                         </div>
-
-                        <!-- Character Card Body -->
-                        <div class="px-6 py-4 space-y-3">
-                            <!-- Race -->
-                            <div class="flex items-center text-gray-300">
-                                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                <span>
-                                    @character.RaceName@(character.SubraceName != null ? $" ({character.SubraceName})" : "")
-                                </span>
-                            </div>
-
-                            <!-- Class -->
-                            <div class="flex items-center text-gray-300">
-                                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                </svg>
-                                <span>
-                                    @character.ClassName@(character.SubclassName != null ? $" ({character.SubclassName})" : "")
-                                </span>
-                            </div>
-
-                            <!-- Background -->
-                            <div class="flex items-center text-gray-300">
-                                <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                                </svg>
-                                <span>@character.BackgroundName</span>
-                            </div>
+                        <div class="sheet-row justify-between">
+                            <dt class="text-sm text-pencil">Class</dt>
+                            <dd class="text-right">@character.ClassName@(character.SubclassName != null ? $" ({character.SubclassName})" : "")</dd>
                         </div>
+                        <div class="sheet-row justify-between">
+                            <dt class="text-sm text-pencil">Background</dt>
+                            <dd class="text-right">@character.BackgroundName</dd>
+                        </div>
+                    </dl>
 
-                        <!-- Character Card Actions -->
-                        <div class="px-6 py-4 bg-gray-750 border-t border-gray-700 flex justify-between">
-                            <button @onclick="() => NavigateToCharacterDetails(character.Id)"
-                                    class="flex-1 mr-2 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-                                View Details
-                            </button>
-                            <button @onclick="() => EditCharacter(character.Id)"
-                                    class="mr-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-                                Edit
-                            </button>
+                    <div class="mt-4 space-y-2">
+                        <button @onclick="() => NavigateToCharacterDetails(character.Id)" class="btn-main w-full">
+                            View details
+                        </button>
+                        <div class="flex flex-wrap gap-2">
+                            <button @onclick="() => EditCharacter(character.Id)" class="btn-secondary flex-1 whitespace-nowrap px-3">Edit</button>
                             @if (character.Level < CharacterLevels.Max)
                             {
-                                <button @onclick="() => LevelUpCharacter(character.Id)"
-                                        class="mr-2 bg-emerald-700 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-                                    Level Up
-                                </button>
+                                <button @onclick="() => LevelUpCharacter(character.Id)" class="btn-secondary flex-1 whitespace-nowrap px-3">Level up</button>
                             }
-                            <button @onclick="() => ConfirmDelete(character)"
-                                    class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-                                Delete
-                            </button>
+                            <button @onclick="() => ConfirmDelete(character)" class="btn-danger flex-1 whitespace-nowrap px-3">Delete</button>
                         </div>
                     </div>
-                }
-            </div>
-
-            <!-- Pagination Controls -->
-            @if (filterResponse.TotalPages > 1)
-            {
-                <div class="flex justify-center items-center space-x-2">
-                    <!-- Previous Button -->
-                    <button @onclick="PreviousPage"
-                            disabled="@(!filterResponse.HasPreviousPage)"
-                            class="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition-colors">
-                        Previous
-                    </button>
-
-                    <!-- Page Numbers -->
-                    @foreach (var pageNum in GetPageNumbers())
-                    {
-                        @if (pageNum == -1)
-                        {
-                            <span class="px-3 py-2 text-gray-400">...</span>
-                        }
-                        else
-                        {
-                            <button @onclick="() => GoToPage(pageNum)"
-                                    class="@GetPageButtonClass(pageNum)">
-                                @(pageNum + 1)
-                            </button>
-                        }
-                    }
-
-                    <!-- Next Button -->
-                    <button @onclick="NextPage"
-                            disabled="@(!filterResponse.HasNextPage)"
-                            class="px-4 py-2 bg-gray-800 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-700 transition-colors">
-                        Next
-                    </button>
-                </div>
+                </Room>
             }
-        }
+        </div>
 
-        <!-- Delete Confirmation Modal -->
-        @if (characterToDelete != null)
+        @if (filterResponse.TotalPages > 1)
         {
-            <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
-                <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
-                    <h3 class="text-xl font-bold text-white mb-4">Delete Character?</h3>
-                    <p class="text-gray-300 mb-6">
-                        Are you sure you want to delete <span class="font-bold text-white">@characterToDelete.Name</span>?
-                        This action cannot be undone.
-                    </p>
-                    <div class="flex justify-end space-x-3">
-                        <button @onclick="CancelDelete"
-                                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
-                            Cancel
+            <nav class="flex flex-wrap items-center justify-center gap-2" aria-label="Pages">
+                <button @onclick="PreviousPage" disabled="@(!filterResponse.HasPreviousPage)" class="btn-secondary">
+                    Previous
+                </button>
+
+                @foreach (var pageNum in GetPageNumbers())
+                {
+                    @if (pageNum == -1)
+                    {
+                        <span class="px-2 text-pencil">...</span>
+                    }
+                    else
+                    {
+                        <button @onclick="() => GoToPage(pageNum)"
+                                class="pager"
+                                aria-current="@(pageNum == filterResponse.PageIndex ? "page" : null)">
+                            @(pageNum + 1)
                         </button>
-                        <button @onclick="DeleteCharacter"
-                                disabled="@isDeleting"
-                                class="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
-                            @(isDeleting ? "Deleting..." : "Delete")
-                        </button>
-                    </div>
-                </div>
-            </div>
+                    }
+                }
+
+                <button @onclick="NextPage" disabled="@(!filterResponse.HasNextPage)" class="btn-secondary">
+                    Next
+                </button>
+            </nav>
         }
-    </div>
+    }
+
+    @if (characterToDelete != null)
+    {
+        <ConfirmDelete Name="@characterToDelete.Name" IsDeleting="isDeleting"
+                       OnConfirm="DeleteCharacter" OnCancel="CancelDelete" />
+    }
 </div>
 
 @code {
@@ -432,21 +327,6 @@
         return pages;
     }
 
-    private string GetPageButtonClass(int pageIndex)
-    {
-        if (filterResponse == null)
-        {
-            return "px-4 py-2 rounded-lg transition-colors font-medium bg-gray-800 text-gray-300 hover:bg-gray-700";
-        }
-
-        var baseClasses = "px-4 py-2 rounded-lg transition-colors font-medium";
-        var activeClasses = "bg-indigo-600 text-white";
-        var inactiveClasses = "bg-gray-800 text-gray-300 hover:bg-gray-700";
-
-        return pageIndex == filterResponse?.PageIndex
-            ? $"{baseClasses} {activeClasses}"
-            : $"{baseClasses} {inactiveClasses}";
-    }
 
     private int GetFirstItemIndex()
     {

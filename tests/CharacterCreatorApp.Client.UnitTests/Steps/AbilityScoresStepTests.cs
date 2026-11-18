@@ -148,7 +148,7 @@ public class AbilityScoresStepTests : WizardStepTestBase
         Button(cut, "Next: Proficiencies").Click();
 
         // Assert
-        cut.Find("div.bg-red-900 p").TextContent.Should().Be("Failed to save ability scores: Ability scores must be between 3 and 20");
+        cut.Find("[role=alert] p").TextContent.Should().Be("Failed to save ability scores: Ability scores must be between 3 and 20");
         _movedOn.Should().Be(0);
     }
 

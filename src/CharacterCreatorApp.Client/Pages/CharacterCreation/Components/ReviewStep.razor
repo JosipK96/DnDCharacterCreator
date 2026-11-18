@@ -13,25 +13,25 @@
     }
     else if (preview is null)
     {
-        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+        <Message Kind="MessageKind.Error" Class="mb-6">
             <p class="text-sm">@(ErrorMessage ?? "Could not build a preview of this character.")</p>
-        </div>
+        </Message>
     }
     else
     {
         @if (!string.IsNullOrEmpty(ErrorMessage))
         {
-            <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+            <Message Kind="MessageKind.Error" Class="mb-6">
                 <p class="text-sm">@ErrorMessage</p>
-            </div>
+            </Message>
         }
 
         @if (!string.IsNullOrEmpty(preview.BlockingIssue))
         {
-            <div class="bg-amber-900 border border-amber-700 text-amber-100 px-4 py-3 rounded-lg mb-6">
+            <Message Kind="MessageKind.Warning" Class="mb-6">
                 <p class="font-medium text-sm">Something still needs choosing</p>
                 <p class="text-sm mt-1">@preview.BlockingIssue</p>
-            </div>
+            </Message>
         }
 
         <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg px-6 py-5 mb-6">

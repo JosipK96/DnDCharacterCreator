@@ -343,7 +343,7 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
 
         // Either the next step shows, or this one shows why the server refused the save
         var heading = _page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex($"^Step {number}: ") });
-        var refusal = _page.Locator("div.bg-red-900 p");
+        var refusal = _page.Locator("[role=alert] p");
         await heading.Or(refusal).First.WaitForAsync();
 
         if (await refusal.IsVisibleAsync())
@@ -360,7 +360,7 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await next.ClickAsync();
 
         var heading = _page.GetByRole(AriaRole.Heading, new() { NameRegex = new Regex($"^Step {shownAs}: ") });
-        var refusal = _page.Locator("div.bg-red-900 p");
+        var refusal = _page.Locator("[role=alert] p");
         await heading.Or(refusal).First.WaitForAsync();
 
         if (await refusal.IsVisibleAsync())

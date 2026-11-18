@@ -14,9 +14,9 @@
     }
     else if (!string.IsNullOrEmpty(ErrorMessage))
     {
-        <div class="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded-lg mb-6">
+        <Message Kind="MessageKind.Error" Class="mb-6">
             <p class="text-sm">@ErrorMessage</p>
-        </div>
+        </Message>
     }
     else if (totalChoices == 0)
     {
@@ -27,7 +27,7 @@
     }
     else
     {
-        <div class="bg-blue-900 border border-blue-700 text-blue-200 px-4 py-3 rounded-lg mb-6">
+        <Message Kind="MessageKind.Info" Class="mb-6">
             <p class="text-sm">
                 Choose <strong>@totalChoices</strong> additional language(s) from the list below.
                 (@selectedLanguageIds.Count / @totalChoices selected)
@@ -36,7 +36,7 @@
             {
                 <p class="text-sm mt-1">Already known from your race and background: <strong>@string.Join(", ", alreadyKnownNames)</strong></p>
             }
-        </div>
+        </Message>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             @foreach (var language in availableLanguages)
@@ -53,7 +53,7 @@
                         </div>
                         @if (isSelected)
                         {
-                            <svg class="w-5 h-5 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <svg class="w-5 h-5 text-indigo-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                             </svg>
                         }

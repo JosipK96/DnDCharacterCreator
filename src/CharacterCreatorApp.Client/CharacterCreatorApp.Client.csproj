@@ -11,4 +11,7 @@
     <ProjectReference Include="..\CharacterCreatorApp.Contracts\CharacterCreatorApp.Contracts.csproj" />
   </ItemGroup>
 
+  <!-- The stylesheet is built from Styles/app.css by Tailwind's standalone CLI (Tailwind.targets) -->
+  <Import Project="Tailwind.targets" />
+
 </Project>

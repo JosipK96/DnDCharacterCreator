@@ -1,48 +1,98 @@
-<div class="mb-8">
-    <div class="flex items-start">
+@* The wizard's progress as a map: a row of numbered rooms joined by corridors, one per step of
+   the flow. Below 700px wide it folds to one line ("Room 3 of 10: Class") over a row of small
+   squares, so nothing scrolls sideways on a phone. Both forms show the same four states. *@
+
+<nav aria-label="Wizard progress" class="mb-8">
+    @* The map, from 700px wide *@
+    <ol class="hidden min-[700px]:flex items-start" data-testid="progress-map">
         @for (int position = 0; position < Flow.Count; position++)
         {
-            var stepNumber = Flow[position];
-            var shownNumber = position + 1;
-            var isLast = position == Flow.Count - 1;
-            var isActive = stepNumber == CurrentStep;
-            var isCompleted = position < CurrentPosition;
-            var needsPick = StepsNeedingPick.Contains(stepNumber) && !isActive;
+            var step = Flow[position];
+            var state = StateOf(position);
 
-            <div class="flex items-center @(isLast ? "" : "flex-1")">
-                <div class="flex flex-col items-center">
-                    @* An edit can go to any step: every step shows what the draft holds *@
+            <li class="flex items-start @(position == 0 ? "shrink basis-[72px] min-w-12" : "flex-1 min-w-0")">
+                @if (position > 0)
+                {
+                    @* A corridor: two parallel walls between neighbouring rooms *@
+                    <div class="flex h-[92px] min-w-1.5 flex-1 items-center" aria-hidden="true">
+                        <div class="h-2.5 w-full border-y-2 border-ink"></div>
+                    </div>
+                }
+                <div class="flex shrink basis-[72px] min-w-12 flex-col items-center">
+                    <div class="flex h-[92px] w-full items-center">
+                        @* An edit can go to any step: every step shows what the draft holds *@
+                        @if (OnSelectStep.HasDelegate)
+                        {
+                            <button type="button" class="@RoomClass(state) w-full" style="height: @(RoomHeight(position))px"
+                                    title="@StepTitle(step, state)" aria-current="@AriaCurrent(state)" data-state="@StateName(state)"
+                                    @onclick="() => OnSelectStep.InvokeAsync(step)">
+                                @RoomMark(position, state)
+                            </button>
+                        }
+                        else
+                        {
+                            <div class="@RoomClass(state) w-full" style="height: @(RoomHeight(position))px"
+                                 title="@StepTitle(step, state)" aria-current="@AriaCurrent(state)" data-state="@StateName(state)">
+                                @RoomMark(position, state)
+                            </div>
+                        }
+                    </div>
+                    <span class="mt-1 w-full text-center text-[13px] leading-tight break-words hyphens-auto @LabelClass(state)">@WizardSteps.NameOf(step)</span>
+                    @if (state == RoomState.NeedsPick)
+                    {
+                        <span class="text-center text-xs text-amber-text">Needs a pick</span>
+                    }
+                </div>
+            </li>
+        }
+    </ol>
+
+    @* The compact form, below 700px *@
+    <div class="min-[700px]:hidden" data-testid="progress-compact">
+        <p class="font-display text-xl font-semibold leading-tight text-ink">Room @(CurrentPosition + 1) of @Flow.Count: @WizardSteps.NameOf(CurrentStep)</p>
+        @if (CurrentPosition + 1 < Flow.Count)
+        {
+            <p class="text-sm text-pencil">Next: @WizardSteps.NameOf(Flow[CurrentPosition + 1])</p>
+        }
+        <ol class="mt-2 flex flex-wrap items-center gap-1">
+            @for (int position = 0; position < Flow.Count; position++)
+            {
+                var step = Flow[position];
+                var state = StateOf(position);
+
+                <li class="flex">
                     @if (OnSelectStep.HasDelegate)
                     {
-                        <button type="button" class="@GetStepClass(isActive, isCompleted, needsPick)"
-                                title="@StepTitle(stepNumber, needsPick)"
-                                @onclick="() => OnSelectStep.InvokeAsync(stepNumber)">
-                            @StepMark(shownNumber, isCompleted, needsPick)
+                        @* The square is small; the button around it gives a finger room to press *@
+                        <button type="button" class="p-1.5" title="@StepTitle(step, state)" aria-label="@StepTitle(step, state)"
+                                aria-current="@AriaCurrent(state)" data-state="@StateName(state)"
+                                @onclick="() => OnSelectStep.InvokeAsync(step)">
+                            <span class="block size-3 @SquareClass(state)"></span>
                         </button>
                     }
                     else
                     {
-                        <div class="@GetStepClass(isActive, isCompleted, needsPick)" title="@StepTitle(stepNumber, needsPick)">
-                            @StepMark(shownNumber, isCompleted, needsPick)
-                        </div>
+                        <span class="block size-3 @SquareClass(state)" title="@StepTitle(step, state)"
+                              aria-current="@AriaCurrent(state)" data-state="@StateName(state)"></span>
                     }
-                    <span class="text-xs mt-1 text-center @(isActive ? "text-indigo-400 font-medium" : "text-gray-500")">@GetStepLabel(stepNumber)</span>
-                    @if (needsPick)
-                    {
-                        <span class="text-xs text-amber-400 text-center">Needs a pick</span>
-                    }
-                </div>
-                @if (!isLast)
-                {
-                    <!-- Connecting line -->
-                    <div class="flex-1 h-0.5 mx-2 mb-4 @(isCompleted ? "bg-indigo-600" : "bg-gray-700")"></div>
-                }
-            </div>
-        }
+                </li>
+            }
+        </ol>
     </div>
-</div>
+</nav>
 
 @code {
+    // How tall each room is, by its place in the row, so the map looks drawn rather than ruled
+    private static readonly int[] RoomHeights = [72, 60, 84, 66, 92, 70, 80, 62, 88, 76, 68];
+
+    private enum RoomState
+    {
+        Done,
+        Current,
+        NeedsPick,
+        Ahead,
+    }
+
     [Parameter]
     public int CurrentStep { get; set; }
 
@@ -61,44 +111,73 @@
     [Parameter]
     public EventCallback<int> OnSelectStep { get; set; }
 
-    private int CurrentPosition => Flow.ToList().IndexOf(CurrentStep);
+    private int CurrentPosition => Math.Max(0, Flow.ToList().IndexOf(CurrentStep));
 
-    private static string GetStepClass(bool isActive, bool isCompleted, bool needsPick)
+    private static int RoomHeight(int position) => RoomHeights[position % RoomHeights.Length];
+
+    private RoomState StateOf(int position)
     {
-        var baseClass = "w-10 h-10 rounded-full flex items-center justify-center font-medium";
+        var step = Flow[position];
 
-        if (needsPick)
-            return $"{baseClass} bg-amber-600 text-white ring-2 ring-amber-400";
+        if (step == CurrentStep)
+        {
+            return RoomState.Current;
+        }
 
-        if (isCompleted)
-            return $"{baseClass} bg-indigo-600 text-white";
+        if (StepsNeedingPick.Contains(step))
+        {
+            return RoomState.NeedsPick;
+        }
 
-        if (isActive)
-            return $"{baseClass} bg-indigo-600 text-white ring-4 ring-indigo-600 ring-opacity-30";
-
-        return $"{baseClass} bg-gray-700 text-gray-400";
+        return position < CurrentPosition ? RoomState.Done : RoomState.Ahead;
     }
 
-    private static RenderFragment StepMark(int shownNumber, bool isCompleted, bool needsPick) => __builder =>
+    private static string RoomClass(RoomState state) => "flex items-center justify-center font-display text-2xl font-semibold " + state switch
     {
-        if (needsPick)
+        RoomState.Done => "hatch border-[3px] border-ink text-ink",
+        RoomState.Current => "bg-plum-tint border-[5px] border-plum text-plum",
+        RoomState.NeedsPick => "bg-amber-tint border-[5px] border-amber text-amber-text",
+        _ => "bg-room border-[3px] border-dashed border-ink text-ink",
+    };
+
+    private static string SquareClass(RoomState state) => state switch
+    {
+        RoomState.Done => "hatch border-2 border-ink",
+        RoomState.Current => "bg-plum-tint border-2 border-plum",
+        RoomState.NeedsPick => "bg-amber-tint border-2 border-amber",
+        _ => "bg-room border-2 border-dashed border-ink",
+    };
+
+    private static string LabelClass(RoomState state) => state switch
+    {
+        RoomState.Current => "font-medium text-plum",
+        RoomState.NeedsPick => "font-medium text-amber-text",
+        _ => "text-ink",
+    };
+
+    private static string StateName(RoomState state) => state switch
+    {
+        RoomState.Done => "done",
+        RoomState.Current => "current",
+        RoomState.NeedsPick => "needs-pick",
+        _ => "ahead",
+    };
+
+    private static string? AriaCurrent(RoomState state) => state == RoomState.Current ? "step" : null;
+
+    private static RenderFragment RoomMark(int position, RoomState state) => __builder =>
+    {
+        if (state == RoomState.NeedsPick)
         {
             <span>!</span>
         }
-        else if (isCompleted)
-        {
-            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-        }
         else
         {
-            <span>@shownNumber</span>
+            @* On the hatching the number sits on a patch of plain floor, so it stays readable *@
+            <span class="@(state == RoomState.Done ? "bg-room px-1" : string.Empty)">@(position + 1)</span>
         }
     };
 
-    private static string StepTitle(int step, bool needsPick) =>
-        needsPick ? $"{GetStepLabel(step)}: needs a pick" : GetStepLabel(step);
-
-    private static string GetStepLabel(int step) => WizardSteps.NameOf(step);
+    private static string StepTitle(int step, RoomState state) =>
+        state == RoomState.NeedsPick ? $"{WizardSteps.NameOf(step)}: needs a pick" : WizardSteps.NameOf(step);
 }

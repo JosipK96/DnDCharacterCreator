@@ -21,14 +21,14 @@
         }
         else if (!string.IsNullOrEmpty(errorMessage))
         {
-            <div class="bg-red-900 border border-red-700 text-red-200 px-6 py-4 rounded-lg">
+            <Message Kind="MessageKind.Error">
                 <p class="font-medium">Error</p>
                 <p class="text-sm mt-1">@errorMessage</p>
                 <button @onclick="Cancel"
-                        class="mt-4 bg-red-800 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm">
+                        class="btn-secondary mt-4">
                     Back to Characters
                 </button>
-            </div>
+            </Message>
         }
         else
         {
@@ -148,7 +148,7 @@
 
         @if (showCancelConfirm)
         {
-            <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 px-4">
+            <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
                 <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
                     @if (IsLevelUp)
                     {
@@ -181,7 +181,7 @@
 
         @if (showResumePrompt && existingDraft != null)
         {
-            <div class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 px-4">
+            <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
                 <div class="bg-gray-800 rounded-lg shadow-2xl max-w-md w-full p-6">
                     <h3 class="text-xl font-bold text-white mb-4">Resume Character Creation?</h3>
                     <p class="text-gray-300 mb-2">You have an in-progress character:</p>

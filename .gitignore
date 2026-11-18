@@ -61,3 +61,6 @@ src/CharacterCreatorApp.Client/Properties/launchSettings.json
 # Claude Code: the skills (a clone of a private repository), worktrees and local settings
 .claude/
 **/.claude/
+
+## The client's stylesheet, generated from Styles/app.css by Tailwind at build time (Tailwind.targets)
+src/CharacterCreatorApp.Client/wwwroot/css/app.css

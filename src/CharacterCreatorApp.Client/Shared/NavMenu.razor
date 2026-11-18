@@ -1,54 +1,34 @@
 @inject AuthService AuthService
 @inject NavigationManager Navigation
 
-<nav class="bg-gray-800 shadow-lg">
-    <div class="container mx-auto px-4">
-        <div class="flex items-center justify-between h-16">
-            <div class="flex items-center space-x-8">
-                <a href="/" class="text-white text-xl font-bold">
-                    🎲 D&D Character Creator
-                </a>
+@* The header band: plain Graph paper with the brand on the left, the links on the right and an
+   Ink rule underneath. It wraps on a phone rather than scrolling sideways. *@
+<nav class="bg-paper border-b-[3px] border-ink">
+    <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-x-6 gap-y-2">
+        <a href="/" class="font-display font-semibold text-[26px] leading-tight text-ink">
+            D&amp;D Character Creator
+        </a>
 
-                <AuthorizeView>
-                    <Authorized>
-                        <div class="hidden md:flex space-x-4">
-                            <a href="/characters" class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
-                                My Characters
-                            </a>
-                            <a href="/character/create" class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
-                                Create Character
-                            </a>
-                        </div>
-                    </Authorized>
-                </AuthorizeView>
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <AuthorizeView>
-                    <Authorized>
-                        <a href="/account/password" class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
-                            Change password
-                        </a>
-                        <button @onclick="Logout"
-                                class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
-                            Logout
-                        </button>
-                    </Authorized>
-                    <NotAuthorized>
-                        <a href="/login" class="text-gray-300 hover:text-white px-3 py-2 rounded-md">
-                            Login
-                        </a>
-                        <a href="/register" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md">
-                            Register
-                        </a>
-                    </NotAuthorized>
-                </AuthorizeView>
-            </div>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-1">
+            <AuthorizeView>
+                <Authorized>
+                    <a href="/characters" class="@LinkClass">My Characters</a>
+                    <a href="/character/create" class="@LinkClass">Create Character</a>
+                    <a href="/account/password" class="@LinkClass">Change password</a>
+                    <button type="button" @onclick="Logout" class="@LinkClass">Logout</button>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/login" class="@LinkClass">Login</a>
+                    <a href="/register" class="btn-main">Register</a>
+                </NotAuthorized>
+            </AuthorizeView>
         </div>
     </div>
 </nav>
 
 @code {
+    private const string LinkClass = "font-medium text-ink underline-offset-4 decoration-2 hover:underline";
+
     private async Task Logout()
     {
         await AuthService.LogoutAsync();

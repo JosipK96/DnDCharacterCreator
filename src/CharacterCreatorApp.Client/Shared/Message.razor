@@ -1,0 +1,70 @@
+@* Every message the client shows: the state's tint, a 5px left border in the state colour, an
+   icon and the text in a dark shade of it. The role lets screen readers and tests find it, so
+   nothing finds a message by its colour. *@
+
+<div role="@Role" data-kind="@Kind.ToString().ToLowerInvariant()"
+     class="flex items-start gap-3 border-l-[5px] px-4 py-3 @KindClass @Class" @attributes="AdditionalAttributes">
+    <svg class="mt-0.5 h-5 w-5 shrink-0 @IconClass" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        @switch (Kind)
+        {
+            case MessageKind.Error:
+                <circle cx="10" cy="10" r="8" />
+                <line x1="10" y1="5.5" x2="10" y2="10.5" />
+                <line x1="10" y1="14" x2="10" y2="14.2" />
+                break;
+            case MessageKind.Success:
+                <polyline points="4,10.5 8,14.5 16,5.5" />
+                break;
+            case MessageKind.Warning:
+                <path d="M10 2.5 18.5 17.5H1.5Z" />
+                <line x1="10" y1="8" x2="10" y2="12" />
+                <line x1="10" y1="14.8" x2="10" y2="15" />
+                break;
+            default:
+                <circle cx="10" cy="10" r="8" />
+                <line x1="10" y1="9" x2="10" y2="14.5" />
+                <line x1="10" y1="5.8" x2="10" y2="6" />
+                break;
+        }
+    </svg>
+    <div class="min-w-0 flex-1">@ChildContent</div>
+</div>
+
+@code {
+    [Parameter]
+    public MessageKind Kind { get; set; } = MessageKind.Info;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Spacing and other layout classes from the page, such as a bottom margin.</summary>
+    [Parameter]
+    public string? Class { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string Role => Kind switch
+    {
+        MessageKind.Error or MessageKind.Warning => "alert",
+        MessageKind.Success => "status",
+        _ => "note",
+    };
+
+    private string KindClass => Kind switch
+    {
+        MessageKind.Error => "bg-red-tint border-red text-red-text",
+        MessageKind.Success => "bg-green-tint border-green text-green-text",
+        MessageKind.Warning => "bg-amber-tint border-amber text-amber-text",
+        _ => "bg-room-highlight border-ink text-ink",
+    };
+
+    private string IconClass => Kind switch
+    {
+        MessageKind.Error => "text-red",
+        MessageKind.Success => "text-green",
+        MessageKind.Warning => "text-amber",
+        _ => "text-pencil",
+    };
+}

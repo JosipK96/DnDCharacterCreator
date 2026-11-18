@@ -14,6 +14,7 @@ namespace CharacterCreatorApp.Client.UnitTests.Fixtures;
 public sealed class FakeApi : HttpMessageHandler
 {
     private readonly Dictionary<string, Func<HttpResponseMessage>> _routes = [];
+    private readonly Dictionary<string, Func<HttpResponseMessage>> _anyQueryRoutes = [];
     private readonly List<(string Route, string? Body)> _requests = [];
 
     /// <summary>"GET /api/books?edition=2024", "PUT /api/character-drafts/{id}/books", in the order sent.</summary>
@@ -23,6 +24,13 @@ public sealed class FakeApi : HttpMessageHandler
 
     public void Get(string pathAndQuery, object response) =>
         _routes[$"GET {pathAndQuery}"] = () => new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(response) };
+
+    /// <summary>
+    /// The answer to every GET of a path, whatever its query, unless <see cref="Get"/> set up that
+    /// exact route: for a lookup most tests do not look at, such as the hidden options a step's note counts.
+    /// </summary>
+    public void GetAnyQuery(string path, object response) =>
+        _anyQueryRoutes[$"GET {path}"] = () => new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(response) };
 
     /// <summary>A file the API sends to be saved, named in its Content-Disposition as ASP.NET Core's File() names it.</summary>
     public void GetFile(string pathAndQuery, string fileName, string contentType, byte[] content) =>
@@ -83,8 +91,12 @@ public sealed class FakeApi : HttpMessageHandler
         var body = request.Content is null ? null : await request.Content.ReadAsStringAsync(cancellationToken);
         _requests.Add((route, body));
 
-        return _routes.TryGetValue(route, out var respond)
-            ? respond()
-            : throw new InvalidOperationException($"The test did not expect {route}.");
+        if (_routes.TryGetValue(route, out var respond)
+            || _anyQueryRoutes.TryGetValue($"{request.Method} {request.RequestUri.AbsolutePath}", out respond))
+        {
+            return respond();
+        }
+
+        throw new InvalidOperationException($"The test did not expect {route}.");
     }
 }

@@ -3,6 +3,7 @@ using AngleSharp.Dom;
 using Bunit;
 
 using CharacterCreatorApp.Client.Services;
+using CharacterCreatorApp.Contracts.Responses;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +20,13 @@ public abstract class WizardStepTestBase : BunitContext
     {
         Services.AddSingleton(new CharacterDraftService(Api.CreateClient()));
         Services.AddSingleton(new LookupService(Api.CreateClient()));
+
+        // A step's note on what the unticked books hold: nothing, unless a test sets up its route
+        Api.GetAnyQuery(HiddenOptionsPath, new HiddenOptionsApiResponse(0, []));
     }
+
+    /// <summary>The route each step's note on the unticked books asks, before its query.</summary>
+    protected const string HiddenOptionsPath = "/api/books/hidden-options";
 
     protected static Guid DraftId { get; } = Guid.Parse("0b6f3a52-7d2e-4c1a-9a51-3f0c2d7e8b14");
 

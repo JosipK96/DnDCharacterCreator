@@ -5,13 +5,11 @@
 @inherits WizardStepBase
 
 <div>
-    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Hit Points")</h2>
+    <h2 class="step-title mb-4">@StepHeading("Hit Points")</h2>
 
     @if (IsLoading)
     {
-        <div class="flex justify-center items-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-        </div>
+        <Spinner />
     }
     else
     {
@@ -24,53 +22,48 @@
 
         @if (dieSize > 0)
         {
-            <p class="text-gray-400 mb-6">
-                Level @level adds a @hitDie and your Constitution modifier to your hit points.
-                Take the hit die's fixed value, roll it here, or enter what you rolled with your own dice.
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <button type="button" @onclick="TakeFixedValue" class="@ChoiceClass(chosenBy == ChosenBy.Fixed)">
-                    <span class="block font-bold text-white">Take @fixedValue</span>
-                    <span class="block text-xs text-gray-400 mt-1">The fixed value of a @hitDie</span>
-                </button>
-
-                <button type="button" @onclick="Roll" disabled="@hasRolled" class="@ChoiceClass(chosenBy == ChosenBy.Rolled)">
-                    <span class="block font-bold text-white">@(hasRolled ? $"Rolled {rolled}" : $"Roll a {hitDie}")</span>
-                    <span class="block text-xs text-gray-400 mt-1">Rolled once, here in the browser</span>
-                </button>
-
-                <div class="@ChoiceClass(chosenBy == ChosenBy.Entered)">
-                    <label for="hit-die-roll" class="block font-bold text-white">I rolled</label>
-                    <input id="hit-die-roll" type="number" min="1" max="@dieSize" value="@entered"
-                           @onchange="Enter"
-                           class="mt-2 w-24 bg-gray-800 border border-gray-600 text-white rounded px-2 py-1" />
-                    <span class="block text-xs text-gray-400 mt-1">From 1 to @dieSize</span>
+            <Room>
+                <div class="mb-5 flex items-start gap-3">
+                    <HitDie Die="@hitDie" Size="40" ShowLabel="false" />
+                    <p class="text-pencil">
+                        Level @level adds a @hitDie and your Constitution modifier to your hit points.
+                        Take the hit die's fixed value, roll it here, or enter what you rolled with your own dice.
+                    </p>
                 </div>
-            </div>
 
-            @if (chosen is { } result)
-            {
-                <p class="text-indigo-300">Level @level: @result on the @hitDie, plus your Constitution modifier.</p>
-            }
+                <div class="option-grid">
+                    <OptionRoom Name="@($"Take {fixedValue}")" Picked="@(chosenBy == ChosenBy.Fixed)" OnClick="TakeFixedValue">
+                        <span>The fixed value of a @hitDie</span>
+                    </OptionRoom>
+
+                    <OptionRoom Name="@(hasRolled ? $"Rolled {rolled}" : $"Roll a {hitDie}")" Picked="@(chosenBy == ChosenBy.Rolled)"
+                                Disabled="@hasRolled" OnClick="Roll">
+                        <span>Rolled once, here in the browser</span>
+                    </OptionRoom>
+
+                    <div class="option-room" data-picked="@(chosenBy == ChosenBy.Entered ? "true" : "false")">
+                        @if (chosenBy == ChosenBy.Entered)
+                        {
+                            <span class="you-are-here" aria-hidden="true"></span>
+                        }
+                        <label for="hit-die-roll" class="block font-display text-[23px] font-semibold leading-tight">I rolled</label>
+                        <input id="hit-die-roll" type="number" min="1" max="@dieSize" value="@entered"
+                               @onchange="Enter" class="field mt-2 w-24" />
+                        <span class="mt-1 block text-sm text-pencil">From 1 to @dieSize</span>
+                    </div>
+                </div>
+
+                @if (chosen is { } result)
+                {
+                    <p class="mt-5 font-medium text-plum">Level @level: @result on the @hitDie, plus your Constitution modifier.</p>
+                }
+            </Room>
         }
     }
 
-    <div class="flex justify-between mt-8">
-        <button @onclick="() => OnBack.InvokeAsync()"
-                type="button"
-                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            Back
-        </button>
-
-        <button @onclick="HandleNext"
-                disabled="@(chosen == null || IsSaving)"
-                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            @(IsSaving ? "Saving..." : NextLabel)
-        </button>
-    </div>
+    <StepNavigation OnBack="() => OnBack.InvokeAsync()" OnNext="HandleNext" NextDisabled="@(chosen == null || IsSaving)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
 </div>
-
 @code {
     [Parameter]
     public EventCallback OnNext { get; set; }
@@ -176,8 +169,6 @@
         }
     }
 
-    private static string ChoiceClass(bool isChosen) =>
-        $"border-2 rounded-lg p-4 text-left transition-all duration-200 disabled:cursor-not-allowed {(isChosen ? "border-indigo-500 bg-gray-600" : "border-gray-600 bg-gray-700 hover:border-indigo-500")}";
 
     private async Task HandleNext()
     {

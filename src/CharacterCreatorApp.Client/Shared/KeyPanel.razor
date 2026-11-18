@@ -1,0 +1,26 @@
+@* The key to the picked option, beside the grid of options (under it on a phone): a room with a
+   double Ink wall, titled "Key: <name>", holding KeyFact rows and a short note at its foot. *@
+
+<aside class="key-room p-5 @Class" data-testid="key-panel">
+    <h3 class="room-title mb-2">Key: @Name</h3>
+    <dl class="text-sm">@ChildContent</dl>
+    @if (Note is not null)
+    {
+        <p class="mt-3 text-sm italic text-pencil">@Note</p>
+    }
+</aside>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>The <see cref="KeyFact"/> rows.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Note { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+}

@@ -312,19 +312,19 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         await NextAsync("Race");
     }
 
-    // A card on a step: a race, class or background, by the name it shows
+    // A room on a step: a race, class or background, by the name it shows
     private Task PickAsync(string name) =>
         _page.GetByRole(AriaRole.Button, new() { Name = name }).First.ClickAsync();
 
-    // The first options still open in a section of picks (skills, languages, spells)
+    // The first rows still open in a section of picks (skills, languages, spells)
     private async Task PickFirstAsync(int count, string? section = null)
     {
         var scope = section is null
             ? _page.Locator("body")
-            : _page.Locator("div.rounded-lg", new() { Has = _page.GetByRole(AriaRole.Heading, new() { Name = section, Exact = true }) }).Last;
+            : Section(_page.GetByRole(AriaRole.Heading, new() { Name = section, Exact = true }));
 
         // Picking one leaves the others open until the count is reached, so the indexes hold
-        var open = scope.Locator("div.grid button:not([disabled]), div.space-y-2 > button:not([disabled])");
+        var open = scope.Locator("[data-testid=choice-row]:not([disabled])");
 
         for (var i = 0; i < count; i++)
         {
@@ -332,22 +332,23 @@ public partial class WizardSmokeTests(WizardHost host) : IClassFixture<WizardHos
         }
     }
 
-    // The spells step says how many the server allows ("Choose 6 (up to level 1)"); that many are picked
+    // A section of picks: the room whose head holds the given heading
+    private ILocator Section(ILocator heading) =>
+        _page.Locator("[data-testid=choice-section]", new() { Has = heading }).Last;
+
+    // A section's count box says how many the server allows ("0 of 6 chosen"); that many are picked
     private async Task PickAsManyAsAllowedAsync(string section)
     {
-        var heading = _page.GetByRole(AriaRole.Heading, new() { Name = section, Exact = true });
-        var allowed = await heading.Locator("xpath=..").Locator("p").First.InnerTextAsync();
+        var count = Section(_page.GetByRole(AriaRole.Heading, new() { Name = section, Exact = true })).Locator("[data-testid=choice-count]");
+        var allowed = await count.GetAttributeAsync("data-total");
 
-        await PickFirstAsync(int.Parse(ChooseCount().Match(allowed).Groups[1].Value, System.Globalization.CultureInfo.InvariantCulture), section);
+        await PickFirstAsync(int.Parse(allowed!, System.Globalization.CultureInfo.InvariantCulture), section);
     }
-
-    [GeneratedRegex(@"^Choose (\d+)")]
-    private static partial Regex ChooseCount();
 
     // The first tool of the one tool choice the step offers ("Soldier: choose 1 tool")
     private Task PickToolAsync() =>
-        _page.Locator("h4", new() { HasTextRegex = new Regex("choose 1 tool") })
-            .Locator("xpath=../..").Locator("button:not([disabled])").First.ClickAsync();
+        Section(_page.Locator("h3", new() { HasTextRegex = new Regex("choose 1 tool") }))
+            .Locator("[data-testid=choice-row]:not([disabled])").First.ClickAsync();
 
     private async Task StandardArrayAsync()
     {

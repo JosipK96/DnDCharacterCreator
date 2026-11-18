@@ -1,0 +1,22 @@
+@* One number on the review step (and the sheet once it is restyled): a label over a big number,
+   with an optional line under it, such as an ability's modifier. *@
+
+<div class="border-2 border-ink bg-room-highlight p-3 text-center">
+    <div class="mb-1 text-xs text-pencil">@Label</div>
+    <div class="font-display text-2xl font-semibold">@Value</div>
+    @if (Sub is not null)
+    {
+        <div class="font-medium text-plum">@Sub</div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Sub { get; set; }
+}

@@ -1,0 +1,37 @@
+@* One option on a wizard step (a race, a class, a background, a feat) drawn as a room on the
+   grid: its name in Barlow Condensed and its key facts in Pencil. The picked one takes the Plum
+   tint and the "you are here" marker; aria-pressed says which it is, for screen readers and tests. *@
+
+<button type="button" class="option-room @Class" aria-pressed="@(Picked ? "true" : "false")"
+        disabled="@Disabled" @onclick="OnClick" data-testid="option-room">
+    @if (Picked)
+    {
+        <span class="you-are-here" aria-hidden="true"></span>
+    }
+    <span class="block pr-8 font-display text-[23px] font-semibold leading-tight">@Name</span>
+    @if (ChildContent is not null)
+    {
+        <span class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-pencil">@ChildContent</span>
+    }
+</button>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool Picked { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    /// <summary>The option's one or two key facts, such as a class's hit die and skill choice.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? Class { get; set; }
+}

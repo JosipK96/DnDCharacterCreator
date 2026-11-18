@@ -147,6 +147,16 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
         (cleric2024!.Edition, cleric2024.SubclassLevel).Should().Be(("2024", 3));
     }
 
+    [Fact]
+    public async Task GetClass_ForAFighter_ReturnsItsSavingThrows()
+    {
+        // Act - the class step's key panel shows them as the API gives them
+        var fighter = await _client.GetFromJsonAsync<ClassApiResponse>("/api/classes/fighter", TestContext.Current.CancellationToken);
+
+        // Assert
+        fighter!.SavingThrowAbilityIds.Should().Equal("STR", "CON");
+    }
+
     [Theory]
     [InlineData("2014", 9, "elf")]
     [InlineData("2024", 10, "elf_2024")]

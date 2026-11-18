@@ -1,0 +1,31 @@
+@* The foot of every wizard step: Back as a plain underlined link, Next as the main button. The
+   step passes its "Next" text, which comes from WizardStepBase.NextLabel. *@
+
+<div class="mt-8 flex flex-wrap items-center justify-between gap-4">
+    @if (OnBack.HasDelegate)
+    {
+        <button type="button" class="link-back" @onclick="OnBack">@BackText</button>
+    }
+    else
+    {
+        <span></span>
+    }
+    <button type="button" class="btn-main" disabled="@NextDisabled" @onclick="OnNext">@NextText</button>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback OnBack { get; set; }
+
+    [Parameter]
+    public string BackText { get; set; } = "Back";
+
+    [Parameter]
+    public EventCallback OnNext { get; set; }
+
+    [Parameter, EditorRequired]
+    public string NextText { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool NextDisabled { get; set; }
+}

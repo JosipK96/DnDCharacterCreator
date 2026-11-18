@@ -1,0 +1,29 @@
+@* How many of a section's picks are made: Green with a check once complete ("3 of 3 chosen"),
+   Amber while choices remain ("4 of 6 chosen: choose 2 more"). The numbers come from the step,
+   which has them from the API. *@
+
+<span data-testid="choice-count" data-chosen="@Chosen" data-total="@Total"
+      class="inline-flex items-center gap-1.5 border-2 px-2 py-0.5 text-sm font-medium @(IsComplete ? "border-green bg-green-tint text-green-text" : "border-amber bg-amber-tint text-amber-text")">
+    @if (IsComplete)
+    {
+        <svg class="h-4 w-4 shrink-0 text-green" viewBox="0 0 20 20" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="4,10.5 8,14.5 16,5.5" />
+        </svg>
+    }
+    @Text
+</span>
+
+@code {
+    [Parameter]
+    public int Chosen { get; set; }
+
+    [Parameter]
+    public int Total { get; set; }
+
+    private bool IsComplete => Chosen >= Total;
+
+    private string Text => IsComplete
+        ? $"{Chosen} of {Total} chosen"
+        : $"{Chosen} of {Total} chosen: choose {Total - Chosen} more";
+}

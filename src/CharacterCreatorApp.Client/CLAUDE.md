@@ -39,5 +39,13 @@
   tests find it, never a colour class. A framed section is `Shared/Room.razor`.
 - `Components/WizardProgress.razor` is a map of rooms from 700px wide and a one-line "Room N of M" with squares
   below it; both carry `data-state` (done, current, needs-pick, ahead) for the tests.
-- The steps, the sheet, the list and the account pages still carry Tailwind's default dark
-  classes inside their panels until their own restyle issues; a page itself sits on the paper.
+- The wizard steps are drawn with the shared pieces in `Shared/`, never with styles of their own.
+  An option to pick (a race, class, background, feat) is a `Shared/OptionRoom.razor` on an
+  option-grid, with the picked one's `Shared/KeyPanel.razor` of `Shared/KeyFact.razor` rows beside
+  it in step-columns. A long list (spells, skills, tools, languages) is a
+  `Shared/ChoiceSection.razor` of `Shared/ChoiceRow.razor` rows, its `Shared/ChoiceCount.razor`
+  Green once complete and Amber otherwise. A hit die is `Shared/HitDie.razor`, a loading list
+  `Shared/Spinner.razor`, a number on the review `Shared/StatBox.razor`, and a step's foot
+  `Components/StepNavigation.razor`. Tests find them by data-testid and aria-pressed, never by a class.
+- The sheet, the list and the account pages still carry Tailwind's default dark classes inside
+  their panels until their own restyle issues; a page itself sits on the paper.

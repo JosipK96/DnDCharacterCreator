@@ -1,17 +1,15 @@
-﻿@using CharacterCreatorApp.Contracts.Requests.CharacterDrafts
+@using CharacterCreatorApp.Contracts.Requests.CharacterDrafts
 @using CharacterCreatorApp.Contracts.Responses
 @inject CharacterDraftService DraftService
 @inject LookupService LookupService
 @inherits WizardStepBase
 
 <div>
-    <h2 class="text-2xl font-bold text-white mb-6">@StepHeading("Choose Your Background")</h2>
+    <h2 class="step-title mb-2">@StepHeading("Choose Your Background")</h2>
 
     @if (IsLoading)
     {
-        <div class="flex justify-center items-center py-20">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-        </div>
+        <Spinner />
     }
     else if (!string.IsNullOrEmpty(ErrorMessage))
     {
@@ -21,162 +19,46 @@
     }
     else
     {
-        @if (selectedBackground == null)
-        {
-            <!-- Background Selection Grid -->
-            <div class="mb-6">
-                <p class="text-gray-400 mb-4">
-                    Your background represents what your character did before becoming an adventurer.
-                    It provides proficiencies, languages, and equipment.
-                </p>
+        <p class="mb-5 text-pencil">
+            Your background represents what your character did before becoming an adventurer.
+            It provides proficiencies, languages, and equipment.
+        </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="step-columns">
+            <div class="min-w-0 space-y-8">
+                <div class="option-grid">
                     @foreach (var background in backgrounds)
                     {
-                        <button @onclick="() => SelectBackground(background)"
-                                class="bg-gray-700 hover:bg-gray-600 border-2 border-gray-600 hover:border-indigo-500 rounded-lg p-4 text-left transition-all duration-200 group">
-                            <h3 class="text-lg font-bold text-white group-hover:text-indigo-400 mb-2">
-                                @background.Name
-                            </h3>
-                            @if (background.Proficiencies?.Any() == true)
+                        <OptionRoom Name="@background.Name" Picked="@(selectedBackground?.Id == background.Id)"
+                                    OnClick="() => SelectBackground(background)">
+                            @if (SkillsOf(background).Any())
                             {
-                                <p class="text-xs text-gray-500 mt-2">
-                                    @background.Proficiencies.Count proficiencies
-                                </p>
+                                <span>@string.Join(", ", SkillsOf(background).Select(s => s.Name))</span>
                             }
-                        </button>
+                        </OptionRoom>
                     }
                 </div>
-            </div>
-        }
-        else
-        {
-            <!-- Selected Background Details -->
-            <div class="space-y-6">
-                <!-- Background Summary -->
-                <div class="bg-gray-700 rounded-lg p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <div class="flex-1">
-                            <h3 class="text-xl font-bold text-white mb-4">@selectedBackground.Name</h3>
 
-                            <div class="space-y-4">
-                                <!-- Proficiencies (Skills and Tools) -->
-                                @if (selectedBackground.Proficiencies?.Any() == true)
-                                {
-                                    var skills = selectedBackground.Proficiencies.Where(p => p.Type == "skill").ToList();
-                                    var tools = selectedBackground.Proficiencies.Where(p => p.Type != "skill").ToList();
-
-                                    @if (skills.Any())
-                                    {
-                                        <div>
-                                            <h4 class="text-sm font-medium text-gray-400 mb-2">Skill Proficiencies</h4>
-                                            <div class="flex flex-wrap gap-2">
-                                                @foreach (var skill in skills)
-                                                {
-                                                    <span class="bg-indigo-900 text-indigo-200 px-3 py-1 rounded-full text-sm">
-                                                        @skill.Name
-                                                    </span>
-                                                }
-                                            </div>
-                                        </div>
-                                    }
-
-                                    @if (tools.Any())
-                                    {
-                                        <div>
-                                            <h4 class="text-sm font-medium text-gray-400 mb-2">Tool Proficiencies</h4>
-                                            <div class="flex flex-wrap gap-2">
-                                                @foreach (var tool in tools)
-                                                {
-                                                    <span class="bg-green-900 text-green-200 px-3 py-1 rounded-full text-sm">
-                                                        @tool.Name
-                                                    </span>
-                                                }
-                                            </div>
-                                        </div>
-                                    }
-                                }
-
-                                <!-- Languages -->
-                                <div>
-                                    <h4 class="text-sm font-medium text-gray-400 mb-2">Languages</h4>
-                                    @* The API sends the named languages, and counts the free choices in LanguageChoiceCount *@
-                                    @if (selectedBackground.Languages.Count > 0)
-                                    {
-                                        <div class="flex flex-wrap gap-2 mb-2">
-                                            @foreach (var language in selectedBackground.Languages)
-                                            {
-                                                <span class="bg-yellow-900 text-yellow-200 px-3 py-1 rounded-full text-sm">
-                                                    @language
-                                                </span>
-                                            }
-                                        </div>
-                                    }
-
-                                    @if (selectedBackground.LanguageChoiceCount > 0)
-                                    {
-                                        var count = selectedBackground.LanguageChoiceCount;
-                                        <p class="text-indigo-300 text-sm">
-                                            + Choose @count more language@(count > 1 ? "s" : "") in the next step
-                                        </p>
-                                    }
-                                    else if (selectedBackground.Languages.Count == 0)
-                                    {
-                                        <p class="text-gray-400 text-sm italic">No additional languages</p>
-                                    }
-                                </div>
-
-                                <!-- Feat: every 2024 background's origin feat, and a few 2014 ones' -->
-                                @if (selectedBackground.Feat != null)
-                                {
-                                    <div>
-                                        <h4 class="text-sm font-medium text-gray-400 mb-2">Feat</h4>
-                                        <span class="bg-purple-900 text-purple-200 px-3 py-1 rounded-full text-sm">@selectedBackground.Feat.Name</span>
-                                    </div>
-                                }
-
-                                <!-- Feature -->
-                                @if (selectedBackground.Feature != null)
-                                {
-                                    <div>
-                                        <h4 class="text-sm font-medium text-gray-400 mb-2">Background Feature</h4>
-                                        <div class="bg-gray-600 rounded-lg p-3">
-                                            <p class="text-white font-medium mb-1">@selectedBackground.Feature.Name</p>
-                                            <p class="text-gray-300 text-sm">@selectedBackground.Feature.Description</p>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <button @onclick="() => selectedBackground = null"
-                                class="text-gray-400 hover:text-white ml-4">
-                            Change
-                        </button>
-                    </div>
-                </div>
-
-                <!-- A 2024 background raises three abilities: +2 and +1, or +1 to each -->
-                @if (selectedBackground.AbilityScoreOptions.Count > 0)
+                @* A 2024 background raises three abilities: +2 and +1, or +1 to each *@
+                @if (selectedBackground?.AbilityScoreOptions.Count > 0)
                 {
                     var options = selectedBackground.AbilityScoreOptions;
-                    <div class="bg-gray-700 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-white mb-2">Ability Score Increases <span class="text-red-400">*</span></h3>
-                        <p class="text-gray-400 text-sm mb-4">
+                    <Room Title="Ability Score Increases">
+                        <p class="mb-4 text-sm text-pencil">
                             @selectedBackground.Name raises @string.Join(", ", options.Select(AbilityName)).
                         </p>
 
-                        <div class="flex rounded-lg overflow-hidden border border-gray-500 w-fit mb-4">
-                            <button type="button" @onclick="() => oneToEach = false" class="@GetModeClass(!oneToEach)">+2 and +1</button>
-                            <button type="button" @onclick="() => oneToEach = true" class="@GetModeClass(oneToEach)">+1 to each</button>
+                        <div class="mb-4 flex flex-wrap gap-2">
+                            <button type="button" class="chip" aria-pressed="@(oneToEach ? "false" : "true")" @onclick="() => oneToEach = false">+2 and +1</button>
+                            <button type="button" class="chip" aria-pressed="@(oneToEach ? "true" : "false")" @onclick="() => oneToEach = true">+1 to each</button>
                         </div>
 
                         @if (!oneToEach)
                         {
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <label class="text-sm text-gray-300">
+                            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                <label class="text-sm font-medium">
                                     +2 to
-                                    <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
-                                            value="@plusTwo" @onchange="e => plusTwo = e.Value?.ToString()">
+                                    <select class="field mt-1" value="@plusTwo" @onchange="e => plusTwo = e.Value?.ToString()">
                                         <option value="">Choose...</option>
                                         @foreach (var ability in options)
                                         {
@@ -184,10 +66,9 @@
                                         }
                                     </select>
                                 </label>
-                                <label class="text-sm text-gray-300">
+                                <label class="text-sm font-medium">
                                     +1 to
-                                    <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2 mt-1"
-                                            value="@plusOne" @onchange="e => plusOne = e.Value?.ToString()">
+                                    <select class="field mt-1" value="@plusOne" @onchange="e => plusOne = e.Value?.ToString()">
                                         <option value="">Choose...</option>
                                         @foreach (var ability in options.Where(a => a != plusTwo))
                                         {
@@ -197,62 +78,88 @@
                                 </label>
                             </div>
                         }
-                    </div>
+                    </Room>
                 }
 
-                <!-- A Mist Wanderer or Spirit Medium picks its feat: any Dark Gift -->
-                @if (selectedBackground.FeatChoiceCategory is { } featCategory)
+                @* A Mist Wanderer or Spirit Medium picks its feat: any Dark Gift *@
+                @if (selectedBackground?.FeatChoiceCategory is { } featCategory)
                 {
-                    <div class="bg-gray-700 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-white mb-2">@featCategory Feat <span class="text-red-400">*</span></h3>
-                        <p class="text-gray-400 text-sm mb-4">@selectedBackground.Name gives a @featCategory feat of your choice.</p>
-                        <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2"
-                                value="@featId" @onchange="e => featId = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
+                    <Room Title="@($"{featCategory} Feat")">
+                        <p class="mb-4 text-sm text-pencil">@selectedBackground.Name gives a @featCategory feat of your choice.</p>
+                        <select class="field" value="@featId" @onchange="e => featId = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
                             <option value="">Choose...</option>
                             @foreach (var feat in categoryFeats.Where(f => f.Category == featCategory))
                             {
                                 <option value="@feat.Id">@feat.Name</option>
                             }
                         </select>
-                    </div>
+                    </Room>
                 }
 
-                <!-- A Haunted One or Investigator may take a Dark Gift instead of its own feat -->
-                @if (selectedBackground.FeatAlternativeCategory is { } alternativeCategory)
+                @* A Haunted One or Investigator may take a Dark Gift instead of its own feat *@
+                @if (selectedBackground?.FeatAlternativeCategory is { } alternativeCategory)
                 {
-                    <div class="bg-gray-700 rounded-lg p-6">
-                        <h3 class="text-lg font-bold text-white mb-2">@alternativeCategory Instead</h3>
-                        <p class="text-gray-400 text-sm mb-4">
+                    <Room Title="@($"{alternativeCategory} Instead")">
+                        <p class="mb-4 text-sm text-pencil">
                             @selectedBackground.Name may take a @alternativeCategory feat in place of @(selectedBackground.Feat?.Name ?? "its feat").
                         </p>
-                        <select class="w-full bg-gray-600 border border-gray-500 text-white rounded-lg px-3 py-2"
-                                value="@featId" @onchange="e => featId = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
+                        <select class="field" value="@featId" @onchange="e => featId = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
                             <option value="">Keep @(selectedBackground.Feat?.Name ?? "its feat")</option>
                             @foreach (var feat in categoryFeats.Where(f => f.Category == alternativeCategory))
                             {
                                 <option value="@feat.Id">@feat.Name</option>
                             }
                         </select>
-                    </div>
+                    </Room>
                 }
             </div>
-        }
+
+            @if (selectedBackground is not null)
+            {
+                <KeyPanel Name="@selectedBackground.Name">
+                    <ChildContent>
+                        <KeyFact Label="Skills">@ListOrNone(SkillsOf(selectedBackground).Select(p => p.Name))</KeyFact>
+                        <KeyFact Label="Tools">@ListOrNone(selectedBackground.Proficiencies.Except(SkillsOf(selectedBackground)).Select(p => p.Name))</KeyFact>
+                        @* The API sends the named languages, and counts the free choices in LanguageChoiceCount *@
+                        <KeyFact Label="Languages">
+                            @ListOrNone(selectedBackground.Languages)
+                            @if (selectedBackground.LanguageChoiceCount > 0)
+                            {
+                                var count = selectedBackground.LanguageChoiceCount;
+                                <span class="block">+ Choose @count more language@(count > 1 ? "s" : "") in the next step</span>
+                            }
+                        </KeyFact>
+                        @if (selectedBackground.AbilityScoreOptions.Count > 0)
+                        {
+                            <KeyFact Label="Ability scores">@string.Join(", ", selectedBackground.AbilityScoreOptions.Select(AbilityName))</KeyFact>
+                        }
+                        @* Every 2024 background's origin feat, and a few 2014 ones' *@
+                        @if (selectedBackground.Feat != null)
+                        {
+                            <KeyFact Label="Feat">@selectedBackground.Feat.Name</KeyFact>
+                        }
+                        @if (selectedBackground.Feature != null)
+                        {
+                            <KeyFact Label="Feature">@selectedBackground.Feature.Name</KeyFact>
+                        }
+                    </ChildContent>
+                    <Note>
+                        @if (selectedBackground.Feature != null)
+                        {
+                            @selectedBackground.Feature.Description
+                        }
+                        else
+                        {
+                            @($"From {selectedBackground.Source}.")
+                        }
+                    </Note>
+                </KeyPanel>
+            }
+        </div>
     }
 
-    <!-- Navigation Buttons -->
-    <div class="flex justify-between mt-8">
-        <button @onclick="HandleBack"
-                type="button"
-                class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            Back
-        </button>
-
-        <button @onclick="HandleNext"
-                disabled="@(!CanProceed() || IsSaving)"
-                class="bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-700 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200">
-            @(IsSaving ? "Saving..." : NextLabel)
-        </button>
-    </div>
+    <StepNavigation OnBack="HandleBack" OnNext="HandleNext" NextDisabled="@(!CanProceed() || IsSaving)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
 </div>
 
 @code {
@@ -309,6 +216,12 @@
 
     private async Task SelectBackground(BackgroundApiResponse background)
     {
+        // Picking the background already picked keeps its increases and feat
+        if (selectedBackground?.Id == background.Id)
+        {
+            return;
+        }
+
         selectedBackground = background;
         oneToEach = false;
         plusTwo = null;
@@ -323,9 +236,14 @@
 
     private static string AbilityName(string abilityId) => AbilityNames.Of(abilityId);
 
-    private static string GetModeClass(bool isActive) => isActive
-        ? "px-4 py-2 text-sm font-medium bg-indigo-600 text-white"
-        : "px-4 py-2 text-sm font-medium bg-gray-600 text-gray-200 hover:bg-gray-500";
+    private static IEnumerable<BackgroundProficiencyApiResponse> SkillsOf(BackgroundApiResponse background) =>
+        background.Proficiencies.Where(p => p.Type == "skill");
+
+    private static string ListOrNone(IEnumerable<string> names)
+    {
+        var list = string.Join(", ", names);
+        return list.Length == 0 ? "None" : list;
+    }
 
     // The increases picked so far, or null while a 2024 background's are unfinished
     private Dictionary<string, int>? AbilityIncreases()
@@ -352,7 +270,10 @@
 
     private async Task HandleNext()
     {
-        if (selectedBackground == null || AbilityIncreases() is not { } increases) return;
+        if (selectedBackground == null || AbilityIncreases() is not { } increases)
+        {
+            return;
+        }
 
         var pickedFeatId = BackgroundFeats.PickableCategory(selectedBackground) == null ? null : featId;
 

@@ -69,6 +69,10 @@
                         The Player's Handbook is always used. Tick the other books your table allows; only what they contain is offered.
                         Each later step says how many more options the unticked books hold, and can bring you back here to tick them.
                     </p>
+                    <div class="mb-3 flex flex-wrap gap-2">
+                        <button type="button" class="btn-secondary" @onclick="TickAllBooks">Tick all</button>
+                        <button type="button" class="btn-secondary" @onclick="ClearAllBooks">Clear all</button>
+                    </div>
                     <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
                         @foreach (var book in books)
                         {
@@ -164,6 +168,18 @@
         {
             selectedBooks.Remove(code);
         }
+    }
+
+    // Only the shown edition's books: the editions share no ids. Saving sends the ticked set as
+    // ticking them by hand does, so a cleared book clears its choices on the same path.
+    private void TickAllBooks()
+    {
+        selectedBooks = [.. books.Where(b => !b.IsPlayersHandbook).Select(b => b.Code)];
+    }
+
+    private void ClearAllBooks()
+    {
+        selectedBooks = [];
     }
 
     private bool IsValid()

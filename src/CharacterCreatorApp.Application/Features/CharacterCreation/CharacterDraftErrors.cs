@@ -39,6 +39,7 @@ public static class CharacterDraftErrors
         public const string ImprovementsRequired = "CharacterDraft.ImprovementsRequired";
         public const string FeatAbilityIncreasesMismatch = "CharacterDraft.FeatAbilityIncreasesMismatch";
         public const string FeatProficiencyPicksRequired = "CharacterDraft.FeatProficiencyPicksRequired";
+        public const string InvalidAsiAbility = "CharacterDraft.InvalidAsiAbility";
         public const string InvalidAbilityScoreCount = "CharacterDraft.InvalidAbilityScoreCount";
         public const string InvalidAbilityScoreKeys = "CharacterDraft.InvalidAbilityScoreKeys";
         public const string InvalidAbilityScoreMethod = "CharacterDraft.InvalidAbilityScoreMethod";
@@ -170,7 +171,7 @@ public static class CharacterDraftErrors
         Error.Validation("CharacterDraft.InvalidAsiPoints", $"Each ASI must distribute exactly 2 points. Got {total}.");
 
     public static Error InvalidAsiAbility(IEnumerable<string> abilities) =>
-        Error.Validation("CharacterDraft.InvalidAsiAbility", $"Invalid ability score(s): {string.Join(", ", abilities)}");
+        Error.Validation(Codes.InvalidAsiAbility, $"Invalid ability score(s): {string.Join(", ", abilities)}");
 
     public static Error InvalidAsiValue() =>
         Error.Validation("CharacterDraft.InvalidAsiValue", "Each ability score in an ASI must receive 1 or 2 points");

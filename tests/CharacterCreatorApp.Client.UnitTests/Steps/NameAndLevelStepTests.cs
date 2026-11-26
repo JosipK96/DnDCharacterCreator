@@ -106,6 +106,51 @@ public class NameAndLevelStepTests : WizardStepTestBase
         cut.Markup.Should().Contain("Choices made from a book you untick are cleared.");
     }
 
+    [Fact]
+    public void TickAll_AfterSwitchingEdition_TicksEveryBookOfThatEditionAndSavesOnlyThem()
+    {
+        // Arrange: a draft saved under 2024 with its other book ticked
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Name = "Tordek", Level = 1, Edition = "2024", AllowedSources = ["XPHB", "EFA"] });
+        Api.Get("/api/books?edition=2014", Books2014);
+        Api.Put(DraftPath("name-and-level"));
+        Api.Put(DraftPath("books"));
+        var cut = RenderStep();
+        Button(cut, "2014 rules").Click();
+
+        // Act
+        Button(cut, "Tick all").Click();
+        Button(cut, "Next: Race").Click();
+
+        // Assert
+        BookBox(cut, "Xanathar's Guide to Everything").HasAttribute("checked").Should().BeTrue();
+        Api.BodyOf<SetAllowedBooksApiRequest>(BooksRoute).Books.Should().Equal("XGE");
+        _movedOn.Should().ContainSingle().Which.Sources.Should().Equal("PHB", "XGE");
+    }
+
+    [Fact]
+    public void ClearAll_WithBooksTicked_LeavesOnlyThePlayersHandbookAndWarnsOfClearedChoices()
+    {
+        // Arrange
+        ArrangeLoad(new CharacterDraftDetailsApiResponse
+        {
+            Id = DraftId, Name = "Tordek", Level = 1, Edition = "2024", AllowedSources = ["XPHB", "EFA"], RaceId = "dwarf-xphb",
+        });
+        Api.Put(DraftPath("name-and-level"));
+        Api.Put(DraftPath("books"));
+        var cut = RenderStep();
+
+        // Act
+        Button(cut, "Clear all").Click();
+        Button(cut, "Next: Race").Click();
+
+        // Assert
+        BookBox(cut, "Player's Handbook (2024)").HasAttribute("checked").Should().BeTrue();
+        BookBox(cut, "Eberron: Forge of the Artificer").HasAttribute("checked").Should().BeFalse();
+        cut.Markup.Should().Contain("Choices made from a book you untick are cleared.");
+        Api.BodyOf<SetAllowedBooksApiRequest>(BooksRoute).Books.Should().BeEmpty();
+        _movedOn.Should().ContainSingle().Which.Sources.Should().Equal("XPHB");
+    }
+
     private static IElement BookBox(IRenderedComponent<NameAndLevelStep> cut, string name) =>
         cut.FindAll("label").Single(l => l.QuerySelector("span")?.TextContent == name).QuerySelector("input[type=checkbox]")!;
 

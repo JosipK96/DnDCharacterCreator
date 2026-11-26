@@ -645,6 +645,33 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task FeatEligibility_ForAFighterWithStrength12_CountsThePointsTheStepHasSpent()
+    {
+        // Arrange - a level 4 hill dwarf fighter: Grappler asks for Strength 13
+        var cancellationToken = TestContext.Current.CancellationToken;
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Thorin", Level = 4, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "dwarf", SubraceId = "hill_dwarf" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter" });
+        await PutStepAsync(draftId, "ability-scores", new SetAbilityScoresApiRequest
+        {
+            Scores = new Dictionary<string, int> { ["STR"] = 12, ["DEX"] = 15, ["CON"] = 14, ["INT"] = 8, ["WIS"] = 13, ["CHA"] = 10 },
+            Method = "standard-array"
+        });
+
+        // Act
+        var before = await _client.GetFromJsonAsync<List<FeatEligibilityApiResponse>>(
+            $"/api/character-drafts/{draftId}/feat-eligibility", cancellationToken);
+        var after = await _client.GetFromJsonAsync<List<FeatEligibilityApiResponse>>(
+            $"/api/character-drafts/{draftId}/feat-eligibility?increase=strength", cancellationToken);
+
+        // Assert - the race's own feat would count no improvement
+        before!.Single(f => f.FeatId == "grappler_2014").Should().Be(new FeatEligibilityApiResponse("grappler_2014", "Strength 13", "Strength 13", false));
+        after!.Single(f => f.FeatId == "grappler_2014").Should().Be(new FeatEligibilityApiResponse("grappler_2014", null, "Strength 13", false));
+    }
+
+    [Fact]
     public async Task ChooseFightingStyles_WithAStyleFromABookTheDraftDoesNotAllow_ReturnsSourceNotAllowed()
     {
         // Arrange - a new 2024 fighter allows the Player's Handbook alone; Arcane Warrior is from Arcana Unleashed

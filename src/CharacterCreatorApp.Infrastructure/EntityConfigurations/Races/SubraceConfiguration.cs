@@ -27,6 +27,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
             builder.Property(sr => sr.LanguageChoiceCount);
             builder.Property(sr => sr.AbilityChoiceCount);
             builder.Property(sr => sr.AbilityChoiceOptions);
+            builder.Property(sr => sr.AbilityChoiceMaxPerAbility);
+            builder.Property(sr => sr.AbilityChoiceMinPerAbility);
             builder.Property(sr => sr.SkillChoiceCount);
             builder.Property(sr => sr.SkillChoiceOptions);
             builder.Property(sr => sr.FeatChoiceCount);

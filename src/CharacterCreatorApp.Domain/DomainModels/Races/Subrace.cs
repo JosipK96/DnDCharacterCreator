@@ -22,12 +22,18 @@ public class Subrace
     public int LanguageChoiceCount { get; set; }
 
     /// <summary>
-    /// Abilities the player raises by 1 in place of the race's choice: a variant human's two of
-    /// all six. See Race.AbilityChoiceWith.
+    /// The points the player spreads in place of the race's choice: a variant human's two +1s of
+    /// all six, a SCAG tiefling variant's +2 to Dexterity or Charisma. See Race.AbilityChoiceWith.
     /// </summary>
     public int AbilityChoiceCount { get; set; }
 
     public List<string> AbilityChoiceOptions { get; set; } = [];
+
+    /// <summary>The most of those points one ability takes; see Race.AbilityChoiceMaxPerAbility.</summary>
+    public int AbilityChoiceMaxPerAbility { get; set; } = 1;
+
+    /// <summary>The fewest points an ability it raises takes; see Race.AbilityChoiceMinPerAbility.</summary>
+    public int AbilityChoiceMinPerAbility { get; set; } = 1;
 
     /// <summary>Skills picked on top of the race's: a variant human's one. Empty options mean any skill.</summary>
     public int SkillChoiceCount { get; set; }

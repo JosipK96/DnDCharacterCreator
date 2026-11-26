@@ -15,10 +15,16 @@ public sealed class SubraceReadModel
     /// <summary>Languages picked on top of the race's: a high elf's one.</summary>
     public int LanguageChoiceCount { get; init; }
 
-    /// <summary>Abilities raised by 1 in place of the race's choice: a variant human's two of six.</summary>
+    /// <summary>Points spread in place of the race's choice: a variant human's two +1s of six.</summary>
     public int AbilityChoiceCount { get; init; }
 
     public List<string> AbilityChoiceOptions { get; init; } = [];
+
+    /// <summary>The most points one ability takes: 2 for a SCAG tiefling variant's +2.</summary>
+    public int AbilityChoiceMaxPerAbility { get; init; } = 1;
+
+    /// <summary>The fewest points an ability raised takes: 2 for a SCAG tiefling variant's +2.</summary>
+    public int AbilityChoiceMinPerAbility { get; init; } = 1;
 
     /// <summary>Skills picked on top of the race's: a variant human's one. Empty options mean any skill.</summary>
     public int SkillChoiceCount { get; init; }

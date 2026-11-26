@@ -97,7 +97,7 @@ public static class DraftCompletenessChecker
 
         if (!raceAbilityChoice.Allows(draft.RaceAbilityIncreases))
         {
-            return CharacterErrors.RaceAbilityIncreasesIncomplete(raceName, raceAbilityChoice.Points);
+            return CharacterErrors.RaceAbilityIncreasesIncomplete(raceName, raceAbilityChoice);
         }
 
         // A 2024 background's increases are the character's only ones: its species gives none

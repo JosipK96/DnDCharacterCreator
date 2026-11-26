@@ -25,10 +25,19 @@ public sealed class RaceReadModel
 
     public int LanguageChoiceCount { get; init; }
 
-    /// <summary>Abilities the player raises by 1 besides the fixed bonuses (a half-elf's two), from AbilityChoiceOptions.</summary>
+    /// <summary>
+    /// The points the player spreads over AbilityChoiceOptions besides the fixed bonuses (a
+    /// half-elf's two +1s), between the minimum and the maximum on each ability raised.
+    /// </summary>
     public int AbilityChoiceCount { get; init; }
 
     public List<string> AbilityChoiceOptions { get; init; } = [];
+
+    /// <summary>The most points one ability takes: 2 for a Monsters of the Multiverse race's +2 and +1.</summary>
+    public int AbilityChoiceMaxPerAbility { get; init; } = 1;
+
+    /// <summary>The fewest points an ability raised takes: 2 for Custom Lineage's +2 to one.</summary>
+    public int AbilityChoiceMinPerAbility { get; init; } = 1;
 
     /// <summary>Feats the race gives to pick (a 2024 human's Origin feat); a null category means any feat.</summary>
     public int FeatChoiceCount { get; init; }

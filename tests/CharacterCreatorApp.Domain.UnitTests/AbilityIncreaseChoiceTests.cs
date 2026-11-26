@@ -9,6 +9,12 @@ public class AbilityIncreaseChoiceTests
     // A half-elf's: +1 to two different abilities besides its Charisma
     private static readonly AbilityIncreaseChoice HalfElf = new(["STR", "DEX", "CON", "INT", "WIS"], 2, 1);
 
+    // +2 to one and +1 to another, or +1 to three, of all six
+    private static readonly AbilityIncreaseChoice MonstersOfTheMultiverse = new(["STR", "DEX", "CON", "INT", "WIS", "CHA"], 3, 2);
+
+    // Tasha's Custom Lineage: +2 to one of the six
+    private static readonly AbilityIncreaseChoice CustomLineage = new(["STR", "DEX", "CON", "INT", "WIS", "CHA"], 2, 2, MinPerAbility: 2);
+
     [Theory]
     [InlineData("DEX:1 WIS:1", true)]
     [InlineData("dexterity:1 wis:1", true)]
@@ -59,6 +65,50 @@ public class AbilityIncreaseChoiceTests
 
         // Assert
         allowed.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData("STR:2 WIS:1", true)]
+    [InlineData("STR:1 WIS:1 CHA:1", true)]
+    [InlineData("STR:3", false)]
+    [InlineData("STR:2 WIS:2", false)]
+    [InlineData("STR:1 WIS:1", false)]
+    [InlineData("STR:1 DEX:1 CON:1 INT:1", false)]
+    public void Allows_ForAMonstersOfTheMultiverseRace_IsPlusTwoAndPlusOneOrPlusOneToThree(string increases, bool expected)
+    {
+        // Act
+        var allowed = MonstersOfTheMultiverse.Allows(Increases(increases));
+
+        // Assert
+        allowed.Should().Be(expected);
+    }
+
+    [Theory]
+    [InlineData("STR:2", true)]
+    [InlineData("CHA:2", true)]
+    [InlineData("STR:1 DEX:1", false)]
+    [InlineData("STR:1", false)]
+    [InlineData("STR:2 DEX:2", false)]
+    public void Allows_ForCustomLineage_IsPlusTwoToOneNeverSplit(string increases, bool expected)
+    {
+        // Act - MinPerAbility 2 refuses the two +1s that 2 points at most 2 each would allow
+        var allowed = CustomLineage.Allows(Increases(increases));
+
+        // Assert
+        allowed.Should().Be(expected);
+    }
+
+    [Fact]
+    public void Describe_ForEachShape_SaysWhatThePlayerPicks()
+    {
+        // Act
+        var descriptions = new[] { HalfElf, CustomLineage, MonstersOfTheMultiverse }.Select(c => c.Describe());
+
+        // Assert
+        descriptions.Should().Equal(
+            "+1 to 2 different abilities",
+            "+2 to 1 ability",
+            "3 points, at most +2 to one ability");
     }
 
     // "DEX:1 WIS:1" as {"DEX": 1, "WIS": 1}; keys that differ only in case stay apart

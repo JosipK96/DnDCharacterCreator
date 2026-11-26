@@ -25,10 +25,16 @@ public sealed record RaceSeedRow
     public List<string> SkillChoiceOptions { get; init; } = [];
     public int LanguageChoiceCount { get; init; }
 
-    /// <summary>Abilities the player raises by 1 besides the fixed bonuses: a half-elf's two.</summary>
+    /// <summary>Points the player spreads besides the fixed bonuses: a half-elf's two +1s.</summary>
     public int AbilityChoiceCount { get; init; }
 
     public List<string> AbilityChoiceOptions { get; init; } = [];
+
+    /// <summary>The most points one ability takes: 2 for a Monsters of the Multiverse race.</summary>
+    public int AbilityChoiceMaxPerAbility { get; init; } = 1;
+
+    /// <summary>The fewest points an ability raised takes: 2 for Custom Lineage's +2 to one.</summary>
+    public int AbilityChoiceMinPerAbility { get; init; } = 1;
 
     /// <summary>Feats the race gives to pick; a category ("Origin") or null for any feat.</summary>
     public int FeatChoiceCount { get; init; }
@@ -65,10 +71,16 @@ public sealed record SubraceSeedRow
     /// <summary>Languages picked on top of the race's: a high elf's extra language.</summary>
     public int LanguageChoiceCount { get; init; }
 
-    /// <summary>Abilities raised by 1 in place of the race's choice: a variant human's two of six.</summary>
+    /// <summary>Points spread in place of the race's choice: a variant human's two +1s of six.</summary>
     public int AbilityChoiceCount { get; init; }
 
     public List<string> AbilityChoiceOptions { get; init; } = [];
+
+    /// <summary>The most points one ability takes: 2 for a SCAG tiefling variant's +2.</summary>
+    public int AbilityChoiceMaxPerAbility { get; init; } = 1;
+
+    /// <summary>The fewest points an ability raised takes: 2 for a SCAG tiefling variant's +2.</summary>
+    public int AbilityChoiceMinPerAbility { get; init; } = 1;
 
     /// <summary>Skills picked on top of the race's; no options means any skill.</summary>
     public int SkillChoiceCount { get; init; }

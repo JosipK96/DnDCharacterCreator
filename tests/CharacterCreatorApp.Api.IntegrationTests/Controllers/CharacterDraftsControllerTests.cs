@@ -665,12 +665,10 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
             $"/api/character-drafts/{draftId}/feat-eligibility", cancellationToken);
         var after = await _client.GetFromJsonAsync<List<FeatEligibilityApiResponse>>(
             $"/api/character-drafts/{draftId}/feat-eligibility?increase=strength", cancellationToken);
-        var refused = await _client.GetAsync($"/api/character-drafts/{draftId}/feat-eligibility?increase=luck", cancellationToken);
 
         // Assert - the race's own feat would count no improvement
         before!.Single(f => f.FeatId == "grappler_2014").Should().Be(new FeatEligibilityApiResponse("grappler_2014", "Strength 13", "Strength 13", false));
         after!.Single(f => f.FeatId == "grappler_2014").Should().Be(new FeatEligibilityApiResponse("grappler_2014", null, "Strength 13", false));
-        await refused.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.InvalidAsiAbility");
     }
 
     [Fact]

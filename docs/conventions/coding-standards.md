@@ -134,13 +134,13 @@ mostly on the same few rules. Check for them before building rather than after.
   `ToUpperInvariant()` (or compare with `StringComparison.OrdinalIgnoreCase`), never
   `ToLower()`.
 
-`dotnet format` fixes the mechanical ones (SA1122, SA1203, SA1001) without a
-rebuild. Limit it to those rules: run over the whole solution it reports CS8618 on
-`ApplicationDbContext`, which the build does not, and `--include` takes paths
-relative to the repository root, not absolute ones.
+`dotnet format` fixes two of them, SA1122 and SA1001, without a rebuild (it has
+no fix for SA1203 or the others). Limit it to those rules: run over the whole
+solution it reports CS8618 on `ApplicationDbContext`, which the build does not,
+and `--include` takes paths relative to the repository root, not absolute ones.
 
 ```
-dotnet format analyzers CharacterCreatorApp.sln --diagnostics SA1122 SA1203 SA1001
+dotnet format analyzers CharacterCreatorApp.sln --diagnostics SA1122 SA1001
 ```
 
 ## Before a pull request

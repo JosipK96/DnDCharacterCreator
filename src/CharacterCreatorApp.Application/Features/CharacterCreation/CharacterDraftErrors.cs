@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation;
 
@@ -102,11 +103,13 @@ public static class CharacterDraftErrors
         Error.Validation("CharacterDraft.UnknownBooks", $"No {edition} book has the code {string.Join(", ", codes)}.");
 
     // --- Race ability increases ---
-    public static Error InvalidRaceAbilityIncreases(string raceName, int count, IReadOnlyCollection<string> abilityNames)
+    public static Error InvalidRaceAbilityIncreases(string raceName, AbilityIncreaseChoice choice, IReadOnlyCollection<string> abilityNames)
     {
-        var description = count == 0
+        ArgumentNullException.ThrowIfNull(choice);
+
+        var description = choice.Points == 0
             ? $"{raceName} has no ability increases to pick."
-            : $"{raceName} raises {count} different abilities by 1, picked from {string.Join(", ", abilityNames)}.";
+            : $"{raceName} raises {choice.Describe()}, picked from {string.Join(", ", abilityNames)}.";
 
         return Error.Validation("CharacterDraft.InvalidRaceAbilityIncreases", description);
     }

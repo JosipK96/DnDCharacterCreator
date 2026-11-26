@@ -89,10 +89,14 @@ public static class CharacterErrors
             "Character.RaceSkillChoicesIncomplete",
             $"A {raceName} must choose exactly {required} skill(s). The draft has {actual}.");
 
-    public static Error RaceAbilityIncreasesIncomplete(string raceName, int count) =>
-        Error.Validation(
+    public static Error RaceAbilityIncreasesIncomplete(string raceName, AbilityIncreaseChoice choice)
+    {
+        ArgumentNullException.ThrowIfNull(choice);
+
+        return Error.Validation(
             "Character.RaceAbilityIncreasesIncomplete",
-            $"A {raceName} raises {count} different abilities of the player's choice by 1; pick them with the race.");
+            $"A {raceName} raises {choice.Describe()} of the player's choice; pick them with the race.");
+    }
 
     public static Error BackgroundAbilityIncreasesIncomplete(string backgroundName) =>
         Error.Validation(

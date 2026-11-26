@@ -75,6 +75,52 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
         _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Theory]
+    [InlineData("STR:2 WIS:1")]
+    [InlineData("STR:1 DEX:1 CHA:1")]
+    public async Task Handle_ForAMonstersOfTheMultiverseRace_StoresPlusTwoAndPlusOneOrPlusOneToThree(string increases)
+    {
+        // Arrange
+        var draft = ArrangeDraft();
+        draft.AllowBooks(["MPMM"], NoChoiceSources());
+        ArrangeRace(Aasimar());
+
+        var command = new SetCharacterRaceCommand(_draftId, "aasimar_mpmm", null, Increases(increases), "Medium");
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        draft.RaceAbilityIncreases.Should().BeEquivalentTo(Increases(increases));
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Theory]
+    [InlineData("STR:2 WIS:2")]
+    [InlineData("STR:3")]
+    [InlineData("STR:1 WIS:1")]
+    public async Task Handle_ForAMonstersOfTheMultiverseRaceWithAnotherSpread_ReturnsInvalidRaceAbilityIncreases(string increases)
+    {
+        // Arrange
+        var draft = ArrangeDraft();
+        draft.AllowBooks(["MPMM"], NoChoiceSources());
+        ArrangeRace(Aasimar());
+
+        var command = new SetCharacterRaceCommand(_draftId, "aasimar_mpmm", null, Increases(increases), "Medium");
+
+        // Act
+        var result = await _sut.Handle(command, _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.InvalidRaceAbilityIncreases");
+        result.Errors[0].Description.Should().Be(
+            "Aasimar raises 3 points, at most +2 to one ability, picked from Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma.");
+        draft.RaceId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
     [Fact]
     public async Task Handle_ForAVariantHuman_TakesTheSubracesIncreases()
     {
@@ -307,6 +353,27 @@ public class SetCharacterRaceCommandHandlerTests : IDisposable
 
     private void ArrangeRace(Race race) =>
         _raceRepositoryMock.Setup(r => r.GetByIdWithSubracesAsync(race.Id, _cts.Token)).ReturnsAsync(race);
+
+    private static DraftChoiceSources NoChoiceSources() =>
+        new(null, null, null, null, null, new Dictionary<string, string>(), new Dictionary<string, string>());
+
+    // "STR:2 WIS:1" as {"STR": 2, "WIS": 1}
+    private static Dictionary<string, int> Increases(string text) =>
+        text.Split(' ').Select(pair => pair.Split(':')).ToDictionary(p => p[0], p => int.Parse(p[1], System.Globalization.CultureInfo.InvariantCulture));
+
+    // Monsters of the Multiverse: +2 to one ability and +1 to another, or +1 to three
+    private static Race Aasimar() => new()
+    {
+        Id = "aasimar_mpmm",
+        Name = "Aasimar",
+        Edition = RulesEdition.Edition2014,
+        Source = "MPMM",
+        Size = "Small or Medium",
+        Speed = 30,
+        AbilityChoiceCount = 3,
+        AbilityChoiceOptions = ["STR", "DEX", "CON", "INT", "WIS", "CHA"],
+        AbilityChoiceMaxPerAbility = 2,
+    };
 
     private static Race Human2024() => new()
     {

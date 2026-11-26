@@ -33,6 +33,8 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
             builder.Property(r => r.LanguageChoiceCount);
             builder.Property(r => r.AbilityChoiceCount);
             builder.Property(r => r.AbilityChoiceOptions);
+            builder.Property(r => r.AbilityChoiceMaxPerAbility);
+            builder.Property(r => r.AbilityChoiceMinPerAbility);
             builder.Property(r => r.FeatChoiceCount);
             builder.Property(r => r.FeatChoiceCategory)
                 .HasMaxLength(30);

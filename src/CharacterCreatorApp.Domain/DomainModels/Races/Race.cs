@@ -36,13 +36,26 @@ public class Race
     public int LanguageChoiceCount { get; set; }
 
     /// <summary>
-    /// How many abilities the player raises by 1 besides the fixed bonuses: a half-elf two of
-    /// AbilityChoiceOptions, on top of its Charisma +2.
+    /// The points the player spreads over AbilityChoiceOptions besides the fixed bonuses: a
+    /// half-elf's two +1s on top of its Charisma +2, or the three of a Monsters of the Multiverse
+    /// race, +2 and +1 or +1 to three.
     /// </summary>
     public int AbilityChoiceCount { get; set; }
 
     /// <summary>The abilities that choice is from, as canonical ids.</summary>
     public List<string> AbilityChoiceOptions { get; set; } = [];
+
+    /// <summary>
+    /// The most of those points one ability takes: 1 for a half-elf, 2 for a Monsters of the
+    /// Multiverse race or Tasha's Custom Lineage.
+    /// </summary>
+    public int AbilityChoiceMaxPerAbility { get; set; } = 1;
+
+    /// <summary>
+    /// The fewest points an ability it raises takes: 1, or 2 for Custom Lineage, whose +2 to one
+    /// may not be split into two +1s.
+    /// </summary>
+    public int AbilityChoiceMinPerAbility { get; set; } = 1;
 
     /// <summary>
     /// Feats the race gives beside those taken for improvements: the 2024 human's Origin feat.
@@ -89,14 +102,15 @@ public class Race
     public int LanguageChoiceCountWith(Subrace? subrace) => LanguageChoiceCount + (subrace?.LanguageChoiceCount ?? 0);
 
     /// <summary>
-    /// The ability increases the player picks for the race or its subrace, +1 each: a half-elf's
-    /// two, or a variant human's, which take the place of a human's +1 to everything.
+    /// The ability increases the player picks for the race or its subrace: a half-elf's two +1s,
+    /// a Monsters of the Multiverse race's +2 and +1 or +1 to three, or a variant human's two +1s,
+    /// which take the place of a human's +1 to everything.
     /// </summary>
     public AbilityIncreaseChoice AbilityChoiceWith(Subrace? subrace) =>
         subrace is { AbilityChoiceCount: > 0 }
-            ? new AbilityIncreaseChoice(subrace.AbilityChoiceOptions, subrace.AbilityChoiceCount, 1)
+            ? new AbilityIncreaseChoice(subrace.AbilityChoiceOptions, subrace.AbilityChoiceCount, subrace.AbilityChoiceMaxPerAbility, subrace.AbilityChoiceMinPerAbility)
             : AbilityChoiceCount > 0
-                ? new AbilityIncreaseChoice(AbilityChoiceOptions, AbilityChoiceCount, 1)
+                ? new AbilityIncreaseChoice(AbilityChoiceOptions, AbilityChoiceCount, AbilityChoiceMaxPerAbility, AbilityChoiceMinPerAbility)
                 : AbilityIncreaseChoice.None;
 
     /// <summary>The feats the race and its subrace give together: a variant human's any one, a 2024 human's Origin one.</summary>

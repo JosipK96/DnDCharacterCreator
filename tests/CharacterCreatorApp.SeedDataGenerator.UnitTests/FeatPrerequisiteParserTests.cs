@@ -75,6 +75,42 @@ public class FeatPrerequisiteParserTests
     }
 
     [Fact]
+    public void Parse_ASubraceWrittenAsOneName_BecomesTheImportedSubracesId()
+    {
+        // Arrange - Vampiric Exultation's "Vampire (Ixalan)": the PSX subrace of Plane Shift:
+        // Zendikar's vampire, whose id has its race's book in it
+        var races = new RaceNames();
+        races.AddRace(RulesEdition.Edition2014, "Vampire", "vampire_psz");
+        races.AddSubrace(RulesEdition.Edition2014, "Vampire", "Ixalan", "ixalan_vampire_psz");
+        var json = JsonNode.Parse("""[{"race":[{"name":"Vampire (Ixalan)"}]}]""");
+
+        // Act
+        var prerequisites = FeatPrerequisiteParser.Parse(json, RulesEdition.Edition2014, FeatNames, races);
+
+        // Assert
+        prerequisites.SubraceIds.Should().Equal("ixalan_vampire_psz");
+        prerequisites.RaceIds.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void Parse_AnImportedRaceAndSubrace_BecomeTheirImportedIds()
+    {
+        // Arrange - Svirfneblin Magic's deep gnome is MTF's subrace of the PHB gnome
+        var races = new RaceNames();
+        races.AddRace(RulesEdition.Edition2014, "Gnome", "gnome");
+        races.AddSubrace(RulesEdition.Edition2014, "Gnome", "Deep", "deep_gnome");
+        races.AddRace(RulesEdition.Edition2014, "Orc", "orc_vgm");
+        var json = JsonNode.Parse("""[{"race":[{"name":"gnome","subrace":"deep"},{"name":"orc"}]}]""");
+
+        // Act
+        var prerequisites = FeatPrerequisiteParser.Parse(json, RulesEdition.Edition2014, FeatNames, races);
+
+        // Assert
+        prerequisites.SubraceIds.Should().Equal("deep_gnome");
+        prerequisites.RaceIds.Should().Equal("orc_vgm");
+    }
+
+    [Fact]
     public void Parse_ASizedRace_BecomesASizeBesideTheRaces()
     {
         // Arrange - Squat Nimbleness

@@ -7,10 +7,13 @@ namespace CharacterCreatorApp.Domain.Services;
 public static class HitPointBonuses
 {
     /// <summary>Dwarven Toughness: 1 more hit point per level, for a 2014 hill dwarf...</summary>
-    public const string HillDwarfSubraceId = "hill_dwarf";
+    public static readonly IReadOnlyList<string> DwarvenToughnessSubraceIds = ["hill_dwarf"];
 
-    /// <summary>...and for every 2024 dwarf, whose species has it rather than a subrace.</summary>
-    public const string Dwarf2024RaceId = "dwarf_2024";
+    /// <summary>
+    /// ...and for the races that have it rather than a subrace: every 2024 dwarf, and Plane
+    /// Shift: Kaladesh's dwarf.
+    /// </summary>
+    public static readonly IReadOnlyList<string> DwarvenToughnessRaceIds = ["dwarf_2024", "dwarf_kaladesh_psk"];
 
     /// <summary>
     /// Draconic Resilience: 1 more hit point per sorcerer level. The 2024 subclass words it as 3
@@ -27,7 +30,7 @@ public static class HitPointBonuses
 
         var bonus = 0;
 
-        if (subraceId == HillDwarfSubraceId || raceId == Dwarf2024RaceId)
+        if ((subraceId != null && DwarvenToughnessSubraceIds.Contains(subraceId)) || DwarvenToughnessRaceIds.Contains(raceId))
         {
             bonus += 1;
         }

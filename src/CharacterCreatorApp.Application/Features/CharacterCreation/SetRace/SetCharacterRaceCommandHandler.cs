@@ -68,7 +68,7 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetRace
             if (!abilityChoice.Allows(abilityIncreases))
             {
                 return CharacterDraftErrors.InvalidRaceAbilityIncreases(
-                    subrace?.Name ?? race.Name, abilityChoice.Points, abilityChoice.Options.Select(id => AbilityScore.FromId(id).Name).ToList());
+                    subrace?.Name ?? race.Name, abilityChoice, abilityChoice.Options.Select(id => AbilityScore.FromId(id).Name).ToList());
             }
 
             var sizes = race.SizeOptions();

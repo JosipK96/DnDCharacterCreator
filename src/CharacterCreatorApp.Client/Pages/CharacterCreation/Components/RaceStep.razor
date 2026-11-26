@@ -28,6 +28,11 @@
                         @foreach (var race in races)
                         {
                             <OptionRoom Name="@race.Name" Picked="@(selectedRace?.Id == race.Id)" OnClick="() => SelectRace(race)">
+                                @* A race reprinted in a later book (VGM's aasimar and MPMM's) says which book it is *@
+                                @if (races.Count(r => r.Name == race.Name) > 1)
+                                {
+                                    <span data-testid="race-book">@race.Source</span>
+                                }
                                 <span>@race.Size · @race.Speed ft.</span>
                                 @if (race.Subraces?.Any() == true)
                                 {
@@ -64,18 +69,20 @@
                         </Room>
                     }
 
-                    @* A half-elf's +1 to two abilities besides Charisma, a variant human's to two of six *@
-                    @if (selectedRace is not null && AbilityChoiceCount() > 0 && (selectedRace.Subraces?.Any() != true || selectedSubrace != null))
+                    @* A half-elf's +1 to two abilities besides Charisma, a variant human's to two of six,
+                       a Monsters of the Multiverse race's +2 and +1 or +1 to three *@
+                    @if (selectedRace is not null && AbilityChoice().Points > 0 && (selectedRace.Subraces?.Any() != true || selectedSubrace != null))
                     {
-                        <ChoiceSection Title="Ability Score Increases" Chosen="@abilityPicks.Count" Total="@AbilityChoiceCount()">
-                            <Description>Raise @AbilityChoiceCount() different abilities by 1.</Description>
+                        var choice = AbilityChoice();
+                        <ChoiceSection Title="Ability Score Increases" Chosen="@PointsSpent()" Total="@choice.Points">
+                            <Description>@AbilityChoiceText(choice, sentence: true)</Description>
                             <ChildContent>
-                                @foreach (var ability in AbilityChoiceOptions())
+                                @foreach (var ability in choice.Options)
                                 {
-                                    var isPicked = abilityPicks.Contains(ability);
-                                    <ChoiceRow Name="@($"+1 {AbilityNames.Of(ability)}")" Picked="@isPicked"
-                                               Disabled="@(!isPicked && abilityPicks.Count >= AbilityChoiceCount())"
-                                               OnClick="() => ToggleAbility(ability)" />
+                                    var amount = abilityPicks.GetValueOrDefault(ability);
+                                    <ChoiceRow Name="@($"+{(amount > 0 ? amount : choice.Min)} {AbilityNames.Of(ability)}")" Picked="@(amount > 0)"
+                                               Disabled="@(amount == 0 && choice.Points - PointsSpent() < choice.Min)"
+                                               OnClick="() => RaiseAbility(ability)" />
                                 }
                             </ChildContent>
                         </ChoiceSection>
@@ -174,8 +181,9 @@
     private List<ProficiencyApiResponse> availableSkills = [];
     private HashSet<string> selectedRaceSkills = [];
 
-    // The abilities picked for the race's or subrace's +1s
-    private HashSet<string> abilityPicks = [];
+    // The points picked for the race's or subrace's ability choice, by ability: +1 each for a
+    // half-elf, +2 and +1 or +1 to three for a Monsters of the Multiverse race
+    private Dictionary<string, int> abilityPicks = [];
 
     // Picked only for a species that may be Small or Medium
     private string? selectedSize;
@@ -195,7 +203,7 @@
 
         selectedRace = race;
         selectedSubrace = race.Subraces?.Find(s => s.Id == draft.SubraceId);
-        abilityPicks = [.. draft.RaceAbilityIncreases.Keys];
+        abilityPicks = new Dictionary<string, int>(draft.RaceAbilityIncreases);
         selectedSize = draft.Size;
         selectedRaceSkills = [.. draft.SelectedRaceSkillIds];
     }, "Failed to load races");
@@ -248,20 +256,45 @@
         if (selectedRace == null) return false;
         if (selectedRace.Subraces?.Any() == true && selectedSubrace == null) return false;
         if (SizeOptions().Count > 1 && selectedSize == null) return false;
-        return abilityPicks.Count == AbilityChoiceCount();
+        return PointsSpent() == AbilityChoice().Points;
     }
 
     // "Small or Medium" is either, as the player picks
     private List<string> SizeOptions() =>
         selectedRace?.Size.Split(" or ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList() ?? [];
 
-    // The +1s the player picks: a subrace's take the place of the race's, as the variant human's
-    // replace the standard human's +1 to everything; the API refuses any other count
-    private int AbilityChoiceCount() =>
-        selectedSubrace is { AbilityChoiceCount: > 0 } ? selectedSubrace.AbilityChoiceCount : selectedRace?.AbilityChoiceCount ?? 0;
+    // The increases the player picks: a subrace's take the place of the race's, as the variant
+    // human's replace the standard human's +1 to everything. The API says how many points, and
+    // the fewest and most one ability takes; it refuses any other spread
+    private RaceAbilityChoice AbilityChoice() =>
+        selectedSubrace is { AbilityChoiceCount: > 0 }
+            ? new(selectedSubrace.AbilityChoiceOptions, selectedSubrace.AbilityChoiceCount, selectedSubrace.AbilityChoiceMinPerAbility, selectedSubrace.AbilityChoiceMaxPerAbility)
+            : selectedRace is { AbilityChoiceCount: > 0 }
+                ? new(selectedRace.AbilityChoiceOptions, selectedRace.AbilityChoiceCount, selectedRace.AbilityChoiceMinPerAbility, selectedRace.AbilityChoiceMaxPerAbility)
+                : new([], 0, 1, 1);
 
-    private List<string> AbilityChoiceOptions() =>
-        selectedSubrace is { AbilityChoiceCount: > 0 } ? selectedSubrace.AbilityChoiceOptions : selectedRace?.AbilityChoiceOptions ?? [];
+    private int PointsSpent() => abilityPicks.Values.Sum();
+
+    // "Raise 2 different abilities by 1.", or for a subrace's option "+1 to 2 abilities"
+    private static string AbilityChoiceText(RaceAbilityChoice choice, bool sentence)
+    {
+        if (choice.Max <= 1)
+        {
+            return sentence ? $"Raise {choice.Points} different abilities by 1." : $"+1 to {choice.Points} abilities";
+        }
+
+        if (choice.Min >= choice.Max)
+        {
+            var abilities = choice.Points / choice.Max;
+            return sentence
+                ? $"Raise {abilities} {(abilities == 1 ? "ability" : "different abilities")} by {choice.Max}."
+                : $"+{choice.Max} to {abilities} {(abilities == 1 ? "ability" : "abilities")}";
+        }
+
+        return sentence
+            ? $"Spread {choice.Points} points, at most +{choice.Max} to one ability: pick an ability again to raise it further."
+            : $"{choice.Points} points, at most +{choice.Max} to one";
+    }
 
     // The skills picked for the race and subrace together: a variant human's comes with the subrace
     private int SkillChoiceCount() => (selectedRace?.SkillChoiceCount ?? 0) + (selectedSubrace?.SkillChoiceCount ?? 0);
@@ -275,12 +308,21 @@
         return anyFromRace || anyFromSubrace ? [] : [.. selectedRace?.SkillChoiceOptions ?? [], .. selectedSubrace?.SkillChoiceOptions ?? []];
     }
 
-    private void ToggleAbility(string ability)
+    // Each pick raises the ability by one more point, from the fewest it may take to the most;
+    // past that, or with no points left for another, it is unpicked
+    private void RaiseAbility(string ability)
     {
-        if (!abilityPicks.Remove(ability) && abilityPicks.Count < AbilityChoiceCount())
+        var choice = AbilityChoice();
+        var amount = abilityPicks.GetValueOrDefault(ability);
+        var next = amount == 0 ? choice.Min : amount + 1;
+
+        if (next <= choice.Max && next - amount <= choice.Points - PointsSpent())
         {
-            abilityPicks.Add(ability);
+            abilityPicks[ability] = next;
+            return;
         }
+
+        abilityPicks.Remove(ability);
     }
 
     // A 2024 human's Origin feat; the feat is picked with the improvements, where its prerequisites are checked
@@ -294,7 +336,7 @@
 
         if (subrace.AbilityChoiceCount > 0)
         {
-            choices.Add($"+1 to {subrace.AbilityChoiceCount} abilities");
+            choices.Add(AbilityChoiceText(new(subrace.AbilityChoiceOptions, subrace.AbilityChoiceCount, subrace.AbilityChoiceMinPerAbility, subrace.AbilityChoiceMaxPerAbility), sentence: false));
         }
 
         if (subrace.SkillChoiceCount > 0)
@@ -329,7 +371,7 @@
     {
         if (!CanProceedRace()) return;
 
-        var abilityIncreases = abilityPicks.ToDictionary(ability => ability, _ => 1);
+        var abilityIncreases = abilityPicks.Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value);
 
         if (!await SaveAsync(() => DraftService.SetRaceAsync(DraftId, selectedRace!.Id, selectedSubrace?.Id, abilityIncreases, SizeOptions().Count > 1 ? selectedSize : null)))
         {
@@ -369,4 +411,7 @@
     {
         await OnBack.InvokeAsync();
     }
+
+    // The race's or subrace's ability choice as the API sends it: Points over Options, Min to Max on each ability raised
+    private sealed record RaceAbilityChoice(List<string> Options, int Points, int Min, int Max);
 }

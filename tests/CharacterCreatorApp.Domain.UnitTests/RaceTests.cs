@@ -32,6 +32,51 @@ public class RaceTests
     }
 
     [Fact]
+    public void AbilityChoiceWith_ForAMonstersOfTheMultiverseRace_TakesItsCap()
+    {
+        // Arrange
+        var aasimar = new Race
+        {
+            Id = "aasimar_mpmm",
+            Name = "Aasimar",
+            Edition = RulesEdition.Edition2014,
+            Size = "Small or Medium",
+            AbilityChoiceCount = 3,
+            AbilityChoiceOptions = ["STR", "DEX", "CON", "INT", "WIS", "CHA"],
+            AbilityChoiceMaxPerAbility = 2,
+        };
+
+        // Act
+        var choice = aasimar.AbilityChoiceWith(subrace: null);
+
+        // Assert
+        choice.Should().Be(new AbilityIncreaseChoice(aasimar.AbilityChoiceOptions, 3, 2, 1));
+    }
+
+    [Fact]
+    public void AbilityChoiceWith_ForASubraceWithItsOwnCapAndMinimum_TakesTheSubraces()
+    {
+        // Arrange - a SCAG winged tiefling's +2 to Dexterity or Charisma, never two +1s
+        var tiefling = new Race { Id = "tiefling", Name = "Tiefling", Edition = RulesEdition.Edition2014, Size = "Medium" };
+        var winged = new Subrace
+        {
+            Id = "winged_tiefling",
+            Name = "Winged Tiefling",
+            RaceId = "tiefling",
+            AbilityChoiceCount = 2,
+            AbilityChoiceOptions = ["DEX", "CHA"],
+            AbilityChoiceMaxPerAbility = 2,
+            AbilityChoiceMinPerAbility = 2,
+        };
+
+        // Act
+        var choice = tiefling.AbilityChoiceWith(winged);
+
+        // Assert
+        choice.Should().Be(new AbilityIncreaseChoice(winged.AbilityChoiceOptions, 2, 2, 2));
+    }
+
+    [Fact]
     public void AbilityChoiceWith_ForTheStandardHuman_IsNone()
     {
         // Arrange - its +1 to everything is fixed

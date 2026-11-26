@@ -18,7 +18,7 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.13")
+                .HasAnnotation("ProductVersion", "10.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -748,6 +748,12 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Property<int>("AbilityChoiceCount")
                         .HasColumnType("integer");
 
+                    b.Property<int>("AbilityChoiceMaxPerAbility")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AbilityChoiceMinPerAbility")
+                        .HasColumnType("integer");
+
                     b.PrimitiveCollection<List<string>>("AbilityChoiceOptions")
                         .IsRequired()
                         .HasColumnType("text[]");
@@ -918,6 +924,12 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<int>("AbilityChoiceCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AbilityChoiceMaxPerAbility")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("AbilityChoiceMinPerAbility")
                         .HasColumnType("integer");
 
                     b.PrimitiveCollection<List<string>>("AbilityChoiceOptions")

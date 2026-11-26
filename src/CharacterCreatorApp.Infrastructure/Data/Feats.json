@@ -10055,10 +10055,10 @@
     "Prerequisites": {
       "MinimumLevel": null,
       "AbilityMinimums": [],
-      "RaceIds": [
-        "vampire_ixalan"
+      "RaceIds": [],
+      "SubraceIds": [
+        "ixalan_vampire_psz"
       ],
-      "SubraceIds": [],
       "Sizes": [],
       "ClassIds": [],
       "Features": [],

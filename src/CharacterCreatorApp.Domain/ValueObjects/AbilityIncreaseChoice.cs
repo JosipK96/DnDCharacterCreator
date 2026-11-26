@@ -1,11 +1,12 @@
 namespace CharacterCreatorApp.Domain.ValueObjects;
 
 /// <summary>
-/// Ability score increases the player spreads: Points over Options, at most MaxPerAbility on any
-/// one. A half-elf's two +1s are 2 points at most 1 each; a 2024 background's +2 and +1, or +1
-/// to each, 3 points at most 2 each; a half-feat's +1 is one point.
+/// Ability score increases the player spreads: Points over Options, at most MaxPerAbility and at
+/// least MinPerAbility on any one it raises. A half-elf's two +1s are 2 points at most 1 each; a
+/// 2024 background's +2 and +1, or +1 to each, 3 points at most 2 each; a half-feat's +1 is one
+/// point; Tasha's Custom Lineage's +2 to one is 2 points at least and at most 2, so not +1 to two.
 /// </summary>
-public sealed record AbilityIncreaseChoice(IReadOnlyCollection<string> Options, int Points, int MaxPerAbility)
+public sealed record AbilityIncreaseChoice(IReadOnlyCollection<string> Options, int Points, int MaxPerAbility, int MinPerAbility = 1)
 {
     /// <summary>Nothing to spread: only no increases are allowed.</summary>
     public static readonly AbilityIncreaseChoice None = new([], 0, 0);
@@ -19,7 +20,8 @@ public sealed record AbilityIncreaseChoice(IReadOnlyCollection<string> Options, 
 
     /// <summary>
     /// Whether these increases are the choice's: every ability one of the options, named once
-    /// (keys in any spelling, "str" or "Strength"), none above MaxPerAbility, all of Points spent.
+    /// (keys in any spelling, "str" or "Strength"), none above MaxPerAbility or below
+    /// MinPerAbility, all of Points spent.
     /// </summary>
     public bool Allows(IReadOnlyDictionary<string, int> increases)
     {
@@ -33,7 +35,7 @@ public sealed record AbilityIncreaseChoice(IReadOnlyCollection<string> Options, 
             if (!AbilityScore.TryNormalize(key, out var abilityId)
                 || !Options.Contains(abilityId)
                 || !abilityIds.Add(abilityId)
-                || amount < 1
+                || amount < Math.Max(1, MinPerAbility)
                 || amount > MaxPerAbility)
             {
                 return false;
@@ -41,5 +43,25 @@ public sealed record AbilityIncreaseChoice(IReadOnlyCollection<string> Options, 
         }
 
         return given.Sum(kvp => kvp.Value) == Points;
+    }
+
+    /// <summary>
+    /// The choice in words, for an error: "+1 to 2 different abilities", "+2 to 1 ability", or
+    /// "3 points, at most +2 to one ability" for a Monsters of the Multiverse race's +2 and +1.
+    /// </summary>
+    public string Describe()
+    {
+        if (MaxPerAbility <= 1)
+        {
+            return $"+1 to {Points} different abilities";
+        }
+
+        if (MinPerAbility >= MaxPerAbility)
+        {
+            var abilities = Points / MaxPerAbility;
+            return $"+{MaxPerAbility} to {abilities} {(abilities == 1 ? "ability" : "different abilities")}";
+        }
+
+        return $"{Points} points, at most +{MaxPerAbility} to one ability";
     }
 }

@@ -14,12 +14,6 @@ namespace CharacterCreatorApp.SeedDataGenerator;
 /// </summary>
 internal sealed class SpellImporter(FiveEToolsSource source, EntryRenderer renderer)
 {
-    /// <summary>
-    /// Books written for the 2024 rules. Their spells get "_2024" ids, so the ids 2014 characters
-    /// already store never change.
-    /// </summary>
-    private static readonly HashSet<string> Sources2024 = new(StringComparer.OrdinalIgnoreCase) { "XPHB", "FRHoF", "EFA", "AU" };
-
     private static readonly Dictionary<string, string> Schools = new()
     {
         ["A"] = "Abjuration",
@@ -90,8 +84,10 @@ internal sealed class SpellImporter(FiveEToolsSource source, EntryRenderer rende
     private static string IdOf(JsonObject spell) =>
         Slug.Of(spell.Str("name")!, '_') + (EditionOf(spell) == RulesEdition.Edition2024 ? "_2024" : string.Empty);
 
+    // A spell from a book written for the 2024 rules gets a "_2024" id, so the ids 2014
+    // characters already store never change
     private static string EditionOf(JsonObject spell) =>
-        Sources2024.Contains(spell.Str("source")!) ? RulesEdition.Edition2024 : RulesEdition.Edition2014;
+        SourceBooks.EditionOfBook(spell.Str("source")!);
 
     private SpellSeedRow Row(JsonObject spell, string id)
     {

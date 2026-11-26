@@ -56,7 +56,7 @@ public class RaceStepTests : WizardStepTestBase
     }
 
     [Fact]
-    public void RaceStep_WithAllPointsSpent_DisablesTheOtherAbilitiesAndUnpicksPastTheCap()
+    public void RaceStep_PickingAnAbilityPastTheCap_UnpicksIt()
     {
         // Arrange
         var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { AbilityChoiceCount = 3, AbilityChoiceOptions = AllSix, AbilityChoiceMaxPerAbility = 2 });

@@ -165,6 +165,7 @@ public class HiddenOptionsNoteTests : WizardStepTestBase
         Api.Get("/api/feats?edition=2014&sources=PHB", new List<FeatApiResponse> { Feat("alert-phb", "Alert") });
         Api.Get("/api/proficiencies", new List<ProficiencyApiResponse>());
         Api.Get(DraftPath("fighting-styles"), new FightingStylesApiResponse(0, []));
+        Api.Get(DraftPath("feat-eligibility"), new List<FeatEligibilityApiResponse>());
         Api.Get(Hidden("feats"), InXanathars);
 
         var cut = Render<ImprovementsStep>(parameters => parameters

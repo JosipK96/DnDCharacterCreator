@@ -94,6 +94,20 @@ public class CharacterDraftService(HttpClient http)
         return await response.ReadAsync<FightingStylesApiResponse>();
     }
 
+    /// <summary>
+    /// Which feats the character can take and what each one it can't needs, counting the ability
+    /// points the improvements step has spent so far (strength 2 is two points of Strength).
+    /// </summary>
+    public async Task<List<FeatEligibilityApiResponse>> GetFeatEligibilityAsync(Guid draftId, IReadOnlyDictionary<string, int> increases)
+    {
+        var points = increases
+            .OrderBy(pair => pair.Key, StringComparer.Ordinal)
+            .SelectMany(pair => Enumerable.Repeat($"increase={Uri.EscapeDataString(pair.Key)}", pair.Value));
+        var query = string.Join("&", points);
+        var response = await _http.GetAsync($"/api/character-drafts/{draftId}/feat-eligibility{(query.Length == 0 ? string.Empty : "?" + query)}");
+        return await response.ReadAsync<List<FeatEligibilityApiResponse>>();
+    }
+
     public Task ChooseFightingStylesAsync(Guid draftId, List<string> featIds) =>
         PutAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(featIds));
 

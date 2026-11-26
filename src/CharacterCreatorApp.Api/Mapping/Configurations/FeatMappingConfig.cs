@@ -18,6 +18,9 @@ public class FeatMappingConfig : IRegister
         config.NewConfig<FightingStylesReadModel, FightingStylesApiResponse>()
             .MapToConstructor(true);
 
+        config.NewConfig<FeatEligibilityReadModel, FeatEligibilityApiResponse>()
+            .MapToConstructor(true);
+
         config.NewConfig<FeatAbilityIncrease, FeatAbilityIncreaseApiResponse>()
             .MapToConstructor(true);
 

@@ -48,7 +48,7 @@ The rules nearly every task needs:
   `Directory.Build.props` (and `tests/Directory.Build.props`, which inherits and relaxes it).
   Never put a `Version=` on a `PackageReference`.
 - CI (`.github/workflows/ci.yml`) runs on every pull request and push to `main` (a push to `main` deploys nothing; a published
-  release does, `.github/workflows/release.yml`, README's Releasing): restore,
+  release does, `.github/workflows/release.yml`, `docs/operations/releasing.md`): restore,
   build (warnings as errors), unit tests, integration tests, test coverage (with a floor for Domain and
   Application, `docs/conventions/git-and-testing.md`) and a vulnerable-package check as
   separate steps, and the Api's Docker image (skipped when a PR changes only Markdown or

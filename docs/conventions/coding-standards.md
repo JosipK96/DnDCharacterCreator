@@ -109,6 +109,40 @@ A local `[SuppressMessage]` is for a case where the analyzer is right in general
 and wrong here. It carries a `Justification` that says what the analyzer cannot
 see. "The build failed" is not a justification.
 
+## Rules that break the build most
+
+Counted over a month of sessions (November 2026): about one build in four failed,
+mostly on the same few rules. Check for them before building rather than after.
+
+- **CS7036, CS9035: a changed constructor or a new `required` member.** Every
+  caller has to change with it, and most callers are tests and builders in
+  `tests/`. Use the LSP's `findReferences` on the constructor or member before
+  building, not after.
+- **CS0246, CS0103: a missing `using` or project reference.** Application does
+  not reference Contracts, and Domain references nothing, so a type that is
+  "right there" in the solution may not be reachable from the project you are in.
+- **SA1118: a multi-line argument.** An argument after the first may not span
+  lines. Put a long expression, collection or object initializer in a local first.
+- **SA1115, SA1001: argument layout.** Each argument starts on the line after the
+  previous one, with no blank line or comment between them, and a comma never has
+  a space before it.
+- **SA1649: the file name.** A file is named after its first type. A second type
+  belongs in its own file.
+- **SA1203, SA1122: member order and `""`.** Constants come before fields, and an
+  empty string is `string.Empty`.
+- **CA1304, CA1311: casing without a culture.** Use `ToLowerInvariant()` or
+  `ToUpperInvariant()` (or compare with `StringComparison.OrdinalIgnoreCase`), never
+  `ToLower()`.
+
+`dotnet format` fixes the mechanical ones (SA1122, SA1203, SA1001) without a
+rebuild. Limit it to those rules: run over the whole solution it reports CS8618 on
+`ApplicationDbContext`, which the build does not, and `--include` takes paths
+relative to the repository root, not absolute ones.
+
+```
+dotnet format analyzers CharacterCreatorApp.sln --diagnostics SA1122 SA1203 SA1001
+```
+
 ## Before a pull request
 
 The root CLAUDE.md lists these as a checklist. Each came out of the code-quality

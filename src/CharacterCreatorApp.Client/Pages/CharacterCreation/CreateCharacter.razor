@@ -192,13 +192,9 @@
                     <h3 class="room-title mb-4">Resume Character Creation?</h3>
                     <p class="mb-2">You have an in-progress character:</p>
                     <div class="border-l-[5px] border-plum bg-plum-tint p-3 mb-6">
-                        <p class="font-medium">
-                            @(string.IsNullOrEmpty(existingDraft.Name) ? "Unnamed Character" : existingDraft.Name)
-                        </p>
-                        @if (existingDraft.Level.HasValue)
-                        {
-                            <p class="text-pencil text-sm">Level @existingDraft.Level</p>
-                        }
+                        @* Only a draft with step 1 saved is asked about, so it has a name and level *@
+                        <p class="font-medium">@existingDraft.Name</p>
+                        <p class="text-pencil text-sm">Level @existingDraft.Level</p>
                     </div>
                     <p class="text-pencil text-sm mb-6">
                         Would you like to continue where you left off, or start a new character?

@@ -1,7 +1,7 @@
 # Deploys a release (#70). Merging to main deploys nothing; publishing a GitHub Release `vX.Y.Z`
 # does. Render follows the `production` branch, and this workflow moves that branch to a commit
 # holding exactly the tagged tree plus version.txt (the version the Dockerfile builds in). The
-# README's Releasing section has the steps, including the one-time Render settings.
+# docs/operations/releasing.md has the steps and how Render follows the production branch.
 name: Release
 
 on:

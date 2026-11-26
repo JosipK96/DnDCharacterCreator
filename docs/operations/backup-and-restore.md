@@ -125,7 +125,7 @@ If the Neon database is lost or damaged:
    ```
 
 4. In the Render dashboard, set `ConnectionStrings__DefaultConnection` to the new database
-   (Npgsql form, as the README's Hosting section shows). Render redeploys. Set
+   (Npgsql form, as [hosting.md](hosting.md) shows). Render redeploys. Set
    `BACKUP_DATABASE_URL` here to the new database too.
 5. Delete the `restore` folder.
 

@@ -89,14 +89,8 @@ against an empty database does the setup for you.
 
 ## The testing rules
 
-The full set, each rule with its own impact rating and checklist, is in the
-private `unit-test-common` skill, outside this repository. The three skills that
-use them:
-
-- `/unit-test-cases <target>` — enumerate what needs covering, write nothing
-- `/unit-test-write <target>` — confirm behaviours, then the mock receipt, then write
-- `/unit-test-review <target>` — check existing tests against the rules
-
-The short version: strict mocks, one `_cts` token threaded through, pin the
-arguments the SUT forwards, assert exact values, and a rule that differs per
-class gets a row per class.
+They are in `tests/CLAUDE.md`, under "Writing a unit test". The short version:
+mock only what reaches the database or the request, strict mocks with one `_cts`
+token threaded through, pin the arguments the SUT forwards, assert exact values
+and error codes, a rule that differs per class gets a row per class, and a
+defect is reported rather than pinned by a test.

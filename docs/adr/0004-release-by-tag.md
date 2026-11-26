@@ -21,4 +21,4 @@ Until 1.0 every merge to `main` deployed to Render once CI passed (#31, #42). No
 - `production` is rewritten by the workflow and is never edited or merged by hand. It must not get branch protection that blocks force pushes.
 - The deployed tree is the tag plus one file, so `git diff vX.Y.Z origin/production` shows only `version.txt`.
 - A tag whose commit CI did not pass cannot be released; a hotfix reaches CI through its pull request to `main`, which tests the same commit.
-- Owner-only setup in Render is in the README's Releasing section.
+- How Render follows the `production` branch is in `docs/operations/releasing.md`.

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <!-- Turns the raw 5etools data into the seed files in Infrastructure/Data, as plain text. A
-         tool run by hand, not part of the app or its image; see README. It references
+         tool run by hand, not part of the app or its image; see docs/development.md. It references
          Infrastructure for the seed file shapes, so what it writes is what the seeders read. -->
     <PropertyGroup>
         <OutputType>Exe</OutputType>

@@ -2,13 +2,37 @@
 
 Long form: `docs/conventions/git-and-testing.md`.
 
-- Tests are xUnit v3 + Moq (`MockBehavior.Strict`) + FluentAssertions. The full rules are in
-  the private `unit-test-common` skill; the short version is strict mocks, one `_cts` token
-  threaded through setups and verifies, pinned arguments, exact assertions, and a row per class
-  for any rule that differs by class.
-- Tests are `Method_Scenario_Expectation`, Arrange/Act/Assert. Fake the clock with `FakeTimeProvider`, never `DateTime.Now`.
+- Tests are xUnit v3 + Moq + FluentAssertions, named `Method_Scenario_Expectation`, in
+  Arrange/Act/Assert.
+
+## Writing a unit test
+
+- **Mock only what reaches the database or the request:** repositories, `IUnitOfWork`,
+  `IUserContext`. Everything in-process runs real (`CharacterBuilder`,
+  `DraftCompletenessChecker`, `CharacterStatsCalculator`, `DraftSourceLoader` over the
+  repository mocks). The clock is a `FakeTimeProvider`, never a mock and never `DateTime.Now`.
+- **Every mock is `MockBehavior.Strict`, and forwarded values are pinned.** Set up and verify
+  with the real draft id, user id and one `_cts.Token`, not `It.IsAny`: the user id is how the
+  repositories scope every read, so a test that ignores it passes when the handler reads another
+  player's draft. `It.IsAny` belongs only on a `Times.Never` verify, where it is the stronger check.
+- **Assert the exact value.** A field gets its expected value, an error its **code** (codes are
+  the contract, descriptions get reworded), never `NotBeNull()` or `NotBeEmpty()` alone.
+- **One case per distinct outcome, and a row per value a rule distinguishes.** A rule that
+  differs by class or race (`Class.SubclassLevel`, `Class.ImprovementsAt`) gets an
+  `[InlineData]` row for each distinct value: two bugs survived a single fighter-shaped test.
+  Several guards returning the same code are one `[Theory]`, a row per guard.
+- **Report a defect; don't pin it.** A test that asserts an accident (a
+  `NullReferenceException` from a `!`, the wrong error code for a step) makes the bug the
+  contract. Write it down with file and line instead, and fix it in its own change. A test with
+  no assertion or a commented-out body is a defect too.
+- **Append to the existing `<Sut>Tests` class** and follow its local conventions. Search first:
+  a class with no test file of its own may be covered through a handler's tests (the
+  `CharacterCreation/Building` helpers are, through finalize and preview).
 - A test fixture that cannot produce a draft the validation would accept is telling you the
   fixture is unrealistic, not that the validation is wrong.
+
+## What the test projects need
+
 - The `*.IntegrationTests` projects start PostgreSQL through Testcontainers, so Docker must be
   running. The unit test projects don't need it.
 - The client's services are concrete classes over an HttpClient, so the bUnit tests run the real

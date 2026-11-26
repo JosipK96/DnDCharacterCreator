@@ -149,7 +149,11 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   ability minimums (racial bonuses count, and so does every improvement for a feat taken for
   one, but not for a race's own feat), race, class, and class features by name ("Fighting
   Style", "Spellcasting" or "Pact Magic", from `CharacterFeatures.ClassFeaturesFor`). What it
-  cannot check (another feat, a campaign) is shown, not enforced. Classes, subclasses, their
+  cannot check (another feat, a campaign) is shown, not enforced. The improvements step's list
+  asks `GET feat-eligibility` with the ability points it has spent so far, which
+  `FeatPrerequisiteCheck.Eligibility` answers as the save would: a feat the character can't
+  take is muted with what it needs and can't be picked, and one with an unchecked prerequisite
+  says to check with the DM. The background's feat choice is not checked. Classes, subclasses, their
   features, races, backgrounds, spells and feats are generated from 5etools; Tasha's optional
   class features, and the choices the app does not ask for yet (a 2014 House Agent's set of
   tools, Skill Expert's expertise), are left out.

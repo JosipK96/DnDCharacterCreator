@@ -307,6 +307,98 @@ public class ImprovementsStepTests : WizardStepTestBase
         _movedOn.Should().Be(0);
     }
 
+    [Fact]
+    public void Render_WithAFeatTheCharacterCannotTake_MutesItSaysWhatItNeedsAndKeepsItFromBeingPicked()
+    {
+        // Arrange
+        ArrangeLoad(Draft(), [Alert, Athlete], eligibility: [new("athlete-phb", "Strength 13", "Strength 13", false)]);
+        var cut = RenderStep(level: 4);
+
+        // Act
+        ModeButton(cut, "Feat").Click();
+
+        // Assert - listed, not hidden, and not picked
+        var athlete = Button(cut, "Athlete");
+        athlete.HasAttribute("disabled").Should().BeTrue();
+        athlete.QuerySelector("[data-testid=feat-needs]")!.TextContent.Should().Be("Needs: Strength 13");
+        athlete.GetAttribute("aria-pressed").Should().Be("false");
+        Button(cut, "Alert").HasAttribute("disabled").Should().BeFalse();
+        Button(cut, "Alert").QuerySelector("[data-testid=feat-needs]").Should().BeNull();
+    }
+
+    [Fact]
+    public void Render_WithAPrerequisiteTheAppCannotCheck_SaysToCheckWithTheDm()
+    {
+        // Arrange
+        ArrangeLoad(Draft(), [Alert], eligibility: [new("alert-phb", null, null, true)]);
+        var cut = RenderStep(level: 4);
+
+        // Act
+        ModeButton(cut, "Feat").Click();
+
+        // Assert
+        var alert = Button(cut, "Alert");
+        alert.HasAttribute("disabled").Should().BeFalse();
+        alert.QuerySelector("[data-testid=feat-check-dm]")!.TextContent.Should().Be("Check with your DM");
+    }
+
+    [Fact]
+    public void Increase_ThatMeetsAFeatsMinimum_AsksAgainAndLetsTheFeatBePicked()
+    {
+        // Arrange - a level 6 fighter: Strength from the first improvement opens Athlete to the second
+        ArrangeLoad(Draft(level: 6), [Athlete], eligibility: [new("athlete-phb", "Strength 13", "Strength 13", false)]);
+        Api.Get($"{DraftPath("feat-eligibility")}?increase=strength", new List<FeatEligibilityApiResponse> { new("athlete-phb", null, "Strength 13", false) });
+        var cut = RenderStep(level: 6);
+        cut.FindAll("button").Where(b => b.TextContent.Trim() == "Feat").ElementAt(1).Click();
+        Button(cut, "Athlete").HasAttribute("disabled").Should().BeTrue();
+
+        // Act
+        PlusOf(cut, "Strength").Click();
+
+        // Assert
+        Api.Requests[^1].Should().Be($"GET {DraftPath("feat-eligibility")}?increase=strength");
+        Button(cut, "Athlete").HasAttribute("disabled").Should().BeFalse();
+        Button(cut, "Athlete").QuerySelector("[data-testid=feat-needs]").Should().BeNull();
+    }
+
+    [Fact]
+    public void Render_WithASavedFeatTheCharacterNoLongerMeets_KeepsItPickedSaysWhatItNeedsAndBlocksNext()
+    {
+        // Arrange - Alert was saved, then a score was lowered
+        var draft = Draft();
+        draft.SelectedFeatIds = ["alert-phb"];
+        ArrangeLoad(draft, [Alert], eligibility: [new("alert-phb", "Dexterity 13", "Dexterity 13", false)]);
+
+        // Act
+        var cut = RenderStep(level: 4);
+
+        // Assert - it can still be clicked, to unpick it
+        var alert = Button(cut, "Alert");
+        alert.GetAttribute("aria-pressed").Should().Be("true");
+        alert.HasAttribute("disabled").Should().BeFalse();
+        alert.QuerySelector("[data-testid=feat-needs]")!.TextContent.Should().Be("Needs: Dexterity 13");
+        Button(cut, "Next: Spells").HasAttribute("disabled").Should().BeTrue();
+    }
+
+    [Fact]
+    public void Render_ForTheRacesFeat_ReadsWhatItNeedsWithoutTheImprovements()
+    {
+        // Arrange - Athlete could be an improvement's feat, but the variant human takes its own at level 1
+        var human = Race("human-phb", "Human", subraces: Subrace("human-variant-phb", "Variant Human", "human-phb", featChoiceCount: 1));
+        ArrangeLoad(
+            Draft(level: 1, raceId: "human-phb", subraceId: "human-variant-phb"),
+            [Athlete],
+            races: [human],
+            eligibility: [new("athlete-phb", null, "Strength 13", false)]);
+
+        // Act
+        var cut = RenderStep(level: 1);
+
+        // Assert
+        Button(cut, "Athlete").HasAttribute("disabled").Should().BeTrue();
+        Button(cut, "Athlete").QuerySelector("[data-testid=feat-needs]")!.TextContent.Should().Be("Needs: Strength 13");
+    }
+
     private static CharacterDraftDetailsApiResponse Draft(int level = 4, string? raceId = null, string? subraceId = null, string? backgroundId = null) => new()
     {
         Id = DraftId,
@@ -335,9 +427,13 @@ public class ImprovementsStepTests : WizardStepTestBase
         int stylesOwed = 0,
         List<FeatApiResponse>? styles = null,
         List<RaceApiResponse>? races = null,
-        BackgroundApiResponse? background = null)
+        BackgroundApiResponse? background = null,
+        List<FeatEligibilityApiResponse>? eligibility = null)
     {
         Api.Get(DraftPath(), draft);
+
+        // Every feat can be taken, whatever the points spent, unless a test says otherwise
+        Api.GetAnyQuery(DraftPath("feat-eligibility"), eligibility ?? []);
         Api.Get($"/api/classes/{Fighter.Id}", Fighter);
         Api.Get("/api/feats?edition=2014&sources=PHB", feats);
         Api.Get("/api/proficiencies", Skills);

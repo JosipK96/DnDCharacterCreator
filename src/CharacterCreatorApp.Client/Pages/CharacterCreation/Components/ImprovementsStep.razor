@@ -95,8 +95,8 @@
                         @if (!slot.IsRaceFeat)
                         {
                             <div class="mb-4 flex flex-wrap gap-2">
-                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "false" : "true")" @onclick="() => SetMode(index, false)">Ability Scores</button>
-                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "true" : "false")" @onclick="() => SetMode(index, true)">Feat</button>
+                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "false" : "true")" @onclick="() => SetModeAsync(index, false)">Ability Scores</button>
+                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "true" : "false")" @onclick="() => SetModeAsync(index, true)">Feat</button>
                             </div>
                         }
 
@@ -112,10 +112,10 @@
                                         <p class="mb-2 text-sm font-medium">@ability.Value</p>
                                         <div class="flex items-center gap-2">
                                             <button type="button" class="btn-step" aria-label="@($"Lower {ability.Value}")"
-                                                    @onclick="() => DecrementAbility(index, ability.Key)" disabled="@(currentVal <= 0)">−</button>
+                                                    @onclick="() => DecrementAbilityAsync(index, ability.Key)" disabled="@(currentVal <= 0)">−</button>
                                             <span class="w-6 text-center font-display text-xl font-semibold">@currentVal</span>
                                             <button type="button" class="btn-step" aria-label="@($"Raise {ability.Value}")"
-                                                    @onclick="() => IncrementAbility(index, ability.Key)" disabled="@(GetPointsLeft(index) <= 0 || currentVal >= 2)">+</button>
+                                                    @onclick="() => IncrementAbilityAsync(index, ability.Key)" disabled="@(GetPointsLeft(index) <= 0 || currentVal >= 2)">+</button>
                                         </div>
                                     </div>
                                 }
@@ -132,7 +132,12 @@
                                         @foreach (var feat in FilteredFeats(index))
                                         {
                                             var featId = feat.Id;
-                                            <OptionRoom Name="@feat.Name" Picked="@(slot.FeatId == featId)" OnClick="() => SelectFeat(index, featId)">
+                                            var needs = NeedsFor(slot, featId);
+                                            @* One the character can't take is muted and says what it needs; one picked before a
+                                               score was lowered stays clickable, so it can be unpicked *@
+                                            <OptionRoom Name="@feat.Name" Picked="@(slot.FeatId == featId)" OnClick="() => SelectFeat(index, featId)"
+                                                        Disabled="@(needs != null && slot.FeatId != featId)"
+                                                        Class="@(needs != null ? "opacity-60 disabled:cursor-not-allowed" : null)">
                                                 @if (feat.Category != null)
                                                 {
                                                     <span>@feat.Category</span>
@@ -144,6 +149,14 @@
                                                 @if (feat.Prerequisites.Any())
                                                 {
                                                     <span>Requires: @string.Join(", ", feat.Prerequisites)</span>
+                                                }
+                                                @if (needs != null)
+                                                {
+                                                    <span class="font-semibold text-ink" data-testid="feat-needs">Needs: @needs</span>
+                                                }
+                                                else if (eligibility.GetValueOrDefault(featId) is { CheckWithDm: true })
+                                                {
+                                                    <span class="font-semibold text-ink" data-testid="feat-check-dm">Check with your DM</span>
                                                 }
                                             </OptionRoom>
                                         }
@@ -258,6 +271,12 @@
     private List<AsiSlot> slots = [];
     private List<FeatApiResponse> feats = [];
 
+    // Which feats the character can take with the points spent so far, by feat id, as the API
+    // answered the latest request; a reply to an earlier one is dropped
+    private Dictionary<string, FeatEligibilityApiResponse> eligibility = [];
+    private int eligibilityRequest;
+    private int eligibilityChecks;
+
     // The draft's edition and books, which the feats come from
     private string draftEdition = string.Empty;
     private IReadOnlyList<string> draftSources = [];
@@ -334,6 +353,11 @@
 
         slots = RestoreSlots(draft);
         RestoreProficiencyPicks(draft);
+
+        if (slots.Count > 0)
+        {
+            eligibility = (await DraftService.GetFeatEligibilityAsync(DraftId, SpentPoints())).ToDictionary(e => e.FeatId);
+        }
 
         var fightingStyles = await DraftService.GetFightingStylesAsync(DraftId);
         fightingStylesOwed = fightingStyles.Owed;
@@ -497,7 +521,7 @@
         return $"+{increase.Points} {abilities}{(increase.Maximum > 20 ? $", up to {increase.Maximum}" : string.Empty)}";
     }
 
-    private void SetMode(int index, bool takesFeat)
+    private async Task SetModeAsync(int index, bool takesFeat)
     {
         var slot = slots[index];
 
@@ -511,7 +535,13 @@
         // Clear whichever choice no longer applies so a half-finished one cannot be submitted
         if (takesFeat)
         {
+            var hadPoints = slot.Improvement.Count > 0;
             slot.Improvement.Clear();
+
+            if (hadPoints)
+            {
+                await RefreshEligibilityAsync();
+            }
         }
         else
         {
@@ -520,6 +550,37 @@
             slot.ProficiencyPicks = [];
         }
     }
+
+    // The ability points every improvement spent on points has so far, a half-spent one included
+    private Dictionary<string, int> SpentPoints() =>
+        slots
+            .Where(s => !s.TakesFeat)
+            .SelectMany(s => s.Improvement)
+            .GroupBy(pair => pair.Key)
+            .ToDictionary(points => points.Key, points => points.Sum(pair => pair.Value));
+
+    private async Task RefreshEligibilityAsync()
+    {
+        var request = ++eligibilityRequest;
+        List<FeatEligibilityApiResponse> answer = [];
+
+        var answered = await RunAsync(
+            async () => answer = await DraftService.GetFeatEligibilityAsync(DraftId, SpentPoints()),
+            busy => eligibilityChecks += busy ? 1 : -1,
+            "Failed to check which feats you can take");
+
+        if (answered && request == eligibilityRequest)
+        {
+            eligibility = answer.ToDictionary(e => e.FeatId);
+        }
+    }
+
+    // What the character lacks for the feat in this slot, or null when it can take it. The race's
+    // own feat counts no improvement; one the API said nothing about is left to the save.
+    private string? NeedsFor(AsiSlot slot, string featId) =>
+        eligibility.GetValueOrDefault(featId) is { } status
+            ? slot.IsRaceFeat ? status.UnmetAsRaceFeat : status.Unmet
+            : null;
 
     private void SelectFeat(int index, string featId)
     {
@@ -535,28 +596,50 @@
 
     private int GetPointsLeft(int index) => 2 - slots[index].Improvement.Values.Sum();
 
-    private void IncrementAbility(int index, string ability)
+    private async Task IncrementAbilityAsync(int index, string ability)
     {
-        if (GetPointsLeft(index) <= 0) return;
+        if (GetPointsLeft(index) <= 0)
+        {
+            return;
+        }
+
         var current = slots[index].Improvement.TryGetValue(ability, out var v) ? v : 0;
-        if (current >= 2) return;
+
+        if (current >= 2)
+        {
+            return;
+        }
+
         slots[index].Improvement[ability] = current + 1;
+        await RefreshEligibilityAsync();
     }
 
-    private void DecrementAbility(int index, string ability)
+    private async Task DecrementAbilityAsync(int index, string ability)
     {
-        if (!slots[index].Improvement.TryGetValue(ability, out var current) || current <= 0) return;
+        if (!slots[index].Improvement.TryGetValue(ability, out var current) || current <= 0)
+        {
+            return;
+        }
+
         if (current == 1)
+        {
             slots[index].Improvement.Remove(ability);
+        }
         else
+        {
             slots[index].Improvement[ability] = current - 1;
+        }
+
+        await RefreshEligibilityAsync();
     }
 
+    // A feat the character can't take blocks the save, as does a check still on its way
     private bool CanProceed() =>
-        chosenStyles.All(id => !string.IsNullOrEmpty(id))
+        eligibilityChecks == 0
+        && chosenStyles.All(id => !string.IsNullOrEmpty(id))
         && backgroundFeatPicks.All(id => !string.IsNullOrEmpty(id))
         && slots.All(slot => slot.TakesFeat
-            ? !string.IsNullOrEmpty(slot.FeatId) && HasAbilityPick(slot) && slot.ProficiencyPicks.All(id => !string.IsNullOrEmpty(id))
+            ? !string.IsNullOrEmpty(slot.FeatId) && NeedsFor(slot, slot.FeatId) == null && HasAbilityPick(slot) && slot.ProficiencyPicks.All(id => !string.IsNullOrEmpty(id))
             : slot.Improvement.Values.Sum() == 2);
 
     // A feat raising one of several abilities needs the pick; one raising a fixed ability does not

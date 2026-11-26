@@ -11,6 +11,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.DeleteDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetBonusSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetToolChoices;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetDraft;
+using CharacterCreatorApp.Application.Features.CharacterCreation.GetFeatEligibility;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetIncompleteDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetSpellAllowance;
@@ -240,6 +241,23 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new GetFightingStylesQuery(draftId), cancellationToken);
 
             return OkOrProblem(response, styles => _mapper.Map<FightingStylesApiResponse>(styles));
+        }
+
+        /// <summary>
+        /// Which feats of the draft's edition and books its character can take, for the
+        /// improvements step's list. Each increase is one ability point the step has spent so far
+        /// (?increase=strength&amp;increase=strength for +2), which an ability minimum counts for
+        /// a feat taken for an improvement. The save still checks every pick.
+        /// </summary>
+        [HttpGet("{draftId:guid}/feat-eligibility")]
+        [ProducesResponseType(typeof(List<FeatEligibilityApiResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetFeatEligibility(Guid draftId, [FromQuery(Name = "increase")] List<string>? increases, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new GetFeatEligibilityQuery(draftId, increases ?? []), cancellationToken);
+
+            return OkOrProblem(response, feats => _mapper.Map<List<FeatEligibilityApiResponse>>(feats));
         }
 
         [HttpPut("{draftId:guid}/spells")]

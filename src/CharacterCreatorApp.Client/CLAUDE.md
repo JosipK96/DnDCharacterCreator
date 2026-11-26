@@ -17,6 +17,8 @@
   takes the flow (`WizardStepBase.Flow`), so its heading number and "Next" label follow it. The
   class step keeps the class (its ClassLocked parameter), and the improvements step keeps the
   earlier improvements beside a new one.
+- The improvements step asks the API which feats the character can take (`GET feat-eligibility`),
+  again after every point it spends or takes back, and compares no score itself (#140).
 - Under each list the draft's books filter (race, class, subclass, background, feats, spells),
   `Components/HiddenOptionsNote.razor` says what the unticked books hold, counted by the API
   (`LookupService.GetHiddenOptionsAsync`). Its button calls `WizardStepBase.OnChangeBooks`: the

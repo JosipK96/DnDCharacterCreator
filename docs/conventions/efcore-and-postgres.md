@@ -176,7 +176,7 @@ Every file but `Proficiencies.json` (`Classes.json`, `Subclasses.json`,
 `Feats.json`, `Languages.json`, `Books.json`, `SrdIds.json` and the files in
 `Spells/`) is generated from the
 raw 5etools data by
-`tools/CharacterCreatorApp.SeedDataGenerator` (see the README); don't edit them by
+`tools/CharacterCreatorApp.SeedDataGenerator` (see `docs/development.md`); don't edit them by
 hand, change the generator and run it again. The
 row types they share with the seeders are in `Infrastructure/Seed/Rows`. A
 class's spell table (cantrips, spells to pick, spell slots or Pact Magic, highest

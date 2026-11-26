@@ -37,7 +37,7 @@ public class AdminController(ISender sender) : ApiController
             $"{origin}/reset-password?email={Uri.EscapeDataString(request.Email)}&token={Uri.EscapeDataString(token)}"));
     }
 
-    /// <summary>Always answers 500 for the owner: how they check that errors reach the error tracker (README, Hosting).</summary>
+    /// <summary>Always answers 500 for the owner: how they check that errors reach the error tracker (docs/operations/hosting.md, Errors).</summary>
     [HttpPost("test-error")]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status403Forbidden)]

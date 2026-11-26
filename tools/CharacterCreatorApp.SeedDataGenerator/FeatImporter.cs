@@ -67,7 +67,9 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
     /// <summary>Each feat's id by "name|source", filled by Import: how a background names its feat.</summary>
     public Dictionary<string, string> IdsByKey { get; } = new(StringComparer.OrdinalIgnoreCase);
 
-    public List<FeatSeedRow> Import(IReadOnlyDictionary<string, string> spellIdsByKey)
+    /// <param name="spellIdsByKey">Each spell's id by "name|source", for the spells a feat gives.</param>
+    /// <param name="races">The imported races by name, for a race prerequisite.</param>
+    public List<FeatSeedRow> Import(IReadOnlyDictionary<string, string> spellIdsByKey, RaceNames races)
     {
         var feats = _source.Load("feats.json").Objects("feat").Concat(FightingStyles2014()).ToList();
 
@@ -87,7 +89,7 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
 
         foreach (var feat in feats)
         {
-            var row = Row(feat, inBothEditions.Contains(BaseId(feat)), spellIdsByKey, featNames);
+            var row = Row(feat, inBothEditions.Contains(BaseId(feat)), spellIdsByKey, featNames, races);
             IdsByKey[$"{feat.Str("name")}|{feat.Str("source")}"] = row.Id;
             rows.Add(row);
         }
@@ -121,7 +123,8 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
         JsonObject feat,
         bool inBothEditions,
         IReadOnlyDictionary<string, string> spellIdsByKey,
-        IReadOnlyDictionary<string, string> featNames)
+        IReadOnlyDictionary<string, string> featNames,
+        RaceNames races)
     {
         var name = feat.Str("name")!;
         var edition = EditionOf(feat);
@@ -130,7 +133,7 @@ internal sealed class FeatImporter(FiveEToolsSource source, EntryRenderer render
             ? new FeatPrerequisites { ClassIds = StyleClassIds(feat), Features = [FightingStyle] }
             : CategoryCode(feat) is { } code && OwnFightingStyleClassIds.TryGetValue(code, out var classId)
                 ? new FeatPrerequisites { ClassIds = [classId], Features = [FightingStyle] }
-                : FeatPrerequisiteParser.Parse(feat["prerequisite"], edition, featNames);
+                : FeatPrerequisiteParser.Parse(feat["prerequisite"], edition, featNames, races);
 
         var id = BaseId(feat) + (inBothEditions ? $"_{edition}" : string.Empty);
 

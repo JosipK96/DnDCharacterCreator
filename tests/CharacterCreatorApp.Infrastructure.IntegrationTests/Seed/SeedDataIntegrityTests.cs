@@ -217,8 +217,8 @@ public partial class SeedDataIntegrityTests
         var feats = await ReadAsync<IdRow>("Feats.json");
 
         // Act & Assert
-        races.Select(r => r.Id).Should().Contain(HitPointBonuses.Dwarf2024RaceId);
-        races.SelectMany(r => r.Subraces).Select(s => s.Id).Should().Contain(HitPointBonuses.HillDwarfSubraceId);
+        races.Select(r => r.Id).Should().Contain(HitPointBonuses.DwarvenToughnessRaceIds);
+        races.SelectMany(r => r.Subraces).Select(s => s.Id).Should().Contain(HitPointBonuses.DwarvenToughnessSubraceIds);
         subclasses.Select(s => s.Id).Should().Contain(HitPointBonuses.DraconicSorcererSubclassIds);
         feats.Select(f => f.Id).Should().Contain(HitPointBonuses.ToughFeatIds);
     }
@@ -238,7 +238,7 @@ public partial class SeedDataIntegrityTests
         var racial = races
             .SelectMany(r => r.Traits.Select(t => (Owner: r.Id, t.Name)))
             .Concat(races.SelectMany(r => r.Subraces).SelectMany(s => s.Traits.Select(t => (Owner: s.Id, t.Name))))
-            .Where(t => t.Name == "Dwarven Toughness" && t.Owner != HitPointBonuses.HillDwarfSubraceId && t.Owner != HitPointBonuses.Dwarf2024RaceId)
+            .Where(t => t.Name == "Dwarven Toughness" && !HitPointBonuses.DwarvenToughnessSubraceIds.Contains(t.Owner) && !HitPointBonuses.DwarvenToughnessRaceIds.Contains(t.Owner))
             .Select(t => $"trait of {t.Owner}: {t.Name}");
         var subclass = features
             .Where(f => f.Name == "Draconic Resilience" && (f.SubclassId == null || !HitPointBonuses.DraconicSorcererSubclassIds.Contains(f.SubclassId)))

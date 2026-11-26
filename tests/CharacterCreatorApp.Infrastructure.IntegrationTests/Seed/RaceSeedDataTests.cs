@@ -17,7 +17,7 @@ public class RaceSeedDataTests
     [InlineData("dwarf", "Medium", 25, 0, 0, new[] { "Common", "Dwarvish" })]
     [InlineData("elf", "Medium", 30, 0, 0, new[] { "Common", "Elvish" })]
     [InlineData("gnome", "Small", 25, 0, 0, new[] { "Common", "Gnomish" })]
-    [InlineData("half_elf", "Medium", 30, 2, 1, new[] { "Common", "Elvish" })]
+    [InlineData("half_elf", "Medium", 30, 0, 1, new[] { "Common", "Elvish" })]
     [InlineData("half_orc", "Medium", 30, 0, 0, new[] { "Common", "Orc" })]
     [InlineData("halfling", "Small", 25, 0, 0, new[] { "Common", "Halfling" })]
     [InlineData("human", "Medium", 30, 0, 1, new[] { "Common" })]
@@ -28,9 +28,9 @@ public class RaceSeedDataTests
         // Act
         var race = await ReadRaceAsync(raceId);
 
-        // Assert
+        // Assert - the half-elf's Skill Versatility is its Standard subrace's, which SCAG's variants replace
         race.Edition.Should().Be(RulesEdition.Edition2014);
-        race.Subraces.Select(s => s.Source).Prepend(race.Source).Should().AllBe("PHB");
+        race.Source.Should().Be("PHB");
         (race.Size, race.Speed, race.SkillChoiceCount, race.LanguageChoiceCount).Should().Be((size, speed, skillChoices, languageChoices));
         race.Languages.Should().Equal(languages);
     }
@@ -62,7 +62,6 @@ public class RaceSeedDataTests
     [Theory]
     [InlineData("elf_2024", 1, new[] { "insight", "perception", "survival" })]
     [InlineData("human_2024", 1, new string[0])]
-    [InlineData("half_elf", 2, new string[0])]
     public async Task Race_OffersTheSkillChoiceOfItsBook(string raceId, int count, string[] options)
     {
         // Act - Keen Senses (2024) is one of three; Skillful and Skill Versatility are any skill
@@ -74,12 +73,11 @@ public class RaceSeedDataTests
     }
 
     [Theory]
-    [InlineData("half_elf", 2, new[] { "STR", "DEX", "CON", "INT", "WIS" })]
     [InlineData("human", 0, new string[0])]
     [InlineData("dwarf", 0, new string[0])]
     public async Task Race2014_OffersTheAbilityIncreasesOfItsBook(string raceId, int count, string[] options)
     {
-        // Act - a half-elf raises two abilities other than its Charisma by 1
+        // Act
         var race = await ReadRaceAsync(raceId);
 
         // Assert
@@ -88,13 +86,24 @@ public class RaceSeedDataTests
     }
 
     [Fact]
-    public async Task HalfElf_KeepsItsCharismaBesideTheChoice()
+    public async Task HalfElf_IsTheBooksAsItsStandardSubraceAndADragonmarkReplacesItsIncreases()
     {
-        // Act
+        // Act - ERLW's Mark of Detection raises Wisdom by 2 in place of the half-elf's Charisma
         var halfElf = await ReadRaceAsync("half_elf");
 
         // Assert
-        halfElf.AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(("CHA", 2));
+        halfElf.AbilityBonuses.Should().BeEmpty();
+        var standard = halfElf.Subraces.Single(s => s.Id == "standard_half_elf");
+        standard.Source.Should().Be("PHB");
+        standard.AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(("CHA", 2));
+        (standard.AbilityChoiceCount, standard.AbilityChoiceMaxPerAbility, standard.SkillChoiceCount).Should().Be((2, 1, 2));
+        standard.AbilityChoiceOptions.Should().Equal("STR", "DEX", "CON", "INT", "WIS");
+        standard.Traits.Select(t => t.Name).Should().Equal("Skill Versatility");
+
+        var detection = halfElf.Subraces.Single(s => s.Id == "mark_of_detection_half_elf");
+        detection.Source.Should().Be("ERLW");
+        detection.AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(("WIS", 2));
+        detection.AbilityChoiceOptions.Should().Equal("STR", "DEX", "CON", "INT", "CHA");
     }
 
     [Fact]
@@ -105,14 +114,14 @@ public class RaceSeedDataTests
 
         // Assert
         human.AbilityBonuses.Should().BeEmpty();
-        human.Subraces.Select(s => s.Id).Should().Equal("standard_human", "variant_human");
+        human.Subraces.Where(s => s.Source == "PHB").Select(s => s.Id).Should().Equal("standard_human", "variant_human");
 
         var standard = human.Subraces[0];
         standard.AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(
             ("STR", 1), ("DEX", 1), ("CON", 1), ("INT", 1), ("WIS", 1), ("CHA", 1));
         (standard.AbilityChoiceCount, standard.SkillChoiceCount, standard.FeatChoiceCount).Should().Be((0, 0, 0));
 
-        var variant = human.Subraces[1];
+        var variant = human.Subraces.Single(s => s.Id == "variant_human");
         variant.AbilityBonuses.Should().BeEmpty();
         variant.AbilityChoiceOptions.Should().Equal("STR", "DEX", "CON", "INT", "WIS", "CHA");
         (variant.AbilityChoiceCount, variant.SkillChoiceCount, variant.FeatChoiceCount, variant.FeatChoiceCategory).Should().Be((2, 1, 1, (string?)null));
@@ -125,9 +134,11 @@ public class RaceSeedDataTests
         // Act
         var races = await SeedFile.ReadListAsync<RaceSeedRow>(Path.Combine(SeedService.DataPath, "Races.json"), TestContext.Current.CancellationToken);
 
-        // Assert - the 2024 human's Versatile, and the variant human's feat
-        races.Where(r => r.FeatChoiceCount > 0).Select(r => (r.Id, r.FeatChoiceCount, r.FeatChoiceCategory)).Should().Equal(("human_2024", 1, "Origin"));
-        races.SelectMany(r => r.Subraces).Where(s => s.FeatChoiceCount > 0).Select(s => s.Id).Should().Equal("variant_human");
+        // Assert - Tasha's Custom Lineage, the 2024 human's Versatile, and the variant human's feat,
+        // which Plane Shift: Amonkhet's human copies
+        races.Where(r => r.FeatChoiceCount > 0).Select(r => (r.Id, r.FeatChoiceCount, r.FeatChoiceCategory)).Should().Equal(
+            ("custom_lineage_tce", 1, (string?)null), ("human_2024", 1, "Origin"));
+        races.SelectMany(r => r.Subraces).Where(s => s.FeatChoiceCount > 0).Select(s => s.Id).Should().Equal("amonkhet_human", "variant_human");
     }
 
     [Fact]
@@ -138,7 +149,7 @@ public class RaceSeedDataTests
 
         // Assert
         elf.ProficiencyIds.Should().Equal("perception");
-        elf.Subraces.Select(s => s.Id).Should().Equal("drow_elf", "high_elf", "wood_elf");
+        elf.Subraces.Where(s => s.Source == "PHB").Select(s => s.Id).Should().Equal("drow_elf", "high_elf", "wood_elf");
 
         var subraces = elf.Subraces.ToDictionary(s => s.Id);
         subraces["high_elf"].LanguageChoiceCount.Should().Be(1);
@@ -199,15 +210,20 @@ public class RaceSeedDataTests
     }
 
     [Fact]
-    public async Task Races_OtherThanTheHighElves_PickNoSpells()
+    public async Task Races_PickSpellsOnlyAsTheBooksSay()
     {
         // Act
         var races = await SeedFile.ReadListAsync<RaceSeedRow>(Path.Combine(SeedService.DataPath, "Races.json"), TestContext.Current.CancellationToken);
 
-        // Assert
+        // Assert - the high elves' wizard cantrip, a kobold's Draconic Sorcery, a Kaladesh vahadar's
+        // and a half-elf of moon or sun elf descent's cantrip, the merfolk's, and a Lorwyn elf's
         races.Where(r => r.SpellChoice != null).Should().BeEmpty();
-        races.SelectMany(r => r.Subraces).Where(s => s.SpellChoice != null).Select(s => s.Id)
-            .Should().BeEquivalentTo(["high_elf", "elf_high_elf_lineage_2024"]);
+        races.SelectMany(r => r.Subraces).Where(s => s.SpellChoice != null).Select(s => s.Id).Should().BeEquivalentTo(
+        [
+            "high_elf", "elf_high_elf_lineage_2024", "kobold_mpmm_draconic_sorcery", "vahadar_elf_kaladesh_psk",
+            "moon_elf_or_sun_elf_descent_half_elf", "blue_merfolk_psz", "green_merfolk_psz", "cosi_creed_merfolk_psz",
+            "emeria_creed_merfolk_psz", "ula_creed_merfolk_psz", "elf_lfl_lorwyn_lineage_2024",
+        ]);
     }
 
     [Fact]
@@ -230,6 +246,141 @@ public class RaceSeedDataTests
 
         // Assert
         dwarf.ToolChoices.Should().BeEmpty();
+    }
+
+    [Theory]
+    [InlineData("aasimar_vgm", "VGM", "2014")]
+    [InlineData("aasimar_mpmm", "MPMM", "2014")]
+    [InlineData("warforged_erlw", "ERLW", "2014")]
+    [InlineData("warforged_efa_2024", "EFA", "2024")]
+    [InlineData("dhampir_vrgr", "VRGR", "2014")]
+    [InlineData("dhampir_rhw_2024", "RHW", "2024")]
+    [InlineData("elf_lfl_2024", "LFL", "2024")]
+    public async Task Race_FromAnotherBook_HasItsBookAndEditionInItsId(string raceId, string source, string edition)
+    {
+        // Act - a reprint is a race of its own, so a draft may tick one book and not the other
+        var race = await ReadRaceAsync(raceId);
+
+        // Assert
+        (race.Source, race.Edition).Should().Be((source, edition));
+    }
+
+    [Theory]
+    [InlineData("aasimar_mpmm")]
+    [InlineData("autognome_aag")]
+    [InlineData("hexblood_vrgr")]
+    [InlineData("fairy_wbtw")]
+    [InlineData("owlin_scc")]
+    [InlineData("kender_dsotdq")]
+    public async Task Race2014_OfTashasLineageRules_RaisesPlusTwoAndPlusOneOrPlusOneToThree(string raceId)
+    {
+        // Act
+        var race = await ReadRaceAsync(raceId);
+
+        // Assert
+        race.AbilityBonuses.Should().BeEmpty();
+        (race.AbilityChoiceCount, race.AbilityChoiceMaxPerAbility, race.AbilityChoiceMinPerAbility).Should().Be((3, 2, 1));
+        race.AbilityChoiceOptions.Should().Equal("STR", "DEX", "CON", "INT", "WIS", "CHA");
+    }
+
+    [Fact]
+    public async Task CustomLineage_RaisesOneAbilityByTwoAndIsDarkvisionOrASkill()
+    {
+        // Act
+        var lineage = await ReadRaceAsync("custom_lineage_tce");
+
+        // Assert
+        (lineage.AbilityChoiceCount, lineage.AbilityChoiceMaxPerAbility, lineage.AbilityChoiceMinPerAbility).Should().Be((2, 2, 2));
+        lineage.SkillChoiceCount.Should().Be(0);
+        lineage.Subraces.Select(s => (s.Id, s.SkillChoiceCount)).Should().Equal(
+            ("custom_lineage_tce_darkvision", 0), ("custom_lineage_tce_skill_proficiency", 1));
+    }
+
+    [Fact]
+    public async Task WingedTiefling_RaisesDexterityOrCharismaByTwoFliesAndHasNoInfernalLegacy()
+    {
+        // Act - SCAG's variant tiefling: Intelligence +1 and +2 to Dexterity or Charisma
+        var winged = (await ReadRaceAsync("tiefling")).Subraces.Single(s => s.Id == "winged_tiefling");
+
+        // Assert
+        winged.AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(("INT", 1));
+        (winged.AbilityChoiceCount, winged.AbilityChoiceMaxPerAbility, winged.AbilityChoiceMinPerAbility).Should().Be((2, 2, 2));
+        winged.AbilityChoiceOptions.Should().Equal("DEX", "CHA");
+        winged.Spells.Should().BeEmpty("its wings replace the Infernal Legacy");
+        winged.Traits.Single(t => t.Name == "Speeds").Description.Should().StartWith("Flying speed 30 feet.");
+    }
+
+    [Fact]
+    public async Task Dragonborn2014_DraconbloodReplacesTheIncreasesTheStandardDragonbornKeeps()
+    {
+        // Act
+        var dragonborn = await ReadRaceAsync("dragonborn");
+
+        // Assert
+        dragonborn.AbilityBonuses.Should().BeEmpty();
+        var subraces = dragonborn.Subraces.ToDictionary(s => s.Id);
+        subraces["standard_dragonborn"].AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(("STR", 2), ("CHA", 1));
+        subraces["draconblood_dragonborn"].AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(("INT", 2), ("CHA", 1));
+    }
+
+    [Fact]
+    public async Task Dwarf2014_DuergarReplacesTheDarkvisionTheOtherDwarvesKeep()
+    {
+        // Act
+        var dwarf = await ReadRaceAsync("dwarf");
+
+        // Assert
+        dwarf.Traits.Select(t => t.Name).Should().NotContain("Darkvision");
+        var subraces = dwarf.Subraces.ToDictionary(s => s.Id);
+        subraces["hill_dwarf"].Traits.Select(t => t.Name).Should().Contain(["Darkvision", "Dwarven Toughness"]);
+        subraces["duergar_dwarf"].Traits.Select(t => t.Name).Should().Contain("Superior Darkvision").And.NotContain("Darkvision");
+    }
+
+    [Fact]
+    public async Task GoblinOfEberron_IsTheCopyOfVolosGoblin()
+    {
+        // Act - 5etools writes it as a copy of VGM's
+        var goblin = await ReadRaceAsync("goblin_erlw");
+
+        // Assert
+        (goblin.Size, goblin.Speed).Should().Be(("Small", 30));
+        goblin.AbilityBonuses.Select(b => (b.AbilityScoreId, b.Bonus)).Should().Equal(("DEX", 2), ("CON", 1));
+        goblin.Traits.Select(t => t.Name).Should().Equal("Darkvision", "Fury of the Small", "Nimble Escape");
+    }
+
+    [Theory]
+    [InlineData("autognome_aag", "Your creature type is Construct.")]
+    [InlineData("kalashtar_efa_2024", "Your creature type is Aberration.")]
+    public async Task Race_NotHumanoid_SaysItsCreatureType(string raceId, string mechanics)
+    {
+        // Act
+        var race = await ReadRaceAsync(raceId);
+
+        // Assert
+        race.Traits.Single(t => t.Name == "Creature Type").Description.Should().StartWith(mechanics);
+    }
+
+    [Fact]
+    public async Task Species2024_FromAnotherBook_RaisesNoAbilities()
+    {
+        // Act - the 2024 background raises them, as for every 2024 species
+        var races = await SeedFile.ReadListAsync<RaceSeedRow>(Path.Combine(SeedService.DataPath, "Races.json"), TestContext.Current.CancellationToken);
+
+        // Assert
+        races.Where(r => r.Edition == RulesEdition.Edition2024)
+            .Where(r => r.AbilityBonuses.Count != 0 || r.AbilityChoiceCount != 0)
+            .Select(r => r.Id)
+            .Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task EveryRaceWithSubraces_HasOneFromItsOwnBook()
+    {
+        // Act - a race needs a subrace at finalize, and a draft always allows the race's own book
+        var races = await SeedFile.ReadListAsync<RaceSeedRow>(Path.Combine(SeedService.DataPath, "Races.json"), TestContext.Current.CancellationToken);
+
+        // Assert
+        races.Where(r => r.Subraces.Count != 0 && !r.Subraces.Exists(s => s.Source == r.Source)).Select(r => r.Id).Should().BeEmpty();
     }
 
     private static async Task<RaceSeedRow> ReadRaceAsync(string raceId)

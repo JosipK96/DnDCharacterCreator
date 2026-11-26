@@ -120,6 +120,21 @@
     "Type": "weapon"
   },
   {
+    "Id": "greatswords",
+    "Name": "Greatswords",
+    "Type": "weapon"
+  },
+  {
+    "Id": "nets",
+    "Name": "Nets",
+    "Type": "weapon"
+  },
+  {
+    "Id": "tridents",
+    "Name": "Tridents",
+    "Type": "weapon"
+  },
+  {
     "Id": "light-crossbows",
     "Name": "Light Crossbows",
     "Type": "weapon"

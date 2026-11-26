@@ -162,6 +162,28 @@ public class RaceStepTests : WizardStepTestBase
             .BeEquivalentTo(new Dictionary<string, int> { ["CHA"] = 2, ["WIS"] = 1 });
     }
 
+    [Fact]
+    public void RaceStep_WithARaceReprinted_SaysEachOnesBookAndNoneForTheOthers()
+    {
+        // Arrange - VGM's aasimar and MPMM's, both ticked
+        Api.Get(DraftPath(), new CharacterDraftDetailsApiResponse { Id = DraftId });
+        Api.Get("/api/races/get-list?edition=2014", new List<RaceApiResponse>
+        {
+            Race("aasimar_mpmm", "Aasimar") with { Source = "MPMM" },
+            Race("aasimar_vgm", "Aasimar") with { Source = "VGM" },
+            Race("dwarf", "Dwarf"),
+        });
+
+        // Act
+        var cut = Render<RaceStep>(parameters => parameters
+            .Add(p => p.DraftId, DraftId)
+            .Add(p => p.Step, 2)
+            .Add(p => p.Edition, "2014"));
+
+        // Assert
+        cut.FindAll("[data-testid=race-book]").Select(e => e.TextContent).Should().Equal("MPMM", "VGM");
+    }
+
     // The step with only this race on offer and nothing saved yet
     private IRenderedComponent<RaceStep> RenderWith(RaceApiResponse race)
     {

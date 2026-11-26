@@ -28,6 +28,11 @@
                         @foreach (var race in races)
                         {
                             <OptionRoom Name="@race.Name" Picked="@(selectedRace?.Id == race.Id)" OnClick="() => SelectRace(race)">
+                                @* A race reprinted in a later book (VGM's aasimar and MPMM's) says which book it is *@
+                                @if (races.Count(r => r.Name == race.Name) > 1)
+                                {
+                                    <span data-testid="race-book">@race.Source</span>
+                                }
                                 <span>@race.Size · @race.Speed ft.</span>
                                 @if (race.Subraces?.Any() == true)
                                 {

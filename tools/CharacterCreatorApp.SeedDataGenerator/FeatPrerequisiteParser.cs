@@ -33,26 +33,31 @@ internal static class FeatPrerequisiteParser
     /// Every feat's name, looked up case-insensitively: a prerequisite names a feat in lower case
     /// ("purple dragon rook|frhof").
     /// </param>
-    public static FeatPrerequisites Parse(JsonNode? prerequisites, string edition, IReadOnlyDictionary<string, string> featNames)
+    /// <param name="races">
+    /// The imported races and subraces by name, for a race prerequisite; none falls back to the
+    /// names with underscores.
+    /// </param>
+    public static FeatPrerequisites Parse(JsonNode? prerequisites, string edition, IReadOnlyDictionary<string, string> featNames, RaceNames? races = null)
     {
+        races ??= RaceNames.None;
         var alternatives = (prerequisites as JsonArray ?? []).OfType<JsonObject>().ToList();
 
         if (alternatives.Select(Shape).Distinct().Count() > 1)
         {
-            return DescribeOnly(alternatives, edition, featNames);
+            return DescribeOnly(alternatives, edition, featNames, races);
         }
 
         var result = new FeatPrerequisites();
 
         foreach (var alternative in alternatives)
         {
-            Read(alternative, edition, featNames, result);
+            Read(alternative, edition, featNames, races, result);
         }
 
         return result;
     }
 
-    private static void Read(JsonObject alternative, string edition, IReadOnlyDictionary<string, string> featNames, FeatPrerequisites result)
+    private static void Read(JsonObject alternative, string edition, IReadOnlyDictionary<string, string> featNames, RaceNames races, FeatPrerequisites result)
     {
         foreach (var (name, value) in alternative)
         {
@@ -65,7 +70,7 @@ internal static class FeatPrerequisiteParser
                     ReadAbilities(value, result);
                     break;
                 case "race":
-                    ReadRaces(value, edition, result);
+                    ReadRaces(value, edition, races, result);
                     break;
                 case "feature":
                     AddFeatures(result, Names(value));
@@ -96,12 +101,12 @@ internal static class FeatPrerequisiteParser
     /// "Fighter or Paladin or the Knight of Solamnia background", with what every alternative asks
     /// for ("A Dragonlance campaign") on a line of its own.
     /// </summary>
-    private static FeatPrerequisites DescribeOnly(List<JsonObject> alternatives, string edition, IReadOnlyDictionary<string, string> featNames)
+    private static FeatPrerequisites DescribeOnly(List<JsonObject> alternatives, string edition, IReadOnlyDictionary<string, string> featNames, RaceNames races)
     {
         var described = alternatives.Select(alternative =>
         {
             var one = new FeatPrerequisites();
-            Read(alternative, edition, featNames, one);
+            Read(alternative, edition, featNames, races, one);
             return one.Describe().ToList();
         }).ToList();
 
@@ -144,11 +149,12 @@ internal static class FeatPrerequisiteParser
         }
     }
 
-    // Race ids are the names with underscores, "half-elf" is "half_elf". One naming a subrace is
-    // that subrace, whose id the race importer makes from both names: {"name": "elf", "subrace":
-    // "wood"} is "wood_elf". "small race" is any race of that size. A race the data does not have
-    // ("Vampire (Ixalan)", MTF's deep gnome) matches nothing, which is what it should do.
-    private static void ReadRaces(JsonNode? value, string edition, FeatPrerequisites result)
+    // A race or subrace is looked up among the imported ones, since a race from a book other than
+    // the Player's Handbooks has its book in its id: "Vampire (Ixalan)" is the PSX subrace
+    // "ixalan_vampire_psz". One the data does not have falls back to its name with underscores,
+    // "half-elf" is "half_elf", and {"name": "elf", "subrace": "wood"} is "wood_elf", which then
+    // matches nothing, as it should. "small race" is any race of that size.
+    private static void ReadRaces(JsonNode? value, string edition, RaceNames races, FeatPrerequisites result)
     {
         var suffix = edition == RulesEdition.Edition2024 ? "_2024" : string.Empty;
 
@@ -161,16 +167,30 @@ internal static class FeatPrerequisiteParser
 
             if (race.Str("subrace") is { } subraceName)
             {
-                AddOnce(result.SubraceIds, Slug.Of($"{subraceName} {raceName}", '_') + suffix);
+                AddAll(result.SubraceIds, races.SubraceIds(edition, raceName, subraceName), Slug.Of($"{subraceName} {raceName}", '_') + suffix);
             }
             else if (SizeOf(raceName) is { } size)
             {
                 AddOnce(result.Sizes, size);
             }
+            else if (races.RaceIds(edition, raceName) is { Count: 0 } && races.SubraceIdsByFullName(edition, raceName) is { Count: > 0 } subraceIds)
+            {
+                AddAll(result.SubraceIds, subraceIds, fallback: null);
+            }
             else
             {
-                AddOnce(result.RaceIds, Slug.Of(raceName, '_') + suffix);
+                AddAll(result.RaceIds, races.RaceIds(edition, raceName), Slug.Of(raceName, '_') + suffix);
             }
+        }
+    }
+
+    private static void AddAll(List<string> list, IReadOnlyList<string> ids, string? fallback)
+    {
+        IEnumerable<string> chosen = ids.Count == 0 && fallback != null ? [fallback] : ids;
+
+        foreach (var id in chosen)
+        {
+            AddOnce(list, id);
         }
     }
 

@@ -37,15 +37,16 @@ await SeedWriter.WriteAsync(dataPath, Path.Combine("Spells", "Spells.json"), spe
 await SeedWriter.WriteAsync(dataPath, Path.Combine("Spells", "SpellClasses.json"), spells.SpellClasses, r => $"{r.SpellId} {r.ClassId}");
 await SeedWriter.WriteAsync(dataPath, Path.Combine("Spells", "SpellSubclasses.json"), spells.SpellSubclasses, r => $"{r.SpellId} {r.SubclassId}");
 
-var featImporter = new FeatImporter(source, classImporter.Renderer, proficiencies);
-var feats = featImporter.Import(spells.IdsByKey);
-
-await SeedWriter.WriteAsync(dataPath, "Feats.json", feats, f => f.Id);
-
+// Races before feats: a feat's race prerequisite names races by name, which RaceNames turns into ids
 var raceImporter = new RaceImporter(source, classImporter.Renderer, proficiencies);
 var races = raceImporter.Import(spells.IdsByKey);
 
 await SeedWriter.WriteAsync(dataPath, "Races.json", races, r => r.Id, r => r.Subraces.Select(s => s.Id));
+
+var featImporter = new FeatImporter(source, classImporter.Renderer, proficiencies);
+var feats = featImporter.Import(spells.IdsByKey, raceImporter.Names);
+
+await SeedWriter.WriteAsync(dataPath, "Feats.json", feats, f => f.Id);
 
 var backgroundImporter = new BackgroundImporter(source, classImporter.Renderer, proficiencies);
 var backgrounds = backgroundImporter.Import(featImporter.IdsByKey);

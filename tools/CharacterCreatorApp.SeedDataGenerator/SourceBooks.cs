@@ -1,4 +1,6 @@
 using System.Text.Json.Nodes;
+
+using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.Seed.Rows;
 
 namespace CharacterCreatorApp.SeedDataGenerator;
@@ -49,15 +51,37 @@ internal static class SourceBooks
         ["PSK"] = "Plane Shift: Kaladesh",
         ["PSI"] = "Plane Shift: Innistrad",
         ["PSX"] = "Plane Shift: Ixalan",
+        ["PSZ"] = "Plane Shift: Zendikar",
+        ["PSD"] = "Plane Shift: Dominaria",
+        ["VGM"] = "Volo's Guide to Monsters",
+        ["MPMM"] = "Mordenkainen Presents: Monsters of the Multiverse",
+        ["EEPC"] = "Elemental Evil Player's Companion",
+        ["TTP"] = "The Tortle Package",
+        ["LR"] = "Locathah Rising",
+        ["OGA"] = "One Grung Above",
+        ["AWM"] = "Adventure with Muk",
         ["UATheMysticClass"] = "Unearthed Arcana: The Mystic Class",
     };
 
     private static readonly HashSet<string> PlayersHandbooks = ["PHB", "XPHB"];
 
+    // The books written for the 2024 rules; every other book is a 2014 one
+    private static readonly HashSet<string> Books2024 = new(StringComparer.OrdinalIgnoreCase) { "XPHB", "FRHoF", "EFA", "AU", "ABH", "LFL", "RHW" };
+
     private static readonly SortedDictionary<string, string> EditionByCode = new(StringComparer.Ordinal);
 
     /// <summary>The book's title, or its code for a book this table does not know.</summary>
     public static string Title(string code) => Titles.GetValueOrDefault(code, code);
+
+    /// <summary>Whether the book is an edition's Player's Handbook, PHB or XPHB.</summary>
+    public static bool IsPlayersHandbook(string code) => PlayersHandbooks.Contains(code);
+
+    /// <summary>
+    /// The edition a book was written for, for the entries that do not say it themselves: a
+    /// spell, or a race whose 5etools entry has no "edition" (RHW's Dhampir, Lorwyn's species).
+    /// </summary>
+    public static string EditionOfBook(string code) =>
+        Books2024.Contains(code) ? RulesEdition.Edition2024 : RulesEdition.Edition2014;
 
     /// <summary>
     /// The code of the book the entry comes from, noted with the edition of the row made from

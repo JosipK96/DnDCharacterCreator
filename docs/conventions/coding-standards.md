@@ -148,7 +148,7 @@ handlers too, but they need Docker, so they fail late; they are a second check,
 not the first.
 
 **Hardcoded ids, guarded both ways.** Some rules can only name seed ids
-(`HitPointBonuses`: the hill dwarf, Draconic Resilience, Tough). A test that the
+(`HitPointBonuses`: the hill dwarf and the dwarves with Dwarven Toughness, Draconic Resilience, Tough). A test that the
 ids still exist is half the guard. The other half is a test that the data holds
 nothing the list should name and doesn't: otherwise a regenerated seed file with
 a new book's dwarf gives that character too few hit points and every test

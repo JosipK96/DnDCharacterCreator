@@ -25,11 +25,13 @@ second entry instead of applying the racial bonus.
 
 Some increases are fixed (a dwarf's CON +2, Actor's CHA +1) and some are the player's to place.
 Every placed one is checked by one rule, `AbilityIncreaseChoice.Allows`: so many points over
-these abilities, at most so many on any one.
+these abilities, at most so many on any one, and at least `AbilityIncreaseChoice.MinPerAbility`
+on any it raises (2 for Custom Lineage's +2 to one, which may not be two +1s).
 
 | Where from | The choice | Kept in |
 | --- | --- | --- |
 | A half-elf (the race), or a variant human (the subrace, in place of the standard human's +1 to everything) | 2 points, 1 each: `Race.AbilityChoiceWith(subrace)` | `CharacterDraft.RaceAbilityIncreases` |
+| A Monsters of the Multiverse race, or Custom Lineage | 3 points, at most 2 on one, over all six; Custom Lineage's 2 points at least and at most 2 on one: `Race.AbilityChoiceMaxPerAbility`, `Race.AbilityChoiceMinPerAbility` | `CharacterDraft.RaceAbilityIncreases` |
 | A 2024 background | 3 points, at most 2 on one, over its three: `Background.AbilityChoice` | `CharacterDraft.BackgroundAbilityIncreases` |
 | A feat (Athlete: Strength or Dexterity) | `Feat.AbilityIncrease`, a `FeatAbilityIncrease`; one option means it is fixed | `CharacterDraft.FeatAbilityIncreases` |
 

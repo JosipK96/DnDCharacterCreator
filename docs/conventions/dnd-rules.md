@@ -45,6 +45,29 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
 
 ## Races and backgrounds
 
+- The races of every book are imported, for the edition the book was written for, except the
+  DMG's, which are monsters adapted as a DM's option (its aasimar and eladrin are reprinted in
+  VGM, MTF and MPMM). A Player's Handbook race keeps its id (`dwarf`, `elf_2024`); one from any
+  other book has its book in its id (`aasimar_vgm`, `aasimar_mpmm`, `warforged_efa_2024`), so a
+  reprint is a race of its own, as a reprinted spell is, and the race step says which book each
+  of two same-named races is from. A subrace comes from its race's book or another of the same
+  edition (ERLW's dragonmarks, MTF's tiefling bloodlines, SCAG's variants), each offered when its
+  own book is ticked; its id is its name and its race's (`mark_of_warding_dwarf`).
+- What a subrace replaces of its race instead of adding to it leaves the race for every subrace
+  that does not replace it: Duergar's Superior Darkvision for the dwarf's Darkvision,
+  Draconblood's increases for the dragonborn's, a tiefling bloodline's legacy and its spells.
+  So the PHB dragonborn, half-elf, half-orc and tiefling now have subraces too, a "Standard" one
+  that is the book's race (`standard_half_elf`), and a draft or an edit picks one. A subrace's
+  own languages beyond its race's (Duergar's Undercommon) have no place in the model and are left out.
+- A 2014 race of Tasha's lineage rules (every Monsters of the Multiverse race, and the races of
+  AAG, VRGR, WBtW, SCC, FTD and DSotDQ) raises one ability by 2 and another by 1, or three by 1:
+  `Race.AbilityChoiceCount` 3, `Race.AbilityChoiceMaxPerAbility` 2. Custom Lineage's +2 to one,
+  and a SCAG tiefling variant's +2 to Dexterity or Charisma, also have a
+  `Race.AbilityChoiceMinPerAbility` of 2, so they may not be split into two +1s. The race step
+  raises an ability one point more each time it is picked, up to the cap.
+- Flying, swimming and climbing speeds, and a creature type other than Humanoid, are not
+  modelled: the generator writes them as a trait of their own ("Speeds", "Creature Type"), and the
+  sheet keeps the walking speed.
 - A 2024 species is a race (`elf_2024`), and its lineages, ancestries and legacies are its
   subraces (`elf_drow_lineage_2024`, `dragonborn_black_2024`). It has no ability increases or
   languages; those come with the 2024 background. A race and its subrace give spells from a

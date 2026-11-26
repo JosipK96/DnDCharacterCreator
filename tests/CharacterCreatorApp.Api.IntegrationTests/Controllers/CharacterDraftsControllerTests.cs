@@ -454,7 +454,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await SignInAsync();
         var draftId = await CreateDraftAsync();
         await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Thorin", Level = 1, Edition = RulesEdition.Edition2014 });
-        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "half_elf", AbilityIncreases = new() { ["DEX"] = 1, ["WIS"] = 1 } });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "half_elf", SubraceId = "standard_half_elf", AbilityIncreases = new() { ["DEX"] = 1, ["WIS"] = 1 } });
 
         // Act
         await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["athletics", "stealth"]));
@@ -472,7 +472,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await SignInAsync();
         var draftId = await CreateDraftAsync();
         await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Tanis", Level = 1, Edition = RulesEdition.Edition2014 });
-        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "half_elf", AbilityIncreases = new() { ["DEX"] = 1, ["WIS"] = 1 } });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "half_elf", SubraceId = "standard_half_elf", AbilityIncreases = new() { ["DEX"] = 1, ["WIS"] = 1 } });
         await PutStepAsync(draftId, "race-skills", new ChooseRaceSkillsApiRequest(["athletics", "stealth"]));
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter" });
         await PutStepAsync(draftId, "background", new SetBackgroundApiRequest { BackgroundId = "soldier" });
@@ -501,7 +501,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await SignInAsync();
         var draftId = await CreateDraftAsync();
         await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Thorin", Level = 1, Edition = RulesEdition.Edition2014 });
-        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "half_elf", AbilityIncreases = new() { ["DEX"] = 1, ["WIS"] = 1 } });
+        await PutStepAsync(draftId, "race", new SetRaceApiRequest { RaceId = "half_elf", SubraceId = "standard_half_elf", AbilityIncreases = new() { ["DEX"] = 1, ["WIS"] = 1 } });
 
         // Act
         var response = await _client.PutAsJsonAsync(
@@ -1283,17 +1283,37 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     [Fact]
     public async Task SetRace_ForAHalfElfWithoutItsIncreases_ReturnsInvalidRaceAbilityIncreases()
     {
-        // Arrange - a half-elf raises two abilities besides its Charisma
+        // Arrange - a standard half-elf raises two abilities besides its Charisma
         await SignInAsync();
         var draftId = await CreateDraftAsync();
         await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Tanis", Level = 1, Edition = RulesEdition.Edition2014 });
 
         // Act
         var response = await _client.PutAsJsonAsync(
-            $"/api/character-drafts/{draftId}/race", new SetRaceApiRequest { RaceId = "half_elf" }, TestContext.Current.CancellationToken);
+            $"/api/character-drafts/{draftId}/race", new SetRaceApiRequest { RaceId = "half_elf", SubraceId = "standard_half_elf" }, TestContext.Current.CancellationToken);
 
         // Assert
         await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.InvalidRaceAbilityIncreases");
+    }
+
+    [Fact]
+    public async Task SetRace_ForAMonstersOfTheMultiverseRaceWithPlusTwoAndPlusOne_SavesThem()
+    {
+        // Arrange
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Aurel", Level = 1, Edition = RulesEdition.Edition2014 });
+        await PutStepAsync(draftId, "books", new SetAllowedBooksApiRequest(["MPMM"]));
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/race",
+            new SetRaceApiRequest { RaceId = "aasimar_mpmm", AbilityIncreases = new() { ["CHA"] = 2, ["WIS"] = 1 }, Size = "Medium" },
+            TestContext.Current.CancellationToken);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.NoContent);
+        (await GetDraftAsync(draftId)).RaceAbilityIncreases.Should().BeEquivalentTo(new Dictionary<string, int> { ["CHA"] = 2, ["WIS"] = 1 });
     }
 
     [Fact]

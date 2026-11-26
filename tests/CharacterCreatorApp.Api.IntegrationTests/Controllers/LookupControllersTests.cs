@@ -127,7 +127,7 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     }
 
     [Theory]
-    [InlineData("list=races", false)] // the seed data's 2014 races are all the Player's Handbook's
+    [InlineData("list=races", true)] // VGM's, MPMM's and the other books' races
     [InlineData("list=classes", true)]
     [InlineData("list=backgrounds", true)]
     [InlineData("list=feats", true)]
@@ -231,16 +231,16 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     }
 
     [Theory]
-    [InlineData("2014", 9, "elf")]
-    [InlineData("2024", 10, "elf_2024")]
-    public async Task GetRaces_ForAnEdition_ReturnsOnlyThatEditionsRaces(string edition, int count, string elfId)
+    [InlineData("2014", "PHB", 9, "elf")]
+    [InlineData("2024", "XPHB", 10, "elf_2024")]
+    public async Task GetRaces_ForAnEditionsPlayersHandbook_ReturnsOnlyThatEditionsRacesOfIt(string edition, string book, int count, string elfId)
     {
-        // Act
+        // Act - Lorwyn has an elf of its own, offered when its book is ticked
         var races = await _client.GetFromJsonAsync<List<RaceApiResponse>>(
-            $"/api/races/get-list?edition={edition}", TestContext.Current.CancellationToken);
+            $"/api/races/get-list?edition={edition}&sources={book}", TestContext.Current.CancellationToken);
 
         // Assert
-        races.Should().HaveCount(count).And.OnlyContain(r => r.Edition == edition);
+        races.Should().HaveCount(count).And.OnlyContain(r => r.Edition == edition && r.Source == book);
         races!.Single(r => r.Name == "Elf").Id.Should().Be(elfId);
     }
 
@@ -434,12 +434,24 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
         var races = await _client.GetFromJsonAsync<List<RaceApiResponse>>(
             "/api/races/get-list?edition=2014", TestContext.Current.CancellationToken);
 
-        // Assert
-        var halfElf = races!.Single(r => r.Id == "half_elf");
+        // Assert - the half-elf's are its Standard subrace's, which ERLW's dragonmarks replace
+        var halfElf = races!.Single(r => r.Id == "half_elf").Subraces.Single(s => s.Id == "standard_half_elf");
         (halfElf.AbilityChoiceCount, halfElf.AbilityChoiceOptions).Should().BeEquivalentTo((2, new[] { "STR", "DEX", "CON", "INT", "WIS" }));
 
         var variant = races!.Single(r => r.Id == "human").Subraces.Single(s => s.Id == "variant_human");
         (variant.AbilityChoiceCount, variant.SkillChoiceCount, variant.FeatChoiceCount, variant.FeatChoiceCategory).Should().Be((2, 1, 1, (string?)null));
+    }
+
+    [Fact]
+    public async Task GetRaces_For2014_SaysAMonstersOfTheMultiverseRaceTakesUpToTwoOnOneAbility()
+    {
+        // Act
+        var races = await _client.GetFromJsonAsync<List<RaceApiResponse>>(
+            "/api/races/get-list?edition=2014&sources=MPMM", TestContext.Current.CancellationToken);
+
+        // Assert
+        var aasimar = races!.Single(r => r.Id == "aasimar_mpmm");
+        (aasimar.AbilityChoiceCount, aasimar.AbilityChoiceMaxPerAbility, aasimar.AbilityChoiceMinPerAbility).Should().Be((3, 2, 1));
     }
 
     [Fact]

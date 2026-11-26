@@ -230,6 +230,7 @@ public partial class WizardSmokeTests(WizardHost host) : IAsyncLifetime
         await RegisterAndSignInAsync("wizard-refused");
         await StartCharacterAsync("Grom", "2014 rules");
         await PickAsync("Half-Orc");
+        await PickAsync("Standard Half-Orc");
         await NextAsync("Class");
         await PickAsync("Fighter");
         await NextAsync("Background");
@@ -287,6 +288,7 @@ public partial class WizardSmokeTests(WizardHost host) : IAsyncLifetime
     {
         await StartCharacterAsync("Grom", "2014 rules");
         await PickAsync("Half-Orc");
+        await PickAsync("Standard Half-Orc");
         await NextAsync("Class");
         await PickAsync("Fighter");
         await NextAsync("Background");

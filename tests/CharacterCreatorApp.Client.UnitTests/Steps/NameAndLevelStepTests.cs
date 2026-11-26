@@ -141,12 +141,12 @@ public class NameAndLevelStepTests : WizardStepTestBase
 
         // Act
         Button(cut, "Clear all").Click();
+        Button(cut, "Next: Race").Click();
 
         // Assert
         BookBox(cut, "Player's Handbook (2024)").HasAttribute("checked").Should().BeTrue();
         BookBox(cut, "Eberron: Forge of the Artificer").HasAttribute("checked").Should().BeFalse();
         cut.Markup.Should().Contain("Choices made from a book you untick are cleared.");
-        Button(cut, "Next: Race").Click();
         Api.BodyOf<SetAllowedBooksApiRequest>(BooksRoute).Books.Should().BeEmpty();
         _movedOn.Should().ContainSingle().Which.Sources.Should().Equal("XPHB");
     }

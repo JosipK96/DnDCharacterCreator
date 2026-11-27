@@ -96,7 +96,7 @@ on every pull request and weekly, and shows its alerts under the repository's Se
 - `tests/CharacterCreatorApp.Client.UnitTests`: bUnit tests of the steps with rules of their own
   (point buy, the dice roll, improvements and Fighting Styles, spell counts, the books and the
   notes on what the unticked ones hold), steps filled in from the draft, the marks of an edit, a
-  level-up's flow and hit points, and the sheet's Download PDF. They render the components in
+  level-up's flow and hit points, a new character's hit points above level 1, and the sheet's Download PDF. They render the components in
   memory over a fake API, so they need neither Docker nor a browser.
 
   ```bash

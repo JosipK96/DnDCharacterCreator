@@ -40,7 +40,9 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   way (`CharacterEditStarter`), then one level up; `SetHitPointsCommandHandler` keeps its hit
   die result (and a new character's or an edit's for each level from 2, `CharacterDraft.HitDieLevels`), and `SetCharacterClassCommandHandler` refuses another class in one. `ICharacterDraftRepository.GetByIdForUpdateAsync` finds only unfinished
   drafts, so no step, finalize or delete can touch a build; an edit is never the
-  `GetIncompleteDraft` a new character resumes.
+  `GetIncompleteDraft` a new character resumes. A player has at most one unfinished new
+  character: `CreateCharacterDraftCommandHandler` returns that draft rather than create a
+  second (#90), and `GetIncompleteDraft` takes the newest should two already exist.
 - A saved character's sheet, on the page and as a PDF, is loaded and worked out by one
   `CharacterDetailsLoader`, so the two cannot disagree. It returns a not-found error when the
   character's class, race, background, subclass or subrace can't be loaded, never a sheet built

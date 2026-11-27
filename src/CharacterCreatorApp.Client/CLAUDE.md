@@ -17,7 +17,8 @@
   `AbilityNames`; never key a dictionary by "Strength" or "strength".
 - Create character reuses the player's unfinished new-character draft (`GET character-drafts/incomplete`):
   with step 1 not saved it opens at step 1 on that draft; with step 1 saved it asks to resume it
-  or start fresh (#138).
+  or start fresh (#138), which deletes it first: `POST character-drafts` returns the unfinished
+  draft rather than create a second (#90).
 - Every step shows what the draft holds when it opens, so coming back to it, or editing a saved
   character ("Edit" on the list and the sheet), goes through it unchanged. In an edit
   (`CharacterDraftDetailsApiResponse.CharacterId` set) the progress map (`Components/WizardProgress.razor`) goes to any step and marks

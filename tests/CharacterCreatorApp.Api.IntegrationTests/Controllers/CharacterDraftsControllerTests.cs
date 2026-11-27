@@ -774,6 +774,36 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task CreateDraft_WhenTheUserHasAnUnfinishedNewCharacter_ReturnsItInsteadOfASecond()
+    {
+        // Arrange - a second tab or a retried request
+        await SignInAsync();
+        var firstId = await CreateDraftAsync();
+
+        // Act
+        var secondId = await CreateDraftAsync();
+
+        // Assert
+        secondId.Should().Be(firstId);
+    }
+
+    [Fact]
+    public async Task CreateDraft_AfterTheUnfinishedOneIsDeleted_CreatesANewOne()
+    {
+        // Arrange - "Start Fresh" deletes the draft before creating
+        await SignInAsync();
+        var firstId = await CreateDraftAsync();
+        var delete = await _client.DeleteAsync($"/api/character-drafts/{firstId}", TestContext.Current.CancellationToken);
+        delete.EnsureSuccessStatusCode();
+
+        // Act
+        var secondId = await CreateDraftAsync();
+
+        // Assert
+        secondId.Should().NotBe(firstId);
+    }
+
+    [Fact]
     public async Task GetDraftById_OfAnotherUser_ReturnsNotFound()
     {
         // Arrange

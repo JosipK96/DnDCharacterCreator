@@ -411,6 +411,30 @@ public class CharacterDraftRepositoryTests : IClassFixture<DatabaseFixture>, IAs
     }
 
     [Fact]
+    public async Task GetIncompleteDraft_WithTwoUnfinishedNewCharacters_ReturnsTheNewest()
+    {
+        // Arrange - data from before #90 can hold two; the older is saved first, so a query
+        // without an order would most likely return it
+        await using var transaction = await BeginWithoutReferenceDataAsync();
+        var userId = Guid.NewGuid();
+        var older = CharacterDraft.CreateEmpty(userId, _timeProvider);
+        await _repository.CreateAsync(older, TestContext.Current.CancellationToken);
+        await _fixture.DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+        _timeProvider.Advance(TimeSpan.FromMinutes(5));
+        var newer = CharacterDraft.CreateEmpty(userId, _timeProvider);
+        await _repository.CreateAsync(newer, TestContext.Current.CancellationToken);
+        await _fixture.DbContext.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        // Act
+        var first = await _repository.GetIncompleteDraft(userId, TestContext.Current.CancellationToken);
+        var second = await _repository.GetIncompleteDraft(userId, TestContext.Current.CancellationToken);
+
+        // Assert
+        first!.Id.Should().Be(newer.Id);
+        second!.Id.Should().Be(newer.Id);
+    }
+
+    [Fact]
     public async Task DeletingACharacter_DeletesItsBuildAndEdit()
     {
         // Arrange

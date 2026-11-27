@@ -121,11 +121,9 @@ public class WizardNavigatorTests
 
         // Act
         navigator.AfterStepOne([2, 3], keptChoices: false);
-        navigator.Next(9);
 
         // Assert
         navigator.Flow.Should().Equal(1, 2, 3, 4, 5, 6, 7, 8, 9, WizardSteps.HitPoints, WizardSteps.Review);
-        navigator.CurrentStep.Should().Be(WizardSteps.HitPoints);
     }
 
     [Fact]

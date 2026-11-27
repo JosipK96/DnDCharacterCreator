@@ -6,7 +6,7 @@
     <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
         @for (int scoreIndex = 0; scoreIndex < Assignment.Scores.Count; scoreIndex++)
         {
-            var currentIndex = scoreIndex; // Capture for closure
+            var currentIndex = scoreIndex;
             var score = Assignment.Scores[currentIndex];
             var isAssigned = Assignment.IsAssigned(currentIndex);
             var isSelected = Assignment.SelectedIndex == currentIndex;

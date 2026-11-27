@@ -15,7 +15,8 @@ public record CharacterStatsApiResponse(
     List<SavingThrowStatApiResponse> SavingThrows,
     List<SkillStatApiResponse> Skills,
     List<SpellSlotStatApiResponse> SpellSlots,
-    PactMagicStatApiResponse? PactMagic);
+    PactMagicStatApiResponse? PactMagic,
+    List<SpellcastingStatApiResponse> Spellcasting);
 
 public record AbilityStatApiResponse(string AbilityId, int Score, int Modifier);
 
@@ -28,3 +29,6 @@ public record SpellSlotStatApiResponse(int SpellLevel, int Slots);
 
 /// <summary>A warlock's Pact Magic slots, all of one spell level and back on a short rest.</summary>
 public record PactMagicStatApiResponse(int SlotLevel, int Slots);
+
+/// <summary>The spell save DC and attack bonus of one spellcasting ability, labelled with what casts with it ("Wizard").</summary>
+public record SpellcastingStatApiResponse(string Label, string AbilityId, int SaveDc, int AttackBonus);

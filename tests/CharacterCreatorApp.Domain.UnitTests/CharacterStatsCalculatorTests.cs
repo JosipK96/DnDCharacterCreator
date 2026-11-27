@@ -468,6 +468,83 @@ public class CharacterStatsCalculatorTests
         stats.PactMagic.Should().BeNull();
     }
 
+    [Fact]
+    public void Calculate_AWizard_ReturnsTheSaveDcAndAttackBonusOfIntelligence()
+    {
+        // Arrange - level 1 (+2) with Intelligence 16 (+3), the ability spelled as the data has it
+        var input = Input(scores: Scores(intelligence: 16), spellcasting: [new SpellcastingSource("Wizard", "intelligence")]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.Spellcasting.Should().Equal(new SpellcastingStat("Wizard", "INT", SaveDc: 13, AttackBonus: 5));
+    }
+
+    [Fact]
+    public void Calculate_AClericAtLevel5_AddsTheHigherProficiencyBonus()
+    {
+        // Arrange - level 5 (+3) with Wisdom 13 (+1)
+        var input = Input(level: 5, spellcasting: [new SpellcastingSource("Cleric", "WIS")]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.Spellcasting.Should().Equal(new SpellcastingStat("Cleric", "WIS", SaveDc: 12, AttackBonus: 4));
+    }
+
+    [Fact]
+    public void Calculate_AnAbilityBelow10_TakesItsModifierOff()
+    {
+        // Arrange - Charisma 8 (-1) at level 1 (+2): a fighter's Magic Initiate with a Charisma list
+        var input = Input(spellcasting: [new SpellcastingSource("Magic Initiate", "CHA")]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.Spellcasting.Should().Equal(new SpellcastingStat("Magic Initiate", "CHA", SaveDc: 9, AttackBonus: 1));
+    }
+
+    [Fact]
+    public void Calculate_RaceOrFeatSpellsWithAnotherAbility_AddALabelledPairAfterTheClasses()
+    {
+        // Arrange - an Eldritch Knight (Intelligence 10) who took Magic Initiate with Wisdom (13)
+        var input = Input(spellcasting: [new SpellcastingSource("Eldritch Knight", "INT"), new SpellcastingSource("Magic Initiate", "WIS")]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.Spellcasting.Should().Equal(
+            new SpellcastingStat("Eldritch Knight", "INT", SaveDc: 10, AttackBonus: 2),
+            new SpellcastingStat("Magic Initiate", "WIS", SaveDc: 11, AttackBonus: 3));
+    }
+
+    [Fact]
+    public void Calculate_RaceSpellsWithTheClassesAbility_AddNothing()
+    {
+        // Arrange - a high elf wizard: the elf's wizard cantrip is cast with Intelligence too
+        var input = Input(spellcasting: [new SpellcastingSource("Wizard", "INT"), new SpellcastingSource("High Elf", "int")]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.Spellcasting.Should().ContainSingle().Which.Label.Should().Be("Wizard");
+    }
+
+    [Fact]
+    public void Calculate_ANonCasterWithNoRaceOrFeatSpells_HasNoSpellcastingNumbers()
+    {
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(Input());
+
+        // Assert
+        stats.Spellcasting.Should().BeEmpty();
+    }
+
     private static Dictionary<string, int> Scores(
         int strength = 15,
         int dexterity = 12,
@@ -497,7 +574,8 @@ public class CharacterStatsCalculatorTests
         string[]? feats = null,
         UnarmoredArmorClass[]? unarmoredArmorClasses = null,
         SpellSlots? spellSlots = null,
-        Dictionary<int, int>? hitDieResults = null) =>
+        Dictionary<int, int>? hitDieResults = null,
+        SpellcastingSource[]? spellcasting = null) =>
         new(level, scores ?? Scores(), proficiencies ?? [], hitDie, hitDieResults ?? [], savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? [],
-            unarmoredArmorClasses ?? [], spellSlots ?? SpellSlots.None);
+            unarmoredArmorClasses ?? [], spellSlots ?? SpellSlots.None, spellcasting ?? []);
 }

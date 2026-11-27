@@ -27,6 +27,7 @@ public class PreviewCharacterQueryHandler(
     TimeProvider timeProvider) : IQueryHandler<PreviewCharacterQuery, Response<CharacterPreviewReadModel>>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
+    private readonly IClassRepository _classRepository = classRepository;
     private readonly IUserContext _userContext = userContext;
     private readonly TimeProvider _timeProvider = timeProvider;
 
@@ -61,6 +62,18 @@ public class PreviewCharacterQueryHandler(
 
         var character = CharacterBuilder.Build(_userContext.UserId, draft, sources, _timeProvider);
 
+        var content = await _contentLoader.LoadAsync(
+            character.ProficiencyIds,
+            CharacterFeatures.IdsFor(sources.Class, sources.Subclass, sources.Background, character.Level),
+            character.SpellIds,
+            character.LanguageIds,
+            character.FeatIds,
+            character.FeatSpells,
+            cancellationToken);
+
+        var bonusSpellcasting = await BonusSpellcasting.LoadAsync(
+            sources.Race, sources.Subrace, character.FeatSpells, content.Feats, _classRepository, cancellationToken);
+
         var stats = CharacterStatsCalculator.Calculate(CharacterStatsInput.For(
             character.Level,
             character.AbilityScores,
@@ -71,16 +84,8 @@ public class PreviewCharacterQueryHandler(
             sources.Race,
             sources.Subrace,
             sources.Class,
-            sources.Subclass));
-
-        var content = await _contentLoader.LoadAsync(
-            character.ProficiencyIds,
-            CharacterFeatures.IdsFor(sources.Class, sources.Subclass, sources.Background, character.Level),
-            character.SpellIds,
-            character.LanguageIds,
-            character.FeatIds,
-            character.FeatSpells,
-            cancellationToken);
+            sources.Subclass,
+            bonusSpellcasting));
 
         var preview = new CharacterPreviewReadModel
         {

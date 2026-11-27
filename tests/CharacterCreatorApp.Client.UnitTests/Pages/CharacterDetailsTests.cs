@@ -132,7 +132,38 @@ public class CharacterDetailsTests : WizardStepTestBase
                 row.QuerySelector("[data-proficient]")!.GetAttribute("data-proficient")!))
             .ToList();
 
-    private static CharacterStatsApiResponse Stats() => new(
+    [Fact]
+    public void Render_ACaster_ShowsEachSpellcastingAbilitysSaveDcAndAttackBonus()
+    {
+        // Arrange - an Eldritch Knight who cast Magic Initiate's spells with Wisdom
+        Api.Get($"/api/characters/{CharacterId}", Character(Stats([new("Eldritch Knight", "INT", 10, 2), new("Magic Initiate", "WIS", 11, 3)])));
+
+        // Act
+        var cut = Render<CharacterDetails>(parameters => parameters.Add(p => p.Id, CharacterId));
+
+        // Assert
+        var rows = cut.FindAll("[data-testid='spellcasting']");
+        rows.Select(r => r.TextContent).Should().SatisfyRespectively(
+            first => first.Should().Contain("Eldritch Knight, with Intelligence"),
+            second => second.Should().Contain("Magic Initiate, with Wisdom"));
+        rows.Select(r => r.QuerySelector("[data-testid='save-dc']")!.TextContent).Should().Equal("10", "11");
+        rows.Select(r => r.QuerySelector("[data-testid='attack-bonus']")!.TextContent).Should().Equal("+2", "+3");
+    }
+
+    [Fact]
+    public void Render_ANonCaster_ShowsNoSpellcastingRoom()
+    {
+        // Arrange
+        Api.Get($"/api/characters/{CharacterId}", Character(Stats()));
+
+        // Act
+        var cut = Render<CharacterDetails>(parameters => parameters.Add(p => p.Id, CharacterId));
+
+        // Assert
+        cut.FindAll("[data-testid='spellcasting']").Should().BeEmpty();
+    }
+
+    private static CharacterStatsApiResponse Stats(List<SpellcastingStatApiResponse>? spellcasting = null) => new(
         ProficiencyBonus: 2,
         MaxHitPoints: 12,
         ArmorClass: 13,
@@ -144,7 +175,8 @@ public class CharacterDetailsTests : WizardStepTestBase
         SavingThrows: [new("STR", 5, true), new("DEX", 1, false)],
         Skills: [new("athletics", "Athletics", "STR", 5, true), new("stealth", "Stealth", "DEX", 1, false)],
         SpellSlots: [],
-        PactMagic: null);
+        PactMagic: null,
+        Spellcasting: spellcasting ?? []);
 
     private static CharacterDetailsApiResponse Character(CharacterStatsApiResponse? stats = null) => new(
         CharacterId, "Bruenor", 1, "2014", "dwarf", null, "fighter", null, "soldier",

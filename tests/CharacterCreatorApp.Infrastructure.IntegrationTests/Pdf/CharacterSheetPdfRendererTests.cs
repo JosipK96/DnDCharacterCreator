@@ -132,6 +132,25 @@ public class CharacterSheetPdfRendererTests
         text.Should().NotContain("6th level:");
     }
 
+    [Fact]
+    public void Render_ALevelTenWizard_FillsTheSpellcastingAbilitySaveDcAndAttackBonus()
+    {
+        // Arrange - level 10 (+4) with Intelligence 18 (+4)
+        var wizard = Wizard();
+
+        // Act
+        var pdf = _renderer.Render(wizard, SheetPaper.A4);
+
+        // Assert
+        using var document = PdfDocument.Open(pdf);
+        // The boxes' words come out in no fixed order, so the ones the three boxes hold are looked for near the label
+        var words = Enumerable.Range(2, document.NumberOfPages - 1).SelectMany(n => WordsOf(document, n)).ToList();
+        var label = words.IndexOf("(Wizard)");
+
+        label.Should().BePositive("the ability's box is labelled with what casts with it");
+        words.Skip(Math.Max(0, label - 15)).Take(30).Should().Contain(["Intelligence", "16", "+8"]);
+    }
+
     private static List<string> WordsOf(PdfDocument document, int pageNumber) =>
         document.GetPage(pageNumber).GetWords().Select(w => w.Text).ToList();
 
@@ -143,7 +162,8 @@ public class CharacterSheetPdfRendererTests
         scores: new() { ["STR"] = 16, ["DEX"] = 14, ["CON"] = 15, ["INT"] = 8, ["WIS"] = 12, ["CHA"] = 10 },
         features: [Feature("second_wind", "Second Wind", 1, "fighter"), Feature("fighting_style", "Fighting Style", 1, "fighter")],
         spells: [],
-        spellSlots: SpellSlots.None);
+        spellSlots: SpellSlots.None,
+        spellcasting: []);
 
     // Long descriptions, so the spells and features take several pages, each ending in a word
     // of its own
@@ -155,11 +175,13 @@ public class CharacterSheetPdfRendererTests
         scores: new() { ["STR"] = 8, ["DEX"] = 14, ["CON"] = 14, ["INT"] = 18, ["WIS"] = 12, ["CHA"] = 10 },
         features: Enumerable.Range(1, 12).Select(i => Feature($"feature{i}", $"Featurename{i} Arcana", (i % 10) + 1, "wizard")).ToList(),
         spells: Enumerable.Range(1, 30).Select(i => Spell($"spell{i}", $"Spellname{i} Bolt", i % 6)).ToList(),
-        spellSlots: new SpellSlots([4, 3, 3, 3, 2], null));
+        spellSlots: new SpellSlots([4, 3, 3, 3, 2], null),
+        spellcasting: [new SpellcastingSource("Wizard", "INT")]);
 
     private static CharacterDetailsReadModel Character(
         string name, string className, string classId, int level, Dictionary<string, int> scores,
-        List<FeatureReadModel> features, List<SpellReadModel> spells, SpellSlots spellSlots) => new()
+        List<FeatureReadModel> features, List<SpellReadModel> spells, SpellSlots spellSlots,
+        List<SpellcastingSource> spellcasting) => new()
     {
         Id = Guid.CreateVersion7(),
         Name = name,
@@ -196,7 +218,8 @@ public class CharacterSheetPdfRendererTests
             SubclassId: null,
             FeatIds: [],
             UnarmoredArmorClasses: [],
-            SpellSlots: spellSlots)),
+            SpellSlots: spellSlots,
+            SpellcastingSources: spellcasting)),
     };
 
     private static FeatureReadModel Feature(string id, string name, int level, string classId) => new()

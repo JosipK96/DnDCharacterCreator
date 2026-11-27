@@ -21,7 +21,8 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   all three — that is the point, so the review step cannot disagree with what finalize builds.
   `CharacterFeatEntries` lists the feats taken, one entry per take with its spells, for the
   review step and the sheet alike. `ToolPicks`, `FeatProficiencyPicks` and `BonusSpells` list the
-  picks a draft owes and check them, for their step and finalize alike.
+  picks a draft owes and check them, for their step and finalize alike. `BonusSpellcasting`
+  says what the race's and feats' picked spells are cast with, for the sheet and the preview.
 - Editing a saved character (`StartCharacterEditCommandHandler`) opens a copy of its build as a
   new draft, dropping an edit left unsaved; finalize then replaces the character it names and
   deletes the old build. A level-up (`StartCharacterLevelUpCommandHandler`) opens it the same

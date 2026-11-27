@@ -30,7 +30,7 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
 
     // The read model carries Stats for every saved character; an empty one keeps the layout
     // drawing if it ever does not
-    private CharacterStats Stats => _character.Stats ?? new CharacterStats(0, 0, 0, 0, 0, string.Empty, 0, [], [], [], [], null);
+    private CharacterStats Stats => _character.Stats ?? new CharacterStats(0, 0, 0, 0, 0, string.Empty, 0, [], [], [], [], null, []);
 
     public DocumentMetadata GetMetadata() => new()
     {
@@ -357,7 +357,7 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
                 }
             }
 
-            if (Stats.SpellSlots.Count > 0 || Stats.PactMagic != null || _character.Spells.Count > 0)
+            if (Stats.SpellSlots.Count > 0 || Stats.PactMagic != null || Stats.Spellcasting.Count > 0 || _character.Spells.Count > 0)
             {
                 column.Item().PaddingTop(8).PreventPageBreak().Column(spellcasting =>
                 {
@@ -382,9 +382,9 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
     }
 
     /// <summary>
-    /// The slots of each spell level, with a box to tick per slot used, and a warlock's Pact
-    /// Magic apart. Spellcasting ability, save DC and attack bonus are left to write in: the
-    /// sheet's numbers do not include them yet.
+    /// The spellcasting ability, save DC and attack bonus, a row for each ability the character
+    /// casts with (labelled with what casts with it), then the slots of each spell level, with a
+    /// box to tick per slot used, and a warlock's Pact Magic apart.
     /// </summary>
     private void ComposeSpellcastingBoxes(IContainer container)
     {
@@ -392,14 +392,23 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
         {
             column.Spacing(4);
 
-            column.Item().Row(row =>
+            // Spells the sheet has no ability for (a tiefling's race spells) leave the boxes to write in
+            var rows = Stats.Spellcasting.Count > 0
+                ? Stats.Spellcasting.Select(s => (Ability: AbilityName(s.AbilityId), Label: $"Spellcasting ability ({s.Label})",
+                    SaveDc: s.SaveDc.ToString(CultureInfo.InvariantCulture), AttackBonus: Signed(s.AttackBonus)))
+                : [(Ability: string.Empty, Label: "Spellcasting ability", SaveDc: string.Empty, AttackBonus: string.Empty)];
+
+            foreach (var spellcasting in rows)
             {
-                row.RelativeItem().Element(c => SmallStatBox(c, string.Empty, "Spellcasting ability"));
-                row.ConstantItem(4);
-                row.RelativeItem().Element(c => SmallStatBox(c, string.Empty, "Spell save DC"));
-                row.ConstantItem(4);
-                row.RelativeItem().Element(c => SmallStatBox(c, string.Empty, "Spell attack bonus"));
-            });
+                column.Item().Row(row =>
+                {
+                    row.RelativeItem().Element(c => SmallStatBox(c, spellcasting.Ability, spellcasting.Label));
+                    row.ConstantItem(4);
+                    row.RelativeItem().Element(c => SmallStatBox(c, spellcasting.SaveDc, "Spell save DC"));
+                    row.ConstantItem(4);
+                    row.RelativeItem().Element(c => SmallStatBox(c, spellcasting.AttackBonus, "Spell attack bonus"));
+                });
+            }
 
             column.Item().Border(BorderWidth).Padding(4).Column(slots =>
             {

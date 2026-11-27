@@ -1,0 +1,25 @@
+@using CharacterCreatorApp.Client.Pages.CharacterCreation
+
+@* The spell save DC and spell attack bonus a character's stats give, for the sheet and the review
+   step alike: a row per ability the character casts with, labelled with what casts with it (the
+   class, or a race or feat whose spells use another ability). The numbers come from the API; the
+   page shows it only for a character with at least one. *@
+
+<ul class="space-y-3">
+    @foreach (var spellcasting in Spellcasting)
+    {
+        <li data-testid="spellcasting" data-ability="@spellcasting.AbilityId">
+            <p class="text-sm text-pencil">@spellcasting.Label, with @AbilityNames.Of(spellcasting.AbilityId)</p>
+            <p class="flex flex-wrap gap-x-6">
+                <span>Spell save DC <strong data-testid="save-dc">@spellcasting.SaveDc</strong></span>
+                <span>Spell attack <strong data-testid="attack-bonus">@Signed(spellcasting.AttackBonus)</strong></span>
+            </p>
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<SpellcastingStatApiResponse> Spellcasting { get; set; } = [];
+
+    private static string Signed(int value) => value >= 0 ? $"+{value}" : value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+}

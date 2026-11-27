@@ -5,6 +5,7 @@ using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Races;
+using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;
@@ -67,6 +68,55 @@ public class CharacterDetailsLoaderTests : IDisposable
         sheet.Features.Should().ContainSingle().Which.Id.Should().Be("military-rank");
         sheet.Languages.Should().ContainSingle().Which.Id.Should().Be("common-phb");
         sheet.Feats.Should().ContainSingle().Which.Feat.Id.Should().Be("tough");
+    }
+
+    [Fact]
+    public async Task LoadAsync_AnEldritchKnight_WorksOutTheSubclassesSpellSaveDcAndAttackBonus()
+    {
+        // Arrange - a level 3 Eldritch Knight: proficiency +2, Intelligence 12 (+1)
+        ArrangeCharacter(subclassId: "eldritch-knight", level: 3);
+        ArrangeSources();
+        ArrangeLists();
+
+        var fighter = Fighter();
+        fighter.Subclasses.Add(new Subclass
+        {
+            Source = "PHB",
+            Id = "eldritch-knight",
+            ClassId = "fighter",
+            Name = "Eldritch Knight",
+            Features = [],
+            SpellProgression =
+            [
+                new SubclassSpellProgression
+                {
+                    SubclassId = "eldritch-knight", CharacterLevel = 3, CantripsKnown = 2, SpellsKnown = 3, MaxSpellLevel = 1,
+                    SpellSlots = [2], SpellcastingAbility = "Intelligence"
+                }
+            ]
+        });
+        _classRepositoryMock.Setup(r => r.GetByIdWithDetailsAsync("fighter", _cts.Token)).ReturnsAsync(fighter);
+
+        // Act
+        var result = await _sut.LoadAsync(_characterId, _userId, _cts.Token);
+
+        // Assert
+        result.Value.Stats!.Spellcasting.Should().Equal(new SpellcastingStat("Eldritch Knight", "INT", SaveDc: 11, AttackBonus: 3));
+    }
+
+    [Fact]
+    public async Task LoadAsync_ANonCaster_HasNoSpellcastingNumbers()
+    {
+        // Arrange - the level 1 dwarf fighter, with no race or feat spells
+        ArrangeCharacter();
+        ArrangeSources();
+        ArrangeLists();
+
+        // Act
+        var result = await _sut.LoadAsync(_characterId, _userId, _cts.Token);
+
+        // Assert
+        result.Value.Stats!.Spellcasting.Should().BeEmpty();
     }
 
     [Fact]
@@ -214,7 +264,7 @@ public class CharacterDetailsLoaderTests : IDisposable
         Subclasses = [new Subclass { Source = "PHB", Id = "champion", ClassId = "fighter", Name = "Champion", Features = [] }]
     };
 
-    private void ArrangeCharacter(string raceId = "dwarf", string? subraceId = null, string? subclassId = null)
+    private void ArrangeCharacter(string raceId = "dwarf", string? subraceId = null, string? subclassId = null, int level = 1)
     {
         _characterRepositoryMock
             .Setup(r => r.GetByIdWithDetailsAsync(_characterId, _userId, _cts.Token))
@@ -222,7 +272,7 @@ public class CharacterDetailsLoaderTests : IDisposable
             {
                 Id = _characterId,
                 Name = "Thorin",
-                Level = 1,
+                Level = level,
                 RaceId = raceId,
                 SubraceId = subraceId,
                 ClassId = "fighter",

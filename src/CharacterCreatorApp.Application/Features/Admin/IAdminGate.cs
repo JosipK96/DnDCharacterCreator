@@ -1,4 +1,4 @@
-namespace CharacterCreatorApp.Application.Features.Authentication;
+namespace CharacterCreatorApp.Application.Features.Admin;
 
 /// <summary>Says whether a signed-in user is the owner, the one who may issue password reset links.</summary>
 public interface IAdminGate

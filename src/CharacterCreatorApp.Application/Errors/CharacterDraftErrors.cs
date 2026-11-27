@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.ValueObjects;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation;
+namespace CharacterCreatorApp.Application.Errors;
 
 /// <summary>
 /// Every error the character creation slices can return. Codes are namespaced

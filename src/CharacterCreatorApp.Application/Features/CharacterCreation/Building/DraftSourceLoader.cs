@@ -30,21 +30,21 @@ public sealed class DraftSourceLoader(
 
         if (race == null)
         {
-            return CharacterErrors.RaceNotFoundById(draft.RaceId!);
+            return RaceErrors.NotFoundById(draft.RaceId!);
         }
 
         var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId!, cancellationToken);
 
         if (@class == null)
         {
-            return CharacterErrors.ClassNotFoundById(draft.ClassId!);
+            return ClassErrors.NotFoundById(draft.ClassId!);
         }
 
         var background = await _backgroundRepository.GetByIdWithDetailsAsync(draft.BackgroundId!, cancellationToken);
 
         if (background == null)
         {
-            return CharacterErrors.BackgroundNotFoundById(draft.BackgroundId!);
+            return BackgroundErrors.NotFoundById(draft.BackgroundId!);
         }
 
         var subclass = string.IsNullOrWhiteSpace(draft.SubclassId)
@@ -53,7 +53,7 @@ public sealed class DraftSourceLoader(
 
         if (!string.IsNullOrWhiteSpace(draft.SubclassId) && subclass == null)
         {
-            return CharacterErrors.SubclassNotFoundById(draft.SubclassId!);
+            return SubclassErrors.NotFoundById(draft.SubclassId!);
         }
 
         var subrace = string.IsNullOrWhiteSpace(draft.SubraceId)
@@ -62,7 +62,7 @@ public sealed class DraftSourceLoader(
 
         if (!string.IsNullOrWhiteSpace(draft.SubraceId) && subrace == null)
         {
-            return CharacterErrors.SubraceNotFoundById(draft.SubraceId!);
+            return SubraceErrors.NotFoundById(draft.SubraceId!);
         }
 
         // The background's feat grants what the others do: a 2024 Tavern Brawler's improvised weapons

@@ -1,8 +1,11 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
+using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.Admin;
+using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Domain.Common.Results;
 
-namespace CharacterCreatorApp.Application.Features.Authentication.CreatePasswordResetLink;
+namespace CharacterCreatorApp.Application.Features.Admin.CreatePasswordResetLink;
 
 public class CreatePasswordResetLinkCommandHandler(IUserContext userContext, IAdminGate adminGate, IIdentityService identityService)
     : ICommandHandler<CreatePasswordResetLinkCommand, Response<string>>

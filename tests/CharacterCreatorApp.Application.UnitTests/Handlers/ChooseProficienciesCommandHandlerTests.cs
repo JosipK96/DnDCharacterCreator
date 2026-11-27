@@ -23,7 +23,6 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
     private readonly Mock<IClassRepository> _classRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IRaceRepository> _raceRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IBackgroundRepository> _backgroundRepositoryMock = new(MockBehavior.Strict);
-    private readonly Mock<IProficiencyRepository> _proficiencyRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = new(MockBehavior.Strict);
     private readonly Mock<IUserContext> _userContextMock = new(MockBehavior.Strict);
     private readonly CancellationTokenSource _cts = new();
@@ -42,7 +41,6 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
             _classRepositoryMock.Object,
             _raceRepositoryMock.Object,
             _backgroundRepositoryMock.Object,
-            _proficiencyRepositoryMock.Object,
             _unitOfWorkMock.Object,
             _userContextMock.Object);
     }
@@ -52,7 +50,6 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
     {
         // Arrange - a fighter picks two of its skills
         var draft = ArrangeHalfElfFighterDraft(raceSkills: ["stealth", "insight"]);
-        ArrangeProficiencies("perception", "survival");
 
         // Act
         var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
@@ -68,7 +65,6 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
     {
         // Arrange - the half-elf took Athletics already; the fighter picks another of its options
         var draft = ArrangeHalfElfFighterDraft(raceSkills: ["athletics", "stealth"]);
-        ArrangeProficiencies("athletics", "perception");
 
         // Act
         var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["athletics", "perception"]), _cts.Token);
@@ -95,7 +91,6 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
             Source = "PHB",
             BackgroundProficiencies = [new BackgroundProficiency { BackgroundId = "soldier", ProficiencyId = "athletics" }]
         });
-        ArrangeProficiencies("perception", "survival");
 
         // Act
         var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
@@ -220,28 +215,10 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
     }
 
     [Fact]
-    public async Task Handle_WithASkillMissingFromTheSeedData_ReturnsProficiencyNotFound()
-    {
-        // Arrange - the class lists it but no proficiency row has it
-        var draft = ArrangeFighterDraft(FighterChoice());
-        _proficiencyRepositoryMock.Setup(r => r.GetByIdAsync("perception", _cts.Token)).ReturnsAsync((ProficiencyReadModel?)null);
-
-        // Act
-        var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
-
-        // Assert
-        result.IsSuccess.Should().BeFalse();
-        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Proficiency.NotFound");
-        draft.SelectedClassProficiencyIds.Should().BeEmpty();
-        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
-    }
-
-    [Fact]
     public async Task Handle_BeforeARaceAndABackgroundAreChosen_SavesTheClassPicks()
     {
         // Arrange - nothing else to repeat yet
         var draft = ArrangeFighterDraft(FighterChoice());
-        ArrangeProficiencies("perception", "survival");
 
         // Act
         var result = await _sut.Handle(new ChooseProficienciesCommand(_draftId, ["perception", "survival"]), _cts.Token);
@@ -324,16 +301,6 @@ public class ChooseProficienciesCommandHandlerTests : IDisposable
         });
 
         return draft;
-    }
-
-    private void ArrangeProficiencies(params string[] ids)
-    {
-        foreach (var id in ids)
-        {
-            _proficiencyRepositoryMock
-                .Setup(r => r.GetByIdAsync(id, _cts.Token))
-                .ReturnsAsync(new ProficiencyReadModel { Id = id, Name = id, Type = "skill" });
-        }
     }
 
     public void Dispose()

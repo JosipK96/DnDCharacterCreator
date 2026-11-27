@@ -162,7 +162,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.ClassNotFound");
+        result.Errors[0].Code.Should().Be("Class.NotFound");
     }
 
     [Fact]
@@ -178,7 +178,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.RaceNotFound");
+        result.Errors[0].Code.Should().Be("Race.NotFound");
     }
 
     [Fact]
@@ -195,7 +195,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.BackgroundNotFound");
+        result.Errors[0].Code.Should().Be("Background.NotFound");
     }
 
     [Fact]
@@ -210,7 +210,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.SubclassNotFound");
+        result.Errors[0].Code.Should().Be("Subclass.NotFound");
     }
 
     [Fact]
@@ -225,7 +225,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.SubraceNotFound");
+        result.Errors[0].Code.Should().Be("Subrace.NotFound");
     }
 
     public void Dispose()

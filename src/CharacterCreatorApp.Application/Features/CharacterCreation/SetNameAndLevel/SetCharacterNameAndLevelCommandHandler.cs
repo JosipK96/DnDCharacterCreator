@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Application.Common.Abstractions;
+using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Persistence;

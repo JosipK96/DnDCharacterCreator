@@ -68,7 +68,7 @@ public class GetCharacterDetailsQueryHandlerTests : IDisposable
         var result = await _sut.Handle(new GetCharacterDetailsQuery(_characterId), _cts.Token);
 
         // Assert
-        result.Errors[0].Code.Should().Be("Character.ClassNotFound");
+        result.Errors[0].Code.Should().Be("Class.NotFound");
     }
 
     public void Dispose()

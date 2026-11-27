@@ -193,7 +193,7 @@ public class SetHitPointsCommandHandlerTests : IDisposable
 
         // Assert
         response.IsSuccess.Should().BeFalse();
-        response.Errors.Should().ContainSingle().Which.Code.Should().Be("Character.ClassNotFound");
+        response.Errors.Should().ContainSingle().Which.Code.Should().Be("Class.NotFound");
     }
 
     [Fact]

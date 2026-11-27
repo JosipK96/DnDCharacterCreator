@@ -14,17 +14,19 @@ public static Error InvalidLanguageCount(int required, int selected) =>
         $"Must choose exactly {required} language(s). You selected {selected}.");
 ```
 
-Where the class lives depends on who uses it:
+Every error class lives in `Application/Errors`, one class per thing the error is about, so a
+reader looking for an error has one folder to open:
 
-| Class | Lives in | Used by |
-| --- | --- | --- |
-| `CharacterDraftErrors` | `Features/CharacterCreation` | the creation slices |
-| `UserErrors` | `Features/Authentication` | login and register |
-| `CharacterErrors` | `Application/Errors` | creation and management both |
-| `RaceErrors`, `ClassErrors`, `SpellErrors`, … | `Application/Errors` | lookups and creation |
+| Class | About |
+| --- | --- |
+| `CharacterDraftErrors` | a draft and its wizard steps |
+| `CharacterErrors` | a finished character: finalize, the sheet, an edit or a level-up |
+| `UserErrors` | signing in, registering, the owner's admin actions |
+| `RaceErrors`, `ClassErrors`, `BackgroundErrors`, `SpellErrors`, … | that entity, wherever it is looked up |
 
-A class one feature area owns sits in that feature's folder. One that two areas share goes in
-`Application/Errors`.
+An error names the entity it is about, not the flow that ran into it. A race that cannot be
+found is `RaceErrors.NotFoundById` (`Race.NotFound`), whether a lookup, a step or finalize asked
+for it.
 
 ## Validators
 
@@ -41,6 +43,15 @@ own name, so the error reads `"NotEmptyValidator"` instead of `"CharacterDraft.N
 RuleFor(x => x.Name)
     .NotEmpty()
     .WithErrorCode(CharacterDraftErrors.Codes.NameRequired);
+```
+
+A rule several validators share is written once in `Application/Validation` and still takes the
+caller's code, so the client learns which request was wrong:
+
+```csharp
+RuleFor(x => x.Edition)
+    .MustBeKnownEdition(RaceErrors.Codes.InvalidEdition)
+    .When(x => x.Edition != null);
 ```
 
 Anything that needs the database — does this race grant two skills, is this feat's prerequisite

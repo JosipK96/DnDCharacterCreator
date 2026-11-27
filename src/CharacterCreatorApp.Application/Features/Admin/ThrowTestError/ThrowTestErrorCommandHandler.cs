@@ -1,8 +1,10 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
+using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.Admin;
 using CharacterCreatorApp.Domain.Common.Results;
 
-namespace CharacterCreatorApp.Application.Features.Authentication.ThrowTestError;
+namespace CharacterCreatorApp.Application.Features.Admin.ThrowTestError;
 
 public class ThrowTestErrorCommandHandler(IUserContext userContext, IAdminGate adminGate)
     : ICommandHandler<ThrowTestErrorCommand, Response>

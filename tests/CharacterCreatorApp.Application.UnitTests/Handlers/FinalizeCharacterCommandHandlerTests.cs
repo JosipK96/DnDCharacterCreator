@@ -1576,7 +1576,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.RaceNotFound");
+        result.Errors[0].Code.Should().Be("Race.NotFound");
 
         _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
     }
@@ -1599,7 +1599,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.ClassNotFound");
+        result.Errors[0].Code.Should().Be("Class.NotFound");
 
         _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
     }
@@ -1624,7 +1624,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.BackgroundNotFound");
+        result.Errors[0].Code.Should().Be("Background.NotFound");
 
         _characterRepositoryMock.Verify(r => r.Create(It.IsAny<Character>(), It.IsAny<CancellationToken>()), Times.Never);
     }

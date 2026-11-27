@@ -1,6 +1,6 @@
-﻿using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.Common.Results;
 
-namespace CharacterCreatorApp.Application.Features.Authentication;
+namespace CharacterCreatorApp.Application.Errors;
 
 public static class UserErrors
 {

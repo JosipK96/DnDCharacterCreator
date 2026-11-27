@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.Features.Authentication;
+using CharacterCreatorApp.Application.Features.Admin;
 
 using Microsoft.Extensions.Options;
 

@@ -1,7 +1,9 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
+using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.Admin;
 using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Application.Features.Authentication.ChangePassword;
-using CharacterCreatorApp.Application.Features.Authentication.CreatePasswordResetLink;
+using CharacterCreatorApp.Application.Features.Admin.CreatePasswordResetLink;
 using CharacterCreatorApp.Application.Features.Authentication.ResetPassword;
 using CharacterCreatorApp.Domain.Common.Results;
 

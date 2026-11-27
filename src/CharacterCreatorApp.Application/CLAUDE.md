@@ -12,7 +12,8 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   12.5.0 changes the pipeline delegate. Dependabot ignores it; move it only by hand.
 - Inside Application, `Features/` holds only use cases and what a single feature area owns.
   Anything two areas share sits beside it: `Persistence/` (`IUnitOfWork` and the repository
-  interfaces), `ReadModels/`, `Errors/` (the shared `<Area>Errors`), and `Common/` for plumbing
+  interfaces), `ReadModels/`, `Errors/` (every `<Area>Errors`, one per entity or flow),
+  `Validation/` (rules several validators share, `MustBeKnownEdition`), and `Common/` for plumbing
   that knows nothing about D&D (CQRS abstractions, pipeline behaviours, filtering, `IUserContext`).
 - List queries take `FilterOptions<T>` from `Common/Filtering`.
 - Shared creation logic lives in `Features/CharacterCreation/Building`: `CharacterBuilder` turns

@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Application.Common.Abstractions;
+using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
@@ -12,7 +12,6 @@ public class ChooseProficienciesCommandHandler(
     IClassRepository classRepository,
     IRaceRepository raceRepository,
     IBackgroundRepository backgroundRepository,
-    IProficiencyRepository proficiencyRepository,
     IUnitOfWork unitOfWork,
     IUserContext userContext) : ICommandHandler<ChooseProficienciesCommand, Response>
 {
@@ -20,7 +19,6 @@ public class ChooseProficienciesCommandHandler(
     private readonly IClassRepository _classRepository = classRepository;
     private readonly IRaceRepository _raceRepository = raceRepository;
     private readonly IBackgroundRepository _backgroundRepository = backgroundRepository;
-    private readonly IProficiencyRepository _proficiencyRepository = proficiencyRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IUserContext _userContext = userContext;
 
@@ -97,16 +95,8 @@ public class ChooseProficienciesCommandHandler(
             return repeated.Value;
         }
 
-        foreach (var proficiencyId in command.ProficiencyIds)
-        {
-            var exists = await _proficiencyRepository.GetByIdAsync(proficiencyId, cancellationToken);
-
-            if (exists == null)
-            {
-                return ProficiencyErrors.NotFoundById(proficiencyId);
-            }
-        }
-
+        // No lookup per id: every id passed the class's options above, and an option's
+        // ProficiencyId is a foreign key to Proficiencies, so it is a real proficiency
         draft.SetClassProficiencies(command.ProficiencyIds);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

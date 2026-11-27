@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;

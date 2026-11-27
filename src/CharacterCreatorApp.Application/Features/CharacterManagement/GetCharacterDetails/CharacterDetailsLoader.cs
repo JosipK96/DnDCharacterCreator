@@ -53,21 +53,21 @@ public class CharacterDetailsLoader(
 
         if (@class == null)
         {
-            return CharacterErrors.ClassNotFoundById(character.ClassId);
+            return ClassErrors.NotFoundById(character.ClassId);
         }
 
         var race = await _raceRepository.GetByIdWithDetailsAsync(character.RaceId, cancellationToken);
 
         if (race == null)
         {
-            return CharacterErrors.RaceNotFoundById(character.RaceId);
+            return RaceErrors.NotFoundById(character.RaceId);
         }
 
         var background = await _backgroundRepository.GetByIdWithDetailsAsync(character.BackgroundId, cancellationToken);
 
         if (background == null)
         {
-            return CharacterErrors.BackgroundNotFoundById(character.BackgroundId);
+            return BackgroundErrors.NotFoundById(character.BackgroundId);
         }
 
         var subclass = string.IsNullOrWhiteSpace(character.SubclassId)
@@ -76,7 +76,7 @@ public class CharacterDetailsLoader(
 
         if (!string.IsNullOrWhiteSpace(character.SubclassId) && subclass == null)
         {
-            return CharacterErrors.SubclassNotFoundById(character.SubclassId);
+            return SubclassErrors.NotFoundById(character.SubclassId);
         }
 
         var subrace = string.IsNullOrWhiteSpace(character.SubraceId)
@@ -85,7 +85,7 @@ public class CharacterDetailsLoader(
 
         if (!string.IsNullOrWhiteSpace(character.SubraceId) && subrace == null)
         {
-            return CharacterErrors.SubraceNotFoundById(character.SubraceId);
+            return SubraceErrors.NotFoundById(character.SubraceId);
         }
 
         var content = await _contentLoader.LoadAsync(

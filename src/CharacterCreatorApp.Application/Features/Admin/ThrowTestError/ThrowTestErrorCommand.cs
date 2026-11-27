@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Domain.Common.Results;
 
-namespace CharacterCreatorApp.Application.Features.Authentication.ThrowTestError;
+namespace CharacterCreatorApp.Application.Features.Admin.ThrowTestError;
 
 /// <summary>
 /// The owner's way to prove that errors reach the error tracker (#77): throws on purpose, so

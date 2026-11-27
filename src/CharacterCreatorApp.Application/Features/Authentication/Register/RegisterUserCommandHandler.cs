@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
+using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.Authentication.Register

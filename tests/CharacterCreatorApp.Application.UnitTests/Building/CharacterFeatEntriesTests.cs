@@ -1,5 +1,6 @@
 using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Feats;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.ValueObjects;
 

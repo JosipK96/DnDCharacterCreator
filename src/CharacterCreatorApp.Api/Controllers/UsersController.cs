@@ -1,10 +1,10 @@
-﻿using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Application.Features.Authentication.ChangePassword;
 using CharacterCreatorApp.Application.Features.Authentication.Login;
 using CharacterCreatorApp.Application.Features.Authentication.Register;
 using CharacterCreatorApp.Application.Features.Authentication.ResetPassword;
 using CharacterCreatorApp.Contracts.Requests.User;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Users;
 
 using CharacterCreatorApp.Api.Infrastructure.RateLimiting;
 

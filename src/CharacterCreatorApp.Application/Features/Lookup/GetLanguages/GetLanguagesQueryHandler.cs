@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Languages;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.ValueObjects;
 

@@ -1,4 +1,8 @@
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
+using CharacterCreatorApp.Application.ReadModels.Classes;
+using CharacterCreatorApp.Application.ReadModels.Languages;
+using CharacterCreatorApp.Application.ReadModels.Proficiencies;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 

@@ -1,7 +1,7 @@
 using Bunit;
 
 using CharacterCreatorApp.Client.Shared;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Characters;
 
 using FluentAssertions;
 

@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Classes;
 
 namespace CharacterCreatorApp.Application.Persistence
 {

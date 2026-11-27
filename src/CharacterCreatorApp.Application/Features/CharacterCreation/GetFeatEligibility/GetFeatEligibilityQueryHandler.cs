@@ -3,7 +3,7 @@ using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.ValueObjects;
 

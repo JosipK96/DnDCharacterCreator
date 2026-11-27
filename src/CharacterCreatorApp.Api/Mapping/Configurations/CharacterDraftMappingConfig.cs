@@ -1,5 +1,10 @@
-﻿using CharacterCreatorApp.Application.ReadModels;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Application.ReadModels.Characters;
+using CharacterCreatorApp.Application.ReadModels.Proficiencies;
+using CharacterCreatorApp.Application.ReadModels.Spells;
+using CharacterCreatorApp.Contracts.Responses.Characters;
+using CharacterCreatorApp.Contracts.Responses.Feats;
+using CharacterCreatorApp.Contracts.Responses.Proficiencies;
+using CharacterCreatorApp.Contracts.Responses.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
 using Mapster;

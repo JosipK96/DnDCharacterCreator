@@ -6,7 +6,7 @@ using CharacterCreatorApp.Client.Pages.CharacterCreation;
 using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Characters;
 
 using FluentAssertions;
 

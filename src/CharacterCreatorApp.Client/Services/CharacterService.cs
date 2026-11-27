@@ -3,7 +3,7 @@ using System.Net.Http.Json;
 using CharacterCreatorApp.Client.Services.Http;
 using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.Character;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Characters;
 
 namespace CharacterCreatorApp.Client.Services;
 

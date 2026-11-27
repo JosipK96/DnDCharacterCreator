@@ -1,5 +1,4 @@
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;

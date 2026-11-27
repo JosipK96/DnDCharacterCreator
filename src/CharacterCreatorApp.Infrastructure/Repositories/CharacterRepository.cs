@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using CharacterCreatorApp.Application.Common.Filtering;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacters;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Infrastructure.Extensions;
 

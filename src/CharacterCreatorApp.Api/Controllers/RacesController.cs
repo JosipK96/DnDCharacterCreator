@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Application.Features.Lookup.GetRaces;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Races;
 
 using MapsterMapper;
 

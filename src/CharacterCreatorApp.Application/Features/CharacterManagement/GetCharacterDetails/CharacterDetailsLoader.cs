@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.Services;
 

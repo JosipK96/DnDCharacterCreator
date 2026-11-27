@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Application.Features.Lookup.GetLanguages;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Languages;
 
 using MapsterMapper;
 

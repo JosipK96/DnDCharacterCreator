@@ -1,5 +1,5 @@
-using CharacterCreatorApp.Application.ReadModels;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Application.ReadModels.Languages;
+using CharacterCreatorApp.Contracts.Responses.Languages;
 
 using Mapster;
 

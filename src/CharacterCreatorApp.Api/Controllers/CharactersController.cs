@@ -9,7 +9,7 @@ using CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacte
 using CharacterCreatorApp.Application.Features.CharacterManagement.LevelUpCharacter;
 using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.Character;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Characters;
 
 using MapsterMapper;
 

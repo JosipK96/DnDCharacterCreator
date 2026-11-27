@@ -1,6 +1,11 @@
 using CharacterCreatorApp.Application.Features.Lookup.GetHiddenOptions;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Backgrounds;
+using CharacterCreatorApp.Application.ReadModels.Books;
+using CharacterCreatorApp.Application.ReadModels.Classes;
+using CharacterCreatorApp.Application.ReadModels.Feats;
+using CharacterCreatorApp.Application.ReadModels.Races;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.ValueObjects;
 

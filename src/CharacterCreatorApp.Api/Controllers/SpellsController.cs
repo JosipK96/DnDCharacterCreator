@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Application.Features.Lookup.GetSpells;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Spells;
 
 using MapsterMapper;
 

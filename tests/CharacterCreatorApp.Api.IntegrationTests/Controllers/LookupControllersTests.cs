@@ -3,7 +3,13 @@ using System.Net.Http.Json;
 using System.Text.Json;
 
 using CharacterCreatorApp.Api.IntegrationTests.Fixtures;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Backgrounds;
+using CharacterCreatorApp.Contracts.Responses.Books;
+using CharacterCreatorApp.Contracts.Responses.Classes;
+using CharacterCreatorApp.Contracts.Responses.Feats;
+using CharacterCreatorApp.Contracts.Responses.Languages;
+using CharacterCreatorApp.Contracts.Responses.Races;
+using CharacterCreatorApp.Contracts.Responses.Spells;
 using CharacterCreatorApp.Infrastructure;
 
 using FluentAssertions;

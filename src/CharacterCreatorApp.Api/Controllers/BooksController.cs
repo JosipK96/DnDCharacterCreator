@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Application.Features.Lookup.GetBooks;
 using CharacterCreatorApp.Application.Features.Lookup.GetHiddenOptions;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Books;
 
 using MapsterMapper;
 

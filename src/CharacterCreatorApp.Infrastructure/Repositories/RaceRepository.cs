@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Infrastructure.Extensions;
 

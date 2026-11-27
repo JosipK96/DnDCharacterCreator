@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterSheetPdf;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;

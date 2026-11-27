@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 
 namespace CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterSheetPdf;
 

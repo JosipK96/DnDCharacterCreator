@@ -1,5 +1,5 @@
-﻿using CharacterCreatorApp.Application.Common.Abstractions;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.Common.Abstractions;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.GetDraft;

@@ -25,7 +25,11 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetNameAndLevel;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetRace;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Characters;
+using CharacterCreatorApp.Contracts.Responses.Classes;
+using CharacterCreatorApp.Contracts.Responses.Feats;
+using CharacterCreatorApp.Contracts.Responses.Proficiencies;
+using CharacterCreatorApp.Contracts.Responses.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
 using MapsterMapper;

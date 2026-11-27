@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Application.Features.Lookup.GetBackgrounds;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Backgrounds;
+using CharacterCreatorApp.Application.ReadModels.Languages;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;

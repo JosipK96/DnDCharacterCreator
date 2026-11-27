@@ -1,5 +1,5 @@
-﻿using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.Persistence;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Infrastructure.Extensions;
 
 using Microsoft.EntityFrameworkCore;

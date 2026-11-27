@@ -1,9 +1,15 @@
-﻿using CharacterCreatorApp.Application.Common.Filtering;
+using CharacterCreatorApp.Application.Common.Filtering;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacters;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
+using CharacterCreatorApp.Application.ReadModels.Classes;
+using CharacterCreatorApp.Application.ReadModels.Proficiencies;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.Character;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Characters;
+using CharacterCreatorApp.Contracts.Responses.Classes;
+using CharacterCreatorApp.Contracts.Responses.Proficiencies;
+using CharacterCreatorApp.Contracts.Responses.Spells;
 using CharacterCreatorApp.Domain.Services;
 
 using Mapster;

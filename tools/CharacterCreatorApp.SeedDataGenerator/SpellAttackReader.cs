@@ -62,6 +62,9 @@ internal static partial class SpellAttackReader
 
         if (scaling.Count == 0)
         {
+            // shortcut: Magic Stone's "1d6 + your spellcasting ability modifier" keeps only the
+            // dice; store the modifier as part of the damage if another cantrip ever adds one
+
             return DamageInText(spell["entries"]?.ToJsonString()) is { } dice
                 ? CantripDamage.TierLevels.Select(_ => dice).ToList()
                 : [];

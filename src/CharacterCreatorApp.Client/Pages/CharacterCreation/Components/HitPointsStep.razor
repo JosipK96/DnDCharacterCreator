@@ -49,40 +49,38 @@
                 var inputId = $"hit-die-roll-{pick.Level}";
 
                 <Room Class="mb-5" data-testid="@($"hit-die-level-{pick.Level}")">
-                    <div>
-                        <h3 class="room-title mb-3">Level @pick.Level</h3>
+                    <h3 class="room-title mb-3">Level @pick.Level</h3>
 
-                        <div class="option-grid">
-                            <OptionRoom Name="@($"Take {fixedValue}")" Picked="@(pick.ChosenBy == ChosenBy.Fixed)" OnClick="() => TakeFixedValue(pick)">
-                                <span>The fixed value of a @hitDie</span>
-                            </OptionRoom>
+                    <div class="option-grid">
+                        <OptionRoom Name="@($"Take {fixedValue}")" Picked="@(pick.ChosenBy == ChosenBy.Fixed)" OnClick="() => TakeFixedValue(pick)">
+                            <span>The fixed value of a @hitDie</span>
+                        </OptionRoom>
 
-                            <OptionRoom Name="@(pick.HasRolled ? $"Rolled {pick.Rolled}" : $"Roll a {hitDie}")" Picked="@(pick.ChosenBy == ChosenBy.Rolled)"
-                                        Disabled="@pick.HasRolled" OnClick="() => Roll(pick)">
-                                <span>Rolled once, here in the browser</span>
-                            </OptionRoom>
+                        <OptionRoom Name="@(pick.HasRolled ? $"Rolled {pick.Rolled}" : $"Roll a {hitDie}")" Picked="@(pick.ChosenBy == ChosenBy.Rolled)"
+                                    Disabled="@pick.HasRolled" OnClick="() => Roll(pick)">
+                            <span>Rolled once, here in the browser</span>
+                        </OptionRoom>
 
-                            <div class="option-room" data-picked="@(pick.ChosenBy == ChosenBy.Entered ? "true" : "false")">
-                                @if (pick.ChosenBy == ChosenBy.Entered)
-                                {
-                                    <span class="you-are-here" aria-hidden="true"></span>
-                                }
-                                <label for="@inputId" class="block font-display text-[23px] font-semibold leading-tight">I rolled</label>
-                                <input id="@inputId" type="number" min="1" max="@dieSize" value="@pick.Entered"
-                                       @onchange="args => Enter(pick, args)" class="field mt-2 w-24" />
-                                <span class="mt-1 block text-sm text-pencil">From 1 to @dieSize</span>
-                            </div>
+                        <div class="option-room" data-picked="@(pick.ChosenBy == ChosenBy.Entered ? "true" : "false")">
+                            @if (pick.ChosenBy == ChosenBy.Entered)
+                            {
+                                <span class="you-are-here" aria-hidden="true"></span>
+                            }
+                            <label for="@inputId" class="block font-display text-[23px] font-semibold leading-tight">I rolled</label>
+                            <input id="@inputId" type="number" min="1" max="@dieSize" value="@pick.Entered"
+                                   @onchange="args => Enter(pick, args)" class="field mt-2 w-24" />
+                            <span class="mt-1 block text-sm text-pencil">From 1 to @dieSize</span>
                         </div>
-
-                        @if (pick.Chosen is { } result)
-                        {
-                            <p class="mt-5 font-medium text-plum">Level @pick.Level: @result on the @hitDie, plus your Constitution modifier.</p>
-                        }
-                        else if (!isLevelUp)
-                        {
-                            <p class="mt-5 text-pencil">Left alone, level @pick.Level takes the fixed value, @fixedValue.</p>
-                        }
                     </div>
+
+                    @if (pick.Chosen is { } result)
+                    {
+                        <p class="mt-5 font-medium text-plum">Level @pick.Level: @result on the @hitDie, plus your Constitution modifier.</p>
+                    }
+                    else if (!isLevelUp)
+                    {
+                        <p class="mt-5 text-pencil">Left alone, level @pick.Level takes the fixed value, @fixedValue.</p>
+                    }
                 </Room>
             }
         }

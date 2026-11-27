@@ -331,7 +331,8 @@ public static class ReadModelExtensions
             CharacterId = draft.CharacterId,
             ChoicesNeeded = draft.ChoicesNeeded,
             LevelUpChoices = draft.LevelUpChoices,
-            HitDieResults = draft.HitDieResults
+            HitDieResults = draft.HitDieResults,
+            HitDieLevels = [.. draft.HitDieLevels]
         };
     }
 }

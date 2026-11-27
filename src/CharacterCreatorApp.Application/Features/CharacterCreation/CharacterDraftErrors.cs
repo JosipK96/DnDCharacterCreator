@@ -45,20 +45,31 @@ public static class CharacterDraftErrors
         public const string InvalidAbilityScoreMethod = "CharacterDraft.InvalidAbilityScoreMethod";
         public const string AbilityScoresDoNotFitMethod = "CharacterDraft.AbilityScoresDoNotFitMethod";
         public const string InvalidHitDieResult = "CharacterDraft.InvalidHitDieResult";
+        public const string HitDieResultsRequired = "CharacterDraft.HitDieResultsRequired";
     }
 
     public static Error NotFoundById(Guid draftId) =>
         Error.NotFound("CharacterDraft.NotFound", $"Character draft not found by id {draftId}");
 
-    // --- A level-up ---
-    public static Error HitPointsOnlyOnLevelUp() =>
-        Error.Validation(
-            "CharacterDraft.HitPointsOnlyOnLevelUp",
-            "Hit points are rolled or taken on a level-up; the levels a character is created with take the fixed value.");
+    // --- Hit points ---
+
+    /// <summary>A result for a level outside CharacterDraft.HitDieLevels: level 1, a level above the character's, or a level-up's earlier level.</summary>
+    public static Error HitDieLevelNotRolled(int level, IReadOnlyCollection<int> levels)
+    {
+        var description = levels.Count == 0
+            ? $"This character rolls no hit die, so level {level} has no result to keep: level 1 is the die's maximum."
+            : $"This character rolls the hit die for level(s) {string.Join(", ", levels)}, not {level}.";
+
+        return Error.Validation("CharacterDraft.HitDieLevelNotRolled", description);
+    }
+
+    public static Error HitDieResultRequired(int level) =>
+        Error.Validation("CharacterDraft.HitDieResultRequired", $"A level-up to level {level} rolls its hit die or takes the fixed value.");
 
     public static Error HitDieResultOutOfRange(int result, string hitDie) =>
         Error.Validation("CharacterDraft.HitDieResultOutOfRange", $"A {hitDie} cannot roll {result}.");
 
+    // --- A level-up ---
     public static Error LevelUpKeepsClass(string className) =>
         Error.Validation(
             "CharacterDraft.LevelUpKeepsClass",

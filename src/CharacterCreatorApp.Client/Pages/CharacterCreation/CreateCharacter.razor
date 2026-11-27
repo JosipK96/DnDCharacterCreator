@@ -57,7 +57,7 @@
             }
             else
             {
-                <WizardProgress CurrentStep="@currentStep" />
+                <WizardProgress CurrentStep="@currentStep" Flow="@flow" />
             }
 
             @* The numbers here are WizardSteps', which gives each step its name; the flow says which a draft goes through *@
@@ -281,7 +281,7 @@
             editedCharacterId = existingDraft.CharacterId;
             stepsNeedingPick = [.. WizardSteps.StepsOf(existingDraft.ChoicesNeeded)];
             isLevelUp = existingDraft.LevelUpChoices.Count != 0;
-            flow = isLevelUp ? WizardSteps.LevelUpOf(existingDraft.LevelUpChoices) : WizardSteps.Creation;
+            flow = isLevelUp ? WizardSteps.LevelUpOf(existingDraft.LevelUpChoices) : WizardSteps.CreationOf(existingDraft.HitDieLevels);
 
             // An edit has every step filled in: it opens at the first one that needs a pick, if any
             currentStep = IsEdit
@@ -344,6 +344,7 @@
         draftId = existingDraft!.Id;
         Navigation.NavigateTo($"/character/create/{draftId}", false);
         currentStep = DetermineCurrentStep(existingDraft);
+        flow = WizardSteps.CreationOf(existingDraft.HitDieLevels);
         edition = existingDraft.Edition;
         sources = existingDraft.AllowedSources;
         if (existingDraft.Level.HasValue)
@@ -389,10 +390,23 @@
 
     // Step 1 goes back to the step that sent the player to tick books, when nothing it saved went:
     // another edition or an unticked book clears choices, and then the steps are walked again in order
-    private void MoveToStep2(int level, string chosenEdition, IReadOnlyList<string> chosenSources)
+    private async Task MoveToStep2(int level, string chosenEdition, IReadOnlyList<string> chosenSources)
     {
         var keepsChoices = chosenEdition == edition && !sources.Except(chosenSources).Any();
         var back = returnStep;
+
+        // The level may have changed, and with it the levels whose hit die the flow asks about
+        try
+        {
+            var saved = await DraftService.GetDraftDetailsAsync(draftId);
+            flow = WizardSteps.CreationOf(saved?.HitDieLevels ?? []);
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            errorMessage = $"Error loading draft: {ex.Message}";
+            StateHasChanged();
+            return;
+        }
 
         returnStep = null;
         characterLevel = level;

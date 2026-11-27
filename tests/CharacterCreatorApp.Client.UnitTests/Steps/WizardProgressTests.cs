@@ -136,4 +136,32 @@ public class WizardProgressTests : BunitContext
         compact.QuerySelector("p")!.TextContent.Should().Be("Room 2 of 2: Review");
         compact.QuerySelectorAll("p").Should().ContainSingle();
     }
+
+    [Fact]
+    public void Render_ANewCharacterAboveLevelOne_ShowsHitPointsBetweenSpellsAndReview()
+    {
+        // Arrange - a level 3 character rolls for levels 2 and 3
+        var flow = WizardSteps.CreationOf([2, 3]);
+
+        // Act
+        var cut = Render<WizardProgress>(parameters => parameters
+            .Add(p => p.CurrentStep, WizardSteps.HitPoints)
+            .Add(p => p.Flow, flow));
+
+        // Assert
+        cut.Find("[data-testid=progress-compact]").QuerySelector("p")!.TextContent.Should().Be("Room 10 of 11: Hit Points");
+        cut.FindAll("[data-testid=progress-map] li span.text-xs").Select(label => label.TextContent).TakeLast(3)
+            .Should().Equal("Spells", "Hit Points", "Review");
+    }
+
+    [Fact]
+    public void CreationOf_ALevelOneCharacter_HasNoHitPointsStep()
+    {
+        // Act - level 1 is the die's maximum, so the draft names no level to roll for
+        var flow = WizardSteps.CreationOf([]);
+
+        // Assert
+        flow.Should().Equal(WizardSteps.Creation);
+        flow.Should().NotContain(WizardSteps.HitPoints);
+    }
 }

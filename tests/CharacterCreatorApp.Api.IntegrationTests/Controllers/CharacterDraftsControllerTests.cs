@@ -1048,7 +1048,7 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         // Act
         var draftId = await StartLevelUpAsync(characterId);
         var levelUp = await GetDraftAsync(draftId);
-        await PutStepAsync(draftId, "hit-points", new SetHitPointsApiRequest(8));
+        await PutStepAsync(draftId, "hit-points", new SetHitPointsApiRequest(new Dictionary<int, int> { [2] = 8 }));
         var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(draftId), cancellationToken);
 
         // Assert - the level-up opened one level up with every pick, asking only for the hit points
@@ -1078,13 +1078,13 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await SignInAsync();
         var characterId = await FinalizeBruenorAsync();
         var toTwo = await StartLevelUpAsync(characterId);
-        await PutStepAsync(toTwo, "hit-points", new SetHitPointsApiRequest(6));
+        await PutStepAsync(toTwo, "hit-points", new SetHitPointsApiRequest(new Dictionary<int, int> { [2] = 6 }));
         (await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(toTwo), cancellationToken)).EnsureSuccessStatusCode();
 
         // Act
         var toThree = await StartLevelUpAsync(characterId);
         var levelUp = await GetDraftAsync(toThree);
-        await PutStepAsync(toThree, "hit-points", new SetHitPointsApiRequest(6));
+        await PutStepAsync(toThree, "hit-points", new SetHitPointsApiRequest(new Dictionary<int, int> { [3] = 6 }));
         var finalizeResponse = await _client.PostAsJsonAsync("/api/characters", new CreateCharacterApiRequest(toThree), cancellationToken);
 
         // Assert
@@ -1105,14 +1105,14 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
 
         // Act
         var response = await _client.PutAsJsonAsync(
-            $"/api/character-drafts/{draftId}/hit-points", new SetHitPointsApiRequest(11), TestContext.Current.CancellationToken);
+            $"/api/character-drafts/{draftId}/hit-points", new SetHitPointsApiRequest(new Dictionary<int, int> { [2] = 11 }), TestContext.Current.CancellationToken);
 
         // Assert
         await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.HitDieResultOutOfRange");
     }
 
     [Fact]
-    public async Task SetHitPoints_OnANewCharactersDraft_ReturnsHitPointsOnlyOnLevelUp()
+    public async Task SetHitPoints_OnANewCharacterAboveLevelOne_KeepsTheResultsOfItsLaterLevels()
     {
         // Arrange
         await SignInAsync();
@@ -1120,12 +1120,30 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Bruenor", Level = 3, Edition = "2024" });
         await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
 
-        // Act
-        var response = await _client.PutAsJsonAsync(
-            $"/api/character-drafts/{draftId}/hit-points", new SetHitPointsApiRequest(6), TestContext.Current.CancellationToken);
+        // Act - level 3 is left alone, so it takes the fixed value
+        await PutStepAsync(draftId, "hit-points", new SetHitPointsApiRequest(new Dictionary<int, int> { [2] = 9 }));
+        var draft = await GetDraftAsync(draftId);
 
         // Assert
-        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.HitPointsOnlyOnLevelUp");
+        draft.HitDieLevels.Should().Equal(2, 3);
+        draft.HitDieResults.Should().Equal(new Dictionary<int, int> { [2] = 9 });
+    }
+
+    [Fact]
+    public async Task SetHitPoints_ForLevelOne_ReturnsHitDieLevelNotRolled()
+    {
+        // Arrange - level 1 is the die's maximum
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await PutStepAsync(draftId, "name-and-level", new SetNameAndLevelApiRequest { Name = "Bruenor", Level = 3, Edition = "2024" });
+        await PutStepAsync(draftId, "class", new SetClassApiRequest { ClassId = "fighter-2024" });
+
+        // Act
+        var response = await _client.PutAsJsonAsync(
+            $"/api/character-drafts/{draftId}/hit-points", new SetHitPointsApiRequest(new Dictionary<int, int> { [1] = 6 }), TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.BadRequest, "CharacterDraft.HitDieLevelNotRolled");
     }
 
     [Fact]

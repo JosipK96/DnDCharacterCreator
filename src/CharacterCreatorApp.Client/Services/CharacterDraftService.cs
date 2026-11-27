@@ -37,9 +37,12 @@ public class CharacterDraftService(HttpClient http)
     public Task SetClassAsync(Guid draftId, string classId, string? subclassId) =>
         PutAsync(draftId, "class", new SetClassApiRequest { ClassId = classId, SubclassId = subclassId });
 
-    /// <summary>The hit die's result for the level a level-up reaches: rolled, or the die's fixed value.</summary>
-    public Task SetHitPointsAsync(Guid draftId, int result) =>
-        PutAsync(draftId, "hit-points", new SetHitPointsApiRequest(result));
+    /// <summary>
+    /// The hit die's results by level, rolled or the die's fixed value: a level-up's new level, or
+    /// the levels from 2 a new character picked one for. A level left out takes the fixed value.
+    /// </summary>
+    public Task SetHitPointsAsync(Guid draftId, IReadOnlyDictionary<int, int> results) =>
+        PutAsync(draftId, "hit-points", new SetHitPointsApiRequest(new Dictionary<int, int>(results)));
 
     /// <summary>
     /// Sets the background, with a 2024 one's ability increases ({"WIS": 2, "CHA": 1}) and the feat

@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Application.Common.Interfaces;
+using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.FinalizeCharacter;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels;
@@ -1193,7 +1193,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - Thorin, a level 2 fighter, levels up to 3, where the class data gives the subclass
         var (_, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 2), CreateTestClass());
-        levelUp.SetHitDieResult(7);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [3] = 7 });
         ArrangeRepositories(_draftId, _userId, levelUp);
 
         // Act
@@ -1211,7 +1211,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange
         var (saved, build, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 2), CreateTestClass());
-        levelUp.SetHitDieResult(7);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [3] = 7 });
         levelUp.SetSubclass("champion");
         ArrangeRepositories(_draftId, _userId, levelUp);
         ArrangeLevelUpSave(saved, build);
@@ -1236,7 +1236,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - level 3 to 4, where the fighter's data gives an improvement
         var (_, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 3), CreateTestClass());
-        levelUp.SetHitDieResult(6);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [4] = 6 });
         ArrangeRepositories(_draftId, _userId, levelUp);
 
         // Act
@@ -1253,7 +1253,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange
         var (saved, build, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 3), CreateTestClass());
-        levelUp.SetHitDieResult(6);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [4] = 6 });
         levelUp.SetAbilityScoreImprovements([new Dictionary<string, int> { ["STR"] = 2 }]);
         ArrangeRepositories(_draftId, _userId, levelUp);
         ArrangeLevelUpSave(saved, build);
@@ -1274,7 +1274,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - a wizard's third level opens 2nd-level spells and one more for the spellbook
         var (_, _, levelUp) = LevelUpOf(LevelTwoWizardDraft(), WizardGainingASpellLevel());
-        levelUp.SetHitDieResult(4);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [3] = 4 });
         ArrangeWizardSpellList();
         ArrangeRepositories(_draftId, _userId, levelUp, @class: WizardGainingASpellLevel());
 
@@ -1292,7 +1292,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange
         var (saved, build, levelUp) = LevelUpOf(LevelTwoWizardDraft(), WizardGainingASpellLevel());
-        levelUp.SetHitDieResult(4);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [3] = 4 });
         levelUp.SetSpells([.. levelUp.SelectedSpellIds, "hold_person"]);
         ArrangeWizardSpellList();
         ArrangeRepositories(_draftId, _userId, levelUp, @class: WizardGainingASpellLevel());
@@ -1328,7 +1328,7 @@ public class FinalizeCharacterCommandHandlerTests : IDisposable
     {
         // Arrange - levelled up to 5 with a 9, then edited back down to 4
         var (saved, _, levelUp) = LevelUpOf(CreateCompleteDraft(_userId, level: 4), CreateTestClass());
-        levelUp.SetHitDieResult(9);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [5] = 9 });
         levelUp.MarkAsCompleted(saved.Id);
         var edit = CharacterDraft.StartEdit(levelUp, _timeProvider);
         edit.SetNameAndLevel("Thorin Oakenshield", 4);

@@ -12,8 +12,11 @@
   (`CharacterDraftDetailsApiResponse.CharacterId` set) the progress map (`Components/WizardProgress.razor`) goes to any step and marks
   the ones in `ChoicesNeeded` (`WizardSteps.StepsOf`); saving returns to the same sheet.
 - A level-up ("Level up" on the list and the sheet; `LevelUpChoices` set) goes through its own
-  flow, `WizardSteps.LevelUpOf`: the Hit Points step (`WizardSteps.HitPoints`, which a new
-  character never visits), then only the steps the new level brings, then Review. Every step
+  flow, `WizardSteps.LevelUpOf`: the Hit Points step (`WizardSteps.HitPoints`), then only the
+  steps the new level brings, then Review. A new character or an edit above level 1 takes the
+  Hit Points step between Spells and Review (`WizardSteps.CreationOf`, from the draft's
+  `HitDieLevels`, read again after step 1 since the level may change there), one row per level
+  from 2; a level-1 character has none. Every step
   takes the flow (`WizardStepBase.Flow`), so its heading number and "Next" label follow it. The
   class step keeps the class (its ClassLocked parameter), and the improvements step keeps the
   earlier improvements beside a new one.

@@ -150,12 +150,18 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   bard's or Noble Genies paladin's 10 + DEX + CHA. The generator reads them from the feature text, with whether a shield still
   allows it (a monk's and a Dance bard's do not), for when shields are modelled. Both handlers
   pass `Class.UnarmoredArmorClassesWith` through `CharacterStatsInput`; never check a class id.
-- Hit points are the hit die's maximum at level 1, then for each later level the die's result a
-  level-up kept (`CharacterDraft.HitDieResults`, `Character.HitDieResults`: rolled, in the app or
-  with real dice, or the fixed value taken) or else the fixed value, the die's average rounded
+- Hit points are the hit die's maximum at level 1, then for each later level the die's result
+  the player kept (`CharacterDraft.HitDieResults`, `Character.HitDieResults`: rolled, in the app
+  or with real dice, or the fixed value taken) or else the fixed value, the die's average rounded
   up. The CON modifier is added on the sheet, never stored, so a CON raised later raises every
   level. Both editions let the player roll or take the fixed value; the owner chose to offer
-  both on every level-up (#28). The levels a character is created with take the fixed value.
+  both on every level-up (#28) and for each level a new character starts with above level 1
+  (#141). Which levels the hit points step asks about is `CharacterDraft.HitDieLevels`: a
+  level-up's new level only, or every level from 2 of a new character or an edit, so a level-1
+  character has no such step. Rolling level 1 is a house rule and is not offered.
+  `SetHitDieResults` adds a level-up's one result to those kept, and replaces a new character's
+  or an edit's, so a level left alone takes the fixed value. A lower level in step 1 drops the
+  results above it, and another class drops them all.
 - Hit points some choices add every level (Dwarven Toughness, a 2014 hill dwarf's and every
   2024 dwarf's; Draconic Resilience; Tough) are in `Domain/Services/HitPointBonuses`, by id.
   `SeedDataIntegrityTests` checks both ways: the ids exist, and no trait, feature or feat of

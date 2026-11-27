@@ -26,7 +26,7 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
   new draft, dropping an edit left unsaved; finalize then replaces the character it names and
   deletes the old build. A level-up (`StartCharacterLevelUpCommandHandler`) opens it the same
   way (`CharacterEditStarter`), then one level up; `SetHitPointsCommandHandler` keeps its hit
-  die result, and `SetCharacterClassCommandHandler` refuses another class in one. `ICharacterDraftRepository.GetByIdForUpdateAsync` finds only unfinished
+  die result (and a new character's or an edit's for each level from 2, `CharacterDraft.HitDieLevels`), and `SetCharacterClassCommandHandler` refuses another class in one. `ICharacterDraftRepository.GetByIdForUpdateAsync` finds only unfinished
   drafts, so no step, finalize or delete can touch a build; an edit is never the
   `GetIncompleteDraft` a new character resumes.
 - A saved character's sheet, on the page and as a PDF, is loaded and worked out by one

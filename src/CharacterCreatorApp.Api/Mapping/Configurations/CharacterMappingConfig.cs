@@ -44,6 +44,9 @@ public class CharacterMappingConfig : IRegister
         config.NewConfig<PactMagicStat, PactMagicStatApiResponse>()
             .MapToConstructor(true);
 
+        config.NewConfig<SpellcastingStat, SpellcastingStatApiResponse>()
+            .MapToConstructor(true);
+
         config.NewConfig<CharacterStats, CharacterStatsApiResponse>()
             .MapToConstructor(true);
 

@@ -11,7 +11,8 @@ namespace CharacterCreatorApp.Domain.Services;
 /// classes are the class's and subclass's (Class.UnarmoredArmorClassesWith), and the spell slots
 /// the class's or subclass's table row for the level (Class.SpellSlotsAt). The hit die results
 /// are the levels a level-up rolled for, or took the fixed value of (Character.HitDieResults).
-/// Nothing has a default, so a caller cannot leave a part out without the compiler saying so.
+/// The spellcasting sources are what the character casts spells with, the class's first
+/// (Class.SpellcastingAt), then its race's and feats' spell picks. Nothing has a default, so a caller cannot leave a part out without the compiler saying so.
 /// </summary>
 public sealed record CharacterStatsInput(
     int Level,
@@ -26,12 +27,14 @@ public sealed record CharacterStatsInput(
     string? SubclassId,
     IReadOnlyCollection<string> FeatIds,
     IReadOnlyCollection<UnarmoredArmorClass> UnarmoredArmorClasses,
-    SpellSlots SpellSlots)
+    SpellSlots SpellSlots,
+    IReadOnlyList<SpellcastingSource> SpellcastingSources)
 {
     /// <summary>
     /// The input for a character at its level: the class's saving throws joined with the ones
     /// feats add, the race's speed with its subrace's change, and the class's and subclass's
-    /// armour classes and spell slots. The review step and the saved sheet both come here, so
+    /// armour classes and spell slots, and the class's spellcasting before the race's and feats'
+    /// (bonusSpellcasting, from the caller, which knows the spell picks). The review step and the saved sheet both come here, so
     /// they cannot work the same character out differently.
     /// </summary>
     public static CharacterStatsInput For(
@@ -44,7 +47,8 @@ public sealed record CharacterStatsInput(
         Race race,
         Subrace? subrace,
         Class @class,
-        Subclass? subclass) =>
+        Subclass? subclass,
+        IEnumerable<SpellcastingSource> bonusSpellcasting) =>
         new(
             Level: level,
             AbilityScores: abilityScores,
@@ -58,5 +62,6 @@ public sealed record CharacterStatsInput(
             SubclassId: subclass?.Id,
             FeatIds: featIds,
             UnarmoredArmorClasses: @class.UnarmoredArmorClassesWith(subclass),
-            SpellSlots: @class.SpellSlotsAt(level, subclass));
+            SpellSlots: @class.SpellSlotsAt(level, subclass),
+            SpellcastingSources: new[] { @class.SpellcastingAt(level, subclass) }.OfType<SpellcastingSource>().Concat(bonusSpellcasting).ToList());
 }

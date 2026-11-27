@@ -29,7 +29,8 @@
   cleared choices. A level-up has no step 1, so its notes have no button.
 - Sheet numbers come from `CharacterStatsCalculator` through the API; don't recompute a modifier
   in a Razor page. The sheet and the review step show spell slots and Pact Magic through the
-  one shared component, Shared/SpellSlotsPanel.razor. What each step may offer follows the D&D rules in
+  one shared component, Shared/SpellSlotsPanel.razor, and the spell save DC and attack bonus
+  through Shared/SpellcastingPanel.razor. What each step may offer follows the D&D rules in
   `src/CharacterCreatorApp.Domain/CLAUDE.md`.
 
 - Unhandled errors (Blazor logs them) go to the API through `Services/ErrorReporting/ClientErrorLoggerProvider`

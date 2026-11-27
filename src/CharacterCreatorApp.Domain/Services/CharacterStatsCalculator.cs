@@ -9,7 +9,8 @@ namespace CharacterCreatorApp.Domain.Services;
 /// Works out the parts of a character sheet that follow from the character's own numbers.
 /// Armour and shields are not modelled yet, so armour class is the unarmoured one: 10 + DEX, or
 /// what the class or subclass gives instead (a barbarian's Unarmored Defense) when that is higher.
-/// Spell slots come from the class's or subclass's spell table, a warlock's Pact Magic apart.
+/// Spell slots come from the class's or subclass's spell table, a warlock's Pact Magic apart, and
+/// a spell save DC and attack bonus for each ability the character casts spells with.
 /// </summary>
 public static class CharacterStatsCalculator
 {
@@ -69,7 +70,32 @@ public static class CharacterStatsCalculator
             SavingThrows: savingThrows,
             Skills: skills,
             SpellSlots: GetSpellSlots(input.SpellSlots),
-            PactMagic: GetPactMagic(input.SpellSlots));
+            PactMagic: GetPactMagic(input.SpellSlots),
+            Spellcasting: GetSpellcasting(input.SpellcastingSources, scores, proficiencyBonus));
+    }
+
+    /// <summary>
+    /// One save DC (8 + proficiency bonus + modifier) and attack bonus (proficiency bonus +
+    /// modifier) per ability the character casts with, in the sources' order, so the class's comes
+    /// first; a later source with the same ability adds nothing. Magic items are not modelled.
+    /// </summary>
+    private static List<SpellcastingStat> GetSpellcasting(
+        IReadOnlyList<SpellcastingSource> sources, Dictionary<string, int> scores, int proficiencyBonus)
+    {
+        var stats = new List<SpellcastingStat>();
+
+        foreach (var source in sources)
+        {
+            if (!AbilityScore.TryNormalize(source.AbilityId, out var abilityId) || stats.Exists(s => s.AbilityId == abilityId))
+            {
+                continue;
+            }
+
+            var modifier = GetModifier(scores, abilityId);
+            stats.Add(new SpellcastingStat(source.Label, abilityId, 8 + proficiencyBonus + modifier, proficiencyBonus + modifier));
+        }
+
+        return stats;
     }
 
     private static PactMagicStat? GetPactMagic(SpellSlots spellSlots) =>

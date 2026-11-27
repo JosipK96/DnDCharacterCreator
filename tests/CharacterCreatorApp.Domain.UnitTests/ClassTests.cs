@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
+using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;
@@ -336,6 +337,70 @@ public class ClassTests
         // Assert
         slots.PerSpellLevel.Should().Equal(4, 2);
         slots.PactMagic.Should().BeNull();
+    }
+
+    [Fact]
+    public void SpellcastingAt_AClassThatCastsAtTheLevel_ReturnsItsAbilityLabelledWithIt()
+    {
+        // Arrange - a level 1 cleric, which prepares its spells and so knows no count
+        var cleric = Class("cleric", new ClassSpellProgression { ClassId = "cleric", CharacterLevel = 1, CantripsKnown = 3, MaxSpellLevel = 1 });
+        cleric.Spellcasting = new Spellcasting { ClassId = "cleric", SpellcastingAbility = "WIS" };
+
+        // Act
+        var spellcasting = cleric.SpellcastingAt(1, subclass: null);
+
+        // Assert
+        spellcasting.Should().Be(new SpellcastingSource("cleric", "WIS"));
+    }
+
+    [Fact]
+    public void SpellcastingAt_AClassWhoseTableGivesNothingYet_ReturnsNull()
+    {
+        // Arrange - a 2014 paladin at level 1: a row, but no cantrip or spell level
+        var paladin = Class("paladin", new ClassSpellProgression { ClassId = "paladin", CharacterLevel = 1 });
+        paladin.Spellcasting = new Spellcasting { ClassId = "paladin", SpellcastingAbility = "CHA" };
+
+        // Act
+        var spellcasting = paladin.SpellcastingAt(1, subclass: null);
+
+        // Assert
+        spellcasting.Should().BeNull();
+    }
+
+    [Fact]
+    public void SpellcastingAt_AClassWithoutATable_ReturnsTheSubclassAbilityLabelledWithTheSubclass()
+    {
+        // Arrange - a level 3 Eldritch Knight, whose fighter casts nothing
+        var eldritchKnight = new Subclass
+        {
+            Id = "eldritch-knight",
+            Name = "Eldritch Knight",
+            ClassId = "fighter",
+            SpellProgression =
+            [
+                new SubclassSpellProgression
+                {
+                    SubclassId = "eldritch-knight", CharacterLevel = 3, CantripsKnown = 2, SpellsKnown = 3, MaxSpellLevel = 1,
+                    SpellSlots = [2], SpellcastingAbility = "Intelligence"
+                }
+            ]
+        };
+
+        // Act
+        var spellcasting = Class("fighter").SpellcastingAt(3, eldritchKnight);
+
+        // Assert
+        spellcasting.Should().Be(new SpellcastingSource("Eldritch Knight", "Intelligence"));
+    }
+
+    [Fact]
+    public void SpellcastingAt_ANonCaster_ReturnsNull()
+    {
+        // Act - a fighter before its subclass
+        var spellcasting = Class("fighter").SpellcastingAt(1, subclass: null);
+
+        // Assert
+        spellcasting.Should().BeNull();
     }
 
     [Fact]

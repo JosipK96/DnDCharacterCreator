@@ -44,7 +44,39 @@ public class CharacterStatsInputTests
         input.SubclassId.Should().BeNull();
     }
 
-    private static CharacterStatsInput Build(Subrace? subrace = null, IEnumerable<string>? featSavingThrows = null) =>
+    [Fact]
+    public void For_AClassThatCastsNothing_TakesOnlyTheRacesAndFeatsSpellcasting()
+    {
+        // Arrange - a fighter, no subclass, with Magic Initiate
+        var input = Build(bonusSpellcasting: [new SpellcastingSource("Magic Initiate", "WIS")]);
+
+        // Assert
+        input.SpellcastingSources.Should().Equal(new SpellcastingSource("Magic Initiate", "WIS"));
+    }
+
+    [Fact]
+    public void For_ACaster_PutsTheClassesSpellcastingFirst()
+    {
+        // Arrange - a level 1 wizard with Magic Initiate
+        var wizard = new Class
+        {
+            Id = "wizard",
+            Edition = RulesEdition.Edition2014,
+            Name = "Wizard",
+            Source = "PHB",
+            HitDie = "1d6",
+            Spellcasting = new Spellcasting { ClassId = "wizard", SpellcastingAbility = "INT" },
+            SpellProgression = [new ClassSpellProgression { ClassId = "wizard", CharacterLevel = 1, CantripsKnown = 3, MaxSpellLevel = 1 }]
+        };
+
+        var input = Build(@class: wizard, bonusSpellcasting: [new SpellcastingSource("Magic Initiate", "WIS")]);
+
+        // Assert
+        input.SpellcastingSources.Should().Equal(new SpellcastingSource("Wizard", "INT"), new SpellcastingSource("Magic Initiate", "WIS"));
+    }
+
+    private static CharacterStatsInput Build(
+        Subrace? subrace = null, IEnumerable<string>? featSavingThrows = null, Class? @class = null, IEnumerable<SpellcastingSource>? bonusSpellcasting = null) =>
         CharacterStatsInput.For(
             level: 1,
             abilityScores: new Dictionary<string, int> { ["STR"] = 15, ["CON"] = 14 },
@@ -63,14 +95,17 @@ public class CharacterStatsInputTests
                 Subraces = subrace == null ? [] : [subrace]
             },
             subrace: subrace,
-            @class: new Class
-            {
-                Id = "fighter",
-                Edition = RulesEdition.Edition2014,
-                Name = "Fighter",
-                Source = "PHB",
-                HitDie = "1d10",
-                SavingThrowAbilityIds = ["STR", "CON"]
-            },
-            subclass: null);
+            @class: @class ?? Fighter(),
+            subclass: null,
+            bonusSpellcasting: bonusSpellcasting ?? []);
+
+    private static Class Fighter() => new()
+    {
+        Id = "fighter",
+        Edition = RulesEdition.Edition2014,
+        Name = "Fighter",
+        Source = "PHB",
+        HitDie = "1d10",
+        SavingThrowAbilityIds = ["STR", "CON"]
+    };
 }

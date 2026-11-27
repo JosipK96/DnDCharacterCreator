@@ -38,5 +38,5 @@ public class SpellSlotsPanelTests : BunitContext
     }
 
     private static CharacterStatsApiResponse Stats(List<SpellSlotStatApiResponse> slots, PactMagicStatApiResponse? pactMagic) => new(
-        2, 8, 12, 2, 30, "1d8", 11, [], [], [], slots, pactMagic);
+        2, 8, 12, 2, 30, "1d8", 11, [], [], [], slots, pactMagic, []);
 }

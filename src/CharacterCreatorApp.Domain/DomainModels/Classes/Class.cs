@@ -115,6 +115,24 @@ public class Class
     }
 
     /// <summary>
+    /// The ability a character of this level casts its class spells with, labelled with the class,
+    /// or with the subclass when the class has no spell table of its own (an Eldritch Knight's
+    /// fighter), as in SpellSlotsAt. Null while the tables give no cantrip or spell level yet: a
+    /// 2014 paladin at level 1, a fighter before its subclass.
+    /// </summary>
+    public SpellcastingSource? SpellcastingAt(int level, Subclass? subclass)
+    {
+        if (Spellcasting != null && SpellProgression.Find(p => p.CharacterLevel == level) is { } row)
+        {
+            return Casts(row.CantripsKnown, row.MaxSpellLevel) ? new SpellcastingSource(Name, Spellcasting.SpellcastingAbility) : null;
+        }
+
+        return subclass?.SpellProgression.Find(p => p.CharacterLevel == level) is { } subclassRow && Casts(subclassRow.CantripsKnown, subclassRow.MaxSpellLevel)
+            ? new SpellcastingSource(subclass.Name, subclassRow.SpellcastingAbility)
+            : null;
+    }
+
+    /// <summary>
     /// The choices a character of this class gains on reaching this level from the one before,
     /// as DraftChoice names: a subclass from SubclassLevel on, an improvement at one of AsiLevels
     /// or a Fighting Style a feature gives, and spells when the spell table, the prepared count
@@ -167,6 +185,8 @@ public class Class
                 && after.Spells == before.Spells
                 && after.MaxSpellLevel == before.MaxSpellLevel
                 && after.SchoolLimit?.AnySchoolSpells == before.SchoolLimit?.AnySchoolSpells;
+
+    private static bool Casts(int cantripsKnown, int maxSpellLevel) => cantripsKnown > 0 || maxSpellLevel > 0;
 
     private static SpellSlots SlotsOf(List<int> perSpellLevel, int pactMagicSlots, int maxSpellLevel) =>
         new(perSpellLevel, pactMagicSlots > 0 ? new PactMagicSlots(pactMagicSlots, maxSpellLevel) : null);

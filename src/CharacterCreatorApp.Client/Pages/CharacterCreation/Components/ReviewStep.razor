@@ -90,6 +90,13 @@
                 </Room>
             </div>
 
+            @if (preview.Stats.Spellcasting.Count > 0)
+            {
+                <Room Title="Spellcasting">
+                    <SpellcastingPanel Spellcasting="preview.Stats.Spellcasting" />
+                </Room>
+            }
+
             @if (preview.Stats.SpellSlots.Count > 0 || preview.Stats.PactMagic != null)
             {
                 <Room Title="Spell Slots">

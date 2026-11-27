@@ -130,6 +130,17 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   (`PactMagicSlots`, all of the row's `MaxSpellLevel`, back on a short rest). Both handlers
   pass `Class.SpellSlotsAt` through `CharacterStatsInput`, and the calculator turns it into a
   row per spell level and `CharacterStats.PactMagic`; never pick a caster type by class id.
+- The spell save DC is 8 + proficiency bonus + the spellcasting ability's modifier, the spell
+  attack bonus proficiency bonus + modifier (`CharacterStats.Spellcasting`, a
+  `SpellcastingStat` per ability). The class's ability comes first (`Class.SpellcastingAt`: the
+  class's `Spellcasting`, or the subclass row's for an Eldritch Knight or Arcane Trickster, once
+  the table gives a cantrip or a spell level). `BonusSpellcasting` adds the race's spell pick
+  and each feat spell pick: the ability the player picked (the 2024 Magic Initiate), else that
+  of the class whose list the spells come from (the 2014 Magic Initiate, a high elf's wizard
+  cantrip). Another ability gets its own pair, labelled with the race or feat; the same one adds
+  nothing. Race spells that come with no pick (a tiefling's) name no ability in the data and add
+  no numbers, and magic items are not modelled. The sheet, the review step
+  (`Shared/SpellcastingPanel.razor`) and the PDF show these numbers and never work them out.
 
 ## Languages
 

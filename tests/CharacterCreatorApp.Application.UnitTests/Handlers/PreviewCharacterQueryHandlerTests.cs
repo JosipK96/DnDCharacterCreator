@@ -199,6 +199,21 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
     }
 
     [Fact]
+    public async Task Handle_ForACaster_WorksOutTheSpellSaveDcAndAttackBonusOfItsClassAbility()
+    {
+        // Arrange - a level 1 cleric
+        ArrangePreparedCasterDraft("cleric", "Wisdom", 1, 14, ["level_1_spell_1", "level_1_spell_2", "level_1_spell_3"]);
+
+        // Act
+        var result = await _sut.Handle(new PreviewCharacterQuery(_draftId), _cts.Token);
+
+        // Assert - 8 + proficiency bonus + the final Wisdom modifier, race bonuses included
+        var stats = result.Value.Stats;
+        var wisdom = stats.Abilities.Single(a => a.AbilityId == "WIS").Modifier;
+        stats.Spellcasting.Should().Equal(new SpellcastingStat("cleric", "WIS", 8 + stats.ProficiencyBonus + wisdom, stats.ProficiencyBonus + wisdom));
+    }
+
+    [Fact]
     public async Task Handle_ForANonCaster_ListsNoSpellSlots()
     {
         // Arrange - a champion fighter
@@ -210,6 +225,7 @@ public class PreviewCharacterQueryHandlerTests : IDisposable
         // Assert
         result.Value.Stats.SpellSlots.Should().BeEmpty();
         result.Value.Stats.PactMagic.Should().BeNull();
+        result.Value.Stats.Spellcasting.Should().BeEmpty();
     }
 
     [Fact]

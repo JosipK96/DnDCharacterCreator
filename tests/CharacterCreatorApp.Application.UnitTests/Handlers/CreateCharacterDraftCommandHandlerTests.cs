@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.CreateDraft;
 using CharacterCreatorApp.Application.Persistence;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
 using FluentAssertions;
@@ -27,6 +28,32 @@ public class CreateCharacterDraftCommandHandlerTests : IDisposable
             _userContextMock.Object,
             _unitOfWorkMock.Object,
             _timeProvider);
+
+        // No unfinished new character unless a test says otherwise
+        _draftRepositoryMock
+            .Setup(r => r.GetIncompleteDraft(It.IsAny<Guid>(), _cts.Token))
+            .ReturnsAsync((CharacterDraftDetailsReadModel?)null);
+    }
+
+    [Fact]
+    public async Task Handle_WhenTheUserHasAnUnfinishedNewCharacter_ReturnsItAndCreatesNothing()
+    {
+        // Arrange
+        var userId = Guid.NewGuid();
+        var existingId = Guid.NewGuid();
+        _userContextMock.Setup(x => x.UserId).Returns(userId);
+        _draftRepositoryMock
+            .Setup(r => r.GetIncompleteDraft(userId, _cts.Token))
+            .ReturnsAsync(new CharacterDraftDetailsReadModel { Id = existingId });
+
+        // Act
+        var result = await _sut.Handle(new CreateCharacterDraftCommand(), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().Be(existingId);
+        _draftRepositoryMock.Verify(r => r.CreateAsync(It.IsAny<CharacterDraft>(), It.IsAny<CancellationToken>()), Times.Never);
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]

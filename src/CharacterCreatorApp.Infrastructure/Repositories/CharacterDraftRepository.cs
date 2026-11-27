@@ -65,6 +65,9 @@ namespace CharacterCreatorApp.Infrastructure.Repositories
             return await _dbContext.CharacterDrafts
                 .AsNoTracking()
                 .Where(d => !d.IsCompleted && d.CharacterId == null && d.CreatedByUserId == userId)
+
+                // The newest, so data that already holds two always resumes the same one
+                .OrderByDescending(d => d.CreatedAt)
                 .Select(d => d.ToDetailsReadModel())
                 .FirstOrDefaultAsync(cancellationToken);
         }

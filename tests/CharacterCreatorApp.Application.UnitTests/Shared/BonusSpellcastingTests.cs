@@ -4,7 +4,9 @@ using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Application.ReadModels.Classes;
 using CharacterCreatorApp.Application.ReadModels.Feats;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.Services;
@@ -154,6 +156,112 @@ public class BonusSpellcastingTests : IDisposable
         sources.Should().BeEmpty();
     }
 
+    [Fact]
+    public async Task AttackCantripsAsync_AWizardsFireBoltAndLight_ListsOnlyFireBoltCastWithIntelligence()
+    {
+        // Arrange - Light calls for a save but deals no damage
+        var light = Cantrip("light", "Light", ["wizard"], damageType: null, dice: [], saveAbilityId: "DEX", attackType: null);
+
+        // Act
+        var cantrips = await AttackCantripsAsync([FireBolt(), light], Wizard());
+
+        // Assert
+        cantrips.Should().ContainSingle().Which.Should().BeEquivalentTo(
+            new AttackCantrip("Fire Bolt", "INT", "ranged", null, "fire", ["1d10", "2d10", "3d10", "4d10"]));
+    }
+
+    [Fact]
+    public async Task AttackCantripsAsync_ALevelledSpell_IsNotListed()
+    {
+        // Arrange - its damage depends on the slot
+        var guidingBolt = Cantrip("guiding_bolt", "Guiding Bolt", ["wizard"], dice: []);
+        guidingBolt.Level = 1;
+
+        // Act
+        var cantrips = await AttackCantripsAsync([guidingBolt], Wizard());
+
+        // Assert
+        cantrips.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task AttackCantripsAsync_AFeatsPick_IsCastWithTheFeatsAbility()
+    {
+        // Arrange - a wizard who took the 2024 Magic Initiate's Fire Bolt with Charisma
+        var pick = new FeatSpellPick { FeatId = "magic_initiate_2024", ClassId = "wizard-2024", SpellIds = ["fire_bolt"], AbilityId = "CHA" };
+
+        // Act
+        var cantrips = await AttackCantripsAsync([FireBolt()], Wizard(), featSpells: [pick]);
+
+        // Assert
+        cantrips.Should().ContainSingle().Which.AbilityId.Should().Be("CHA");
+    }
+
+    [Fact]
+    public async Task AttackCantripsAsync_AHighElfFightersWizardCantrip_IsCastWithTheRacesAbility()
+    {
+        // Arrange - Fire Bolt is not on the fighter's list, so the race gave it
+        var highElf = new Subrace
+        {
+            Id = "high_elf", Name = "High Elf", Source = "PHB", RaceId = "elf",
+            SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1 },
+        };
+
+        // Act
+        var cantrips = await AttackCantripsAsync([FireBolt()], Fighter(), race: Elf(highElf), subrace: highElf);
+
+        // Assert
+        cantrips.Should().ContainSingle().Which.AbilityId.Should().Be("INT");
+    }
+
+    [Fact]
+    public async Task AttackCantripsAsync_ARacesOwnCantripOnTheClassesListToo_IsCastWithTheRacesAbility()
+    {
+        // Arrange - a fire genasi druid's Produce Flame comes with the race, cast with Constitution
+        var genasi = new Race
+        {
+            Id = "genasi", Name = "Genasi", Edition = RulesEdition.Edition2014, Source = "EEPC", Size = "Medium", SpellcastingAbility = "CON",
+            Spells = [new RaceSpell { RaceId = "genasi", SpellId = "produce_flame", Level = 1 }],
+        };
+        var druid = Wizard("druid", "WIS");
+
+        // Act
+        var cantrips = await AttackCantripsAsync([Cantrip("produce_flame", "Produce Flame", ["druid"])], druid, race: genasi);
+
+        // Assert
+        cantrips.Should().ContainSingle().Which.AbilityId.Should().Be("CON");
+    }
+
+    [Fact]
+    public async Task AttackCantripsAsync_ASubclassCantripOffTheClassesList_IsCastWithTheClassesAbility()
+    {
+        // Arrange - a Celestial warlock's Sacred Flame, from its subclass
+        var warlock = Wizard("warlock", "CHA");
+        var celestial = new Subclass
+        {
+            Id = "celestial", Name = "The Celestial", ClassId = "warlock",
+            Spells = [new SpellSubclass { SpellId = "sacred_flame", SubclassId = "celestial", Level = 1, IsAlwaysPrepared = true }],
+        };
+        var sacredFlame = Cantrip("sacred_flame", "Sacred Flame", ["cleric"], attackType: null, saveAbilityId: "DEX");
+
+        // Act
+        var cantrips = await AttackCantripsAsync([sacredFlame], warlock, subclass: celestial);
+
+        // Assert
+        cantrips.Should().ContainSingle().Which.AbilityId.Should().Be("CHA");
+    }
+
+    [Fact]
+    public async Task AttackCantripsAsync_NoAbilityToCastWith_LeavesTheCantripOut()
+    {
+        // Arrange - a fighter with no race or feat spells
+        // Act
+        var cantrips = await AttackCantripsAsync([FireBolt()], Fighter());
+
+        // Assert
+        cantrips.Should().BeEmpty();
+    }
+
     public void Dispose()
     {
         _cts.Dispose();
@@ -184,6 +292,52 @@ public class BonusSpellcastingTests : IDisposable
         Edition = RulesEdition.Edition2014,
         HitDie = "1d8",
         Spellcasting = new SpellcastingReadModel { SpellcastingAbility = ability },
+    };
+
+    private Task<List<AttackCantrip>> AttackCantripsAsync(
+        List<SpellReadModel> spells, Class @class, Subclass? subclass = null, Race? race = null, Subrace? subrace = null, List<FeatSpellPick>? featSpells = null) =>
+        BonusSpellcasting.AttackCantripsAsync(
+            spells, 1, @class, subclass, race ?? Elf(subrace), subrace, null, featSpells ?? [], _classRepositoryMock.Object, _cts.Token);
+
+    private static SpellReadModel FireBolt() => Cantrip("fire_bolt", "Fire Bolt", ["wizard", "sorcerer"], damageType: "fire", dice: ["1d10", "2d10", "3d10", "4d10"]);
+
+    private static SpellReadModel Cantrip(
+        string id, string name, List<string> classIds, string? damageType = "fire", List<string>? dice = null, string? saveAbilityId = null, string? attackType = "ranged") => new()
+    {
+        Id = id,
+        Name = name,
+        Level = 0,
+        School = "Evocation",
+        CastingTimeUnit = "action",
+        RangeType = "point",
+        DurationType = "instant",
+        Description = string.Empty,
+        ClassIds = classIds,
+        AttackType = attackType,
+        SaveAbilityId = saveAbilityId,
+        DamageType = damageType,
+        CantripDamageDice = dice ?? ["1d8", "2d8", "3d8", "4d8"],
+    };
+
+    // A full caster of this class with three cantrips from level 1
+    private static Class Wizard(string id = "wizard", string ability = "INT") => new()
+    {
+        Id = id,
+        Edition = RulesEdition.Edition2014,
+        Name = id,
+        Source = "PHB",
+        HitDie = "1d6",
+        Spellcasting = new Spellcasting { ClassId = id, SpellcastingAbility = ability },
+        SpellProgression = [new ClassSpellProgression { ClassId = id, CharacterLevel = 1, CantripsKnown = 3, MaxSpellLevel = 1 }],
+    };
+
+    private static Class Fighter() => new()
+    {
+        Id = "fighter",
+        Edition = RulesEdition.Edition2014,
+        Name = "Fighter",
+        Source = "PHB",
+        HitDie = "1d10",
     };
 
     private static CharacterFeatReadModel Feat(string id, string name) => new()

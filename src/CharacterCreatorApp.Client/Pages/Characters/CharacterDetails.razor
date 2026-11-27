@@ -138,6 +138,13 @@
                     </Room>
                 }
 
+                @if (character.Stats is { Attacks.Count: > 0 } attackStats)
+                {
+                    <Room Title="Attacks">
+                        <AttacksTable Attacks="attackStats.Attacks" />
+                    </Room>
+                }
+
                 @if (character.Stats is { } slotStats && (slotStats.SpellSlots.Count > 0 || slotStats.PactMagic != null))
                 {
                     <Room Title="Spell Slots">

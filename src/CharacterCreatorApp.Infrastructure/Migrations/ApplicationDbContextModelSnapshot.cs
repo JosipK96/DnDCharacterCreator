@@ -1093,6 +1093,14 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("AttackType")
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
+
+                    b.PrimitiveCollection<List<string>>("CantripDamageDice")
+                        .IsRequired()
+                        .HasColumnType("text[]");
+
                     b.Property<int>("CastingTimeNumber")
                         .HasColumnType("integer");
 
@@ -1100,6 +1108,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
+
+                    b.Property<string>("DamageType")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1155,6 +1167,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
+
+                    b.Property<string>("SaveAbilityId")
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
 
                     b.Property<string>("School")
                         .IsRequired()

@@ -53,6 +53,6 @@ public class ReviewStepTests : WizardStepTestBase
 
     private static CharacterPreviewApiResponse Preview(List<SpellcastingStatApiResponse> spellcasting) => new(
         "Elminster", 1, "2014", "Human", null, "Wizard", null, "Sage", "Medium", [], [], [], [], [],
-        new CharacterStatsApiResponse(2, 8, 12, 2, 30, "1d6", 11, [], [], [], [], null, spellcasting),
+        new CharacterStatsApiResponse(2, 8, 12, 2, 30, "1d6", 11, [], [], [], [], null, spellcasting, []),
         null);
 }

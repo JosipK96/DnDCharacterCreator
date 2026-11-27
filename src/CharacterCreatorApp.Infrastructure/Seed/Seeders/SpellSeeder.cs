@@ -70,6 +70,10 @@ namespace CharacterCreatorApp.Infrastructure.Seed.Seeders
             DurationUnit = row.DurationUnit,
             IsConcentration = row.IsConcentration,
             IsRitual = row.IsRitual,
+            AttackType = row.AttackType,
+            SaveAbilityId = row.SaveAbilityId,
+            DamageType = row.DamageType,
+            CantripDamageDice = row.CantripDamageDice,
             Description = row.Description
         };
     }

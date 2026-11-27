@@ -34,6 +34,19 @@ public sealed record SpellSeedRow
     public string? DurationUnit { get; init; }
     public bool IsConcentration { get; init; }
     public bool IsRitual { get; init; }
+
+    /// <summary>"melee" or "ranged" for a spell attack.</summary>
+    public string? AttackType { get; init; }
+
+    /// <summary>The ability of the saving throw it calls for ("DEX").</summary>
+    public string? SaveAbilityId { get; init; }
+
+    /// <summary>"fire", or the types to pick from joined ("acid/cold/fire").</summary>
+    public string? DamageType { get; init; }
+
+    /// <summary>A cantrip's damage dice at character levels 1, 5, 11 and 17.</summary>
+    public List<string> CantripDamageDice { get; init; } = [];
+
     public required string Description { get; init; }
 }
 

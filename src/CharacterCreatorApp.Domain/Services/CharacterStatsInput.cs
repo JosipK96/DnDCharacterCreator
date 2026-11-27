@@ -12,7 +12,8 @@ namespace CharacterCreatorApp.Domain.Services;
 /// the class's or subclass's table row for the level (Class.SpellSlotsAt). The hit die results
 /// are the levels a level-up rolled for, or took the fixed value of (Character.HitDieResults).
 /// The spellcasting sources are what the character casts spells with, the class's first
-/// (Class.SpellcastingAt), then its race's and feats' spell picks. Nothing has a default, so a caller cannot leave a part out without the compiler saying so.
+/// (Class.SpellcastingAt), then its race's and feats' spell picks. The attack cantrips are the
+/// character's damaging cantrips, each with the ability it is cast with. Nothing has a default, so a caller cannot leave a part out without the compiler saying so.
 /// </summary>
 public sealed record CharacterStatsInput(
     int Level,
@@ -28,7 +29,8 @@ public sealed record CharacterStatsInput(
     IReadOnlyCollection<string> FeatIds,
     IReadOnlyCollection<UnarmoredArmorClass> UnarmoredArmorClasses,
     SpellSlots SpellSlots,
-    IReadOnlyList<SpellcastingSource> SpellcastingSources)
+    IReadOnlyList<SpellcastingSource> SpellcastingSources,
+    IReadOnlyList<AttackCantrip> AttackCantrips)
 {
     /// <summary>
     /// The input for a character at its level: the class's saving throws joined with the ones
@@ -48,7 +50,8 @@ public sealed record CharacterStatsInput(
         Subrace? subrace,
         Class @class,
         Subclass? subclass,
-        IEnumerable<SpellcastingSource> bonusSpellcasting) =>
+        IEnumerable<SpellcastingSource> bonusSpellcasting,
+        IEnumerable<AttackCantrip> attackCantrips) =>
         new(
             Level: level,
             AbilityScores: abilityScores,
@@ -63,5 +66,6 @@ public sealed record CharacterStatsInput(
             FeatIds: featIds,
             UnarmoredArmorClasses: @class.UnarmoredArmorClassesWith(subclass),
             SpellSlots: @class.SpellSlotsAt(level, subclass),
-            SpellcastingSources: new[] { @class.SpellcastingAt(level, subclass) }.OfType<SpellcastingSource>().Concat(bonusSpellcasting).ToList());
+            SpellcastingSources: new[] { @class.SpellcastingAt(level, subclass) }.OfType<SpellcastingSource>().Concat(bonusSpellcasting).ToList(),
+            AttackCantrips: attackCantrips.ToList());
 }

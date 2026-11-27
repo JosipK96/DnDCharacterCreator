@@ -124,6 +124,10 @@ internal sealed class SpellImporter(FiveEToolsSource source, EntryRenderer rende
             DurationUnit = duration?["duration"].Str("type"),
             IsConcentration = duration.Bool("concentration"),
             IsRitual = spell["meta"].Bool("ritual"),
+            AttackType = SpellAttackReader.AttackType(spell),
+            SaveAbilityId = SpellAttackReader.SaveAbilityId(spell),
+            DamageType = SpellAttackReader.DamageType(spell),
+            CantripDamageDice = SpellAttackReader.CantripDice(spell),
             Description = SrdText.Describe(id, spell, () => Description(spell), SrdText.SpellMechanics(spell))
         };
     }

@@ -219,6 +219,10 @@ public static class ReadModelExtensions
         DurationUnit = spell.DurationUnit,
         IsConcentration = spell.IsConcentration,
         IsRitual = spell.IsRitual,
+        AttackType = spell.AttackType,
+        SaveAbilityId = spell.SaveAbilityId,
+        DamageType = spell.DamageType,
+        CantripDamageDice = spell.CantripDamageDice,
         Description = spell.Description,
         ClassIds = spell.SpellClasses.Select(sc => sc.ClassId).ToList()
     };

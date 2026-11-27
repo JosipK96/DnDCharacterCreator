@@ -1,0 +1,40 @@
+@using CharacterCreatorApp.Client.Pages.CharacterCreation
+
+@* The sheet's attacks table: a row per damaging cantrip the character knows, with its attack
+   bonus or the save it calls for and its damage at the character's level. The rows come from the
+   API, which builds the PDF's from the same stats; the page shows it only for a character with one. *@
+
+<table class="w-full text-left">
+    <thead>
+        <tr class="text-sm text-pencil">
+            <th scope="col" class="font-normal">Name</th>
+            <th scope="col" class="font-normal">Attack / save</th>
+            <th scope="col" class="font-normal">Damage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var attack in Attacks)
+        {
+            <tr data-testid="attack">
+                <td data-testid="attack-name">@attack.Name</td>
+                <td data-testid="attack-hit">@Hit(attack)</td>
+                <td data-testid="attack-damage">@attack.Damage @attack.DamageType</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<SpellAttackStatApiResponse> Attacks { get; set; } = [];
+
+    // "+5" for a spell attack, "DC 13 Dexterity save" for a saving throw
+    private static string Hit(SpellAttackStatApiResponse attack)
+    {
+        if (attack.AttackBonus is { } bonus)
+        {
+            return bonus >= 0 ? $"+{bonus}" : bonus.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        return attack is { SaveDc: { } dc, SaveAbilityId: { } ability } ? $"DC {dc} {AbilityNames.Of(ability)} save" : string.Empty;
+    }
+}

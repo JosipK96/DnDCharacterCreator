@@ -97,7 +97,8 @@ public class CharacterStatsInputTests
             subrace: subrace,
             @class: @class ?? Fighter(),
             subclass: null,
-            bonusSpellcasting: bonusSpellcasting ?? []);
+            bonusSpellcasting: bonusSpellcasting ?? [],
+            attackCantrips: []);
 
     private static Class Fighter() => new()
     {

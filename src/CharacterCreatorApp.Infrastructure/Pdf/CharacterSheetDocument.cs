@@ -17,14 +17,19 @@ namespace CharacterCreatorApp.Infrastructure.Pdf;
 /// The character sheet: page 1 laid out the way players know it (abilities, saves and skills on
 /// the left, combat in the middle, proficiencies and features on the right), then features and
 /// spells in full on as many pages as they take, no entry split across two. Black on white, so it
-/// prints the same on any printer, and sized to fit A4 or Letter. Equipment, attacks and anything
-/// else the app does not model are drawn empty, for writing in by hand.
+/// prints the same on any printer, and sized to fit A4 or Letter. Equipment, weapon attacks and
+/// anything else the app does not model are drawn empty, for writing in by hand.
 /// </summary>
 internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character, SheetPaper paper) : IDocument
 {
     private const float BorderWidth = 0.75f;
+
+    // shortcut: page 1 is fixed, so a character with more damaging cantrips than this shows the
+    // first by name; give the table a continuation if anyone ever has more
+    private const int AttackRows = 5;
+
     private static readonly Color LabelColor = Colors.Grey.Darken3;
-    private static readonly string[] AttackHeadings = ["Name", "Atk bonus", "Damage / type"];
+    private static readonly string[] AttackHeadings = ["Name", "Atk bonus / DC", "Damage / type"];
     private static readonly string[] ProficiencyHeadings = ["Armour", "Weapons", "Tools"];
 
     private readonly CharacterDetailsReadModel _character = character;
@@ -32,7 +37,7 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
 
     // The read model carries Stats for every saved character; an empty one keeps the layout
     // drawing if it ever does not
-    private CharacterStats Stats => _character.Stats ?? new CharacterStats(0, 0, 0, 0, 0, string.Empty, 0, [], [], [], [], null, []);
+    private CharacterStats Stats => _character.Stats ?? new CharacterStats(0, 0, 0, 0, 0, string.Empty, 0, [], [], [], [], null, [], []);
 
     public DocumentMetadata GetMetadata() => new()
     {
@@ -252,7 +257,8 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
                 });
             });
 
-            // Weapons and armour come with equipment (#33): until then these are for writing in
+            // The damaging cantrips fill the first rows; weapons and armour come with equipment
+            // (#33), and until then the rest are for writing in
             column.Item().Border(BorderWidth).Padding(4).Column(attacks =>
             {
                 attacks.Item().Table(table =>
@@ -269,9 +275,18 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
                         table.Cell().Text(heading).FontSize(6).FontColor(LabelColor);
                     }
 
-                    for (var i = 0; i < 15; i++)
+                    var rows = Stats.Attacks
+                        .Select(a => new[] { a.Name, AttackHit(a), $"{a.Damage} {a.DamageType}" })
+                        .Take(AttackRows)
+                        .ToList();
+
+                    for (var i = 0; i < AttackRows; i++)
                     {
-                        table.Cell().PaddingRight(3).BorderBottom(BorderWidth).Height(14);
+                        for (var cell = 0; cell < AttackHeadings.Length; cell++)
+                        {
+                            var text = i < rows.Count ? rows[i][cell] : string.Empty;
+                            table.Cell().PaddingRight(3).BorderBottom(BorderWidth).Height(14).AlignBottom().ScaleToFit().Text(text).FontSize(7);
+                        }
                     }
                 });
 
@@ -637,4 +652,17 @@ internal sealed class CharacterSheetDocument(CharacterDetailsReadModel character
 
     private static string Signed(int value) =>
         value >= 0 ? $"+{value}" : value.ToString(CultureInfo.InvariantCulture);
+
+    // "+5" for a spell attack, "DC 13 DEX" for a saving throw: the column is too narrow for more
+    private static string AttackHit(SpellAttackStat attack)
+    {
+        if (attack.AttackBonus is { } bonus)
+        {
+            return Signed(bonus);
+        }
+
+        return attack is { SaveDc: { } dc, SaveAbilityId: { } ability }
+            ? $"DC {dc} {Abbreviation(ability).ToUpperInvariant()}"
+            : string.Empty;
+    }
 }

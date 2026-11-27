@@ -17,5 +17,10 @@ data feeds in `docs/conventions/dnd-rules.md`.
   a 5etools copy is resolved by `FiveEToolsCopy`, and what a subrace or version replaces moves
   off its race. A feat's race prerequisite is looked up in `RaceNames`, so races are imported
   before feats. The rules this follows are in `docs/conventions/dnd-rules.md`'s races section.
+- `SpellAttackReader` gives each spell its attack type (`spellAttack`), saving throw
+  (`savingThrow`) and damage type (`damageInflict`), and a cantrip its dice at levels 1, 5, 11
+  and 17 from `scalingLevelDice`, or the first `{@damage}` of its text when it has none
+  (Eldritch Blast). A cantrip whose damage starts at level 5 adds to a weapon's hit and gets no
+  dice; `SeedDataIntegrityTests` checks every other damaging cantrip has them.
 - A new book needs its title in `SourceBooks`, which stops the run on one it does not know.
 - After a run, run `SeedDataIntegrityTests` (Infrastructure tests, no database).

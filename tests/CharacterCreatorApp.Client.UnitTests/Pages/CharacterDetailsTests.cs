@@ -163,7 +163,42 @@ public class CharacterDetailsTests : WizardStepTestBase
         cut.FindAll("[data-testid='spellcasting']").Should().BeEmpty();
     }
 
-    private static CharacterStatsApiResponse Stats(List<SpellcastingStatApiResponse>? spellcasting = null) => new(
+    [Fact]
+    public void Render_ACharacterWithAttackCantrips_ListsThemInTheAttacksTable()
+    {
+        // Arrange - a spell attack and a saving throw, as the API works them out
+        var attacks = new List<SpellAttackStatApiResponse>
+        {
+            new("Fire Bolt", AttackBonus: 6, SaveDc: null, SaveAbilityId: null, Damage: "2d10", DamageType: "fire"),
+            new("Sacred Flame", AttackBonus: null, SaveDc: 13, SaveAbilityId: "DEX", Damage: "1d8", DamageType: "radiant"),
+        };
+        Api.Get($"/api/characters/{CharacterId}", Character(Stats(attacks: attacks)));
+
+        // Act
+        var cut = Render<CharacterDetails>(parameters => parameters.Add(p => p.Id, CharacterId));
+
+        // Assert
+        var rows = cut.FindAll("[data-testid='attack']");
+        rows.Select(r => r.QuerySelector("[data-testid='attack-name']")!.TextContent).Should().Equal("Fire Bolt", "Sacred Flame");
+        rows.Select(r => r.QuerySelector("[data-testid='attack-hit']")!.TextContent).Should().Equal("+6", "DC 13 Dexterity save");
+        rows.Select(r => r.QuerySelector("[data-testid='attack-damage']")!.TextContent).Should().Equal("2d10 fire", "1d8 radiant");
+    }
+
+    [Fact]
+    public void Render_NoAttackCantrips_ShowsNoAttacksTable()
+    {
+        // Arrange
+        Api.Get($"/api/characters/{CharacterId}", Character(Stats()));
+
+        // Act
+        var cut = Render<CharacterDetails>(parameters => parameters.Add(p => p.Id, CharacterId));
+
+        // Assert
+        cut.FindAll("[data-testid='attack']").Should().BeEmpty();
+    }
+
+    private static CharacterStatsApiResponse Stats(
+        List<SpellcastingStatApiResponse>? spellcasting = null, List<SpellAttackStatApiResponse>? attacks = null) => new(
         ProficiencyBonus: 2,
         MaxHitPoints: 12,
         ArmorClass: 13,
@@ -176,7 +211,8 @@ public class CharacterDetailsTests : WizardStepTestBase
         Skills: [new("athletics", "Athletics", "STR", 5, true), new("stealth", "Stealth", "DEX", 1, false)],
         SpellSlots: [],
         PactMagic: null,
-        Spellcasting: spellcasting ?? []);
+        Spellcasting: spellcasting ?? [],
+        Attacks: attacks ?? []);
 
     private static CharacterDetailsApiResponse Character(CharacterStatsApiResponse? stats = null) => new(
         CharacterId, "Bruenor", 1, "2014", "dwarf", null, "fighter", null, "soldier",

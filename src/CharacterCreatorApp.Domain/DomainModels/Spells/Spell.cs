@@ -23,6 +23,23 @@
         public string? DurationUnit { get; set; }  // "minute", "hour", "round"
         public bool IsConcentration { get; set; }
         public bool IsRitual { get; set; }
+
+        /// <summary>"melee" or "ranged" for a spell that makes a spell attack, else null.</summary>
+        public string? AttackType { get; set; }
+
+        /// <summary>The ability of the saving throw the spell calls for, by canonical id ("DEX"), else null.</summary>
+        public string? SaveAbilityId { get; set; }
+
+        /// <summary>What its damage is ("fire"), or the types to pick from ("acid/cold/fire"); null for none.</summary>
+        public string? DamageType { get; set; }
+
+        /// <summary>
+        /// A cantrip's damage dice at each of <see cref="Services.CantripDamage.TierLevels"/>.
+        /// Empty for a levelled spell, whose damage depends on the slot, and for a cantrip whose
+        /// damage adds to a weapon's hit.
+        /// </summary>
+        public List<string> CantripDamageDice { get; set; } = [];
+
         public required string Description { get; set; }
 
         public ICollection<SpellClass> SpellClasses { get; set; } = [];

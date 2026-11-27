@@ -545,6 +545,75 @@ public class CharacterStatsCalculatorTests
         stats.Spellcasting.Should().BeEmpty();
     }
 
+    [Theory]
+    [InlineData(1, "1d10")]
+    [InlineData(4, "1d10")]
+    [InlineData(5, "2d10")]
+    [InlineData(10, "2d10")]
+    [InlineData(11, "3d10")]
+    [InlineData(17, "4d10")]
+    [InlineData(20, "4d10")]
+    public void Calculate_FireBolt_DealsItsDiceForTheTierOfTheLevel(int level, string dice)
+    {
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(Input(level: level, attackCantrips: [FireBolt("INT")]));
+
+        // Assert
+        stats.Attacks.Should().ContainSingle().Which.Damage.Should().Be(dice);
+    }
+
+    [Fact]
+    public void Calculate_FireBoltOnALevelFiveWizard_HasTheSpellAttackBonusAndTwoD10Fire()
+    {
+        // Arrange - level 5 (+3) with Intelligence 16 (+3), cast with "Intelligence" spelled out
+        var input = Input(level: 5, scores: Scores(intelligence: 16), attackCantrips: [FireBolt("Intelligence")]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(input);
+
+        // Assert
+        stats.Attacks.Should().Equal(new SpellAttackStat("Fire Bolt", AttackBonus: 6, SaveDc: null, SaveAbilityId: null, Damage: "2d10", DamageType: "fire"));
+    }
+
+    [Fact]
+    public void Calculate_SacredFlameOnACleric_HasTheSaveDcAndDexteritySave()
+    {
+        // Arrange - level 1 (+2) with Wisdom 16 (+3)
+        var sacredFlame = new AttackCantrip("Sacred Flame", "WIS", AttackType: null, SaveAbilityId: "dexterity", "radiant", ["1d8", "2d8", "3d8", "4d8"]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(Input(scores: Scores(wisdom: 16), attackCantrips: [sacredFlame]));
+
+        // Assert
+        stats.Attacks.Should().Equal(new SpellAttackStat("Sacred Flame", AttackBonus: null, SaveDc: 13, SaveAbilityId: "DEX", Damage: "1d8", DamageType: "radiant"));
+    }
+
+    [Fact]
+    public void Calculate_TwoCantrips_ListsThemByName()
+    {
+        // Arrange
+        var rayOfFrost = new AttackCantrip("Ray of Frost", "INT", "ranged", null, "cold", ["1d8", "2d8", "3d8", "4d8"]);
+
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(Input(attackCantrips: [rayOfFrost, FireBolt("INT")]));
+
+        // Assert
+        stats.Attacks.Select(a => a.Name).Should().Equal("Fire Bolt", "Ray of Frost");
+    }
+
+    [Fact]
+    public void Calculate_NoAttackCantrips_HasNoAttacks()
+    {
+        // Act
+        var stats = CharacterStatsCalculator.Calculate(Input());
+
+        // Assert
+        stats.Attacks.Should().BeEmpty();
+    }
+
+    private static AttackCantrip FireBolt(string abilityId) =>
+        new("Fire Bolt", abilityId, "ranged", SaveAbilityId: null, "fire", ["1d10", "2d10", "3d10", "4d10"]);
+
     private static Dictionary<string, int> Scores(
         int strength = 15,
         int dexterity = 12,
@@ -575,7 +644,8 @@ public class CharacterStatsCalculatorTests
         UnarmoredArmorClass[]? unarmoredArmorClasses = null,
         SpellSlots? spellSlots = null,
         Dictionary<int, int>? hitDieResults = null,
-        SpellcastingSource[]? spellcasting = null) =>
+        SpellcastingSource[]? spellcasting = null,
+        AttackCantrip[]? attackCantrips = null) =>
         new(level, scores ?? Scores(), proficiencies ?? [], hitDie, hitDieResults ?? [], savingThrows ?? [], speed, raceId, subraceId, subclassId, feats ?? [],
-            unarmoredArmorClasses ?? [], spellSlots ?? SpellSlots.None, spellcasting ?? []);
+            unarmoredArmorClasses ?? [], spellSlots ?? SpellSlots.None, spellcasting ?? [], attackCantrips ?? []);
 }

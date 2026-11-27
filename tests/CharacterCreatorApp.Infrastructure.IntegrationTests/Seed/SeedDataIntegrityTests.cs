@@ -19,6 +19,9 @@ public partial class SeedDataIntegrityTests
 {
     private static readonly string DataPath = SeedService.DataPath;
 
+    // Booming Blade and Green-Flame Blade: their damage adds to a weapon's hit (the generator's SpellAttackReader)
+    private static readonly string[] WeaponCantripIds = ["booming_blade", "green_flame_blade"];
+
     [Fact]
     public async Task OnlySrdEntries_CarryTheBooksText()
     {
@@ -46,6 +49,44 @@ public partial class SeedDataIntegrityTests
 
         // Assert
         withBookText.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task EveryDamagingCantrip_HasPlainDiceForEachTier()
+    {
+        // Arrange - a cantrip that makes a spell attack or calls for a save and deals damage is a
+        // row of the sheet's attacks table, so it needs its dice at every tier. The weapon
+        // cantrips' damage only starts at level 5, added to a weapon's hit, which is not modelled
+        var spells = await ReadAsync<SpellSeedRow>(Path.Combine("Spells", "Spells.json"));
+        var damaging = spells
+            .Where(s => s.Level == 0 && (s.AttackType != null || s.SaveAbilityId != null) && s.DamageType != null)
+            .ToList();
+
+        // Act
+        var withoutDice = damaging
+            .Where(s => !WeaponCantripIds.Contains(s.Id))
+            .Where(s => !CantripDamage.IsAttackCantrip(s.Level, s.AttackType, s.SaveAbilityId, s.DamageType, s.CantripDamageDice)
+                || !s.CantripDamageDice.TrueForAll(d => PlainDice().IsMatch(d)))
+            .Select(s => s.Id)
+            .ToList();
+
+        // Assert
+        withoutDice.Should().BeEmpty();
+        damaging.Select(s => s.Id).Should().Contain(["fire_bolt", "fire_bolt_2024", "eldritch_blast", "sacred_flame", "toll_the_dead"]);
+    }
+
+    [Fact]
+    public async Task WeaponCantripIds_AreDamagingCantripsWithNoDice()
+    {
+        // Arrange - the list the test above leaves out, so it cannot name a spell that has gone
+        var spells = (await ReadAsync<SpellSeedRow>(Path.Combine("Spells", "Spells.json"))).ToDictionary(s => s.Id);
+
+        // Act & Assert
+        WeaponCantripIds.Should().AllSatisfy(id =>
+        {
+            spells.Should().ContainKey(id);
+            spells[id].Should().Match<SpellSeedRow>(s => s.Level == 0 && s.AttackType != null && s.DamageType != null && s.CantripDamageDice.Count == 0);
+        });
     }
 
     [Fact]
@@ -377,4 +418,7 @@ public partial class SeedDataIntegrityTests
     // "Wisdom saving throw. 1d8 necrotic damage.\n\nSee Xanathar's Guide to Everything, page 169."
     [System.Text.RegularExpressions.GeneratedRegex(@"\A([^\n]+\n\n)?See [^\n]+\.\z")]
     private static partial System.Text.RegularExpressions.Regex MechanicsAndReference();
+
+    [System.Text.RegularExpressions.GeneratedRegex("^[0-9]+d[0-9]+$")]
+    private static partial System.Text.RegularExpressions.Regex PlainDice();
 }

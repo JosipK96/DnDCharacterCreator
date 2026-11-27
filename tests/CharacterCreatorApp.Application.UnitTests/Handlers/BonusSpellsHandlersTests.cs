@@ -101,6 +101,51 @@ public class BonusSpellsHandlersTests : IDisposable
     }
 
     [Fact]
+    public async Task ChooseBonusSpells_WithTheAbilityTheRaceOffers_SavesItAsItsCanonicalId()
+    {
+        // Arrange - a high elf whose cantrip is cast with Intelligence, Wisdom or Charisma (the 2024 one's)
+        _raceRepositoryMock.Setup(r => r.GetByIdWithSubracesAsync("elf", _cts.Token)).ReturnsAsync(HighElf(["INT", "WIS", "CHA"]));
+        var pick = new FeatSpellPick { FeatId = "magic_initiate", ClassId = "cleric", SpellIds = ["light", "guidance", "bless"] };
+
+        // Act
+        var result = await ChooseHandler().Handle(new ChooseBonusSpellsCommand(_draftId, ["fire_bolt"], [pick], "wisdom"), _cts.Token);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        _draft.RaceSpellAbilityId.Should().Be("WIS");
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(_cts.Token), Times.Once);
+    }
+
+    [Fact]
+    public async Task ChooseBonusSpells_WithARaceAbilityTheRaceDoesNotOffer_RefusesItAndSavesNothing()
+    {
+        // Arrange - a 2014 high elf casts its cantrip with the wizard's Intelligence, no pick
+        var pick = new FeatSpellPick { FeatId = "magic_initiate", ClassId = "cleric", SpellIds = ["light", "guidance", "bless"] };
+
+        // Act
+        var result = await ChooseHandler().Handle(new ChooseBonusSpellsCommand(_draftId, ["fire_bolt"], [pick], "WIS"), _cts.Token);
+
+        // Assert
+        result.Errors.Should().ContainSingle().Which.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
+        _draft.RaceSpellAbilityId.Should().BeNull();
+        _unitOfWorkMock.Verify(u => u.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task GetBonusSpells_ForARaceWithASpellcastingAbilityToPick_ListsTheAbilities()
+    {
+        // Arrange
+        ArrangeClassNames();
+        _raceRepositoryMock.Setup(r => r.GetByIdWithSubracesAsync("elf", _cts.Token)).ReturnsAsync(HighElf(["INT", "WIS", "CHA"]));
+
+        // Act
+        var result = await QueryHandler().Handle(new GetBonusSpellsQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value[0].AbilityOptions.Should().Equal("INT", "WIS", "CHA");
+    }
+
+    [Fact]
     public async Task ChooseBonusSpells_ForADraftNotFound_ReturnsNotFound()
     {
         // Arrange
@@ -208,7 +253,7 @@ public class BonusSpellsHandlersTests : IDisposable
             new ClassReadModel { Id = "wizard", Name = "Wizard", Edition = RulesEdition.Edition2014, HitDie = "1d6" },
         ]);
 
-    private static Race HighElf() => new()
+    private static Race HighElf(List<string>? abilityOptions = null) => new()
     {
         Id = "elf",
         Name = "Elf",
@@ -223,7 +268,7 @@ public class BonusSpellsHandlersTests : IDisposable
                 Name = "High Elf",
                 RaceId = "elf",
                 Source = "PHB",
-                SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1 },
+                SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1, AbilityOptions = abilityOptions ?? [] },
             },
         ],
     };

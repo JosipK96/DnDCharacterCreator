@@ -362,6 +362,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             Traits = traits,
             Spells = Spells(id, parts.Select(p => p["additionalSpells"]), spellIdsByKey),
             SpellChoice = SpellChoice(parts.Select(p => p["additionalSpells"]), edition),
+            SpellcastingAbility = SpellcastingAbility(parts.Select(p => p["additionalSpells"])),
             Subraces = children,
         };
     }
@@ -418,6 +419,7 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
             Traits = traits,
             Spells = Spells(id, parts.Select(p => p["additionalSpells"]), spellIdsByKey),
             SpellChoice = SpellChoice(parts.Select(p => p["additionalSpells"]), edition),
+            SpellcastingAbility = SpellcastingAbility(parts.Select(p => p["additionalSpells"])),
         };
     }
 
@@ -674,15 +676,19 @@ internal sealed class RaceImporter(FiveEToolsSource source, EntryRenderer render
         return spells;
     }
 
-    // A named block is one lineage's, which that lineage's own version carries
     private static BonusSpellChoice? SpellChoice(IEnumerable<JsonNode?> additionalSpells, string edition) =>
-        AdditionalSpells.Choice(
-            additionalSpells
-                .SelectMany(node => node as JsonArray ?? (node is JsonObject one ? [one.DeepClone()] : []))
-                .OfType<JsonObject>()
-                .Where(block => block.Str("name") == null)
-                .ToList(),
-            edition);
+        AdditionalSpells.Choice(OwnBlocks(additionalSpells), edition);
+
+    private static string? SpellcastingAbility(IEnumerable<JsonNode?> additionalSpells) =>
+        AdditionalSpells.FixedAbility(OwnBlocks(additionalSpells));
+
+    // A named block is one lineage's, which that lineage's own version carries
+    private static List<JsonObject> OwnBlocks(IEnumerable<JsonNode?> additionalSpells) =>
+        additionalSpells
+            .SelectMany(node => node as JsonArray ?? (node is JsonObject one ? [one.DeepClone()] : []))
+            .OfType<JsonObject>()
+            .Where(block => block.Str("name") == null)
+            .ToList();
 
     private static int? Speed(JsonNode? speed) =>
         speed is JsonValue walk && walk.TryGetValue<int>(out var feet) ? feet : speed.Int("walk");

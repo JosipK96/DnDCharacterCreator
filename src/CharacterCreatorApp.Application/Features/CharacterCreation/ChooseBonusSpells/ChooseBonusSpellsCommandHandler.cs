@@ -38,14 +38,15 @@ public class ChooseBonusSpellsCommandHandler(
         var lists = await BonusSpells.LoadListsAsync(
             _spellRepository, raceSlot is null ? featSlots : featSlots.Append(raceSlot), cancellationToken);
 
-        var invalidPick = BonusSpells.FindInvalidPick(draft, raceSlot, featSlots, command.RaceSpellIds, command.FeatSpells, lists);
+        var invalidPick = BonusSpells.FindInvalidPick(
+            draft, raceSlot, featSlots, command.RaceSpellIds, command.RaceSpellAbilityId, command.FeatSpells, lists);
 
         if (invalidPick is not null)
         {
             return invalidPick.Value;
         }
 
-        draft.ChooseBonusSpells(command.RaceSpellIds, command.FeatSpells);
+        draft.ChooseBonusSpells(command.RaceSpellIds, command.FeatSpells, command.RaceSpellAbilityId);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Response.Success();

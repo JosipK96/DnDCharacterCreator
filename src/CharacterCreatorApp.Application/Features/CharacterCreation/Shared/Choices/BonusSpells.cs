@@ -87,13 +87,14 @@ public static class BonusSpells
     /// Returns null when the race's spells and one pick per feat slot, in order, are exactly what
     /// each gives: a list the feat offers (another each time a repeatable one is taken again),
     /// the cantrips and 1st-level spells it counts, every one on that list, from an allowed book,
-    /// none twice.
+    /// none twice, and a spellcasting ability where the race or feat offers one (none where not).
     /// </summary>
     public static Error? FindInvalidPick(
         CharacterDraft draft,
         BonusSpellSlot? raceSlot,
         IReadOnlyList<BonusSpellSlot> featSlots,
         IReadOnlyList<string> raceSpellIds,
+        string? raceSpellAbilityId,
         IReadOnlyList<FeatSpellPick> featSpells,
         IReadOnlyDictionary<string, List<SpellReadModel>> lists)
     {
@@ -103,10 +104,19 @@ public static class BonusSpells
             {
                 return CharacterDraftErrors.BonusSpellCount("The race", 0, 0, raceSpellIds.Count, 0);
             }
+
+            if (raceSpellAbilityId != null)
+            {
+                return CharacterDraftErrors.InvalidSpellcastingAbility("The race", []);
+            }
         }
         else if (FindInvalidSpells(draft, raceSlot, raceSlot.Choice.ClassIds, raceSpellIds, lists) is { } raceError)
         {
             return raceError;
+        }
+        else if (!AllowsAbility(raceSlot.Choice, raceSpellAbilityId))
+        {
+            return InvalidAbility(raceSlot);
         }
 
         if (featSpells.Count != featSlots.Count || featSpells.Where((pick, i) => pick.FeatId != featSlots[i].FeatId).Any())
@@ -135,13 +145,15 @@ public static class BonusSpells
 
             if (!AllowsAbility(slot.Choice, pick.AbilityId))
             {
-                return CharacterDraftErrors.InvalidSpellcastingAbility(
-                    slot.Name, slot.Choice.AbilityOptions.ConvertAll(id => AbilityScore.FromId(id).Name));
+                return InvalidAbility(slot);
             }
         }
 
         return null;
     }
+
+    private static Error InvalidAbility(BonusSpellSlot slot) =>
+        CharacterDraftErrors.InvalidSpellcastingAbility(slot.Name, slot.Choice.AbilityOptions.ConvertAll(id => AbilityScore.FromId(id).Name));
 
     private static void AddSlot(List<BonusSpellSlot> slots, string featId, IReadOnlyDictionary<string, FeatReadModel> featsById, string? fixedClassId)
     {

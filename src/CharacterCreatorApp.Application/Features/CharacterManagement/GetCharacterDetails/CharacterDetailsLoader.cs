@@ -105,7 +105,7 @@ public class CharacterDetailsLoader(
         character.Feats = content.Feats;
 
         var bonusSpellcasting = await BonusSpellcasting.LoadAsync(
-            race, subrace, character.FeatSpells, content.Feats, _classRepository, cancellationToken);
+            race, subrace, character.RaceSpellAbilityId, character.FeatSpells, content.Feats, _classRepository, cancellationToken);
 
         character.Stats = CharacterStatsCalculator.Calculate(CharacterStatsInput.For(
             character.Level,

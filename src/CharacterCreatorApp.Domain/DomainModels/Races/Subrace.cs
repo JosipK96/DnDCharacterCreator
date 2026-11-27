@@ -53,4 +53,7 @@ public class Subrace
 
     /// <summary>Spells the player picks from a class list: a high elf's wizard cantrip.</summary>
     public BonusSpellChoice? SpellChoice { get; set; }
+
+    /// <summary>The ability its own spells are cast with, by canonical id: a drow's "CHA"; see Race.SpellcastingAbility.</summary>
+    public string? SpellcastingAbility { get; set; }
 }

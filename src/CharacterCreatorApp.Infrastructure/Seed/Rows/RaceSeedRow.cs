@@ -52,6 +52,9 @@ public sealed record RaceSeedRow
     /// <summary>Spells the player picks from a class list; see Race.SpellChoiceWith.</summary>
     public BonusSpellChoice? SpellChoice { get; init; }
 
+    /// <summary>The ability its own spells are cast with ("CHA"); null when the player picks it. See Race.SpellcastingAbility.</summary>
+    public string? SpellcastingAbility { get; init; }
+
     public List<ToolChoice> ToolChoices { get; init; } = [];
 
     public List<SubraceSeedRow> Subraces { get; init; } = [];
@@ -99,6 +102,9 @@ public sealed record SubraceSeedRow
 
     /// <summary>Spells the player picks from a class list: a high elf's wizard cantrip.</summary>
     public BonusSpellChoice? SpellChoice { get; init; }
+
+    /// <summary>The ability its own spells are cast with: a drow's "CHA"; null when the player picks it.</summary>
+    public string? SpellcastingAbility { get; init; }
 }
 
 /// <summary>A fixed ability score increase, the ability as its canonical id ("CON").</summary>

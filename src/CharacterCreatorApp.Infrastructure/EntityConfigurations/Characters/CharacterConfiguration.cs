@@ -91,6 +91,9 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Character>
         builder.Property(c => c.Size)
             .HasMaxLength(20);
 
+        builder.Property(c => c.RaceSpellAbilityId)
+            .HasMaxLength(3);
+
         builder.Property(c => c.FeatSavingThrowAbilityIds)
             .HasColumnType("jsonb")
             .HasJsonConversion();

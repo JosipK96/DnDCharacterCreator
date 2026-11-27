@@ -134,13 +134,15 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   attack bonus proficiency bonus + modifier (`CharacterStats.Spellcasting`, a
   `SpellcastingStat` per ability). The class's ability comes first (`Class.SpellcastingAt`: the
   class's `Spellcasting`, or the subclass row's for an Eldritch Knight or Arcane Trickster, once
-  the table gives a cantrip or a spell level). `BonusSpellcasting` adds the race's spell pick
-  and each feat spell pick: the ability the player picked (the 2024 Magic Initiate), else that
-  of the class whose list the spells come from (the 2014 Magic Initiate, a high elf's wizard
-  cantrip). Another ability gets its own pair, labelled with the race or feat; the same one adds
-  nothing. Race spells that come with no pick (a tiefling's) name no ability in the data, and a
-  race cantrip whose ability the player picks (a 2024 elf's, the Kobold Legacy's) has that pick
-  stored nowhere, so neither adds numbers; magic items are not modelled. The sheet, the review step
+  the table gives a cantrip or a spell level). `BonusSpellcasting` adds the race's spells and
+  each feat spell pick: the ability the player picked (a 2024 high elf, the 2024 Magic
+  Initiate), else the race's own (`Race.SpellcastingAbilityWith`: a tiefling's or drow's
+  Charisma, from the data's fixed `ability`), else that of the class whose list the spells come
+  from (the 2014 Magic Initiate, a 2014 high elf's wizard cantrip). Another ability gets its own
+  pair, labelled with the subrace, race or feat; the same one adds nothing. A race whose spells'
+  ability is a pick but which has no spell pick to ask it with (a 2024 tiefling legacy, the 2024
+  drow and gnome lineages, most Monsters of the Multiverse races) adds no numbers yet; magic
+  items are not modelled. The sheet, the review step
   (`Shared/SpellcastingPanel.razor`) and the PDF show these numbers and never work them out.
 
 ## Languages
@@ -217,10 +219,11 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   the spells step and kept in `CharacterDraft.RaceSpellIds` and `FeatSpells`, one pick per such
   feat in the character's feat order. `Character.FeatSpells` keeps the feat picks after
   finalize, so the sheet, like the review step, lists a feat taken twice twice, each with its
-  own spells (`CharacterFeatEntries` pairs them for both). A feat whose data lets the player pick
-  the spellcasting ability (`BonusSpellChoice.AbilityOptions`: the 2024 Magic Initiate's INT, WIS
-  or CHA) keeps the pick with its spells (`FeatSpellPick.AbilityId`), and the sheet shows it with
-  them. `BonusSpells` lists what a draft owes and checks the
+  own spells (`CharacterFeatEntries` pairs them for both). A feat or race whose data lets the
+  player pick the spellcasting ability (`BonusSpellChoice.AbilityOptions`: the 2024 Magic
+  Initiate's or 2024 high elf's INT, WIS or CHA) keeps the pick with its spells
+  (`FeatSpellPick.AbilityId`, `CharacterDraft.RaceSpellAbilityId` and
+  `Character.RaceSpellAbilityId`), and the sheet shows it with them. `BonusSpells` lists what a draft owes and checks the
   picks, for `ChooseBonusSpells` and finalize alike; a background may fix its feat's list
   (`Background.FeatSpellListClassId`: an Acolyte's is the cleric's). A 2024 species that is
   "Small or Medium" keeps its pick in `CharacterDraft.Size`, a background that lets the player

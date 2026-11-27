@@ -282,6 +282,38 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         created.SpellIds.Should().Equal("fire_bolt");
     }
 
+    [Fact]
+    public async Task Handle_WithTheHighElf2024sAbilityNotPicked_ReturnsInvalidSpellcastingAbility()
+    {
+        // Arrange - its cantrip is picked, its Intelligence, Wisdom or Charisma is not
+        var draft = Draft();
+        draft.SetRace("elf", "high_elf");
+        draft.ChooseBonusSpells(["fire_bolt"], []);
+        ArrangeSpellList("wizard", Spell("fire_bolt", 0));
+
+        // Act
+        var result = await Finalize(draft, race: HighElf(["INT", "WIS", "CHA"]));
+
+        // Assert
+        AssertRefused(result, "CharacterDraft.InvalidSpellcastingAbility");
+    }
+
+    [Fact]
+    public async Task Handle_WithTheHighElf2024sAbilityPicked_KeepsItOnTheCharacter()
+    {
+        // Arrange
+        var draft = Draft();
+        draft.SetRace("elf", "high_elf");
+        draft.ChooseBonusSpells(["fire_bolt"], [], "CHA");
+        ArrangeSpellList("wizard", Spell("fire_bolt", 0));
+
+        // Act
+        var created = await FinalizeSuccessfully(draft, race: HighElf(["INT", "WIS", "CHA"]));
+
+        // Assert
+        created.RaceSpellAbilityId.Should().Be("CHA");
+    }
+
     // --- A feat's spells ---
 
     [Fact]
@@ -547,7 +579,7 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
         Speed = 25,
     };
 
-    private static Race HighElf()
+    private static Race HighElf(List<string>? abilityOptions = null)
     {
         var elf = Dwarf();
         elf.Id = "elf";
@@ -561,7 +593,7 @@ public class FinalizeFeatAndRaceChoicesTests : IDisposable
                 Name = "High Elf",
                 RaceId = "elf",
                 Source = "PHB",
-                SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1 },
+                SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1, AbilityOptions = abilityOptions ?? [] },
             },
         ];
         return elf;

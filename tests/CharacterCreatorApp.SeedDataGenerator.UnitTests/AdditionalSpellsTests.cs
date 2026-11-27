@@ -91,5 +91,40 @@ public class AdditionalSpellsTests
         choice.Should().BeNull();
     }
 
+    [Fact]
+    public void FixedAbility_ForTheTiefling_IsCharisma()
+    {
+        // Arrange - Thaumaturgy, then Hellish Rebuke at 3 and Darkness at 5
+        var blocks = Blocks("""
+            [
+              {"ability": "cha",
+               "innate": {"3": {"daily": {"1": ["hellish rebuke#2"]}}, "5": {"daily": {"1": ["darkness"]}}},
+               "known": {"1": ["thaumaturgy#c"]}}
+            ]
+            """);
+
+        // Act
+        var ability = AdditionalSpells.FixedAbility(blocks);
+
+        // Assert
+        ability.Should().Be("CHA");
+    }
+
+    [Theory]
+    [InlineData("""[{"ability": {"choose": ["int", "wis", "cha"]}, "known": {"1": ["prestidigitation#c"]}}]""")]
+    [InlineData("""[{"ability": "inherit", "known": {"1": ["light#c"]}}]""")]
+    [InlineData("""[{"ability": "cha", "known": {"1": ["thaumaturgy#c"]}}, {"ability": "int", "known": {"1": ["light#c"]}}]""")]
+    [InlineData("""[{"ability": "cha"}]""")]
+    [InlineData("""[]""")]
+    public void FixedAbility_ForAPickInheritTwoAbilitiesOrNoSpells_IsNull(string json)
+    {
+        // Act - a pick (a 2024 high elf's, which its spell choice holds instead), "inherit", two
+        // abilities, an ability with no spells, or no block at all
+        var ability = AdditionalSpells.FixedAbility(Blocks(json));
+
+        // Assert
+        ability.Should().BeNull();
+    }
+
     private static List<JsonObject> Blocks(string json) => JsonNode.Parse(json)!.AsArray().OfType<JsonObject>().ToList();
 }

@@ -136,8 +136,13 @@ public class CharacterDraftService(HttpClient http)
     }
 
     /// <summary>The race's spells and one pick per feat, in the order GetBonusSpellsAsync lists them.</summary>
-    public Task ChooseBonusSpellsAsync(Guid draftId, List<string> raceSpellIds, List<FeatSpellPickApiModel> featSpells) =>
-        PutAsync(draftId, "bonus-spells", new ChooseBonusSpellsApiRequest { RaceSpellIds = raceSpellIds, FeatSpells = featSpells });
+    public Task ChooseBonusSpellsAsync(Guid draftId, List<string> raceSpellIds, string? raceSpellAbilityId, List<FeatSpellPickApiModel> featSpells) =>
+        PutAsync(draftId, "bonus-spells", new ChooseBonusSpellsApiRequest
+        {
+            RaceSpellIds = raceSpellIds,
+            RaceSpellAbilityId = raceSpellAbilityId,
+            FeatSpells = featSpells,
+        });
 
     /// <summary>The user's unfinished draft, or null when there is none to resume.</summary>
     public async Task<CharacterDraftDetailsApiResponse?> GetIncompleteDraftAsync()

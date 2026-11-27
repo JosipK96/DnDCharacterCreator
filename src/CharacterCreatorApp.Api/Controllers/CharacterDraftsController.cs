@@ -302,7 +302,7 @@ namespace CharacterCreatorApp.Api.Controllers
         public async Task<IActionResult> ChooseBonusSpells(Guid draftId, [FromBody] ChooseBonusSpellsApiRequest request, CancellationToken cancellationToken)
         {
             var featSpells = request.FeatSpells.ConvertAll(pick => new FeatSpellPick { FeatId = pick.FeatId, ClassId = pick.ClassId, SpellIds = pick.SpellIds, AbilityId = pick.AbilityId });
-            var response = await _sender.Send(new ChooseBonusSpellsCommand(draftId, request.RaceSpellIds, featSpells), cancellationToken);
+            var response = await _sender.Send(new ChooseBonusSpellsCommand(draftId, request.RaceSpellIds, featSpells, request.RaceSpellAbilityId), cancellationToken);
 
             return NoContentOrProblem(response);
         }

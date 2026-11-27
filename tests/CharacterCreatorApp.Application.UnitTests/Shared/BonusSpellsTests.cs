@@ -124,7 +124,7 @@ public class BonusSpellsTests
     public void FindInvalidPick_WithRaceSpellsAndNoRaceChoice_ReturnsBonusSpellCount()
     {
         // Act
-        var error = BonusSpells.FindInvalidPick(Draft(), null, [], ["fire_bolt"], [], Lists);
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [], ["fire_bolt"], null, [], Lists);
 
         // Assert
         error!.Value.Code.Should().Be("CharacterDraft.BonusSpellCount");
@@ -172,7 +172,7 @@ public class BonusSpellsTests
         var pick = Pick("cleric", "light", "guidance", "bless");
 
         // Act
-        var error = BonusSpells.FindInvalidPick(Draft(), null, [slot, slot], [], [pick, pick], Lists);
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [slot, slot], [], null, [pick, pick], Lists);
 
         // Assert
         error!.Value.Code.Should().Be("CharacterDraft.BonusSpellListRepeated");
@@ -220,7 +220,7 @@ public class BonusSpellsTests
         var pick = Pick("cleric", spellIds);
 
         // Act
-        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiateSlot()], [], [pick], lists);
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiateSlot()], [], null, [pick], lists);
 
         // Assert
         error!.Value.Code.Should().Be("CharacterDraft.BonusSpellCount");
@@ -236,7 +236,7 @@ public class BonusSpellsTests
         pick.AbilityId = abilityId;
 
         // Act
-        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiate2024Slot()], [], [pick], Lists);
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiate2024Slot()], [], null, [pick], Lists);
 
         // Assert
         error.Should().BeNull();
@@ -253,7 +253,7 @@ public class BonusSpellsTests
         pick.AbilityId = abilityId;
 
         // Act
-        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiate2024Slot()], [], [pick], Lists);
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiate2024Slot()], [], null, [pick], Lists);
 
         // Assert
         error!.Value.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
@@ -269,11 +269,62 @@ public class BonusSpellsTests
         pick.AbilityId = "WIS";
 
         // Act
-        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiateSlot()], [], [pick], Lists);
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [MagicInitiateSlot()], [], null, [pick], Lists);
 
         // Assert
         error!.Value.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
         error.Value.Description.Should().Be("Magic Initiate has no spellcasting ability to pick.");
+    }
+
+    [Theory]
+    [InlineData("WIS")]
+    [InlineData("wisdom")]
+    public void FindInvalidPick_WithASpellcastingAbilityTheRaceOffers_ReturnsNull(string abilityId)
+    {
+        // Act - a 2024 high elf's cantrip, cast with Intelligence, Wisdom or Charisma
+        var error = BonusSpells.FindInvalidPick(Draft(), HighElf2024Slot(), [], ["fire_bolt"], abilityId, [], Lists);
+
+        // Assert
+        error.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("STR")]
+    public void FindInvalidPick_WithoutASpellcastingAbilityTheRaceOffers_ReturnsInvalidSpellcastingAbility(string? abilityId)
+    {
+        // Act
+        var error = BonusSpells.FindInvalidPick(Draft(), HighElf2024Slot(), [], ["fire_bolt"], abilityId, [], Lists);
+
+        // Assert
+        error!.Value.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
+        error.Value.Description.Should().Be(
+            "High Elf's spellcasting ability is one of Intelligence, Wisdom, Charisma; pick it with the spells.");
+    }
+
+    [Fact]
+    public void FindInvalidPick_WithARaceAbilityForARaceOfferingNone_ReturnsInvalidSpellcastingAbility()
+    {
+        // Arrange - a 2014 high elf casts its cantrip with the wizard's Intelligence
+        var highElf = new BonusSpellSlot(null, "High Elf", new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1 });
+
+        // Act
+        var error = BonusSpells.FindInvalidPick(Draft(), highElf, [], ["fire_bolt"], "WIS", [], Lists);
+
+        // Assert
+        error!.Value.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
+        error.Value.Description.Should().Be("High Elf has no spellcasting ability to pick.");
+    }
+
+    [Fact]
+    public void FindInvalidPick_WithARaceAbilityAndNoRaceChoice_ReturnsInvalidSpellcastingAbility()
+    {
+        // Act
+        var error = BonusSpells.FindInvalidPick(Draft(), null, [], [], "WIS", [], Lists);
+
+        // Assert
+        error!.Value.Code.Should().Be("CharacterDraft.InvalidSpellcastingAbility");
+        error.Value.Description.Should().Be("The race has no spellcasting ability to pick.");
     }
 
     [Fact]
@@ -296,12 +347,16 @@ public class BonusSpellsTests
             new BonusSpellSlot(null, "High Elf", new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1 }),
             [MagicInitiateSlot()],
             raceSpellIds,
+            null,
             featSpells,
             Lists);
 
     private static BonusSpellSlot MagicInitiateSlot() => new("magic_initiate", "Magic Initiate", MagicInitiate);
 
     private static BonusSpellSlot MagicInitiate2024Slot() => new("magic_initiate", "Magic Initiate", MagicInitiate2024);
+
+    private static BonusSpellSlot HighElf2024Slot() =>
+        new(null, "High Elf", new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1, AbilityOptions = ["INT", "WIS", "CHA"] });
 
     private static FeatSpellPick Pick(string classId, params string[] spellIds) =>
         new() { FeatId = "magic_initiate", ClassId = classId, SpellIds = [.. spellIds] };

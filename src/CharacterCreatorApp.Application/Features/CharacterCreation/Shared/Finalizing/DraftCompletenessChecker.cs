@@ -171,6 +171,7 @@ public static class DraftCompletenessChecker
                 BonusSpells.RaceSlot(race, subrace),
                 BonusSpells.FeatSlots(draft, background, sources.Feats.ToDictionary(f => f.Id)),
                 draft.RaceSpellIds,
+                draft.RaceSpellAbilityId,
                 draft.FeatSpells,
                 sources.BonusSpellLists);
     }

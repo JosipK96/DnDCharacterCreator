@@ -48,6 +48,12 @@ public class Character : Entity<Guid>, IAuditable
     /// </summary>
     public List<FeatSpellPick> FeatSpells { get; private set; } = [];
 
+    /// <summary>
+    /// The ability picked for the race's spells (CharacterDraft.RaceSpellAbilityId: a 2024 high
+    /// elf's), by canonical id. Null where the race offers no pick, or for a character made before it was kept.
+    /// </summary>
+    public string? RaceSpellAbilityId { get; private set; }
+
     /// <summary>"Small" or "Medium". Null for a character made before the size was kept; its race's size stands.</summary>
     public string? Size { get; private set; }
 
@@ -133,6 +139,7 @@ public class Character : Entity<Guid>, IAuditable
         SpellIds = [.. rebuilt.SpellIds];
         FeatIds = [.. rebuilt.FeatIds];
         FeatSpells = [.. rebuilt.FeatSpells];
+        RaceSpellAbilityId = rebuilt.RaceSpellAbilityId;
         Size = rebuilt.Size;
         FeatSavingThrowAbilityIds = [.. rebuilt.FeatSavingThrowAbilityIds];
         HitDieResults = new Dictionary<int, int>(rebuilt.HitDieResults);
@@ -258,6 +265,12 @@ public class Character : Entity<Guid>, IAuditable
     public void SetFeatSpells(IEnumerable<FeatSpellPick> featSpells)
     {
         FeatSpells = featSpells.ToList();
+    }
+
+    /// <summary>The ability picked for the race's spells, as the draft kept it; null where there was no pick.</summary>
+    public void SetRaceSpellAbility(string? abilityId)
+    {
+        RaceSpellAbilityId = abilityId;
     }
 
     /// <summary>"Small" or "Medium": the race's only size, or the one picked for a species that may be either.</summary>

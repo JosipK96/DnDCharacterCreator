@@ -43,6 +43,9 @@ public sealed class CharacterDetailsReadModel
     public List<string> FeatIds { get; set; } = [];
     public List<FeatSpellPick> FeatSpells { get; set; } = [];
 
+    /// <summary>The ability picked for the race's spells; see Character.RaceSpellAbilityId.</summary>
+    public string? RaceSpellAbilityId { get; set; }
+
     /// <summary>One entry per feat taken, so a repeatable feat taken twice is two entries.</summary>
     public List<CharacterFeatReadModel> Feats { get; set; } = [];
 

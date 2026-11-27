@@ -124,7 +124,7 @@
                     <ChoiceSection Title="@($"{choice.Name} Spells")" Chosen="@picks.Count" Total="@(choice.Cantrips + choice.FirstLevelSpells)">
                         <Description>
                             <p>@BonusText(choice)</p>
-                            <div class="grid gap-3 md:grid-cols-2 @(choice.Lists.Count > 1 || (choice.FeatId != null && choice.AbilityOptions.Count > 0) ? "mt-3" : string.Empty)">
+                            <div class="grid gap-3 md:grid-cols-2 @(choice.Lists.Count > 1 || choice.AbilityOptions.Count > 0 ? "mt-3" : string.Empty)">
                                 @if (choice.Lists.Count > 1)
                                 {
                                     <select class="field" aria-label="Spell list" value="@bonusListIds[index]" @onchange="e => SelectBonusList(index, e.Value?.ToString())">
@@ -136,8 +136,8 @@
                                     </select>
                                 }
 
-                                @* The 2024 Magic Initiate's spellcasting ability: Intelligence, Wisdom or Charisma *@
-                                @if (choice.FeatId != null && choice.AbilityOptions.Count > 0)
+                                @* The 2024 Magic Initiate's or a 2024 high elf's spellcasting ability: Intelligence, Wisdom or Charisma *@
+                                @if (choice.AbilityOptions.Count > 0)
                                 {
                                     <select class="field" aria-label="Spellcasting ability" value="@bonusAbilities[index]"
                                             @onchange="e => bonusAbilities[index] = string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()">
@@ -255,6 +255,7 @@
         {
             if (bonusChoices[i].FeatId == null)
             {
+                bonusAbilities[i] = draft?.RaceSpellAbilityId;
                 bonusPicks[i] = [.. draft?.RaceSpellIds ?? []];
             }
             else if (featIndex < featPicks.Count && featPicks[featIndex].FeatId == bonusChoices[i].FeatId)
@@ -309,7 +310,7 @@
     private bool BonusComplete() =>
         bonusChoices.Select((choice, i) => bonusListIds[i] != null
                 && bonusPicks[i].Count == choice.Cantrips + choice.FirstLevelSpells
-                && (choice.FeatId == null || choice.AbilityOptions.Count == 0 || choice.AbilityOptions.Contains(bonusAbilities[i] ?? string.Empty)))
+                && (choice.AbilityOptions.Count == 0 || choice.AbilityOptions.Contains(bonusAbilities[i] ?? string.Empty)))
             .All(done => done);
 
     private async Task LoadSpellsAsync()
@@ -480,7 +481,9 @@
     private Task SaveBonusSpellsAsync()
     {
         var indexed = bonusChoices.Select((choice, i) => (Choice: choice, Index: i)).ToList();
-        var raceSpellIds = indexed.Where(c => c.Choice.FeatId == null).SelectMany(c => bonusPicks[c.Index]).ToList();
+        var race = indexed.Where(c => c.Choice.FeatId == null).ToList();
+        var raceSpellIds = race.SelectMany(c => bonusPicks[c.Index]).ToList();
+        var raceSpellAbilityId = race.Where(c => c.Choice.AbilityOptions.Count > 0).Select(c => bonusAbilities[c.Index]).FirstOrDefault();
         var featSpells = indexed
             .Where(c => c.Choice.FeatId != null)
             .Select(c => new FeatSpellPickApiModel
@@ -492,7 +495,7 @@
             })
             .ToList();
 
-        return DraftService.ChooseBonusSpellsAsync(DraftId, raceSpellIds, featSpells);
+        return DraftService.ChooseBonusSpellsAsync(DraftId, raceSpellIds, raceSpellAbilityId, featSpells);
     }
 
     private async Task HandleBack()

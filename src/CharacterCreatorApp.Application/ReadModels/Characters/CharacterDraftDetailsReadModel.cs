@@ -24,6 +24,9 @@ public class CharacterDraftDetailsReadModel
     /// <summary>The spells picked for the race: a high elf's wizard cantrip.</summary>
     public List<string> RaceSpellIds { get; set; } = [];
 
+    /// <summary>The ability picked for the race's spells; see CharacterDraft.RaceSpellAbilityId.</summary>
+    public string? RaceSpellAbilityId { get; set; }
+
     public string? ClassId { get; set; }
     public string? SubclassId { get; set; }
     public string? BackgroundId { get; set; }

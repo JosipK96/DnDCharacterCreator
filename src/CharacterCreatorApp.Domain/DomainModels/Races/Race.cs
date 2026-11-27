@@ -78,6 +78,13 @@ public class Race
     /// <summary>Spells the player picks from a class list; a subrace may have its own (see SpellChoiceWith).</summary>
     public BonusSpellChoice? SpellChoice { get; set; }
 
+    /// <summary>
+    /// The ability the race's own spells are cast with, by canonical id: a 2014 tiefling's "CHA".
+    /// Null when it gives no spells or the player picks the ability (SpellChoice.AbilityOptions).
+    /// A subrace may have its own (see SpellcastingAbilityWith).
+    /// </summary>
+    public string? SpellcastingAbility { get; set; }
+
     /// <summary>The skills picked for the race and its subrace together: a variant human's one.</summary>
     public int SkillChoiceCountWith(Subrace? subrace) => SkillChoiceCount + (subrace?.SkillChoiceCount ?? 0);
 
@@ -121,6 +128,9 @@ public class Race
 
     /// <summary>The spells the player picks for the race or its subrace: a 2014 high elf's wizard cantrip.</summary>
     public BonusSpellChoice? SpellChoiceWith(Subrace? subrace) => subrace?.SpellChoice ?? SpellChoice;
+
+    /// <summary>The ability the race's and subrace's own spells are cast with: a drow's Charisma; the subrace's first.</summary>
+    public string? SpellcastingAbilityWith(Subrace? subrace) => subrace?.SpellcastingAbility ?? SpellcastingAbility;
 
     /// <summary>The walking speed, which a subrace may change: a wood elf's is 35 feet.</summary>
     public int SpeedWith(Subrace? subrace) => subrace?.Speed ?? Speed;

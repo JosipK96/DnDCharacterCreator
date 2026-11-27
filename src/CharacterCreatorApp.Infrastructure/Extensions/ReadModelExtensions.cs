@@ -294,6 +294,7 @@ public static class ReadModelExtensions
             SpellIds = character.SpellIds,
             FeatIds = character.FeatIds,
             FeatSpells = character.FeatSpells,
+            RaceSpellAbilityId = character.RaceSpellAbilityId,
             FeatSavingThrowAbilityIds = character.FeatSavingThrowAbilityIds,
             HitDieResults = character.HitDieResults,
 
@@ -315,6 +316,7 @@ public static class ReadModelExtensions
             RaceAbilityIncreases = draft.RaceAbilityIncreases,
             Size = draft.Size,
             RaceSpellIds = draft.RaceSpellIds,
+            RaceSpellAbilityId = draft.RaceSpellAbilityId,
             ClassId = draft.ClassId,
             SubclassId = draft.SubclassId,
             BackgroundId = draft.BackgroundId,

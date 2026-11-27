@@ -281,11 +281,11 @@ public static class CharacterDraftErrors
         Error.Validation("CharacterDraft.BonusSpellNotOnList", $"{spellId} is not on the {classId} list {name}'s spells come from.");
 
     /// <summary>A feat's spellcasting ability left open, not one it offers, or picked for a feat that offers none.</summary>
-    public static Error InvalidSpellcastingAbility(string featName, IReadOnlyCollection<string> abilityNames)
+    public static Error InvalidSpellcastingAbility(string raceOrFeatName, IReadOnlyCollection<string> abilityNames)
     {
         var description = abilityNames.Count == 0
-            ? $"{featName} has no spellcasting ability to pick."
-            : $"{featName}'s spellcasting ability is one of {string.Join(", ", abilityNames)}; pick it with the spells.";
+            ? $"{raceOrFeatName} has no spellcasting ability to pick."
+            : $"{raceOrFeatName}'s spellcasting ability is one of {string.Join(", ", abilityNames)}; pick it with the spells.";
 
         return Error.Validation("CharacterDraft.InvalidSpellcastingAbility", description);
     }

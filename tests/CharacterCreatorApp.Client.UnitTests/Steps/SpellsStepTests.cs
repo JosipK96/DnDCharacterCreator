@@ -219,6 +219,49 @@ public class SpellsStepTests : WizardStepTestBase
         cut.FindAll("button.chip").Single(b => b.TextContent.Trim() == "Abjuration").GetAttribute("aria-pressed").Should().Be("true");
     }
 
+    [Fact]
+    public void Next_ForARaceCantripCastWithAnAbilityToPick_WaitsForTheAbilityAndSavesIt()
+    {
+        // Arrange - a 2024 high elf's wizard cantrip, cast with Intelligence, Wisdom or Charisma
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, []), [HighElfCantrip()]);
+        Api.Put(DraftPath("spells"));
+        Api.Put(DraftPath("bonus-spells"));
+        var cut = RenderStep();
+        SpellButton(cut, "Light").Click();
+        SpellButton(cut, "Shield").Click();
+        SpellButton(cut, "Ray of Frost").Click();
+        Button(cut, "Next: Review").HasAttribute("disabled").Should().BeTrue();
+
+        // Act
+        cut.Find("select[aria-label='Spellcasting ability']").Change("WIS");
+        Button(cut, "Next: Review").Click();
+
+        // Assert
+        var saved = Api.BodyOf<ChooseBonusSpellsApiRequest>(SaveRoute("bonus-spells"));
+        saved.RaceSpellIds.Should().Equal("ray-of-frost-phb");
+        saved.RaceSpellAbilityId.Should().Be("WIS");
+        _movedOn.Should().Be(1);
+    }
+
+    [Fact]
+    public void Render_ForARaceCantripWithItsAbilityPicked_ShowsThePick()
+    {
+        // Arrange - coming back to the step, or editing a saved character
+        var draft = Draft("wizard-phb");
+        draft.RaceSpellIds = ["ray-of-frost-phb"];
+        draft.RaceSpellAbilityId = "CHA";
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, []), [HighElfCantrip()], draft);
+
+        // Act
+        var cut = RenderStep();
+
+        // Assert
+        cut.Find("select[aria-label='Spellcasting ability']").GetAttribute("value").Should().Be("CHA");
+    }
+
+    private static BonusSpellChoiceApiResponse HighElfCantrip() => new(
+        null, "High Elf", 1, 0, [new BonusSpellListApiResponse("wizard-phb", "Wizard", [Spell("ray-of-frost-phb", "Ray of Frost", 0)])], ["INT", "WIS", "CHA"]);
+
     private static CharacterDraftDetailsApiResponse Draft(string classId, string? subclassId = null) => new()
     {
         Id = DraftId,
@@ -242,13 +285,14 @@ public class SpellsStepTests : WizardStepTestBase
     private static IElement SpellButton(IRenderedComponent<SpellsStep> cut, string name) =>
         cut.FindAll("[data-testid=choice-row]").Single(b => b.QuerySelector("span.font-semibold")?.TextContent.Trim() == name);
 
-    private void ArrangeWizard(SpellAllowanceApiResponse allowance)
+    private void ArrangeWizard(
+        SpellAllowanceApiResponse allowance, List<BonusSpellChoiceApiResponse>? bonusChoices = null, CharacterDraftDetailsApiResponse? draft = null)
     {
-        Api.Get(DraftPath(), Draft("wizard-phb"));
+        Api.Get(DraftPath(), draft ?? Draft("wizard-phb"));
         Api.Get("/api/classes/wizard-phb", Class("wizard-phb", "Wizard"));
         Api.Get(DraftPath("spell-allowance"), allowance);
         Api.Get("/api/spells?classId=wizard-phb&maxLevel=1&sources=PHB", WizardSpells);
-        Api.Get(DraftPath("bonus-spells"), new List<BonusSpellChoiceApiResponse>());
+        Api.Get(DraftPath("bonus-spells"), bonusChoices ?? []);
     }
 
     private IRenderedComponent<SpellsStep> RenderStep()

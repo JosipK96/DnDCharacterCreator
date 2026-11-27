@@ -43,6 +43,7 @@ public class CharacterDraftFeatAndRaceChoicesTests
 
         // Assert
         draft.RaceSpellIds.Should().BeEmpty();
+        draft.RaceSpellAbilityId.Should().BeNull();
         draft.Size.Should().BeNull();
     }
 
@@ -70,6 +71,7 @@ public class CharacterDraftFeatAndRaceChoicesTests
 
         // Assert
         draft.RaceSpellIds.Should().BeEmpty();
+        draft.RaceSpellAbilityId.Should().BeNull();
         draft.FeatSpells.Should().BeEmpty();
     }
 
@@ -193,6 +195,19 @@ public class CharacterDraftFeatAndRaceChoicesTests
 
         // Assert
         draft.FeatSpells.Should().ContainSingle().Which.AbilityId.Should().Be("WIS");
+    }
+
+    [Fact]
+    public void ChooseBonusSpells_WithARaceSpellcastingAbility_KeepsItsCanonicalId()
+    {
+        // Arrange - a 2024 high elf's ability arrives in any spelling
+        var draft = NewDraft();
+
+        // Act
+        draft.ChooseBonusSpells(["fire_bolt_2024"], [], "charisma");
+
+        // Assert
+        draft.RaceSpellAbilityId.Should().Be("CHA");
     }
 
     [Fact]
@@ -352,7 +367,8 @@ public class CharacterDraftFeatAndRaceChoicesTests
             [new FeatProficiencyPick { FeatId = "mist_walker", ProficiencyIds = ["stealth"] }]);
         draft.ChooseBonusSpells(
             ["fire_bolt"],
-            [new FeatSpellPick { FeatId = "magic_initiate_2014", ClassId = "cleric", SpellIds = ["light", "guidance", "bless"] }]);
+            [new FeatSpellPick { FeatId = "magic_initiate_2014", ClassId = "cleric", SpellIds = ["light", "guidance", "bless"] }],
+            "INT");
 
         return draft;
     }

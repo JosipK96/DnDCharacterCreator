@@ -210,6 +210,20 @@ public class RaceSeedDataTests
     }
 
     [Fact]
+    public async Task Tiefling2014_CastsItsSpellsWithCharismaAndTheHighElf2024PicksItsAbility()
+    {
+        // Act
+        var tiefling = await ReadRaceAsync("tiefling");
+        var highElf = (await ReadRaceAsync("elf_2024")).Subraces.Single(s => s.Id == "elf_high_elf_lineage_2024");
+
+        // Assert - the tiefling's spells sit on its subraces; a winged tiefling has none
+        tiefling.Subraces.Single(s => s.Id == "standard_tiefling").SpellcastingAbility.Should().Be("CHA");
+        tiefling.Subraces.Single(s => s.Id == "winged_tiefling").SpellcastingAbility.Should().BeNull();
+        highElf.SpellcastingAbility.Should().BeNull();
+        highElf.SpellChoice!.AbilityOptions.Should().Equal("INT", "WIS", "CHA");
+    }
+
+    [Fact]
     public async Task Races_PickSpellsOnlyAsTheBooksSay()
     {
         // Act

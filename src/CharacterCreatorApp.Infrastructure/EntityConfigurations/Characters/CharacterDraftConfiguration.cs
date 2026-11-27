@@ -31,6 +31,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Characters
 
             builder.Property(x => x.RaceSpellIds);
 
+            builder.Property(x => x.RaceSpellAbilityId)
+                .HasMaxLength(3);
+
             builder.Property(x => x.BackgroundFeatId)
                 .HasMaxLength(50);
 

@@ -86,6 +86,22 @@ internal static class AdditionalSpells
         };
     }
 
+    /// <summary>
+    /// The ability a race's own spells are cast with, by canonical id, when every block that gives
+    /// spells names the same one ({"ability": "cha"}, a tiefling's). Null for none, for a pick
+    /// ({"choose": [...]}, which Choice reads), for "inherit", and where the blocks disagree.
+    /// </summary>
+    public static string? FixedAbility(IReadOnlyList<JsonObject> blocks)
+    {
+        var abilities = blocks
+            .Where(block => SpellKinds.Any(kind => block[kind] != null))
+            .Select(block => block["ability"] is JsonValue value && value.TryGetValue<string>(out var key) && AbilityScore.TryNormalize(key, out var id) ? id : null)
+            .Distinct()
+            .ToList();
+
+        return abilities is [{ } ability] ? ability : null;
+    }
+
     // The spellcasting ability a block lets the player pick, {"choose": ["int", "wis", "cha"]} (the
     // 2024 Magic Initiate's), by canonical id; none for a fixed one ("con") or "inherit"
     private static List<string> AbilityOptions(JsonObject block) =>

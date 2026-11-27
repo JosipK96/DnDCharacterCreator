@@ -1,7 +1,6 @@
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetSpells;
 using CharacterCreatorApp.Contracts.Responses.Spells;
-
-using MapsterMapper;
 
 using MediatR;
 
@@ -10,10 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers
 {
     [Route("api/spells")]
-    public class SpellsController(ISender sender, IMapper mapper) : ApiController
+    public class SpellsController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         [HttpGet]
         [ProducesResponseType(typeof(List<SpellApiResponse>), StatusCodes.Status200OK)]
@@ -27,7 +25,7 @@ namespace CharacterCreatorApp.Api.Controllers
             var query = new GetSpellsQuery(classId, subclassId, maxLevel, sources);
             var response = await _sender.Send(query, cancellationToken);
 
-            return OkOrProblem(response, spells => _mapper.Map<List<SpellApiResponse>>(spells));
+            return OkOrProblem(response, spells => spells.Select(spell => spell.ToResponse()).ToList());
         }
     }
 }

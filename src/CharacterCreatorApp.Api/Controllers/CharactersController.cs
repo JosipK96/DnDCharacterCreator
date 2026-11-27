@@ -11,8 +11,6 @@ using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.Character;
 using CharacterCreatorApp.Contracts.Responses.Characters;
 
-using MapsterMapper;
-
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
@@ -22,10 +20,9 @@ namespace CharacterCreatorApp.Api.Controllers
 {
     [Authorize]
     [Route("api/characters")]
-    public class CharactersController(ISender sender, IMapper mapper) : ApiController
+    public class CharactersController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         [HttpPost]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
@@ -44,11 +41,11 @@ namespace CharacterCreatorApp.Api.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetMyCharacters([FromBody] FilterRequest<GetCharactersApiRequest>? filterRequest, CancellationToken cancellationToken)
         {
-            var filter = filterRequest.ToFilterOptions<GetCharactersApiRequest, FilterCharacterSearchParams>();
+            var filter = filterRequest.ToFilterOptions();
 
             var response = await _sender.Send(new GetMyCharactersQuery(filter), cancellationToken);
 
-            return OkOrProblem(response, page => _mapper.Map<FilterResponse<CharacterSummaryApiResponse>>(page));
+            return OkOrProblem(response, page => page.ToResponse());
         }
 
         [HttpGet("{id:guid}")]
@@ -59,7 +56,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetCharacterDetailsQuery(id), cancellationToken);
 
-            return OkOrProblem(response, character => _mapper.Map<CharacterDetailsApiResponse>(character));
+            return OkOrProblem(response, character => character.ToResponse());
         }
 
         /// <summary>

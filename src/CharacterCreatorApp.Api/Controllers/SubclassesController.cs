@@ -1,8 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetSubclasses;
 using CharacterCreatorApp.Contracts.Responses.Classes;
-
-using MapsterMapper;
 
 using MediatR;
 
@@ -11,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers
 {
     [Route("api/subclasses")]
-    public class SubclassesController(ISender sender, IMapper mapper) : ApiController
+    public class SubclassesController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         [HttpGet]
         [ProducesResponseType(typeof(List<SubclassApiResponse>), StatusCodes.Status200OK)]
@@ -24,7 +22,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetSubclassesQuery(classId, sources), cancellationToken);
 
-            return OkOrProblem(response, subclasses => _mapper.Map<List<SubclassApiResponse>>(subclasses));
+            return OkOrProblem(response, subclasses => subclasses.Select(subclass => subclass.ToResponse()).ToList());
         }
 
         [HttpGet("{id}")]
@@ -34,7 +32,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetSubclassByIdQuery(id), cancellationToken);
 
-            return OkOrProblem(response, subclass => _mapper.Map<SubclassApiResponse>(subclass));
+            return OkOrProblem(response, subclass => subclass.ToResponse());
         }
     }
 }

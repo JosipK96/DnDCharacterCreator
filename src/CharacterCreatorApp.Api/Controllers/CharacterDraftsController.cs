@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseBonusSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseLanguages;
@@ -32,8 +33,6 @@ using CharacterCreatorApp.Contracts.Responses.Proficiencies;
 using CharacterCreatorApp.Contracts.Responses.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
-using MapsterMapper;
-
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
@@ -44,10 +43,9 @@ namespace CharacterCreatorApp.Api.Controllers
     [Authorize]
     [Route("api/character-drafts")]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public class CharacterDraftsController(ISender sender, IMapper mapper) : ApiController
+    public class CharacterDraftsController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         [HttpPost]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
@@ -194,7 +192,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetToolChoicesQuery(draftId), cancellationToken);
 
-            return OkOrProblem(response, choices => _mapper.Map<List<ToolChoiceApiResponse>>(choices));
+            return OkOrProblem(response, choices => choices.Select(choice => choice.ToResponse()).ToList());
         }
 
         [HttpPut("{draftId:guid}/languages")]
@@ -245,7 +243,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetFightingStylesQuery(draftId), cancellationToken);
 
-            return OkOrProblem(response, styles => _mapper.Map<FightingStylesApiResponse>(styles));
+            return OkOrProblem(response, styles => styles.ToResponse());
         }
 
         /// <summary>
@@ -262,7 +260,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetFeatEligibilityQuery(draftId, increases ?? []), cancellationToken);
 
-            return OkOrProblem(response, feats => _mapper.Map<List<FeatEligibilityApiResponse>>(feats));
+            return OkOrProblem(response, feats => feats.Select(feat => feat.ToResponse()).ToList());
         }
 
         [HttpPut("{draftId:guid}/spells")]
@@ -290,7 +288,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetSpellAllowanceQuery(draftId), cancellationToken);
 
-            return OkOrProblem(response, allowance => _mapper.Map<SpellAllowanceApiResponse>(allowance));
+            return OkOrProblem(response, allowance => allowance.ToResponse());
         }
 
         /// <summary>
@@ -320,7 +318,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetBonusSpellsQuery(draftId), cancellationToken);
 
-            return OkOrProblem(response, choices => _mapper.Map<List<BonusSpellChoiceApiResponse>>(choices));
+            return OkOrProblem(response, choices => choices.Select(choice => choice.ToResponse()).ToList());
         }
 
         /// <summary>
@@ -335,7 +333,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetIncompleteCharacterDraftQuery(), cancellationToken);
 
-            return OkOrProblem(response, draft => _mapper.Map<CharacterDraftDetailsApiResponse>(draft));
+            return OkOrProblem(response, draft => draft.ToResponse());
         }
 
         [HttpDelete("{draftId:guid}")]
@@ -355,7 +353,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetCharacterDraftByIdQuery(draftId), cancellationToken);
 
-            return OkOrProblem(response, draft => _mapper.Map<CharacterDraftDetailsApiResponse>(draft));
+            return OkOrProblem(response, draft => draft.ToResponse());
         }
 
         /// <summary>
@@ -369,7 +367,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new PreviewCharacterQuery(draftId), cancellationToken);
 
-            return OkOrProblem(response, preview => _mapper.Map<CharacterPreviewApiResponse>(preview));
+            return OkOrProblem(response, preview => preview.ToResponse());
         }
     }
 }

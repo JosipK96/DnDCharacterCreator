@@ -1,8 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetBackgrounds;
 using CharacterCreatorApp.Contracts.Responses.Backgrounds;
-
-using MapsterMapper;
 
 using MediatR;
 
@@ -11,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers
 {
     [Route("api/backgrounds")]
-    public class BackgroundsController(ISender sender, IMapper mapper) : ApiController
+    public class BackgroundsController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         /// <summary>
         /// The backgrounds of one rules edition ("2014" or "2024"), or of both without one, from
@@ -27,7 +25,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetBackgroundsQuery(edition, sources), cancellationToken);
 
-            return OkOrProblem(response, backgrounds => _mapper.Map<List<BackgroundApiResponse>>(backgrounds));
+            return OkOrProblem(response, backgrounds => backgrounds.Select(background => background.ToResponse()).ToList());
         }
 
         [HttpGet("{id}")]
@@ -37,7 +35,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetBackgroundByIdQuery(id), cancellationToken);
 
-            return OkOrProblem(response, background => _mapper.Map<BackgroundApiResponse>(background));
+            return OkOrProblem(response, background => background.ToResponse());
         }
     }
 }

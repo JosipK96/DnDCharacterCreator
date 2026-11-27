@@ -1,8 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetLanguages;
 using CharacterCreatorApp.Contracts.Responses.Languages;
-
-using MapsterMapper;
 
 using MediatR;
 
@@ -11,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers;
 
 [Route("api/languages")]
-public class LanguagesController(ISender sender, IMapper mapper) : ApiController
+public class LanguagesController(ISender sender) : ApiController
 {
     private readonly ISender _sender = sender;
-    private readonly IMapper _mapper = mapper;
 
     /// <summary>The languages a character of one rules edition may pick; the 2014 ones without one.</summary>
     [HttpGet("get-list")]
@@ -24,6 +22,6 @@ public class LanguagesController(ISender sender, IMapper mapper) : ApiController
     {
         var response = await _sender.Send(new GetLanguagesQuery(edition), cancellationToken);
 
-        return OkOrProblem(response, languages => _mapper.Map<List<LanguageApiResponse>>(languages));
+        return OkOrProblem(response, languages => languages.Select(language => language.ToResponse()).ToList());
     }
 }

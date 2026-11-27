@@ -1,9 +1,8 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetBooks;
 using CharacterCreatorApp.Application.Features.Lookup.GetHiddenOptions;
 using CharacterCreatorApp.Contracts.Responses.Books;
-
-using MapsterMapper;
 
 using MediatR;
 
@@ -12,10 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers;
 
 [Route("api/books")]
-public class BooksController(ISender sender, IMapper mapper) : ApiController
+public class BooksController(ISender sender) : ApiController
 {
     private readonly ISender _sender = sender;
-    private readonly IMapper _mapper = mapper;
 
     /// <summary>The books of one rules edition ("2014" or "2024"), its Player's Handbook first.</summary>
     [HttpGet]
@@ -25,7 +23,7 @@ public class BooksController(ISender sender, IMapper mapper) : ApiController
     {
         var response = await _sender.Send(new GetBooksQuery(edition), cancellationToken);
 
-        return OkOrProblem(response, books => _mapper.Map<List<BookApiResponse>>(books));
+        return OkOrProblem(response, books => books.Select(book => book.ToResponse()).ToList());
     }
 
     /// <summary>
@@ -51,6 +49,6 @@ public class BooksController(ISender sender, IMapper mapper) : ApiController
         var query = new GetHiddenOptionsQuery(edition, list, sources, classId, subclassId, maxLevel, category);
         var response = await _sender.Send(query, cancellationToken);
 
-        return OkOrProblem(response, hidden => _mapper.Map<HiddenOptionsApiResponse>(hidden));
+        return OkOrProblem(response, hidden => hidden.ToResponse());
     }
 }

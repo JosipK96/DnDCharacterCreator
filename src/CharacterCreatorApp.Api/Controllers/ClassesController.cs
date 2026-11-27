@@ -1,8 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetClasses;
 using CharacterCreatorApp.Contracts.Responses.Classes;
-
-using MapsterMapper;
 
 using MediatR;
 
@@ -11,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers
 {
     [Route("api/classes")]
-    public class ClassesController(ISender sender, IMapper mapper) : ApiController
+    public class ClassesController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ClassApiResponse), StatusCodes.Status200OK)]
@@ -23,7 +21,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetClassByIdQuery(id), cancellationToken);
 
-            return OkOrProblem(response, @class => _mapper.Map<ClassApiResponse>(@class));
+            return OkOrProblem(response, @class => @class.ToResponse());
         }
 
         /// <summary>
@@ -37,7 +35,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetClassesQuery(edition, sources), cancellationToken);
 
-            return OkOrProblem(response, classes => _mapper.Map<List<ClassApiResponse>>(classes));
+            return OkOrProblem(response, classes => classes.Select(@class => @class.ToResponse()).ToList());
         }
     }
 }

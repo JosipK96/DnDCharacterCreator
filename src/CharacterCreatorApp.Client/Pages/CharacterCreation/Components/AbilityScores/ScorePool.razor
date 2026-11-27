@@ -1,0 +1,68 @@
+@* The scores to hand out, one button each; a rolled one shows its dice, the dropped die struck through *@
+
+<Room Title="@Title">
+    <p class="mb-4 text-sm text-pencil">Click a score to assign it to an ability</p>
+
+    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        @for (int scoreIndex = 0; scoreIndex < Assignment.Scores.Count; scoreIndex++)
+        {
+            var currentIndex = scoreIndex; // Capture for closure
+            var score = Assignment.Scores[currentIndex];
+            var isAssigned = Assignment.IsAssigned(currentIndex);
+            var isSelected = Assignment.SelectedIndex == currentIndex;
+
+            <button type="button" class="option-room text-center disabled:cursor-not-allowed disabled:opacity-50"
+                    aria-pressed="@(isSelected ? "true" : "false")" disabled="@isAssigned"
+                    @onclick="() => OnSelect.InvokeAsync(currentIndex)">
+                @if (currentIndex < Rolls.Count)
+                {
+                    var roll = Rolls[currentIndex];
+                    <span class="mb-2 flex justify-center gap-1">
+                        @for (int i = 0; i < roll.AllDice.Count; i++)
+                        {
+                            var die = roll.AllDice[i];
+                            @* The die 4d6 drops is struck through *@
+                            <div class="flex h-6 w-6 items-center justify-center border border-ink text-xs font-semibold @(i == roll.DroppedDieIndex ? "line-through opacity-40" : string.Empty)">@die</div>
+                        }
+                    </span>
+                }
+                <div class="text-4xl font-display font-semibold">@score</div>
+                @if (isAssigned)
+                {
+                    <span class="mt-1 block text-xs">Assigned</span>
+                }
+                else if (isSelected)
+                {
+                    <span class="mt-1 block text-xs text-plum">Selected</span>
+                }
+            </button>
+        }
+    </div>
+
+    @if (!Assignment.AllAssigned)
+    {
+        <button type="button" class="btn-secondary mt-4 w-full" @onclick="OnStartOver">@StartOverText</button>
+    }
+</Room>
+
+@code {
+    [Parameter, EditorRequired]
+    public ScoreAssignment Assignment { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    /// <summary>The dice behind each score, in the same order; empty when the scores were not rolled.</summary>
+    [Parameter]
+    public IReadOnlyList<RollDiceComponent3D.DiceRoll> Rolls { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public string StartOverText { get; set; } = string.Empty;
+
+    /// <summary>Called with the place of the score clicked.</summary>
+    [Parameter]
+    public EventCallback<int> OnSelect { get; set; }
+
+    [Parameter]
+    public EventCallback OnStartOver { get; set; }
+}

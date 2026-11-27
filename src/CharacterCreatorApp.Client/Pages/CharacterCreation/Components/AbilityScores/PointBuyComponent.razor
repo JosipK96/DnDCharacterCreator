@@ -5,13 +5,13 @@
     <p class="mb-4 text-sm text-pencil">All scores start at 8. You can increase them up to 15.</p>
 
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        @foreach (var ability in GetAbilityOrder())
+        @foreach (var ability in AbilityNames.Ids)
         {
             <div class="border-2 border-ink bg-room-highlight p-3">
-                <h4 class="mb-2 text-center text-sm font-medium">@GetAbilityFullName(ability)</h4>
+                <h4 class="mb-2 text-center text-sm font-medium">@AbilityNames.Of(ability)</h4>
 
                 <div class="flex items-center justify-between gap-3">
-                    <button type="button" class="btn-step" aria-label="@($"Lower {GetAbilityFullName(ability)}")"
+                    <button type="button" class="btn-step" aria-label="@($"Lower {AbilityNames.Of(ability)}")"
                             @onclick="() => DecreaseScore(ability)" disabled="@(!CanDecrease(ability))">−</button>
 
                     <div class="flex-1 text-center">
@@ -19,7 +19,7 @@
                         <span class="text-xs text-pencil">Cost: @GetCostForScore(pointBuyScores[ability])</span>
                     </div>
 
-                    <button type="button" class="btn-step" aria-label="@($"Raise {GetAbilityFullName(ability)}")"
+                    <button type="button" class="btn-step" aria-label="@($"Raise {AbilityNames.Of(ability)}")"
                             @onclick="() => IncreaseScore(ability)" disabled="@(!CanIncrease(ability))">+</button>
                 </div>
             </div>
@@ -50,15 +50,8 @@
     [Parameter]
     public EventCallback<List<int>> ScoresChanged { get; set; }
 
-    private Dictionary<string, int> pointBuyScores = new()
-    {
-        ["STR"] = 8,
-        ["DEX"] = 8,
-        ["CON"] = 8,
-        ["INT"] = 8,
-        ["WIS"] = 8,
-        ["CHA"] = 8
-    };
+    // Every ability starts at 8, by its id ("STR")
+    private Dictionary<string, int> pointBuyScores = AbilityNames.Ids.ToDictionary(id => id, _ => 8);
 
     private readonly Dictionary<int, int> pointCosts = new()
     {
@@ -75,25 +68,6 @@
     private const int TotalPoints = 27;
     private int pointsRemaining => TotalPoints - GetTotalSpent();
 
-    private List<string> GetAbilityOrder()
-    {
-        return new() { "STR", "DEX", "CON", "INT", "WIS", "CHA" };
-    }
-
-    private string GetAbilityFullName(string abbr)
-    {
-        return abbr switch
-        {
-            "STR" => "Strength",
-            "DEX" => "Dexterity",
-            "CON" => "Constitution",
-            "INT" => "Intelligence",
-            "WIS" => "Wisdom",
-            "CHA" => "Charisma",
-            _ => abbr
-        };
-    }
-
     private int GetTotalSpent()
     {
         return pointBuyScores.Values.Sum(score => GetCostForScore(score));
@@ -109,7 +83,10 @@
         int currentScore = pointBuyScores[ability];
 
         // Can't go above 15
-        if (currentScore >= 15) return false;
+        if (currentScore >= 15)
+        {
+            return false;
+        }
 
         // Check if we have enough points
         int currentCost = GetCostForScore(currentScore);
@@ -145,9 +122,12 @@
 
     private async Task ApplyPointBuy()
     {
-        if (pointsRemaining != 0) return;
+        if (pointsRemaining != 0)
+        {
+            return;
+        }
 
-        var scores = pointBuyScores.Values.ToList();
+        var scores = AbilityNames.Ids.Select(id => pointBuyScores[id]).ToList();
 
         Scores.Clear();
         Scores.AddRange(scores);

@@ -11,11 +11,15 @@ The same six abilities are written three different ways depending on where the d
 | --- | --- |
 | A draft's `BaseAbilityScores` | `STR`, `DEX`, `CON` |
 | Race and subrace seed data | `str`, `dex`, `con` |
-| Ability score improvements | `strength`, `dexterity`, `constitution` |
+| Ability score improvements saved before #157 | `strength`, `dexterity`, `constitution` |
 
 `AbilityScore.TryNormalize` / `AbilityScore.Normalize` resolve any of those to the canonical id
 (`STR`, `DEX`, `CON`, `INT`, `WIS`, `CHA`). `Character` normalizes on every write, so its
 `AbilityScores` dictionary only ever holds canonical keys.
+
+The client uses the canonical ids only, through `AbilityNames` (`AbilityNames.Ids` and the name
+each shows, `AbilityNames.Of`), and sends nothing else. An improvement saved by an older client
+still holds a full name, which the improvements step reads through `AbilityNames.IdOf`.
 
 Never compare or index ability keys directly. `Character.AbilityScores` is an ordinal dictionary:
 looking up `"con"` when the entry is `"CON"` silently misses and, before this was fixed, added a

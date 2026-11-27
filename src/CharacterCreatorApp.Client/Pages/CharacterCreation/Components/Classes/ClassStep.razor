@@ -1,4 +1,4 @@
-@using CharacterCreatorApp.Contracts.Requests.CharacterDrafts
+@* The step: the class, and its subclass from the level the class takes one (SubclassPicker) *@
 @inject CharacterDraftService DraftService
 @inject LookupService LookupService
 @inherits WizardStepBase
@@ -46,35 +46,9 @@
 
                 @if (selectedClass is not null && characterLevel >= selectedClass.SubclassLevel)
                 {
-                    @if (loadingSubclasses)
-                    {
-                        <Spinner Small="true" Text="Loading subclasses..." />
-                    }
-                    else if (subclasses.Any())
-                    {
-                        <Room Title="Choose a Subclass">
-                            <p class="mb-4 text-sm text-pencil">
-                                At level @selectedClass.SubclassLevel, you choose a subclass that grants you additional features.
-                            </p>
-                            <div class="option-grid">
-                                @foreach (var subclass in subclasses)
-                                {
-                                    <OptionRoom Name="@subclass.Name" Picked="@(selectedSubclass?.Id == subclass.Id)"
-                                                OnClick="() => selectedSubclass = subclass">
-                                        <span>@selectedClass.Name subclass · @subclass.Source</span>
-                                    </OptionRoom>
-                                }
-                            </div>
-                            <HiddenOptionsNote List="subclasses" Edition="@Edition" Sources="@Sources" ClassId="@selectedClass.Id"
-                                               OnChangeBooks="@OnChangeBooks" Class="mt-4" />
-                        </Room>
-                    }
-                    else
-                    {
-                        <Message Kind="MessageKind.Error">
-                            <p class="text-sm">Failed to load subclasses. Please go back and try again.</p>
-                        </Message>
-                    }
+                    <SubclassPicker ClassOption="@selectedClass" Subclasses="@subclasses" IsLoading="@loadingSubclasses"
+                                    Picked="@selectedSubclass" OnPick="subclass => selectedSubclass = subclass"
+                                    Edition="@Edition" Sources="@Sources" OnChangeBooks="@OnChangeBooks" />
                 }
                 else if (selectedClass is not null)
                 {
@@ -88,27 +62,7 @@
 
             @if (selectedClass is not null)
             {
-                <KeyPanel Name="@selectedClass.Name">
-                    <ChildContent>
-                        <KeyFact Label="Hit die"><HitDie Die="@selectedClass.HitDie" Size="24" /></KeyFact>
-                        <KeyFact Label="Saving throws">@ListOrNone(selectedClass.SavingThrowAbilityIds.Select(AbilityNames.Of))</KeyFact>
-                        <KeyFact Label="Armor">@ListOrNone(ProficienciesOf(selectedClass, ProficiencyGroup.Armor))</KeyFact>
-                        <KeyFact Label="Weapons">@ListOrNone(ProficienciesOf(selectedClass, ProficiencyGroup.Weapons))</KeyFact>
-                        <KeyFact Label="Tools">@ListOrNone(ProficienciesOf(selectedClass, ProficiencyGroup.Tools))</KeyFact>
-                        <KeyFact Label="Skills">
-                            @if (selectedClass.ProficiencyChoice is { } skillChoice)
-                            {
-                                <span>Pick @skillChoice.Count of @string.Join(", ", skillChoice.Options.Select(o => o.Name))</span>
-                            }
-                            else
-                            {
-                                <span>None</span>
-                            }
-                        </KeyFact>
-                        <KeyFact Label="Subclass">At level @selectedClass.SubclassLevel</KeyFact>
-                    </ChildContent>
-                    <Note>The skills are picked on the Proficiencies step.</Note>
-                </KeyPanel>
+                <ClassKeyPanel ClassOption="@selectedClass" />
             }
         </div>
     }
@@ -139,13 +93,6 @@
     [Parameter]
     public EventCallback OnBack { get; set; }
 
-    private enum ProficiencyGroup
-    {
-        Armor,
-        Weapons,
-        Tools,
-    }
-
     private List<ClassApiResponse> classes = new();
     private List<SubclassApiResponse> subclasses = new();
     private ClassApiResponse? selectedClass;
@@ -170,24 +117,6 @@
             await SelectClass(saved);
             selectedSubclass = subclasses.Find(s => s.Id == draft!.SubclassId);
         }
-    }
-
-    // The seed data types tools four ways (tool, artisans_tools, gaming_set, musical-instrument),
-    // so anything that is not armor or a weapon is a tool, as the sheet's PDF groups them
-    private static IEnumerable<string> ProficienciesOf(ClassApiResponse classOption, ProficiencyGroup group) =>
-        classOption.ClassProficiencies
-            .Where(p => group switch
-            {
-                ProficiencyGroup.Armor => p.Type == "armor",
-                ProficiencyGroup.Weapons => p.Type == "weapon",
-                _ => p.Type is not ("armor" or "weapon" or "skill"),
-            })
-            .Select(p => p.Name);
-
-    private static string ListOrNone(IEnumerable<string> names)
-    {
-        var list = string.Join(", ", names);
-        return list.Length == 0 ? "None" : list;
     }
 
     private async Task SelectClass(ClassApiResponse classOption)

@@ -1,0 +1,34 @@
+@* The race's subraces (a 2024 species' lineages or ancestries), one option each *@
+
+<Room Title="@RaceTexts.SubraceHeading(Race)">
+    <div class="option-grid">
+        @foreach (var subrace in Race.Subraces)
+        {
+            <OptionRoom Name="@subrace.Name" Picked="@(Picked?.Id == subrace.Id)" OnClick="() => OnPick.InvokeAsync(subrace)">
+                @if (subrace.Speed is { } subraceSpeed)
+                {
+                    <span>Speed @subraceSpeed ft.</span>
+                }
+                @if (subrace.AbilityScoreBonuses?.Any() == true)
+                {
+                    <span>@RaceTexts.Bonuses(subrace.AbilityScoreBonuses)</span>
+                }
+                @if (RaceTexts.SubraceChoices(subrace) is { } choices)
+                {
+                    <span>@choices</span>
+                }
+            </OptionRoom>
+        }
+    </div>
+</Room>
+
+@code {
+    [Parameter, EditorRequired]
+    public RaceApiResponse Race { get; set; } = default!;
+
+    [Parameter]
+    public SubraceApiResponse? Picked { get; set; }
+
+    [Parameter]
+    public EventCallback<SubraceApiResponse> OnPick { get; set; }
+}

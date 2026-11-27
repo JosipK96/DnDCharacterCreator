@@ -1,0 +1,275 @@
+@* The step, in two parts: the race with its subrace, ability increases and size, then the skills
+   the race has the player pick, if any. The rules it reads are in RaceAbilityChoice and RaceSkillChoice. *@
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    @if (subStep == 1)
+    {
+        <h2 class="step-title mb-2">@StepHeading("Choose Your Race")</h2>
+
+        @if (IsLoading)
+        {
+            <Spinner />
+        }
+        else if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <Message Kind="MessageKind.Error" Class="mb-6">
+                <p class="text-sm">@ErrorMessage</p>
+            </Message>
+        }
+        else
+        {
+            <p class="mb-5 text-pencil">Each race provides unique traits and bonuses.</p>
+
+            <div class="step-columns">
+                <div class="min-w-0 space-y-8">
+                    <div class="option-grid">
+                        @foreach (var race in races)
+                        {
+                            <OptionRoom Name="@race.Name" Picked="@(selectedRace?.Id == race.Id)" OnClick="() => SelectRace(race)">
+                                @* A race reprinted in a later book (VGM's aasimar and MPMM's) says which book it is *@
+                                @if (races.Count(r => r.Name == race.Name) > 1)
+                                {
+                                    <span data-testid="race-book">@race.Source</span>
+                                }
+                                <span>@race.Size · @race.Speed ft.</span>
+                                @if (race.Subraces?.Any() == true)
+                                {
+                                    <span>@race.Subraces.Count @(race.Subraces.Count == 1 ? "option" : "options")</span>
+                                }
+                            </OptionRoom>
+                        }
+                    </div>
+
+                    <HiddenOptionsNote List="races" Edition="@(Edition ?? string.Empty)" Sources="@Sources" OnChangeBooks="@OnChangeBooks" />
+
+                    @if (selectedRace?.Subraces?.Any() == true)
+                    {
+                        <SubracePicker Race="@selectedRace" Picked="@selectedSubrace" OnPick="SelectSubrace" />
+                    }
+
+                    @if (selectedRace is not null && AbilityChoice().Points > 0 && (selectedRace.Subraces?.Any() != true || selectedSubrace != null))
+                    {
+                        <RaceAbilityIncreases Choice="@AbilityChoice()" Picks="@abilityPicks" OnRaise="abilityId => AbilityChoice().Raise(abilityPicks, abilityId)" />
+                    }
+
+                    @* A 2024 human, aasimar or tiefling is Small or Medium, as the player likes *@
+                    @if (SizeOptions().Count > 1)
+                    {
+                        <Room Title="Size">
+                            <div class="option-grid">
+                                @foreach (var size in SizeOptions())
+                                {
+                                    <OptionRoom Name="@size" Picked="@(selectedSize == size)" OnClick="() => selectedSize = size" />
+                                }
+                            </div>
+                        </Room>
+                    }
+                </div>
+
+                @if (selectedRace is not null)
+                {
+                    <RaceKeyPanel Race="@selectedRace" Subrace="@selectedSubrace" />
+                }
+            </div>
+        }
+
+        <StepNavigation OnBack="HandleBack" OnNext="HandleRaceNext" NextDisabled="@(!CanProceedRace() || IsSaving)"
+                        NextText="@(IsSaving ? "Saving..." : SkillChoiceCount() > 0 ? "Next: Choose Skills" : NextLabel)" />
+    }
+    else if (subStep == 2)
+    {
+        <h2 class="step-title mb-4">@StepHeading($"{selectedSubrace?.Name ?? selectedRace!.Name} Skill Proficiencies")</h2>
+
+        @if (isLoadingSkills)
+        {
+            <Spinner />
+        }
+        else
+        {
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <Message Kind="MessageKind.Error" Class="mb-6">
+                    <p class="text-sm">@ErrorMessage</p>
+                </Message>
+            }
+
+            <ChoiceSection Title="@($"{selectedSubrace?.Name ?? selectedRace!.Name} skills")" Chosen="@selectedRaceSkills.Count" Total="@SkillChoiceCount()">
+                <Description>As a <strong>@(selectedSubrace?.Name ?? selectedRace!.Name)</strong>, choose @SkillChoiceCount() skill proficiency(ies).</Description>
+                <ChildContent>
+                    @foreach (var skill in availableSkills)
+                    {
+                        var isSelected = selectedRaceSkills.Contains(skill.Id);
+                        <ChoiceRow Name="@skill.Name" Picked="@isSelected"
+                                   Disabled="@(!isSelected && selectedRaceSkills.Count >= SkillChoiceCount())"
+                                   OnClick="() => ToggleSkill(skill.Id)" />
+                    }
+                </ChildContent>
+            </ChoiceSection>
+        }
+
+        <StepNavigation OnBack="() => subStep = 1" OnNext="HandleSkillsNext"
+                        NextDisabled="@(selectedRaceSkills.Count != SkillChoiceCount() || IsSaving)"
+                        NextText="@(IsSaving ? "Saving..." : NextLabel)" />
+    }
+</div>
+
+@code {
+    /// <summary>The draft's rules edition; only its races are offered.</summary>
+    [Parameter] public string? Edition { get; set; }
+
+    /// <summary>The books the draft allows, by code; only what comes from them is offered.</summary>
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private List<RaceApiResponse> races = [];
+    private RaceApiResponse? selectedRace;
+    private SubraceApiResponse? selectedSubrace;
+    private List<ProficiencyApiResponse> availableSkills = [];
+    private HashSet<string> selectedRaceSkills = [];
+
+    // The points picked for the race's or subrace's ability choice, by ability id: +1 each for a
+    // half-elf, +2 and +1 or +1 to three for a Monsters of the Multiverse race
+    private Dictionary<string, int> abilityPicks = [];
+
+    // Picked only for a species that may be Small or Medium
+    private string? selectedSize;
+    private int subStep = 1;
+    private bool isLoadingSkills = false;
+
+    // Coming back to this step, or editing a saved character, shows what the draft holds
+    protected override Task OnInitializedAsync() => LoadAsync(async () =>
+    {
+        races = await LookupService.GetRacesAsync(Edition, Sources);
+        var draft = await DraftService.GetDraftDetailsAsync(DraftId);
+
+        if (draft?.RaceId is not { } raceId || races.Find(r => r.Id == raceId) is not { } race)
+        {
+            return;
+        }
+
+        selectedRace = race;
+        selectedSubrace = race.Subraces?.Find(s => s.Id == draft.SubraceId);
+        abilityPicks = new Dictionary<string, int>(draft.RaceAbilityIncreases);
+        selectedSize = draft.Size;
+        selectedRaceSkills = [.. draft.SelectedRaceSkillIds];
+    }, "Failed to load races");
+
+    private void SelectRace(RaceApiResponse race)
+    {
+        selectedRace = race;
+        selectedSubrace = null;
+        selectedRaceSkills = [];
+        abilityPicks = [];
+        selectedSize = null;
+    }
+
+    // Another subrace may bring its own ability choice (a variant human's), so the picks go
+    private void SelectSubrace(SubraceApiResponse subrace)
+    {
+        if (selectedSubrace?.Id != subrace.Id)
+        {
+            abilityPicks = [];
+            selectedRaceSkills = [];
+        }
+
+        selectedSubrace = subrace;
+    }
+
+    private bool CanProceedRace()
+    {
+        if (selectedRace == null)
+        {
+            return false;
+        }
+
+        if (selectedRace.Subraces?.Any() == true && selectedSubrace == null)
+        {
+            return false;
+        }
+
+        if (SizeOptions().Count > 1 && selectedSize == null)
+        {
+            return false;
+        }
+
+        return abilityPicks.Values.Sum() == AbilityChoice().Points;
+    }
+
+    // "Small or Medium" is either, as the player picks
+    private List<string> SizeOptions() =>
+        selectedRace?.Size.Split(" or ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList() ?? [];
+
+    private RaceAbilityChoice AbilityChoice() => RaceAbilityChoice.For(selectedRace, selectedSubrace);
+
+    private int SkillChoiceCount() => RaceSkillChoice.CountFor(selectedRace, selectedSubrace);
+
+    private void ToggleSkill(string id)
+    {
+        if (selectedRaceSkills.Contains(id))
+        {
+            selectedRaceSkills.Remove(id);
+            return;
+        }
+
+        if (selectedRaceSkills.Count < SkillChoiceCount())
+        {
+            selectedRaceSkills.Add(id);
+        }
+    }
+
+    private async Task HandleRaceNext()
+    {
+        if (!CanProceedRace())
+        {
+            return;
+        }
+
+        var abilityIncreases = abilityPicks.Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value);
+
+        if (!await SaveAsync(() => DraftService.SetRaceAsync(DraftId, selectedRace!.Id, selectedSubrace?.Id, abilityIncreases, SizeOptions().Count > 1 ? selectedSize : null)))
+        {
+            return;
+        }
+
+        if (SkillChoiceCount() == 0)
+        {
+            await OnNext.InvokeAsync();
+            return;
+        }
+
+        subStep = 2;
+        await RunAsync(
+            async () =>
+            {
+                // A 2024 elf's Keen Senses is one of three; a half-elf may pick any skill
+                var skills = await LookupService.GetSkillProficienciesAsync();
+                var options = RaceSkillChoice.OptionsFor(selectedRace, selectedSubrace);
+                availableSkills = options.Count == 0 ? skills : skills.Where(s => options.Contains(s.Id)).ToList();
+            },
+            busy => isLoadingSkills = busy,
+            "Failed to load skills");
+    }
+
+    private async Task HandleSkillsNext()
+    {
+        if (selectedRaceSkills.Count != SkillChoiceCount())
+        {
+            return;
+        }
+
+        if (await SaveAsync(() => DraftService.ChooseRaceSkillsAsync(DraftId, selectedRaceSkills.ToList()), "Failed to save race skills"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

@@ -1,6 +1,6 @@
 using Bunit;
 
-using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Races;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
 using CharacterCreatorApp.Contracts.Responses.Characters;

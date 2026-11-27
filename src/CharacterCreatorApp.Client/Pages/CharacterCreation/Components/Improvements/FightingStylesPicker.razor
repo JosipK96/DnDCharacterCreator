@@ -1,0 +1,50 @@
+@* The Fighting Styles the class's feature gives: one select per style owed *@
+
+<Room Title="Fighting Style">
+    <p class="mb-4 text-sm text-pencil">
+        Your class gives you <strong>@Chosen.Count</strong> Fighting Style(s). Pick @(Chosen.Count == 1 ? "one" : "them").
+    </p>
+
+    @for (int s = 0; s < Chosen.Count; s++)
+    {
+        var styleIndex = s;
+        <label class="mb-3 block text-sm font-medium">
+            @(Chosen.Count == 1 ? "Style" : $"Style {styleIndex + 1}")
+            <select class="field mt-1" value="@Chosen[styleIndex]" @onchange="e => OnPick.InvokeAsync((styleIndex, e.Value?.ToString()))">
+                <option value="">Choose...</option>
+                @foreach (var style in Options.Where(o => o.Id == Chosen[styleIndex] || (!Chosen.Contains(o.Id) && !TakenAsFeats.Contains(o.Id))))
+                {
+                    <option value="@style.Id">@style.Name</option>
+                }
+            </select>
+            @if (Options.FirstOrDefault(o => o.Id == Chosen[styleIndex]) is { } picked)
+            {
+                <span class="mt-1 block text-xs font-normal text-pencil">@Truncate(picked.Description)</span>
+            }
+        </label>
+    }
+</Room>
+
+@code {
+    /// <summary>The styles the class offers, as feats.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<FeatApiResponse> Options { get; set; } = [];
+
+    /// <summary>One entry per style owed: the style picked, null or empty where none is yet.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<string?> Chosen { get; set; } = [];
+
+    /// <summary>
+    /// The feats the improvements take: a 2024 fighter may take another Fighting Style as a feat,
+    /// and the same style cannot also be its feature's.
+    /// </summary>
+    [Parameter]
+    public IReadOnlyCollection<string?> TakenAsFeats { get; set; } = [];
+
+    /// <summary>Called with the select's index and the style id picked in it.</summary>
+    [Parameter]
+    public EventCallback<(int Index, string? StyleId)> OnPick { get; set; }
+
+    private static string Truncate(string text) =>
+        text.Length <= 160 ? text : string.Concat(text.AsSpan(0, 160), "...");
+}

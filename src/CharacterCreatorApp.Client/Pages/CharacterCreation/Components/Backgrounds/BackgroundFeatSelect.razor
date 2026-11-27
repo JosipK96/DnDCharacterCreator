@@ -1,0 +1,51 @@
+@* A background's feat the player picks from one category: a Mist Wanderer's Dark Gift, or a Haunted
+   One's in place of its own *@
+
+<Room Title="@Title">
+    <p class="mb-4 text-sm text-pencil">@Text</p>
+    <select class="field" value="@FeatId" @onchange="e => OnPick.InvokeAsync(string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString())">
+        <option value="">@EmptyOption</option>
+        @foreach (var feat in Feats.Where(f => f.Category == Category))
+        {
+            <option value="@feat.Id">@feat.Name</option>
+        }
+    </select>
+    <HiddenOptionsNote List="feats" Category="@Category" Edition="@Edition" Sources="@Sources"
+                       OnChangeBooks="@OnChangeBooks" Class="mt-4" />
+</Room>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Text { get; set; } = string.Empty;
+
+    /// <summary>The first option, picking no feat of the category: "Choose..." or "Keep Survivor".</summary>
+    [Parameter, EditorRequired]
+    public string EmptyOption { get; set; } = string.Empty;
+
+    /// <summary>The category the feats are picked from, "Dark Gift".</summary>
+    [Parameter, EditorRequired]
+    public string Category { get; set; } = string.Empty;
+
+    /// <summary>The edition's feats in the draft's books; only the category's are offered.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<FeatApiResponse> Feats { get; set; } = [];
+
+    [Parameter]
+    public string? FeatId { get; set; }
+
+    /// <summary>Called with the feat id picked, null for the empty option.</summary>
+    [Parameter]
+    public EventCallback<string?> OnPick { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Edition { get; set; } = string.Empty;
+
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
+
+    [Parameter]
+    public EventCallback OnChangeBooks { get; set; }
+}

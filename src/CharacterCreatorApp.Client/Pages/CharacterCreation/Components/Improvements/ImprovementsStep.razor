@@ -1,0 +1,337 @@
+@* The step: loads what the character has earned, lays out a room per slot, and saves. Each slot's
+   choice is drawn by AbilityPointsPicker or FeatPicker, and changed through AsiSlot. *@
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="step-title mb-4">@StepHeading("Ability Score Improvements")</h2>
+
+    @if (IsLoading)
+    {
+        <Spinner />
+    }
+    else
+    {
+        <div class="space-y-6">
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <Message Kind="MessageKind.Error">
+                    <p class="text-sm">@ErrorMessage</p>
+                </Message>
+            }
+
+            @* The background's feat may ask for skills or tools too: a Noble's Skilled *@
+            @if (backgroundFeat is { Choice: { } backgroundChoice })
+            {
+                <Room Title="@($"Background Feat: {backgroundFeat.Name}")">
+                    <FeatProficiencySelects Choice="@backgroundChoice" Picks="@backgroundFeatPicks" ProficiencyNames="@proficiencyNames"
+                                            OptionsFor="@ProficiencyOptionsFor" OnPick="pick => backgroundFeatPicks[pick.Index] = pick.ProficiencyId" />
+                </Room>
+            }
+
+            @if (chosenStyles.Count > 0)
+            {
+                <FightingStylesPicker Options="@fightingStyleOptions" Chosen="@chosenStyles"
+                                      TakenAsFeats="@slots.Where(s => s.TakesFeat).Select(s => s.FeatId).ToList()"
+                                      OnPick="pick => chosenStyles[pick.Index] = pick.StyleId" />
+            }
+
+            @if (slots.Count == 0 && chosenStyles.Count == 0)
+            {
+                <Room Title="No Improvements">
+                    <p>No Ability Score Improvements available at this level.</p>
+                    <p class="mt-2 text-sm text-pencil">ASIs are gained at levels @(string.Join(", ", asiLevels)) for your class.</p>
+                </Room>
+            }
+            else if (slots.Count > 0)
+            {
+                @if (bonusFeatCount > 0)
+                {
+                    <Message Kind="MessageKind.Info">
+                        <p class="text-sm">
+                            As a <strong>@raceName</strong>, you take <strong>@bonusFeatCount</strong>
+                            @(bonusFeatCategory == null ? string.Empty : bonusFeatCategory + " ")feat(s) of your choice.
+                        </p>
+                    </Message>
+                }
+
+                @if (asiCount > 0)
+                {
+                    <Message Kind="MessageKind.Info">
+                        <p class="text-sm">
+                            You have <strong>@asiCount</strong> Ability Score Improvement(s).
+                            Each one can either raise your ability scores by <strong>2 points</strong>
+                            (+2 to one score, or +1 to two different scores) or take a <strong>feat</strong> instead.
+                        </p>
+                    </Message>
+                }
+
+                @for (int i = 0; i < slots.Count; i++)
+                {
+                    var index = i;
+                    var slot = slots[index];
+
+                    <Room Title="@(slot.IsRaceFeat ? $"{raceName} Feat" : $"Improvement #{index + 1 - bonusFeatCount}")" data-testid="improvement">
+                        @if (!slot.IsRaceFeat)
+                        {
+                            <div class="mb-4 flex flex-wrap gap-2">
+                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "false" : "true")" @onclick="() => SwitchToAsync(slot, false)">Ability Scores</button>
+                                <button type="button" class="chip" aria-pressed="@(slot.TakesFeat ? "true" : "false")" @onclick="() => SwitchToAsync(slot, true)">Feat</button>
+                            </div>
+                        }
+
+                        @if (!slot.TakesFeat)
+                        {
+                            <AbilityPointsPicker Slot="@slot" OnRaise="abilityId => RaiseAsync(slot, abilityId)" OnLower="abilityId => LowerAsync(slot, abilityId)" />
+                        }
+                        else
+                        {
+                            <FeatPicker Slot="@slot" Feats="@FeatsFor(slot)" Picked="@FeatOf(slot)" Eligibility="@eligibility"
+                                        ProficiencyNames="@proficiencyNames" ProficiencyOptionsFor="@ProficiencyOptionsFor"
+                                        OnPickFeat="featId => slot.ToggleFeat(featId, feats.FirstOrDefault(f => f.Id == featId))"
+                                        OnPickAbility="abilityId => slot.FeatAbility = abilityId"
+                                        OnPickProficiency="pick => slot.ProficiencyPicks[pick.Index] = pick.ProficiencyId" />
+                        }
+                    </Room>
+                }
+
+                @* One note for every feat list on the step; only the race's feats, when those are all it shows *@
+                @if (slots.Any(s => s.TakesFeat))
+                {
+                    <HiddenOptionsNote List="feats" Edition="@draftEdition" Sources="@draftSources" OnChangeBooks="@OnChangeBooks"
+                                       Category="@(slots.Where(s => s.TakesFeat).All(s => s.IsRaceFeat) ? bonusFeatCategory : null)" />
+                }
+            }
+        </div>
+    }
+
+    <StepNavigation OnBack="HandleBack" OnNext="HandleNext" NextDisabled="@(!CanProceed() || IsSaving)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
+</div>
+@code {
+    [Parameter] public int CharacterLevel { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    // The 2024 rules make raising ability scores a feat of this name. The "Ability Scores" mode
+    // is that feat, and taking it from the list would add no points, so it is not listed.
+    private const string AbilityScoreImprovementFeat = "Ability Score Improvement";
+
+    private List<int> asiLevels = [];
+    private int asiCount;
+
+    // The feats the race gives: a variant human's any one, a 2024 human's Origin one
+    private int bonusFeatCount;
+    private string? bonusFeatCategory;
+    private string? raceName;
+
+    private List<AsiSlot> slots = [];
+    private List<FeatApiResponse> feats = [];
+
+    // Which feats the character can take with the points spent so far, by feat id, as the API
+    // answered the latest request; a reply to an earlier one is dropped
+    private Dictionary<string, FeatEligibilityApiResponse> eligibility = [];
+    private int eligibilityRequest;
+    private int eligibilityChecks;
+
+    // The draft's edition and books, which the feats come from
+    private string draftEdition = string.Empty;
+    private IReadOnlyList<string> draftSources = [];
+
+    // The class's Fighting Style features: the styles it offers, and one pick per style owed
+    private List<FeatApiResponse> fightingStyleOptions = [];
+    private List<string?> chosenStyles = [];
+
+    // The background's feat when it asks for skills or tools (a Noble's Skilled), and its picks
+    private FeatApiResponse? backgroundFeat;
+    private List<string?> backgroundFeatPicks = [];
+
+    // Proficiency names by id, and what the race, background and class steps already gave or picked
+    private Dictionary<string, string> proficiencyNames = [];
+    private HashSet<string> proficienciesHeld = [];
+
+    protected override Task OnInitializedAsync() => LoadAsync(LoadImprovementsAsync, "Failed to load ASI data");
+
+    private async Task LoadImprovementsAsync()
+    {
+        var draft = await DraftService.GetDraftDetailsAsync(DraftId);
+        if (draft == null)
+        {
+            ErrorMessage = "Draft not found.";
+            return;
+        }
+
+        if (string.IsNullOrEmpty(draft.ClassId))
+        {
+            ErrorMessage = "No class selected.";
+            return;
+        }
+
+        var selectedClass = await LookupService.GetClassByIdAsync(draft.ClassId);
+        if (selectedClass == null)
+        {
+            ErrorMessage = "Class not found.";
+            return;
+        }
+
+        asiLevels = selectedClass.AsiLevels;
+        asiCount = asiLevels.Count(l => l <= CharacterLevel);
+
+        var race = string.IsNullOrEmpty(draft.RaceId)
+            ? null
+            : (await LookupService.GetRacesAsync(draft.Edition)).FirstOrDefault(r => r.Id == draft.RaceId);
+        var subrace = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
+
+        // A variant human's feat comes with the subrace, a 2024 human's with the species
+        raceName = subrace?.Name ?? race?.Name;
+        (bonusFeatCount, bonusFeatCategory) = subrace is { FeatChoiceCount: > 0 }
+            ? ((race?.FeatChoiceCount ?? 0) + subrace.FeatChoiceCount, subrace.FeatChoiceCategory)
+            : (race?.FeatChoiceCount ?? 0, race?.FeatChoiceCategory);
+
+        var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
+        var editionFeats = await LookupService.GetFeatsAsync(draft.Edition, draft.AllowedSources);
+        draftEdition = draft.Edition;
+        draftSources = draft.AllowedSources;
+
+        // The feat picked for the background (a Mist Wanderer's Dark Gift, or a Haunted One's in
+        // place of Survivor), or else its own
+        var backgroundFeatId = background == null ? null : BackgroundFeats.FeatIdWith(background, draft.BackgroundFeatId);
+
+        // Only the feats of the character's rules edition and books, less one the background
+        // already gave (a 2024 criminal's Alert) unless it can be taken again
+        if (asiCount + bonusFeatCount > 0)
+        {
+            var nonRepeatableBackgroundFeat = background?.Feat is { IsRepeatable: false } feat && feat.Id == backgroundFeatId ? feat.Id : null;
+
+            feats = editionFeats
+                .Where(f => f.Name != AbilityScoreImprovementFeat && f.Id != nonRepeatableBackgroundFeat && f.CanBeTakenForImprovement)
+                .ToList();
+        }
+
+        backgroundFeat = editionFeats.FirstOrDefault(f => f.Id == backgroundFeatId && f.Choice is { } choice && choice.AsksForProficiencies());
+
+        proficiencyNames = (await LookupService.GetProficienciesAsync()).ToDictionary(p => p.Id, p => p.Name);
+        proficienciesHeld =
+        [
+            .. background?.Proficiencies.Select(p => p.Id) ?? [],
+            .. draft.SelectedRaceSkillIds ?? [],
+            .. draft.SelectedClassProficiencyIds ?? [],
+            .. (draft.ToolPicks ?? []).SelectMany(pick => pick),
+        ];
+
+        slots = DraftImprovements.RestoreSlots(draft, bonusFeatCount, asiCount);
+        backgroundFeatPicks = DraftImprovements.RestoreProficiencyPicks(draft, backgroundFeat, slots, feats);
+
+        if (slots.Count > 0)
+        {
+            eligibility = (await DraftService.GetFeatEligibilityAsync(DraftId, DraftImprovements.SpentPoints(slots))).ToDictionary(e => e.FeatId);
+        }
+
+        var fightingStyles = await DraftService.GetFightingStylesAsync(DraftId);
+        fightingStyleOptions = fightingStyles.Options;
+        chosenStyles = Enumerable.Range(0, fightingStyles.Owed)
+            .Select(i => i < draft.FightingStyleIds.Count ? draft.FightingStyleIds[i] : null)
+            .ToList();
+    }
+
+    // A feat's options less what the character has from elsewhere or picked in another select
+    private IEnumerable<string> ProficiencyOptionsFor(FeatChoiceApiResponse choice, string? current)
+    {
+        var taken = AllProficiencyPicks().Where(id => id != current).ToHashSet();
+
+        return choice.Options
+            .Where(id => id == current || (!taken.Contains(id) && !proficienciesHeld.Contains(id)))
+            .OrderBy(id => proficiencyNames.GetValueOrDefault(id, id));
+    }
+
+    private IEnumerable<string> AllProficiencyPicks() =>
+        backgroundFeatPicks
+            .Concat(slots.Where(s => s.TakesFeat).SelectMany(s => s.ProficiencyPicks))
+            .OfType<string>();
+
+    // A race's feat may be of one category only: a 2024 human's is an Origin feat
+    private IEnumerable<FeatApiResponse> FeatsFor(AsiSlot slot) =>
+        feats.Where(f => !slot.IsRaceFeat || bonusFeatCategory == null || f.Category == bonusFeatCategory);
+
+    private FeatApiResponse? FeatOf(AsiSlot slot) => feats.FirstOrDefault(f => f.Id == slot.FeatId);
+
+    private async Task SwitchToAsync(AsiSlot slot, bool takesFeat)
+    {
+        if (slot.SwitchTo(takesFeat))
+        {
+            await RefreshEligibilityAsync();
+        }
+    }
+
+    private async Task RaiseAsync(AsiSlot slot, string abilityId)
+    {
+        if (slot.Raise(abilityId))
+        {
+            await RefreshEligibilityAsync();
+        }
+    }
+
+    private async Task LowerAsync(AsiSlot slot, string abilityId)
+    {
+        if (slot.Lower(abilityId))
+        {
+            await RefreshEligibilityAsync();
+        }
+    }
+
+    private async Task RefreshEligibilityAsync()
+    {
+        var request = ++eligibilityRequest;
+        List<FeatEligibilityApiResponse> answer = [];
+
+        var answered = await RunAsync(
+            async () => answer = await DraftService.GetFeatEligibilityAsync(DraftId, DraftImprovements.SpentPoints(slots)),
+            busy => eligibilityChecks += busy ? 1 : -1,
+            "Failed to check which feats you can take");
+
+        if (answered && request == eligibilityRequest)
+        {
+            eligibility = answer.ToDictionary(e => e.FeatId);
+        }
+    }
+
+    // A feat the character can't take blocks the save, as does a check still on its way
+    private bool CanProceed() =>
+        eligibilityChecks == 0
+        && chosenStyles.All(id => !string.IsNullOrEmpty(id))
+        && backgroundFeatPicks.All(id => !string.IsNullOrEmpty(id))
+        && slots.All(slot => slot.IsComplete(FeatOf(slot), slot.FeatId == null ? null : eligibility.GetValueOrDefault(slot.FeatId)));
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed())
+        {
+            return;
+        }
+
+        var toSave = DraftImprovements.ToSave(slots, feats, backgroundFeat, backgroundFeatPicks);
+        var styleIds = chosenStyles.OfType<string>().ToList();
+
+        // The improvements first: the styles are checked against the feats they take
+        if (await SaveAsync(
+                async () =>
+                {
+                    await DraftService.SetAbilityScoreImprovementsAsync(DraftId, toSave.Improvements, toSave.FeatIds, toSave.FeatAbilityIncreases, toSave.ProficiencyPicks);
+
+                    if (chosenStyles.Count > 0)
+                    {
+                        await DraftService.ChooseFightingStylesAsync(DraftId, styleIds);
+                    }
+                },
+                "Failed to save improvements"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

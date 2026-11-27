@@ -1,0 +1,169 @@
+@* The step: the background, a 2024 one's ability increases (BackgroundIncreases) and a feat
+   picked for it where the background lets the player choose (BackgroundFeatSelect). *@
+@inject CharacterDraftService DraftService
+@inject LookupService LookupService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="step-title mb-2">@StepHeading("Choose Your Background")</h2>
+
+    @if (IsLoading)
+    {
+        <Spinner />
+    }
+    else if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <Message Kind="MessageKind.Error" Class="mb-6">
+            <p class="text-sm">@ErrorMessage</p>
+        </Message>
+    }
+    else
+    {
+        <p class="mb-5 text-pencil">
+            Your background represents what your character did before becoming an adventurer.
+            It provides proficiencies, languages, and equipment.
+        </p>
+
+        <div class="step-columns">
+            <div class="min-w-0 space-y-8">
+                <div class="option-grid">
+                    @foreach (var background in backgrounds)
+                    {
+                        <OptionRoom Name="@background.Name" Picked="@(selectedBackground?.Id == background.Id)"
+                                    OnClick="() => SelectBackground(background)">
+                            @if (BackgroundKeyPanel.SkillsOf(background).Any())
+                            {
+                                <span>@string.Join(", ", BackgroundKeyPanel.SkillsOf(background).Select(s => s.Name))</span>
+                            }
+                        </OptionRoom>
+                    }
+                </div>
+
+                <HiddenOptionsNote List="backgrounds" Edition="@(Edition ?? string.Empty)" Sources="@Sources" OnChangeBooks="@OnChangeBooks" />
+
+                @if (selectedBackground?.AbilityScoreOptions.Count > 0)
+                {
+                    <BackgroundAbilityIncreases Background="@selectedBackground" Increases="@increases" OnChanged="StateHasChanged" />
+                }
+
+                @* A Mist Wanderer or Spirit Medium picks its feat: any Dark Gift *@
+                @if (selectedBackground?.FeatChoiceCategory is { } featCategory)
+                {
+                    <BackgroundFeatSelect Title="@($"{featCategory} Feat")" Text="@($"{selectedBackground.Name} gives a {featCategory} feat of your choice.")"
+                                          EmptyOption="Choose..." Category="@featCategory" Feats="@categoryFeats"
+                                          FeatId="@featId" OnPick="id => featId = id"
+                                          Edition="@(Edition ?? string.Empty)" Sources="@Sources" OnChangeBooks="@OnChangeBooks" />
+                }
+
+                @* A Haunted One or Investigator may take a Dark Gift instead of its own feat *@
+                @if (selectedBackground?.FeatAlternativeCategory is { } alternativeCategory)
+                {
+                    var ownFeat = selectedBackground.Feat?.Name ?? "its feat";
+                    <BackgroundFeatSelect Title="@($"{alternativeCategory} Instead")" Text="@($"{selectedBackground.Name} may take a {alternativeCategory} feat in place of {ownFeat}.")"
+                                          EmptyOption="@($"Keep {ownFeat}")" Category="@alternativeCategory" Feats="@categoryFeats"
+                                          FeatId="@featId" OnPick="id => featId = id"
+                                          Edition="@(Edition ?? string.Empty)" Sources="@Sources" OnChangeBooks="@OnChangeBooks" />
+                }
+            </div>
+
+            @if (selectedBackground is not null)
+            {
+                <BackgroundKeyPanel Background="@selectedBackground" />
+            }
+        </div>
+    }
+
+    <StepNavigation OnBack="HandleBack" OnNext="HandleNext" NextDisabled="@(!CanProceed() || IsSaving)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
+</div>
+
+@code {
+    /// <summary>The draft's rules edition; only its backgrounds are offered.</summary>
+    [Parameter]
+    public string? Edition { get; set; }
+
+    /// <summary>The books the draft allows, by code; only what comes from them is offered.</summary>
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
+
+    [Parameter]
+    public EventCallback OnNext { get; set; }
+
+    [Parameter]
+    public EventCallback OnBack { get; set; }
+
+    private List<BackgroundApiResponse> backgrounds = [];
+    private BackgroundApiResponse? selectedBackground;
+
+    // A 2024 background's increases: +2 and +1 to two of its abilities, or +1 to all three
+    private readonly BackgroundIncreases increases = new();
+
+    // The feat picked for a background that lets the player choose it, from the edition's feats
+    private string? featId;
+    private List<FeatApiResponse> categoryFeats = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        CharacterDraftDetailsApiResponse? draft = null;
+
+        var loaded = await LoadAsync(async () =>
+        {
+            backgrounds = await LookupService.GetBackgroundsAsync(Edition, Sources);
+            draft = await DraftService.GetDraftDetailsAsync(DraftId);
+        }, "Failed to load backgrounds");
+
+        // Coming back to this step, or editing a saved character, shows what the draft holds
+        if (!loaded || backgrounds.Find(b => b.Id == draft?.BackgroundId) is not { } saved)
+        {
+            return;
+        }
+
+        await SelectBackground(saved);
+
+        increases.Restore(draft!.BackgroundAbilityIncreases);
+        featId = draft.BackgroundFeatId;
+    }
+
+    private async Task SelectBackground(BackgroundApiResponse background)
+    {
+        // Picking the background already picked keeps its increases and feat
+        if (selectedBackground?.Id == background.Id)
+        {
+            return;
+        }
+
+        selectedBackground = background;
+        increases.Clear();
+        featId = null;
+
+        if (BackgroundFeats.PickableCategory(background) != null && categoryFeats.Count == 0)
+        {
+            await LoadAsync(async () => categoryFeats = await LookupService.GetFeatsAsync(Edition, Sources), "Failed to load feats");
+        }
+    }
+
+    private bool CanProceed() =>
+        selectedBackground != null
+        && increases.For(selectedBackground.AbilityScoreOptions) != null
+        && (selectedBackground.FeatChoiceCategory == null || featId != null);
+
+    private async Task HandleNext()
+    {
+        if (selectedBackground == null || increases.For(selectedBackground.AbilityScoreOptions) is not { } picked)
+        {
+            return;
+        }
+
+        var pickedFeatId = BackgroundFeats.PickableCategory(selectedBackground) == null ? null : featId;
+
+        if (await SaveAsync(() => DraftService.SetBackgroundAsync(DraftId, selectedBackground.Id, picked, pickedFeatId)))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

@@ -1,0 +1,57 @@
+@* The six abilities, each with the score it was given, or a button to give it the score clicked *@
+
+<Room Title="Assign to Abilities">
+    <p class="mb-4 text-sm text-pencil">
+        @if (Assignment.SelectedScore is { } selectedScore)
+        {
+            <span>Click an ability to assign <strong>@selectedScore</strong></span>
+        }
+        else
+        {
+            <span>Select a score first</span>
+        }
+    </p>
+
+    <div class="space-y-3">
+        @foreach (var abilityId in AbilityNames.Ids)
+        {
+            var assignedScore = Assignment.ScoreOf(abilityId);
+            var hasScore = assignedScore > 0;
+
+            <div class="flex flex-wrap items-center justify-between gap-3 border-2 p-3 @(hasScore ? "border-plum bg-plum-tint" : Assignment.SelectedIndex.HasValue ? "border-ink bg-room-highlight" : "border-dashed border-pencil")">
+                <span class="font-medium">@AbilityNames.Of(abilityId)</span>
+
+                @if (hasScore)
+                {
+                    <span class="flex items-center gap-3">
+                        <span class="font-display text-3xl font-semibold">@assignedScore</span>
+                        <button type="button" class="link-back text-sm" @onclick="() => OnRemove.InvokeAsync(abilityId)">Remove</button>
+                    </span>
+                }
+                else if (Assignment.SelectedScore is { } toAssign)
+                {
+                    <button type="button" class="btn-main" @onclick="() => OnAssign.InvokeAsync(abilityId)">
+                        Assign @toAssign
+                    </button>
+                }
+                else
+                {
+                    <span class="text-pencil">--</span>
+                }
+            </div>
+        }
+    </div>
+</Room>
+
+@code {
+    [Parameter, EditorRequired]
+    public ScoreAssignment Assignment { get; set; } = default!;
+
+    /// <summary>Called with the id ("STR") of the ability to give the clicked score.</summary>
+    [Parameter]
+    public EventCallback<string> OnAssign { get; set; }
+
+    /// <summary>Called with the id ("STR") of the ability whose score is taken back.</summary>
+    [Parameter]
+    public EventCallback<string> OnRemove { get; set; }
+}

@@ -1,0 +1,48 @@
+@* The picked class's key: its hit die, saving throws, proficiencies and when it takes a subclass *@
+
+<KeyPanel Name="@ClassOption.Name">
+    <ChildContent>
+        <KeyFact Label="Hit die"><HitDie Die="@ClassOption.HitDie" Size="24" /></KeyFact>
+        <KeyFact Label="Saving throws">@ListText.OrNone(ClassOption.SavingThrowAbilityIds.Select(AbilityNames.Of))</KeyFact>
+        <KeyFact Label="Armor">@ListText.OrNone(ProficienciesOf(ProficiencyGroup.Armor))</KeyFact>
+        <KeyFact Label="Weapons">@ListText.OrNone(ProficienciesOf(ProficiencyGroup.Weapons))</KeyFact>
+        <KeyFact Label="Tools">@ListText.OrNone(ProficienciesOf(ProficiencyGroup.Tools))</KeyFact>
+        <KeyFact Label="Skills">
+            @if (ClassOption.ProficiencyChoice is { } skillChoice)
+            {
+                <span>Pick @skillChoice.Count of @string.Join(", ", skillChoice.Options.Select(o => o.Name))</span>
+            }
+            else
+            {
+                <span>None</span>
+            }
+        </KeyFact>
+        <KeyFact Label="Subclass">At level @ClassOption.SubclassLevel</KeyFact>
+    </ChildContent>
+    <Note>The skills are picked on the Proficiencies step.</Note>
+</KeyPanel>
+
+@code {
+    /// <summary>The class picked.</summary>
+    [Parameter, EditorRequired]
+    public ClassApiResponse ClassOption { get; set; } = default!;
+
+    private enum ProficiencyGroup
+    {
+        Armor,
+        Weapons,
+        Tools,
+    }
+
+    // The seed data types tools four ways (tool, artisans_tools, gaming_set, musical-instrument),
+    // so anything that is not armor or a weapon is a tool, as the sheet's PDF groups them
+    private IEnumerable<string> ProficienciesOf(ProficiencyGroup group) =>
+        ClassOption.ClassProficiencies
+            .Where(p => group switch
+            {
+                ProficiencyGroup.Armor => p.Type == "armor",
+                ProficiencyGroup.Weapons => p.Type == "weapon",
+                _ => p.Type is not ("armor" or "weapon" or "skill"),
+            })
+            .Select(p => p.Name);
+}

@@ -4,6 +4,17 @@
   address. Run the Api to use it (see `src/CharacterCreatorApp.Api/CLAUDE.md`).
 - The wizard's step order, numbers and names come from
   `Client/Pages/CharacterCreation/WizardSteps`; a step reads its heading and "Next" label from `WizardStepBase`, never a literal.
+  Which step shows, and where Next, Back, the map and a books note go, is `WizardNavigator`, a
+  plain class `CreateCharacter.razor` asks; the page only loads the draft and draws the step.
+- A long step has a folder of its own under `Pages/CharacterCreation/Components` (`Improvements/`,
+  `Races/`, `Classes/`, `Backgrounds/`, `AbilityScores/`): the step, the pieces it draws
+  (`Components/Improvements/FeatPicker.razor`, `Components/Races/SubracePicker.razor`...) and
+  plain classes for what is not markup (`AsiSlot`, `DraftImprovements`, `ScoreAssignment`,
+  `RaceAbilityChoice`), which get plain unit tests. A piece takes what it shows as parameters and
+  reports what the player did through an EventCallback, so the step draws again and knows whether
+  Next is allowed. Short steps stay a single file in `Components/`.
+- Ability keys are the canonical ids ("STR") everywhere in the client, named through
+  `AbilityNames`; never key a dictionary by "Strength" or "strength".
 - Create character reuses the player's unfinished new-character draft (`GET character-drafts/incomplete`):
   with step 1 not saved it opens at step 1 on that draft; with step 1 saved it asks to resume it
   or start fresh (#138).

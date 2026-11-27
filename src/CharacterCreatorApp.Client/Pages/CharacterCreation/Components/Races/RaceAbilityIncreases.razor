@@ -1,0 +1,29 @@
+@* The race's or subrace's ability increases to pick: one row per ability it may raise *@
+
+<ChoiceSection Title="Ability Score Increases" Chosen="@PointsSpent" Total="@Choice.Points">
+    <Description>@Choice.Describe(sentence: true)</Description>
+    <ChildContent>
+        @foreach (var abilityId in Choice.Options)
+        {
+            var amount = Picks.GetValueOrDefault(abilityId);
+            <ChoiceRow Name="@($"+{(amount > 0 ? amount : Choice.Min)} {AbilityNames.Of(abilityId)}")" Picked="@(amount > 0)"
+                       Disabled="@(amount == 0 && Choice.Points - PointsSpent < Choice.Min)"
+                       OnClick="() => OnRaise.InvokeAsync(abilityId)" />
+        }
+    </ChildContent>
+</ChoiceSection>
+
+@code {
+    [Parameter, EditorRequired]
+    public RaceAbilityChoice Choice { get; set; } = RaceAbilityChoice.None;
+
+    /// <summary>The points picked so far, by ability id ("STR").</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, int> Picks { get; set; } = new Dictionary<string, int>();
+
+    /// <summary>Called with the id of the ability clicked, to raise it once more or unpick it.</summary>
+    [Parameter]
+    public EventCallback<string> OnRaise { get; set; }
+
+    private int PointsSpent => Picks.Values.Sum();
+}

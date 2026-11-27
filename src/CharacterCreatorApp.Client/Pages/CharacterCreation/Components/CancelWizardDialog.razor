@@ -1,0 +1,46 @@
+@* Asks before leaving the wizard, worded for a new character, an edit or a level-up *@
+
+<div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
+    <div class="room max-w-md w-full p-6">
+        @if (IsLevelUp)
+        {
+            <h3 class="room-title mb-4">Cancel Level Up?</h3>
+            <p class="mb-6">The character stays at the level it was saved; the picks made here are lost.</p>
+        }
+        else if (IsEdit)
+        {
+            <h3 class="room-title mb-4">Cancel Editing?</h3>
+            <p class="mb-6">The character stays as it was saved; the changes made here are lost.</p>
+        }
+        else
+        {
+            <h3 class="room-title mb-4">Cancel Character Creation?</h3>
+            <p class="mb-6">Are you sure you want to cancel? All progress will be lost.</p>
+        }
+        <div class="flex flex-wrap justify-end gap-3">
+            <button @onclick="OnStay"
+                    class="btn-secondary">
+                @(IsLevelUp ? "Continue Levelling Up" : IsEdit ? "Continue Editing" : "Continue Creating")
+            </button>
+            <button @onclick="OnLeave"
+                    class="btn-danger">
+                Yes, Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    /// <summary>An edit of a saved character, a level-up among them.</summary>
+    [Parameter]
+    public bool IsEdit { get; set; }
+
+    [Parameter]
+    public bool IsLevelUp { get; set; }
+
+    [Parameter]
+    public EventCallback OnStay { get; set; }
+
+    [Parameter]
+    public EventCallback OnLeave { get; set; }
+}

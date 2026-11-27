@@ -1,0 +1,49 @@
+@* The picked background's key: its proficiencies, languages, increases, feat and feature *@
+
+<KeyPanel Name="@Background.Name">
+    <ChildContent>
+        <KeyFact Label="Skills">@ListText.OrNone(SkillsOf(Background).Select(p => p.Name))</KeyFact>
+        <KeyFact Label="Tools">@ListText.OrNone(Background.Proficiencies.Except(SkillsOf(Background)).Select(p => p.Name))</KeyFact>
+        @* The API sends the named languages, and counts the free choices in LanguageChoiceCount *@
+        <KeyFact Label="Languages">
+            @ListText.OrNone(Background.Languages)
+            @if (Background.LanguageChoiceCount > 0)
+            {
+                var count = Background.LanguageChoiceCount;
+                <span class="block">+ Choose @count more language@(count > 1 ? "s" : "") in the next step</span>
+            }
+        </KeyFact>
+        @if (Background.AbilityScoreOptions.Count > 0)
+        {
+            <KeyFact Label="Ability scores">@string.Join(", ", Background.AbilityScoreOptions.Select(AbilityNames.Of))</KeyFact>
+        }
+        @* Every 2024 background's origin feat, and a few 2014 ones' *@
+        @if (Background.Feat != null)
+        {
+            <KeyFact Label="Feat">@Background.Feat.Name</KeyFact>
+        }
+        @if (Background.Feature != null)
+        {
+            <KeyFact Label="Feature">@Background.Feature.Name</KeyFact>
+        }
+    </ChildContent>
+    <Note>
+        @if (Background.Feature != null)
+        {
+            @Background.Feature.Description
+        }
+        else
+        {
+            @($"From {Background.Source}.")
+        }
+    </Note>
+</KeyPanel>
+
+@code {
+    [Parameter, EditorRequired]
+    public BackgroundApiResponse Background { get; set; } = default!;
+
+    /// <summary>The skills among the background's proficiencies; the rest are tools.</summary>
+    public static IEnumerable<BackgroundProficiencyApiResponse> SkillsOf(BackgroundApiResponse background) =>
+        background.Proficiencies.Where(p => p.Type == "skill");
+}

@@ -1,0 +1,183 @@
+@* The step: the player picks a method, gets six scores from it, and hands them out. Which score
+   went where is ScoreAssignment's; ScorePool and AbilityAssignments draw it. *@
+@inject CharacterDraftService DraftService
+@inherits WizardStepBase
+
+<div>
+    <h2 class="step-title mb-4">@StepHeading("Ability Scores")</h2>
+
+    <div class="space-y-6">
+        @if (!string.IsNullOrEmpty(ErrorMessage))
+        {
+            <Message Kind="MessageKind.Error">
+                <p class="text-sm">@ErrorMessage</p>
+            </Message>
+        }
+
+        <Room Title="Choose Your Method">
+            <div class="option-grid">
+                <OptionRoom Name="Standard Array" Picked="@(selectedMethod == AbilityScoreMethod.StandardArray)"
+                            OnClick="() => SelectMethod(AbilityScoreMethod.StandardArray)">
+                    <span>15, 14, 13, 12, 10, 8</span>
+                    <span>Quick &amp; balanced</span>
+                </OptionRoom>
+                <OptionRoom Name="Point Buy" Picked="@(selectedMethod == AbilityScoreMethod.PointBuy)"
+                            OnClick="() => SelectMethod(AbilityScoreMethod.PointBuy)">
+                    <span>27 points to spend</span>
+                    <span>Customize your stats</span>
+                </OptionRoom>
+                <OptionRoom Name="Roll Dice" Picked="@(selectedMethod == AbilityScoreMethod.RollDice)"
+                            OnClick="() => SelectMethod(AbilityScoreMethod.RollDice)">
+                    <span>4d6 drop lowest</span>
+                    <span>Live dangerously!</span>
+                </OptionRoom>
+            </div>
+        </Room>
+
+        @if (selectedMethod == AbilityScoreMethod.RollDice && !hasRolledScores)
+        {
+            <RollDiceComponent3D Scores="@assignment.Scores"
+                                 ScoresChanged="@(scores => assignment.UseScores(scores))"
+                                 OnRollComplete="@(() => hasRolledScores = true)"
+                                 OnRollResultsChanged="@(rolls => rollResults = rolls)" />
+        }
+
+        @if (selectedMethod == AbilityScoreMethod.StandardArray && !hasGeneratedScores)
+        {
+            <div class="text-center">
+                <button type="button" class="btn-main" @onclick="GenerateStandardArray">Generate Standard Array</button>
+            </div>
+        }
+
+        @if (selectedMethod == AbilityScoreMethod.PointBuy && !hasGeneratedScores)
+        {
+            <PointBuyComponent Scores="@assignment.Scores"
+                               ScoresChanged="@(scores => assignment.UseScores(scores))" />
+
+            @if (assignment.Scores.Count == 6)
+            {
+                <div class="text-center">
+                    <button type="button" class="btn-main" @onclick="() => hasGeneratedScores = true">Use Point Buy Scores</button>
+                </div>
+            }
+        }
+
+        @* The scores on one side, the abilities they go to on the other; one above the other on a phone *@
+        @if ((hasRolledScores || hasGeneratedScores) && assignment.Scores.Any())
+        {
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                @* The standard array is always the same six numbers, so there starting over only clears the assignments *@
+                <ScorePool Assignment="@assignment"
+                           Title="@(selectedMethod == AbilityScoreMethod.RollDice ? "Your Rolled Scores" : "Your Scores")"
+                           Rolls="@(selectedMethod == AbilityScoreMethod.RollDice ? rollResults : [])"
+                           StartOverText="@(selectedMethod == AbilityScoreMethod.RollDice ? "Reroll All" : "Start Over")"
+                           OnSelect="index => assignment.Select(index)"
+                           OnStartOver="StartOver" />
+
+                <AbilityAssignments Assignment="@assignment" OnAssign="AssignTo" OnRemove="abilityId => assignment.Unassign(abilityId)" />
+            </div>
+        }
+    </div>
+
+    <StepNavigation OnBack="HandleBack" OnNext="HandleNext" NextDisabled="@(!CanProceed() || IsSaving)"
+                    NextText="@(IsSaving ? "Saving..." : NextLabel)" />
+</div>
+@* The dice roll over the whole window *@
+<div id="dice-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></div>
+
+@code {
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private readonly ScoreAssignment assignment = new();
+    private AbilityScoreMethod selectedMethod = AbilityScoreMethod.None;
+    private List<RollDiceComponent3D.DiceRoll> rollResults = [];
+    private bool hasRolledScores;
+    private bool hasGeneratedScores;
+
+    // Coming back to this step, or editing a saved character, shows the scores the draft holds
+    // assigned as they were; a draft from before the method was kept picks them again
+    protected override async Task OnInitializedAsync()
+    {
+        CharacterDraftDetailsApiResponse? draft = null;
+
+        if (!await LoadAsync(async () => draft = await DraftService.GetDraftDetailsAsync(DraftId), "Failed to load the draft")
+            || draft?.BaseAbilityScoreMethod is not { } methodId
+            || !AbilityNames.Ids.All(draft.BaseAbilityScores.ContainsKey))
+        {
+            return;
+        }
+
+        selectedMethod = AbilityScoreMethods.FromId(methodId);
+
+        if (selectedMethod == AbilityScoreMethod.None)
+        {
+            return;
+        }
+
+        assignment.Restore(draft.BaseAbilityScores);
+        hasRolledScores = selectedMethod == AbilityScoreMethod.RollDice;
+        hasGeneratedScores = !hasRolledScores;
+    }
+
+    private void SelectMethod(AbilityScoreMethod method)
+    {
+        selectedMethod = method;
+        ResetScores();
+        ErrorMessage = null;
+    }
+
+    private void ResetScores()
+    {
+        assignment.Reset();
+        rollResults.Clear();
+        hasRolledScores = false;
+        hasGeneratedScores = false;
+    }
+
+    private void GenerateStandardArray()
+    {
+        assignment.UseScores(AbilityScoreMethods.StandardArray);
+        hasGeneratedScores = true;
+    }
+
+    // A roll starts again from the roll button; the standard array is dealt again at once
+    private void StartOver()
+    {
+        ResetScores();
+
+        if (selectedMethod == AbilityScoreMethod.StandardArray)
+        {
+            GenerateStandardArray();
+        }
+    }
+
+    private void AssignTo(string abilityId)
+    {
+        assignment.AssignSelectedTo(abilityId);
+        ErrorMessage = null;
+    }
+
+    private bool CanProceed() => selectedMethod != AbilityScoreMethod.None && assignment.AllAssigned;
+
+    private async Task HandleNext()
+    {
+        if (!CanProceed())
+        {
+            ErrorMessage = "Please assign all ability scores before continuing.";
+            return;
+        }
+
+        var scores = assignment.ToScores();
+
+        if (await SaveAsync(() => DraftService.SetAbilityScoresAsync(DraftId, scores, AbilityScoreMethods.IdOf(selectedMethod)), "Failed to save ability scores"))
+        {
+            await OnNext.InvokeAsync();
+        }
+    }
+
+    private async Task HandleBack()
+    {
+        await OnBack.InvokeAsync();
+    }
+}

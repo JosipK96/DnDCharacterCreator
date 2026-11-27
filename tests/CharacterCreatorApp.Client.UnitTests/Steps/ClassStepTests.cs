@@ -2,7 +2,7 @@ using AngleSharp.Dom;
 
 using Bunit;
 
-using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Classes;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Responses.Characters;
 using CharacterCreatorApp.Contracts.Responses.Classes;

@@ -1,0 +1,58 @@
+@* The subclasses of the class picked, for a character at or past its subclass level *@
+
+@if (IsLoading)
+{
+    <Spinner Small="true" Text="Loading subclasses..." />
+}
+else if (Subclasses.Any())
+{
+    <Room Title="Choose a Subclass">
+        <p class="mb-4 text-sm text-pencil">
+            At level @ClassOption.SubclassLevel, you choose a subclass that grants you additional features.
+        </p>
+        <div class="option-grid">
+            @foreach (var subclass in Subclasses)
+            {
+                <OptionRoom Name="@subclass.Name" Picked="@(Picked?.Id == subclass.Id)"
+                            OnClick="() => OnPick.InvokeAsync(subclass)">
+                    <span>@ClassOption.Name subclass · @subclass.Source</span>
+                </OptionRoom>
+            }
+        </div>
+        <HiddenOptionsNote List="subclasses" Edition="@Edition" Sources="@Sources" ClassId="@ClassOption.Id"
+                           OnChangeBooks="@OnChangeBooks" Class="mt-4" />
+    </Room>
+}
+else
+{
+    <Message Kind="MessageKind.Error">
+        <p class="text-sm">Failed to load subclasses. Please go back and try again.</p>
+    </Message>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public ClassApiResponse ClassOption { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<SubclassApiResponse> Subclasses { get; set; } = [];
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public SubclassApiResponse? Picked { get; set; }
+
+    [Parameter]
+    public EventCallback<SubclassApiResponse> OnPick { get; set; }
+
+    /// <summary>The draft's edition and books, for the note on the subclasses the unticked books hold.</summary>
+    [Parameter, EditorRequired]
+    public string Edition { get; set; } = string.Empty;
+
+    [Parameter]
+    public IReadOnlyList<string> Sources { get; set; } = [];
+
+    [Parameter]
+    public EventCallback OnChangeBooks { get; set; }
+}

@@ -4,6 +4,10 @@ using Bunit;
 
 using CharacterCreatorApp.Client.Pages.CharacterCreation;
 using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Backgrounds;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Classes;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Improvements;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Races;
 using CharacterCreatorApp.Client.Services;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;

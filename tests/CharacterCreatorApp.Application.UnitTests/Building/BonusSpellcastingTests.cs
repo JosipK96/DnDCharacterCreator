@@ -13,14 +13,15 @@ using Moq;
 
 namespace CharacterCreatorApp.Application.UnitTests.Building;
 
-public class BonusSpellcastingTests
+public class BonusSpellcastingTests : IDisposable
 {
     private readonly Mock<IClassRepository> _classRepositoryMock = new(MockBehavior.Strict);
+    private readonly CancellationTokenSource _cts = new();
 
     public BonusSpellcastingTests()
     {
-        _classRepositoryMock.Setup(r => r.GetByIdAsync("wizard", It.IsAny<CancellationToken>())).ReturnsAsync(Caster("wizard", "INT"));
-        _classRepositoryMock.Setup(r => r.GetByIdAsync("cleric", It.IsAny<CancellationToken>())).ReturnsAsync(Caster("cleric", "WIS"));
+        _classRepositoryMock.Setup(r => r.GetByIdAsync("wizard", _cts.Token)).ReturnsAsync(Caster("wizard", "INT"));
+        _classRepositoryMock.Setup(r => r.GetByIdAsync("cleric", _cts.Token)).ReturnsAsync(Caster("cleric", "WIS"));
     }
 
     [Fact]
@@ -34,10 +35,27 @@ public class BonusSpellcastingTests
         };
 
         // Act
-        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, [], [], _classRepositoryMock.Object, CancellationToken.None);
+        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, [], [], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().Equal(new SpellcastingSource("High Elf", "INT"));
+    }
+
+    [Fact]
+    public async Task LoadAsync_ARaceCantripWhoseAbilityThePlayerPicks_AddsNothing()
+    {
+        // Arrange - a 2024 high elf picks Intelligence, Wisdom or Charisma, which the draft does not keep
+        var highElf = new Subrace
+        {
+            Id = "high_elf_2024", Name = "High Elf", Source = "XPHB", RaceId = "elf",
+            SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1, AbilityOptions = ["INT", "WIS", "CHA"] },
+        };
+
+        // Act
+        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, [], [], _classRepositoryMock.Object, _cts.Token);
+
+        // Assert
+        sources.Should().BeEmpty();
     }
 
     [Fact]
@@ -48,7 +66,7 @@ public class BonusSpellcastingTests
 
         // Act
         var sources = await BonusSpellcasting.LoadAsync(
-            Elf(), null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, CancellationToken.None);
+            Elf(), null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().Equal(new SpellcastingSource("Magic Initiate", "WIS"));
@@ -62,18 +80,18 @@ public class BonusSpellcastingTests
 
         // Act
         var sources = await BonusSpellcasting.LoadAsync(
-            Elf(), null, [pick], [Feat("magic_initiate_2024", "Magic Initiate")], _classRepositoryMock.Object, CancellationToken.None);
+            Elf(), null, [pick], [Feat("magic_initiate_2024", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().Equal(new SpellcastingSource("Magic Initiate", "CHA"));
-        _classRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
+        _classRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<string>(), _cts.Token), Times.Never);
     }
 
     [Fact]
     public async Task LoadAsync_NoRaceOrFeatSpells_ReturnsNone()
     {
         // Act
-        var sources = await BonusSpellcasting.LoadAsync(Elf(), null, [], [], _classRepositoryMock.Object, CancellationToken.None);
+        var sources = await BonusSpellcasting.LoadAsync(Elf(), null, [], [], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().BeEmpty();
@@ -83,15 +101,21 @@ public class BonusSpellcastingTests
     public async Task LoadAsync_AListWhoseClassIsGone_AddsNothingForIt()
     {
         // Arrange - a class the seed data no longer has
-        _classRepositoryMock.Setup(r => r.GetByIdAsync("bard", It.IsAny<CancellationToken>())).ReturnsAsync((ClassReadModel?)null);
+        _classRepositoryMock.Setup(r => r.GetByIdAsync("bard", _cts.Token)).ReturnsAsync((ClassReadModel?)null);
         var pick = new FeatSpellPick { FeatId = "magic_initiate", ClassId = "bard", SpellIds = ["vicious_mockery"] };
 
         // Act
         var sources = await BonusSpellcasting.LoadAsync(
-            Elf(), null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, CancellationToken.None);
+            Elf(), null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().BeEmpty();
+    }
+
+    public void Dispose()
+    {
+        _cts.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     private static Race Elf(Subrace? subrace = null) => new()

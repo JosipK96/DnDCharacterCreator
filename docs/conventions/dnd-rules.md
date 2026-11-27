@@ -138,8 +138,9 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   and each feat spell pick: the ability the player picked (the 2024 Magic Initiate), else that
   of the class whose list the spells come from (the 2014 Magic Initiate, a high elf's wizard
   cantrip). Another ability gets its own pair, labelled with the race or feat; the same one adds
-  nothing. Race spells that come with no pick (a tiefling's) name no ability in the data and add
-  no numbers, and magic items are not modelled. The sheet, the review step
+  nothing. Race spells that come with no pick (a tiefling's) name no ability in the data, and a
+  race cantrip whose ability the player picks (a 2024 elf's, the Kobold Legacy's) has that pick
+  stored nowhere, so neither adds numbers; magic items are not modelled. The sheet, the review step
   (`Shared/SpellcastingPanel.razor`) and the PDF show these numbers and never work them out.
 
 ## Languages

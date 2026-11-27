@@ -168,6 +168,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("RaceSpellAbilityId")
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
+
                     b.Property<string>("Size")
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
@@ -313,6 +317,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Property<string>("RaceId")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<string>("RaceSpellAbilityId")
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
 
                     b.PrimitiveCollection<List<string>>("RaceSpellIds")
                         .IsRequired()
@@ -798,6 +806,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.Property<int>("Speed")
                         .HasColumnType("integer");
 
+                    b.Property<string>("SpellcastingAbility")
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
+
                     b.Property<string>("ToolChoices")
                         .IsRequired()
                         .HasColumnType("jsonb");
@@ -970,6 +982,10 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
 
                     b.Property<int?>("Speed")
                         .HasColumnType("integer");
+
+                    b.Property<string>("SpellcastingAbility")
+                        .HasMaxLength(3)
+                        .HasColumnType("character varying(3)");
 
                     b.HasKey("Id");
 

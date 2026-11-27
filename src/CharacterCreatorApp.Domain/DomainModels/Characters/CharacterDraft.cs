@@ -43,6 +43,12 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public List<string> RaceSpellIds { get; private set; } = [];
 
         /// <summary>
+        /// The ability picked for the race's spells, by canonical id ("WIS"), where its spell choice
+        /// lets the player pick it (BonusSpellChoice.AbilityOptions: a 2024 high elf's). Null otherwise.
+        /// </summary>
+        public string? RaceSpellAbilityId { get; private set; }
+
+        /// <summary>
         /// The +1s picked for the race or subrace (Race.AbilityChoiceWith), by canonical id: a
         /// half-elf's two, a variant human's two. Empty for a race without that choice.
         /// </summary>
@@ -205,6 +211,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             draft.SubraceId = build.SubraceId;
             draft.Size = build.Size;
             draft.RaceSpellIds = [.. build.RaceSpellIds];
+            draft.RaceSpellAbilityId = build.RaceSpellAbilityId;
             draft.RaceAbilityIncreases = new Dictionary<string, int>(build.RaceAbilityIncreases);
             draft.ClassId = build.ClassId;
             draft.SubclassId = build.SubclassId;
@@ -373,6 +380,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             SubraceId = null;
             Size = null;
             RaceSpellIds = [];
+            RaceSpellAbilityId = null;
             RaceAbilityIncreases = [];
             ClassId = null;
             SubclassId = null;
@@ -436,6 +444,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 SubraceId = null;
                 Size = null;
                 RaceSpellIds = [];
+                RaceSpellAbilityId = null;
                 RaceAbilityIncreases = [];
                 SelectedRaceSkillIds = [];
                 SelectedLanguageIds = [];
@@ -598,6 +607,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
                 // and with the subrace (a variant human's feat slot)
                 ClearImprovements();
                 RaceSpellIds = [];
+                RaceSpellAbilityId = null;
             }
 
             RaceId = raceId;
@@ -617,6 +627,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             {
                 RaceAbilityIncreases = [];
                 RaceSpellIds = [];
+                RaceSpellAbilityId = null;
                 ClearImprovements();
             }
 
@@ -747,10 +758,11 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         }
 
         /// <summary>
-        /// Sets the spells picked for the race (Race.SpellChoiceWith) and for each feat with a
-        /// spell choice, one pick per feat in the character's order (see FeatSpells).
+        /// Sets the spells picked for the race (Race.SpellChoiceWith), with the ability picked for
+        /// them where it offers one, and for each feat with a spell choice, one pick per feat in
+        /// the character's order (see FeatSpells).
         /// </summary>
-        public void ChooseBonusSpells(List<string> raceSpellIds, List<FeatSpellPick> featSpells)
+        public void ChooseBonusSpells(List<string> raceSpellIds, List<FeatSpellPick> featSpells, string? raceSpellAbilityId = null)
         {
             ArgumentNullException.ThrowIfNull(raceSpellIds);
             ArgumentNullException.ThrowIfNull(featSpells);
@@ -758,6 +770,7 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
             RaceSpellIds = raceSpellIds;
 
             // The ability arrives as "WIS" or "wisdom"; the sheet reads the canonical id
+            RaceSpellAbilityId = raceSpellAbilityId is { } raceAbilityId ? AbilityScore.Normalize(raceAbilityId) : null;
             FeatSpells = featSpells.ConvertAll(pick => new FeatSpellPick
             {
                 FeatId = pick.FeatId,

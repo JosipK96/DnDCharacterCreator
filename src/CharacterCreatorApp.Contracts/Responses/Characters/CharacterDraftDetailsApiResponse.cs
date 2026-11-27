@@ -21,6 +21,9 @@ public class CharacterDraftDetailsApiResponse
     /// <summary>The spells picked for the race: a high elf's wizard cantrip.</summary>
     public List<string> RaceSpellIds { get; set; } = [];
 
+    /// <summary>The ability picked for the race's spells ("WIS") where it offers one: a 2024 high elf's; null otherwise.</summary>
+    public string? RaceSpellAbilityId { get; set; }
+
     /// <summary>The +1s picked for the race or subrace by ability id: a half-elf's two.</summary>
     public Dictionary<string, int> RaceAbilityIncreases { get; set; } = [];
 

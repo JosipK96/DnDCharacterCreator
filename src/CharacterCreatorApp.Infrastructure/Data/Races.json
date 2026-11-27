@@ -54,6 +54,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -112,6 +113,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -170,6 +172,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -196,7 +199,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "aasimar_mpmm_radiant_consumption",
@@ -222,7 +226,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "aasimar_mpmm_radiant_soul",
@@ -248,7 +253,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -308,6 +314,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": "CHA",
     "ToolChoices": [],
     "Subraces": [
       {
@@ -339,7 +346,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "protector_aasimar_vgm",
@@ -370,7 +378,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "scourge_aasimar_vgm",
@@ -401,7 +410,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -463,6 +473,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -489,7 +500,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -568,6 +580,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -636,6 +649,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -679,6 +693,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -712,7 +727,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "ibis_headed_aven_psa",
@@ -743,7 +759,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -798,6 +815,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -863,6 +881,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -928,6 +947,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -993,6 +1013,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1066,6 +1087,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1139,6 +1161,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1202,6 +1225,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1256,6 +1280,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1310,6 +1335,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1350,6 +1376,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -1376,7 +1403,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "custom_lineage_tce_skill_proficiency",
@@ -1402,7 +1430,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -1465,6 +1494,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1528,6 +1558,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -1562,6 +1593,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -1602,7 +1634,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "draconblood_dragonborn",
@@ -1647,7 +1680,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "ravenite_dragonborn",
@@ -1692,7 +1726,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -1731,6 +1766,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -1762,7 +1798,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_chromatic_ftd_blue",
@@ -1793,7 +1830,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_chromatic_ftd_green",
@@ -1824,7 +1862,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_chromatic_ftd_red",
@@ -1855,7 +1894,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_chromatic_ftd_white",
@@ -1886,7 +1926,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -1930,6 +1971,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -1961,7 +2003,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_gem_ftd_crystal",
@@ -1992,7 +2035,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_gem_ftd_emerald",
@@ -2023,7 +2067,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_gem_ftd_sapphire",
@@ -2054,7 +2099,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_gem_ftd_topaz",
@@ -2085,7 +2131,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -2124,6 +2171,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -2155,7 +2203,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_metallic_ftd_bronze",
@@ -2186,7 +2235,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_metallic_ftd_copper",
@@ -2217,7 +2267,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_metallic_ftd_gold",
@@ -2248,7 +2299,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_metallic_ftd_silver",
@@ -2279,7 +2331,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -2342,6 +2395,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -2396,6 +2450,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [
       {
         "Count": 1,
@@ -2460,7 +2515,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "hill_dwarf",
@@ -2501,7 +2557,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "mark_of_warding_dwarf",
@@ -2561,7 +2618,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "mountain_dwarf",
@@ -2605,7 +2663,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -2664,6 +2723,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [
       {
         "Count": 2,
@@ -2747,6 +2807,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -2798,6 +2859,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -2861,7 +2923,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "eladrin_elf",
@@ -2897,7 +2960,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "high_elf",
@@ -2955,7 +3019,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "mark_of_shadow_elf",
@@ -3010,7 +3075,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "pallid_elf",
@@ -3064,7 +3130,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "sea_elf",
@@ -3125,7 +3192,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "shadar_kai_elf",
@@ -3166,7 +3234,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "wood_elf",
@@ -3217,7 +3286,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -3287,6 +3357,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -3318,7 +3389,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "vahadar_elf_kaladesh_psk",
@@ -3356,7 +3428,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "WIS"
       }
     ]
   },
@@ -3403,6 +3476,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -3454,7 +3528,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "mul_daya_nation_elf_zendikar_psz",
@@ -3518,7 +3593,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "tajuru_nation_elf_zendikar_psz",
@@ -3554,7 +3630,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -3621,6 +3698,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -3687,6 +3765,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -3749,6 +3828,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -3817,6 +3897,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": "WIS",
     "ToolChoices": [],
     "Subraces": []
   },
@@ -3850,6 +3931,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -3891,7 +3973,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CON"
       },
       {
         "Id": "earth_genasi_eepc",
@@ -3932,7 +4015,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CON"
       },
       {
         "Id": "fire_genasi_eepc",
@@ -3982,7 +4066,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CON"
       },
       {
         "Id": "water_genasi_eepc",
@@ -4042,7 +4127,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CON"
       }
     ]
   },
@@ -4081,6 +4167,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -4130,7 +4217,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "earth_genasi_mpmm",
@@ -4170,7 +4258,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "fire_genasi_mpmm",
@@ -4214,7 +4303,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "water_genasi_mpmm",
@@ -4268,7 +4358,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -4324,6 +4415,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -4356,6 +4448,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -4416,7 +4509,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "githzerai_gith_mtf",
@@ -4465,7 +4559,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       }
     ]
   },
@@ -4527,6 +4622,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -4588,6 +4684,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -4627,6 +4724,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -4663,7 +4761,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "deep_svirfneblin_gnome",
@@ -4699,7 +4798,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "forest_gnome",
@@ -4745,7 +4845,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "mark_of_scribing_gnome",
@@ -4804,7 +4905,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "rock_gnome",
@@ -4847,7 +4949,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -4901,6 +5004,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -4954,6 +5058,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5007,6 +5112,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5046,6 +5152,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -5077,7 +5184,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "grotag_tribe_goblin_psz",
@@ -5110,7 +5218,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "lavastep_tribe_goblin_psz",
@@ -5141,7 +5250,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "tuktuk_tribe_goblin_psz",
@@ -5174,7 +5284,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -5228,6 +5339,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5281,6 +5393,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5331,6 +5444,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5391,6 +5505,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5463,6 +5578,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5516,6 +5632,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -5555,6 +5672,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -5592,7 +5710,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "aquatic_elf_descent_half_elf",
@@ -5629,7 +5748,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "drow_descent_half_elf",
@@ -5679,7 +5799,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "mark_of_detection_half_elf",
@@ -5739,7 +5860,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "mark_of_storm_half_elf",
@@ -5794,7 +5916,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "moon_elf_or_sun_elf_descent_half_elf",
@@ -5843,7 +5966,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "wood_elf_descent_half_elf",
@@ -5885,7 +6009,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -5925,6 +6050,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -5966,7 +6092,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "mark_of_finding_half_orc",
@@ -6016,7 +6143,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       }
     ]
   },
@@ -6066,6 +6194,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -6097,7 +6226,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "lightfoot_halfling",
@@ -6128,7 +6258,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "lotusden_halfling",
@@ -6177,7 +6308,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "mark_of_healing_halfling",
@@ -6227,7 +6359,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "mark_of_hospitality_halfling",
@@ -6281,7 +6414,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "stout_halfling",
@@ -6312,7 +6446,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -6368,6 +6503,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -6423,6 +6559,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -6490,6 +6627,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -6545,6 +6683,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -6598,6 +6737,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -6653,6 +6793,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -6680,6 +6821,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -6725,7 +6867,8 @@
         "ProficiencyIds": [],
         "Traits": [],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "amonkhet_human",
@@ -6763,7 +6906,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "keldon_human",
@@ -6810,7 +6954,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "mark_of_handling_human",
@@ -6871,7 +7016,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "mark_of_making_human",
@@ -6932,7 +7078,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "INT"
       },
       {
         "Id": "mark_of_passage_human",
@@ -6989,7 +7136,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "DEX"
       },
       {
         "Id": "mark_of_sentinel_human",
@@ -7044,7 +7192,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "variant_human",
@@ -7082,7 +7231,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "mark_of_finding_human",
@@ -7141,7 +7291,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "WIS"
       }
     ]
   },
@@ -7169,6 +7320,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -7214,7 +7366,8 @@
         "ProficiencyIds": [],
         "Traits": [],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "kessig_human_innistrad_psi",
@@ -7266,7 +7419,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "nephalia_human_innistrad_psi",
@@ -7301,7 +7455,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "stensia_human_innistrad_psi",
@@ -7343,7 +7498,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -7396,6 +7552,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7448,6 +7605,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7500,6 +7658,7 @@
     "Traits": [],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7557,6 +7716,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7611,6 +7771,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7659,6 +7820,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7717,6 +7879,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7768,6 +7931,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -7811,6 +7975,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -7843,7 +8008,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "kobold_mpmm_defiance",
@@ -7869,7 +8035,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "kobold_mpmm_draconic_sorcery",
@@ -7906,7 +8073,8 @@
             "WIS",
             "CHA"
           ]
-        }
+        },
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -7961,6 +8129,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8026,6 +8195,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8088,6 +8258,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8158,6 +8329,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8242,6 +8414,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8313,6 +8486,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8375,6 +8549,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8423,6 +8598,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -8469,7 +8645,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "green_merfolk_psz",
@@ -8512,7 +8689,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "cosi_creed_merfolk_psz",
@@ -8562,7 +8740,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "emeria_creed_merfolk_psz",
@@ -8608,7 +8787,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "WIS"
       },
       {
         "Id": "ula_creed_merfolk_psz",
@@ -8654,7 +8834,8 @@
           "Cantrips": 1,
           "FirstLevelSpells": 0,
           "AbilityOptions": []
-        }
+        },
+        "SpellcastingAbility": "INT"
       }
     ]
   },
@@ -8715,6 +8896,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8775,6 +8957,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8828,6 +9011,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8887,6 +9071,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -8946,6 +9131,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9011,6 +9197,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9077,6 +9264,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9130,6 +9318,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9196,6 +9385,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9256,6 +9446,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9311,6 +9502,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9374,6 +9566,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9422,6 +9615,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9493,6 +9687,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [
       {
         "Count": 1,
@@ -9570,6 +9765,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [
       {
         "Count": 1,
@@ -9656,6 +9852,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9721,6 +9918,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -9759,6 +9957,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -9801,7 +10000,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "longtooth_shifter_erlw",
@@ -9843,7 +10043,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "swiftstride_shifter_erlw",
@@ -9885,7 +10086,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "wildhunt_shifter_erlw",
@@ -9927,7 +10129,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -9976,6 +10179,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -10002,7 +10206,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "shifter_mpmm_longtooth",
@@ -10028,7 +10233,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "shifter_mpmm_swiftstride",
@@ -10054,7 +10260,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "shifter_mpmm_wildhunt",
@@ -10080,7 +10287,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -10130,6 +10338,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -10183,6 +10392,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -10244,6 +10454,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -10309,6 +10520,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -10372,6 +10584,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -10411,6 +10624,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -10459,7 +10673,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "asmodeus_tiefling",
@@ -10507,7 +10722,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "baalzebul_tiefling",
@@ -10555,7 +10771,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "dispater_tiefling",
@@ -10603,7 +10820,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "fierna_tiefling",
@@ -10651,7 +10869,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "glasya_tiefling",
@@ -10699,7 +10918,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "levistus_tiefling",
@@ -10747,7 +10967,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "mammon_tiefling",
@@ -10795,7 +11016,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "mephistopheles_tiefling",
@@ -10843,7 +11065,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "devils_tongue_tiefling",
@@ -10895,7 +11118,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "hellfire_tiefling",
@@ -10947,7 +11171,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "infernal_legacy_tiefling",
@@ -10999,7 +11224,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       },
       {
         "Id": "winged_tiefling",
@@ -11043,7 +11269,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "zariel_tiefling",
@@ -11091,7 +11318,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": "CHA"
       }
     ]
   },
@@ -11157,6 +11385,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11222,6 +11451,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11312,6 +11542,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": "CHA",
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11388,6 +11619,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11478,6 +11710,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": "CHA",
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11526,6 +11759,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -11557,7 +11791,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "zendikar_vampire_psz",
@@ -11588,7 +11823,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -11648,6 +11884,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11695,6 +11932,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11760,6 +11998,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11819,6 +12058,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11885,6 +12125,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -11957,6 +12198,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": "CHA",
     "ToolChoices": [],
     "Subraces": []
   },
@@ -12013,6 +12255,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": "CHA",
     "ToolChoices": [],
     "Subraces": []
   },
@@ -12059,6 +12302,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -12106,6 +12350,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -12157,6 +12402,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -12193,6 +12439,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -12224,7 +12471,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_blue_2024",
@@ -12255,7 +12503,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_brass_2024",
@@ -12286,7 +12535,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_bronze_2024",
@@ -12317,7 +12567,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_copper_2024",
@@ -12348,7 +12599,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_gold_2024",
@@ -12379,7 +12631,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_green_2024",
@@ -12410,7 +12663,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_red_2024",
@@ -12441,7 +12695,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_silver_2024",
@@ -12472,7 +12727,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "dragonborn_white_2024",
@@ -12503,7 +12759,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -12550,6 +12807,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -12600,6 +12858,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -12644,7 +12903,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "elf_high_elf_lineage_2024",
@@ -12690,7 +12950,8 @@
             "WIS",
             "CHA"
           ]
-        }
+        },
+        "SpellcastingAbility": null
       },
       {
         "Id": "elf_wood_elf_lineage_2024",
@@ -12729,7 +12990,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -12780,6 +13042,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -12826,7 +13089,8 @@
             "WIS",
             "CHA"
           ]
-        }
+        },
+        "SpellcastingAbility": null
       },
       {
         "Id": "elf_lfl_shadowmoor_lineage_2024",
@@ -12865,7 +13129,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -12925,6 +13190,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -12945,7 +13211,8 @@
         "ProficiencyIds": [],
         "Traits": [],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "faerie_lfl_shadowmoor_2024",
@@ -12971,7 +13238,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -13026,6 +13294,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13062,6 +13331,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -13097,7 +13367,8 @@
             "Level": 3
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "gnome_rock_gnome_lineage_2024",
@@ -13132,7 +13403,8 @@
             "Level": 1
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -13169,6 +13441,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -13195,7 +13468,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "goliath_fire_giant_ancestry_2024",
@@ -13221,7 +13495,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "goliath_frost_giant_ancestry_2024",
@@ -13247,7 +13522,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "goliath_hill_giant_ancestry_2024",
@@ -13273,7 +13549,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "goliath_stone_giant_ancestry_2024",
@@ -13299,7 +13576,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "goliath_storm_giant_ancestry_2024",
@@ -13325,7 +13603,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -13372,6 +13651,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13422,6 +13702,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13463,6 +13744,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13514,6 +13796,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13565,6 +13848,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13611,6 +13895,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -13631,7 +13916,8 @@
         "ProficiencyIds": [],
         "Traits": [],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "kithkin_lfl_shadowmoor_2024",
@@ -13657,7 +13943,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -13712,6 +13999,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13762,6 +14050,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13803,6 +14092,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13849,6 +14139,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13903,6 +14194,7 @@
       }
     ],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   },
@@ -13944,6 +14236,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -13970,7 +14263,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "shifter_efa_longtooth_2024",
@@ -13996,7 +14290,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "shifter_efa_swiftstride_2024",
@@ -14022,7 +14317,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "shifter_efa_wildhunt_2024",
@@ -14048,7 +14344,8 @@
           }
         ],
         "Spells": [],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -14085,6 +14382,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": [
       {
@@ -14128,7 +14426,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "tiefling_chthonic_legacy_2024",
@@ -14171,7 +14470,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       },
       {
         "Id": "tiefling_infernal_legacy_2024",
@@ -14214,7 +14514,8 @@
             "Level": 5
           }
         ],
-        "SpellChoice": null
+        "SpellChoice": null,
+        "SpellcastingAbility": null
       }
     ]
   },
@@ -14271,6 +14572,7 @@
     ],
     "Spells": [],
     "SpellChoice": null,
+    "SpellcastingAbility": null,
     "ToolChoices": [],
     "Subraces": []
   }

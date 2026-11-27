@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Domain.DomainModels.Races;
+using CharacterCreatorApp.Domain.DomainModels.Races;
 
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +36,9 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Races
                 .HasMaxLength(30);
 
             builder.OwnsOne(sr => sr.SpellChoice).ToJson();
+
+            builder.Property(sr => sr.SpellcastingAbility)
+                .HasMaxLength(3);
 
             builder.HasMany(sr => sr.Spells)
                 .WithOne(s => s.Subrace)

@@ -55,9 +55,11 @@ checks their count and category before counting the rest against `Class.Improvem
 ability points may be (2 points, at most 2 on one, real abilities) is
 `AbilityIncreaseChoice.Improvement`, which the step and finalize both check.
 
-A feat's spellcasting ability, where the player picks it (the 2024 Magic Initiate's Intelligence,
-Wisdom or Charisma, `BonusSpellChoice.AbilityOptions`), is an ability id too: it arrives in any
-spelling with the feat's spells and is kept under its canonical id in `FeatSpellPick.AbilityId`.
+A feat's or race's spellcasting ability, where the player picks it (the 2024 Magic Initiate's or
+2024 high elf's Intelligence, Wisdom or Charisma, `BonusSpellChoice.AbilityOptions`), is an
+ability id too: it arrives in any spelling with the spells and is kept under its canonical id in
+`FeatSpellPick.AbilityId` or `CharacterDraft.RaceSpellAbilityId`. A race's fixed one
+(`Race.SpellcastingAbility`, a tiefling's) is written canonical by the generator.
 
 ## Language ids
 

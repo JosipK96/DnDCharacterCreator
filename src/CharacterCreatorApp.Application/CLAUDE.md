@@ -31,7 +31,7 @@ changing a character creation step, `CharacterBuilder` or `DraftCompletenessChec
     `DraftCompletenessChecker` says what is still missing. Finalize and preview both use them —
     that is the point, so the review step cannot disagree with what finalize builds.
     `CharacterFeatEntries` lists the feats taken, one entry per take with its spells, and
-    `BonusSpellcasting` says what the race's and feats' picked spells are cast with, for the
+    `BonusSpellcasting` says what the race's spells and the feats' picked spells are cast with, for the
     review step and the sheet alike.
 - Editing a saved character (`StartCharacterEditCommandHandler`) opens a copy of its build as a
   new draft, dropping an edit left unsaved; finalize then replaces the character it names and

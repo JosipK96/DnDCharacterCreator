@@ -73,7 +73,7 @@ public class PreviewCharacterQueryHandler(
             cancellationToken);
 
         var bonusSpellcasting = await BonusSpellcasting.LoadAsync(
-            sources.Race, sources.Subrace, character.FeatSpells, content.Feats, _classRepository, cancellationToken);
+            sources.Race, sources.Subrace, character.RaceSpellAbilityId, character.FeatSpells, content.Feats, _classRepository, cancellationToken);
 
         var stats = CharacterStatsCalculator.Calculate(CharacterStatsInput.For(
             character.Level,

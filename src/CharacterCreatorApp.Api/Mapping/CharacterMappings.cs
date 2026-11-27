@@ -124,6 +124,7 @@ public static class CharacterMappings
         SubraceId = draft.SubraceId,
         Size = draft.Size,
         RaceSpellIds = draft.RaceSpellIds,
+        RaceSpellAbilityId = draft.RaceSpellAbilityId,
         RaceAbilityIncreases = draft.RaceAbilityIncreases,
         ClassId = draft.ClassId,
         SubclassId = draft.SubclassId,

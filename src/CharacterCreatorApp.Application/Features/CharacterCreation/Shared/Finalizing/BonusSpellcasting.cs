@@ -14,14 +14,16 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Fina
 public static class BonusSpellcasting
 {
     /// <summary>
-    /// The race's spell pick (a 2014 high elf's wizard cantrip), then one source per feat spell
-    /// pick, labelled with the subrace, race or feat. A feat that lets the player pick the ability
-    /// (the 2024 Magic Initiate) uses the pick; otherwise the spells are cast with the ability of
-    /// the class whose list they come from (the 2014 Magic Initiate, the 2014 high elf).
+    /// One source for the race's spells, labelled with the subrace or race, then one per feat
+    /// spell pick, labelled with the feat. Where the race or feat lets the player pick the ability
+    /// (a 2024 high elf, the 2024 Magic Initiate) the pick is used. Otherwise a race's spells are
+    /// cast with its own ability (a tiefling's Charisma), and spells picked from a class's list
+    /// with that class's (the 2014 Magic Initiate, the 2014 high elf's wizard cantrip).
     /// </summary>
     public static async Task<List<SpellcastingSource>> LoadAsync(
         Race race,
         Subrace? subrace,
+        string? raceSpellAbilityId,
         IEnumerable<FeatSpellPick> featSpells,
         IEnumerable<CharacterFeatReadModel> feats,
         IClassRepository classRepository,
@@ -30,14 +32,16 @@ public static class BonusSpellcasting
         var sources = new List<SpellcastingSource>();
         var abilityByClassId = new Dictionary<string, string?>(StringComparer.Ordinal);
 
-        // shortcut: race spells that come with no pick (a tiefling's Hellish Rebuke) name no ability
-        // in the seed data, and a race cantrip whose ability the player picks (a 2024 elf's, the
-        // Kobold Legacy's) has that pick stored nowhere, so neither adds numbers; upgrade when the
-        // generator reads the one and the draft stores the other.
-        if (BonusSpells.RaceSlot(race, subrace) is { Choice: { ClassIds: [var raceListClassId], AbilityOptions.Count: 0 } } raceSlot
-            && await ClassAbilityAsync(raceListClassId, abilityByClassId, classRepository, cancellationToken) is { } raceAbility)
+        var raceSlot = BonusSpells.RaceSlot(race, subrace);
+        var raceAbility = raceSpellAbilityId
+            ?? race.SpellcastingAbilityWith(subrace)
+            ?? (raceSlot is { Choice: { ClassIds: [var raceListClassId], AbilityOptions.Count: 0 } }
+                ? await ClassAbilityAsync(raceListClassId, abilityByClassId, classRepository, cancellationToken)
+                : null);
+
+        if (raceAbility != null)
         {
-            sources.Add(new SpellcastingSource(raceSlot.Name, raceAbility));
+            sources.Add(new SpellcastingSource(subrace?.Name ?? race.Name, raceAbility));
         }
 
         var featNames = feats.Select(f => f.Feat).DistinctBy(f => f.Id).ToDictionary(f => f.Id, f => f.Name);

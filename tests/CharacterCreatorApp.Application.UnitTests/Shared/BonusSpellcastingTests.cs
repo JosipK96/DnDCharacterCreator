@@ -38,27 +38,66 @@ public class BonusSpellcastingTests : IDisposable
         };
 
         // Act
-        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, [], [], _classRepositoryMock.Object, _cts.Token);
+        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, null, [], [], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().Equal(new SpellcastingSource("High Elf", "INT"));
     }
 
     [Fact]
-    public async Task LoadAsync_ARaceCantripWhoseAbilityThePlayerPicks_AddsNothing()
+    public async Task LoadAsync_ARaceCantripWhoseAbilityThePlayerPicked_CastsWithThePickAndLoadsNoClass()
     {
-        // Arrange - a 2024 high elf picks Intelligence, Wisdom or Charisma, which the draft does not keep
-        var highElf = new Subrace
-        {
-            Id = "high_elf_2024", Name = "High Elf", Source = "XPHB", RaceId = "elf",
-            SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1, AbilityOptions = ["INT", "WIS", "CHA"] },
-        };
+        // Arrange - a 2024 high elf picks Intelligence, Wisdom or Charisma
+        var highElf = HighElf2024();
 
         // Act
-        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, [], [], _classRepositoryMock.Object, _cts.Token);
+        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, "WIS", [], [], _classRepositoryMock.Object, _cts.Token);
+
+        // Assert
+        sources.Should().Equal(new SpellcastingSource("High Elf", "WIS"));
+        _classRepositoryMock.Verify(r => r.GetByIdAsync(It.IsAny<string>(), _cts.Token), Times.Never);
+    }
+
+    [Fact]
+    public async Task LoadAsync_ARaceCantripWhoseAbilityWasNeverPicked_AddsNothing()
+    {
+        // Arrange - a character made before the pick was kept: the wizard's Intelligence would be a guess
+        var highElf = HighElf2024();
+
+        // Act
+        var sources = await BonusSpellcasting.LoadAsync(Elf(highElf), highElf, null, [], [], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task LoadAsync_ATiefling_CastsItsRacesSpellsWithItsOwnAbilityUnderTheRacesName()
+    {
+        // Arrange - Thaumaturgy and Hellish Rebuke come with no pick, cast with Charisma
+        var tiefling = new Race
+        {
+            Id = "tiefling", Name = "Tiefling", Edition = RulesEdition.Edition2014, Source = "PHB", Size = "Medium", SpellcastingAbility = "CHA",
+        };
+
+        // Act
+        var sources = await BonusSpellcasting.LoadAsync(tiefling, null, null, [], [], _classRepositoryMock.Object, _cts.Token);
+
+        // Assert
+        sources.Should().Equal(new SpellcastingSource("Tiefling", "CHA"));
+    }
+
+    [Fact]
+    public async Task LoadAsync_ADrow_CastsItsSubracesSpellsWithTheSubracesAbility()
+    {
+        // Arrange - Faerie Fire and Darkness, cast with Charisma
+        var drow = new Subrace { Id = "drow", Name = "Drow", Source = "PHB", RaceId = "elf", SpellcastingAbility = "CHA" };
+
+        // Act
+        var sources = await BonusSpellcasting.LoadAsync(Elf(drow), drow, null, [], [], _classRepositoryMock.Object, _cts.Token);
+
+        // Assert
+        sources.Should().Equal(new SpellcastingSource("Drow", "CHA"));
     }
 
     [Fact]
@@ -69,7 +108,7 @@ public class BonusSpellcastingTests : IDisposable
 
         // Act
         var sources = await BonusSpellcasting.LoadAsync(
-            Elf(), null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
+            Elf(), null, null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().Equal(new SpellcastingSource("Magic Initiate", "WIS"));
@@ -83,7 +122,7 @@ public class BonusSpellcastingTests : IDisposable
 
         // Act
         var sources = await BonusSpellcasting.LoadAsync(
-            Elf(), null, [pick], [Feat("magic_initiate_2024", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
+            Elf(), null, null, [pick], [Feat("magic_initiate_2024", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().Equal(new SpellcastingSource("Magic Initiate", "CHA"));
@@ -94,7 +133,7 @@ public class BonusSpellcastingTests : IDisposable
     public async Task LoadAsync_NoRaceOrFeatSpells_ReturnsNone()
     {
         // Act
-        var sources = await BonusSpellcasting.LoadAsync(Elf(), null, [], [], _classRepositoryMock.Object, _cts.Token);
+        var sources = await BonusSpellcasting.LoadAsync(Elf(), null, null, [], [], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().BeEmpty();
@@ -109,7 +148,7 @@ public class BonusSpellcastingTests : IDisposable
 
         // Act
         var sources = await BonusSpellcasting.LoadAsync(
-            Elf(), null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
+            Elf(), null, null, [pick], [Feat("magic_initiate", "Magic Initiate")], _classRepositoryMock.Object, _cts.Token);
 
         // Assert
         sources.Should().BeEmpty();
@@ -130,6 +169,12 @@ public class BonusSpellcastingTests : IDisposable
         Size = "Medium",
         Speed = 30,
         Subraces = subrace == null ? [] : [subrace],
+    };
+
+    private static Subrace HighElf2024() => new()
+    {
+        Id = "high_elf_2024", Name = "High Elf", Source = "XPHB", RaceId = "elf",
+        SpellChoice = new BonusSpellChoice { ClassIds = ["wizard"], Cantrips = 1, AbilityOptions = ["INT", "WIS", "CHA"] },
     };
 
     private static ClassReadModel Caster(string id, string ability) => new()

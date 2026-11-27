@@ -576,7 +576,7 @@ public class CharacterDraftEditTests
         build.SetFeats(["magic_initiate_2014"], [[]], [new FeatProficiencyPick { FeatId = "skilled_2014", ProficiencyIds = ["arcana"] }]);
         build.SetAbilityScoreImprovements([new Dictionary<string, int> { ["STR"] = 2 }]);
         build.SetSpells(["sacred_flame", "cure_wounds"]);
-        build.ChooseBonusSpells(["light"], [new FeatSpellPick { FeatId = "magic_initiate_2014", ClassId = "cleric", SpellIds = ["guidance", "bless"] }]);
+        build.ChooseBonusSpells(["light"], [new FeatSpellPick { FeatId = "magic_initiate_2014", ClassId = "cleric", SpellIds = ["guidance", "bless"] }], "WIS");
         build.MarkAsCompleted(CharacterId);
         return build;
     }

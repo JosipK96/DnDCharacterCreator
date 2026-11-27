@@ -144,6 +144,20 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   drow and gnome lineages, most Monsters of the Multiverse races) adds no numbers yet; magic
   items are not modelled. The sheet, the review step
   (`Shared/SpellcastingPanel.razor`) and the PDF show these numbers and never work them out.
+- A damaging cantrip is a row of the attacks table (`CharacterStats.Attacks`, a
+  `SpellAttackStat` each): a cantrip that makes a spell attack or calls for a saving throw and
+  has damage dice (`CantripDamage.IsAttackCantrip`). Its damage grows at character levels 5, 11
+  and 17 in both editions, so a spell keeps its dice for each tier (`Spell.CantripDamageDice`,
+  `CantripDamage.DiceAt`); Eldritch Blast keeps 1d10 at every tier, each beam being an attack of
+  its own. Levelled spells are left out (their damage depends on the slot), and so are the
+  cantrips whose damage adds to a weapon's hit (Booming Blade, Green-Flame Blade), until weapons
+  are modelled (#33). `BonusSpellcasting.AttackCantripsAsync` says which ability each is cast
+  with: a feat's pick with the feat's, the race's own with the race's, one on the class's list
+  or from the subclass with the class's, any other (a high elf fighter's Fire Bolt) with the
+  race's. The character does not keep which pick gave a spell, so a race's pick that is also on
+  the class's list counts as the class's. The calculator gives the attack bonus, or the save DC
+  and the save's ability, and the dice at the character's level; the sheet
+  (`Shared/AttacksTable.razor`) and the PDF's "Attacks & spellcasting" table show those rows.
 
 ## Languages
 

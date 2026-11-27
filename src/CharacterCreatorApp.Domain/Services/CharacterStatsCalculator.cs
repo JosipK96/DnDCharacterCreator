@@ -10,7 +10,8 @@ namespace CharacterCreatorApp.Domain.Services;
 /// Armour and shields are not modelled yet, so armour class is the unarmoured one: 10 + DEX, or
 /// what the class or subclass gives instead (a barbarian's Unarmored Defense) when that is higher.
 /// Spell slots come from the class's or subclass's spell table, a warlock's Pact Magic apart, and
-/// a spell save DC and attack bonus for each ability the character casts spells with.
+/// a spell save DC and attack bonus for each ability the character casts spells with, and an
+/// attacks table row for each damaging cantrip.
 /// </summary>
 public static class CharacterStatsCalculator
 {
@@ -71,7 +72,40 @@ public static class CharacterStatsCalculator
             Skills: skills,
             SpellSlots: GetSpellSlots(input.SpellSlots),
             PactMagic: GetPactMagic(input.SpellSlots),
-            Spellcasting: GetSpellcasting(input.SpellcastingSources, scores, proficiencyBonus));
+            Spellcasting: GetSpellcasting(input.SpellcastingSources, scores, proficiencyBonus),
+            Attacks: GetAttacks(input.AttackCantrips, scores, proficiencyBonus, input.Level));
+    }
+
+    /// <summary>
+    /// A row per damaging cantrip, by name: the attack bonus (proficiency bonus + modifier) for a
+    /// spell attack, the save DC (8 + both) for a saving throw, each with the ability the cantrip is
+    /// cast with, and the damage dice at the character's level.
+    /// </summary>
+    private static List<SpellAttackStat> GetAttacks(
+        IReadOnlyList<AttackCantrip> cantrips, Dictionary<string, int> scores, int proficiencyBonus, int level)
+    {
+        var attacks = new List<SpellAttackStat>();
+
+        foreach (var cantrip in cantrips.OrderBy(c => c.Name, StringComparer.Ordinal))
+        {
+            if (!AbilityScore.TryNormalize(cantrip.AbilityId, out var abilityId) || CantripDamage.DiceAt(cantrip.DamageDice, level) is not { } dice)
+            {
+                continue;
+            }
+
+            var modifier = GetModifier(scores, abilityId);
+            var hasSave = cantrip.SaveAbilityId != null;
+
+            attacks.Add(new SpellAttackStat(
+                cantrip.Name,
+                AttackBonus: cantrip.AttackType != null ? proficiencyBonus + modifier : null,
+                SaveDc: hasSave ? 8 + proficiencyBonus + modifier : null,
+                SaveAbilityId: hasSave && AbilityScore.TryNormalize(cantrip.SaveAbilityId!, out var saveAbilityId) ? saveAbilityId : null,
+                Damage: dice,
+                DamageType: cantrip.DamageType));
+        }
+
+        return attacks;
     }
 
     /// <summary>

@@ -107,6 +107,9 @@ public class CharacterDetailsLoader(
         var bonusSpellcasting = await BonusSpellcasting.LoadAsync(
             race, subrace, character.RaceSpellAbilityId, character.FeatSpells, content.Feats, _classRepository, cancellationToken);
 
+        var attackCantrips = await BonusSpellcasting.AttackCantripsAsync(
+            content.Spells, character.Level, @class, subclass, race, subrace, character.RaceSpellAbilityId, character.FeatSpells, _classRepository, cancellationToken);
+
         character.Stats = CharacterStatsCalculator.Calculate(CharacterStatsInput.For(
             character.Level,
             character.AbilityScores,
@@ -118,7 +121,8 @@ public class CharacterDetailsLoader(
             subrace,
             @class,
             subclass,
-            bonusSpellcasting));
+            bonusSpellcasting,
+            attackCantrips));
 
         return character;
     }

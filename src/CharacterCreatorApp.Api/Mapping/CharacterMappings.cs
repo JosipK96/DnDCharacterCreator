@@ -165,5 +165,6 @@ public static class CharacterMappings
         Skills: stats.Skills.Select(s => new SkillStatApiResponse(s.SkillId, s.Name, s.AbilityId, s.Modifier, s.IsProficient)).ToList(),
         SpellSlots: stats.SpellSlots.Select(s => new SpellSlotStatApiResponse(s.SpellLevel, s.Slots)).ToList(),
         PactMagic: stats.PactMagic == null ? null : new PactMagicStatApiResponse(stats.PactMagic.SlotLevel, stats.PactMagic.Slots),
-        Spellcasting: stats.Spellcasting.Select(s => new SpellcastingStatApiResponse(s.Label, s.AbilityId, s.SaveDc, s.AttackBonus)).ToList());
+        Spellcasting: stats.Spellcasting.Select(s => new SpellcastingStatApiResponse(s.Label, s.AbilityId, s.SaveDc, s.AttackBonus)).ToList(),
+        Attacks: stats.Attacks.Select(a => new SpellAttackStatApiResponse(a.Name, a.AttackBonus, a.SaveDc, a.SaveAbilityId, a.Damage, a.DamageType)).ToList());
 }

@@ -24,6 +24,19 @@ public class SpellReadModel
     public string? DurationUnit { get; set; }
     public bool IsConcentration { get; set; }
     public bool IsRitual { get; set; }
+
+    /// <summary>"melee" or "ranged" for a spell attack; see Spell.AttackType.</summary>
+    public string? AttackType { get; set; }
+
+    /// <summary>The ability of the saving throw it calls for ("DEX").</summary>
+    public string? SaveAbilityId { get; set; }
+
+    /// <summary>"fire", or the types to pick from ("acid/cold/fire").</summary>
+    public string? DamageType { get; set; }
+
+    /// <summary>A cantrip's damage dice at character levels 1, 5, 11 and 17; see Spell.CantripDamageDice.</summary>
+    public List<string> CantripDamageDice { get; set; } = [];
+
     public required string Description { get; set; }
 
     public List<string> ClassIds { get; set; } = [];

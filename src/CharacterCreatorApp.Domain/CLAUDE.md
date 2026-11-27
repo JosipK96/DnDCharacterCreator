@@ -14,7 +14,7 @@ section for the area you are changing. Ability keys, language ids and proficienc
   (`ApplyAbilityScoreImprovements`, `SetRaceSkills`), never public setters on the interesting
   state.
 - Derived sheet numbers (hit points, armour class, saves, skills, spell slots, spell save DC
-  and attack bonus) come from
+  and attack bonus, the damaging cantrips' attacks) come from
   `Domain/Services/CharacterStatsCalculator`. Don't recompute a modifier in a Razor page.
   `CharacterStatsInput` has no defaults and `CharacterStatsInput.For` is the one place it is
   assembled, so the preview and the sheet cannot build it differently. A character's features

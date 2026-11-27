@@ -41,6 +41,17 @@ namespace CharacterCreatorApp.Infrastructure.EntityConfigurations.Spells
             builder.Property(s => s.DurationUnit)
                 .HasMaxLength(20);
 
+            builder.Property(s => s.AttackType)
+                .HasMaxLength(10);
+
+            builder.Property(s => s.SaveAbilityId)
+                .HasMaxLength(3);
+
+            builder.Property(s => s.DamageType)
+                .HasMaxLength(100);
+
+            builder.Property(s => s.CantripDamageDice);
+
             builder.HasMany(s => s.SpellClasses)
                 .WithOne(sc => sc.Spell)
                 .HasForeignKey(sc => sc.SpellId)

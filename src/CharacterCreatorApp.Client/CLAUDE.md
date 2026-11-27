@@ -41,7 +41,8 @@
 - Sheet numbers come from `CharacterStatsCalculator` through the API; don't recompute a modifier
   in a Razor page. The sheet and the review step show spell slots and Pact Magic through the
   one shared component, Shared/SpellSlotsPanel.razor, and the spell save DC and attack bonus
-  through Shared/SpellcastingPanel.razor. What each step may offer follows the D&D rules in
+  through Shared/SpellcastingPanel.razor. The sheet's attacks table (the damaging cantrips) is
+  Shared/AttacksTable.razor, from the stats' `Attacks`. What each step may offer follows the D&D rules in
   `src/CharacterCreatorApp.Domain/CLAUDE.md`.
 
 - Unhandled errors (Blazor logs them) go to the API through `Services/ErrorReporting/ClientErrorLoggerProvider`

@@ -75,6 +75,10 @@ public class PreviewCharacterQueryHandler(
         var bonusSpellcasting = await BonusSpellcasting.LoadAsync(
             sources.Race, sources.Subrace, character.RaceSpellAbilityId, character.FeatSpells, content.Feats, _classRepository, cancellationToken);
 
+        var attackCantrips = await BonusSpellcasting.AttackCantripsAsync(
+            content.Spells, character.Level, sources.Class, sources.Subclass, sources.Race, sources.Subrace,
+            character.RaceSpellAbilityId, character.FeatSpells, _classRepository, cancellationToken);
+
         var stats = CharacterStatsCalculator.Calculate(CharacterStatsInput.For(
             character.Level,
             character.AbilityScores,
@@ -86,7 +90,8 @@ public class PreviewCharacterQueryHandler(
             sources.Subrace,
             sources.Class,
             sources.Subclass,
-            bonusSpellcasting));
+            bonusSpellcasting,
+            attackCantrips));
 
         var preview = new CharacterPreviewReadModel
         {

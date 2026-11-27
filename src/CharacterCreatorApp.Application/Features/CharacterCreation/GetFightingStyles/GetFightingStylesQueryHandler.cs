@@ -1,7 +1,8 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels.Classes;
 using CharacterCreatorApp.Domain.Common.Results;
@@ -15,12 +16,14 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.GetFighting
 /// </summary>
 public class GetFightingStylesQueryHandler(
     ICharacterDraftRepository characterDraftRepository,
+    IRaceRepository raceRepository,
     IClassRepository classRepository,
+    IBackgroundRepository backgroundRepository,
     IFeatRepository featRepository,
     IUserContext userContext) : IQueryHandler<GetFightingStylesQuery, Response<FightingStylesReadModel>>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IClassRepository _classRepository = classRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly IFeatRepository _featRepository = featRepository;
     private readonly IUserContext _userContext = userContext;
 
@@ -38,12 +41,14 @@ public class GetFightingStylesQueryHandler(
             return CharacterDraftErrors.ClassAndLevelRequired();
         }
 
-        var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
+        var classResult = await _selections.LoadClassAsync(draft, "choosing a Fighting Style", cancellationToken);
 
-        if (@class == null)
+        if (!classResult.IsSuccess)
         {
-            return ClassErrors.NotFoundById(draft.ClassId);
+            return classResult.Errors;
         }
+
+        var @class = classResult.Value;
 
         var subclass = @class.Subclasses.FirstOrDefault(s => s.Id == draft.SubclassId);
         var owed = CharacterFeatures.FightingStylesOwed(@class, subclass, level);

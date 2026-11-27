@@ -4,7 +4,7 @@ using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>
 /// The tool choices a draft owes, in the order CharacterDraft.ToolPicks keeps the picks: the

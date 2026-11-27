@@ -1,9 +1,11 @@
 using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 
 /// <summary>
 /// Loads the race, class, background, feats, languages and spells a draft names by id, so a

@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.Common.Results;
@@ -12,7 +12,7 @@ using FluentAssertions;
 
 using Microsoft.Extensions.Time.Testing;
 
-namespace CharacterCreatorApp.Application.UnitTests.Building;
+namespace CharacterCreatorApp.Application.UnitTests.Shared;
 
 public class BonusSpellsTests
 {

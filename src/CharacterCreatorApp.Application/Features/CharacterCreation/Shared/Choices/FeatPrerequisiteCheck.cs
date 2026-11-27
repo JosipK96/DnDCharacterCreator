@@ -7,7 +7,7 @@ using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>
 /// Whether a character may take the feats it picked. The improvements step and finalize both check

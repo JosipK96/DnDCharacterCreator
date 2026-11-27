@@ -1,11 +1,13 @@
 using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.Services;
 using CharacterCreatorApp.Domain.ValueObjects;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 
 /// <summary>
 /// Checks the choices whose required count only becomes known once the race, class and

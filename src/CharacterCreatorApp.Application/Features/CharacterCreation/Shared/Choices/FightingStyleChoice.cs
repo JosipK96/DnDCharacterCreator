@@ -6,7 +6,7 @@ using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.Services;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>
 /// The Fighting Styles a character picks for its class's Fighting Style features: as many as

@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
@@ -6,7 +6,7 @@ using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentAssertions;
 
-namespace CharacterCreatorApp.Application.UnitTests.Building;
+namespace CharacterCreatorApp.Application.UnitTests.Shared;
 
 public class CharacterFeatEntriesTests
 {

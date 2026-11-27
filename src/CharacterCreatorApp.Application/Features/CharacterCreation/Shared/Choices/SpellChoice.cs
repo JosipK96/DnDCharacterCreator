@@ -1,11 +1,13 @@
 using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>
 /// What a character may pick in the spells step, and whether a pick fits it. The spells step and

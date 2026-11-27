@@ -3,7 +3,7 @@ using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 
 /// <summary>
 /// The feats a character took, as the sheet and the review step both list them, so the two

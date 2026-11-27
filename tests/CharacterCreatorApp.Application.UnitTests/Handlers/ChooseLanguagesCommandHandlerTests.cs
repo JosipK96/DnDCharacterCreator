@@ -20,6 +20,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
     private readonly Mock<ICharacterDraftRepository> _draftRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IRaceRepository> _raceRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IBackgroundRepository> _backgroundRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<IClassRepository> _classRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<ILanguageRepository> _languageRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IUnitOfWork> _unitOfWorkMock = new(MockBehavior.Strict);
     private readonly Mock<IUserContext> _userContextMock = new(MockBehavior.Strict);
@@ -64,6 +65,7 @@ public class ChooseLanguagesCommandHandlerTests : IDisposable
             _draftRepositoryMock.Object,
             _raceRepositoryMock.Object,
             _backgroundRepositoryMock.Object,
+            _classRepositoryMock.Object,
             _languageRepositoryMock.Object,
             _unitOfWorkMock.Object,
             _userContextMock.Object);

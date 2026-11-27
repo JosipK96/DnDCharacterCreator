@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>A tool choice and the name of the race, background or class that offers it.</summary>
 public sealed record ToolSlot(string Name, ToolChoice Choice);

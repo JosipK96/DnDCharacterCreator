@@ -3,7 +3,7 @@ using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>
 /// The feats that ask for skills or tools (Keen Mind's one skill, Skilled's three skills or

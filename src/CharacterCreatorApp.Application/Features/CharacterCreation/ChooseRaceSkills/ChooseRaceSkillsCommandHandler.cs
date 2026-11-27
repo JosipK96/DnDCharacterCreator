@@ -1,7 +1,8 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -17,9 +18,7 @@ public class ChooseRaceSkillsCommandHandler(
     IUserContext userContext) : ICommandHandler<ChooseRaceSkillsCommand, Response>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IRaceRepository _raceRepository = raceRepository;
-    private readonly IBackgroundRepository _backgroundRepository = backgroundRepository;
-    private readonly IClassRepository _classRepository = classRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IUserContext _userContext = userContext;
 
@@ -32,17 +31,14 @@ public class ChooseRaceSkillsCommandHandler(
             return CharacterDraftErrors.NotFoundById(command.DraftId);
         }
 
-        if (string.IsNullOrEmpty(draft.RaceId))
+        var raceResult = await _selections.LoadRaceAsync(draft, "selecting race skills", cancellationToken);
+
+        if (!raceResult.IsSuccess)
         {
-            return CharacterDraftErrors.RaceRequired("selecting race skills");
+            return raceResult.Errors;
         }
 
-        var race = await _raceRepository.GetByIdWithDetailsAsync(draft.RaceId, cancellationToken);
-
-        if (race == null)
-        {
-            return RaceErrors.NotFoundById(draft.RaceId);
-        }
+        var race = raceResult.Value;
 
         // A variant human's skill comes with the subrace
         var subrace = race.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
@@ -85,12 +81,8 @@ public class ChooseRaceSkillsCommandHandler(
 
         // What the background and class give is known only when they are chosen; finalize checks
         // again once they all are
-        var background = string.IsNullOrEmpty(draft.BackgroundId)
-            ? null
-            : await _backgroundRepository.GetByIdWithDetailsAsync(draft.BackgroundId, cancellationToken);
-        var @class = string.IsNullOrEmpty(draft.ClassId)
-            ? null
-            : await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
+        var background = await _selections.LoadBackgroundIfChosenAsync(draft, cancellationToken);
+        var @class = await _selections.LoadClassIfChosenAsync(draft, cancellationToken);
         var repeated = ProficiencyPickCheck.FindRepeated(draft, race, subrace, background, @class, raceSkillPicks: command.ProficiencyIds);
 
         if (repeated is not null)

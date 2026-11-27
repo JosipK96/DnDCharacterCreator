@@ -4,7 +4,7 @@ using CharacterCreatorApp.Application.ReadModels.Languages;
 using CharacterCreatorApp.Application.ReadModels.Proficiencies;
 using CharacterCreatorApp.Application.ReadModels.Spells;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 
 /// <summary>What a sheet lists beside the numbers, with every id resolved to its entry.</summary>
 public sealed record CharacterSheetContent(

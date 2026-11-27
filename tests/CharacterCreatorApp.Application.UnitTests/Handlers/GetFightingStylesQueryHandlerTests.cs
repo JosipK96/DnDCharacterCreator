@@ -55,7 +55,9 @@ public class GetFightingStylesQueryHandlerTests : IDisposable
 
         _sut = new GetFightingStylesQueryHandler(
             _draftRepositoryMock.Object,
+            new Mock<IRaceRepository>(MockBehavior.Strict).Object,
             _classRepositoryMock.Object,
+            new Mock<IBackgroundRepository>(MockBehavior.Strict).Object,
             _featRepositoryMock.Object,
             _userContextMock.Object);
     }

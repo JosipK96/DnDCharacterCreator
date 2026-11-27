@@ -35,7 +35,9 @@ public class ChooseFightingStylesCommandHandlerTests : IDisposable
 
         _sut = new ChooseFightingStylesCommandHandler(
             _draftRepositoryMock.Object,
+            new Mock<IRaceRepository>(MockBehavior.Strict).Object,
             _classRepositoryMock.Object,
+            new Mock<IBackgroundRepository>(MockBehavior.Strict).Object,
             _featRepositoryMock.Object,
             _userContextMock.Object,
             _unitOfWorkMock.Object);

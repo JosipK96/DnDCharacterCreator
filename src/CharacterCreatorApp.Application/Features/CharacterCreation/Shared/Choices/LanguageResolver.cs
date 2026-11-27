@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Application.ReadModels.Languages;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>
 /// Turns the ways the seed data names a language into the ids of the character's edition: PHB

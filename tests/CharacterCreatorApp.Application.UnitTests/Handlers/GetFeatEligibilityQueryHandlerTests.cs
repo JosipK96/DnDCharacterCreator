@@ -80,6 +80,7 @@ public class GetFeatEligibilityQueryHandlerTests : IDisposable
             _draftRepositoryMock.Object,
             _classRepositoryMock.Object,
             _raceRepositoryMock.Object,
+            new Mock<IBackgroundRepository>(MockBehavior.Strict).Object,
             _featRepositoryMock.Object,
             _userContextMock.Object);
     }

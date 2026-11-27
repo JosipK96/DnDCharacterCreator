@@ -1,4 +1,5 @@
 using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Spells;
@@ -9,7 +10,7 @@ using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Domain.ValueObjects;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 
 /// <summary>
 /// The spells a race or feat lets the player pick from a class list (a 2014 high elf's wizard

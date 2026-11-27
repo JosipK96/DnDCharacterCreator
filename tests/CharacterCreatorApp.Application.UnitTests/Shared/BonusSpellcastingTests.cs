@@ -1,4 +1,5 @@
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Application.ReadModels.Classes;
@@ -13,7 +14,7 @@ using FluentAssertions;
 
 using Moq;
 
-namespace CharacterCreatorApp.Application.UnitTests.Building;
+namespace CharacterCreatorApp.Application.UnitTests.Shared;
 
 public class BonusSpellcastingTests : IDisposable
 {

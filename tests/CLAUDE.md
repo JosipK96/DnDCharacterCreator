@@ -27,7 +27,7 @@ Long form: `docs/conventions/git-and-testing.md`.
   no assertion or a commented-out body is a defect too.
 - **Append to the existing `<Sut>Tests` class** and follow its local conventions. Search first:
   a class with no test file of its own may be covered through a handler's tests (the
-  `CharacterCreation/Building` helpers are, through finalize and preview).
+  `CharacterCreation/Shared` helpers are, through the step handlers, finalize and preview).
 - A test fixture that cannot produce a draft the validation would accept is telling you the
   fixture is unrealistic, not that the validation is wrong.
 

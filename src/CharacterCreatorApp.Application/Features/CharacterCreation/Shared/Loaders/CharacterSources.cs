@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Languages;
 using CharacterCreatorApp.Application.ReadModels.Spells;
@@ -5,7 +6,7 @@ using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 
 /// <summary>
 /// Everything needed to turn a draft into a character: the entities the draft names only by id,

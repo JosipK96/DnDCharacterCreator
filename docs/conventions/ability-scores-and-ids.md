@@ -65,7 +65,7 @@ Languages arrive in three shapes too:
 - A draft's `SelectedLanguageIds` holds **language ids of its edition**: `"common-phb"` for a 2014
   character, `"common-xphb"` for a 2024 one (`Language.SourceFor`).
 
-`LanguageResolver` (in `Features/CharacterCreation/Building`) resolves all of them against the
+`LanguageResolver` (in `Features/CharacterCreation/Shared/Choices`) resolves all of them against the
 edition's languages and drops the `"any"` placeholders, which the player's own choices fill.
 `CharacterBuilder` uses it for the character's languages and `ChooseLanguages` for the ones the
 character already has, so the two cannot disagree about what "Dwarvish" means. Language ids are

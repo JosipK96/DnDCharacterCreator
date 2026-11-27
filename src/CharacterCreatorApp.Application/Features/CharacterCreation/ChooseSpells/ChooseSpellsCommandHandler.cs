@@ -1,7 +1,8 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
 
@@ -21,7 +22,7 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpell
     {
         private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
         private readonly ISpellRepository _spellRepository = spellRepository;
-        private readonly IClassRepository _classRepository = classRepository;
+        private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
         private readonly IUserContext _userContext = userContext;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly TimeProvider _timeProvider = timeProvider;
@@ -39,19 +40,14 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseSpell
                 return CharacterDraftErrors.NotFoundById(command.DraftId);
             }
 
-            // Without this the lookup below ran with a null id and the player was told the class
-            // was not found, when the real problem is that no class had been chosen yet.
-            if (string.IsNullOrEmpty(draft.ClassId))
+            var classResult = await _selections.LoadClassAsync(draft, "selecting spells", cancellationToken);
+
+            if (!classResult.IsSuccess)
             {
-                return CharacterDraftErrors.ClassRequired("selecting spells");
+                return classResult.Errors;
             }
 
-            var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
-
-            if (@class == null)
-            {
-                return ClassErrors.NotFoundById(draft.ClassId);
-            }
+            var @class = classResult.Value;
 
             if (draft.Level is not { } level)
             {

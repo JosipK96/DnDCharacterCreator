@@ -1,7 +1,8 @@
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 
 /// <summary>
 /// Resolves the proficiencies, features, spells, languages and feats of a character into what the

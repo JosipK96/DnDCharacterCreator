@@ -1,10 +1,11 @@
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.Services;
 
-namespace CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 
 /// <summary>
 /// What a character casts its race's and feats' picked spells with, for the sheet's save DC and

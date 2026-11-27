@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Feats;
 
 namespace CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
 

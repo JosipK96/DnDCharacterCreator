@@ -1,0 +1,17 @@
+namespace CharacterCreatorApp.Contracts.Responses.Spells;
+
+public record SpellApiResponse(
+    string Id,
+    string Name,
+    string Source,
+    int Level,
+    string School,
+    string CastingTime,
+    string Range,
+    string Components,
+    string Duration,
+    string Description,
+    bool IsRitual,
+    bool IsConcentration,
+    List<string> ClassIds
+);

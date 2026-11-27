@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Infrastructure.Extensions;
 

@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.ValueObjects;
@@ -193,7 +193,7 @@ public class SetHitPointsCommandHandlerTests : IDisposable
 
         // Assert
         response.IsSuccess.Should().BeFalse();
-        response.Errors.Should().ContainSingle().Which.Code.Should().Be("Character.ClassNotFound");
+        response.Errors.Should().ContainSingle().Which.Code.Should().Be("Class.NotFound");
     }
 
     [Fact]

@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Filtering;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.CharacterManagement.GetMyCharacters;

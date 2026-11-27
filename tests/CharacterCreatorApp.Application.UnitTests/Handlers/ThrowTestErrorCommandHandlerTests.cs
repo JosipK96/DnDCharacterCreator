@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
-using CharacterCreatorApp.Application.Features.Authentication;
-using CharacterCreatorApp.Application.Features.Authentication.ThrowTestError;
+using CharacterCreatorApp.Application.Features.Admin;
+using CharacterCreatorApp.Application.Features.Admin.ThrowTestError;
 using CharacterCreatorApp.Domain.Common.Results;
 
 using FluentAssertions;

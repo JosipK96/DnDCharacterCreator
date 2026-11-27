@@ -1,0 +1,168 @@
+using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.ReadModels.Feats;
+using CharacterCreatorApp.Domain.Common.Results;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.DomainModels.Races;
+using CharacterCreatorApp.Domain.Services;
+using CharacterCreatorApp.Domain.ValueObjects;
+
+namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+
+/// <summary>
+/// Whether a character may take the feats it picked. The improvements step and finalize both check
+/// through here: lowering the level, changing the race or class, or lowering a score after the
+/// feats were picked used to leave an Epic Boon at level 4 or Elven Accuracy on a dwarf. A feat
+/// for one subrace (Wood Elf Magic) or one size (Squat Nimbleness) is checked against those too.
+/// The step's list asks through here as well (Eligibility), so it cannot offer what the save refuses.
+/// </summary>
+public static class FeatPrerequisiteCheck
+{
+    /// <summary>
+    /// The first picked feat whose prerequisites the draft does not meet, as an error naming it
+    /// and what it asks for, or null when every one is met. The race's own feats come first in
+    /// pickedFeats (raceFeatCount of them); the rest were taken for improvements.
+    /// </summary>
+    public static Error? FindUnmet(
+        IReadOnlyList<FeatReadModel> pickedFeats,
+        int raceFeatCount,
+        IEnumerable<Dictionary<string, int>> improvements,
+        CharacterDraft draft,
+        Race? race,
+        Subrace? subrace,
+        Class @class,
+        Subclass? subclass,
+        int level)
+    {
+        var character = Facts.For(improvements, draft, race, subrace, @class, subclass, level);
+
+        for (var i = 0; i < pickedFeats.Count; i++)
+        {
+            var feat = pickedFeats[i];
+            var unmet = character.Unmet(feat, asRaceFeat: i < raceFeatCount);
+
+            if (unmet is not null)
+            {
+                return CharacterDraftErrors.FeatPrerequisiteNotMet(feat.Name, unmet);
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// Whether the character could take each feat, for an improvement and as the race's own feat,
+    /// with the given improvements, as FindUnmet would decide it on the save.
+    /// </summary>
+    public static List<FeatEligibilityReadModel> Eligibility(
+        IEnumerable<FeatReadModel> feats,
+        IEnumerable<Dictionary<string, int>> improvements,
+        CharacterDraft draft,
+        Race? race,
+        Subrace? subrace,
+        Class @class,
+        Subclass? subclass,
+        int level)
+    {
+        var character = Facts.For(improvements, draft, race, subrace, @class, subclass, level);
+
+        return feats
+            .Select(feat => new FeatEligibilityReadModel
+            {
+                FeatId = feat.Id,
+                Unmet = character.Unmet(feat, asRaceFeat: false),
+                UnmetAsRaceFeat = character.Unmet(feat, asRaceFeat: true),
+                CheckWithDm = feat.Prerequisites.Unchecked.Count != 0,
+            })
+            .ToList();
+    }
+
+    // What a feat's prerequisites are checked against, worked out once for every feat
+    private sealed record Facts(
+        int Level,
+        CharacterDraft Draft,
+        IReadOnlyList<string> RaceSizes,
+        Dictionary<string, int> ScoresAtLevelOne,
+        Dictionary<string, int> ScoresWithImprovements,
+        List<string> FeatureNames)
+    {
+        public static Facts For(
+            IEnumerable<Dictionary<string, int>> improvements,
+            CharacterDraft draft,
+            Race? race,
+            Subrace? subrace,
+            Class @class,
+            Subclass? subclass,
+            int level)
+        {
+            // A race's feat is taken at level 1, before any improvement. The draft does not say at
+            // which level each improvement or feat was taken, but the player chooses at each one, so
+            // the improvements can always have come first: a feat counts every one of them.
+            var scoresAtLevelOne = ScoresBeforeImprovements(draft, race, subrace);
+            var featureNames = CharacterFeatures
+                .ClassFeaturesFor(@class, subclass, level)
+                .Select(f => f.Name)
+                .ToList();
+
+            // The size picked for a species that may be either, or every size the race may be
+            IReadOnlyList<string> raceSizes = draft.Size is { } size ? [size] : race?.SizeOptions() ?? [];
+
+            return new Facts(level, draft, raceSizes, scoresAtLevelOne, WithImprovements(scoresAtLevelOne, improvements), featureNames);
+        }
+
+        public string? Unmet(FeatReadModel feat, bool asRaceFeat) =>
+            feat.Prerequisites.FindUnmet(
+                Level,
+                Draft.RaceId,
+                Draft.SubraceId,
+                RaceSizes,
+                Draft.ClassId,
+                asRaceFeat ? ScoresAtLevelOne : ScoresWithImprovements,
+                FeatureNames);
+    }
+
+    // A prerequisite counts the score as it stands, racial bonuses, the race's picks and a 2024
+    // background's increases included: a half-orc's base Strength of 12 is 14 by the time a feat
+    // asking for 13 comes up. This used to check the base scores alone.
+    private static Dictionary<string, int> ScoresBeforeImprovements(CharacterDraft draft, Race? race, Subrace? subrace)
+    {
+        var scores = new Dictionary<string, int>();
+
+        foreach (var (key, value) in draft.BaseAbilityScores)
+        {
+            if (AbilityScore.TryNormalize(key, out var abilityId))
+            {
+                scores[abilityId] = value;
+            }
+        }
+
+        var bonuses = (race?.AbilityBonuses.Select(b => KeyValuePair.Create(b.AbilityScoreId, b.Bonus)) ?? [])
+            .Concat(subrace?.AbilityBonuses.Select(b => KeyValuePair.Create(b.AbilityScoreId, b.Bonus)) ?? [])
+            .Concat(draft.RaceAbilityIncreases)
+            .Concat(draft.BackgroundAbilityIncreases);
+
+        foreach (var (key, bonus) in bonuses)
+        {
+            var abilityId = AbilityScore.Normalize(key);
+            scores[abilityId] = scores.GetValueOrDefault(abilityId) + bonus;
+        }
+
+        return scores;
+    }
+
+    // Raised as the sheet raises them, so to 20 at most
+    private static Dictionary<string, int> WithImprovements(
+        Dictionary<string, int> scores,
+        IEnumerable<Dictionary<string, int>> improvements)
+    {
+        var improved = new Dictionary<string, int>(scores);
+
+        foreach (var (key, points) in improvements.SelectMany(improvement => improvement))
+        {
+            var abilityId = AbilityScore.Normalize(key);
+            improved[abilityId] = AbilityScore.Raise(improved.GetValueOrDefault(abilityId), points);
+        }
+
+        return improved;
+    }
+}

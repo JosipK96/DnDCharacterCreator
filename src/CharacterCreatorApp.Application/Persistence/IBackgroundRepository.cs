@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 
 namespace CharacterCreatorApp.Application.Persistence

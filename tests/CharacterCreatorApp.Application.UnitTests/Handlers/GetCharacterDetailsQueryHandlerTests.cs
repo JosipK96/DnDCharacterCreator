@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
 
 using FluentAssertions;
 
@@ -68,7 +68,7 @@ public class GetCharacterDetailsQueryHandlerTests : IDisposable
         var result = await _sut.Handle(new GetCharacterDetailsQuery(_characterId), _cts.Token);
 
         // Assert
-        result.Errors[0].Code.Should().Be("Character.ClassNotFound");
+        result.Errors[0].Code.Should().Be("Class.NotFound");
     }
 
     public void Dispose()

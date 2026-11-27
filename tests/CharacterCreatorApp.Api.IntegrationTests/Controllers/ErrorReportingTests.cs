@@ -11,7 +11,7 @@ using CharacterCreatorApp.Api.IntegrationTests.Fixtures;
 using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.ClientError;
 using CharacterCreatorApp.Contracts.Requests.User;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Users;
 
 using FluentAssertions;
 

@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 using CharacterCreatorApp.Api.Infrastructure.Registration;
 using CharacterCreatorApp.Api.IntegrationTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.User;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Users;
 
 using FluentAssertions;
 

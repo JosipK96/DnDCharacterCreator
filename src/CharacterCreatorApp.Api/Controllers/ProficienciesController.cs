@@ -1,8 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetProficiencies;
-using CharacterCreatorApp.Contracts.Responses;
-
-using MapsterMapper;
+using CharacterCreatorApp.Contracts.Responses.Proficiencies;
 
 using MediatR;
 
@@ -11,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers
 {
     [Route("api/proficiencies")]
-    public class ProficienciesController(ISender sender, IMapper mapper) : ApiController
+    public class ProficienciesController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         [HttpGet]
         [ProducesResponseType(typeof(List<ProficiencyApiResponse>), StatusCodes.Status200OK)]
@@ -22,7 +20,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetAllProficienciesQuery(), cancellationToken);
 
-            return OkOrProblem(response, proficiencies => _mapper.Map<List<ProficiencyApiResponse>>(proficiencies));
+            return OkOrProblem(response, proficiencies => proficiencies.Select(proficiency => proficiency.ToResponse()).ToList());
         }
 
         [HttpGet("{id}")]
@@ -32,7 +30,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetProficiencyByIdQuery(id), cancellationToken);
 
-            return OkOrProblem(response, proficiency => _mapper.Map<ProficiencyApiResponse>(proficiency));
+            return OkOrProblem(response, proficiency => proficiency.ToResponse());
         }
     }
 }

@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Backgrounds;
 
 namespace CharacterCreatorApp.Client.Pages.CharacterCreation;
 

@@ -2,10 +2,15 @@ using AngleSharp.Dom;
 
 using Bunit;
 
-using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Improvements;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Backgrounds;
+using CharacterCreatorApp.Contracts.Responses.Characters;
+using CharacterCreatorApp.Contracts.Responses.Classes;
+using CharacterCreatorApp.Contracts.Responses.Feats;
+using CharacterCreatorApp.Contracts.Responses.Proficiencies;
+using CharacterCreatorApp.Contracts.Responses.Races;
 
 using FluentAssertions;
 
@@ -91,7 +96,7 @@ public class ImprovementsStepTests : WizardStepTestBase
 
         // Assert
         var sent = Api.BodyOf<SetAbilityScoreImprovementsApiRequest>(ImprovementsRoute);
-        sent.Improvements.Should().ContainSingle().Which.Should().Equal(new Dictionary<string, int> { ["strength"] = 2 });
+        sent.Improvements.Should().ContainSingle().Which.Should().Equal(new Dictionary<string, int> { ["STR"] = 2 });
         sent.FeatIds.Should().BeEmpty();
         sent.FeatAbilityIncreases.Should().BeEmpty();
         sent.FeatProficiencyPicks.Should().BeEmpty();
@@ -121,7 +126,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         var sent = Api.BodyOf<SetAbilityScoreImprovementsApiRequest>(ImprovementsRoute);
         sent.Improvements.Should().HaveCount(2);
         sent.Improvements[0].Should().Equal(new Dictionary<string, int> { ["STR"] = 2 });
-        sent.Improvements[1].Should().Equal(new Dictionary<string, int> { ["dexterity"] = 2 });
+        sent.Improvements[1].Should().Equal(new Dictionary<string, int> { ["DEX"] = 2 });
         _movedOn.Should().Be(1);
     }
 
@@ -282,7 +287,7 @@ public class ImprovementsStepTests : WizardStepTestBase
 
         // Assert
         var sent = Api.BodyOf<SetAbilityScoreImprovementsApiRequest>(ImprovementsRoute);
-        sent.Improvements.Should().ContainSingle().Which.Should().Equal(new Dictionary<string, int> { ["constitution"] = 2 });
+        sent.Improvements.Should().ContainSingle().Which.Should().Equal(new Dictionary<string, int> { ["CON"] = 2 });
         sent.FeatProficiencyPicks.Should().ContainSingle()
             .Which.Should().BeEquivalentTo(new FeatProficiencyPickApiModel { FeatId = "skilled-phb", ProficiencyIds = ["arcana", "stealth"] });
     }
@@ -347,7 +352,7 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange - a level 6 fighter: Strength from the first improvement opens Athlete to the second
         ArrangeLoad(Draft(level: 6), [Athlete], eligibility: [new("athlete-phb", "Strength 13", "Strength 13", false)]);
-        Api.Get($"{DraftPath("feat-eligibility")}?increase=strength", new List<FeatEligibilityApiResponse> { new("athlete-phb", null, "Strength 13", false) });
+        Api.Get($"{DraftPath("feat-eligibility")}?increase=STR", new List<FeatEligibilityApiResponse> { new("athlete-phb", null, "Strength 13", false) });
         var cut = RenderStep(level: 6);
         cut.FindAll("button").Where(b => b.TextContent.Trim() == "Feat").ElementAt(1).Click();
         Button(cut, "Athlete").HasAttribute("disabled").Should().BeTrue();
@@ -356,7 +361,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         PlusOf(cut, "Strength").Click();
 
         // Assert
-        Api.Requests[^1].Should().Be($"GET {DraftPath("feat-eligibility")}?increase=strength");
+        Api.Requests[^1].Should().Be($"GET {DraftPath("feat-eligibility")}?increase=STR");
         Button(cut, "Athlete").HasAttribute("disabled").Should().BeFalse();
         Button(cut, "Athlete").QuerySelector("[data-testid=feat-needs]").Should().BeNull();
     }

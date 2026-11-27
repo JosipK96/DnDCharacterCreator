@@ -1,13 +1,17 @@
 @page "/character/create"
 @page "/character/create/{DraftIdParam}"
 @attribute [Authorize]
-@using CharacterCreatorApp.Contracts.Responses
+@using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.AbilityScores
+@using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Backgrounds
+@using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Classes
+@using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Improvements
+@using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Races
 @inject CharacterDraftService DraftService
 @inject CharacterService CharacterService
 @inject NavigationManager Navigation
-@inject IJSRuntime JS
 
-@* The page sits on the graph paper; each step draws its own rooms on it *@
+@* The page finds or creates the draft and shows the step WizardNavigator says, on the graph paper;
+   each step draws its own rooms on it *@
 <div>
     <div class="max-w-6xl mx-auto">
 
@@ -34,7 +38,7 @@
         else
         {
             <div class="mb-8">
-                @if (IsLevelUp)
+                @if (navigator.IsLevelUp)
                 {
                     <h1 class="page-title mb-2">Level up @existingDraft?.Name to level @characterLevel</h1>
                     <p class="text-pencil">Every earlier choice stays. Pick what the new level brings; saving replaces the character.</p>
@@ -53,164 +57,113 @@
 
             @if (IsEdit)
             {
-                <WizardProgress CurrentStep="@currentStep" Flow="@flow" StepsNeedingPick="@stepsNeedingPick" OnSelectStep="SelectStep" />
+                <WizardProgress CurrentStep="@navigator.CurrentStep" Flow="@navigator.Flow" StepsNeedingPick="@navigator.StepsNeedingPick" OnSelectStep="navigator.Select" />
             }
             else
             {
-                <WizardProgress CurrentStep="@currentStep" Flow="@flow" />
+                <WizardProgress CurrentStep="@navigator.CurrentStep" Flow="@navigator.Flow" />
             }
 
             @* The numbers here are WizardSteps', which gives each step its name; the flow says which a draft goes through *@
             <div class="mt-8">
-                @if (currentStep == 1)
+                @if (navigator.CurrentStep == 1)
                 {
-                    <NameAndLevelStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
-                                      OnNext="@((choice) => MoveToStep2(choice.Level, choice.Edition, choice.Sources))"
+                    <NameAndLevelStep DraftId="@draftId" Step="1" Flow="@navigator.Flow"
+                                      OnNext="@((choice) => AfterStepOneAsync(choice.Level, choice.Edition, choice.Sources))"
                                       OnCancel="Cancel" />
                 }
-                else if (currentStep == 2)
+                else if (navigator.CurrentStep == 2)
                 {
-                    <RaceStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
+                    <RaceStep DraftId="@draftId" Step="2" Flow="@navigator.Flow"
                               Edition="@edition"
                               Sources="@sources"
                               OnChangeBooks="@ChangeBooksCallback"
-                              OnNext="() => Next(2)"
+                              OnNext="() => navigator.Next(2)"
                               OnBack="() => Back(2)" />
                 }
-                else if (currentStep == 3)
+                else if (navigator.CurrentStep == 3)
                 {
-                    <ClassStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
+                    <ClassStep DraftId="@draftId" Step="3" Flow="@navigator.Flow"
                                CharacterLevel="@characterLevel"
                                Edition="@edition"
                                Sources="@sources"
-                               ClassLocked="@IsLevelUp"
+                               ClassLocked="@navigator.IsLevelUp"
                                OnChangeBooks="@ChangeBooksCallback"
-                               OnNext="() => Next(3)"
+                               OnNext="() => navigator.Next(3)"
                                OnBack="() => Back(3)" />
                 }
-                else if (currentStep == 4)
+                else if (navigator.CurrentStep == 4)
                 {
-                    <BackgroundStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
+                    <BackgroundStep DraftId="@draftId" Step="4" Flow="@navigator.Flow"
                                     Edition="@edition"
                                     Sources="@sources"
                                     OnChangeBooks="@ChangeBooksCallback"
-                                    OnNext="() => Next(4)"
+                                    OnNext="() => navigator.Next(4)"
                                     OnBack="() => Back(4)" />
                 }
-                else if (currentStep == 5)
+                else if (navigator.CurrentStep == 5)
                 {
-                    <LanguagesStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
-                                   OnNext="() => Next(5)"
+                    <LanguagesStep DraftId="@draftId" Step="5" Flow="@navigator.Flow"
+                                   OnNext="() => navigator.Next(5)"
                                    OnBack="() => Back(5)" />
                 }
-                else if (currentStep == 6)
+                else if (navigator.CurrentStep == 6)
                 {
-                    <AbilityScoresStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
-                                       OnNext="() => Next(6)"
+                    <AbilityScoresStep DraftId="@draftId" Step="6" Flow="@navigator.Flow"
+                                       OnNext="() => navigator.Next(6)"
                                        OnBack="() => Back(6)" />
                 }
-                else if (currentStep == 7)
+                else if (navigator.CurrentStep == 7)
                 {
-                    <ProficienciesStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
-                                       OnNext="() => Next(7)"
+                    <ProficienciesStep DraftId="@draftId" Step="7" Flow="@navigator.Flow"
+                                       OnNext="() => navigator.Next(7)"
                                        OnBack="() => Back(7)" />
                 }
-                else if (currentStep == 8)
+                else if (navigator.CurrentStep == 8)
                 {
                     @* Before the spells: a feat can grant a spell, and an improvement changes how many a prepared caster gets *@
-                    <ImprovementsStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
+                    <ImprovementsStep DraftId="@draftId" Step="8" Flow="@navigator.Flow"
                                       CharacterLevel="@characterLevel"
                                       OnChangeBooks="@ChangeBooksCallback"
-                                      OnNext="() => Next(8)"
+                                      OnNext="() => navigator.Next(8)"
                                       OnBack="() => Back(8)" />
                 }
-                else if (currentStep == 9)
+                else if (navigator.CurrentStep == 9)
                 {
-                    <SpellsStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
+                    <SpellsStep DraftId="@draftId" Step="9" Flow="@navigator.Flow"
                                 OnChangeBooks="@ChangeBooksCallback"
-                                OnNext="() => Next(9)"
+                                OnNext="() => navigator.Next(9)"
                                 OnBack="() => Back(9)" />
                 }
-                else if (currentStep == WizardSteps.Review)
+                else if (navigator.CurrentStep == WizardSteps.Review)
                 {
-                    <ReviewStep DraftId="@draftId" Step="@currentStep" Flow="@flow" IsEdit="@IsEdit"
+                    <ReviewStep DraftId="@draftId" Step="@WizardSteps.Review" Flow="@navigator.Flow" IsEdit="@IsEdit"
                                 OnNext="FinalizeCharacter"
                                 OnBack="() => Back(WizardSteps.Review)" />
                 }
-                else if (currentStep == WizardSteps.HitPoints)
+                else if (navigator.CurrentStep == WizardSteps.HitPoints)
                 {
-                    <HitPointsStep DraftId="@draftId" Step="@currentStep" Flow="@flow"
-                                   OnNext="() => Next(WizardSteps.HitPoints)"
+                    <HitPointsStep DraftId="@draftId" Step="@WizardSteps.HitPoints" Flow="@navigator.Flow"
+                                   OnNext="() => navigator.Next(WizardSteps.HitPoints)"
                                    OnBack="() => Back(WizardSteps.HitPoints)" />
                 }
             </div>
 
             <div class="mt-6 text-center">
                 <button @onclick="ConfirmCancel" class="font-medium text-ink underline-offset-4 hover:underline">
-                    @(IsLevelUp ? "Cancel Level Up" : IsEdit ? "Cancel Editing" : "Cancel Character Creation")
+                    @(navigator.IsLevelUp ? "Cancel Level Up" : IsEdit ? "Cancel Editing" : "Cancel Character Creation")
                 </button>
             </div>
         }
 
         @if (showCancelConfirm)
         {
-            <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
-                <div class="room max-w-md w-full p-6">
-                    @if (IsLevelUp)
-                    {
-                        <h3 class="room-title mb-4">Cancel Level Up?</h3>
-                        <p class="mb-6">The character stays at the level it was saved; the picks made here are lost.</p>
-                    }
-                    else if (IsEdit)
-                    {
-                        <h3 class="room-title mb-4">Cancel Editing?</h3>
-                        <p class="mb-6">The character stays as it was saved; the changes made here are lost.</p>
-                    }
-                    else
-                    {
-                        <h3 class="room-title mb-4">Cancel Character Creation?</h3>
-                        <p class="mb-6">Are you sure you want to cancel? All progress will be lost.</p>
-                    }
-                    <div class="flex flex-wrap justify-end gap-3">
-                        <button @onclick="() => showCancelConfirm = false"
-                                class="btn-secondary">
-                            @(IsLevelUp ? "Continue Levelling Up" : IsEdit ? "Continue Editing" : "Continue Creating")
-                        </button>
-                        <button @onclick="Cancel"
-                                class="btn-danger">
-                            Yes, Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <CancelWizardDialog IsEdit="@IsEdit" IsLevelUp="@navigator.IsLevelUp" OnStay="() => showCancelConfirm = false" OnLeave="Cancel" />
         }
 
         @if (showResumePrompt && existingDraft != null)
         {
-            <div class="fixed inset-0 bg-black/75 flex items-center justify-center z-50 px-4">
-                <div class="room max-w-md w-full p-6">
-                    <h3 class="room-title mb-4">Resume Character Creation?</h3>
-                    <p class="mb-2">You have an in-progress character:</p>
-                    <div class="border-l-[5px] border-plum bg-plum-tint p-3 mb-6">
-                        @* Only a draft with step 1 saved is asked about, so it has a name and level *@
-                        <p class="font-medium">@existingDraft.Name</p>
-                        <p class="text-pencil text-sm">Level @existingDraft.Level</p>
-                    </div>
-                    <p class="text-pencil text-sm mb-6">
-                        Would you like to continue where you left off, or start a new character?
-                    </p>
-                    <div class="flex flex-col space-y-3">
-                        <button @onclick="ResumeDraft"
-                                class="btn-main w-full">
-                            Resume Character
-                        </button>
-                        <button @onclick="StartFresh"
-                                class="btn-secondary w-full">
-                            Start Fresh
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <ResumeDraftPrompt Draft="@existingDraft" OnResume="ResumeDraft" OnStartFresh="StartFresh" />
         }
     </div>
 </div>
@@ -219,41 +172,35 @@
     [Parameter]
     public string? DraftIdParam { get; set; }
 
+    private readonly WizardNavigator navigator = new();
+
     private Guid draftId = Guid.Empty;
-    private int currentStep = 1;
     private int characterLevel = 1;
 
     // The draft's rules edition and books, which decide what the later steps offer
     private string edition = "";
     private IReadOnlyList<string> sources = [];
 
-    // The step that sent the player to step 1 to tick books, which step 1's Next returns to
-    private int? returnStep;
     private bool isInitializing = true;
     private bool showCancelConfirm = false;
     private bool showResumePrompt = false;
     private CharacterDraftDetailsApiResponse? existingDraft;
     private string? errorMessage;
 
-    // An edit of a saved character: the draft names it, and some of its steps may need a pick
+    // An edit of a saved character, a level-up among them: the draft names the character it replaces
     private Guid? editedCharacterId;
-    private HashSet<int> stepsNeedingPick = [];
 
-    // The steps this draft goes through: all of them, or a level-up's few (WizardSteps.LevelUpOf)
-    private IReadOnlyList<int> flow = WizardSteps.Creation;
-    private bool isLevelUp;
-
-    // A level-up is an edit too: it names the character it replaces
     private bool IsEdit => editedCharacterId != null;
 
-    private bool IsLevelUp => isLevelUp;
+    // A level-up has no step 1, so its notes offer no way there
+    private EventCallback ChangeBooksCallback => navigator.CanChangeBooks ? EventCallback.Factory.Create(this, navigator.ChangeBooks) : default;
 
     protected override async Task OnInitializedAsync()
     {
         if (!string.IsNullOrEmpty(DraftIdParam) && Guid.TryParse(DraftIdParam, out var parsedDraftId))
         {
             draftId = parsedDraftId;
-            await LoadDraftAndDetermineStep();
+            await LoadDraftAsync();
         }
         else
         {
@@ -261,7 +208,7 @@
         }
     }
 
-    private async Task LoadDraftAndDetermineStep()
+    private async Task LoadDraftAsync()
     {
         isInitializing = true;
         StateHasChanged();
@@ -279,17 +226,12 @@
             edition = existingDraft.Edition;
             sources = existingDraft.AllowedSources;
             editedCharacterId = existingDraft.CharacterId;
-            stepsNeedingPick = [.. WizardSteps.StepsOf(existingDraft.ChoicesNeeded)];
-            isLevelUp = existingDraft.LevelUpChoices.Count != 0;
-            flow = isLevelUp ? WizardSteps.LevelUpOf(existingDraft.LevelUpChoices) : WizardSteps.CreationOf(existingDraft.HitDieLevels);
-
-            // An edit has every step filled in: it opens at the first one that needs a pick, if any
-            currentStep = IsEdit
-                ? flow.Where(stepsNeedingPick.Contains).DefaultIfEmpty(flow[0]).First()
-                : DetermineCurrentStep(existingDraft);
+            navigator.Open(existingDraft);
 
             if (existingDraft.Level.HasValue)
+            {
                 characterLevel = existingDraft.Level.Value;
+            }
         }
         catch (Exception ex)
         {
@@ -319,7 +261,7 @@
 
             // A draft with step 1 not saved holds nothing to resume: it opens at step 1 without
             // asking, and is reused rather than joined by a second unfinished draft (#90)
-            if (DetermineCurrentStep(existingDraft) == 1)
+            if (WizardNavigator.FirstStepToFill(existingDraft) == 1)
             {
                 ResumeDraft();
                 return;
@@ -343,30 +285,27 @@
         showResumePrompt = false;
         draftId = existingDraft!.Id;
         Navigation.NavigateTo($"/character/create/{draftId}", false);
-        currentStep = DetermineCurrentStep(existingDraft);
-        flow = WizardSteps.CreationOf(existingDraft.HitDieLevels);
+        navigator.Resume(existingDraft);
         edition = existingDraft.Edition;
         sources = existingDraft.AllowedSources;
-        if (existingDraft.Level.HasValue)
-            characterLevel = existingDraft.Level.Value;
-        StateHasChanged();
-    }
 
-    private int DetermineCurrentStep(CharacterDraftDetailsApiResponse draft)
-    {
-        if (string.IsNullOrEmpty(draft.Name) || !draft.Level.HasValue) return 1;
-        if (string.IsNullOrEmpty(draft.RaceId)) return 2;
-        if (string.IsNullOrEmpty(draft.ClassId)) return 3;
-        if (string.IsNullOrEmpty(draft.BackgroundId)) return 4;
-        if (draft.BaseAbilityScores == null || draft.BaseAbilityScores.Count < 6) return 6;
-        return 7;
+        if (existingDraft.Level.HasValue)
+        {
+            characterLevel = existingDraft.Level.Value;
+        }
+
+        StateHasChanged();
     }
 
     private async Task StartFresh()
     {
         showResumePrompt = false;
+
         if (existingDraft != null)
+        {
             await DraftService.DeleteDraftAsync(existingDraft.Id);
+        }
+
         await CreateNewDraft();
     }
 
@@ -375,11 +314,13 @@
         try
         {
             draftId = await DraftService.CreateDraftAsync();
+
             if (draftId == Guid.Empty)
             {
                 errorMessage = "Failed to initialize character creation";
                 return;
             }
+
             Navigation.NavigateTo($"/character/create/{draftId}", false);
         }
         catch (Exception ex)
@@ -388,18 +329,16 @@
         }
     }
 
-    // Step 1 goes back to the step that sent the player to tick books, when nothing it saved went:
-    // another edition or an unticked book clears choices, and then the steps are walked again in order
-    private async Task MoveToStep2(int level, string chosenEdition, IReadOnlyList<string> chosenSources)
+    // The level may have changed on step 1, and with it the levels whose hit die the flow asks
+    // about, so the saved draft is read again before moving on
+    private async Task AfterStepOneAsync(int level, string chosenEdition, IReadOnlyList<string> chosenSources)
     {
-        var keepsChoices = chosenEdition == edition && !sources.Except(chosenSources).Any();
-        var back = returnStep;
+        var keptChoices = chosenEdition == edition && !sources.Except(chosenSources).Any();
+        CharacterDraftDetailsApiResponse? saved;
 
-        // The level may have changed, and with it the levels whose hit die the flow asks about
         try
         {
-            var saved = await DraftService.GetDraftDetailsAsync(draftId);
-            flow = WizardSteps.CreationOf(saved?.HitDieLevels ?? []);
+            saved = await DraftService.GetDraftDetailsAsync(draftId);
         }
         catch (Exception ex) when (ex is ApiException or HttpRequestException)
         {
@@ -408,59 +347,19 @@
             return;
         }
 
-        returnStep = null;
         characterLevel = level;
         edition = chosenEdition;
         sources = chosenSources;
-
-        if (back is { } step && keepsChoices)
-        {
-            stepsNeedingPick.Remove(1);
-            GoTo(step);
-            return;
-        }
-
-        Next(1);
+        navigator.AfterStepOne(saved?.HitDieLevels ?? [], keptChoices);
     }
 
-    // A step's note on what the unticked books hold sends the player to step 1, and back after
-    private void ChangeBooks()
-    {
-        returnStep = currentStep;
-        GoTo(1);
-    }
-
-    // A level-up has no step 1, so its notes offer no way there
-    private EventCallback ChangeBooksCallback => flow.Contains(1) ? EventCallback.Factory.Create(this, ChangeBooks) : default;
-
-    // A step the player has been through needs no pick any more, even one that had nothing to save
-    private void Next(int fromStep)
-    {
-        stepsNeedingPick.Remove(fromStep);
-        GoTo(flow[flow.ToList().IndexOf(fromStep) + 1]);
-    }
-
-    // Back from a level-up's first step leaves it, as cancelling does
+    // Back from the flow's first step (a level-up's) leaves it, as cancelling does
     private void Back(int fromStep)
     {
-        var position = flow.ToList().IndexOf(fromStep);
-
-        if (position <= 0)
+        if (!navigator.Back(fromStep))
         {
             ConfirmCancel();
-            return;
         }
-
-        GoTo(flow[position - 1]);
-    }
-
-    private void GoTo(int step) { currentStep = step; StateHasChanged(); }
-
-    // A step picked on an edit's map: step 1 no longer returns to the one that sent the player there
-    private void SelectStep(int step)
-    {
-        returnStep = null;
-        GoTo(step);
     }
 
     private async Task FinalizeCharacter()

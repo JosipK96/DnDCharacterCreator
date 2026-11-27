@@ -1,0 +1,134 @@
+@* One slot spent on a feat: the searchable list, the picked feat's key, and what that feat asks for *@
+
+<input type="search" placeholder="Search feats..." aria-label="Search feats" class="field mb-4"
+       value="@Slot.FeatSearch" @oninput="e => Slot.FeatSearch = e.Value?.ToString() ?? string.Empty" />
+
+<div class="step-columns">
+    <div class="max-h-[28rem] min-w-0 overflow-y-auto p-1">
+        <div class="option-grid">
+            @foreach (var feat in Shown())
+            {
+                var featId = feat.Id;
+                var needs = Slot.UnmetFor(Eligibility.GetValueOrDefault(featId));
+                @* One the character can't take is muted and says what it needs; one picked before a
+                   score was lowered stays clickable, so it can be unpicked *@
+                <OptionRoom Name="@feat.Name" Picked="@(Slot.FeatId == featId)" OnClick="() => OnPickFeat.InvokeAsync(featId)"
+                            Disabled="@(needs != null && Slot.FeatId != featId)"
+                            Class="@(needs != null ? "opacity-60 disabled:cursor-not-allowed" : null)">
+                    @if (feat.Category != null)
+                    {
+                        <span>@feat.Category</span>
+                    }
+                    @if (feat.AbilityIncrease is { } increase)
+                    {
+                        <span>@IncreaseText(increase)</span>
+                    }
+                    @if (feat.Prerequisites.Any())
+                    {
+                        <span>Requires: @string.Join(", ", feat.Prerequisites)</span>
+                    }
+                    @if (needs != null)
+                    {
+                        <span class="font-semibold text-ink" data-testid="feat-needs">Needs: @needs</span>
+                    }
+                    else if (Eligibility.GetValueOrDefault(featId) is { CheckWithDm: true })
+                    {
+                        <span class="font-semibold text-ink" data-testid="feat-check-dm">Check with your DM</span>
+                    }
+                </OptionRoom>
+            }
+        </div>
+
+        @if (!Shown().Any())
+        {
+            <p class="py-4 text-center text-sm text-pencil">No feats match that search.</p>
+        }
+    </div>
+
+    @if (Picked is { } shownFeat)
+    {
+        <KeyPanel Name="@shownFeat.Name">
+            <ChildContent>
+                @if (shownFeat.Category != null)
+                {
+                    <KeyFact Label="Category">@shownFeat.Category</KeyFact>
+                }
+                <KeyFact Label="Requires">@(shownFeat.Prerequisites.Any() ? string.Join(", ", shownFeat.Prerequisites) : "None")</KeyFact>
+                <KeyFact Label="Raises">@(shownFeat.AbilityIncrease is { } raises ? IncreaseText(raises) : "Nothing")</KeyFact>
+            </ChildContent>
+            <Note>@shownFeat.Description</Note>
+        </KeyPanel>
+    }
+</div>
+
+@* Athlete raises Strength or Dexterity: the player says which *@
+@if (Picked is { AbilityIncrease: { Options.Count: > 1 } choice } chosenFeat)
+{
+    <label class="mt-4 block text-sm font-medium">
+        @chosenFeat.Name raises by @choice.Points
+        <select class="field mt-1" value="@Slot.FeatAbility" @onchange="e => OnPickAbility.InvokeAsync(e.Value?.ToString())">
+            <option value="">Choose...</option>
+            @foreach (var ability in choice.Options)
+            {
+                <option value="@ability">@AbilityNames.Of(ability)</option>
+            }
+        </select>
+    </label>
+}
+
+@* Keen Mind's skill, Skilled's three skills or tools *@
+@if (Picked is { Choice: { } featChoice } && featChoice.AsksForProficiencies())
+{
+    <FeatProficiencySelects Choice="@featChoice" Picks="@Slot.ProficiencyPicks" ProficiencyNames="@ProficiencyNames"
+                            OptionsFor="@ProficiencyOptionsFor" OnPick="@OnPickProficiency" />
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public AsiSlot Slot { get; set; } = default!;
+
+    /// <summary>The feats this slot may take; a race's feat may be of one category only (a 2024 human's Origin feat).</summary>
+    [Parameter, EditorRequired]
+    public IEnumerable<FeatApiResponse> Feats { get; set; } = [];
+
+    /// <summary>The feat picked in this slot, null while none is.</summary>
+    [Parameter]
+    public FeatApiResponse? Picked { get; set; }
+
+    /// <summary>Which feats the character can take with the points spent so far, by feat id, as the API answered.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, FeatEligibilityApiResponse> Eligibility { get; set; } = new Dictionary<string, FeatEligibilityApiResponse>();
+
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, string> ProficiencyNames { get; set; } = new Dictionary<string, string>();
+
+    /// <summary>What a skill or tool select offers: see <see cref="FeatProficiencySelects.OptionsFor"/>.</summary>
+    [Parameter, EditorRequired]
+    public Func<FeatChoiceApiResponse, string?, IEnumerable<string>> ProficiencyOptionsFor { get; set; } = (_, _) => [];
+
+    /// <summary>Called with the id of the feat clicked, to pick it or unpick it.</summary>
+    [Parameter]
+    public EventCallback<string> OnPickFeat { get; set; }
+
+    /// <summary>Called with the ability id picked for a feat that raises one of several, null when cleared.</summary>
+    [Parameter]
+    public EventCallback<string?> OnPickAbility { get; set; }
+
+    [Parameter]
+    public EventCallback<(int Index, string? ProficiencyId)> OnPickProficiency { get; set; }
+
+    private IEnumerable<FeatApiResponse> Shown() =>
+        Feats
+            .Where(f => string.IsNullOrWhiteSpace(Slot.FeatSearch) || f.Name.Contains(Slot.FeatSearch, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(f => f.Name);
+
+    // "+1 Strength or Dexterity", "+1 to any ability, up to 30" for an Epic Boon
+    private static string IncreaseText(FeatAbilityIncreaseApiResponse increase)
+    {
+        var abilities = increase.Options.Count == 6
+            ? "to any ability"
+            : string.Join(" or ", increase.Options.Select(AbilityNames.Of));
+
+        return $"+{increase.Points} {abilities}{(increase.Maximum > 20 ? $", up to {increase.Maximum}" : string.Empty)}";
+    }
+}

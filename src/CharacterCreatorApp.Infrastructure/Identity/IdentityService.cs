@@ -1,4 +1,5 @@
-﻿using CharacterCreatorApp.Application.Features.Authentication;
+using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Domain.Common.Results;
 
 using Microsoft.AspNetCore.Identity;

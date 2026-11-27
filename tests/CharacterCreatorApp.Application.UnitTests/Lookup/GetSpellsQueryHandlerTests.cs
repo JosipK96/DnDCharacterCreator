@@ -1,6 +1,6 @@
 using CharacterCreatorApp.Application.Features.Lookup.GetSpells;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 
 using FluentAssertions;
 

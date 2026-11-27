@@ -1,7 +1,8 @@
-﻿using CharacterCreatorApp.Application.Common.Abstractions;
+using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
 
@@ -12,15 +13,11 @@ public class ChooseProficienciesCommandHandler(
     IClassRepository classRepository,
     IRaceRepository raceRepository,
     IBackgroundRepository backgroundRepository,
-    IProficiencyRepository proficiencyRepository,
     IUnitOfWork unitOfWork,
     IUserContext userContext) : ICommandHandler<ChooseProficienciesCommand, Response>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IClassRepository _classRepository = classRepository;
-    private readonly IRaceRepository _raceRepository = raceRepository;
-    private readonly IBackgroundRepository _backgroundRepository = backgroundRepository;
-    private readonly IProficiencyRepository _proficiencyRepository = proficiencyRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IUserContext _userContext = userContext;
 
@@ -33,17 +30,14 @@ public class ChooseProficienciesCommandHandler(
             return CharacterDraftErrors.NotFoundById(command.DraftId);
         }
 
-        if (string.IsNullOrEmpty(draft.ClassId))
+        var classResult = await _selections.LoadClassAsync(draft, "selecting proficiencies", cancellationToken);
+
+        if (!classResult.IsSuccess)
         {
-            return CharacterDraftErrors.ClassRequired("selecting proficiencies");
+            return classResult.Errors;
         }
 
-        var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
-
-        if (@class == null)
-        {
-            return ClassErrors.NotFoundById(draft.ClassId);
-        }
+        var @class = classResult.Value;
 
         if (@class.ProficiencyChoice == null)
         {
@@ -56,7 +50,7 @@ public class ChooseProficienciesCommandHandler(
 
         if (command.ProficiencyIds.Count != requiredCount)
         {
-            return CharacterDraftErrors.InvalidProficiencyCount(requiredCount, @class.ProficiencyChoice.Type, draft.ClassId, command.ProficiencyIds.Count);
+            return CharacterDraftErrors.InvalidProficiencyCount(requiredCount, @class.ProficiencyChoice.Type, @class.Id, command.ProficiencyIds.Count);
         }
 
         var availableOptions = @class.ProficiencyChoice.Options
@@ -78,12 +72,8 @@ public class ChooseProficienciesCommandHandler(
         }
 
         // A skill the race, its picks or the background give already is picked again in vain
-        var race = string.IsNullOrEmpty(draft.RaceId)
-            ? null
-            : await _raceRepository.GetByIdWithDetailsAsync(draft.RaceId, cancellationToken);
-        var background = string.IsNullOrEmpty(draft.BackgroundId)
-            ? null
-            : await _backgroundRepository.GetByIdWithDetailsAsync(draft.BackgroundId, cancellationToken);
+        var race = await _selections.LoadRaceIfChosenAsync(draft, cancellationToken);
+        var background = await _selections.LoadBackgroundIfChosenAsync(draft, cancellationToken);
         var repeated = ProficiencyPickCheck.FindRepeated(
             draft,
             race,
@@ -97,16 +87,8 @@ public class ChooseProficienciesCommandHandler(
             return repeated.Value;
         }
 
-        foreach (var proficiencyId in command.ProficiencyIds)
-        {
-            var exists = await _proficiencyRepository.GetByIdAsync(proficiencyId, cancellationToken);
-
-            if (exists == null)
-            {
-                return ProficiencyErrors.NotFoundById(proficiencyId);
-            }
-        }
-
+        // No lookup per id: every id passed the class's options above, and an option's
+        // ProficiencyId is a foreign key to Proficiencies, so it is a real proficiency
         draft.SetClassProficiencies(command.ProficiencyIds);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);

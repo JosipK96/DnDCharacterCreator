@@ -1,0 +1,28 @@
+@* The picked race's key: what it and its subrace give *@
+
+<KeyPanel Name="@(Subrace?.Name ?? Race.Name)">
+    <ChildContent>
+        <KeyFact Label="Size">@Race.Size</KeyFact>
+        <KeyFact Label="Speed">@(Subrace?.Speed ?? Race.Speed) ft.</KeyFact>
+        <KeyFact Label="Ability bonuses">@RaceTexts.Bonuses([.. Race.AbilityScoreBonuses, .. Subrace?.AbilityScoreBonuses ?? []])</KeyFact>
+        <KeyFact Label="Languages">@(Race.Languages.Count == 0 ? "None" : string.Join(", ", Race.Languages))</KeyFact>
+        @if (Race.Traits.Count + (Subrace?.Traits.Count ?? 0) > 0)
+        {
+            <KeyFact Label="Traits">@string.Join(", ", Race.Traits.Concat(Subrace?.Traits ?? []).Select(t => t.Name))</KeyFact>
+        }
+        @if (Race.FeatChoiceCount > 0)
+        {
+            <KeyFact Label="Feat">@RaceTexts.FeatChoice(Race.FeatChoiceCount, Race.FeatChoiceCategory)</KeyFact>
+        }
+    </ChildContent>
+    <Note>From @(Subrace?.Source ?? Race.Source).</Note>
+</KeyPanel>
+
+@code {
+    [Parameter, EditorRequired]
+    public RaceApiResponse Race { get; set; } = default!;
+
+    /// <summary>The subrace picked, null while none is or the race has none.</summary>
+    [Parameter]
+    public SubraceApiResponse? Subrace { get; set; }
+}

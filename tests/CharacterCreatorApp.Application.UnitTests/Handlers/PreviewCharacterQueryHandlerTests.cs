@@ -1,7 +1,9 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.PreviewCharacter;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Feats;
+using CharacterCreatorApp.Application.ReadModels.Languages;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;

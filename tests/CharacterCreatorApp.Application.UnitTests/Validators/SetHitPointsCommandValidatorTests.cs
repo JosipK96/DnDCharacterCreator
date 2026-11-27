@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.Features.CharacterCreation;
+using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 
 using FluentAssertions;

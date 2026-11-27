@@ -1,7 +1,6 @@
-﻿@page "/character/{id:guid}"
+@page "/character/{id:guid}"
 @attribute [Authorize]
 @using CharacterCreatorApp.Client.Pages.CharacterCreation
-@using CharacterCreatorApp.Contracts.Responses
 @inject CharacterService CharacterService
 @inject NavigationManager Navigation
 @inject IJSRuntime JS

@@ -1,9 +1,10 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.GetSpellAllowance;
@@ -25,7 +26,7 @@ public class GetSpellAllowanceQueryHandler(
     TimeProvider timeProvider) : IQueryHandler<GetSpellAllowanceQuery, Response<SpellAllowanceReadModel>>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IClassRepository _classRepository = classRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly IUserContext _userContext = userContext;
     private readonly TimeProvider _timeProvider = timeProvider;
 
@@ -41,17 +42,14 @@ public class GetSpellAllowanceQueryHandler(
             return CharacterDraftErrors.NotFoundById(query.DraftId);
         }
 
-        if (string.IsNullOrEmpty(draft.ClassId))
+        var classResult = await _selections.LoadClassAsync(draft, "selecting spells", cancellationToken);
+
+        if (!classResult.IsSuccess)
         {
-            return CharacterDraftErrors.ClassRequired("selecting spells");
+            return classResult.Errors;
         }
 
-        var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
-
-        if (@class == null)
-        {
-            return ClassErrors.NotFoundById(draft.ClassId);
-        }
+        var @class = classResult.Value;
 
         if (draft.Level is not { } level)
         {

@@ -1,6 +1,10 @@
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterDetails;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Characters;
+using CharacterCreatorApp.Application.ReadModels.Classes;
+using CharacterCreatorApp.Application.ReadModels.Feats;
+using CharacterCreatorApp.Application.ReadModels.Languages;
+using CharacterCreatorApp.Application.ReadModels.Proficiencies;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
@@ -162,7 +166,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.ClassNotFound");
+        result.Errors[0].Code.Should().Be("Class.NotFound");
     }
 
     [Fact]
@@ -178,7 +182,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.RaceNotFound");
+        result.Errors[0].Code.Should().Be("Race.NotFound");
     }
 
     [Fact]
@@ -195,7 +199,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.BackgroundNotFound");
+        result.Errors[0].Code.Should().Be("Background.NotFound");
     }
 
     [Fact]
@@ -210,7 +214,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.SubclassNotFound");
+        result.Errors[0].Code.Should().Be("Subclass.NotFound");
     }
 
     [Fact]
@@ -225,7 +229,7 @@ public class CharacterDetailsLoaderTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.SubraceNotFound");
+        result.Errors[0].Code.Should().Be("Subrace.NotFound");
     }
 
     public void Dispose()

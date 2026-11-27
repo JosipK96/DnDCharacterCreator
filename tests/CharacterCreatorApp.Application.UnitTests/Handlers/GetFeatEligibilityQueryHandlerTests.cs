@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetFeatEligibility;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
@@ -80,6 +80,7 @@ public class GetFeatEligibilityQueryHandlerTests : IDisposable
             _draftRepositoryMock.Object,
             _classRepositoryMock.Object,
             _raceRepositoryMock.Object,
+            new Mock<IBackgroundRepository>(MockBehavior.Strict).Object,
             _featRepositoryMock.Object,
             _userContextMock.Object);
     }

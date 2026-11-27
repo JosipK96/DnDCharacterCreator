@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.ChooseFightingStyles;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
@@ -35,7 +35,9 @@ public class ChooseFightingStylesCommandHandlerTests : IDisposable
 
         _sut = new ChooseFightingStylesCommandHandler(
             _draftRepositoryMock.Object,
+            new Mock<IRaceRepository>(MockBehavior.Strict).Object,
             _classRepositoryMock.Object,
+            new Mock<IBackgroundRepository>(MockBehavior.Strict).Object,
             _featRepositoryMock.Object,
             _userContextMock.Object,
             _unitOfWorkMock.Object);

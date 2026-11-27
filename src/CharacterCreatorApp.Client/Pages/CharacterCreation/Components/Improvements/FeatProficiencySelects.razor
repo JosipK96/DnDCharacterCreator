@@ -1,0 +1,42 @@
+@* The skills or tools a feat asks for (Keen Mind's skill, Skilled's three): one select per pick *@
+
+<p class="mb-2 mt-4 text-sm text-pencil">
+    Pick @Choice.Count @(Choice.Type == FeatChoiceApiResponse.SkillsTools ? "skill(s) or tool(s)" : "skill(s)")
+</p>
+<div class="grid grid-cols-1 gap-3 md:grid-cols-3">
+    @for (var p = 0; p < Picks.Count; p++)
+    {
+        var pickIndex = p;
+        <select class="field" aria-label="@($"Pick {pickIndex + 1}")"
+                value="@Picks[pickIndex]" @onchange="e => OnPick.InvokeAsync((pickIndex, string.IsNullOrEmpty(e.Value?.ToString()) ? null : e.Value.ToString()))">
+            <option value="">Choose...</option>
+            @foreach (var option in OptionsFor(Choice, Picks[pickIndex]))
+            {
+                <option value="@option">@ProficiencyNames.GetValueOrDefault(option, option)</option>
+            }
+        </select>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public FeatChoiceApiResponse Choice { get; set; } = default!;
+
+    /// <summary>The picks so far, one entry per pick the feat gives, null where none is made yet.</summary>
+    [Parameter, EditorRequired]
+    public IReadOnlyList<string?> Picks { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public IReadOnlyDictionary<string, string> ProficiencyNames { get; set; } = new Dictionary<string, string>();
+
+    /// <summary>
+    /// What one select offers, given the feat's choice and that select's current pick: the step
+    /// leaves out what another pick or step already has, which only it knows.
+    /// </summary>
+    [Parameter, EditorRequired]
+    public Func<FeatChoiceApiResponse, string?, IEnumerable<string>> OptionsFor { get; set; } = (_, _) => [];
+
+    /// <summary>Called with the select's index and the id picked in it, null when it was cleared.</summary>
+    [Parameter]
+    public EventCallback<(int Index, string? ProficiencyId)> OnPick { get; set; }
+}

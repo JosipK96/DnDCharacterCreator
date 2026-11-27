@@ -1,9 +1,9 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
 using CharacterCreatorApp.Api.Infrastructure.RateLimiting;
-using CharacterCreatorApp.Application.Features.Authentication.CreatePasswordResetLink;
-using CharacterCreatorApp.Application.Features.Authentication.ThrowTestError;
+using CharacterCreatorApp.Application.Features.Admin.CreatePasswordResetLink;
+using CharacterCreatorApp.Application.Features.Admin.ThrowTestError;
 using CharacterCreatorApp.Contracts.Requests.User;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Users;
 
 using MediatR;
 

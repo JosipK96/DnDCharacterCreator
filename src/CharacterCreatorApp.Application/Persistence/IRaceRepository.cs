@@ -1,4 +1,4 @@
-﻿using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 
 namespace CharacterCreatorApp.Application.Persistence

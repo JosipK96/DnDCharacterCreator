@@ -62,7 +62,7 @@ public class SetHitPointsCommandHandler(
 
         if (@class == null)
         {
-            return CharacterErrors.ClassNotFoundById(classId);
+            return ClassErrors.NotFoundById(classId);
         }
 
         var dieSize = HitDieNotation.SizeOf(@class.HitDie);

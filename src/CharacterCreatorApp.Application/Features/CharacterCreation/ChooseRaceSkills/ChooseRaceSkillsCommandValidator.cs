@@ -1,5 +1,7 @@
 using FluentValidation;
 
+using CharacterCreatorApp.Application.Errors;
+
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseRaceSkills;
 
 public class ChooseRaceSkillsCommandValidator : AbstractValidator<ChooseRaceSkillsCommand>

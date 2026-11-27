@@ -1,7 +1,14 @@
 using System.Globalization;
 
 using CharacterCreatorApp.Client.Services.Http;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Backgrounds;
+using CharacterCreatorApp.Contracts.Responses.Books;
+using CharacterCreatorApp.Contracts.Responses.Classes;
+using CharacterCreatorApp.Contracts.Responses.Feats;
+using CharacterCreatorApp.Contracts.Responses.Languages;
+using CharacterCreatorApp.Contracts.Responses.Proficiencies;
+using CharacterCreatorApp.Contracts.Responses.Races;
+using CharacterCreatorApp.Contracts.Responses.Spells;
 
 namespace CharacterCreatorApp.Client.Services;
 

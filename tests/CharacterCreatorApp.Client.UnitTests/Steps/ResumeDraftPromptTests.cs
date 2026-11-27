@@ -3,7 +3,8 @@ using Bunit;
 using CharacterCreatorApp.Client.Pages.CharacterCreation;
 using CharacterCreatorApp.Client.Services;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Books;
+using CharacterCreatorApp.Contracts.Responses.Characters;
 
 using FluentAssertions;
 

@@ -1,7 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterManagement.LevelUpCharacter;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Races;
@@ -175,7 +175,7 @@ public class StartCharacterLevelUpCommandHandlerTests : IDisposable
 
         // Assert
         result.IsSuccess.Should().BeFalse();
-        result.Errors[0].Code.Should().Be("Character.ClassNotFound");
+        result.Errors[0].Code.Should().Be("Class.NotFound");
         _draftRepositoryMock.Verify(r => r.CreateAsync(It.IsAny<CharacterDraft>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 

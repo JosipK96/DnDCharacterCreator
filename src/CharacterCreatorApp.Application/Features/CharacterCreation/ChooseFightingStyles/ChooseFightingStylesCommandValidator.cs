@@ -1,5 +1,7 @@
 using FluentValidation;
 
+using CharacterCreatorApp.Application.Errors;
+
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseFightingStyles;
 
 public class ChooseFightingStylesCommandValidator : AbstractValidator<ChooseFightingStylesCommand>

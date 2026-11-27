@@ -1,9 +1,10 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Proficiencies;
 using CharacterCreatorApp.Domain.Common.Results;
 
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.GetToolChoices;
@@ -23,9 +24,7 @@ public class GetToolChoicesQueryHandler(
     private const string Step = "picking tools";
 
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IRaceRepository _raceRepository = raceRepository;
-    private readonly IBackgroundRepository _backgroundRepository = backgroundRepository;
-    private readonly IClassRepository _classRepository = classRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly IProficiencyRepository _proficiencyRepository = proficiencyRepository;
     private readonly IUserContext _userContext = userContext;
 
@@ -38,42 +37,14 @@ public class GetToolChoicesQueryHandler(
             return CharacterDraftErrors.NotFoundById(query.DraftId);
         }
 
-        if (string.IsNullOrEmpty(draft.RaceId))
+        var selections = await _selections.LoadRaceBackgroundAndClassAsync(draft, Step, cancellationToken);
+
+        if (!selections.IsSuccess)
         {
-            return CharacterDraftErrors.RaceRequired(Step);
+            return selections.Errors;
         }
 
-        if (string.IsNullOrEmpty(draft.BackgroundId))
-        {
-            return CharacterDraftErrors.BackgroundRequired(Step);
-        }
-
-        if (string.IsNullOrEmpty(draft.ClassId))
-        {
-            return CharacterDraftErrors.ClassRequired(Step);
-        }
-
-        var race = await _raceRepository.GetByIdWithDetailsAsync(draft.RaceId, cancellationToken);
-
-        if (race == null)
-        {
-            return RaceErrors.NotFoundById(draft.RaceId);
-        }
-
-        var background = await _backgroundRepository.GetByIdWithDetailsAsync(draft.BackgroundId, cancellationToken);
-
-        if (background == null)
-        {
-            return BackgroundErrors.NotFoundById(draft.BackgroundId);
-        }
-
-        var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
-
-        if (@class == null)
-        {
-            return ClassErrors.NotFoundById(draft.ClassId);
-        }
-
+        var (race, background, @class) = selections.Value;
         var slots = ToolPicks.SlotsFor(race, background, @class);
 
         if (slots.Count == 0)

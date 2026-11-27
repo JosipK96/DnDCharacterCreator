@@ -50,7 +50,7 @@ public class StartCharacterLevelUpCommandHandler(
 
         if (@class == null)
         {
-            return CharacterErrors.ClassNotFoundById(character.ClassId);
+            return ClassErrors.NotFoundById(character.ClassId);
         }
 
         var draft = await _editStarter.StartAsync(character, cancellationToken);

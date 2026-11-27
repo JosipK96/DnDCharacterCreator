@@ -1,4 +1,5 @@
-﻿using CharacterCreatorApp.Application.Features.Authentication;
+using CharacterCreatorApp.Application.Errors;
+using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Application.Features.Authentication.Login;
 using CharacterCreatorApp.Domain.Common.Results;
 

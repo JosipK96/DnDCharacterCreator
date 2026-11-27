@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Domain.ValueObjects;
+using CharacterCreatorApp.Application.Validation;
 
 using FluentValidation;
 
@@ -9,10 +9,7 @@ public class GetHiddenOptionsQueryValidator : AbstractValidator<GetHiddenOptions
 {
     public GetHiddenOptionsQueryValidator()
     {
-        RuleFor(x => x.Edition)
-            .Must(RulesEdition.IsKnown)
-            .WithErrorCode(BookErrors.Codes.InvalidEdition)
-            .WithMessage($"Edition must be {RulesEdition.Edition2014} or {RulesEdition.Edition2024}.");
+        RuleFor(x => x.Edition).MustBeKnownEdition(BookErrors.Codes.InvalidEdition);
 
         RuleFor(x => x.List)
             .Must(list => HiddenOptionLists.All.Contains(list))

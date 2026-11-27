@@ -19,21 +19,6 @@ public static class CharacterErrors
         public const string SheetPaperInvalid = "Character.SheetPaperInvalid";
     }
 
-    public static Error RaceNotFoundById(string raceId) =>
-        Error.NotFound("Character.RaceNotFound", $"Race not found by id {raceId} for character creation");
-
-    public static Error ClassNotFoundById(string classId) =>
-        Error.NotFound("Character.ClassNotFound", $"Class not found by id {classId} for character creation");
-
-    public static Error BackgroundNotFoundById(string backgroundId) =>
-        Error.NotFound("Character.BackgroundNotFound", $"Background not found by id {backgroundId} for character creation");
-
-    public static Error SubclassNotFoundById(string subclassId) =>
-        Error.NotFound("Character.SubclassNotFound", $"Subclass not found by id {subclassId} for character creation");
-
-    public static Error SubraceNotFoundById(string subraceId) =>
-        Error.NotFound("Character.SubraceNotFound", $"Subrace not found by id {subraceId} for character creation");
-
     public static Error NotFoundById(Guid characterId) =>
         Error.NotFound("Character.NotFound", $"Character with id {characterId} was not found.");
 

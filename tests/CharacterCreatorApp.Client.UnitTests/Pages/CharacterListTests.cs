@@ -4,7 +4,8 @@ using CharacterCreatorApp.Client.Pages.Characters;
 using CharacterCreatorApp.Client.Services;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Common;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Characters;
+using CharacterCreatorApp.Contracts.Responses.Classes;
 
 using FluentAssertions;
 

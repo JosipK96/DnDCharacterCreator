@@ -1,7 +1,11 @@
 # Api
 
 - Controllers map a `*ApiRequest` onto a command or query, and map what comes back (a read
-  model, `PagedResult<T>`, `LoginResult`) onto a `*ApiResponse`.
+  model, `PagedResult<T>`, `LoginResult`) onto a `*ApiResponse`. The mapping is plain code: a
+  `ToResponse()` extension method per read model in `Mapping/`, one file per `ReadModels/`
+  folder (`RaceMappings` for `ReadModels/Races`), with named arguments, so Go to Definition
+  lands on it and a response that gains a field does not build until it is mapped. No mapping
+  library: a new read model gets its `ToResponse()` beside the others.
 - The Api serves the Blazor client (`MapStaticAssets` + `MapFallbackToFile`), so the client
   calls the API on its own origin: no CORS, no client-side API address. Run the Api to use it.
 

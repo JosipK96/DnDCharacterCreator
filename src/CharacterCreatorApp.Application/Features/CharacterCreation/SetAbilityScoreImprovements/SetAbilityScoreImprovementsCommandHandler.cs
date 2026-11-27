@@ -1,9 +1,11 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
@@ -23,9 +25,7 @@ public class SetAbilityScoreImprovementsCommandHandler(
     IUserContext userContext) : ICommandHandler<SetAbilityScoreImprovementsCommand, Response>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IClassRepository _classRepository = classRepository;
-    private readonly IRaceRepository _raceRepository = raceRepository;
-    private readonly IBackgroundRepository _backgroundRepository = backgroundRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly IFeatRepository _featRepository = featRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IUserContext _userContext = userContext;
@@ -45,15 +45,17 @@ public class SetAbilityScoreImprovementsCommandHandler(
         }
 
         // The class with its features: a Fighting Style feat asks for the feature of that name
-        var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
+        var classResult = await _selections.LoadClassAsync(draft, "choosing ability score improvements", cancellationToken);
 
-        if (@class == null)
+        if (!classResult.IsSuccess)
         {
-            return ClassErrors.NotFoundById(draft.ClassId);
+            return classResult.Errors;
         }
 
+        var @class = classResult.Value;
+
         // The race with its subraces: a variant human's feat comes with the subrace
-        var race = string.IsNullOrEmpty(draft.RaceId) ? null : await _raceRepository.GetByIdWithDetailsAsync(draft.RaceId, cancellationToken);
+        var race = await _selections.LoadRaceIfChosenAsync(draft, cancellationToken);
         var subrace = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
         var raceName = subrace?.Name ?? race?.Name ?? string.Empty;
         var bonusFeats = race?.BonusFeatsWith(subrace) ?? new BonusFeatChoice(0, null);
@@ -80,9 +82,7 @@ public class SetAbilityScoreImprovementsCommandHandler(
         }
 
         // The background's feat (a Noble's Skilled) may ask for picks too, made in this step
-        var background = draft.BackgroundId is { } backgroundId
-            ? await _backgroundRepository.GetByIdWithDetailsAsync(backgroundId, cancellationToken)
-            : null;
+        var background = await _selections.LoadBackgroundIfChosenAsync(draft, cancellationToken);
         var backgroundFeatIds = background == null ? [] : CharacterBuilder.BackgroundFeatIds(background, draft).ToList();
         var featIdsToLoad = command.FeatIds.Concat(backgroundFeatIds).Distinct().ToList();
         var feats = featIdsToLoad.Count == 0 ? [] : await _featRepository.GetByIdsAsync(featIdsToLoad, cancellationToken);

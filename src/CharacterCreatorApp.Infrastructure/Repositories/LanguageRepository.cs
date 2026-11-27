@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Languages;
 using CharacterCreatorApp.Domain.DomainModels.Languages;
 
 using Microsoft.EntityFrameworkCore;

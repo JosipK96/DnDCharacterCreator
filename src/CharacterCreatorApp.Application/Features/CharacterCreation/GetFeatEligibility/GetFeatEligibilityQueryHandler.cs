@@ -1,9 +1,10 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.ValueObjects;
 
@@ -18,12 +19,12 @@ public class GetFeatEligibilityQueryHandler(
     ICharacterDraftRepository characterDraftRepository,
     IClassRepository classRepository,
     IRaceRepository raceRepository,
+    IBackgroundRepository backgroundRepository,
     IFeatRepository featRepository,
     IUserContext userContext) : IQueryHandler<GetFeatEligibilityQuery, Response<List<FeatEligibilityReadModel>>>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IClassRepository _classRepository = classRepository;
-    private readonly IRaceRepository _raceRepository = raceRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly IFeatRepository _featRepository = featRepository;
     private readonly IUserContext _userContext = userContext;
 
@@ -42,14 +43,15 @@ public class GetFeatEligibilityQueryHandler(
         }
 
         // The class with its features: a Fighting Style feat asks for the feature of that name
-        var @class = await _classRepository.GetByIdWithDetailsAsync(draft.ClassId, cancellationToken);
+        var classResult = await _selections.LoadClassAsync(draft, "choosing feats", cancellationToken);
 
-        if (@class == null)
+        if (!classResult.IsSuccess)
         {
-            return ClassErrors.NotFoundById(draft.ClassId);
+            return classResult.Errors;
         }
 
-        var race = string.IsNullOrEmpty(draft.RaceId) ? null : await _raceRepository.GetByIdWithDetailsAsync(draft.RaceId, cancellationToken);
+        var @class = classResult.Value;
+        var race = await _selections.LoadRaceIfChosenAsync(draft, cancellationToken);
         var subrace = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
         var feats = await _featRepository.GetAllAsync(draft.Edition, cancellationToken);
 

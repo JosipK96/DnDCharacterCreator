@@ -3,7 +3,7 @@ using AngleSharp.Dom;
 using Bunit;
 
 using CharacterCreatorApp.Client.Services;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Books;
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;

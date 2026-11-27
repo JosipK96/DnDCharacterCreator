@@ -1,7 +1,8 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.CharacterCreation.Building;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
+using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Loaders;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
 
@@ -11,13 +12,13 @@ public class ChooseLanguagesCommandHandler(
     ICharacterDraftRepository characterDraftRepository,
     IRaceRepository raceRepository,
     IBackgroundRepository backgroundRepository,
+    IClassRepository classRepository,
     ILanguageRepository languageRepository,
     IUnitOfWork unitOfWork,
     IUserContext userContext) : ICommandHandler<ChooseLanguagesCommand, Response>
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
-    private readonly IRaceRepository _raceRepository = raceRepository;
-    private readonly IBackgroundRepository _backgroundRepository = backgroundRepository;
+    private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
     private readonly ILanguageRepository _languageRepository = languageRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IUserContext _userContext = userContext;
@@ -31,29 +32,14 @@ public class ChooseLanguagesCommandHandler(
             return CharacterDraftErrors.NotFoundById(command.DraftId);
         }
 
-        if (string.IsNullOrEmpty(draft.RaceId))
+        var selections = await _selections.LoadRaceAndBackgroundAsync(draft, "selecting languages", cancellationToken);
+
+        if (!selections.IsSuccess)
         {
-            return CharacterDraftErrors.RaceRequired("selecting languages");
+            return selections.Errors;
         }
 
-        if (string.IsNullOrEmpty(draft.BackgroundId))
-        {
-            return CharacterDraftErrors.BackgroundRequired("selecting languages");
-        }
-
-        var race = await _raceRepository.GetByIdWithDetailsAsync(draft.RaceId, cancellationToken);
-
-        if (race == null)
-        {
-            return RaceErrors.NotFoundById(draft.RaceId);
-        }
-
-        var background = await _backgroundRepository.GetByIdWithDetailsAsync(draft.BackgroundId, cancellationToken);
-
-        if (background == null)
-        {
-            return BackgroundErrors.NotFoundById(draft.BackgroundId);
-        }
+        var (race, background) = selections.Value;
 
         // A high elf picks one more than an elf
         var subrace = race.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);

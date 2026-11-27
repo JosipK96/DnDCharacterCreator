@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Application.Features.Authentication.Register;
 using CharacterCreatorApp.Domain.Common.Results;

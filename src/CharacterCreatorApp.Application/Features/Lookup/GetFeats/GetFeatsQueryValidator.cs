@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Domain.ValueObjects;
+using CharacterCreatorApp.Application.Validation;
 
 using FluentValidation;
 
@@ -10,9 +10,7 @@ public class GetFeatsQueryValidator : AbstractValidator<GetFeatsQuery>
     public GetFeatsQueryValidator()
     {
         RuleFor(x => x.Edition)
-            .Must(RulesEdition.IsKnown)
-            .When(x => x.Edition != null)
-            .WithErrorCode(FeatErrors.Codes.InvalidEdition)
-            .WithMessage($"Edition must be {RulesEdition.Edition2014} or {RulesEdition.Edition2024}.");
+            .MustBeKnownEdition(FeatErrors.Codes.InvalidEdition)
+            .When(x => x.Edition != null);
     }
 }

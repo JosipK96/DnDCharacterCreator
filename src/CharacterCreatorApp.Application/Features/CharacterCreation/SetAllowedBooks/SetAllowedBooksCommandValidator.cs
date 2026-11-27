@@ -1,5 +1,7 @@
 using FluentValidation;
 
+using CharacterCreatorApp.Application.Errors;
+
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetAllowedBooks;
 
 public class SetAllowedBooksCommandValidator : AbstractValidator<SetAllowedBooksCommand>

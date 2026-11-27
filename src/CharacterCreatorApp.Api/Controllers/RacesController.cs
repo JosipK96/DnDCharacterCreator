@@ -1,8 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetRaces;
-using CharacterCreatorApp.Contracts.Responses;
-
-using MapsterMapper;
+using CharacterCreatorApp.Contracts.Responses.Races;
 
 using MediatR;
 
@@ -11,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers
 {
     [Route("api/races")]
-    public class RacesController(ISender sender, IMapper mapper) : ApiController
+    public class RacesController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         /// <summary>
         /// The races of one rules edition ("2014" or "2024"), or of both without one, from
@@ -27,7 +25,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetRacesQuery(edition, sources), cancellationToken);
 
-            return OkOrProblem(response, races => _mapper.Map<List<RaceApiResponse>>(races));
+            return OkOrProblem(response, races => races.Select(race => race.ToResponse()).ToList());
         }
     }
 }

@@ -1,0 +1,57 @@
+@* A 2024 background raises three abilities: +2 and +1, or +1 to each *@
+
+<Room Title="Ability Score Increases">
+    <p class="mb-4 text-sm text-pencil">
+        @Background.Name raises @string.Join(", ", Background.AbilityScoreOptions.Select(AbilityNames.Of)).
+    </p>
+
+    <div class="mb-4 flex flex-wrap gap-2">
+        <button type="button" class="chip" aria-pressed="@(Increases.OneToEach ? "false" : "true")" @onclick="() => Change(() => Increases.OneToEach = false)">+2 and +1</button>
+        <button type="button" class="chip" aria-pressed="@(Increases.OneToEach ? "true" : "false")" @onclick="() => Change(() => Increases.OneToEach = true)">+1 to each</button>
+    </div>
+
+    @if (!Increases.OneToEach)
+    {
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <label class="text-sm font-medium">
+                +2 to
+                <select class="field mt-1" value="@Increases.PlusTwo" @onchange="e => Change(() => Increases.PlusTwo = e.Value?.ToString())">
+                    <option value="">Choose...</option>
+                    @foreach (var ability in Background.AbilityScoreOptions)
+                    {
+                        <option value="@ability">@AbilityNames.Of(ability)</option>
+                    }
+                </select>
+            </label>
+            <label class="text-sm font-medium">
+                +1 to
+                <select class="field mt-1" value="@Increases.PlusOne" @onchange="e => Change(() => Increases.PlusOne = e.Value?.ToString())">
+                    <option value="">Choose...</option>
+                    @foreach (var ability in Background.AbilityScoreOptions.Where(a => a != Increases.PlusTwo))
+                    {
+                        <option value="@ability">@AbilityNames.Of(ability)</option>
+                    }
+                </select>
+            </label>
+        </div>
+    }
+</Room>
+
+@code {
+    [Parameter, EditorRequired]
+    public BackgroundApiResponse Background { get; set; } = default!;
+
+    /// <summary>The picks, which this room changes in place.</summary>
+    [Parameter, EditorRequired]
+    public BackgroundIncreases Increases { get; set; } = default!;
+
+    /// <summary>Called after every change, so the step can tell whether it may move on.</summary>
+    [Parameter]
+    public EventCallback OnChanged { get; set; }
+
+    private Task Change(Action change)
+    {
+        change();
+        return OnChanged.InvokeAsync();
+    }
+}

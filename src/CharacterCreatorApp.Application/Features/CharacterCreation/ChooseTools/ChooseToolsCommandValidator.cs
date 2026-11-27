@@ -1,5 +1,7 @@
 using FluentValidation;
 
+using CharacterCreatorApp.Application.Errors;
+
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.ChooseTools;
 
 public class ChooseToolsCommandValidator : AbstractValidator<ChooseToolsCommand>

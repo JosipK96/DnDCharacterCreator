@@ -1,3 +1,4 @@
+using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 using FluentValidation;

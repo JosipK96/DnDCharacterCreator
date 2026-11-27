@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Application.Persistence;
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Backgrounds;
 
 namespace CharacterCreatorApp.Application.Features.Lookup.GetBackgrounds;
 

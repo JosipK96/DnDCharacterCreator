@@ -1,4 +1,4 @@
-using CharacterCreatorApp.Application.ReadModels;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 
 using FluentAssertions;
 

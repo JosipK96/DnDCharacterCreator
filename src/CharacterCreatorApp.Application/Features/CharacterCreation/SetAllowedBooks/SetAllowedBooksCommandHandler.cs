@@ -1,5 +1,6 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
+using CharacterCreatorApp.Application.Errors;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.Common.Results;
 using CharacterCreatorApp.Domain.DomainModels.Characters;

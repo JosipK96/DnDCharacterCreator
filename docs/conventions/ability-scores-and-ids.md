@@ -11,11 +11,15 @@ The same six abilities are written three different ways depending on where the d
 | --- | --- |
 | A draft's `BaseAbilityScores` | `STR`, `DEX`, `CON` |
 | Race and subrace seed data | `str`, `dex`, `con` |
-| Ability score improvements | `strength`, `dexterity`, `constitution` |
+| Ability score improvements saved before #157 | `strength`, `dexterity`, `constitution` |
 
 `AbilityScore.TryNormalize` / `AbilityScore.Normalize` resolve any of those to the canonical id
 (`STR`, `DEX`, `CON`, `INT`, `WIS`, `CHA`). `Character` normalizes on every write, so its
 `AbilityScores` dictionary only ever holds canonical keys.
+
+The client uses the canonical ids only, through `AbilityNames` (`AbilityNames.Ids` and the name
+each shows, `AbilityNames.Of`), and sends nothing else. An improvement saved by an older client
+still holds a full name, which the improvements step reads through `AbilityNames.IdOf`.
 
 Never compare or index ability keys directly. `Character.AbilityScores` is an ordinal dictionary:
 looking up `"con"` when the entry is `"CON"` silently misses and, before this was fixed, added a
@@ -65,7 +69,7 @@ Languages arrive in three shapes too:
 - A draft's `SelectedLanguageIds` holds **language ids of its edition**: `"common-phb"` for a 2014
   character, `"common-xphb"` for a 2024 one (`Language.SourceFor`).
 
-`LanguageResolver` (in `Features/CharacterCreation/Building`) resolves all of them against the
+`LanguageResolver` (in `Features/CharacterCreation/Shared/Choices`) resolves all of them against the
 edition's languages and drops the `"any"` placeholders, which the player's own choices fill.
 `CharacterBuilder` uses it for the character's languages and `ChooseLanguages` for the ones the
 character already has, so the two cannot disagree about what "Dwarvish" means. Language ids are

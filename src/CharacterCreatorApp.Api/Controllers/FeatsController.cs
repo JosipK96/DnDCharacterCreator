@@ -1,8 +1,7 @@
 using CharacterCreatorApp.Api.Infrastructure.ApiProblemDetails;
+using CharacterCreatorApp.Api.Mapping;
 using CharacterCreatorApp.Application.Features.Lookup.GetFeats;
-using CharacterCreatorApp.Contracts.Responses;
-
-using MapsterMapper;
+using CharacterCreatorApp.Contracts.Responses.Feats;
 
 using MediatR;
 
@@ -11,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CharacterCreatorApp.Api.Controllers
 {
     [Route("api/feats")]
-    public class FeatsController(ISender sender, IMapper mapper) : ApiController
+    public class FeatsController(ISender sender) : ApiController
     {
         private readonly ISender _sender = sender;
-        private readonly IMapper _mapper = mapper;
 
         /// <summary>
         /// The feats of one rules edition ("2014" or "2024"), or of both without one, from
@@ -27,7 +25,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetFeatsQuery(edition, sources), cancellationToken);
 
-            return OkOrProblem(response, feats => _mapper.Map<List<FeatApiResponse>>(feats));
+            return OkOrProblem(response, feats => feats.Select(feat => feat.ToResponse()).ToList());
         }
 
         [HttpGet("{id}")]
@@ -37,7 +35,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetFeatByIdQuery(id), cancellationToken);
 
-            return OkOrProblem(response, feat => _mapper.Map<FeatApiResponse>(feat));
+            return OkOrProblem(response, feat => feat.ToResponse());
         }
 
         [HttpGet("by-proficiency/{proficiencyId}")]
@@ -46,7 +44,7 @@ namespace CharacterCreatorApp.Api.Controllers
         {
             var response = await _sender.Send(new GetFeatsByProficiencyIdQuery(proficiencyId), cancellationToken);
 
-            return OkOrProblem(response, feats => _mapper.Map<List<FeatApiResponse>>(feats));
+            return OkOrProblem(response, feats => feats.Select(feat => feat.ToResponse()).ToList());
         }
     }
 }

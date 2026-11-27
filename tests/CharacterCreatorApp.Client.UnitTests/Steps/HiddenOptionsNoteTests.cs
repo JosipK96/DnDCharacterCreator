@@ -4,10 +4,21 @@ using Bunit;
 
 using CharacterCreatorApp.Client.Pages.CharacterCreation;
 using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Backgrounds;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Classes;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Improvements;
+using CharacterCreatorApp.Client.Pages.CharacterCreation.Components.Races;
 using CharacterCreatorApp.Client.Services;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
-using CharacterCreatorApp.Contracts.Responses;
+using CharacterCreatorApp.Contracts.Responses.Backgrounds;
+using CharacterCreatorApp.Contracts.Responses.Books;
+using CharacterCreatorApp.Contracts.Responses.Characters;
+using CharacterCreatorApp.Contracts.Responses.Classes;
+using CharacterCreatorApp.Contracts.Responses.Feats;
+using CharacterCreatorApp.Contracts.Responses.Proficiencies;
+using CharacterCreatorApp.Contracts.Responses.Races;
+using CharacterCreatorApp.Contracts.Responses.Spells;
 
 using FluentAssertions;
 

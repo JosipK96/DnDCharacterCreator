@@ -6,6 +6,10 @@ and what goes live is exactly that tag's commit. The decision is in
 [docs/adr/0004-release-by-tag.md](../adr/0004-release-by-tag.md). Where the app runs is in
 [hosting.md](hosting.md).
 
+- **What goes in a release:** each planned release is a GitHub milestone `vX.Y.Z`, and the
+  Roadmap issue #34 lists its open issues in order. A release is published when its milestone
+  has no open issues; an issue that turns out much bigger than planned moves to the next
+  milestone instead of holding the release back. A hotfix doesn't wait for a milestone.
 - **Releasing:** on GitHub, Releases > Draft a new release, create the tag `vX.Y.Z` on the
   `main` commit to ship, and publish. [release.yml](../../.github/workflows/release.yml) then
   checks the tag looks like `vX.Y.Z` and that CI passed on its commit, moves the `production`

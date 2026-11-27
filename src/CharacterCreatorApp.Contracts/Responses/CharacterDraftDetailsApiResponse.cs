@@ -78,6 +78,13 @@ public class CharacterDraftDetailsApiResponse
     /// </summary>
     public List<string> LevelUpChoices { get; set; } = [];
 
-    /// <summary>The hit die's result for each level a level-up reached, by level.</summary>
+    /// <summary>The hit die's result for each level from 2 the player rolled or took the fixed value for, by level.</summary>
     public Dictionary<int, int> HitDieResults { get; set; } = [];
+
+    /// <summary>
+    /// The levels the hit points step asks for: a level-up's new level, or every level from 2 of a
+    /// new character or an edit. Empty at level 1, whose hit die is its maximum, and the wizard
+    /// then leaves the step out.
+    /// </summary>
+    public List<int> HitDieLevels { get; set; } = [];
 }

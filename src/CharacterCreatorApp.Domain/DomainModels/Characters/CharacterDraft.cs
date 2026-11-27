@@ -140,9 +140,8 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public List<string> LevelUpChoices { get; private set; } = [];
 
         /// <summary>
-        /// The hit die's result for each level a level-up reached, by level: what the player rolled,
-        /// or the die's fixed value. A level without one, such as every level a character was
-        /// created with, takes the fixed value.
+        /// The hit die's result for each level from 2 on, by level: what the player rolled, or the
+        /// die's fixed value. A level without one takes the fixed value.
         /// </summary>
         public Dictionary<int, int> HitDieResults { get; private set; } = [];
 
@@ -150,6 +149,15 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         public const int MaxLevel = 20;
 
         public bool IsLevelUp => LevelUpChoices.Count != 0;
+
+        /// <summary>
+        /// The levels whose hit die the hit points step asks for: only the new level on a level-up,
+        /// every level from 2 on a new character or an edit. Level 1 is the die's maximum, so a
+        /// level-1 character, or a draft with no level yet, has none.
+        /// </summary>
+        public IReadOnlyList<int> HitDieLevels => Level is not { } level
+            ? []
+            : IsLevelUp ? [level] : [.. Enumerable.Range(2, Math.Max(0, level - 1))];
 
         /// <summary>
         /// Whether the draft may take this class: any for a new character or an edit, only its own
@@ -303,19 +311,41 @@ namespace CharacterCreatorApp.Domain.DomainModels.Characters
         }
 
         /// <summary>
-        /// The hit die's result for the level this level-up reaches: what the player rolled, or the
-        /// die's fixed value. The caller checks it is no more than the class's hit die.
+        /// The hit die's results, by level, for levels of <see cref="HitDieLevels"/>: what the player
+        /// rolled, or the die's fixed value. A level-up adds its new level's result to the ones it
+        /// kept; any other draft replaces its results, so a level left out takes the fixed value.
+        /// The caller checks each is no more than the class's hit die.
         /// </summary>
-        public void SetHitDieResult(int result)
+        public void SetHitDieResults(IReadOnlyDictionary<int, int> results)
         {
-            if (!IsLevelUp)
+            ArgumentNullException.ThrowIfNull(results);
+
+            var levels = HitDieLevels;
+
+            if (results.Keys.Any(level => !levels.Contains(level)))
             {
-                throw new InvalidOperationException("Hit points are picked only on a level-up.");
+                throw new ArgumentException($"Only levels {string.Join(", ", levels)} roll a hit die.", nameof(results));
             }
 
-            ArgumentOutOfRangeException.ThrowIfLessThan(result, 1);
+            if (results.Values.Any(result => result < 1))
+            {
+                throw new ArgumentOutOfRangeException(nameof(results), "A hit die rolls at least 1.");
+            }
 
-            HitDieResults = new Dictionary<int, int>(HitDieResults) { [Level!.Value] = result };
+            if (IsLevelUp)
+            {
+                if (!results.ContainsKey(Level!.Value))
+                {
+                    throw new ArgumentException($"A level-up keeps the hit die's result for level {Level}.", nameof(results));
+                }
+
+                HitDieResults = new Dictionary<int, int>(HitDieResults) { [Level.Value] = results[Level.Value] };
+            }
+            else
+            {
+                HitDieResults = new Dictionary<int, int>(results);
+            }
+
             Made(DraftChoice.HitPoints);
         }
 

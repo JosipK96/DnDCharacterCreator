@@ -103,8 +103,9 @@ namespace CharacterCreatorApp.Api.Controllers
         }
 
         /// <summary>
-        /// The hit die's result for the level a level-up reaches: what the player rolled, or the
-        /// die's fixed value. Only a level-up takes one.
+        /// The hit die's results by level: what the player rolled, or the die's fixed value. A
+        /// level-up takes its new level's; a new character or an edit takes any of its levels from
+        /// 2 and replaces what it kept, a level left out taking the fixed value.
         /// </summary>
         [HttpPut("{draftId:guid}/hit-points")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -112,7 +113,7 @@ namespace CharacterCreatorApp.Api.Controllers
         [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> SetHitPoints(Guid draftId, [FromBody] SetHitPointsApiRequest request, CancellationToken cancellationToken)
         {
-            var response = await _sender.Send(new SetHitPointsCommand(draftId, request.Result), cancellationToken);
+            var response = await _sender.Send(new SetHitPointsCommand(draftId, request.Results), cancellationToken);
 
             return NoContentOrProblem(response);
         }

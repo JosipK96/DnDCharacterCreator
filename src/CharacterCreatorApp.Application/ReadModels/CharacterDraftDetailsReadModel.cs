@@ -74,6 +74,9 @@ public class CharacterDraftDetailsReadModel
     /// <summary>The steps a level-up asks for, by DraftChoice name ("hit-points"); empty for any other draft.</summary>
     public List<string> LevelUpChoices { get; set; } = [];
 
-    /// <summary>The hit die's result for each level a level-up reached, by level.</summary>
+    /// <summary>The hit die's result for each level from 2 the player rolled or took the fixed value for, by level.</summary>
     public Dictionary<int, int> HitDieResults { get; set; } = [];
+
+    /// <summary>The levels the hit points step asks for (CharacterDraft.HitDieLevels); none at level 1.</summary>
+    public List<int> HitDieLevels { get; set; } = [];
 }

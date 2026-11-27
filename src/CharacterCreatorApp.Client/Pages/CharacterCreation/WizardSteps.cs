@@ -8,8 +8,9 @@ namespace CharacterCreatorApp.Client.Pages.CharacterCreation;
 public static class WizardSteps
 {
     /// <summary>
-    /// The step a level-up opens with, numbered after Review because a new character never
-    /// visits it: the levels a character is created with take the hit die's fixed value.
+    /// The step a level-up opens with, and that a new character or an edit above level 1 takes
+    /// after Spells (<see cref="CreationOf"/>). It is numbered after Review because a level-1
+    /// character never visits it: its hit die is the maximum.
     /// </summary>
     public const int HitPoints = 11;
 
@@ -41,8 +42,16 @@ public static class WizardSteps
     /// <summary>Review, the last step of every flow.</summary>
     public static int Review => Count;
 
-    /// <summary>A new character's steps, and an edit's: every one in order.</summary>
+    /// <summary>A level-1 character's steps, new or edited: every one in order, with no hit points to roll.</summary>
     public static IReadOnlyList<int> Creation { get; } = [.. Enumerable.Range(1, Count)];
+
+    /// <summary>
+    /// A new character's steps, and an edit's, from the draft's HitDieLevels
+    /// (CharacterDraftDetailsApiResponse): every one in order, and Hit Points between Spells and
+    /// Review when the draft has a level to roll for, as every character above level 1 does.
+    /// </summary>
+    public static IReadOnlyList<int> CreationOf(IReadOnlyCollection<int> hitDieLevels) =>
+        hitDieLevels.Count == 0 ? Creation : [.. Creation.Where(step => step != Review), HitPoints, Review];
 
     /// <summary>A step's name from its number, counting from 1.</summary>
     public static string NameOf(int step) => step == HitPoints ? HitPointsName : Names[step - 1];

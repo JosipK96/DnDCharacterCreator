@@ -22,46 +22,73 @@
 
         @if (dieSize > 0)
         {
-            <Room>
-                <div class="mb-5 flex items-start gap-3">
-                    <HitDie Die="@hitDie" Size="40" ShowLabel="false" />
-                    <p class="text-pencil">
-                        Level @level adds a @hitDie and your Constitution modifier to your hit points.
-                        Take the hit die's fixed value, roll it here, or enter what you rolled with your own dice.
-                    </p>
+            <div class="mb-5 flex items-start gap-3">
+                <HitDie Die="@hitDie" Size="40" ShowLabel="false" />
+                <div class="text-pencil">
+                    @if (isLevelUp)
+                    {
+                        <p>
+                            Level @picks[0].Level adds a @hitDie and your Constitution modifier to your hit points.
+                            Take the hit die's fixed value, roll it here, or enter what you rolled with your own dice.
+                        </p>
+                    }
+                    else
+                    {
+                        <p>Level 1 takes the @hitDie's maximum, @dieSize, plus your Constitution modifier.</p>
+                        <p class="mt-1">
+                            Each later level adds a @hitDie and your Constitution modifier. For each, take the hit die's
+                            fixed value, roll it here, or enter what you rolled with your own dice. A level you leave
+                            alone takes the fixed value, @fixedValue.
+                        </p>
+                    }
                 </div>
+            </div>
 
-                <div class="option-grid">
-                    <OptionRoom Name="@($"Take {fixedValue}")" Picked="@(chosenBy == ChosenBy.Fixed)" OnClick="TakeFixedValue">
-                        <span>The fixed value of a @hitDie</span>
-                    </OptionRoom>
+            @foreach (var pick in picks)
+            {
+                var inputId = $"hit-die-roll-{pick.Level}";
 
-                    <OptionRoom Name="@(hasRolled ? $"Rolled {rolled}" : $"Roll a {hitDie}")" Picked="@(chosenBy == ChosenBy.Rolled)"
-                                Disabled="@hasRolled" OnClick="Roll">
-                        <span>Rolled once, here in the browser</span>
-                    </OptionRoom>
+                <Room Class="mb-5" data-testid="@($"hit-die-level-{pick.Level}")">
+                    <div>
+                        <h3 class="room-title mb-3">Level @pick.Level</h3>
 
-                    <div class="option-room" data-picked="@(chosenBy == ChosenBy.Entered ? "true" : "false")">
-                        @if (chosenBy == ChosenBy.Entered)
+                        <div class="option-grid">
+                            <OptionRoom Name="@($"Take {fixedValue}")" Picked="@(pick.ChosenBy == ChosenBy.Fixed)" OnClick="() => TakeFixedValue(pick)">
+                                <span>The fixed value of a @hitDie</span>
+                            </OptionRoom>
+
+                            <OptionRoom Name="@(pick.HasRolled ? $"Rolled {pick.Rolled}" : $"Roll a {hitDie}")" Picked="@(pick.ChosenBy == ChosenBy.Rolled)"
+                                        Disabled="@pick.HasRolled" OnClick="() => Roll(pick)">
+                                <span>Rolled once, here in the browser</span>
+                            </OptionRoom>
+
+                            <div class="option-room" data-picked="@(pick.ChosenBy == ChosenBy.Entered ? "true" : "false")">
+                                @if (pick.ChosenBy == ChosenBy.Entered)
+                                {
+                                    <span class="you-are-here" aria-hidden="true"></span>
+                                }
+                                <label for="@inputId" class="block font-display text-[23px] font-semibold leading-tight">I rolled</label>
+                                <input id="@inputId" type="number" min="1" max="@dieSize" value="@pick.Entered"
+                                       @onchange="args => Enter(pick, args)" class="field mt-2 w-24" />
+                                <span class="mt-1 block text-sm text-pencil">From 1 to @dieSize</span>
+                            </div>
+                        </div>
+
+                        @if (pick.Chosen is { } result)
                         {
-                            <span class="you-are-here" aria-hidden="true"></span>
+                            <p class="mt-5 font-medium text-plum">Level @pick.Level: @result on the @hitDie, plus your Constitution modifier.</p>
                         }
-                        <label for="hit-die-roll" class="block font-display text-[23px] font-semibold leading-tight">I rolled</label>
-                        <input id="hit-die-roll" type="number" min="1" max="@dieSize" value="@entered"
-                               @onchange="Enter" class="field mt-2 w-24" />
-                        <span class="mt-1 block text-sm text-pencil">From 1 to @dieSize</span>
+                        else if (!isLevelUp)
+                        {
+                            <p class="mt-5 text-pencil">Left alone, level @pick.Level takes the fixed value, @fixedValue.</p>
+                        }
                     </div>
-                </div>
-
-                @if (chosen is { } result)
-                {
-                    <p class="mt-5 font-medium text-plum">Level @level: @result on the @hitDie, plus your Constitution modifier.</p>
-                }
-            </Room>
+                </Room>
+            }
         }
     }
 
-    <StepNavigation OnBack="() => OnBack.InvokeAsync()" OnNext="HandleNext" NextDisabled="@(chosen == null || IsSaving)"
+    <StepNavigation OnBack="() => OnBack.InvokeAsync()" OnNext="HandleNext" NextDisabled="@(!CanMoveOn || IsSaving)"
                     NextText="@(IsSaving ? "Saving..." : NextLabel)" />
 </div>
 @code {
@@ -73,16 +100,37 @@
 
     private enum ChosenBy { None, Fixed, Rolled, Entered }
 
-    private int level;
+    // What the player picked for one level's hit die
+    private sealed class LevelPick(int level)
+    {
+        public int Level { get; } = level;
+
+        public ChosenBy ChosenBy { get; set; }
+
+        public int? Chosen { get; set; }
+
+        public bool HasRolled { get; set; }
+
+        public int Rolled { get; set; }
+
+        public int? Entered { get; set; }
+
+        // A roll typed in that the die cannot make, which Next waits on rather than dropping
+        public bool HasInvalidEntry { get; set; }
+    }
+
     private string hitDie = string.Empty;
     private int dieSize;
     private int fixedValue;
+    private bool isLevelUp;
 
-    private ChosenBy chosenBy;
-    private int? chosen;
-    private bool hasRolled;
-    private int rolled;
-    private int? entered;
+    // The levels the API says the step asks about (HitDieLevels): a level-up's new one, or each from 2
+    private List<LevelPick> picks = [];
+
+    // A level-up keeps a result for its new level; a new character's levels left alone take the fixed value
+    private bool CanMoveOn => dieSize > 0
+        && !picks.Exists(pick => pick.HasInvalidEntry)
+        && (!isLevelUp || picks.TrueForAll(pick => pick.Chosen != null));
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,13 +147,13 @@
             }
         }, "Failed to load the hit die");
 
-        if (!loaded || draft?.Level is not { } draftLevel || @class == null)
+        if (!loaded || draft == null || @class == null)
         {
             ErrorMessage ??= "The character's class could not be loaded.";
             return;
         }
 
-        level = draftLevel;
+        isLevelUp = draft.LevelUpChoices.Count != 0;
         hitDie = $"d{DieSizeOf(@class.HitDie)}";
         dieSize = DieSizeOf(@class.HitDie);
 
@@ -116,12 +164,19 @@
         fixedValue = (dieSize / 2) + 1;
 
         // Coming back to this step shows what was saved
-        if (draft.HitDieResults.TryGetValue(level, out var saved))
+        picks = draft.HitDieLevels.ConvertAll(level =>
         {
-            chosen = saved;
-            chosenBy = saved == fixedValue ? ChosenBy.Fixed : ChosenBy.Entered;
-            entered = chosenBy == ChosenBy.Entered ? saved : null;
-        }
+            var pick = new LevelPick(level);
+
+            if (draft.HitDieResults.TryGetValue(level, out var saved))
+            {
+                pick.Chosen = saved;
+                pick.ChosenBy = saved == fixedValue ? ChosenBy.Fixed : ChosenBy.Entered;
+                pick.Entered = pick.ChosenBy == ChosenBy.Entered ? saved : null;
+            }
+
+            return pick;
+        });
     }
 
     // "1d10", "d10" and "10" are all a d10
@@ -134,50 +189,59 @@
             : 8;
     }
 
-    private void TakeFixedValue()
+    private void TakeFixedValue(LevelPick pick)
     {
-        chosen = fixedValue;
-        chosenBy = ChosenBy.Fixed;
+        pick.Chosen = fixedValue;
+        pick.ChosenBy = ChosenBy.Fixed;
     }
 
-    private void Roll()
+    private void Roll(LevelPick pick)
     {
-        rolled = Random.Shared.Next(1, dieSize + 1);
-        hasRolled = true;
-        chosen = rolled;
-        chosenBy = ChosenBy.Rolled;
+        pick.Rolled = Random.Shared.Next(1, dieSize + 1);
+        pick.HasRolled = true;
+        pick.Chosen = pick.Rolled;
+        pick.ChosenBy = ChosenBy.Rolled;
     }
 
-    private void Enter(ChangeEventArgs args)
+    private void Enter(LevelPick pick, ChangeEventArgs args)
     {
-        if (int.TryParse(args.Value?.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var value) && value >= 1 && value <= dieSize)
+        var text = args.Value?.ToString();
+
+        if (int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out var value) && value >= 1 && value <= dieSize)
         {
-            entered = value;
-            chosen = value;
-            chosenBy = ChosenBy.Entered;
-            ErrorMessage = null;
+            pick.Entered = value;
+            pick.Chosen = value;
+            pick.ChosenBy = ChosenBy.Entered;
+            pick.HasInvalidEntry = false;
+            ErrorMessage = picks.Exists(other => other.HasInvalidEntry) ? ErrorMessage : null;
             return;
         }
 
-        entered = null;
-        ErrorMessage = $"A {hitDie} rolls from 1 to {dieSize}.";
+        pick.Entered = null;
 
-        if (chosenBy == ChosenBy.Entered)
+        // A box emptied again is no roll at all, not a wrong one
+        pick.HasInvalidEntry = !string.IsNullOrWhiteSpace(text);
+        ErrorMessage = pick.HasInvalidEntry ? $"A {hitDie} rolls from 1 to {dieSize}." : ErrorMessage;
+
+        if (pick.ChosenBy == ChosenBy.Entered)
         {
-            chosen = null;
-            chosenBy = ChosenBy.None;
+            pick.Chosen = null;
+            pick.ChosenBy = ChosenBy.None;
         }
     }
-
 
     private async Task HandleNext()
     {
-        if (chosen is not { } result)
+        if (!CanMoveOn)
         {
             return;
         }
 
-        if (await SaveAsync(() => DraftService.SetHitPointsAsync(DraftId, result), "Failed to save the hit points"))
+        var results = picks
+            .Where(pick => pick.Chosen != null)
+            .ToDictionary(pick => pick.Level, pick => pick.Chosen!.Value);
+
+        if (await SaveAsync(() => DraftService.SetHitPointsAsync(DraftId, results), "Failed to save the hit points"))
         {
             await OnNext.InvokeAsync();
         }

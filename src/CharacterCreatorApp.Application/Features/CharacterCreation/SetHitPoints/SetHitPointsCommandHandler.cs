@@ -9,8 +9,9 @@ using CharacterCreatorApp.Domain.ValueObjects;
 namespace CharacterCreatorApp.Application.Features.CharacterCreation.SetHitPoints;
 
 /// <summary>
-/// Keeps the hit die's result for the level a level-up reaches. Only a level-up asks for one:
-/// the levels a character is created with take the fixed value.
+/// Keeps the hit die's results for the levels the draft rolls for (CharacterDraft.HitDieLevels):
+/// a level-up's new level, or every level from 2 of a new character or an edit. Level 1 is the
+/// die's maximum, so it has no result to keep.
 /// </summary>
 public class SetHitPointsCommandHandler(
     ICharacterDraftRepository characterDraftRepository,
@@ -18,6 +19,8 @@ public class SetHitPointsCommandHandler(
     IUnitOfWork unitOfWork,
     IUserContext userContext) : ICommandHandler<SetHitPointsCommand, Response>
 {
+    private const string Step = "setting hit points";
+
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
     private readonly IClassRepository _classRepository = classRepository;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
@@ -32,25 +35,45 @@ public class SetHitPointsCommandHandler(
             return CharacterDraftErrors.NotFoundById(command.DraftId);
         }
 
-        if (!draft.IsLevelUp)
+        if (draft.Level is not { } level)
         {
-            return CharacterDraftErrors.HitPointsOnlyOnLevelUp();
+            return CharacterDraftErrors.LevelRequired(Step);
         }
 
-        // A level-up keeps its class, so the draft always names one
-        var @class = await _classRepository.GetByIdAsync(draft.ClassId!, cancellationToken);
+        if (draft.ClassId is not { } classId)
+        {
+            return CharacterDraftErrors.ClassRequired(Step);
+        }
+
+        var levels = draft.HitDieLevels;
+        var notRolled = command.Results.Keys.Where(l => !levels.Contains(l)).Order().ToList();
+
+        if (notRolled.Count != 0)
+        {
+            return CharacterDraftErrors.HitDieLevelNotRolled(notRolled[0], levels);
+        }
+
+        if (draft.IsLevelUp && !command.Results.ContainsKey(level))
+        {
+            return CharacterDraftErrors.HitDieResultRequired(level);
+        }
+
+        var @class = await _classRepository.GetByIdAsync(classId, cancellationToken);
 
         if (@class == null)
         {
-            return CharacterErrors.ClassNotFoundById(draft.ClassId!);
+            return CharacterErrors.ClassNotFoundById(classId);
         }
 
-        if (command.Result > HitDieNotation.SizeOf(@class.HitDie))
+        var dieSize = HitDieNotation.SizeOf(@class.HitDie);
+        var tooHigh = command.Results.Values.Where(result => result > dieSize).ToList();
+
+        if (tooHigh.Count != 0)
         {
-            return CharacterDraftErrors.HitDieResultOutOfRange(command.Result, @class.HitDie);
+            return CharacterDraftErrors.HitDieResultOutOfRange(tooHigh[0], @class.HitDie);
         }
 
-        draft.SetHitDieResult(command.Result);
+        draft.SetHitDieResults(command.Results);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Response.Success();

@@ -186,6 +186,7 @@ public class CharacterDraftEditTests
             .Excluding(d => d.Level)
             .Excluding(d => d.IsCompleted)
             .Excluding(d => d.IsLevelUp)
+            .Excluding(d => d.HitDieLevels)
             .Excluding(d => d.LevelUpChoices)
             .Excluding(d => d.ChoicesNeeded)
             .Excluding(d => d.CreatedAt)
@@ -300,14 +301,60 @@ public class CharacterDraftEditTests
     }
 
     [Fact]
-    public void SetHitDieResult_OnALevelUp_KeepsItForTheNewLevelAndTakesAwayItsMark()
+    public void HitDieLevels_OnALevelUp_IsTheNewLevelOnly()
+    {
+        // Arrange
+        var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
+
+        // Act
+        edit.LevelUp(Cleric(), Life(), StandardArray());
+
+        // Assert
+        edit.HitDieLevels.Should().Equal([5]);
+    }
+
+    [Fact]
+    public void HitDieLevels_OnAnEdit_IsEveryLevelFromTwo()
+    {
+        // Arrange - level 1 is the die's maximum
+        var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
+
+        // Act
+        var levels = edit.HitDieLevels;
+
+        // Assert
+        levels.Should().Equal([2, 3, 4]);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData(1)]
+    public void HitDieLevels_WithNoLevelAboveOne_IsEmpty(int? level)
+    {
+        // Arrange
+        var draft = CharacterDraft.CreateEmpty(UserId, FakeTimeProvider);
+
+        if (level is { } chosen)
+        {
+            draft.SetNameAndLevel("Brother Aldo", chosen);
+        }
+
+        // Act
+        var levels = draft.HitDieLevels;
+
+        // Assert
+        levels.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void SetHitDieResults_OnALevelUp_KeepsItForTheNewLevelAndTakesAwayItsMark()
     {
         // Arrange
         var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
         edit.LevelUp(Cleric(), Life(), StandardArray());
 
         // Act
-        edit.SetHitDieResult(7);
+        edit.SetHitDieResults(new Dictionary<int, int> { [5] = 7 });
 
         // Assert
         edit.HitDieResults.Should().Equal(new Dictionary<int, int> { [5] = 7 });
@@ -316,27 +363,72 @@ public class CharacterDraftEditTests
     }
 
     [Fact]
-    public void SetHitDieResult_NotALevelUp_Throws()
+    public void SetHitDieResults_OnAnEdit_ReplacesTheResultsSoALevelLeftOutTakesTheFixedValue()
     {
-        // Arrange
+        // Arrange - level 3 was rolled before
+        var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
+        edit.SetHitDieResults(new Dictionary<int, int> { [3] = 2 });
+
+        // Act
+        edit.SetHitDieResults(new Dictionary<int, int> { [2] = 8, [4] = 1 });
+
+        // Assert
+        edit.HitDieResults.Should().Equal(new Dictionary<int, int> { [2] = 8, [4] = 1 });
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(5)]
+    public void SetHitDieResults_OnAnEditForALevelItDoesNotRoll_Throws(int level)
+    {
+        // Arrange - a level 4 character rolls for levels 2 to 4
         var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
 
         // Act
-        var act = () => edit.SetHitDieResult(7);
+        var act = () => edit.SetHitDieResults(new Dictionary<int, int> { [level] = 5 });
 
         // Assert
-        act.Should().Throw<InvalidOperationException>();
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
-    public void SetHitDieResult_BelowOne_Throws()
+    public void SetHitDieResults_OnALevelUpForAnEarlierLevel_Throws()
+    {
+        // Arrange - the levels below were kept when they were reached
+        var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
+        edit.LevelUp(Cleric(), Life(), StandardArray());
+
+        // Act
+        var act = () => edit.SetHitDieResults(new Dictionary<int, int> { [4] = 5, [5] = 5 });
+
+        // Assert
+        act.Should().Throw<ArgumentException>();
+        edit.HitDieResults.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void SetHitDieResults_OnALevelUpWithoutItsLevel_Throws()
     {
         // Arrange
         var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
         edit.LevelUp(Cleric(), Life(), StandardArray());
 
         // Act
-        var act = () => edit.SetHitDieResult(0);
+        var act = () => edit.SetHitDieResults(new Dictionary<int, int>());
+
+        // Assert
+        act.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
+    public void SetHitDieResults_BelowOne_Throws()
+    {
+        // Arrange
+        var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
+        edit.LevelUp(Cleric(), Life(), StandardArray());
+
+        // Act
+        var act = () => edit.SetHitDieResults(new Dictionary<int, int> { [5] = 0 });
 
         // Assert
         act.Should().Throw<ArgumentOutOfRangeException>();
@@ -348,7 +440,7 @@ public class CharacterDraftEditTests
         // Arrange - an edit of it later is a plain edit
         var edit = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
         edit.LevelUp(Cleric(), Life(), StandardArray());
-        edit.SetHitDieResult(8);
+        edit.SetHitDieResults(new Dictionary<int, int> { [5] = 8 });
 
         // Act
         edit.MarkAsCompleted(CharacterId);
@@ -365,7 +457,7 @@ public class CharacterDraftEditTests
         // Arrange
         var levelUp = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
         levelUp.LevelUp(Cleric(), Life(), StandardArray());
-        levelUp.SetHitDieResult(3);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [5] = 3 });
         levelUp.MarkAsCompleted(CharacterId);
 
         // Act
@@ -383,11 +475,11 @@ public class CharacterDraftEditTests
         // Arrange - a character levelled up to 5 then 6
         var levelUp = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
         levelUp.LevelUp(Cleric(), Life(), StandardArray());
-        levelUp.SetHitDieResult(3);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [5] = 3 });
         levelUp.MarkAsCompleted(CharacterId);
         var secondLevelUp = CharacterDraft.StartEdit(levelUp, FakeTimeProvider);
         secondLevelUp.LevelUp(Cleric(), Life(), StandardArray());
-        secondLevelUp.SetHitDieResult(5);
+        secondLevelUp.SetHitDieResults(new Dictionary<int, int> { [6] = 5 });
         secondLevelUp.MarkAsCompleted(CharacterId);
         var edit = CharacterDraft.StartEdit(secondLevelUp, FakeTimeProvider);
 
@@ -404,7 +496,7 @@ public class CharacterDraftEditTests
         // Arrange - they were rolled on the old class's die
         var levelUp = CharacterDraft.StartEdit(CompletedBuild(), FakeTimeProvider);
         levelUp.LevelUp(Cleric(), Life(), StandardArray());
-        levelUp.SetHitDieResult(3);
+        levelUp.SetHitDieResults(new Dictionary<int, int> { [5] = 3 });
         levelUp.MarkAsCompleted(CharacterId);
         var edit = CharacterDraft.StartEdit(levelUp, FakeTimeProvider);
 

@@ -164,8 +164,8 @@ public partial class WizardSmokeTests(WizardHost host) : IAsyncLifetime
         // The third brings the subclass too, and the spells an Eldritch Knight would cast
         await _page.GetByRole(AriaRole.Button, new() { Name = "Level Up" }).ClickAsync();
         await Expect(_page.GetByRole(AriaRole.Heading, new() { Name = "Level up Grom to level 3" })).ToBeVisibleAsync();
-        await _page.Locator("#hit-die-roll").FillAsync("8");
-        await _page.Locator("#hit-die-roll").DispatchEventAsync("change");
+        await _page.Locator("#hit-die-roll-3").FillAsync("8");
+        await _page.Locator("#hit-die-roll-3").DispatchEventAsync("change");
         await LevelUpNextAsync("Class", 2);
         await Expect(_page.GetByRole(AriaRole.Button, new() { Name = "Change" })).ToHaveCountAsync(0);
         await PickAsync("Champion");

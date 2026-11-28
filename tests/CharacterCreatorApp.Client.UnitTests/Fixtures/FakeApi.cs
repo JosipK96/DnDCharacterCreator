@@ -62,6 +62,10 @@ public sealed class FakeApi : HttpMessageHandler
             }),
         };
 
+    /// <summary>A delete, which the API answers with no content.</summary>
+    public void Delete(string path) =>
+        _routes[$"DELETE {path}"] = () => new HttpResponseMessage(HttpStatusCode.NoContent);
+
     /// <summary>A POST the API answers with no content (a password change), or with the given body.</summary>
     public void Post(string path, object? response = null) =>
         _routes[$"POST {path}"] = () => response is null
@@ -77,6 +81,18 @@ public sealed class FakeApi : HttpMessageHandler
                 status = 400,
                 title = "Bad Request",
                 errors = new[] { new { code, detail } },
+            }),
+        };
+
+    /// <summary>A POST the API refuses with a 400 problem listing every one of these errors, as registration does.</summary>
+    public void RefusePost(string path, params (string Code, string Detail)[] errors) =>
+        _routes[$"POST {path}"] = () => new HttpResponseMessage(HttpStatusCode.BadRequest)
+        {
+            Content = JsonContent.Create(new
+            {
+                status = 400,
+                title = "Bad Request",
+                errors = errors.Select(e => new { code = e.Code, detail = e.Detail }).ToArray(),
             }),
         };
 

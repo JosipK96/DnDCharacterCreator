@@ -45,7 +45,7 @@
 - Under each list the draft's books filter (race, class, subclass, background, feats, spells),
   `Components/HiddenOptionsNote.razor` says what the unticked books hold, counted by the API
   (`LookupService.GetHiddenOptionsAsync`; the spells step passes the count `GET spell-allowance`
-  built with its list as the note's `Counted`, #134). Its button calls `WizardStepBase.OnChangeBooks`: the
+  built with its list as the note's Counted parameter, #134). Its button calls `WizardStepBase.OnChangeBooks`: the
   wizard goes to step 1 and back to the step after, unless an edition change or an unticked book
   cleared choices. A level-up has no step 1, so its notes have no button.
 - Sheet numbers come from `CharacterStatsCalculator` through the API; don't recompute a modifier

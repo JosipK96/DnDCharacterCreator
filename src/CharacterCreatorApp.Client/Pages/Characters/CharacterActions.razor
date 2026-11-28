@@ -1,0 +1,137 @@
+@inject CharacterService CharacterService
+@inject NavigationManager Navigation
+
+@* Edit, Level up and Delete for one saved character, on the list and the sheet alike (#88): the
+   same busy state, the same messages, and the delete's confirm. The page says what follows a
+   delete, since the list loads again and the sheet goes back to the list. *@
+<div>
+    <div class="flex flex-wrap @(Compact ? "gap-2" : "gap-3")">
+        <button type="button" @onclick="EditAsync" disabled="@isStarting"
+                class="@(Compact ? "btn-secondary flex-1 whitespace-nowrap px-3" : "btn-main")">
+            @(isStarting ? "Opening..." : Compact ? "Edit" : "Edit character")
+        </button>
+        @if (Level < CharacterLevels.Max)
+        {
+            <button type="button" @onclick="LevelUpAsync" disabled="@isStarting"
+                    class="@(Compact ? "btn-secondary flex-1 whitespace-nowrap px-3" : "btn-secondary")">
+                Level up
+            </button>
+        }
+        <button type="button" @onclick="AskToDelete" disabled="@isStarting"
+                class="@(Compact ? "btn-danger flex-1 whitespace-nowrap px-3" : "btn-danger")">
+            @(Compact ? "Delete" : "Delete character")
+        </button>
+    </div>
+
+    @if (errorMessage != null)
+    {
+        <Message Kind="MessageKind.Error" Class="mt-3">@errorMessage</Message>
+    }
+</div>
+
+@if (isAskingToDelete)
+{
+    <ConfirmDelete Name="@Name" IsDeleting="isDeleting" OnConfirm="DeleteAsync" OnCancel="CancelDelete" />
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Guid CharacterId { get; set; }
+
+    /// <summary>The character's name, which the delete's confirm asks about.</summary>
+    [Parameter, EditorRequired]
+    public string Name { get; set; } = string.Empty;
+
+    /// <summary>The character's level: at the top level there is no Level up.</summary>
+    [Parameter, EditorRequired]
+    public int Level { get; set; }
+
+    /// <summary>The list's room: short labels on buttons that share the row.</summary>
+    [Parameter]
+    public bool Compact { get; set; }
+
+    /// <summary>Called once the character is deleted.</summary>
+    [Parameter]
+    public EventCallback OnDeleted { get; set; }
+
+    private bool isStarting;
+    private bool isAskingToDelete;
+    private bool isDeleting;
+    private string? errorMessage;
+
+    // The character opens in the wizard as a draft; saving it replaces the character
+    private Task EditAsync() => StartAsync(CharacterService.StartEditAsync, "Failed to open the character for editing");
+
+    // The character opens one level up in the wizard, which asks only what the new level brings
+    private Task LevelUpAsync() => StartAsync(CharacterService.StartLevelUpAsync, "Failed to level the character up");
+
+    // A second click while one starts would open another draft and drop the first, which the
+    // page may already be going to, so it does nothing
+    private async Task StartAsync(Func<Guid, Task<Guid>> start, string whatFailed)
+    {
+        if (isStarting)
+        {
+            return;
+        }
+
+        isStarting = true;
+        errorMessage = null;
+
+        try
+        {
+            var draftId = await start(CharacterId);
+            Navigation.NavigateTo($"/character/create/{draftId}");
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            errorMessage = Describe(ex, whatFailed);
+            isStarting = false;
+        }
+    }
+
+    private void AskToDelete()
+    {
+        errorMessage = null;
+        isAskingToDelete = true;
+    }
+
+    private void CancelDelete()
+    {
+        isAskingToDelete = false;
+    }
+
+    private async Task DeleteAsync()
+    {
+        if (isDeleting)
+        {
+            return;
+        }
+
+        isDeleting = true;
+        StateHasChanged();
+
+        try
+        {
+            await CharacterService.DeleteCharacterAsync(CharacterId);
+        }
+        catch (Exception ex) when (ex is ApiException or HttpRequestException)
+        {
+            errorMessage = Describe(ex, "Failed to delete the character");
+            return;
+        }
+        finally
+        {
+            isDeleting = false;
+            isAskingToDelete = false;
+        }
+
+        // Last, since the list loads again and this room may be gone once it has
+        await OnDeleted.InvokeAsync();
+    }
+
+    // Only a failed call reaches here; anything else is a bug, which Blazor's error bar shows
+    // rather than its raw message
+    private static string Describe(Exception ex, string whatFailed) => ex is ApiException
+        ? $"{whatFailed}: {ex.Message}"
+        : $"{whatFailed}: the server could not be reached.";
+}

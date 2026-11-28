@@ -379,9 +379,13 @@
             foreach (var id in draft.SelectedSpellIds)
             {
                 if (cantripIds.Contains(id))
+                {
                     selectedCantrips.Add(id);
+                }
                 else
+                {
                     selectedLeveledSpells.Add(id);
+                }
             }
         }
     }
@@ -391,15 +395,21 @@
         var result = source.AsEnumerable();
 
         if (!string.IsNullOrEmpty(filterLevel) && int.TryParse(filterLevel, out var level))
+        {
             result = result.Where(s => s.Level == level);
+        }
 
         if (!string.IsNullOrEmpty(filterSchool))
+        {
             result = result.Where(s => s.School == filterSchool);
+        }
 
         if (!string.IsNullOrEmpty(searchText))
+        {
             result = result.Where(s =>
                 s.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
                 s.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+        }
 
         return result.ToList();
     }
@@ -407,9 +417,13 @@
     private void ToggleCantrip(string spellId)
     {
         if (selectedCantrips.Contains(spellId))
+        {
             selectedCantrips.Remove(spellId);
+        }
         else if (selectedCantrips.Count < cantripsKnown)
+        {
             selectedCantrips.Add(spellId);
+        }
 
         ErrorMessage = null;
         StateHasChanged();
@@ -418,9 +432,13 @@
     private void ToggleLeveledSpell(string spellId)
     {
         if (selectedLeveledSpells.Contains(spellId))
+        {
             selectedLeveledSpells.Remove(spellId);
+        }
         else if (selectedLeveledSpells.Count < spellsKnown)
+        {
             selectedLeveledSpells.Add(spellId);
+        }
 
         ErrorMessage = null;
         StateHasChanged();
@@ -428,13 +446,30 @@
 
     private bool CanProceed()
     {
-        if (IsLoading || IsSaving) return false;
-        if (!BonusComplete()) return false;
-        if (!isSpellcaster) return true;
+        if (IsLoading || IsSaving)
+        {
+            return false;
+        }
 
-        if (cantripsKnown > 0 && selectedCantrips.Count != cantripsKnown) return false;
+        if (!BonusComplete())
+        {
+            return false;
+        }
 
-        if (spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown) return false;
+        if (!isSpellcaster)
+        {
+            return true;
+        }
+
+        if (cantripsKnown > 0 && selectedCantrips.Count != cantripsKnown)
+        {
+            return false;
+        }
+
+        if (spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown)
+        {
+            return false;
+        }
 
         return true;
     }
@@ -444,9 +479,14 @@
         if (!CanProceed())
         {
             if (cantripsKnown > 0 && selectedCantrips.Count != cantripsKnown)
+            {
                 ErrorMessage = $"Please select exactly {cantripsKnown} cantrip{(cantripsKnown == 1 ? "" : "s")}.";
+            }
             else if (spellsKnown > 0 && selectedLeveledSpells.Count != spellsKnown)
+            {
                 ErrorMessage = $"Please select exactly {spellsKnown} spell{(spellsKnown == 1 ? "" : "s")}.";
+            }
+
             return;
         }
 

@@ -157,7 +157,10 @@
 
     private void ToggleProficiency(string proficiencyId)
     {
-        if (proficiencyChoice == null) return;
+        if (proficiencyChoice == null)
+        {
+            return;
+        }
 
         if (selectedProficiencies.Contains(proficiencyId))
         {
@@ -190,21 +193,31 @@
 
     private bool IsComplete()
     {
-        if (proficiencyChoice == null) return true;
+        if (proficiencyChoice == null)
+        {
+            return true;
+        }
+
         return selectedProficiencies.Count == proficiencyChoice.Count;
     }
 
     private bool CanProceed()
     {
         if (IsLoading || IsSaving)
+        {
             return false;
+        }
 
         if (toolChoices.Where((choice, i) => toolPicks[i].Count != choice.Count).Any())
+        {
             return false;
+        }
 
         // If no proficiency choice, can proceed
         if (proficiencyChoice == null)
+        {
             return true;
+        }
 
         // Must select exactly the required count
         return selectedProficiencies.Count == proficiencyChoice.Count;

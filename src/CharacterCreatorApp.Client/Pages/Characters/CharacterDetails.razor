@@ -36,18 +36,8 @@
                         <option value="letter">Letter</option>
                     </select>
                 </div>
-                @if (character.Level < CharacterLevels.Max)
-                {
-                    <button @onclick="LevelUpCharacter" disabled="@isStartingEdit" class="btn-secondary">
-                        Level up
-                    </button>
-                }
-                <button @onclick="EditCharacter" disabled="@isStartingEdit" class="btn-main">
-                    @(isStartingEdit ? "Opening..." : "Edit character")
-                </button>
-                <button @onclick="() => ConfirmDelete(character)" class="btn-danger">
-                    Delete character
-                </button>
+                <CharacterActions CharacterId="character.Id" Name="@character.Name" Level="character.Level"
+                                  OnDeleted="BackToList" />
             </div>
         </div>
 
@@ -237,12 +227,6 @@
             }
         </div>
     }
-
-    @if (characterToDelete != null)
-    {
-        <ConfirmDelete Name="@characterToDelete.Name" IsDeleting="isDeleting"
-                       OnConfirm="DeleteCharacter" OnCancel="CancelDelete" />
-    }
 </div>
 
 @code {
@@ -250,10 +234,7 @@
     public Guid Id { get; set; }
 
     private CharacterDetailsApiResponse? character;
-    private CharacterDetailsApiResponse? characterToDelete;
     private bool isLoading = true;
-    private bool isDeleting = false;
-    private bool isStartingEdit;
     private bool isDownloading;
     private string paper = "a4";
     private string? errorMessage;
@@ -294,40 +275,6 @@
         Navigation.NavigateTo("/characters");
     }
 
-    // The character opens in the wizard as a draft; saving it replaces this character
-    private async Task EditCharacter()
-    {
-        isStartingEdit = true;
-
-        try
-        {
-            var draftId = await CharacterService.StartEditAsync(Id);
-            Navigation.NavigateTo($"/character/create/{draftId}");
-        }
-        catch (Exception ex) when (ex is ApiException or HttpRequestException)
-        {
-            errorMessage = $"Failed to open the character for editing: {ex.Message}";
-            isStartingEdit = false;
-        }
-    }
-
-    // The character opens one level up in the wizard, which asks only what the new level brings
-    private async Task LevelUpCharacter()
-    {
-        isStartingEdit = true;
-
-        try
-        {
-            var draftId = await CharacterService.StartLevelUpAsync(Id);
-            Navigation.NavigateTo($"/character/create/{draftId}");
-        }
-        catch (Exception ex) when (ex is ApiException or HttpRequestException)
-        {
-            errorMessage = $"Failed to level the character up: {ex.Message}";
-            isStartingEdit = false;
-        }
-    }
-
     // The API draws the sheet; the browser is handed the file to save, since the request needs the user's token
     private async Task DownloadPdf()
     {
@@ -345,45 +292,6 @@
         finally
         {
             isDownloading = false;
-        }
-    }
-
-    private void ConfirmDelete(CharacterDetailsApiResponse charDetails)
-    {
-        characterToDelete = charDetails;
-        StateHasChanged();
-    }
-
-    private void CancelDelete()
-    {
-        characterToDelete = null;
-        StateHasChanged();
-    }
-
-    private async Task DeleteCharacter()
-    {
-        if (characterToDelete == null)
-        {
-            return;
-        }
-
-        isDeleting = true;
-        StateHasChanged();
-
-        try
-        {
-            await CharacterService.DeleteCharacterAsync(characterToDelete.Id);
-            Navigation.NavigateTo("/characters");
-        }
-        catch (Exception ex)
-        {
-            errorMessage = $"Failed to delete character: {ex.Message}";
-            characterToDelete = null;
-        }
-        finally
-        {
-            isDeleting = false;
-            StateHasChanged();
         }
     }
 

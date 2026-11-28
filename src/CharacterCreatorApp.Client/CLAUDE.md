@@ -109,9 +109,13 @@
   two on a tablet, one on a phone), its combat numbers `Shared/CombatNumber.razor`, its ability
   scores `score-box` with the modifier in a `modifier-tab`, and its saving throws and skills
   `sheet-row` rows with a `prof-dot` (`data-proficient`). The list is a room per character with
-  `field` filters and `pager` page numbers (`aria-current="page"` filled Ink). Both ask before a
-  delete with `Shared/ConfirmDelete.razor` (role `dialog`). The PDF is drawn by the API and keeps
-  its own look.
+  `field` filters and `pager` page numbers (`aria-current="page"` filled Ink). Both draw Edit,
+  Level up and Delete with one component, `Pages/Characters/CharacterActions.razor` (#88; its
+  Compact parameter for the list's labels): it disables them while an edit or level-up starts,
+  catches only a failed call (`ApiException`, or an HttpRequestException when the server cannot be
+  reached) and shows its message, and
+  asks before a delete with `Shared/ConfirmDelete.razor` (role `dialog`); the page says what
+  follows a delete. The PDF is drawn by the API and keeps its own look.
 - The home, sign-in, register, password and admin pages are one `Shared/Room.razor` each on the
   paper, with a `field` and a visible label per input and a `btn-main` for the action. No Razor
   file uses a Tailwind default colour (`gray-`, `indigo-`, `red-` and so on).

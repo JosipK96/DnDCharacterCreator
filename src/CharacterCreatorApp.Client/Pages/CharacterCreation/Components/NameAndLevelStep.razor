@@ -192,7 +192,10 @@
 
     private async Task HandleNext()
     {
-        if (!IsValid()) return;
+        if (!IsValid())
+        {
+            return;
+        }
 
         // The name and level first: a new edition resets the books, which are then set for it
         var otherBooks = books.Where(b => !b.IsPlayersHandbook && selectedBooks.Contains(b.Code)).Select(b => b.Code).ToList();

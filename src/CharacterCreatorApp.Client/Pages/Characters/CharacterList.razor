@@ -126,14 +126,8 @@
                         <button @onclick="() => NavigateToCharacterDetails(character.Id)" class="btn-main w-full">
                             View details
                         </button>
-                        <div class="flex flex-wrap gap-2">
-                            <button @onclick="() => EditCharacter(character.Id)" class="btn-secondary flex-1 whitespace-nowrap px-3">Edit</button>
-                            @if (character.Level < CharacterLevels.Max)
-                            {
-                                <button @onclick="() => LevelUpCharacter(character.Id)" class="btn-secondary flex-1 whitespace-nowrap px-3">Level up</button>
-                            }
-                            <button @onclick="() => ConfirmDelete(character)" class="btn-danger flex-1 whitespace-nowrap px-3">Delete</button>
-                        </div>
+                        <CharacterActions @key="character.Id" CharacterId="character.Id" Name="@character.Name"
+                                          Level="character.Level" Compact="true" OnDeleted="LoadCharacters" />
                     </div>
                 </Room>
             }
@@ -168,20 +162,12 @@
             </nav>
         }
     }
-
-    @if (characterToDelete != null)
-    {
-        <ConfirmDelete Name="@characterToDelete.Name" IsDeleting="isDeleting"
-                       OnConfirm="DeleteCharacter" OnCancel="CancelDelete" />
-    }
 </div>
 
 @code {
     private FilterResponse<CharacterSummaryApiResponse>? filterResponse;
     private bool isLoading = true;
     private string? errorMessage;
-    private CharacterSummaryApiResponse? characterToDelete;
-    private bool isDeleting = false;
 
     // Filter/Search state
     private string? searchTerm = null;
@@ -355,72 +341,5 @@
     private void NavigateToCharacterDetails(Guid characterId)
     {
         Navigation.NavigateTo($"/character/{characterId}");
-    }
-
-    // The character opens in the wizard as a draft; saving it replaces the character
-    private async Task EditCharacter(Guid characterId)
-    {
-        try
-        {
-            var draftId = await CharacterService.StartEditAsync(characterId);
-            Navigation.NavigateTo($"/character/create/{draftId}");
-        }
-        catch (Exception ex) when (ex is ApiException or HttpRequestException)
-        {
-            errorMessage = $"Failed to open the character for editing: {ex.Message}";
-        }
-    }
-
-    // The character opens one level up in the wizard, which asks only what the new level brings
-    private async Task LevelUpCharacter(Guid characterId)
-    {
-        try
-        {
-            var draftId = await CharacterService.StartLevelUpAsync(characterId);
-            Navigation.NavigateTo($"/character/create/{draftId}");
-        }
-        catch (Exception ex) when (ex is ApiException or HttpRequestException)
-        {
-            errorMessage = $"Failed to level the character up: {ex.Message}";
-        }
-    }
-
-    private void ConfirmDelete(CharacterSummaryApiResponse character)
-    {
-        characterToDelete = character;
-        StateHasChanged();
-    }
-
-    private void CancelDelete()
-    {
-        characterToDelete = null;
-        StateHasChanged();
-    }
-
-    private async Task DeleteCharacter()
-    {
-        if (characterToDelete == null)
-        {
-            return;
-        }
-
-        isDeleting = true;
-        StateHasChanged();
-
-        try
-        {
-            await CharacterService.DeleteCharacterAsync(characterToDelete.Id);
-            await LoadCharacters();
-            characterToDelete = null;
-        }
-        catch (Exception ex)
-        {
-            errorMessage = $"Failed to delete character: {ex.Message}";
-        }
-        finally
-        {
-            isDeleting = false;
-            StateHasChanged();
-        }
     }
 }

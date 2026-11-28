@@ -34,15 +34,19 @@ public sealed class FakeApi : HttpMessageHandler
         _anyQueryRoutes[$"GET {path}"] = () => new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(response) };
 
     /// <summary>
-    /// Keeps a GET set up with <see cref="Get"/> waiting until the returned source is set, so a test
-    /// sees the step while it is still loading, as a slow network shows it.
+    /// Keeps a request set up with <see cref="Get"/> (or <see cref="Post"/>, with "POST") waiting until
+    /// the returned source is set, so a test sees the page while it is still waiting, as a slow network shows it.
     /// </summary>
-    public TaskCompletionSource Hold(string pathAndQuery)
+    public TaskCompletionSource Hold(string pathAndQuery, string method = "GET")
     {
         var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-        _holds[$"GET {pathAndQuery}"] = release.Task;
+        _holds[$"{method} {pathAndQuery}"] = release.Task;
         return release;
     }
+
+    /// <summary>A request that never reaches the API, as when the network is down: HttpClient throws.</summary>
+    public void Unreachable(string method, string path) =>
+        _routes[$"{method} {path}"] = () => throw new HttpRequestException("No connection could be made.");
 
     /// <summary>A GET the API answers 404, as it does for a draft or character that is gone or someone else's.</summary>
     public void NotFound(string pathAndQuery) =>

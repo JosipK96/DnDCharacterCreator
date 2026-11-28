@@ -8,7 +8,6 @@ using CharacterCreatorApp.Contracts.Responses.Books;
 using CharacterCreatorApp.Contracts.Responses.Characters;
 using CharacterCreatorApp.Contracts.Responses.Classes;
 using CharacterCreatorApp.Contracts.Responses.Languages;
-using CharacterCreatorApp.Contracts.Responses.Races;
 
 using FluentAssertions;
 

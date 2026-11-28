@@ -1,7 +1,5 @@
 using CharacterCreatorApp.Contracts.Requests.ClientError;
 
-using Sentry;
-
 namespace CharacterCreatorApp.Api.Infrastructure.ErrorReporting;
 
 /// <summary>

@@ -1,7 +1,5 @@
 using System.Diagnostics;
 
-using Sentry;
-
 namespace CharacterCreatorApp.Api.Infrastructure.ErrorReporting;
 
 /// <summary>

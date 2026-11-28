@@ -2,8 +2,6 @@ using System.Net.Http.Json;
 
 using CharacterCreatorApp.Contracts.Requests.ClientError;
 
-using Microsoft.Extensions.Logging;
-
 namespace CharacterCreatorApp.Client.Services.ErrorReporting;
 
 /// <summary>

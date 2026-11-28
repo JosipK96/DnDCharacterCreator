@@ -1,6 +1,5 @@
 using CharacterCreatorApp.Contracts.Common;
 
-using Sentry.AspNetCore;
 using Sentry.Extensibility;
 
 namespace CharacterCreatorApp.Api.Infrastructure.ErrorReporting;

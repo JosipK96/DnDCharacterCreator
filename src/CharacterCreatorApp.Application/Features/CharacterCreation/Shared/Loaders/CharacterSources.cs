@@ -1,4 +1,3 @@
-using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Languages;
 using CharacterCreatorApp.Application.ReadModels.Spells;

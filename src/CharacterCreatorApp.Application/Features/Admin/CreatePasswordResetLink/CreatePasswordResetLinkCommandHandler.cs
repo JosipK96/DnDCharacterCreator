@@ -1,7 +1,6 @@
 using CharacterCreatorApp.Application.Common.Abstractions;
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Errors;
-using CharacterCreatorApp.Application.Features.Admin;
 using CharacterCreatorApp.Application.Features.Authentication;
 using CharacterCreatorApp.Domain.Common.Results;
 

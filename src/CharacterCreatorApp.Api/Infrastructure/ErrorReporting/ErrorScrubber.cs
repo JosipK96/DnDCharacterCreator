@@ -1,7 +1,5 @@
 using System.Text.RegularExpressions;
 
-using Sentry;
-
 namespace CharacterCreatorApp.Api.Infrastructure.ErrorReporting;
 
 /// <summary>

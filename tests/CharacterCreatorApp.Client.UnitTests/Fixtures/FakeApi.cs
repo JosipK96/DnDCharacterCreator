@@ -32,6 +32,10 @@ public sealed class FakeApi : HttpMessageHandler
     public void GetAnyQuery(string path, object response) =>
         _anyQueryRoutes[$"GET {path}"] = () => new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(response) };
 
+    /// <summary>A GET the API answers 404, as it does for a draft or character that is gone or someone else's.</summary>
+    public void NotFound(string pathAndQuery) =>
+        _routes[$"GET {pathAndQuery}"] = () => new HttpResponseMessage(HttpStatusCode.NotFound);
+
     /// <summary>A file the API sends to be saved, named in its Content-Disposition as ASP.NET Core's File() names it.</summary>
     public void GetFile(string pathAndQuery, string fileName, string contentType, byte[] content) =>
         _routes[$"GET {pathAndQuery}"] = () =>
@@ -58,6 +62,10 @@ public sealed class FakeApi : HttpMessageHandler
             }),
         };
 
+    /// <summary>A delete, which the API answers with no content.</summary>
+    public void Delete(string path) =>
+        _routes[$"DELETE {path}"] = () => new HttpResponseMessage(HttpStatusCode.NoContent);
+
     /// <summary>A POST the API answers with no content (a password change), or with the given body.</summary>
     public void Post(string path, object? response = null) =>
         _routes[$"POST {path}"] = () => response is null
@@ -73,6 +81,18 @@ public sealed class FakeApi : HttpMessageHandler
                 status = 400,
                 title = "Bad Request",
                 errors = new[] { new { code, detail } },
+            }),
+        };
+
+    /// <summary>A POST the API refuses with a 400 problem listing every one of these errors, as registration does.</summary>
+    public void RefusePost(string path, params (string Code, string Detail)[] errors) =>
+        _routes[$"POST {path}"] = () => new HttpResponseMessage(HttpStatusCode.BadRequest)
+        {
+            Content = JsonContent.Create(new
+            {
+                status = 400,
+                title = "Bad Request",
+                errors = errors.Select(e => new { code = e.Code, detail = e.Detail }).ToArray(),
             }),
         };
 

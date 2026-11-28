@@ -2,9 +2,9 @@
 using CharacterCreatorApp.Application.Features.CharacterManagement.GetCharacterSheetPdf;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Infrastructure.Identity;
-using CharacterCreatorApp.Infrastructure.Interceptors;
+using CharacterCreatorApp.Infrastructure.Persistence.Interceptors;
 using CharacterCreatorApp.Infrastructure.Pdf;
-using CharacterCreatorApp.Infrastructure.Seed;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

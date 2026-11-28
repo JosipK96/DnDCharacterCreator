@@ -3,8 +3,6 @@ using CharacterCreatorApp.Contracts.Requests.ClientError;
 
 using FluentAssertions;
 
-using Sentry;
-
 namespace CharacterCreatorApp.Api.IntegrationTests.Infrastructure;
 
 /// <summary>The event made from what a client posts; anyone can post, so every field is bounded.</summary>

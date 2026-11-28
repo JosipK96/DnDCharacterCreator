@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-using CharacterCreatorApp.Domain.DomainModels.Classes;
+﻿using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.ValueObjects;
 
 namespace CharacterCreatorApp.Domain.Services;

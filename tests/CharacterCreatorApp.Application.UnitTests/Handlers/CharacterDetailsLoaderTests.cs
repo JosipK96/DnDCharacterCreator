@@ -6,7 +6,6 @@ using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Languages;
 using CharacterCreatorApp.Application.ReadModels.Proficiencies;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
-using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.Services;

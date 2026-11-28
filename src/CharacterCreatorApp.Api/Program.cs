@@ -5,7 +5,7 @@ using CharacterCreatorApp.Api.Infrastructure.ErrorReporting;
 using CharacterCreatorApp.Application;
 using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Infrastructure;
-using CharacterCreatorApp.Infrastructure.Seed;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed;
 
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;

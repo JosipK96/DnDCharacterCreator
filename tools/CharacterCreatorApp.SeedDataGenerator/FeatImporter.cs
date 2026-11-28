@@ -2,7 +2,7 @@ using System.Text.Json.Nodes;
 
 using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.ValueObjects;
-using CharacterCreatorApp.Infrastructure.Seed.Rows;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed.Rows;
 
 namespace CharacterCreatorApp.SeedDataGenerator;
 

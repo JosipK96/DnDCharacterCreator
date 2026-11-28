@@ -4,6 +4,11 @@ Seed data, migrations, repositories and Identity. Long form: `docs/conventions/e
 The seed JSON is written by `tools/CharacterCreatorApp.SeedDataGenerator`; read its CLAUDE.md
 before changing what a seed file holds.
 
+Database code is under `Persistence/` (entity configurations, repositories, interceptors, EF
+extensions, seeders). `ApplicationDbContext`, `UnitOfWork`, `Migrations/` and the seed JSON in
+`Data/` stay at the root: the migrations, the generator and the build all name those paths.
+`Pdf/` and `Identity/` sit beside `Persistence/`.
+
 ## Repositories and Identity
 
 - ASP.NET Core Identity stays in Infrastructure: `ApplicationUser` and `IdentityService` are in

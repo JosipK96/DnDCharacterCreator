@@ -8,7 +8,6 @@ using CharacterCreatorApp.Contracts.Responses.Feats;
 using CharacterCreatorApp.Contracts.Responses.Languages;
 using CharacterCreatorApp.Contracts.Responses.Proficiencies;
 using CharacterCreatorApp.Contracts.Responses.Races;
-using CharacterCreatorApp.Contracts.Responses.Spells;
 
 namespace CharacterCreatorApp.Client.Services;
 

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.ValueObjects;
-using CharacterCreatorApp.Infrastructure.Seed.Rows;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed.Rows;
 
 namespace CharacterCreatorApp.SeedDataGenerator;
 

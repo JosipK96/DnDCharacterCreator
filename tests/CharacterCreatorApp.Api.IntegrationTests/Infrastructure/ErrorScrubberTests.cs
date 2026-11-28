@@ -2,7 +2,6 @@ using CharacterCreatorApp.Api.Infrastructure.ErrorReporting;
 
 using FluentAssertions;
 
-using Sentry;
 using Sentry.Protocol;
 
 namespace CharacterCreatorApp.Api.IntegrationTests.Infrastructure;

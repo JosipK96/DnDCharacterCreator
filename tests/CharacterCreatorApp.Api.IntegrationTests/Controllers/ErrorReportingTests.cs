@@ -21,7 +21,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-using Sentry;
 using Sentry.AspNetCore;
 using Sentry.Extensibility;
 using Sentry.Protocol.Envelopes;

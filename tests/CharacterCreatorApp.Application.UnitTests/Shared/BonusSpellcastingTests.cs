@@ -1,4 +1,3 @@
-using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choices;
 using CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Finalizing;
 using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Application.ReadModels.Characters;

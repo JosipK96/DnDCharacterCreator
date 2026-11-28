@@ -1,6 +1,4 @@
-﻿using CharacterCreatorApp.Infrastructure;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 using Testcontainers.PostgreSql;
 

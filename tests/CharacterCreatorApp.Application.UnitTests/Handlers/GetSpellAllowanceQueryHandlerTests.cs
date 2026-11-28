@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetSpellAllowance;
 using CharacterCreatorApp.Application.Persistence;
+using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.DomainModels.Classes;
@@ -113,13 +114,35 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
                 new SpellSubclass { SpellId = "lesser_restoration", SubclassId = "life", Level = 3, IsAlwaysPrepared = true },
             ]
         });
+        _spellRepositoryMock
+            .Setup(r => r.GetByIdsAsync(new List<string> { "bless", "cure_wounds" }, _cts.Token))
+            .ReturnsAsync([Spell("cure_wounds", 1), Spell("bless", 1)]);
+
+        // Act
+        var result = await _sut.Handle(new GetSpellAllowanceQuery(_draftId), _cts.Token);
+
+        // Assert - the class list here holds neither, so they are loaded to be named in the list
+        result.Value.AlwaysPreparedSpellIds.Should().Equal("bless", "cure_wounds");
+        result.Value.Spells.Should().Be(3);
+        result.Value.SpellList.Select(s => s.Id).Should().Equal("bless", "cure_wounds");
+    }
+
+    [Fact]
+    public async Task Handle_ForACaster_ListsItsClassSpellsFromItsBooksUpToItsHighestLevelByLevelThenName()
+    {
+        // Arrange - a level 1 sorcerer of the PHB alone, picking up to level 1
+        ArrangeDraft("sorcerer", level: 1, withScores: false);
+        ArrangeClass("sorcerer", Row("sorcerer", 1, cantrips: 4, spells: 2), spellcasting: null);
+        _spellRepositoryMock.Setup(r => r.GetByClassIdAsync("sorcerer", _cts.Token)).ReturnsAsync(
+        [
+            Spell("shield", 1), Spell("web", 2), Spell("ice_knife", 1, "XGE"), Spell("fire_bolt", 0), Spell("burning_hands", 1),
+        ]);
 
         // Act
         var result = await _sut.Handle(new GetSpellAllowanceQuery(_draftId), _cts.Token);
 
         // Assert
-        result.Value.AlwaysPreparedSpellIds.Should().Equal("bless", "cure_wounds");
-        result.Value.Spells.Should().Be(3);
+        result.Value.SpellList.Select(s => s.Id).Should().Equal("fire_bolt", "burning_hands", "shield");
     }
 
     [Fact]
@@ -228,6 +251,19 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
     private static Spellcasting Rule(string classId, string ability, int divisor) => new()
     {
         ClassId = classId, SpellcastingAbility = ability, IsPreparedCaster = true, PreparedSpellsLevelDivisor = divisor
+    };
+
+    private static SpellReadModel Spell(string id, int level, string source = "PHB") => new()
+    {
+        Id = id,
+        Name = id,
+        Source = source,
+        Level = level,
+        School = "Evocation",
+        CastingTimeUnit = "action",
+        RangeType = "point",
+        DurationType = "instant",
+        Description = "A spell.",
     };
 
     private static ClassSpellProgression Row(string classId, int level, int cantrips, int spells) => new()

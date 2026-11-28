@@ -78,22 +78,6 @@ public class LookupService(HttpClient http)
 
     public Task<BackgroundApiResponse?> GetBackgroundByIdAsync(string id) => GetCachedOrNullAsync<BackgroundApiResponse>($"/api/backgrounds/{id}");
 
-    public Task<List<SpellApiResponse>> GetSpellsAsync(
-        string? classId = null,
-        string? subclassId = null,
-        int? maxLevel = null,
-        IEnumerable<string>? sources = null)
-    {
-        var query = ToQueryString(new Dictionary<string, string?>
-        {
-            ["classId"] = classId,
-            ["subclassId"] = subclassId,
-            ["maxLevel"] = maxLevel?.ToString(CultureInfo.InvariantCulture)
-        }, sources);
-
-        return GetCachedAsync<List<SpellApiResponse>>($"/api/spells{query}");
-    }
-
     /// <summary>The feats of one rules edition, "2014" or "2024", or of both when it is null; only those from the given books, when there are any.</summary>
     public Task<List<FeatApiResponse>> GetFeatsAsync(string? edition, IEnumerable<string>? sources = null) =>
         GetCachedAsync<List<FeatApiResponse>>($"/api/feats{ToQueryString(new() { ["edition"] = edition }, sources)}");

@@ -123,7 +123,6 @@
                 {
                     @* Before the spells: a feat can grant a spell, and an improvement changes how many a prepared caster gets *@
                     <ImprovementsStep DraftId="@draftId" Step="8" Flow="@navigator.Flow"
-                                      CharacterLevel="@characterLevel"
                                       OnChangeBooks="@ChangeBooksCallback"
                                       OnNext="() => navigator.Next(8)"
                                       OnBack="() => Back(8)" />

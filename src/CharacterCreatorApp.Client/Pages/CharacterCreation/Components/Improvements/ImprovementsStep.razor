@@ -110,7 +110,6 @@
                     NextText="@(IsSaving ? "Saving..." : NextLabel)" />
 </div>
 @code {
-    [Parameter] public int CharacterLevel { get; set; }
     [Parameter] public EventCallback OnNext { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
 
@@ -168,35 +167,27 @@
             return;
         }
 
-        var selectedClass = await LookupService.GetClassByIdAsync(draft.ClassId);
-        if (selectedClass == null)
+        // The counts are the API's: the improvements the class has given by the draft's level, the
+        // feats the race gives (a variant human's any one, a 2024 human's Origin one), and the
+        // background's feat (one picked, as a Mist Wanderer's Dark Gift, or else its own)
+        var owed = await DraftService.GetChoicesOwedAsync(DraftId);
+        asiLevels = owed.ImprovementLevels;
+        asiCount = owed.Improvements;
+        bonusFeatCount = owed.BonusFeats;
+        bonusFeatCategory = owed.BonusFeatCategory;
+        var backgroundFeatId = owed.BackgroundFeatId;
+
+        // The race's name heads its feat's room
+        if (bonusFeatCount > 0)
         {
-            ErrorMessage = "Class not found.";
-            return;
+            var race = (await LookupService.GetRacesAsync(draft.Edition)).FirstOrDefault(r => r.Id == draft.RaceId);
+            raceName = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId)?.Name ?? race?.Name;
         }
-
-        asiLevels = selectedClass.AsiLevels;
-        asiCount = asiLevels.Count(l => l <= CharacterLevel);
-
-        var race = string.IsNullOrEmpty(draft.RaceId)
-            ? null
-            : (await LookupService.GetRacesAsync(draft.Edition)).FirstOrDefault(r => r.Id == draft.RaceId);
-        var subrace = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
-
-        // A variant human's feat comes with the subrace, a 2024 human's with the species
-        raceName = subrace?.Name ?? race?.Name;
-        (bonusFeatCount, bonusFeatCategory) = subrace is { FeatChoiceCount: > 0 }
-            ? ((race?.FeatChoiceCount ?? 0) + subrace.FeatChoiceCount, subrace.FeatChoiceCategory)
-            : (race?.FeatChoiceCount ?? 0, race?.FeatChoiceCategory);
 
         var background = string.IsNullOrEmpty(draft.BackgroundId) ? null : await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
         var editionFeats = await LookupService.GetFeatsAsync(draft.Edition, draft.AllowedSources);
         draftEdition = draft.Edition;
         draftSources = draft.AllowedSources;
-
-        // The feat picked for the background (a Mist Wanderer's Dark Gift, or a Haunted One's in
-        // place of Survivor), or else its own
-        var backgroundFeatId = background == null ? null : BackgroundFeats.FeatIdWith(background, draft.BackgroundFeatId);
 
         // Only the feats of the character's rules edition and books, less one the background
         // already gave (a 2024 criminal's Alert) unless it can be taken again

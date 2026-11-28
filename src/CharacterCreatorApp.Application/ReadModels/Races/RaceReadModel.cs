@@ -45,4 +45,7 @@ public sealed class RaceReadModel
     public int FeatChoiceCount { get; init; }
 
     public string? FeatChoiceCategory { get; init; }
+
+    /// <summary>What the player picks for the race with no subrace; each subrace has its own.</summary>
+    public required RacePicksReadModel Picks { get; init; }
 }

@@ -118,7 +118,20 @@ public class CharacterDraftService(HttpClient http)
     public Task ChooseFightingStylesAsync(Guid draftId, List<string> featIds) =>
         PutAsync(draftId, "fighting-styles", new ChooseFightingStylesApiRequest(featIds));
 
-    /// <summary>How many cantrips and spells the class lets the character pick: a 2014 cleric's count follows its scores.</summary>
+    /// <summary>
+    /// What the draft's race, class, background and level owe the player to pick: the
+    /// improvements, the race's feats, the background's feat, the languages and the hit die.
+    /// </summary>
+    public async Task<DraftChoicesOwedApiResponse> GetChoicesOwedAsync(Guid draftId)
+    {
+        var response = await _http.GetAsync($"/api/character-drafts/{draftId}/choices-owed");
+        return await response.ReadAsync<DraftChoicesOwedApiResponse>();
+    }
+
+    /// <summary>
+    /// How many cantrips and spells the class lets the character pick (a 2014 cleric's count
+    /// follows its scores), and the spells they are picked from.
+    /// </summary>
     public async Task<SpellAllowanceApiResponse> GetSpellAllowanceAsync(Guid draftId)
     {
         var response = await _http.GetAsync($"/api/character-drafts/{draftId}/spell-allowance");

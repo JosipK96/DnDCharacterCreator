@@ -39,10 +39,10 @@ public class ImprovementsStepTests : WizardStepTestBase
     public void Render_ForALevel6Fighter_OffersOneImprovementPerAsiLevelReached()
     {
         // Arrange
-        ArrangeLoad(Draft(), [Alert]);
+        ArrangeLoad(Draft(level: 6), [Alert]);
 
         // Act
-        var cut = RenderStep(level: 6);
+        var cut = RenderStep();
 
         // Assert
         cut.FindAll("[data-testid=improvement] > h2").Select(h => h.TextContent.Trim()).Should().Equal("Improvement #1", "Improvement #2");
@@ -54,7 +54,7 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange
         ArrangeLoad(Draft(), [Alert]);
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
 
         // Act
         PlusOf(cut, "Strength").Click();
@@ -70,7 +70,7 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange
         ArrangeLoad(Draft(), [Alert]);
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
 
         // Act
         PlusOf(cut, "Strength").Click();
@@ -87,7 +87,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         // Arrange
         ArrangeLoad(Draft(), [Alert]);
         Api.Put(DraftPath("ability-score-improvements"));
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
         PlusOf(cut, "Strength").Click();
         PlusOf(cut, "Strength").Click();
 
@@ -112,7 +112,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         draft.AbilityScoreImprovements = [new Dictionary<string, int> { ["STR"] = 2 }];
         ArrangeLoad(draft, [Alert]);
         Api.Put(DraftPath("ability-score-improvements"));
-        var cut = RenderStep(level: 6);
+        var cut = RenderStep();
         var secondSlotDexterity = cut.FindAll("p").Where(p => p.TextContent.Trim() == "Dexterity").ElementAt(1).ParentElement!
             .QuerySelectorAll("button").Single(b => b.TextContent.Trim() == "+");
 
@@ -136,7 +136,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         // Arrange
         ArrangeLoad(Draft(), [Alert, Athlete]);
         Api.Put(DraftPath("ability-score-improvements"));
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
         ModeButton(cut, "Feat").Click();
         Button(cut, "Alert").Click();
 
@@ -156,7 +156,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         // Arrange
         ArrangeLoad(Draft(), [Alert, Athlete]);
         Api.Put(DraftPath("ability-score-improvements"));
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
         ModeButton(cut, "Feat").Click();
         Button(cut, "Athlete").Click();
         Button(cut, "Next: Spells").HasAttribute("disabled").Should().BeTrue();
@@ -177,7 +177,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         // Arrange
         ArrangeLoad(Draft(), [Alert, Skilled]);
         Api.Put(DraftPath("ability-score-improvements"));
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
         ModeButton(cut, "Feat").Click();
         Button(cut, "Skilled").Click();
 
@@ -199,7 +199,7 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange
         ArrangeLoad(Draft(), [Skilled]);
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
         ModeButton(cut, "Feat").Click();
         Button(cut, "Skilled").Click();
 
@@ -215,9 +215,9 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange
         var human = Race("human-phb", "Human", subraces: Subrace("human-variant-phb", "Variant Human", "human-phb", featChoiceCount: 1));
-        ArrangeLoad(Draft(level: 1, raceId: "human-phb", subraceId: "human-variant-phb"), [Alert], races: [human]);
+        ArrangeLoad(Draft(level: 1, raceId: "human-phb", subraceId: "human-variant-phb"), [Alert], races: [human], bonusFeats: 1);
         Api.Put(DraftPath("ability-score-improvements"));
-        var cut = RenderStep(level: 1);
+        var cut = RenderStep();
         cut.FindAll("[data-testid=improvement] > h2").Select(h => h.TextContent.Trim()).Should().Equal("Variant Human Feat");
         Buttons(cut, "Ability Scores").Should().BeEmpty();
 
@@ -238,7 +238,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         ArrangeLoad(Draft(level: 1), [Alert], stylesOwed: 1, styles: [Archery, Defense]);
         Api.Put(DraftPath("ability-score-improvements"));
         Api.Put(DraftPath("fighting-styles"));
-        var cut = RenderStep(level: 1);
+        var cut = RenderStep();
         cut.FindAll("h2.room-title").Select(h => h.TextContent.Trim()).Should().Equal("Fighting Style");
         Button(cut, "Next: Spells").HasAttribute("disabled").Should().BeTrue();
 
@@ -257,7 +257,7 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange: a 2024 fighter may take another Fighting Style as a feat
         ArrangeLoad(Draft(level: 4), [Archery, Defense], stylesOwed: 1, styles: [Archery, Defense]);
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
 
         // Act
         ModeButton(cut, "Feat").Click();
@@ -274,7 +274,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         var background = Background("scholar-xphb", "Scholar", new("skilled-phb", "Skilled", true), new BackgroundProficiencyApiResponse("history", "History", "skill"));
         ArrangeLoad(Draft(level: 4, backgroundId: "scholar-xphb"), [Alert, Skilled], background: background);
         Api.Put(DraftPath("ability-score-improvements"));
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
         cut.Markup.Should().Contain("Background Feat: Skilled");
         OptionValues(cut.FindAll("select")[0]).Should().Equal("arcana", "stealth");
 
@@ -298,7 +298,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         // Arrange
         ArrangeLoad(Draft(level: 4), [Alert], stylesOwed: 1, styles: [Archery, Defense]);
         Api.RefusePut(DraftPath("ability-score-improvements"), "You don't meet the feat's prerequisites");
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
         cut.Find("select").Change("archery-xphb");
         PlusOf(cut, "Wisdom").Click();
         PlusOf(cut, "Wisdom").Click();
@@ -317,7 +317,7 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange
         ArrangeLoad(Draft(), [Alert, Athlete], eligibility: [new("athlete-phb", "Strength 13", "Strength 13", false)]);
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
 
         // Act
         ModeButton(cut, "Feat").Click();
@@ -336,7 +336,7 @@ public class ImprovementsStepTests : WizardStepTestBase
     {
         // Arrange
         ArrangeLoad(Draft(), [Alert], eligibility: [new("alert-phb", null, null, true)]);
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
 
         // Act
         ModeButton(cut, "Feat").Click();
@@ -353,7 +353,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         // Arrange - a level 6 fighter: Strength from the first improvement opens Athlete to the second
         ArrangeLoad(Draft(level: 6), [Athlete], eligibility: [new("athlete-phb", "Strength 13", "Strength 13", false)]);
         Api.Get($"{DraftPath("feat-eligibility")}?increase=STR", new List<FeatEligibilityApiResponse> { new("athlete-phb", null, "Strength 13", false) });
-        var cut = RenderStep(level: 6);
+        var cut = RenderStep();
         cut.FindAll("button").Where(b => b.TextContent.Trim() == "Feat").ElementAt(1).Click();
         Button(cut, "Athlete").HasAttribute("disabled").Should().BeTrue();
 
@@ -375,7 +375,7 @@ public class ImprovementsStepTests : WizardStepTestBase
         ArrangeLoad(draft, [Alert], eligibility: [new("alert-phb", "Dexterity 13", "Dexterity 13", false)]);
 
         // Act
-        var cut = RenderStep(level: 4);
+        var cut = RenderStep();
 
         // Assert - it can still be clicked, to unpick it
         var alert = Button(cut, "Alert");
@@ -394,10 +394,11 @@ public class ImprovementsStepTests : WizardStepTestBase
             Draft(level: 1, raceId: "human-phb", subraceId: "human-variant-phb"),
             [Athlete],
             races: [human],
+            bonusFeats: 1,
             eligibility: [new("athlete-phb", null, "Strength 13", false)]);
 
         // Act
-        var cut = RenderStep(level: 1);
+        var cut = RenderStep();
 
         // Assert
         Button(cut, "Athlete").HasAttribute("disabled").Should().BeTrue();
@@ -433,13 +434,20 @@ public class ImprovementsStepTests : WizardStepTestBase
         List<FeatApiResponse>? styles = null,
         List<RaceApiResponse>? races = null,
         BackgroundApiResponse? background = null,
-        List<FeatEligibilityApiResponse>? eligibility = null)
+        List<FeatEligibilityApiResponse>? eligibility = null,
+        int bonusFeats = 0)
     {
         Api.Get(DraftPath(), draft);
 
         // Every feat can be taken, whatever the points spent, unless a test says otherwise
         Api.GetAnyQuery(DraftPath("feat-eligibility"), eligibility ?? []);
-        Api.Get($"/api/classes/{Fighter.Id}", Fighter);
+
+        // What the API owes a fighter of the draft's level: an improvement at each AsiLevel reached
+        Api.Get(DraftPath("choices-owed"), Owed(
+            improvements: Fighter.AsiLevels.Count(l => l <= draft.Level),
+            improvementLevels: Fighter.AsiLevels,
+            bonusFeats: bonusFeats,
+            backgroundFeatId: background?.Feat?.Id));
         Api.Get("/api/feats?edition=2014&sources=PHB", feats);
         Api.Get("/api/proficiencies", Skills);
         Api.Get(DraftPath("fighting-styles"), new FightingStylesApiResponse(stylesOwed, styles ?? []));
@@ -455,12 +463,11 @@ public class ImprovementsStepTests : WizardStepTestBase
         }
     }
 
-    private IRenderedComponent<ImprovementsStep> RenderStep(int level)
+    private IRenderedComponent<ImprovementsStep> RenderStep()
     {
         var cut = Render<ImprovementsStep>(parameters => parameters
             .Add(p => p.DraftId, DraftId)
             .Add(p => p.Step, 8)
-            .Add(p => p.CharacterLevel, level)
             .Add(p => p.OnNext, () => _movedOn++));
 
         cut.WaitForAssertion(() => cut.FindAll("div.animate-spin").Should().BeEmpty());

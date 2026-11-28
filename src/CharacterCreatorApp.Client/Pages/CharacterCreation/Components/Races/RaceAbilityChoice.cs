@@ -14,15 +14,14 @@ public sealed record RaceAbilityChoice(List<string> Options, int Points, int Min
     public static RaceAbilityChoice None { get; } = new([], 0, 1, 1);
 
     /// <summary>
-    /// The increases the player picks: a subrace's take the place of the race's, as the variant
-    /// human's replace the standard human's +1 to everything.
+    /// The increases the player picks for a race with its subrace, as the API adds them up (a
+    /// subrace's take the place of the race's, as the variant human's replace the standard human's
+    /// +1 to everything).
     /// </summary>
-    public static RaceAbilityChoice For(RaceApiResponse? race, SubraceApiResponse? subrace) =>
-        subrace is { AbilityChoiceCount: > 0 }
-            ? Of(subrace)
-            : race is { AbilityChoiceCount: > 0 }
-                ? new(race.AbilityChoiceOptions, race.AbilityChoiceCount, race.AbilityChoiceMinPerAbility, race.AbilityChoiceMaxPerAbility)
-                : None;
+    public static RaceAbilityChoice For(RacePicksApiResponse? picks) =>
+        picks is { AbilityChoicePoints: > 0 }
+            ? new(picks.AbilityChoiceOptions, picks.AbilityChoicePoints, picks.AbilityChoiceMinPerAbility, picks.AbilityChoiceMaxPerAbility)
+            : None;
 
     /// <summary>The subrace's own choice, as its option in the list describes it.</summary>
     public static RaceAbilityChoice Of(SubraceApiResponse subrace) =>

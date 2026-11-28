@@ -142,7 +142,7 @@ public class HiddenOptionsNoteTests : WizardStepTestBase
     public void BackgroundStep_WithBackgroundsAndDarkGiftsInUntickedBooks_NotesBoth()
     {
         // Arrange - a Mist Wanderer picks a Dark Gift, counted on its own
-        var wanderer = Background("mist_wanderer", "Mist Wanderer") with { FeatChoiceCategory = "Dark Gift" };
+        var wanderer = Background("mist_wanderer", "Mist Wanderer") with { FeatChoiceCategory = "Dark Gift", PickableFeatCategory = "Dark Gift" };
         Api.Get(DraftPath(), new CharacterDraftDetailsApiResponse { Id = DraftId, BackgroundId = "mist_wanderer" });
         Api.Get("/api/backgrounds?edition=2024&sources=XPHB", new List<BackgroundApiResponse> { wanderer });
         Api.Get("/api/feats?edition=2024&sources=XPHB", new List<FeatApiResponse>());
@@ -172,7 +172,7 @@ public class HiddenOptionsNoteTests : WizardStepTestBase
         {
             Id = DraftId, Level = 4, Edition = "2014", AllowedSources = ["PHB"], ClassId = fighter.Id,
         });
-        Api.Get($"/api/classes/{fighter.Id}", fighter);
+        Api.Get(DraftPath("choices-owed"), Owed(improvements: 1, improvementLevels: fighter.AsiLevels));
         Api.Get("/api/feats?edition=2014&sources=PHB", new List<FeatApiResponse> { Feat("alert-phb", "Alert") });
         Api.Get("/api/proficiencies", new List<ProficiencyApiResponse>());
         Api.Get(DraftPath("fighting-styles"), new FightingStylesApiResponse(0, []));
@@ -182,7 +182,6 @@ public class HiddenOptionsNoteTests : WizardStepTestBase
         var cut = Render<ImprovementsStep>(parameters => parameters
             .Add(p => p.DraftId, DraftId)
             .Add(p => p.Step, 8)
-            .Add(p => p.CharacterLevel, 4)
             .Add(p => p.OnChangeBooks, () => _changedBooks++));
         cut.WaitForAssertion(() => cut.FindAll("div.animate-spin").Should().BeEmpty());
         cut.FindAll("[data-testid=hidden-options]").Should().BeEmpty("no feat list shows while the improvement raises scores");
@@ -205,9 +204,7 @@ public class HiddenOptionsNoteTests : WizardStepTestBase
         });
         Api.Get("/api/classes/wizard-phb", Class("wizard-phb", "Wizard"));
         Api.Get("/api/subclasses/evoker", new SubclassApiResponse("evoker", "Evoker", "wizard-phb", "PHB", null, []));
-        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(true, 3, 6, 1, false, []));
-        Api.Get("/api/spells?classId=wizard-phb&maxLevel=1&sources=PHB", new List<SpellApiResponse> { Spell("light-phb", "Light", 0) });
-        Api.Get("/api/spells?subclassId=evoker&maxLevel=1&sources=PHB", new List<SpellApiResponse>());
+        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(true, 3, 6, 1, false, [], [Spell("light-phb", "Light", 0)]));
         Api.Get(DraftPath("bonus-spells"), new List<BonusSpellChoiceApiResponse>());
         Api.Get(Hidden("spells", "classId=wizard-phb&subclassId=evoker&maxLevel=1"), InXanathars);
 

@@ -250,7 +250,9 @@ public class HitPointsStepTests : WizardStepTestBase
     private void ArrangeLoad(CharacterDraftDetailsApiResponse draft)
     {
         Api.Get(DraftPath(), draft);
-        Api.Get("/api/classes/fighter-phb", Class("fighter-phb", "Fighter", 4, 6, 8));
+
+        // A fighter's d10, whose fixed value is 6
+        Api.Get(DraftPath("choices-owed"), Owed(hitDieSize: 10, hitDieFixedValue: 6));
     }
 
     private IRenderedComponent<HitPointsStep> RenderStep(IReadOnlyList<int> flow)

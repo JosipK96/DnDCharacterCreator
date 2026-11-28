@@ -69,37 +69,24 @@
             return;
         }
 
-        var races = await LookupService.GetRacesAsync(draft.Edition);
-        var race = races.FirstOrDefault(r => r.Id == draft.RaceId);
-        var subrace = race?.Subraces.FirstOrDefault(s => s.Id == draft.SubraceId);
-
-        BackgroundApiResponse? background = null;
-        if (!string.IsNullOrEmpty(draft.BackgroundId))
-        {
-            background = await LookupService.GetBackgroundByIdAsync(draft.BackgroundId);
-        }
-
-        // A high elf picks one more than an elf
-        var raceLanguageChoices = (race?.LanguageChoiceCount ?? 0) + (subrace?.LanguageChoiceCount ?? 0);
-        var backgroundLanguageChoices = background?.LanguageChoiceCount ?? 0;
-        totalChoices = raceLanguageChoices + backgroundLanguageChoices;
+        // The API counts the picks (a high elf's one more than an elf's, and the background's) and
+        // names the languages the race and background give already, by id as it checks them
+        var owed = await DraftService.GetChoicesOwedAsync(DraftId);
+        totalChoices = owed.Languages;
+        var knownIds = owed.KnownLanguageIds.ToHashSet();
 
         // A 2024 character picks from the 2024 book's standard languages
         var allLanguages = await LookupService.GetLanguagesAsync(draft.Edition);
 
         // A language the race or background already gives can't be picked again; the server
         // refuses it, since the pick would be spent on nothing
-        var knownNames = (race?.Languages ?? [])
-            .Concat(background?.Languages ?? [])
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
         alreadyKnownNames = allLanguages
-            .Where(l => knownNames.Contains(l.Name))
+            .Where(l => knownIds.Contains(l.Id))
             .Select(l => l.Name)
             .ToList();
 
         availableLanguages = allLanguages
-            .Where(l => !knownNames.Contains(l.Name))
+            .Where(l => !knownIds.Contains(l.Id))
             .OrderBy(l => l.Type)
             .ThenBy(l => l.Name)
             .ToList();

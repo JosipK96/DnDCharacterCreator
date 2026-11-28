@@ -349,9 +349,9 @@ public class GetHiddenOptionsQueryHandlerTests : IDisposable
         new() { Code = code, Name = name, Edition = Edition, IsPlayersHandbook = isPlayersHandbook };
 
     private static RaceReadModel Race(string id, string source, params SubraceReadModel[] subraces) =>
-        new() { Id = id, Name = id, Edition = Edition, Source = source, Size = "Medium", Subraces = [.. subraces] };
+        new() { Id = id, Name = id, Edition = Edition, Source = source, Size = "Medium", Subraces = [.. subraces], Picks = new() };
 
-    private static SubraceReadModel Subrace(string id, string source) => new() { Id = id, Name = id, RaceId = "race", Source = source };
+    private static SubraceReadModel Subrace(string id, string source) => new() { Id = id, Name = id, RaceId = "race", Source = source, Picks = new() };
 
     private static ClassReadModel Class(string id, string source) => new() { Id = id, Name = id, Edition = Edition, Source = source, HitDie = "1d10" };
 

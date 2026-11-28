@@ -3,10 +3,8 @@ using Bunit;
 using CharacterCreatorApp.Client.Pages.CharacterCreation.Components;
 using CharacterCreatorApp.Client.UnitTests.Fixtures;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
-using CharacterCreatorApp.Contracts.Responses.Backgrounds;
 using CharacterCreatorApp.Contracts.Responses.Characters;
 using CharacterCreatorApp.Contracts.Responses.Languages;
-using CharacterCreatorApp.Contracts.Responses.Races;
 
 using FluentAssertions;
 
@@ -15,8 +13,8 @@ using static CharacterCreatorApp.Client.UnitTests.Fixtures.TestData;
 namespace CharacterCreatorApp.Client.UnitTests.Steps;
 
 /// <summary>
-/// The languages step: how many it asks for (the race's, the subrace's and the background's
-/// together), the languages already known left out of the choices, and what it saves.
+/// The languages step: it asks for as many as the API counts (the race's, the subrace's and the
+/// background's together), leaves out the languages the API says are known, and saves the picks.
 /// </summary>
 public class LanguagesStepTests : WizardStepTestBase
 {
@@ -29,21 +27,11 @@ public class LanguagesStepTests : WizardStepTestBase
         new("abyssal", "Abyssal", "Exotic"),
     ];
 
-    // An elf knows Common and Elvish; a high elf picks one more language
-    private static readonly RaceApiResponse Elf = Race("elf", "Elf") with
-    {
-        Languages = ["Common", "Elvish"],
-        Subraces = [Subrace("high-elf", "High Elf", "elf") with { LanguageChoiceCount = 1 }],
-    };
-
-    // An acolyte picks two languages
-    private static readonly BackgroundApiResponse Acolyte = Background("acolyte", "Acolyte") with { LanguageChoiceCount = 2 };
-
     [Fact]
     public void Render_AHighElfAcolyte_AsksForThreeAndLeavesOutTheLanguagesAlreadyKnown()
     {
-        // Arrange
-        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf", BackgroundId = "acolyte" });
+        // Arrange - a high elf picks one, an acolyte two, and an elf knows Common and Elvish
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf", BackgroundId = "acolyte" }, languages: 3);
 
         // Act
         var cut = RenderStep();
@@ -58,7 +46,7 @@ public class LanguagesStepTests : WizardStepTestBase
     public void Render_WithNoLanguageToChoose_SaysSoAndLetsThePlayerOn()
     {
         // Arrange - an elf with no subrace and no background
-        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf" });
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf" }, languages: 0);
 
         // Act
         var cut = RenderStep();
@@ -73,7 +61,7 @@ public class LanguagesStepTests : WizardStepTestBase
     public void Click_AsManyAsAllowed_DisablesTheRestAndSendsThePicks()
     {
         // Arrange
-        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf", BackgroundId = "acolyte" });
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf", BackgroundId = "acolyte" }, languages: 3);
         Api.Put(DraftPath("languages"));
         var nexts = 0;
         var cut = RenderStep(() => nexts++);
@@ -94,7 +82,7 @@ public class LanguagesStepTests : WizardStepTestBase
     public void Click_TheLastPick_DisablesTheRest()
     {
         // Arrange - a high elf with no background picks one
-        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf" });
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf" }, languages: 1);
         var cut = RenderStep();
 
         // Act
@@ -108,7 +96,7 @@ public class LanguagesStepTests : WizardStepTestBase
     public void Click_APickAgain_TakesItBackAndFreesTheRest()
     {
         // Arrange
-        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf" });
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf" }, languages: 1);
         var cut = RenderStep();
         Row(cut, "Giant").Click();
 
@@ -127,7 +115,7 @@ public class LanguagesStepTests : WizardStepTestBase
         ArrangeLoad(new CharacterDraftDetailsApiResponse
         {
             Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf", SelectedLanguageIds = ["giant"],
-        });
+        }, languages: 1);
 
         // Act
         var cut = RenderStep();
@@ -142,7 +130,7 @@ public class LanguagesStepTests : WizardStepTestBase
     public void Next_WhenTheApiRefuses_ShowsItsMessageAndStays()
     {
         // Arrange
-        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf", SelectedLanguageIds = ["giant"] });
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf", SelectedLanguageIds = ["giant"] }, languages: 1);
         Api.RefusePut(DraftPath("languages"), "That language is already known");
         var nexts = 0;
         var cut = RenderStep(() => nexts++);
@@ -174,11 +162,11 @@ public class LanguagesStepTests : WizardStepTestBase
     private static AngleSharp.Dom.IElement Row(IRenderedComponent<LanguagesStep> cut, string name) =>
         cut.FindAll("[data-testid=choice-row]").Single(r => r.QuerySelector("span.font-semibold")!.TextContent == name);
 
-    private void ArrangeLoad(CharacterDraftDetailsApiResponse draft)
+    // The API counts the picks; an elf knows Common and Elvish
+    private void ArrangeLoad(CharacterDraftDetailsApiResponse draft, int languages)
     {
         Api.Get(DraftPath(), draft);
-        Api.Get("/api/races/get-list?edition=2014", new List<RaceApiResponse> { Elf });
-        Api.Get("/api/backgrounds/acolyte", Acolyte);
+        Api.Get(DraftPath("choices-owed"), Owed(languages: languages, knownLanguageIds: ["common", "elvish"]));
         Api.Get("/api/languages/get-list?edition=2014", Languages);
     }
 

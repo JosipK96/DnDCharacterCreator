@@ -29,7 +29,8 @@ public static class SpellMappings
         Spells: allowance.Spells,
         MaxSpellLevel: allowance.MaxSpellLevel,
         SpellsFollowScores: allowance.SpellsFollowScores,
-        AlwaysPreparedSpellIds: allowance.AlwaysPreparedSpellIds);
+        AlwaysPreparedSpellIds: allowance.AlwaysPreparedSpellIds,
+        SpellList: allowance.SpellList.Select(spell => spell.ToResponse()).ToList());
 
     public static BonusSpellChoiceApiResponse ToResponse(this BonusSpellChoiceReadModel choice) => new(
         FeatId: choice.FeatId,

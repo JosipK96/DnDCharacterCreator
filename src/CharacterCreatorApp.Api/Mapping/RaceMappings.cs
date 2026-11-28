@@ -25,6 +25,7 @@ public static class RaceMappings
         Traits: race.Traits.Select(trait => trait.ToResponse()).ToList(),
         Subraces: race.Subraces.Select(subrace => subrace.ToResponse()).ToList(),
         FixedProficiencies: race.FixedProficiencies.Select(proficiency => proficiency.ToResponse()).ToList(),
+        Picks: race.Picks.ToResponse(),
         AbilityChoiceMaxPerAbility: race.AbilityChoiceMaxPerAbility,
         AbilityChoiceMinPerAbility: race.AbilityChoiceMinPerAbility);
 
@@ -43,8 +44,20 @@ public static class RaceMappings
         FeatChoiceCategory: subrace.FeatChoiceCategory,
         AbilityScoreBonuses: subrace.AbilityScoreBonuses.Select(bonus => bonus.ToResponse()).ToList(),
         Traits: subrace.Traits.Select(trait => trait.ToResponse()).ToList(),
+        Picks: subrace.Picks.ToResponse(),
         AbilityChoiceMaxPerAbility: subrace.AbilityChoiceMaxPerAbility,
         AbilityChoiceMinPerAbility: subrace.AbilityChoiceMinPerAbility);
+
+    public static RacePicksApiResponse ToResponse(this RacePicksReadModel picks) => new(
+        AbilityChoiceOptions: picks.AbilityChoiceOptions,
+        AbilityChoicePoints: picks.AbilityChoicePoints,
+        AbilityChoiceMinPerAbility: picks.AbilityChoiceMinPerAbility,
+        AbilityChoiceMaxPerAbility: picks.AbilityChoiceMaxPerAbility,
+        SkillChoiceCount: picks.SkillChoiceCount,
+        SkillChoiceOptions: picks.SkillChoiceOptions,
+        LanguageChoiceCount: picks.LanguageChoiceCount,
+        FeatChoiceCount: picks.FeatChoiceCount,
+        FeatChoiceCategory: picks.FeatChoiceCategory);
 
     // The client gets the ability's name ("Strength"), not the value object
     public static AbilityScoreBonusApiResponse ToResponse(this AbilityScoreBonusReadModel bonus) =>

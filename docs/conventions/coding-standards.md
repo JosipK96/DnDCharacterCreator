@@ -159,7 +159,8 @@ three places, a background's language count in an Infrastructure mapping, and
 the race's picks worked out again in the race and improvements steps. A copy
 works until the rule changes, and then the step offers what finalize refuses.
 The wizard asks the API for what a draft owes, as the spells step asks
-`GET spell-allowance` and the improvements step `GET fighting-styles`.
+`GET spell-allowance`, the improvements, languages and hit points steps
+`GET choices-owed`, and the race step reads each race's and subrace's `Picks`.
 
 **One builder for what two flows share.** The review step's preview and the
 saved sheet (and its PDF) show the same thing; a step and finalize check the

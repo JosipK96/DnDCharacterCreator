@@ -9,7 +9,6 @@ using CharacterCreatorApp.Contracts.Responses.Classes;
 using CharacterCreatorApp.Contracts.Responses.Feats;
 using CharacterCreatorApp.Contracts.Responses.Languages;
 using CharacterCreatorApp.Contracts.Responses.Races;
-using CharacterCreatorApp.Contracts.Responses.Spells;
 using CharacterCreatorApp.Infrastructure;
 
 using FluentAssertions;
@@ -37,7 +36,6 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     [InlineData("/api/feats")]
     [InlineData("/api/languages/get-list")]
     [InlineData("/api/proficiencies")]
-    [InlineData("/api/spells?classId=wizard&maxLevel=1")]
     [InlineData("/api/subclasses?classId=wizard")]
     public async Task GetList_ReturnsTheSeededItems(string url)
     {
@@ -274,6 +272,24 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     }
 
     [Fact]
+    public async Task GetRaces_SendsWhatEachRaceAndSubracePicksAsTheRaceRulesAddItUp()
+    {
+        // Act - the race step reads these rather than adding the race's and subrace's up itself
+        var races = await _client.GetFromJsonAsync<List<RaceApiResponse>>(
+            "/api/races/get-list", TestContext.Current.CancellationToken);
+
+        // Assert - a 2024 elf's lineage keeps the species' Keen Senses pick; a high elf adds a language to the elf's none
+        var elf2024 = races!.Single(r => r.Id == "elf_2024");
+        elf2024.Picks.SkillChoiceCount.Should().Be(1);
+        elf2024.Picks.SkillChoiceOptions.Should().Equal("insight", "perception", "survival");
+        elf2024.Subraces.Should().OnlyContain(s => s.Picks.SkillChoiceCount == 1);
+
+        var elf = races!.Single(r => r.Id == "elf");
+        elf.Picks.LanguageChoiceCount.Should().Be(0);
+        elf.Subraces.Single(s => s.Id == "high_elf").Picks.LanguageChoiceCount.Should().Be(1);
+    }
+
+    [Fact]
     public async Task GetRaces_IncludesTheLanguagesEachRaceSpeaks()
     {
         // Act - the race queries once left RaceLanguages out, and every race spoke nothing
@@ -350,21 +366,6 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
         // Assert
         languages!.Select(l => l.Id).Should().Contain("common-phb")
             .And.NotContain(["druidic-phb", "thieves-cant-phb"]);
-    }
-
-    [Fact]
-    public async Task GetSpells_DescribesTheSpellTheWayTheBookDoes()
-    {
-        // Act
-        var spells = await _client.GetFromJsonAsync<List<SpellApiResponse>>(
-            "/api/spells?classId=cleric&maxLevel=0", TestContext.Current.CancellationToken);
-
-        // Assert - the seed data spells this "1 action", "point / touch" and "roll a {@dice d4}"
-        var guidance = spells!.Single(s => s.Id == "guidance");
-        guidance.CastingTime.Should().Be("1 action");
-        guidance.Range.Should().Be("Touch");
-        guidance.Duration.Should().Be("1 minute");
-        guidance.Description.Should().Contain("roll a d4");
     }
 
     [Theory]

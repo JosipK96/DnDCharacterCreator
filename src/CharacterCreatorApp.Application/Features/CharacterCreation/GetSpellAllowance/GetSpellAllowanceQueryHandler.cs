@@ -27,6 +27,7 @@ public class GetSpellAllowanceQueryHandler(
 {
     private readonly ICharacterDraftRepository _characterDraftRepository = characterDraftRepository;
     private readonly DraftSelectionsLoader _selections = new(raceRepository, classRepository, backgroundRepository);
+    private readonly ISpellRepository _spellRepository = spellRepository;
     private readonly IUserContext _userContext = userContext;
     private readonly TimeProvider _timeProvider = timeProvider;
 
@@ -70,6 +71,20 @@ public class GetSpellAllowanceQueryHandler(
             return new SpellAllowanceReadModel();
         }
 
+        // The lists ChooseSpells checks the picks against, less what the draft's books or level rule out
+        var choosable = await SpellChoice.LoadChoosableAsync(_spellRepository, @class, subclass, cancellationToken);
+        var listed = choosable.Where(s => s.Level <= spells.MaxSpellLevel && draft.AllowsSource(s.Source)).ToList();
+
+        // A domain or oath spell is prepared whatever the books, and may be off the class's list
+        // (a Vengeance paladin's Hunter's Mark), so the step can name every one
+        var alwaysPrepared = subclass?.AlwaysPreparedSpellIdsAt(level).ToList() ?? [];
+        var unlisted = alwaysPrepared.Except(listed.Select(s => s.Id)).ToList();
+
+        if (unlisted.Count != 0)
+        {
+            listed.AddRange(await _spellRepository.GetByIdsAsync(unlisted, cancellationToken));
+        }
+
         return new SpellAllowanceReadModel
         {
             CastsSpells = true,
@@ -77,7 +92,8 @@ public class GetSpellAllowanceQueryHandler(
             Spells = spells.Spells,
             MaxSpellLevel = spells.MaxSpellLevel,
             SpellsFollowScores = @class.PreparesSpellsFromScoresAt(level),
-            AlwaysPreparedSpellIds = subclass?.AlwaysPreparedSpellIdsAt(level).ToList() ?? [],
+            AlwaysPreparedSpellIds = alwaysPrepared,
+            SpellList = [.. listed.OrderBy(s => s.Level).ThenBy(s => s.Name, StringComparer.Ordinal)],
         };
     }
 }

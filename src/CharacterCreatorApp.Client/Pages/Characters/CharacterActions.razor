@@ -7,13 +7,13 @@
 <div>
     <div class="flex flex-wrap @(Compact ? "gap-2" : "gap-3")">
         <button type="button" @onclick="EditAsync" disabled="@isStarting"
-                class="@(Compact ? "btn-secondary flex-1 whitespace-nowrap px-3" : "btn-main")">
+                class="@(Compact ? CompactSecondary : "btn-main")">
             @(isStarting ? "Opening..." : Compact ? "Edit" : "Edit character")
         </button>
         @if (Level < CharacterLevels.Max)
         {
             <button type="button" @onclick="LevelUpAsync" disabled="@isStarting"
-                    class="@(Compact ? "btn-secondary flex-1 whitespace-nowrap px-3" : "btn-secondary")">
+                    class="@(Compact ? CompactSecondary : "btn-secondary")">
                 Level up
             </button>
         }
@@ -35,6 +35,9 @@
 }
 
 @code {
+    // Written out in full, since Tailwind's CLI only sees whole class names
+    private const string CompactSecondary = "btn-secondary flex-1 whitespace-nowrap px-3";
+
     [Parameter, EditorRequired]
     public Guid CharacterId { get; set; }
 

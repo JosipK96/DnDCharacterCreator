@@ -37,13 +37,12 @@ public class CharacterActionsTests : WizardStepTestBase
         Button(cut, button).Click();
 
         // Act
-        var again = Button(cut, buttonWhileStarting);
-        again.HasAttribute("disabled").Should().BeTrue();
-        again.Click();
+        Button(cut, buttonWhileStarting).Click();
         answer.SetResult();
 
         // Assert
         cut.WaitForAssertion(() => Navigation.Uri.Should().EndWith($"/character/create/{NewDraftId}"));
+        Button(cut, buttonWhileStarting).HasAttribute("disabled").Should().BeTrue();
         Api.Requests.Should().ContainSingle(r => r == $"POST {route}");
     }
 

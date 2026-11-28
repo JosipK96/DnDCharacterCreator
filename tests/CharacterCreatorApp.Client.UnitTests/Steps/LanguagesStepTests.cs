@@ -58,6 +58,24 @@ public class LanguagesStepTests : WizardStepTestBase
     }
 
     [Fact]
+    public void Next_WhileTheStepIsStillLoading_IsDisabled()
+    {
+        // Arrange - before the count arrives it reads 0, which would let no pick through
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf" }, languages: 1);
+        var owed = Api.Hold(DraftPath("choices-owed"));
+
+        // Act
+        var cut = Render<LanguagesStep>(parameters => parameters
+            .Add(p => p.DraftId, DraftId)
+            .Add(p => p.Step, 5));
+
+        // Assert
+        cut.WaitForAssertion(() => Api.Requests.Should().Contain($"GET {DraftPath("choices-owed")}"));
+        Button(cut, "Next: Ability Scores").HasAttribute("disabled").Should().BeTrue();
+        owed.SetResult();
+    }
+
+    [Fact]
     public void Click_AsManyAsAllowed_DisablesTheRestAndSendsThePicks()
     {
         // Arrange

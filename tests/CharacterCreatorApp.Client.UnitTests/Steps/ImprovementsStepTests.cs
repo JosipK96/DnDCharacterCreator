@@ -232,6 +232,25 @@ public class ImprovementsStepTests : WizardStepTestBase
     }
 
     [Fact]
+    public void Next_WhileTheStepIsStillLoading_IsDisabled()
+    {
+        // Arrange - a click before the styles had loaded once saved a fighter's edit with none
+        ArrangeLoad(Draft(level: 1), [Alert], stylesOwed: 1, styles: [Archery, Defense]);
+        var styles = Api.Hold(DraftPath("fighting-styles"));
+
+        // Act
+        var cut = Render<ImprovementsStep>(parameters => parameters
+            .Add(p => p.DraftId, DraftId)
+            .Add(p => p.Step, 8)
+            .Add(p => p.OnNext, () => _movedOn++));
+
+        // Assert
+        cut.WaitForAssertion(() => Api.Requests.Should().Contain($"GET {DraftPath("fighting-styles")}"));
+        Button(cut, "Next: Spells").HasAttribute("disabled").Should().BeTrue();
+        styles.SetResult();
+    }
+
+    [Fact]
     public void Next_ForAFighterOwedAStyle_WaitsForItThenSavesTheImprovementsBeforeTheStyle()
     {
         // Arrange

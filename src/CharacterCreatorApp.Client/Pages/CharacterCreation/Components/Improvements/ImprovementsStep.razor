@@ -287,9 +287,11 @@
         }
     }
 
-    // A feat the character can't take blocks the save, as does a check still on its way
+    // A feat the character can't take blocks the save, as does a check still on its way. So does
+    // the load: before it ends there is nothing to fill in, and a save then sent no Fighting Style
     private bool CanProceed() =>
-        eligibilityChecks == 0
+        !IsLoading
+        && eligibilityChecks == 0
         && chosenStyles.All(id => !string.IsNullOrEmpty(id))
         && backgroundFeatPicks.All(id => !string.IsNullOrEmpty(id))
         && slots.All(slot => slot.IsComplete(FeatOf(slot), slot.FeatId == null ? null : eligibility.GetValueOrDefault(slot.FeatId)));

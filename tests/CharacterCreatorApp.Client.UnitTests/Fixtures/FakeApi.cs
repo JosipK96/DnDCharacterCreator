@@ -16,6 +16,7 @@ public sealed class FakeApi : HttpMessageHandler
     private readonly Dictionary<string, Func<HttpResponseMessage>> _routes = [];
     private readonly Dictionary<string, Func<HttpResponseMessage>> _anyQueryRoutes = [];
     private readonly List<(string Route, string? Body)> _requests = [];
+    private readonly Dictionary<string, Task> _holds = [];
 
     /// <summary>"GET /api/books?edition=2024", "PUT /api/character-drafts/{id}/books", in the order sent.</summary>
     public IReadOnlyList<string> Requests => _requests.ConvertAll(r => r.Route);
@@ -31,6 +32,17 @@ public sealed class FakeApi : HttpMessageHandler
     /// </summary>
     public void GetAnyQuery(string path, object response) =>
         _anyQueryRoutes[$"GET {path}"] = () => new HttpResponseMessage(HttpStatusCode.OK) { Content = JsonContent.Create(response) };
+
+    /// <summary>
+    /// Keeps a GET set up with <see cref="Get"/> waiting until the returned source is set, so a test
+    /// sees the step while it is still loading, as a slow network shows it.
+    /// </summary>
+    public TaskCompletionSource Hold(string pathAndQuery)
+    {
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        _holds[$"GET {pathAndQuery}"] = release.Task;
+        return release;
+    }
 
     /// <summary>A GET the API answers 404, as it does for a draft or character that is gone or someone else's.</summary>
     public void NotFound(string pathAndQuery) =>
@@ -110,6 +122,11 @@ public sealed class FakeApi : HttpMessageHandler
         var route = $"{request.Method} {request.RequestUri!.PathAndQuery}";
         var body = request.Content is null ? null : await request.Content.ReadAsStringAsync(cancellationToken);
         _requests.Add((route, body));
+
+        if (_holds.TryGetValue(route, out var hold))
+        {
+            await hold.WaitAsync(cancellationToken);
+        }
 
         if (_routes.TryGetValue(route, out var respond)
             || _anyQueryRoutes.TryGetValue($"{request.Method} {request.RequestUri.AbsolutePath}", out respond))

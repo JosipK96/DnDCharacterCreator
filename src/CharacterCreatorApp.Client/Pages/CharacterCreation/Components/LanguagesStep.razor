@@ -106,7 +106,8 @@
         }
     }
 
-    private bool CanProceed() => totalChoices == 0 || selectedLanguageIds.Count == totalChoices;
+    // Until the count has loaded it reads 0, which would let an empty pick through
+    private bool CanProceed() => !IsLoading && (totalChoices == 0 || selectedLanguageIds.Count == totalChoices);
 
     private async Task HandleNext()
     {

@@ -17,6 +17,47 @@ namespace CharacterCreatorApp.Application.Features.CharacterCreation.Shared.Choi
 public static class SpellChoice
 {
     /// <summary>
+    /// The spells step's list for a draft, by level then name, and the spells it would offer to
+    /// pick once its unticked books were ticked. Listed is what the lists offer
+    /// (<see cref="LoadChoosableAsync"/>) from the draft's books up to maxSpellLevel, and the
+    /// subclass's always-prepared spells, which the step names but are not picked and so show
+    /// whatever the books (a Vengeance paladin's Hunter's Mark, off the class's list).
+    /// InUntickedBooks is what the lists offer up to that level from the other books, less the
+    /// always-prepared ones. GET spell-allowance builds both here, so the list and the count of
+    /// what the unticked books hold cannot disagree.
+    /// </summary>
+    public static async Task<StepSpellList> LoadStepListAsync(
+        ISpellRepository spellRepository,
+        CharacterDraft draft,
+        Class @class,
+        Subclass? subclass,
+        int level,
+        int maxSpellLevel,
+        CancellationToken cancellationToken)
+    {
+        var alwaysPrepared = subclass?.AlwaysPreparedSpellIdsAt(level).ToHashSet() ?? [];
+        var choosable = await LoadChoosableAsync(spellRepository, @class, subclass, cancellationToken);
+
+        var pickable = choosable.Where(s => s.Level <= maxSpellLevel && !alwaysPrepared.Contains(s.Id)).ToList();
+        var listed = pickable.Where(s => draft.AllowsSource(s.Source)).ToList();
+        var inUntickedBooks = pickable.Where(s => !draft.AllowsSource(s.Source)).ToList();
+
+        var prepared = choosable.Where(s => alwaysPrepared.Contains(s.Id)).ToList();
+        var unlisted = alwaysPrepared.Except(prepared.Select(s => s.Id)).ToList();
+
+        if (unlisted.Count != 0)
+        {
+            prepared.AddRange(await spellRepository.GetByIdsAsync(unlisted, cancellationToken));
+        }
+
+        listed.AddRange(prepared);
+
+        return new StepSpellList(
+            [.. listed.OrderBy(s => s.Level).ThenBy(s => s.Name, StringComparer.Ordinal)],
+            inUntickedBooks);
+    }
+
+    /// <summary>
     /// The class's own list, the whole list of another class a subclass opens up (the Wizard's
     /// for an Eldritch Knight, whose fighter has none), and the spells a subclass adds to its
     /// class's. Checking the class list alone refused every Eldritch Knight spell.

@@ -1,6 +1,7 @@
 using CharacterCreatorApp.Application.Common.Interfaces;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetSpellAllowance;
 using CharacterCreatorApp.Application.Persistence;
+using CharacterCreatorApp.Application.ReadModels.Books;
 using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
@@ -26,6 +27,7 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
     private readonly Mock<ILanguageRepository> _languageRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IFeatRepository> _featRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<ISpellRepository> _spellRepositoryMock = new(MockBehavior.Strict);
+    private readonly Mock<IBookRepository> _bookRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IUserContext> _userContextMock = new(MockBehavior.Strict);
     private readonly CancellationTokenSource _cts = new();
     private readonly GetSpellAllowanceQueryHandler _sut;
@@ -39,6 +41,14 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
         _featRepositoryMock.Setup(r => r.GetByIdsAsync(It.IsAny<IEnumerable<string>>(), _cts.Token)).ReturnsAsync([]);
         _languageRepositoryMock.Setup(r => r.GetAllForEditionAsync(RulesEdition.Edition2014, _cts.Token)).ReturnsAsync([]);
 
+        // The 2014 books, the Player's Handbook first, as the repository orders them
+        _bookRepositoryMock.Setup(r => r.GetAllForEditionAsync(RulesEdition.Edition2014, _cts.Token)).ReturnsAsync(() =>
+        [
+            Book("PHB", "Player's Handbook (2014)", isPlayersHandbook: true),
+            Book("TCE", "Tasha's Cauldron of Everything"),
+            Book("XGE", "Xanathar's Guide to Everything"),
+        ]);
+
         _sut = new GetSpellAllowanceQueryHandler(
             _draftRepositoryMock.Object,
             _classRepositoryMock.Object,
@@ -47,6 +57,7 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
             _languageRepositoryMock.Object,
             _featRepositoryMock.Object,
             _spellRepositoryMock.Object,
+            _bookRepositoryMock.Object,
             _userContextMock.Object,
             new FakeTimeProvider(new DateTimeOffset(2025, 1, 5, 14, 30, 0, TimeSpan.Zero)));
     }
@@ -143,6 +154,96 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
 
         // Assert
         result.Value.SpellList.Select(s => s.Id).Should().Equal("fire_bolt", "burning_hands", "shield");
+    }
+
+    [Fact]
+    public async Task Handle_ForACaster_CountsWhatItsUntickedBooksHoldUpToItsHighestLevel()
+    {
+        // Arrange - a level 1 sorcerer of the PHB alone: Ice Knife (XGE) would be offered with
+        // Xanathar's ticked, its level 2 spell would not be at all
+        ArrangeDraft("sorcerer", level: 1, withScores: false);
+        ArrangeClass("sorcerer", Row("sorcerer", 1, cantrips: 4, spells: 2), spellcasting: null);
+        _spellRepositoryMock.Setup(r => r.GetByClassIdAsync("sorcerer", _cts.Token)).ReturnsAsync(
+        [
+            Spell("shield", 1), Spell("ice_knife", 1, "XGE"), Spell("xge_cantrip", 0, "XGE"), Spell("xge_high", 2, "XGE"), Spell("tce_spell", 1, "TCE"),
+        ]);
+
+        // Act
+        var result = await _sut.Handle(new GetSpellAllowanceQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.HiddenSpells.Count.Should().Be(3);
+        Books(result.Value).Should().Equal(("TCE", "Tasha's Cauldron of Everything", 1), ("XGE", "Xanathar's Guide to Everything", 2));
+    }
+
+    [Fact]
+    public async Task Handle_ForASubclassThatOpensAnotherList_ListsAndCountsEverySpellOnce()
+    {
+        // Arrange - an Eldritch Knight-like subclass opens the wizard's list and adds spells of its
+        // own; Shield is on both and counts once, and Absorb Elements once, though two lists hold it
+        ArrangeDraft("fighter", level: 1, withScores: false, subclassId: "knight");
+        ArrangeClass("fighter", Row("fighter", 1, cantrips: 2, spells: 3), spellcasting: null, new Subclass
+        {
+            Id = "knight",
+            Name = "Knight",
+            Source = "PHB",
+            ClassId = "fighter",
+            SpellListClassId = "wizard",
+            Spells = [new SpellSubclass { SpellId = "absorb_elements", SubclassId = "knight", Level = 1 }],
+        });
+        _spellRepositoryMock.Setup(r => r.GetByClassIdAsync("wizard", _cts.Token)).ReturnsAsync(
+            [Spell("shield", 1), Spell("magic_missile", 1), Spell("absorb_elements", 1, "XGE")]);
+        _spellRepositoryMock.Setup(r => r.GetByIdsAsync(new List<string> { "absorb_elements" }, _cts.Token)).ReturnsAsync(
+            [Spell("absorb_elements", 1, "XGE")]);
+
+        // Act
+        var result = await _sut.Handle(new GetSpellAllowanceQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.SpellList.Select(s => s.Id).Should().Equal("magic_missile", "shield");
+        Books(result.Value).Should().Equal(("XGE", "Xanathar's Guide to Everything", 1));
+    }
+
+    [Fact]
+    public async Task Handle_ForASubclassWithAnAlwaysPreparedSpellOfAnUntickedBook_ListsItAndDoesNotCountIt()
+    {
+        // Arrange - an oath's spell from Xanathar's is prepared whatever the books, so ticking
+        // Xanathar's would not add it to the picks; the class's own Xanathar's spell would be
+        ArrangeDraft("paladin", level: 3, withScores: true, "Charisma", 14, subclassId: "oath");
+        ArrangeRaceAndBackground("Charisma", raceBonus: 0);
+        ArrangeClass("paladin", Row("paladin", 3, cantrips: 0, spells: 0), Rule("paladin", "Charisma", 2), new Subclass
+        {
+            Id = "oath",
+            Name = "Oath",
+            Source = "PHB",
+            ClassId = "paladin",
+            Spells = [new SpellSubclass { SpellId = "ceremony", SubclassId = "oath", Level = 3, IsAlwaysPrepared = true }],
+        });
+        _spellRepositoryMock.Setup(r => r.GetByClassIdAsync("paladin", _cts.Token)).ReturnsAsync(
+            [Spell("bless", 1), Spell("ceremony", 1, "XGE"), Spell("searing_smite", 1, "XGE")]);
+
+        // Act
+        var result = await _sut.Handle(new GetSpellAllowanceQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.AlwaysPreparedSpellIds.Should().Equal("ceremony");
+        result.Value.SpellList.Select(s => s.Id).Should().Equal("bless", "ceremony");
+        Books(result.Value).Should().Equal(("XGE", "Xanathar's Guide to Everything", 1));
+    }
+
+    [Fact]
+    public async Task Handle_ForACharacterThatCastsNothingYet_CountsNothingHidden()
+    {
+        // Arrange - the 2014 paladin's table starts at level 2
+        ArrangeDraft("paladin", level: 1, withScores: false);
+        ArrangeClass("paladin", Row("paladin", 2, cantrips: 0, spells: 0), Rule("paladin", "Charisma", 2));
+
+        // Act
+        var result = await _sut.Handle(new GetSpellAllowanceQuery(_draftId), _cts.Token);
+
+        // Assert
+        result.Value.HiddenSpells.Count.Should().Be(0);
+        result.Value.HiddenSpells.Books.Should().BeEmpty();
     }
 
     [Fact]
@@ -265,6 +366,12 @@ public class GetSpellAllowanceQueryHandlerTests : IDisposable
         DurationType = "instant",
         Description = "A spell.",
     };
+
+    private static List<(string Code, string Name, int Count)> Books(SpellAllowanceReadModel allowance) =>
+        allowance.HiddenSpells.Books.ConvertAll(b => (b.Code, b.Name, b.Count));
+
+    private static BookReadModel Book(string code, string name, bool isPlayersHandbook = false) =>
+        new() { Code = code, Name = name, Edition = RulesEdition.Edition2014, IsPlayersHandbook = isPlayersHandbook };
 
     private static ClassSpellProgression Row(string classId, int level, int cantrips, int spells) => new()
     {

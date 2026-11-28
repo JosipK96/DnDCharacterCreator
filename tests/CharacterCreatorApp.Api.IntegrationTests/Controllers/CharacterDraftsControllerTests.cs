@@ -7,6 +7,7 @@ using CharacterCreatorApp.Contracts.Common;
 using CharacterCreatorApp.Contracts.Requests.Character;
 using CharacterCreatorApp.Contracts.Requests.CharacterDrafts;
 using CharacterCreatorApp.Contracts.Requests.User;
+using CharacterCreatorApp.Contracts.Responses.Books;
 using CharacterCreatorApp.Contracts.Responses.Characters;
 using CharacterCreatorApp.Contracts.Responses.Classes;
 using CharacterCreatorApp.Contracts.Responses.Feats;
@@ -1991,8 +1992,16 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         // Assert
         allowance.Should().BeEquivalentTo(
             new SpellAllowanceApiResponse(
-                CastsSpells: true, Cantrips: 3, Spells: 4, MaxSpellLevel: 1, SpellsFollowScores: true, AlwaysPreparedSpellIds: ["bless", "cure_wounds"], SpellList: []),
-            options => options.Excluding(a => a.SpellList));
+                CastsSpells: true, Cantrips: 3, Spells: 4, MaxSpellLevel: 1, SpellsFollowScores: true, AlwaysPreparedSpellIds: ["bless", "cure_wounds"], SpellList: [],
+                HiddenSpells: new HiddenOptionsApiResponse(0, [])),
+            options => options.Excluding(a => a.SpellList).Excluding(a => a.HiddenSpells));
+
+        // With the Player's Handbook alone, the other books' cleric spells (Xanathar's Toll the Dead)
+        // are counted under their books, built with the list
+        var editionBooks = await _client.GetFromJsonAsync<List<BookApiResponse>>("/api/books?edition=2014", cancellationToken);
+        allowance!.HiddenSpells.Count.Should().BePositive().And.Be(allowance.HiddenSpells.Books.Sum(b => b.Count));
+        allowance.HiddenSpells.Books.Select(b => b.Code).Should().Contain("XGE")
+            .And.BeSubsetOf(editionBooks!.Where(b => !b.IsPlayersHandbook).Select(b => b.Code));
 
         // The list the step shows holds what was picked and the domain spells, and nothing above level 1
         allowance!.SpellList.Select(s => s.Id).Should().Contain(["guidance", "guiding_bolt", "sanctuary", "bless", "cure_wounds"]);

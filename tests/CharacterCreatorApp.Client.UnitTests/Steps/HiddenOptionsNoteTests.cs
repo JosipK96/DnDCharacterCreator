@@ -195,28 +195,30 @@ public class HiddenOptionsNoteTests : WizardStepTestBase
     }
 
     [Fact]
-    public void SpellsStep_ForACasterWithASubclass_CountsItsListsUpToTheLevelItPicksFrom()
+    public void SpellsStep_ForACaster_ShowsTheCountTheSpellAllowanceBuiltWithItsList()
     {
-        // Arrange - a level 1 wizard of a subclass, picking up to level 1
+        // Arrange - a level 1 wizard of a subclass; the count comes with the list, not from hidden-options
         Api.Get(DraftPath(), new CharacterDraftDetailsApiResponse
         {
             Id = DraftId, Level = 1, Edition = "2014", AllowedSources = ["PHB"], ClassId = "wizard-phb", SubclassId = "evoker",
         });
         Api.Get("/api/classes/wizard-phb", Class("wizard-phb", "Wizard"));
         Api.Get("/api/subclasses/evoker", new SubclassApiResponse("evoker", "Evoker", "wizard-phb", "PHB", null, []));
-        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(true, 3, 6, 1, false, [], [Spell("light-phb", "Light", 0)]));
+        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(true, 3, 6, 1, false, [], [Spell("light-phb", "Light", 0)], InXanathars));
         Api.Get(DraftPath("bonus-spells"), new List<BonusSpellChoiceApiResponse>());
-        Api.Get(Hidden("spells", "classId=wizard-phb&subclassId=evoker&maxLevel=1"), InXanathars);
 
         // Act
         var cut = Render<SpellsStep>(parameters => parameters
             .Add(p => p.DraftId, DraftId)
             .Add(p => p.Step, 9)
             .Add(p => p.OnChangeBooks, () => _changedBooks++));
+        Button(NoteOf(cut, "spells"), "Tick books in step 1").Click();
 
         // Assert
         Squash(NoteOf(cut, "spells").TextContent).Should().StartWith(
             "3 more spells are in books you haven't ticked: Xanathar's Guide to Everything (3).");
+        Api.Requests.Should().NotContain(r => r.Contains(HiddenOptionsPath, StringComparison.Ordinal));
+        _changedBooks.Should().Be(1);
     }
 
     [Fact]

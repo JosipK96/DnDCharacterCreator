@@ -10,17 +10,15 @@ public class GetHiddenOptionsQueryValidatorTests
     private readonly GetHiddenOptionsQueryValidator _validator = new();
 
     [Theory]
-    [InlineData("races", null, null)]
-    [InlineData("classes", null, null)]
-    [InlineData("backgrounds", null, null)]
-    [InlineData("feats", null, null)]
-    [InlineData("subclasses", "ranger", null)]
-    [InlineData("spells", "wizard", 0)]
-    [InlineData("spells", "wizard", 9)]
-    public void Valid_WithAKnownListAndWhatItNeeds_Passes(string list, string? classId, int? maxLevel)
+    [InlineData("races", null)]
+    [InlineData("classes", null)]
+    [InlineData("backgrounds", null)]
+    [InlineData("feats", null)]
+    [InlineData("subclasses", "ranger")]
+    public void Valid_WithAKnownListAndWhatItNeeds_Passes(string list, string? classId)
     {
         // Arrange
-        var query = new GetHiddenOptionsQuery("2014", list, ["PHB"], classId, MaxLevel: maxLevel);
+        var query = new GetHiddenOptionsQuery("2014", list, ["PHB"], classId);
 
         // Act
         var result = _validator.TestValidate(query);
@@ -39,37 +37,25 @@ public class GetHiddenOptionsQueryValidatorTests
         result.ShouldHaveValidationErrorFor(x => x.Edition).WithErrorCode(BookErrors.Codes.InvalidEdition);
     }
 
-    [Fact]
-    public void Invalid_WithAnUnknownList_FailsWithInvalidList()
+    [Theory]
+    [InlineData("monsters")]
+    [InlineData("spells")] // GET spell-allowance counts the spells step's, with its list
+    public void Invalid_WithAnUnknownList_FailsWithInvalidList(string list)
     {
         // Act
-        var result = _validator.TestValidate(new GetHiddenOptionsQuery("2014", "monsters", []));
+        var result = _validator.TestValidate(new GetHiddenOptionsQuery("2014", list, [], "wizard"));
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.List).WithErrorCode(BookErrors.Codes.InvalidList);
     }
 
-    [Theory]
-    [InlineData("subclasses")]
-    [InlineData("spells")]
-    public void Invalid_WithoutAClassForAClassList_FailsWithClassRequired(string list)
+    [Fact]
+    public void Invalid_WithoutAClassForTheSubclasses_FailsWithClassRequired()
     {
         // Act
-        var result = _validator.TestValidate(new GetHiddenOptionsQuery("2014", list, []));
+        var result = _validator.TestValidate(new GetHiddenOptionsQuery("2014", "subclasses", []));
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.ClassId).WithErrorCode(BookErrors.Codes.ClassRequired);
-    }
-
-    [Theory]
-    [InlineData(-1)]
-    [InlineData(10)]
-    public void Invalid_WithASpellLevelOutOfRange_FailsWithInvalidMaxLevel(int maxLevel)
-    {
-        // Act
-        var result = _validator.TestValidate(new GetHiddenOptionsQuery("2014", "spells", [], "wizard", MaxLevel: maxLevel));
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(x => x.MaxLevel).WithErrorCode(BookErrors.Codes.InvalidMaxLevel);
     }
 }

@@ -5,7 +5,6 @@ using CharacterCreatorApp.Application.ReadModels.Books;
 using CharacterCreatorApp.Application.ReadModels.Classes;
 using CharacterCreatorApp.Application.ReadModels.Feats;
 using CharacterCreatorApp.Application.ReadModels.Races;
-using CharacterCreatorApp.Application.ReadModels.Spells;
 using CharacterCreatorApp.Domain.DomainModels.Feats;
 using CharacterCreatorApp.Domain.ValueObjects;
 
@@ -25,7 +24,6 @@ public class GetHiddenOptionsQueryHandlerTests : IDisposable
     private readonly Mock<ISubclassRepository> _subclassRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IBackgroundRepository> _backgroundRepositoryMock = new(MockBehavior.Strict);
     private readonly Mock<IFeatRepository> _featRepositoryMock = new(MockBehavior.Strict);
-    private readonly Mock<ISpellRepository> _spellRepositoryMock = new(MockBehavior.Strict);
     private readonly CancellationTokenSource _cts = new();
     private readonly GetHiddenOptionsQueryHandler _sut;
 
@@ -45,8 +43,7 @@ public class GetHiddenOptionsQueryHandlerTests : IDisposable
             _classRepositoryMock.Object,
             _subclassRepositoryMock.Object,
             _backgroundRepositoryMock.Object,
-            _featRepositoryMock.Object,
-            _spellRepositoryMock.Object);
+            _featRepositoryMock.Object);
     }
 
     [Fact]
@@ -203,88 +200,6 @@ public class GetHiddenOptionsQueryHandlerTests : IDisposable
     }
 
     [Fact]
-    public async Task Handle_SpellsWithASubclass_CountsTheClassListTheOpenedListAndTheSubclassSpellsOnce()
-    {
-        // Arrange - a subclass that opens the wizard's list and adds spells of its own; shield is
-        // on two of the lists and counts once, and the subclass's level 3 spell is above the level
-        _classRepositoryMock.Setup(r => r.GetByIdAsync("fighter", _cts.Token)).ReturnsAsync(() => Class("fighter", "PHB"));
-        _subclassRepositoryMock.Setup(r => r.GetByIdAsync("knight", _cts.Token)).ReturnsAsync(() => Subclass("knight", "PHB", spellListClassId: "wizard"));
-        _spellRepositoryMock.Setup(r => r.GetByClassIdAndMaxLevelAsync("fighter", 1, _cts.Token)).ReturnsAsync(() => [Spell("fighter_spell", "TCE", 1)]);
-        _spellRepositoryMock.Setup(r => r.GetByClassIdAndMaxLevelAsync("wizard", 1, _cts.Token)).ReturnsAsync(() =>
-        [
-            Spell("shield", "XGE", 1),
-            Spell("magic_missile", "PHB", 1),
-        ]);
-        _spellRepositoryMock.Setup(r => r.GetBySubclassIdAsync("knight", _cts.Token)).ReturnsAsync(() =>
-        [
-            Spell("shield", "XGE", 1),
-            Spell("knight_cantrip", "XGE", 0),
-            Spell("knight_high", "XGE", 3),
-        ]);
-
-        // Act
-        var result = await _sut.Handle(
-            Query(HiddenOptionLists.Spells, ["PHB"]) with { ClassId = "fighter", SubclassId = "knight", MaxLevel = 1 },
-            _cts.Token);
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
-        result.Value.Count.Should().Be(3);
-        Books(result.Value).Should().Equal(("TCE", "Tasha's Cauldron of Everything", 1), ("XGE", "Xanathar's Guide to Everything", 2));
-    }
-
-    [Fact]
-    public async Task Handle_SpellsWithoutALevel_CountsTheWholeClassList()
-    {
-        // Arrange
-        _classRepositoryMock.Setup(r => r.GetByIdAsync("wizard", _cts.Token)).ReturnsAsync(() => Class("wizard", "PHB"));
-        _spellRepositoryMock.Setup(r => r.GetByClassIdAsync("wizard", _cts.Token)).ReturnsAsync(() =>
-        [
-            Spell("magic_missile", "PHB", 1),
-            Spell("xge_high", "XGE", 9),
-        ]);
-
-        // Act
-        var result = await _sut.Handle(Query(HiddenOptionLists.Spells, ["PHB"]) with { ClassId = "wizard" }, _cts.Token);
-
-        // Assert
-        result.IsSuccess.Should().BeTrue();
-        result.Value.Count.Should().Be(1);
-        Books(result.Value).Should().Equal(("XGE", "Xanathar's Guide to Everything", 1));
-    }
-
-    [Fact]
-    public async Task Handle_SpellsOfAnUnknownClass_ReturnsClassNotFound()
-    {
-        // Arrange
-        _classRepositoryMock.Setup(r => r.GetByIdAsync("nobody", _cts.Token)).ReturnsAsync((ClassReadModel?)null);
-
-        // Act
-        var result = await _sut.Handle(Query(HiddenOptionLists.Spells, ["PHB"]) with { ClassId = "nobody", MaxLevel = 1 }, _cts.Token);
-
-        // Assert
-        result.IsSuccess.Should().BeFalse();
-        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Class.NotFound");
-    }
-
-    [Fact]
-    public async Task Handle_SpellsOfAnUnknownSubclass_ReturnsSubclassNotFound()
-    {
-        // Arrange
-        _classRepositoryMock.Setup(r => r.GetByIdAsync("fighter", _cts.Token)).ReturnsAsync(() => Class("fighter", "PHB"));
-        _subclassRepositoryMock.Setup(r => r.GetByIdAsync("nobody", _cts.Token)).ReturnsAsync((SubclassReadModel?)null);
-
-        // Act
-        var result = await _sut.Handle(
-            Query(HiddenOptionLists.Spells, ["PHB"]) with { ClassId = "fighter", SubclassId = "nobody", MaxLevel = 1 },
-            _cts.Token);
-
-        // Assert
-        result.IsSuccess.Should().BeFalse();
-        result.Errors.Should().ContainSingle().Which.Code.Should().Be("Subclass.NotFound");
-    }
-
-    [Fact]
     public async Task Handle_WithEveryBookTicked_HidesNothing()
     {
         // Arrange
@@ -355,24 +270,11 @@ public class GetHiddenOptionsQueryHandlerTests : IDisposable
 
     private static ClassReadModel Class(string id, string source) => new() { Id = id, Name = id, Edition = Edition, Source = source, HitDie = "1d10" };
 
-    private static SubclassReadModel Subclass(string id, string source, string? spellListClassId = null) =>
-        new() { Id = id, Name = id, ClassId = "class", Source = source, SpellListClassId = spellListClassId };
+    private static SubclassReadModel Subclass(string id, string source) =>
+        new() { Id = id, Name = id, ClassId = "class", Source = source };
 
     private static FeatReadModel Feat(string id, string source, string? category) =>
         new() { Id = id, Name = id, Description = id, Edition = Edition, Source = source, Category = category };
-
-    private static SpellReadModel Spell(string id, string source, int level) => new()
-    {
-        Id = id,
-        Name = id,
-        Source = source,
-        Level = level,
-        School = "Evocation",
-        CastingTimeUnit = "action",
-        RangeType = "point",
-        DurationType = "instant",
-        Description = id,
-    };
 
     public void Dispose()
     {

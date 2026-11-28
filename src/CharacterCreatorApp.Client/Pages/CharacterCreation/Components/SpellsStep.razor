@@ -108,8 +108,7 @@
                         </ChoiceSection>
                     }
 
-                    <HiddenOptionsNote List="spells" Edition="@(draft?.Edition ?? string.Empty)" Sources="@(draft?.AllowedSources ?? [])"
-                                       ClassId="@draft?.ClassId" SubclassId="@draft?.SubclassId" MaxLevel="@maxSpellLevel"
+                    <HiddenOptionsNote List="spells" Edition="@(draft?.Edition ?? string.Empty)" Counted="@hiddenSpells"
                                        OnChangeBooks="@OnChangeBooks" />
                 }
 
@@ -210,6 +209,9 @@
     private int spellsKnown = 0;
     private int cantripsKnown = 0;
     private int maxSpellLevel = 0;
+
+    // What the unticked books would add to the list, counted by the API with the list itself
+    private HiddenOptionsApiResponse? hiddenSpells;
 
     private List<SpellApiResponse> availableCantrips = [];
     private List<SpellApiResponse> availableLeveledSpells = [];
@@ -352,6 +354,7 @@
         cantripsKnown = allowance.Cantrips;
         maxSpellLevel = allowance.MaxSpellLevel;
         spellsFollowScores = allowance.SpellsFollowScores;
+        hiddenSpells = allowance.HiddenSpells;
 
         // What PUT spells accepts, up to the highest spell level (cantrips are level 0), from the
         // draft's books: the class's list, another class's a subclass opens up (the Wizard's for an

@@ -1,3 +1,5 @@
+using CharacterCreatorApp.Application.ReadModels.Books;
+
 namespace CharacterCreatorApp.Application.ReadModels.Spells;
 
 /// <summary>
@@ -24,4 +26,10 @@ public class SpellAllowanceReadModel
     /// AlwaysPreparedSpellIds, which it names but are not picked.
     /// </summary>
     public List<SpellReadModel> SpellList { get; set; } = [];
+
+    /// <summary>
+    /// How many more spells the step would offer to pick once the draft's unticked books were
+    /// ticked, and in which books; built with SpellList (SpellChoice.LoadStepListAsync).
+    /// </summary>
+    public HiddenOptionsReadModel HiddenSpells { get; set; } = new();
 }

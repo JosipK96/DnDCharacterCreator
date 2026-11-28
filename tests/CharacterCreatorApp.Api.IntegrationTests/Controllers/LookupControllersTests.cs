@@ -135,7 +135,6 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
     [InlineData("list=classes", true)]
     [InlineData("list=backgrounds", true)]
     [InlineData("list=feats", true)]
-    [InlineData("list=spells&classId=wizard&maxLevel=1", true)]
     public async Task GetHiddenOptions_For2014WithOnlyThePlayersHandbook_CountsEveryListAgainstItsBooks(string list, bool anyHidden)
     {
         // Act
@@ -164,6 +163,7 @@ public class LookupControllersTests(CustomWebApplicationFactory factory)
 
     [Theory]
     [InlineData("edition=2014&list=monsters", HttpStatusCode.BadRequest, "Book.InvalidList")]
+    [InlineData("edition=2014&list=spells&classId=wizard", HttpStatusCode.BadRequest, "Book.InvalidList")] // counted by GET spell-allowance
     [InlineData("edition=2019&list=races", HttpStatusCode.BadRequest, "Book.InvalidEdition")]
     [InlineData("edition=2014&list=subclasses", HttpStatusCode.BadRequest, "Book.ClassRequired")]
     [InlineData("edition=2014&list=subclasses&classId=no-such-class", HttpStatusCode.NotFound, "Class.NotFound")]

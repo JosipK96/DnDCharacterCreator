@@ -1,3 +1,5 @@
+using CharacterCreatorApp.Contracts.Responses.Books;
+
 namespace CharacterCreatorApp.Contracts.Responses.Spells;
 
 /// <summary>
@@ -5,7 +7,8 @@ namespace CharacterCreatorApp.Contracts.Responses.Spells;
 /// the spell count is a 2014 prepared caster's, following its scores and level; and the domain or
 /// oath spells it has prepared already; and the spells the step lists, by level then name: what its
 /// lists offer from its books up to that level, which it picks from, and the always-prepared ones,
-/// which it does not. CastsSpells is false for a character that casts nothing yet.
+/// which it does not; and how many more it would offer to pick from the books the draft has not
+/// ticked, built with the list. CastsSpells is false for a character that casts nothing yet.
 /// </summary>
 public record SpellAllowanceApiResponse(
     bool CastsSpells,
@@ -14,4 +17,5 @@ public record SpellAllowanceApiResponse(
     int MaxSpellLevel,
     bool SpellsFollowScores,
     List<string> AlwaysPreparedSpellIds,
-    List<SpellApiResponse> SpellList);
+    List<SpellApiResponse> SpellList,
+    HiddenOptionsApiResponse HiddenSpells);

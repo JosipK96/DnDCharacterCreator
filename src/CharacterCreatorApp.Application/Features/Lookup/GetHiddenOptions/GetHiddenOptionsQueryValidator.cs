@@ -20,12 +20,6 @@ public class GetHiddenOptionsQueryValidator : AbstractValidator<GetHiddenOptions
             .NotEmpty()
             .When(x => HiddenOptionLists.NeedsClass(x.List))
             .WithErrorCode(BookErrors.Codes.ClassRequired)
-            .WithMessage("A class is needed to count its subclasses or spells.");
-
-        RuleFor(x => x.MaxLevel)
-            .InclusiveBetween(0, 9)
-            .When(x => x.MaxLevel.HasValue)
-            .WithErrorCode(BookErrors.Codes.InvalidMaxLevel)
-            .WithMessage("Max spell level must be between 0 and 9.");
+            .WithMessage("A class is needed to count its subclasses.");
     }
 }

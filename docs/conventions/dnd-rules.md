@@ -39,7 +39,10 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
 - What a step's list leaves out is counted by the API, `GET api/books/hidden-options`
   (`GetHiddenOptionsQuery`): the entries of the edition's unticked books, per book, for races
   (and the subraces ticking their own book would offer), classes, a class's subclasses,
-  backgrounds, the feats an improvement can buy (or one category's) and the spells step's lists.
+  backgrounds and the feats an improvement can buy (or one category's). The spells step's count
+  comes with its list from `GET spell-allowance` (`SpellAllowanceApiResponse.HiddenSpells`), both
+  built by `SpellChoice.LoadStepListAsync`, so they cannot disagree; a subclass's always-prepared
+  spells, which the step shows whatever the books and does not offer to pick, are not counted.
   Each step shows it under its list (`Components/HiddenOptionsNote.razor`); the client never
   counts it.
 
@@ -117,8 +120,8 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   come with it at their level (`Subclass.AlwaysPreparedSpellIdsAt`, added by `CharacterBuilder`),
   and a 2014 patron's only join the list the warlock picks from. `Subclass.SpellListClassId`
   opens a whole other list: the Wizard's for an Eldritch Knight, whose fighter has none. The
-  spells step lists the three as `GET spell-allowance` sends them (`SpellChoice.LoadChoosableAsync`,
-  the list `ChooseSpells` checks against), and both refuse a pick of a spell the subclass already
+  spells step lists the three as `GET spell-allowance` sends them (`SpellChoice.LoadStepListAsync`,
+  from `SpellChoice.LoadChoosableAsync`, the list `ChooseSpells` checks against), and both refuse a pick of a spell the subclass already
   has prepared.
 - A 2024 class's spell table gives how many spells it prepares. A 2014 cleric, druid, paladin
   or artificer prepares its spellcasting modifier plus its level, or half of it, at least one

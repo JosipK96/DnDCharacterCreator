@@ -1,6 +1,7 @@
 @* Under a list the draft's books filter: how many more of its kind the books not ticked in step 1
    hold, and which, so a player does not take a switched-off option for one the app lacks. The API
-   counts them (GET api/books/hidden-options), never the client. Nothing shows when none are left out. *@
+   counts them (GET api/books/hidden-options, or for spells GET spell-allowance with the step's list,
+   passed in as Counted), never the client. Nothing shows when none are left out. *@
 @inject LookupService LookupService
 
 @if (hidden is { Count: > 0 })
@@ -42,16 +43,16 @@
     [Parameter]
     public IReadOnlyList<string> Sources { get; set; } = [];
 
-    /// <summary>The class whose subclasses or spells are counted.</summary>
+    /// <summary>The class whose subclasses are counted.</summary>
     [Parameter]
     public string? ClassId { get; set; }
 
-    /// <summary>For spells: the subclass whose spells the step adds, and the highest level it lists.</summary>
+    /// <summary>
+    /// A count the step already has, built by the API with its list (the spells step's, from GET
+    /// spell-allowance): the note shows it and asks the API for none.
+    /// </summary>
     [Parameter]
-    public string? SubclassId { get; set; }
-
-    [Parameter]
-    public int? MaxLevel { get; set; }
+    public HiddenOptionsApiResponse? Counted { get; set; }
 
     /// <summary>For feats: the one category a pick is of (a 2024 human's Origin feat, a Dark Gift), or null for any.</summary>
     [Parameter]
@@ -73,7 +74,14 @@
     // The class step's subclass list changes class as the player clicks, so the count follows it
     protected override async Task OnParametersSetAsync()
     {
-        var key = $"{Edition}|{List}|{string.Join(',', Sources)}|{ClassId}|{SubclassId}|{MaxLevel}|{Category}";
+        if (Counted is not null)
+        {
+            hidden = Counted;
+            loadedFor = null;
+            return;
+        }
+
+        var key = $"{Edition}|{List}|{string.Join(',', Sources)}|{ClassId}|{Category}";
 
         if (key == loadedFor)
         {
@@ -91,7 +99,7 @@
 
         try
         {
-            var result = await LookupService.GetHiddenOptionsAsync(Edition, List, Sources, ClassId, SubclassId, MaxLevel, Category);
+            var result = await LookupService.GetHiddenOptionsAsync(Edition, List, Sources, ClassId, Category);
 
             // A class clicked while the last one's count loaded keeps its own
             if (loadedFor == key)

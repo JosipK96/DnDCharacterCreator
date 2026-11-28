@@ -1,6 +1,5 @@
 @using System.Globalization
 @inject CharacterDraftService DraftService
-@inject LookupService LookupService
 @inherits WizardStepBase
 
 <div>
@@ -132,33 +131,31 @@
     protected override async Task OnInitializedAsync()
     {
         CharacterDraftDetailsApiResponse? draft = null;
-        ClassApiResponse? @class = null;
+        DraftChoicesOwedApiResponse? owed = null;
 
         var loaded = await LoadAsync(async () =>
         {
             draft = await DraftService.GetDraftDetailsAsync(DraftId);
 
-            if (draft?.ClassId is { } classId)
+            if (draft != null)
             {
-                @class = await LookupService.GetClassByIdAsync(classId);
+                owed = await DraftService.GetChoicesOwedAsync(DraftId);
             }
         }, "Failed to load the hit die");
 
-        if (!loaded || draft == null || @class == null)
+        // The API sends no die without a class it can load
+        if (!loaded || draft == null || owed is not { HitDieSize: > 0 })
         {
             ErrorMessage ??= "The character's class could not be loaded.";
             return;
         }
 
         isLevelUp = draft.LevelUpChoices.Count != 0;
-        hitDie = $"d{DieSizeOf(@class.HitDie)}";
-        dieSize = DieSizeOf(@class.HitDie);
+        dieSize = owed.HitDieSize;
+        hitDie = $"d{dieSize}";
 
-        // The die's average rounded up, as the sheet takes for a level without a result.
-        // shortcut: this and DieSizeOf repeat Class.HitDieFixedValue and
-        // Class.HitDieSize, which the client cannot reference; the server checks the result's range
-        // anyway. Upgrade by sending both numbers with the class (ClassApiResponse) if the rule changes.
-        fixedValue = (dieSize / 2) + 1;
+        // What the sheet takes for a level without a result, as the API works it out
+        fixedValue = owed.HitDieFixedValue;
 
         // Coming back to this step shows what was saved
         picks = draft.HitDieLevels.ConvertAll(level =>
@@ -174,16 +171,6 @@
 
             return pick;
         });
-    }
-
-    // "1d10", "d10" and "10" are all a d10
-    private static int DieSizeOf(string hitDie)
-    {
-        var separator = hitDie.IndexOf('d', StringComparison.OrdinalIgnoreCase);
-
-        return int.TryParse(separator >= 0 ? hitDie[(separator + 1)..] : hitDie, NumberStyles.Integer, CultureInfo.InvariantCulture, out var size) && size > 0
-            ? size
-            : 8;
     }
 
     private void TakeFixedValue(LevelPick pick)

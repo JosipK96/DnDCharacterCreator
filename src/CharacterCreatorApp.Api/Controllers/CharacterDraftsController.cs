@@ -12,6 +12,7 @@ using CharacterCreatorApp.Application.Features.CharacterCreation.DeleteDraft;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetBonusSpells;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetToolChoices;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetDraft;
+using CharacterCreatorApp.Application.Features.CharacterCreation.GetDraftChoicesOwed;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetFeatEligibility;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetFightingStyles;
 using CharacterCreatorApp.Application.Features.CharacterCreation.GetIncompleteDraft;
@@ -261,6 +262,21 @@ namespace CharacterCreatorApp.Api.Controllers
             var response = await _sender.Send(new GetFeatEligibilityQuery(draftId, increases ?? []), cancellationToken);
 
             return OkOrProblem(response, feats => feats.Select(feat => feat.ToResponse()).ToList());
+        }
+
+        /// <summary>
+        /// What the draft's race, class, background and level owe the player to pick: the
+        /// improvements, the race's bonus feats, the background's feat, the languages to pick and
+        /// those already known, and the hit die. 0, empty or null for what is not chosen yet.
+        /// </summary>
+        [HttpGet("{draftId:guid}/choices-owed")]
+        [ProducesResponseType(typeof(DraftChoicesOwedApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CustomProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetChoicesOwed(Guid draftId, CancellationToken cancellationToken)
+        {
+            var response = await _sender.Send(new GetDraftChoicesOwedQuery(draftId), cancellationToken);
+
+            return OkOrProblem(response, owed => owed.ToResponse());
         }
 
         [HttpPut("{draftId:guid}/spells")]

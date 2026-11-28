@@ -18,7 +18,8 @@ public static class BackgroundMappings
         Feat: background.Feat?.ToResponse(),
         Feature: background.Feature?.ToResponse(),
         FeatChoiceCategory: background.FeatChoiceCategory,
-        FeatAlternativeCategory: background.FeatAlternativeCategory);
+        FeatAlternativeCategory: background.FeatAlternativeCategory,
+        PickableFeatCategory: background.PickableFeatCategory);
 
     public static BackgroundProficiencyApiResponse ToResponse(this BackgroundProficiencyReadModel proficiency) =>
         new(Id: proficiency.Id, Name: proficiency.Name, Type: proficiency.Type);

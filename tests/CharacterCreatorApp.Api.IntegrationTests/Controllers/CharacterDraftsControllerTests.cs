@@ -650,6 +650,45 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task ChoicesOwed_ForAHillDwarfClericAcolyte_CountsWhatTheRaceClassAndBackgroundOwe()
+    {
+        // Arrange - a dwarf speaks Common and Dwarvish, an acolyte picks two, a cleric rolls a d8
+        await SignInAsync();
+        var draftId = await CreateHillDwarfLifeClericAsync();
+
+        // Act
+        var owed = await _client.GetFromJsonAsync<DraftChoicesOwedApiResponse>(
+            $"/api/character-drafts/{draftId}/choices-owed", TestContext.Current.CancellationToken);
+
+        // Assert
+        owed.Should().BeEquivalentTo(new DraftChoicesOwedApiResponse(
+            Improvements: 0,
+            ImprovementLevels: [4, 8, 12, 16, 19],
+            BonusFeats: 0,
+            BonusFeatCategory: null,
+            BackgroundFeatId: null,
+            Languages: 2,
+            KnownLanguageIds: ["common-phb", "dwarvish-phb"],
+            HitDieSize: 8,
+            HitDieFixedValue: 5));
+    }
+
+    [Fact]
+    public async Task ChoicesOwed_ForAnotherPlayersDraft_ReturnsNotFound()
+    {
+        // Arrange
+        await SignInAsync();
+        var draftId = await CreateDraftAsync();
+        await SignInAsync();
+
+        // Act
+        var response = await _client.GetAsync($"/api/character-drafts/{draftId}/choices-owed", TestContext.Current.CancellationToken);
+
+        // Assert
+        await response.ShouldFailWithAsync(HttpStatusCode.NotFound, "CharacterDraft.NotFound");
+    }
+
+    [Fact]
     public async Task FeatEligibility_ForAFighterWithStrength12_CountsThePointsTheStepHasSpent()
     {
         // Arrange - a level 4 hill dwarf fighter: Grappler asks for Strength 13
@@ -1950,8 +1989,21 @@ public class CharacterDraftsControllerTests : IAsyncLifetime
         var character = await _client.GetFromJsonAsync<CharacterDetailsApiResponse>($"/api/characters/{characterId}", cancellationToken);
 
         // Assert
-        allowance.Should().BeEquivalentTo(new SpellAllowanceApiResponse(
-            CastsSpells: true, Cantrips: 3, Spells: 4, MaxSpellLevel: 1, SpellsFollowScores: true, AlwaysPreparedSpellIds: ["bless", "cure_wounds"]));
+        allowance.Should().BeEquivalentTo(
+            new SpellAllowanceApiResponse(
+                CastsSpells: true, Cantrips: 3, Spells: 4, MaxSpellLevel: 1, SpellsFollowScores: true, AlwaysPreparedSpellIds: ["bless", "cure_wounds"], SpellList: []),
+            options => options.Excluding(a => a.SpellList));
+
+        // The list the step shows holds what was picked and the domain spells, and nothing above level 1
+        allowance!.SpellList.Select(s => s.Id).Should().Contain(["guidance", "guiding_bolt", "sanctuary", "bless", "cure_wounds"]);
+        allowance.SpellList.Should().OnlyContain(s => s.Level <= 1);
+
+        // Described as the book does: the seed data spells this "1 action", "point / touch" and "roll a {@dice d4}"
+        var guidance = allowance.SpellList.Single(s => s.Id == "guidance");
+        guidance.CastingTime.Should().Be("1 action");
+        guidance.Range.Should().Be("Touch");
+        guidance.Duration.Should().Be("1 minute");
+        guidance.Description.Should().Contain("roll a d4");
         character!.Spells.Select(s => s.Id).Should().BeEquivalentTo(
             ["guidance", "sacred_flame", "thaumaturgy", "guiding_bolt", "healing_word", "shield_of_faith", "sanctuary", "bless", "cure_wounds"]);
     }

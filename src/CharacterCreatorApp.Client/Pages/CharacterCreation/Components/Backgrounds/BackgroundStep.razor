@@ -136,7 +136,7 @@
         increases.Clear();
         featId = null;
 
-        if (BackgroundFeats.PickableCategory(background) != null && categoryFeats.Count == 0)
+        if (background.PickableFeatCategory != null && categoryFeats.Count == 0)
         {
             await LoadAsync(async () => categoryFeats = await LookupService.GetFeatsAsync(Edition, Sources), "Failed to load feats");
         }
@@ -154,7 +154,7 @@
             return;
         }
 
-        var pickedFeatId = BackgroundFeats.PickableCategory(selectedBackground) == null ? null : featId;
+        var pickedFeatId = selectedBackground.PickableFeatCategory == null ? null : featId;
 
         if (await SaveAsync(() => DraftService.SetBackgroundAsync(DraftId, selectedBackground.Id, picked, pickedFeatId)))
         {

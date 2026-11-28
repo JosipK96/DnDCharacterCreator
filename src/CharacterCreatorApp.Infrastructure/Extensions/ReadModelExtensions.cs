@@ -67,11 +67,32 @@ public static class ReadModelExtensions
         AbilityScoreBonuses = race.AbilityBonuses.Select(asb => asb.ToReadModel()).ToList(),
         Languages = race.RaceLanguages.Select(rl => rl.Language).ToList(),
         Traits = race.Traits.Select(t => t.ToReadModel()).ToList(),
-        Subraces = race.Subraces.Select(sr => sr.ToReadModel()).ToList(),
-        FixedProficiencies = race.RaceProficiencies.Select(rp => rp.Proficiency.ToReadModel()).ToList()
+        Subraces = race.Subraces.Select(sr => sr.ToReadModel(race)).ToList(),
+        FixedProficiencies = race.RaceProficiencies.Select(rp => rp.Proficiency.ToReadModel()).ToList(),
+        Picks = race.PicksWith(null)
     };
 
-    public static SubraceReadModel ToReadModel(this Subrace subrace) => new()
+    // The race step's counts come from the entity's rules, never from adding the columns up here
+    public static RacePicksReadModel PicksWith(this Race race, Subrace? subrace)
+    {
+        var abilityChoice = race.AbilityChoiceWith(subrace);
+        var feats = race.BonusFeatsWith(subrace);
+
+        return new RacePicksReadModel
+        {
+            AbilityChoiceOptions = [.. abilityChoice.Options],
+            AbilityChoicePoints = abilityChoice.Points,
+            AbilityChoiceMinPerAbility = abilityChoice.MinPerAbility,
+            AbilityChoiceMaxPerAbility = abilityChoice.MaxPerAbility,
+            SkillChoiceCount = race.SkillChoiceCountWith(subrace),
+            SkillChoiceOptions = [.. race.SkillChoiceOptionsWith(subrace)],
+            LanguageChoiceCount = race.LanguageChoiceCountWith(subrace),
+            FeatChoiceCount = feats.Count,
+            FeatChoiceCategory = feats.Category,
+        };
+    }
+
+    public static SubraceReadModel ToReadModel(this Subrace subrace, Race race) => new()
     {
         Id = subrace.Id,
         Name = subrace.Name,
@@ -88,7 +109,8 @@ public static class ReadModelExtensions
         FeatChoiceCount = subrace.FeatChoiceCount,
         FeatChoiceCategory = subrace.FeatChoiceCategory,
         AbilityScoreBonuses = subrace.AbilityBonuses.Select(asb => asb.ToReadModel()).ToList(),
-        Traits = subrace.Traits.Select(t => t.ToReadModel()).ToList()
+        Traits = subrace.Traits.Select(t => t.ToReadModel()).ToList(),
+        Picks = race.PicksWith(subrace)
     };
 
     public static TraitReadModel ToReadModel(this RaceTrait trait) => new()
@@ -159,6 +181,7 @@ public static class ReadModelExtensions
                 : null,
             FeatChoiceCategory = background.FeatChoiceCategory,
             FeatAlternativeCategory = background.FeatAlternativeCategory,
+            PickableFeatCategory = background.PickableFeatCategory,
 
             LanguageChoiceCount = background.LanguageChoiceCount,
 

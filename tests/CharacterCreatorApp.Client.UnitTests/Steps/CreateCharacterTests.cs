@@ -248,8 +248,7 @@ public class CreateCharacterTests : WizardStepTestBase
         });
 
         // The languages step it opens at
-        Api.Get("/api/races/get-list?edition=2014", new List<RaceApiResponse> { Race("dwarf", "Dwarf") with { LanguageChoiceCount = 1 } });
-        Api.Get("/api/backgrounds/soldier", Background("soldier", "Soldier"));
+        Api.Get(DraftPath("choices-owed"), Owed(languages: 1));
         Api.Get("/api/languages/get-list?edition=2014", new List<LanguageApiResponse> { new("giant", "Giant", "Standard") });
     }
 
@@ -261,7 +260,7 @@ public class CreateCharacterTests : WizardStepTestBase
             CharacterId = CharacterId, LevelUpChoices = ["hit-points"], ChoicesNeeded = ["hit-points"], HitDieLevels = [5],
         });
 
-        // The hit points step it opens at
-        Api.Get("/api/classes/fighter-phb", Class("fighter-phb", "Fighter", 4));
+        // The hit points step it opens at, for a fighter's d10
+        Api.Get(DraftPath("choices-owed"), Owed(hitDieSize: 10, hitDieFixedValue: 6));
     }
 }

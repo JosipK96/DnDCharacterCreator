@@ -38,4 +38,7 @@ public sealed class SubraceReadModel
 
     public List<AbilityScoreBonusReadModel> AbilityScoreBonuses { get; init; } = [];
     public List<TraitReadModel> Traits { get; init; } = [];
+
+    /// <summary>What the player picks for the race with this subrace, the race's and the subrace's together.</summary>
+    public required RacePicksReadModel Picks { get; init; }
 }

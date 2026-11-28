@@ -26,7 +26,7 @@ public class RaceStepTests : WizardStepTestBase
     public void RaceStep_ForAMonstersOfTheMultiverseRace_SendsPlusTwoAndPlusOne()
     {
         // Arrange
-        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { AbilityChoiceCount = 3, AbilityChoiceOptions = AllSix, AbilityChoiceMaxPerAbility = 2 });
+        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { Picks = Picks(abilityPoints: 3, abilityOptions: AllSix, max: 2) });
         Button(cut, "Aasimar").Click();
 
         // Act - Strength twice is +2, Wisdom once +1
@@ -44,7 +44,7 @@ public class RaceStepTests : WizardStepTestBase
     public void RaceStep_ForAMonstersOfTheMultiverseRace_SendsPlusOneToThree()
     {
         // Arrange
-        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { AbilityChoiceCount = 3, AbilityChoiceOptions = AllSix, AbilityChoiceMaxPerAbility = 2 });
+        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { Picks = Picks(abilityPoints: 3, abilityOptions: AllSix, max: 2) });
         Button(cut, "Aasimar").Click();
 
         // Act
@@ -62,7 +62,7 @@ public class RaceStepTests : WizardStepTestBase
     public void RaceStep_PickingAnAbilityPastTheCap_UnpicksIt()
     {
         // Arrange
-        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { AbilityChoiceCount = 3, AbilityChoiceOptions = AllSix, AbilityChoiceMaxPerAbility = 2 });
+        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { Picks = Picks(abilityPoints: 3, abilityOptions: AllSix, max: 2) });
         Button(cut, "Aasimar").Click();
         Button(cut, "+1 Strength").Click();
         Button(cut, "+1 Strength").Click();
@@ -81,7 +81,7 @@ public class RaceStepTests : WizardStepTestBase
     public void RaceStep_WithNoPointsLeft_DisablesTheUnpickedAbilities()
     {
         // Arrange
-        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { AbilityChoiceCount = 3, AbilityChoiceOptions = AllSix, AbilityChoiceMaxPerAbility = 2 });
+        var cut = RenderWith(Race("aasimar_mpmm", "Aasimar") with { Picks = Picks(abilityPoints: 3, abilityOptions: AllSix, max: 2) });
         Button(cut, "Aasimar").Click();
 
         // Act
@@ -98,13 +98,7 @@ public class RaceStepTests : WizardStepTestBase
     public void RaceStep_ForCustomLineage_RaisesOnePickByTwo()
     {
         // Arrange
-        var cut = RenderWith(Race("custom_lineage_tce", "Custom Lineage") with
-        {
-            AbilityChoiceCount = 2,
-            AbilityChoiceOptions = AllSix,
-            AbilityChoiceMaxPerAbility = 2,
-            AbilityChoiceMinPerAbility = 2,
-        });
+        var cut = RenderWith(Race("custom_lineage_tce", "Custom Lineage") with { Picks = Picks(abilityPoints: 2, abilityOptions: AllSix, min: 2, max: 2) });
         Button(cut, "Custom Lineage").Click();
 
         // Act
@@ -121,7 +115,7 @@ public class RaceStepTests : WizardStepTestBase
     public void RaceStep_ForTheHalfElf_SendsTwoPlusOnes()
     {
         // Arrange
-        var cut = RenderWith(Race("half_elf", "Half-Elf") with { AbilityChoiceCount = 2, AbilityChoiceOptions = ["STR", "DEX", "CON", "INT", "WIS"] });
+        var cut = RenderWith(Race("half_elf", "Half-Elf") with { Picks = Picks(abilityPoints: 2, abilityOptions: ["STR", "DEX", "CON", "INT", "WIS"]) });
         Button(cut, "Half-Elf").Click();
 
         // Act - a second pick of Dexterity unpicks it, as a +1 each choice always has
@@ -148,7 +142,7 @@ public class RaceStepTests : WizardStepTestBase
         });
         Api.Get("/api/races/get-list?edition=2014", new List<RaceApiResponse>
         {
-            Race("aasimar_mpmm", "Aasimar") with { AbilityChoiceCount = 3, AbilityChoiceOptions = AllSix, AbilityChoiceMaxPerAbility = 2 },
+            Race("aasimar_mpmm", "Aasimar") with { Picks = Picks(abilityPoints: 3, abilityOptions: AllSix, max: 2) },
         });
         Api.Put(DraftPath("race"));
 
@@ -256,7 +250,7 @@ public class RaceStepTests : WizardStepTestBase
 
     private IRenderedComponent<RaceStep> RenderKeenSensesElf()
     {
-        var cut = RenderWith(Race("elf", "Elf") with { SkillChoiceCount = 1, SkillChoiceOptions = ["insight", "perception", "survival"] });
+        var cut = RenderWith(Race("elf", "Elf") with { Picks = Picks(skills: 1, skillOptions: ["insight", "perception", "survival"]) });
         Api.Get("/api/proficiencies", new List<Contracts.Responses.Proficiencies.ProficiencyApiResponse>
         {
             Skill("athletics", "Athletics"), Skill("insight", "Insight"), Skill("perception", "Perception"), Skill("survival", "Survival"),
@@ -271,7 +265,7 @@ public class RaceStepTests : WizardStepTestBase
     public void RaceStep_BackFromTheSkills_ReturnsToTheRaces()
     {
         // Arrange - a half-elf picks any two skills
-        var cut = RenderWith(Race("half_elf", "Half-Elf") with { SkillChoiceCount = 2 });
+        var cut = RenderWith(Race("half_elf", "Half-Elf") with { Picks = Picks(skills: 2) });
         Api.Get("/api/proficiencies", new List<Contracts.Responses.Proficiencies.ProficiencyApiResponse> { Skill("athletics", "Athletics"), Skill("insight", "Insight") });
         Button(cut, "Half-Elf").Click();
         Button(cut, "Next: Choose Skills").Click();

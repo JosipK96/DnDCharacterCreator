@@ -7,6 +7,8 @@ namespace CharacterCreatorApp.Contracts.Responses.Backgrounds;
 /// Feat lets the player pick its feat from that category (a Mist Wanderer's Dark Gift); one with
 /// FeatAlternativeCategory lets the player pick a feat of that category in place of its Feat (a
 /// Haunted One's Dark Gift instead of Survivor), and keeps the Feat when nothing is picked.
+/// PickableFeatCategory is the category a feat picked is from, either way, as the server reads it;
+/// null when no feat may be picked.
 /// </summary>
 public record BackgroundApiResponse(
     string Id,
@@ -20,7 +22,8 @@ public record BackgroundApiResponse(
     BackgroundFeatApiResponse? Feat,
     BackgroundFeatureApiResponse? Feature,
     string? FeatChoiceCategory,
-    string? FeatAlternativeCategory
+    string? FeatAlternativeCategory,
+    string? PickableFeatCategory
 );
 
 public record BackgroundProficiencyApiResponse(

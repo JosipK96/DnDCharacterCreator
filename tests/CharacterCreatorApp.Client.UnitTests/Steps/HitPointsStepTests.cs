@@ -49,6 +49,35 @@ public class HitPointsStepTests : WizardStepTestBase
     }
 
     [Fact]
+    public void Render_ForAnotherDie_OffersTheDieAndFixedValueTheApiSends()
+    {
+        // Arrange - a d6, whose fixed value is 4
+        ArrangeLoad(LevelUp(), Owed(hitDieSize: 6, hitDieFixedValue: 4));
+
+        // Act
+        var cut = RenderStep(LevelUpFlow);
+
+        // Assert
+        Button(cut, "Take 4").Should().NotBeNull();
+        Button(cut, "Roll a d6").Should().NotBeNull();
+    }
+
+    [Fact]
+    public void Render_WhenTheApiSendsNoHitDie_SaysTheClassCouldNotBeLoadedAndOffersNoLevel()
+    {
+        // Arrange - the API counts no die without a class it can load
+        ArrangeLoad(LevelUp(), Owed());
+
+        // Act
+        var cut = RenderStep(LevelUpFlow);
+
+        // Assert
+        cut.Find("[role=alert]").TextContent.Should().Contain("The character's class could not be loaded.");
+        cut.FindAll("[data-testid^='hit-die-level-']").Should().BeEmpty();
+        Button(cut, "Next: Improvements").HasAttribute("disabled").Should().BeTrue();
+    }
+
+    [Fact]
     public void Next_AfterTakingTheFixedValue_SavesItAndMovesOn()
     {
         // Arrange
@@ -247,10 +276,11 @@ public class HitPointsStepTests : WizardStepTestBase
     private static IElement Button(IElement room, string text) =>
         room.QuerySelectorAll("button").First(button => button.TextContent.Contains(text, StringComparison.Ordinal));
 
-    private void ArrangeLoad(CharacterDraftDetailsApiResponse draft)
+    // A fighter's d10, whose fixed value is 6, unless a test says otherwise
+    private void ArrangeLoad(CharacterDraftDetailsApiResponse draft, DraftChoicesOwedApiResponse? owed = null)
     {
         Api.Get(DraftPath(), draft);
-        Api.Get("/api/classes/fighter-phb", Class("fighter-phb", "Fighter", 4, 6, 8));
+        Api.Get(DraftPath("choices-owed"), owed ?? Owed(hitDieSize: 10, hitDieFixedValue: 6));
     }
 
     private IRenderedComponent<HitPointsStep> RenderStep(IReadOnlyList<int> flow)

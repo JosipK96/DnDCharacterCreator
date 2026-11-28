@@ -1,5 +1,6 @@
 @* The step, in two parts: the race with its subrace, ability increases and size, then the skills
-   the race has the player pick, if any. The rules it reads are in RaceAbilityChoice and RaceSkillChoice. *@
+   the race has the player pick, if any. What it may pick is the API's Picks for the race with its
+   subrace; RaceAbilityChoice spreads the ability points. *@
 @inject CharacterDraftService DraftService
 @inject LookupService LookupService
 @inherits WizardStepBase
@@ -204,9 +205,12 @@
     private List<string> SizeOptions() =>
         selectedRace?.Size.Split(" or ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList() ?? [];
 
-    private RaceAbilityChoice AbilityChoice() => RaceAbilityChoice.For(selectedRace, selectedSubrace);
+    // What the race with its subrace has the player pick, as the API adds it up
+    private RacePicksApiResponse? Picks() => selectedSubrace?.Picks ?? selectedRace?.Picks;
 
-    private int SkillChoiceCount() => RaceSkillChoice.CountFor(selectedRace, selectedSubrace);
+    private RaceAbilityChoice AbilityChoice() => RaceAbilityChoice.For(Picks());
+
+    private int SkillChoiceCount() => Picks()?.SkillChoiceCount ?? 0;
 
     private void ToggleSkill(string id)
     {
@@ -248,7 +252,7 @@
             {
                 // A 2024 elf's Keen Senses is one of three; a half-elf may pick any skill
                 var skills = await LookupService.GetSkillProficienciesAsync();
-                var options = RaceSkillChoice.OptionsFor(selectedRace, selectedSubrace);
+                var options = Picks()?.SkillChoiceOptions ?? [];
                 availableSkills = options.Count == 0 ? skills : skills.Where(s => options.Contains(s.Id)).ToList();
             },
             busy => isLoadingSkills = busy,

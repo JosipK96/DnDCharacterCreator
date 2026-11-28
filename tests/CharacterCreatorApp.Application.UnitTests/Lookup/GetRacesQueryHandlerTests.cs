@@ -61,9 +61,10 @@ public class GetRacesQueryHandlerTests : IDisposable
         Source = source,
         Size = "Medium",
         Subraces = [.. subraces],
+        Picks = new(),
     };
 
-    private static SubraceReadModel Subrace(string id, string source) => new() { Id = id, Name = id, RaceId = "elf", Source = source };
+    private static SubraceReadModel Subrace(string id, string source) => new() { Id = id, Name = id, RaceId = "elf", Source = source, Picks = new() };
 
     public void Dispose()
     {

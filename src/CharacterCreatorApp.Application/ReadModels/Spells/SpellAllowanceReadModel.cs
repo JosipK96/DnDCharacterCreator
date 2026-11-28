@@ -17,4 +17,11 @@ public class SpellAllowanceReadModel
 
     /// <summary>The domain or oath spells the subclass has prepared already, which are not picked.</summary>
     public List<string> AlwaysPreparedSpellIds { get; set; } = [];
+
+    /// <summary>
+    /// The spells the step lists, by level then name: what the lists offer the draft
+    /// (SpellChoice.LoadChoosableAsync) from its books and up to MaxSpellLevel, and the
+    /// AlwaysPreparedSpellIds, which it names but are not picked.
+    /// </summary>
+    public List<SpellReadModel> SpellList { get; set; } = [];
 }

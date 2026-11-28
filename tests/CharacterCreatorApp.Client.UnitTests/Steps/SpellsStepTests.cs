@@ -35,7 +35,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void Render_ForACaster_ShowsTheCountsTheServerAllows()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 3, 6, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 3, 6, 1, false, [], WizardSpells));
 
         // Act
         var cut = RenderStep();
@@ -50,7 +50,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void ToggleCantrip_AtTheAllowedCount_DisablesTheOthers()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, [], WizardSpells));
         var cut = RenderStep();
 
         // Act
@@ -67,7 +67,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void Next_WithExactlyTheAllowedPicks_SavesThemAndMovesOn()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 2, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 2, 1, false, [], WizardSpells));
         Api.Put(DraftPath("spells"));
         var cut = RenderStep();
         SpellButton(cut, "Mage Hand").Click();
@@ -91,16 +91,11 @@ public class SpellsStepTests : WizardStepTestBase
         Api.Get(DraftPath(), draft);
         Api.Get("/api/classes/cleric-phb", Class("cleric-phb", "Cleric"));
         Api.Get("/api/subclasses/life-domain-phb", new SubclassApiResponse("life-domain-phb", "Life Domain", "cleric-phb", "PHB", null, []));
-        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(true, 3, 4, 1, true, ["bless-phb", "cure-wounds-phb"]));
-        Api.Get("/api/spells?classId=cleric-phb&maxLevel=1&sources=PHB", new List<SpellApiResponse>
-        {
+        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(true, 3, 4, 1, true, ["bless-phb", "cure-wounds-phb"],
+        [
             Spell("guidance-phb", "Guidance", 0), Spell("bless-phb", "Bless", 1), Spell("cure-wounds-phb", "Cure Wounds", 1),
             Spell("guiding-bolt-phb", "Guiding Bolt", 1), Spell("healing-word-phb", "Healing Word", 1),
-        });
-        Api.Get("/api/spells?subclassId=life-domain-phb&maxLevel=1&sources=PHB", new List<SpellApiResponse>
-        {
-            Spell("bless-phb", "Bless", 1), Spell("cure-wounds-phb", "Cure Wounds", 1),
-        });
+        ]));
         Api.Get(DraftPath("bonus-spells"), new List<BonusSpellChoiceApiResponse>());
 
         // Act
@@ -119,7 +114,7 @@ public class SpellsStepTests : WizardStepTestBase
         // Arrange
         Api.Get(DraftPath(), Draft("fighter-phb"));
         Api.Get("/api/classes/fighter-phb", Class("fighter-phb", "Fighter"));
-        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(false, 0, 0, 0, false, []));
+        Api.Get(DraftPath("spell-allowance"), new SpellAllowanceApiResponse(false, 0, 0, 0, false, [], []));
         Api.Get(DraftPath("bonus-spells"), new List<BonusSpellChoiceApiResponse>());
         var cut = RenderStep();
         cut.Markup.Should().Contain("No Spells Available");
@@ -136,7 +131,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void Next_WhenTheServerRefusesTheSpells_ShowsItsMessageAndStays()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, [], WizardSpells));
         Api.RefusePut(DraftPath("spells"), "Shield is not on the Wizard spell list");
         var cut = RenderStep();
         SpellButton(cut, "Light").Click();
@@ -154,7 +149,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void ToggleSpell_WithPicksStillOpen_ShowsAnAmberCountOfWhatIsLeft()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, [], WizardSpells));
         var cut = RenderStep();
 
         // Act
@@ -171,7 +166,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void ToggleSpell_UntilTheSectionIsFull_ShowsAGreenCountWithACheck()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 1, 1, false, [], WizardSpells));
         var cut = RenderStep();
         SpellButton(cut, "Fire Bolt").Click();
 
@@ -189,7 +184,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void Render_ForACaster_ShowsTheSpellbookWithThePicksAndTheSlotsStillOpen()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 2, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 2, 2, 1, false, [], WizardSpells));
         var cut = RenderStep();
 
         // Act
@@ -208,7 +203,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void Filter_ByASchool_ShowsOnlyThatSchoolsRows()
     {
         // Arrange
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, []));
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, [], WizardSpells));
         var cut = RenderStep();
 
         // Act
@@ -223,7 +218,7 @@ public class SpellsStepTests : WizardStepTestBase
     public void Next_ForARaceCantripCastWithAnAbilityToPick_WaitsForTheAbilityAndSavesIt()
     {
         // Arrange - a 2024 high elf's wizard cantrip, cast with Intelligence, Wisdom or Charisma
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, []), [HighElfCantrip()]);
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, [], WizardSpells), [HighElfCantrip()]);
         Api.Put(DraftPath("spells"));
         Api.Put(DraftPath("bonus-spells"));
         var cut = RenderStep();
@@ -250,7 +245,7 @@ public class SpellsStepTests : WizardStepTestBase
         var draft = Draft("wizard-phb");
         draft.RaceSpellIds = ["ray-of-frost-phb"];
         draft.RaceSpellAbilityId = "CHA";
-        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, []), [HighElfCantrip()], draft);
+        ArrangeWizard(new SpellAllowanceApiResponse(true, 1, 1, 1, false, [], WizardSpells), [HighElfCantrip()], draft);
 
         // Act
         var cut = RenderStep();
@@ -291,7 +286,6 @@ public class SpellsStepTests : WizardStepTestBase
         Api.Get(DraftPath(), draft ?? Draft("wizard-phb"));
         Api.Get("/api/classes/wizard-phb", Class("wizard-phb", "Wizard"));
         Api.Get(DraftPath("spell-allowance"), allowance);
-        Api.Get("/api/spells?classId=wizard-phb&maxLevel=1&sources=PHB", WizardSpells);
         Api.Get(DraftPath("bonus-spells"), bonusChoices ?? []);
     }
 

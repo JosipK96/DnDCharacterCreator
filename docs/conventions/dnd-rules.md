@@ -117,8 +117,9 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   come with it at their level (`Subclass.AlwaysPreparedSpellIdsAt`, added by `CharacterBuilder`),
   and a 2014 patron's only join the list the warlock picks from. `Subclass.SpellListClassId`
   opens a whole other list: the Wizard's for an Eldritch Knight, whose fighter has none. The
-  spells step and `ChooseSpells` both take all three into account, and refuse a pick of a
-  spell the subclass already has prepared.
+  spells step lists the three as `GET spell-allowance` sends them (`SpellChoice.LoadChoosableAsync`,
+  the list `ChooseSpells` checks against), and both refuse a pick of a spell the subclass already
+  has prepared.
 - A 2024 class's spell table gives how many spells it prepares. A 2014 cleric, druid, paladin
   or artificer prepares its spellcasting modifier plus its level, or half of it, at least one
   (`Spellcasting.PreparedSpellsLevelDivisor`, from 5etools' formula; `Class.SpellAllowanceAt`),
@@ -186,7 +187,8 @@ proficiency ids are explained in `ability-scores-and-ids.md`.
   both on every level-up (#28) and for each level a new character starts with above level 1
   (#141). Which levels the hit points step asks about is `CharacterDraft.HitDieLevels`: a
   level-up's new level only, or every level from 2 of a new character or an edit, so a level-1
-  character has no such step. Rolling level 1 is a house rule and is not offered.
+  character has no such step. Rolling level 1 is a house rule and is not offered. The step takes
+  the die and its fixed value (`Class.HitDieSize`, `Class.HitDieFixedValue`) from `GET choices-owed`.
   `SetHitDieResults` adds a level-up's one result to those kept, and replaces a new character's
   or an edit's, so a level left alone takes the fixed value. A lower level in step 1 drops the
   results above it, and another class drops them all.

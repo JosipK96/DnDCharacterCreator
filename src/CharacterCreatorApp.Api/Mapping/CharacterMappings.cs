@@ -14,6 +14,17 @@ namespace CharacterCreatorApp.Api.Mapping;
 /// </summary>
 public static class CharacterMappings
 {
+    public static DraftChoicesOwedApiResponse ToResponse(this DraftChoicesOwedReadModel owed) => new(
+        Improvements: owed.Improvements,
+        ImprovementLevels: owed.ImprovementLevels,
+        BonusFeats: owed.BonusFeats,
+        BonusFeatCategory: owed.BonusFeatCategory,
+        BackgroundFeatId: owed.BackgroundFeatId,
+        Languages: owed.Languages,
+        KnownLanguageIds: owed.KnownLanguageIds,
+        HitDieSize: owed.HitDieSize,
+        HitDieFixedValue: owed.HitDieFixedValue);
+
     public static CharacterDetailsApiResponse ToResponse(this CharacterDetailsReadModel character) => new(
         Id: character.Id,
         Name: character.Name,

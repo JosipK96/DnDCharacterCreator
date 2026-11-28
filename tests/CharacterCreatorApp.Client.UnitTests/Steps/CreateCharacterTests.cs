@@ -166,8 +166,23 @@ public class CreateCharacterTests : WizardStepTestBase
 
         // Assert
         cut.FindAll("h3").Select(h => h.TextContent).Should().Contain("Cancel Level Up?");
+        Api.Requests.Should().NotContain(r => r.StartsWith("DELETE ", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ContinueLevellingUp_ClosesTheDialogAndStaysOnTheStep()
+    {
+        // Arrange
+        ArrangeALevelUp();
+        var cut = Render<CreateCharacter>(parameters => parameters.Add(p => p.DraftIdParam, DraftId.ToString()));
+        cut.WaitForAssertion(() => Button(cut, "Back").Click());
+
+        // Act
         Button(cut, "Continue Levelling Up").Click();
+
+        // Assert
         cut.FindAll("h3").Select(h => h.TextContent).Should().NotContain("Cancel Level Up?");
+        cut.Find("h2").TextContent.Should().Be("Step 1: Hit Points");
     }
 
     [Fact]
@@ -194,7 +209,7 @@ public class CreateCharacterTests : WizardStepTestBase
     }
 
     [Fact]
-    public void Open_ADraftThatIsGone_SaysSoAndOffersTheWayBack()
+    public void Open_ADraftThatIsGone_SaysSo()
     {
         // Arrange
         Api.NotFound(DraftPath());
@@ -204,7 +219,19 @@ public class CreateCharacterTests : WizardStepTestBase
 
         // Assert
         cut.WaitForAssertion(() => cut.Find("[role=alert]").TextContent.Should().Contain("Character draft not found"));
-        Button(cut, "Back to Characters").Click();
+    }
+
+    [Fact]
+    public void BackToCharacters_FromADraftThatIsGone_GoesToTheList()
+    {
+        // Arrange
+        Api.NotFound(DraftPath());
+        var cut = Render<CreateCharacter>(parameters => parameters.Add(p => p.DraftIdParam, DraftId.ToString()));
+
+        // Act
+        cut.WaitForAssertion(() => Button(cut, "Back to Characters").Click());
+
+        // Assert
         Navigation.Uri.Should().EndWith("/characters");
     }
 

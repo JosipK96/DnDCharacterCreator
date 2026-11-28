@@ -91,7 +91,7 @@ public class LanguagesStepTests : WizardStepTestBase
     }
 
     [Fact]
-    public void Click_ARowWhenEveryPickIsMade_IsDisabledUntilOneIsTakenBack()
+    public void Click_TheLastPick_DisablesTheRest()
     {
         // Arrange - a high elf with no background picks one
         ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf" });
@@ -102,7 +102,21 @@ public class LanguagesStepTests : WizardStepTestBase
 
         // Assert
         Row(cut, "Abyssal").HasAttribute("disabled").Should().BeTrue();
+    }
+
+    [Fact]
+    public void Click_APickAgain_TakesItBackAndFreesTheRest()
+    {
+        // Arrange
+        ArrangeLoad(new CharacterDraftDetailsApiResponse { Id = DraftId, Edition = "2014", RaceId = "elf", SubraceId = "high-elf" });
+        var cut = RenderStep();
         Row(cut, "Giant").Click();
+
+        // Act
+        Row(cut, "Giant").Click();
+
+        // Assert
+        Row(cut, "Giant").GetAttribute("aria-pressed").Should().Be("false");
         Row(cut, "Abyssal").HasAttribute("disabled").Should().BeFalse();
     }
 

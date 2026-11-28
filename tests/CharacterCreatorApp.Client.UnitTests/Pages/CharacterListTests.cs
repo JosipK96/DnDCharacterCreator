@@ -129,15 +129,31 @@ public class CharacterListTests : WizardStepTestBase
         Api.Post(ListRoute, Page(totalCount: 0));
         var cut = Render<CharacterList>();
         cut.Find("#character-search").Input("Nobody");
+
+        // Act
+        Button(cut, "Apply filters").Click();
+
+        // Assert
+        var empty = cut.Find("[data-testid='no-characters']");
+        empty.TextContent.Should().Contain("No characters match your filters");
+        empty.QuerySelector("button")!.TextContent.Trim().Should().Be("Clear filters");
+    }
+
+    [Fact]
+    public void ClearFilters_FromTheEmptyState_AsksForEveryCharacterAgain()
+    {
+        // Arrange
+        Api.Post(ListRoute, Page(totalCount: 0));
+        var cut = Render<CharacterList>();
+        cut.Find("#character-search").Input("Nobody");
         Button(cut, "Apply filters").Click();
 
         // Act
-        var empty = cut.Find("[data-testid='no-characters']");
+        cut.Find("[data-testid='no-characters'] button").Click();
 
         // Assert
-        empty.TextContent.Should().Contain("No characters match your filters");
-        empty.QuerySelector("button")!.Click();
-        Api.BodyOf<FilterRequest<GetCharactersApiRequest>>($"POST {ListRoute}").SearchParams!.Name.Should().BeNull();
+        Api.BodyOf<FilterRequest<GetCharactersApiRequest>>($"POST {ListRoute}").SearchParams.Should()
+            .BeEquivalentTo(new GetCharactersApiRequest());
     }
 
     [Theory]

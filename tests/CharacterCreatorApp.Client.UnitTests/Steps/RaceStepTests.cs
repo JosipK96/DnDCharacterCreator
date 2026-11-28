@@ -222,9 +222,40 @@ public class RaceStepTests : WizardStepTestBase
     }
 
     [Fact]
-    public void RaceStep_ForARaceWithSkillsToPick_OffersOnlyItsOptionsThenSendsThePick()
+    public void RaceStep_ForARaceWithSkillsToPick_SavesTheRaceAndOffersOnlyItsSkills()
     {
         // Arrange - a 2024 elf's Keen Senses: one of three
+        var cut = RenderKeenSensesElf();
+
+        // Act
+        Button(cut, "Next: Choose Skills").Click();
+
+        // Assert
+        cut.WaitForAssertion(() => cut.Find("h2").TextContent.Should().Be("Step 2: Elf Skill Proficiencies"));
+        cut.FindAll("[data-testid=choice-row]").Select(r => r.QuerySelector("span.font-semibold")!.TextContent)
+            .Should().Equal("Insight", "Perception", "Survival");
+        Api.BodyOf<SetRaceApiRequest>(SaveRoute("race")).RaceId.Should().Be("elf");
+        _movedOn.Should().Be(0, "the race is saved, the skills not yet");
+    }
+
+    [Fact]
+    public void RaceStep_AfterPickingTheRacesSkill_SendsItAndMovesOn()
+    {
+        // Arrange
+        var cut = RenderKeenSensesElf();
+        Button(cut, "Next: Choose Skills").Click();
+        cut.WaitForAssertion(() => Row(cut, "Perception").Click());
+
+        // Act
+        Button(cut, "Next: Class").Click();
+
+        // Assert
+        Api.BodyOf<ChooseRaceSkillsApiRequest>(SaveRoute("race-skills")).ProficiencyIds.Should().Equal("perception");
+        _movedOn.Should().Be(1);
+    }
+
+    private IRenderedComponent<RaceStep> RenderKeenSensesElf()
+    {
         var cut = RenderWith(Race("elf", "Elf") with { SkillChoiceCount = 1, SkillChoiceOptions = ["insight", "perception", "survival"] });
         Api.Get("/api/proficiencies", new List<Contracts.Responses.Proficiencies.ProficiencyApiResponse>
         {
@@ -233,20 +264,7 @@ public class RaceStepTests : WizardStepTestBase
         });
         Api.Put(DraftPath("race-skills"));
         Button(cut, "Elf").Click();
-
-        // Act
-        Button(cut, "Next: Choose Skills").Click();
-        cut.WaitForAssertion(() => cut.Find("h2").TextContent.Should().Be("Step 2: Elf Skill Proficiencies"));
-        Row(cut, "Perception").Click();
-
-        // Assert
-        cut.FindAll("[data-testid=choice-row]").Select(r => r.QuerySelector("span.font-semibold")!.TextContent)
-            .Should().Equal("Insight", "Perception", "Survival");
-        Row(cut, "Insight").HasAttribute("disabled").Should().BeTrue("the one pick is made");
-        _movedOn.Should().Be(0, "the race is saved, the skills not yet");
-        Button(cut, "Next: Class").Click();
-        Api.BodyOf<ChooseRaceSkillsApiRequest>(SaveRoute("race-skills")).ProficiencyIds.Should().Equal("perception");
-        _movedOn.Should().Be(1);
+        return cut;
     }
 
     [Fact]

@@ -141,7 +141,8 @@ public class ProficienciesStepTests : WizardStepTestBase
         var cut = RenderStep();
 
         // Assert
-        cut.FindAll("[data-testid=choice-row][aria-pressed=true]").Should().BeEmpty();
+        cut.FindAll("[data-testid=choice-row]").Select(r => (r.QuerySelector("span.font-semibold")!.TextContent, r.GetAttribute("aria-pressed")))
+            .Should().Equal(("Dice Set", "false"), ("Playing Card Set", "false"));
     }
 
     [Fact]

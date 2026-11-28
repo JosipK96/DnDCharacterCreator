@@ -1,0 +1,373 @@
+using CharacterCreatorApp.Application.ReadModels.Backgrounds;
+using CharacterCreatorApp.Application.ReadModels.Characters;
+using CharacterCreatorApp.Application.ReadModels.Classes;
+using CharacterCreatorApp.Application.ReadModels.Feats;
+using CharacterCreatorApp.Application.ReadModels.Proficiencies;
+using CharacterCreatorApp.Application.ReadModels.Races;
+using CharacterCreatorApp.Application.ReadModels.Spells;
+using CharacterCreatorApp.Domain.DomainModels.Backgrounds;
+using CharacterCreatorApp.Domain.DomainModels.Characters;
+using CharacterCreatorApp.Domain.DomainModels.Classes;
+using CharacterCreatorApp.Domain.DomainModels.Feats;
+using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
+using CharacterCreatorApp.Domain.DomainModels.Races;
+using CharacterCreatorApp.Domain.DomainModels.Spells;
+using CharacterCreatorApp.Domain.ValueObjects;
+
+namespace CharacterCreatorApp.Infrastructure.Persistence.Extensions;
+
+public static class ReadModelExtensions
+{
+    public static ClassReadModel ToReadModel(this Class entity) => new()
+    {
+        Id = entity.Id,
+        Name = entity.Name,
+        Edition = entity.Edition,
+        Source = entity.Source,
+        HitDie = entity.HitDie,
+        SubclassLevel = entity.SubclassLevel,
+        AsiLevels = entity.AsiLevels,
+        SavingThrowAbilityIds = entity.SavingThrowAbilityIds,
+        ClassProficiencies = entity.ClassProficiencies.Select(cp => cp.Proficiency.ToReadModel()).ToList(),
+        ProficiencyChoice = entity.ProficiencyChoice?.ToReadModel(),
+        Spellcasting = entity.Spellcasting?.ToReadModel(),
+        SpellProgression = entity.SpellProgression.Select(sp => sp.ToReadModel()).ToList()
+    };
+
+    public static SpellcastingReadModel ToReadModel(this Spellcasting s) => new()
+    {
+        SpellcastingAbility = s.SpellcastingAbility,
+        IsPreparedCaster = s.IsPreparedCaster
+    };
+
+    public static ProficiencyChoiceReadModel ToReadModel(this ProficiencyChoice proficiencyChoice) => new()
+    {
+        Type = proficiencyChoice.Type,
+        Count = proficiencyChoice.Count,
+        Options = proficiencyChoice.Options.Select(o => o.Proficiency.ToReadModel()).ToList()
+    };
+
+    public static RaceReadModel ToReadModel(this Race race) => new()
+    {
+        Id = race.Id,
+        Name = race.Name,
+        Edition = race.Edition,
+        Source = race.Source,
+        Size = race.Size,
+        Speed = race.Speed,
+        SkillChoiceCount = race.SkillChoiceCount,
+        SkillChoiceOptions = race.SkillChoiceOptions,
+        LanguageChoiceCount = race.LanguageChoiceCount,
+        AbilityChoiceCount = race.AbilityChoiceCount,
+        AbilityChoiceOptions = race.AbilityChoiceOptions,
+        AbilityChoiceMaxPerAbility = race.AbilityChoiceMaxPerAbility,
+        AbilityChoiceMinPerAbility = race.AbilityChoiceMinPerAbility,
+        FeatChoiceCount = race.FeatChoiceCount,
+        FeatChoiceCategory = race.FeatChoiceCategory,
+        AbilityScoreBonuses = race.AbilityBonuses.Select(asb => asb.ToReadModel()).ToList(),
+        Languages = race.RaceLanguages.Select(rl => rl.Language).ToList(),
+        Traits = race.Traits.Select(t => t.ToReadModel()).ToList(),
+        Subraces = race.Subraces.Select(sr => sr.ToReadModel(race)).ToList(),
+        FixedProficiencies = race.RaceProficiencies.Select(rp => rp.Proficiency.ToReadModel()).ToList(),
+        Picks = race.PicksWith(null)
+    };
+
+    // The race step's counts come from the entity's rules, never from adding the columns up here
+    public static RacePicksReadModel PicksWith(this Race race, Subrace? subrace)
+    {
+        var abilityChoice = race.AbilityChoiceWith(subrace);
+        var feats = race.BonusFeatsWith(subrace);
+
+        return new RacePicksReadModel
+        {
+            AbilityChoiceOptions = [.. abilityChoice.Options],
+            AbilityChoicePoints = abilityChoice.Points,
+            AbilityChoiceMinPerAbility = abilityChoice.MinPerAbility,
+            AbilityChoiceMaxPerAbility = abilityChoice.MaxPerAbility,
+            SkillChoiceCount = race.SkillChoiceCountWith(subrace),
+            SkillChoiceOptions = [.. race.SkillChoiceOptionsWith(subrace)],
+            LanguageChoiceCount = race.LanguageChoiceCountWith(subrace),
+            FeatChoiceCount = feats.Count,
+            FeatChoiceCategory = feats.Category,
+        };
+    }
+
+    public static SubraceReadModel ToReadModel(this Subrace subrace, Race race) => new()
+    {
+        Id = subrace.Id,
+        Name = subrace.Name,
+        RaceId = subrace.RaceId,
+        Source = subrace.Source,
+        Speed = subrace.Speed,
+        LanguageChoiceCount = subrace.LanguageChoiceCount,
+        AbilityChoiceCount = subrace.AbilityChoiceCount,
+        AbilityChoiceOptions = subrace.AbilityChoiceOptions,
+        AbilityChoiceMaxPerAbility = subrace.AbilityChoiceMaxPerAbility,
+        AbilityChoiceMinPerAbility = subrace.AbilityChoiceMinPerAbility,
+        SkillChoiceCount = subrace.SkillChoiceCount,
+        SkillChoiceOptions = subrace.SkillChoiceOptions,
+        FeatChoiceCount = subrace.FeatChoiceCount,
+        FeatChoiceCategory = subrace.FeatChoiceCategory,
+        AbilityScoreBonuses = subrace.AbilityBonuses.Select(asb => asb.ToReadModel()).ToList(),
+        Traits = subrace.Traits.Select(t => t.ToReadModel()).ToList(),
+        Picks = race.PicksWith(subrace)
+    };
+
+    public static TraitReadModel ToReadModel(this RaceTrait trait) => new()
+    {
+        Id = trait.Id,
+        Name = trait.Name,
+        Description = trait.Description,
+        ProficiencyIds = []
+    };
+
+    public static TraitReadModel ToReadModel(this SubraceTrait trait) => new()
+    {
+        Id = trait.Id,
+        Name = trait.Name,
+        Description = trait.Description,
+        ProficiencyIds = []
+    };
+
+    public static SubclassReadModel ToReadModel(this Subclass subclass) => new()
+    {
+        Id = subclass.Id,
+        Name = subclass.Name,
+        ClassId = subclass.ClassId,
+        Source = subclass.Source,
+        SpellListClassId = subclass.SpellListClassId,
+        SpellProgression = subclass.SpellProgression.Select(sp => sp.ToReadModel()).ToList()
+    };
+
+    public static SpellProgressionReadModel ToReadModel(this ClassSpellProgression sp) => new()
+    {
+        CharacterLevel = sp.CharacterLevel,
+        SpellsKnown = sp.SpellsKnown,
+        CantripsKnown = sp.CantripsKnown,
+        MaxSpellLevel = sp.MaxSpellLevel,
+        SpellcastingAbility = null
+    };
+
+    public static SpellProgressionReadModel ToReadModel(this SubclassSpellProgression sp) => new()
+    {
+        CharacterLevel = sp.CharacterLevel,
+        SpellsKnown = sp.SpellsKnown,
+        CantripsKnown = sp.CantripsKnown,
+        MaxSpellLevel = sp.MaxSpellLevel,
+        SpellcastingAbility = sp.SpellcastingAbility
+    };
+
+    public static FeatureReadModel ToReadModel(this Feature feature) => new()
+    {
+        Id = feature.Id,
+        Name = feature.Name,
+        Description = feature.Description,
+        Level = feature.Level,
+        ClassId = feature.ClassId,
+        SubclassId = feature.SubclassId
+    };
+
+    public static BackgroundReadModel ToReadModel(this Background background)
+    {
+        return new BackgroundReadModel
+        {
+            Id = background.Id,
+            Name = background.Name,
+            Edition = background.Edition,
+            Source = background.Source,
+            AbilityScoreOptions = background.AbilityScoreOptions,
+            Feat = background.Feat is { } feat
+                ? new BackgroundFeatReadModel { Id = feat.Id, Name = feat.Name, IsRepeatable = feat.IsRepeatable }
+                : null,
+            FeatChoiceCategory = background.FeatChoiceCategory,
+            FeatAlternativeCategory = background.FeatAlternativeCategory,
+            PickableFeatCategory = background.PickableFeatCategory,
+
+            LanguageChoiceCount = background.LanguageChoiceCount,
+
+            Languages = background.NamedLanguages.ToList(),
+
+            Proficiencies = background.BackgroundProficiencies
+                .Select(bp => new BackgroundProficiencyReadModel
+                {
+                    Id = bp.ProficiencyId,
+                    Name = bp.Proficiency.Name,
+                    Type = bp.Proficiency.Type
+                })
+                .ToList(),
+
+            Feature = background.Feature is { } feature
+                ? new BackgroundFeatureReadModel { Id = feature.Id, Name = feature.Name, Description = feature.Description }
+                : null
+        };
+    }
+
+    public static ProficiencyReadModel ToReadModel(this Proficiency p) => new()
+    {
+        Id = p.Id,
+        Name = p.Name,
+        Type = p.Type
+    };
+
+    public static AbilityScoreBonusReadModel ToReadModel(this RaceAbilityBonus abilityScoreBonus) => new()
+    {
+        AbilityScore = AbilityScore.FromId(abilityScoreBonus.AbilityScoreId),
+        Bonus = abilityScoreBonus.Bonus
+    };
+
+    public static AbilityScoreBonusReadModel ToReadModel(this SubraceAbilityBonus abilityScoreBonus) => new()
+    {
+        AbilityScore = AbilityScore.FromId(abilityScoreBonus.AbilityScoreId),
+        Bonus = abilityScoreBonus.Bonus
+    };
+
+    public static SpellReadModel ToReadModel(this Spell spell) => new()
+    {
+        Id = spell.Id,
+        Name = spell.Name,
+        Source = spell.Source,
+        Level = spell.Level,
+        School = spell.School,
+        CastingTimeNumber = spell.CastingTimeNumber,
+        CastingTimeUnit = spell.CastingTimeUnit,
+        RangeType = spell.RangeType,
+        RangeDistanceType = spell.RangeDistanceType,
+        RangeDistanceAmount = spell.RangeDistanceAmount,
+        HasVerbalComponent = spell.HasVerbalComponent,
+        HasSomaticComponent = spell.HasSomaticComponent,
+        HasMaterialComponent = spell.HasMaterialComponent,
+        Material = spell.Material,
+        DurationType = spell.DurationType,
+        DurationAmount = spell.DurationAmount,
+        DurationUnit = spell.DurationUnit,
+        IsConcentration = spell.IsConcentration,
+        IsRitual = spell.IsRitual,
+        AttackType = spell.AttackType,
+        SaveAbilityId = spell.SaveAbilityId,
+        DamageType = spell.DamageType,
+        CantripDamageDice = spell.CantripDamageDice,
+        Description = spell.Description,
+        ClassIds = spell.SpellClasses.Select(sc => sc.ClassId).ToList()
+    };
+
+    public static FeatReadModel ToReadModel(this Feat feat)
+    {
+        return new FeatReadModel
+        {
+            Id = feat.Id,
+            Name = feat.Name,
+            Description = feat.Description,
+            Edition = feat.Edition,
+            Source = feat.Source,
+            Category = feat.Category,
+            Prerequisites = feat.Prerequisites,
+            IsRepeatable = feat.IsRepeatable,
+            AbilityIncrease = feat.AbilityIncrease,
+            GrantedProficiencyIds = feat.GrantedProficiencyIds?.AsReadOnly() ?? new List<string>().AsReadOnly(),
+            GrantedLanguageIds = feat.GrantedLanguageIds?.AsReadOnly() ?? new List<string>().AsReadOnly(),
+            GrantedSpellIds = feat.GrantedSpellIds?.AsReadOnly() ?? new List<string>().AsReadOnly(),
+            Choice = feat.Choice,
+            SpellChoice = feat.SpellChoice,
+        };
+    }
+
+    public static CharacterReadModel ToReadModel(this Character c) => new()
+    {
+        Id = c.Id,
+        UserId = c.UserId,
+        Name = c.Name,
+        Level = c.Level,
+        Edition = c.Edition,
+        ClassName = c.Class.Name,
+        SubclassName = c.Subclass?.Name,
+        RaceName = c.Race.Name,
+        SubraceName = c.Subrace?.Name,
+        BackgroundName = c.Background.Name,
+        CreatedAt = c.CreatedAt.DateTime
+    };
+
+    public static CharacterDetailsReadModel ToDetailsReadModel(this Character character)
+    {
+        return new CharacterDetailsReadModel
+        {
+            Id = character.Id,
+            Name = character.Name,
+            Level = character.Level,
+            Edition = character.Edition,
+
+            // IDs
+            RaceId = character.RaceId,
+            SubraceId = character.SubraceId,
+            ClassId = character.ClassId,
+            SubclassId = character.SubclassId,
+            BackgroundId = character.BackgroundId,
+
+            // Names
+            RaceName = character.Race.Name,
+            SubraceName = character.Subrace?.Name,
+            ClassName = character.Class.Name,
+            SubclassName = character.Subclass?.Name,
+            BackgroundName = character.Background.Name,
+
+            // A character made before the size was kept has its race's
+            Size = character.Size ?? character.Race.Size,
+
+            // Data. GetCharacterDetailsQueryHandler looks up what these ids stand for; the
+            // proficiency ids also decide which skills the sheet counts as proficient, and when
+            // they were left off here every skill came out without the proficiency bonus.
+            AbilityScores = character.AbilityScores,
+            ProficiencyIds = character.ProficiencyIds,
+            LanguageIds = character.LanguageIds,
+            SpellIds = character.SpellIds,
+            FeatIds = character.FeatIds,
+            FeatSpells = character.FeatSpells,
+            RaceSpellAbilityId = character.RaceSpellAbilityId,
+            FeatSavingThrowAbilityIds = character.FeatSavingThrowAbilityIds,
+            HitDieResults = character.HitDieResults,
+
+            CreatedAt = character.CreatedAt.DateTime
+        };
+    }
+
+    public static CharacterDraftDetailsReadModel ToDetailsReadModel(this CharacterDraft draft)
+    {
+        return new CharacterDraftDetailsReadModel
+        {
+            Id = draft.Id,
+            Name = draft.Name,
+            Level = draft.Level,
+            Edition = draft.Edition,
+            AllowedSources = draft.AllowedSources,
+            RaceId = draft.RaceId,
+            SubraceId = draft.SubraceId,
+            RaceAbilityIncreases = draft.RaceAbilityIncreases,
+            Size = draft.Size,
+            RaceSpellIds = draft.RaceSpellIds,
+            RaceSpellAbilityId = draft.RaceSpellAbilityId,
+            ClassId = draft.ClassId,
+            SubclassId = draft.SubclassId,
+            BackgroundId = draft.BackgroundId,
+            BackgroundAbilityIncreases = draft.BackgroundAbilityIncreases,
+            BackgroundFeatId = draft.BackgroundFeatId,
+            BaseAbilityScores = draft.BaseAbilityScores,
+            BaseAbilityScoreMethod = draft.BaseAbilityScoreMethod,
+            SelectedClassProficiencyIds = draft.SelectedClassProficiencyIds,
+            SelectedRaceSkillIds = draft.SelectedRaceSkillIds,
+            ToolPicks = draft.ToolPicks,
+            SelectedLanguageIds = draft.SelectedLanguageIds,
+            SelectedFeatIds = draft.SelectedFeatIds,
+            FeatAbilityIncreases = draft.FeatAbilityIncreases,
+            FeatProficiencyPicks = draft.FeatProficiencyPicks,
+            FightingStyleIds = draft.FightingStyleIds,
+            SelectedSpellIds = draft.SelectedSpellIds,
+            FeatSpells = draft.FeatSpells,
+            AbilityScoreImprovements = draft.AbilityScoreImprovements,
+            IsCompleted = draft.IsCompleted,
+            CharacterId = draft.CharacterId,
+            ChoicesNeeded = draft.ChoicesNeeded,
+            LevelUpChoices = draft.LevelUpChoices,
+            HitDieResults = draft.HitDieResults,
+            HitDieLevels = [.. draft.HitDieLevels]
+        };
+    }
+}

@@ -2,7 +2,7 @@
 using System.Text;
 
 using CharacterCreatorApp.Infrastructure;
-using CharacterCreatorApp.Infrastructure.Seed;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;

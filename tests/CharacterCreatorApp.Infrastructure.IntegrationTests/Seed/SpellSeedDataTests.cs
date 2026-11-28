@@ -1,5 +1,5 @@
-using CharacterCreatorApp.Infrastructure.Seed;
-using CharacterCreatorApp.Infrastructure.Seed.Rows;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed.Rows;
 
 using FluentAssertions;
 

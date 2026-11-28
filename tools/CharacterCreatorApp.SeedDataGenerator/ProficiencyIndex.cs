@@ -1,5 +1,5 @@
 using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
-using CharacterCreatorApp.Infrastructure.Seed;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed;
 
 namespace CharacterCreatorApp.SeedDataGenerator;
 

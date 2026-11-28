@@ -1,6 +1,6 @@
 ﻿using CharacterCreatorApp.Infrastructure.IntegrationTests.Fixtures;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
-using CharacterCreatorApp.Infrastructure.Repositories;
+using CharacterCreatorApp.Infrastructure.Persistence.Repositories;
 
 using FluentAssertions;
 

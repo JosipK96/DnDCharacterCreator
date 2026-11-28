@@ -178,7 +178,7 @@ Every file but `Proficiencies.json` (`Classes.json`, `Subclasses.json`,
 raw 5etools data by
 `tools/CharacterCreatorApp.SeedDataGenerator` (see `docs/development.md`); don't edit them by
 hand, change the generator and run it again. The
-row types they share with the seeders are in `Infrastructure/Seed/Rows`. A
+row types they share with the seeders are in `Infrastructure/Persistence/Seed/Rows`. A
 class's spell table (cantrips, spells to pick, spell slots or Pact Magic, highest
 spell level per level),
 its spellcasting ability and how a 2014 one counts its prepared spells, subclass

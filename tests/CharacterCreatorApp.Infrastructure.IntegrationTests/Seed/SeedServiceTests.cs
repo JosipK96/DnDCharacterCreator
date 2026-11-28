@@ -4,7 +4,7 @@ using CharacterCreatorApp.Application.Persistence;
 using CharacterCreatorApp.Domain.DomainModels.Characters;
 using CharacterCreatorApp.Domain.ValueObjects;
 using CharacterCreatorApp.Infrastructure.IntegrationTests.Fixtures;
-using CharacterCreatorApp.Infrastructure.Seed;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed;
 
 using FluentAssertions;
 

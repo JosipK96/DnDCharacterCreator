@@ -1333,7 +1333,7 @@ namespace CharacterCreatorApp.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("CharacterCreatorApp.Infrastructure.Seed.ReferenceDataVersion", b =>
+            modelBuilder.Entity("CharacterCreatorApp.Infrastructure.Persistence.Seed.ReferenceDataVersion", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("integer");

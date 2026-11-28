@@ -7,7 +7,7 @@ using CharacterCreatorApp.Domain.DomainModels.Proficiencies;
 using CharacterCreatorApp.Domain.DomainModels.Races;
 using CharacterCreatorApp.Domain.DomainModels.Spells;
 using CharacterCreatorApp.Infrastructure.Identity;
-using CharacterCreatorApp.Infrastructure.Seed;
+using CharacterCreatorApp.Infrastructure.Persistence.Seed;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
